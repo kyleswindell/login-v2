@@ -1,0 +1,14 @@
+/* ==========================================================================
+   File: Modules/Notifications/resources/css/notifications/index.css
+   Purpose: Notifications module CSS partial index.
+
+   Notes:
+   - Keep imports grouped by ownership area.
+   - Popover panel styles and toast styles are intentionally separate.
+   ========================================================================== */
+
+@import "trigger.css";
+@import "popover.css";
+@import "panel.css";
+@import "list.css";
+@import "toast.css";

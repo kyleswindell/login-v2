@@ -6,11 +6,11 @@ status: implemented-standard
 system_maturity: partial-family-standard
 category: data-and-content-interactions
 priority: baseline-pattern-composition
-ui_reference_route: /platform/ui-reference/patterns/data-content
+rendered_evidence_route: null
 canonical_doc: docs/02-standards/ui/patterns/interactions.md
-source_owner: /platform/ui-reference/patterns/data-content
+source_owner: not installed
 pattern_api:
-  - x-ui.patterns.search-filter-bar
+  - x-patterns.search-filter-bar
   - toolbar-action-group
   - batch-action-row
   - filter-summary-row
@@ -58,7 +58,7 @@ carbon_reference:
   - [3. Installed standard](#3-installed-standard)
   - [4. Pattern API](#4-pattern-api)
     - [4.1. API surfaces](#41-api-surfaces)
-    - [4.2. `x-ui.patterns.search-filter-bar`](#42-x-uipatternssearch-filter-bar)
+    - [4.2. `x-patterns.search-filter-bar`](#42-x-uipatternssearch-filter-bar)
     - [4.3. Search and filter bar composition](#43-search-and-filter-bar-composition)
     - [4.4. Toolbar action group composition](#44-toolbar-action-group-composition)
     - [4.5. Batch action row composition](#45-batch-action-row-composition)
@@ -84,10 +84,10 @@ carbon_reference:
   - [15. Content contract](#15-content-contract)
   - [16. Prohibited usage](#16-prohibited-usage)
   - [17. Deferred or gated capabilities](#17-deferred-or-gated-capabilities)
-  - [Implementation and UI Reference Checklist](#implementation-and-ui-reference-checklist)
+  - [Implementation and Rendered Evidence Checklist](#implementation-and-ui-reference-checklist)
     - [Implementation checklist](#implementation-checklist)
-    - [UI Reference proof checklist](#ui-reference-proof-checklist)
-  - [19. UI Reference requirements](#19-ui-reference-requirements)
+    - [rendered evidence proof checklist](#ui-reference-proof-checklist)
+  - [19. Rendered evidence requirements](#19-ui-reference-requirements)
   - [20. Testing and acceptance criteria](#20-testing-and-acceptance-criteria)
   - [21. Related APIs](#21-related-apis)
   - [22. References](#22-references)
@@ -96,7 +96,7 @@ carbon_reference:
 
 Interaction patterns define reusable control groups such as search, filter, batch action, toolbar, and local navigation behavior.
 
-Canonical API owner: `/platform/ui-reference/patterns/data-content`. Use this Pattern API when multiple controls cooperate to change a page region, dataset, list, table, or local content view. Do not rebuild local search bars, filter clusters, batch-action rows, toolbar action groups, or filter summary rows for the same UI role.
+Canonical API owner: `not installed`. Use this Pattern API when multiple controls cooperate to change a page region, dataset, list, table, or local content view. Do not rebuild local search bars, filter clusters, batch-action rows, toolbar action groups, or filter summary rows for the same UI role.
 
 Interaction is a Pattern API. It composes approved Foundation Element APIs and Component APIs into reusable control arrangements. It does not redefine text input, search, select, dropdown, checkbox, button, menu button, pagination, data table, loading, notification, tag, icon, color, spacing, typography, theme, motion, or grid primitives. Feature modules still own query rules, filter schemas, permissions, selected record IDs, data loading, persistence, result computation, and route-specific behavior.
 
@@ -111,7 +111,7 @@ Canonical API responsibilities:
 - Define responsive wrapping, collapse, and overflow rules for coordinated controls.
 - Preserve logical keyboard order, labels, focus-visible behavior, and result-change announcements.
 - Consume Foundation Element APIs for color, spacing, typography, themes, icons, motion, and 2x Grid.
-- Prove search/filter bars, toolbar action groups, batch action rows, filter summaries, no-results recovery, and local control clusters on the UI Reference route.
+- Prove search/filter bars, toolbar action groups, batch action rows, filter summaries, no-results recovery, and local control clusters on the Rendered evidence route.
 
 Non-owned responsibilities:
 
@@ -122,26 +122,26 @@ Non-owned responsibilities:
 - Local JavaScript controllers, raw AJAX behavior, polling, debounce timing, or loading state computation unless the owning feature or Component documents it.
 - Broad table, form, or page-header composition outside the scoped interaction region.
 
-Carbon alignment note: Carbon describes Patterns as reusable best-practice solutions for user goals. Carbon Search guidance treats search as discovery that often starts broad and narrows through filters. Carbon Filtering guidance distinguishes batch filters from instant filters and warns that multiple filter categories should remain visible instead of hidden in menus. Carbon Data table guidance places search, filtering, display settings, utilities, pagination, and batch actions around table data. Login App maps those principles to app-owned Pattern APIs, installed Components, Foundation Element tokens, and UI Reference proof rather than adopting Carbon implementation classes directly.
+Carbon alignment note: Carbon describes Patterns as reusable best-practice solutions for user goals. Carbon Search guidance treats search as discovery that often starts broad and narrows through filters. Carbon Filtering guidance distinguishes batch filters from instant filters and warns that multiple filter categories should remain visible instead of hidden in menus. Carbon Data table guidance places search, filtering, display settings, utilities, pagination, and batch actions around table data. Login App maps those principles to app-owned Pattern APIs, installed Components, Foundation Element tokens, and rendered evidence proof rather than adopting Carbon implementation classes directly.
 
 ## 2. Status and ownership
 
-| Field                        | Value                                                                                                                |
-| ---------------------------- | -------------------------------------------------------------------------------------------------------------------- |
-| Status                       | Implemented standard                                                                                                 |
-| System maturity              | Partial family standard                                                                                              |
-| API layer                    | Pattern API                                                                                                          |
-| Pattern slug                 | interactions                                                                                                         |
-| Category                     | Data and content interactions                                                                                        |
-| Owner route                  | `/platform/ui-reference/patterns/data-content`                                                                       |
-| Canonical path               | `docs/02-standards/ui/patterns/interactions.md`                                                                      |
-| UI Reference proof           | `/platform/ui-reference/patterns/data-content`                                                                       |
-| Source owner                 | `/platform/ui-reference/patterns/data-content`                                                                       |
-| Blade API                    | `x-ui.patterns.search-filter-bar` where installed; other entries are composition APIs unless wrappers are documented |
-| JavaScript API               | None approved by this Pattern standard                                                                               |
-| Data attributes              | None approved by this Pattern standard                                                                               |
-| Foundation Elements consumed | Color, Spacing, Typography, Themes, Icons, Motion, 2x Grid                                                           |
-| Carbon benchmark             | Carbon Patterns overview, Search pattern, Filtering pattern, and Data table guidance                                 |
+| Field                        | Value                                                                                                             |
+| ---------------------------- | ----------------------------------------------------------------------------------------------------------------- |
+| Status                       | Implemented standard                                                                                              |
+| System maturity              | Partial family standard                                                                                           |
+| API layer                    | Pattern API                                                                                                       |
+| Pattern slug                 | interactions                                                                                                      |
+| Category                     | Data and content interactions                                                                                     |
+| Owner route                  | `not installed`                                                                    |
+| Canonical path               | `docs/02-standards/ui/patterns/interactions.md`                                                                   |
+| rendered evidence proof           | `not installed`                                                                    |
+| Source owner                 | `not installed`                                                                    |
+| Blade API                    | `x-patterns.search-filter-bar` where installed; other entries are composition APIs unless wrappers are documented |
+| JavaScript API               | None approved by this Pattern standard                                                                            |
+| Data attributes              | None approved by this Pattern standard                                                                            |
+| Foundation Elements consumed | Color, Spacing, Typography, Themes, Icons, Motion, 2x Grid                                                        |
+| Carbon benchmark             | Carbon Patterns overview, Search pattern, Filtering pattern, and Data table guidance                              |
 
 `Implemented standard` means this Pattern contract is active for Login App 2.0 UI surfaces that coordinate search, filters, toolbar actions, batch actions, local controls, result feedback, and pagination.
 
@@ -153,7 +153,7 @@ Use interaction patterns when multiple controls cooperate to change a page regio
 
 The installed standard is:
 
-- Use `x-ui.patterns.search-filter-bar` when the installed wrapper exists for the route or UI Reference example.
+- Use `x-patterns.search-filter-bar` when the installed wrapper exists for the route or rendered evidence example.
 - Use toolbar action group composition for global actions tied to a result set or region.
 - Use batch action row composition only when selected items exist and the selection-owning Component or Pattern provides selected state.
 - Use filter summary row composition when active filters, query text, or saved filter context should remain visible after controls move, wrap, or collapse.
@@ -179,7 +179,7 @@ Installed interaction compositions:
 | Local control cluster         | Implemented standard                        | Small region-scoped sort/view/filter/action group that controls one local area.           |
 | No-results recovery           | Implemented standard                        | Recovery guidance when search/filter criteria produce no results.                         |
 | Saved filters                 | Gated / feature-owned data model            | Requires route-specific saved-view persistence and ownership.                             |
-| Complex query builder         | Gated                                       | Requires feature-backed data model, parser, accessibility review, and UI Reference proof. |
+| Complex query builder         | Gated                                       | Requires feature-backed data model, parser, accessibility review, and rendered evidence proof. |
 | Drag/reorder toolbar behavior | Not owned by Interaction                    | Requires a dedicated Pattern and feature persistence model.                               |
 
 ## 4. Pattern API
@@ -188,7 +188,7 @@ Installed interaction compositions:
 
 | API surface                 | Installed value                                                           | Rule                                                                                                                                              |
 | --------------------------- | ------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Search/filter Blade wrapper | `x-ui.patterns.search-filter-bar` where installed                         | Use for canonical search/filter bar composition. If unavailable in a feature, compose only through the Pattern owner until wrapper is formalized. |
+| Search/filter Blade wrapper | `x-patterns.search-filter-bar` where installed                            | Use for canonical search/filter bar composition. If unavailable in a feature, compose only through the Pattern owner until wrapper is formalized. |
 | Toolbar action group        | Composition API                                                           | Use installed Button, Icon button, Menu buttons, Link, and Tag APIs. Do not create a local toolbar Component.                                     |
 | Batch action row            | Composition API                                                           | Show only when selection exists. Selection source remains Data table, Checkbox, or feature state.                                                 |
 | Filter summary row          | Composition API                                                           | Show query/filter state with text, count, removable Tags, and clear action.                                                                       |
@@ -197,12 +197,12 @@ Installed interaction compositions:
 | Data attributes             | None approved                                                             | Add only through a future documented behavior gate.                                                                                               |
 | CSS namespace               | Pattern-owned `ui-pattern-interactions*` or documented owner classes only | Do not create feature-local toolbar/filter classes.                                                                                               |
 
-### 4.2. `x-ui.patterns.search-filter-bar`
+### 4.2. `x-patterns.search-filter-bar`
 
 Use the installed wrapper when a result region needs a coordinated query field, filter controls, and clear/apply behavior.
 
 ```blade
-<x-ui.patterns.search-filter-bar
+<x-patterns.search-filter-bar
     method="GET"
     action="{{ route('platform.users.index') }}"
     search-name="q"
@@ -257,7 +257,7 @@ Use this structure when filters apply together on submit. Use instant filter upd
     </div>
 
     <div class="ui-pattern-interactions__actions">
-        <x-ui.button semantic="ghost" icon="heroicon-o-arrow-down-tray">
+        <x-ui.button semantic="ghost" icon="download">
             Export
         </x-ui.button>
 
@@ -301,13 +301,13 @@ Batch action rows appear only when selection exists. Data table, Checkbox, or fe
     </p>
 
     <div class="ui-pattern-interactions__active-filters">
-        <x-ui.badge status="neutral" size="sm" removable remove-label="Remove status filter">
+        <x-ui.tag variant="dismissible" size="sm" dismiss-label="Remove status filter">
             Status: active
-        </x-ui.badge>
+        </x-ui.tag>
 
-        <x-ui.badge status="neutral" size="sm" removable remove-label="Remove role filter">
+        <x-ui.tag variant="dismissible" size="sm" dismiss-label="Remove role filter">
             Role: administrator
-        </x-ui.badge>
+        </x-ui.tag>
     </div>
 
     <x-ui.button semantic="ghost" type="button">
@@ -366,7 +366,7 @@ Use these Component APIs as applicable. Do not replace them with local markup fo
 | Menu buttons             | Use when toolbar actions collapse into a menu or when a disclosure menu is required.      |
 | Pagination               | Use for paginated results and place it near the affected dataset.                         |
 | Data table               | Use for tabular data, row selection, column actions, and table-specific composition.      |
-| Tag / Badge              | Use for active filter chips, compact status, and filter summaries.                        |
+| Tag                      | Use for active filter chips, compact status, and filter summaries.                        |
 | Notification             | Use for blocking or non-blocking feedback around failed search/filter actions.            |
 | Loading / Inline loading | Use for pending search/filter/table updates where the final content or action is waiting. |
 | Link                     | Use for reference/navigation handoffs, not commands.                                      |
@@ -505,7 +505,7 @@ Child Components still own local props, states, validation, focus-visible treatm
 | Batch filter update       | Allowed / feature-owned                | Multiple categories or slow result refresh should wait for Apply filters.                             |
 | Collapsed overflow menu   | Allowed with proof                     | Toolbar actions may collapse into Menu buttons if active state and primary actions stay discoverable. |
 | Top-and-bottom pagination | Gated                                  | Requires long dataset proof and duplicate-control accessibility expectations.                         |
-| Saved filters/views       | Gated / feature-owned                  | Requires data model, naming, persistence, sharing, and UI Reference proof.                            |
+| Saved filters/views       | Gated / feature-owned                  | Requires data model, naming, persistence, sharing, and rendered evidence proof.                            |
 | Complex query builder     | Gated                                  | Requires feature-backed query model and accessibility proof.                                          |
 | Drag/reorder controls     | Not owned by this Pattern              | Requires a separate reorder/list Pattern and feature persistence ownership.                           |
 | Spreadsheet-like controls | Not allowed                            | Use a dedicated table/grid standard before production.                                                |
@@ -656,7 +656,7 @@ Pattern selection:
 
 | Capability                         | Status                                    | Gate                                                                                                                                             |
 | ---------------------------------- | ----------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Saved filters/views                | Gated / feature-owned                     | Requires saved-view data model, naming rules, persistence ownership, sharing/visibility rules, route integration, UI Reference proof, and tests. |
+| Saved filters/views                | Gated / feature-owned                     | Requires saved-view data model, naming rules, persistence ownership, sharing/visibility rules, route integration, rendered evidence proof, and tests. |
 | Complex query builder              | Gated                                     | Requires feature-backed query model, parser/serializer, validation, keyboard behavior, clear/reset model, and tests.                             |
 | Async instant filtering controller | Deferred                                  | Requires documented data attributes, lifecycle, loading state, result announcements, cancellation/debounce behavior, error handling, and tests.  |
 | Persistent toolbar preferences     | Gated / feature-owned                     | Requires preference model, permission rules, reset behavior, and route ownership.                                                                |
@@ -671,7 +671,7 @@ Pattern selection:
 
 New reusable orchestration belongs in this Pattern doc only after at least one concrete app use case exists or the capability is explicitly queued with trigger conditions.
 
-## Implementation and UI Reference Checklist
+## Implementation and Rendered Evidence Checklist
 ### Implementation checklist
 | Requirement                | Standard expectation                                                                                                                      |
 | -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
@@ -682,7 +682,7 @@ New reusable orchestration belongs in this Pattern doc only after at least one c
 | Accessibility/content      | Page/workflow semantics, heading structure, focus flow, status messaging, action labels, and non-color meaning are defined.               |
 | Tests                      | Route/content/API assertions prove the Pattern and coordinated Component usage.                                                           |
 
-### UI Reference proof checklist
+### rendered evidence proof checklist
 | Requirement            | Visual proof expectation                                                                                                           |
 | ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
 | Live compositions      | The page renders production-like composed examples, not isolated primitive samples.                                                |
@@ -691,38 +691,38 @@ New reusable orchestration belongs in this Pattern doc only after at least one c
 | Variants/states        | Required layout variants, responsive states, empty/loading/error/blocked states, or explicit gates are visible.                    |
 | Related APIs           | Coordinated Components, consumed Elements, planned sub-APIs, source files, and canonical docs are linked.                          |
 | Manual review          | The page provides enough rendered proof for visual review of composition, hierarchy, responsive behavior, and workflow boundaries. |
-## 19. UI Reference requirements
+## 19. Rendered evidence requirements
 
-The UI Reference page must render the approved five-card scaffold: Purpose, Use cases, Pattern contract, Live examples, and Related components and patterns.
+The rendered evidence page must render the approved five-card scaffold: Purpose, Use cases, Pattern contract, Live examples, and Related components and patterns.
 
-The Interaction proof may live on `/platform/ui-reference/patterns/data-content` as part of the Data/content family page. It must show rendered examples of approved pattern compositions, not abstract notes only.
+The Interaction proof may live on `not installed` as part of the Data/content family page. It must show rendered examples of approved pattern compositions, not abstract notes only.
 
 Required Live examples internal sections:
 
-| Required proof                    | Rendered behavior                                                                                                                                    | Variants/options shown                                                      |
-| --------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
-| API status proof                  | Page states that Interaction is an implemented Pattern standard under Data/content and identifies `x-ui.patterns.search-filter-bar` where installed. | Implemented standard, Pattern-owned, feature-owned data behavior            |
-| Search and filter bar             | Rendered query field, filter controls, apply/clear actions, result count, and affected region relationship.                                          | Search, Select/Dropdown, Checkbox, Apply filters, Clear filters             |
-| Toolbar action group              | Rendered region-level actions with correct Button/Menu hierarchy and no unrelated controls.                                                          | Create, Export, Settings/Menu, Action hierarchy                             |
-| Batch action row                  | Rendered selected-count row that appears only when selection exists.                                                                                 | Selected count, Clear selection, Batch action, Danger action boundary       |
-| Filter summary row                | Rendered active filters with visible summary, removable Tags, clear-all action, and result count.                                                    | Active filters, Removable Tags, Clear all, Result count                     |
-| Local control cluster             | Rendered compact local controls affecting one bounded region.                                                                                        | Sort, Refresh, Local filter, Region label                                   |
-| No-results recovery               | Rendered no-results state tied to active query/filter context with one recovery action.                                                              | No results, Clear filters, Retry/search guidance                            |
-| Pending/result update behavior    | Example documents loading placement and result-count update announcement expectations.                                                               | Loading, Inline loading, Result count, Live region note                     |
-| Responsive behavior proof         | Examples show wrapping, stacking, and menu collapse without hiding active filters.                                                                   | Wrap, Stack, Collapse, Overflow menu                                        |
-| Accessibility proof               | Examples show labels, keyboard order, affected-region relationship, selected count, removable filter labels, and result change announcements.        | Labels, Keyboard, `aria-live`, selected count, remove labels                |
-| Content behavior proof            | Examples show concrete search/filter labels, count labels, specific action labels, and useful no-results copy.                                       | Search users, Apply filters, 3 selected, No users match these filters       |
-| Boundary proof                    | Page distinguishes Pattern-owned composition from Component-owned controls and feature-owned query/data rules.                                       | Component boundary, Pattern boundary, Feature handoff                       |
-| Prohibited usage proof            | Page calls out local toolbars, hidden active filters, unrelated dense controls, Bootstrap/Carbon classes, and fake saved views as prohibited.        | Local wrappers, Hidden filters, Bootstrap, Carbon classes, Fake saved views |
-| Deferred gate proof               | Page shows trigger conditions for saved filters, complex query builders, async controllers, sticky toolbars, and bulk selection across pages.        | Saved filters, Query builder, Async, Sticky, Cross-page selection           |
-| Foundation Elements proof         | Page links consumed Element APIs and shows token responsibilities.                                                                                   | Color, Spacing, Typography, Themes, Icons, Motion, 2x Grid                  |
-| Developer implementation examples | Canonical composition examples render as real code examples and do not include placeholder text.                                                     | Search/filter bar, Toolbar, Batch row, Filter summary, Local controls       |
+| Required proof                    | Rendered behavior                                                                                                                                 | Variants/options shown                                                      |
+| --------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------------------------- |
+| API status proof                  | Page states that Interaction is an implemented Pattern standard under Data/content and identifies `x-patterns.search-filter-bar` where installed. | Implemented standard, Pattern-owned, feature-owned data behavior            |
+| Search and filter bar             | Rendered query field, filter controls, apply/clear actions, result count, and affected region relationship.                                       | Search, Select/Dropdown, Checkbox, Apply filters, Clear filters             |
+| Toolbar action group              | Rendered region-level actions with correct Button/Menu hierarchy and no unrelated controls.                                                       | Create, Export, Settings/Menu, Action hierarchy                             |
+| Batch action row                  | Rendered selected-count row that appears only when selection exists.                                                                              | Selected count, Clear selection, Batch action, Danger action boundary       |
+| Filter summary row                | Rendered active filters with visible summary, removable Tags, clear-all action, and result count.                                                 | Active filters, Removable Tags, Clear all, Result count                     |
+| Local control cluster             | Rendered compact local controls affecting one bounded region.                                                                                     | Sort, Refresh, Local filter, Region label                                   |
+| No-results recovery               | Rendered no-results state tied to active query/filter context with one recovery action.                                                           | No results, Clear filters, Retry/search guidance                            |
+| Pending/result update behavior    | Example documents loading placement and result-count update announcement expectations.                                                            | Loading, Inline loading, Result count, Live region note                     |
+| Responsive behavior proof         | Examples show wrapping, stacking, and menu collapse without hiding active filters.                                                                | Wrap, Stack, Collapse, Overflow menu                                        |
+| Accessibility proof               | Examples show labels, keyboard order, affected-region relationship, selected count, removable filter labels, and result change announcements.     | Labels, Keyboard, `aria-live`, selected count, remove labels                |
+| Content behavior proof            | Examples show concrete search/filter labels, count labels, specific action labels, and useful no-results copy.                                    | Search users, Apply filters, 3 selected, No users match these filters       |
+| Boundary proof                    | Page distinguishes Pattern-owned composition from Component-owned controls and feature-owned query/data rules.                                    | Component boundary, Pattern boundary, Feature handoff                       |
+| Prohibited usage proof            | Page calls out local toolbars, hidden active filters, unrelated dense controls, Bootstrap/Carbon classes, and fake saved views as prohibited.     | Local wrappers, Hidden filters, Bootstrap, Carbon classes, Fake saved views |
+| Deferred gate proof               | Page shows trigger conditions for saved filters, complex query builders, async controllers, sticky toolbars, and bulk selection across pages.     | Saved filters, Query builder, Async, Sticky, Cross-page selection           |
+| Foundation Elements proof         | Page links consumed Element APIs and shows token responsibilities.                                                                                | Color, Spacing, Typography, Themes, Icons, Motion, 2x Grid                  |
+| Developer implementation examples | Canonical composition examples render as real code examples and do not include placeholder text.                                                  | Search/filter bar, Toolbar, Batch row, Filter summary, Local controls       |
 
 The page must link to this canonical standard and to consumed Element and Component standards. Deferred capabilities must appear as explicit gated disposition rows with trigger conditions, not fake complete examples. Examples must use app-owned tokens, classes, helpers, and Blade components where available.
 
 ## 20. Testing and acceptance criteria
 
-- `/platform/ui-reference/patterns/data-content` returns 200 for authorized users.
+- `not installed` returns 200 for authorized users.
 - The page shows the installed Interaction Pattern API, states, variants/options, prohibited usage, deferred gates, and Foundation Elements consumed.
 - Rendered examples include the required composition markers and consumed Component links.
 - Implemented Pattern compositions render production-like examples.
@@ -742,11 +742,11 @@ The page must link to this canonical standard and to consumed Element and Compon
 Suggested automated assertions:
 
 ```php
-$response = $this->actingAs($admin)->get('/platform/ui-reference/patterns/data-content');
+$response = $this->actingAs($admin)->get('not installed');
 
 $response->assertOk();
 $response->assertSee('Interaction Pattern API');
-$response->assertSee('x-ui.patterns.search-filter-bar');
+$response->assertSee('x-patterns.search-filter-bar');
 $response->assertSee('Search and filter bar');
 $response->assertSee('Toolbar action group');
 $response->assertSee('Batch action row');
@@ -788,33 +788,33 @@ $response->assertDontSee('row col-');
 
 | API                             | Route                                                                |
 | ------------------------------- | -------------------------------------------------------------------- |
-| Search                          | `/platform/ui-reference/components/search`                           |
-| Text input                      | `/platform/ui-reference/components/text-input`                       |
-| Select                          | `/platform/ui-reference/components/select`                           |
-| Dropdown                        | `/platform/ui-reference/components/dropdown`                         |
-| Checkbox                        | `/platform/ui-reference/components/checkbox`                         |
-| Button                          | `/platform/ui-reference/components/button`                           |
-| Menu buttons                    | `/platform/ui-reference/components/menu-buttons`                     |
-| Pagination                      | `/platform/ui-reference/components/pagination`                       |
-| Data table                      | `/platform/ui-reference/components/data-table`                       |
-| Tag                             | `/platform/ui-reference/components/tag`                              |
-| Notification                    | `/platform/ui-reference/components/notification`                     |
-| Loading                         | `/platform/ui-reference/components/loading`                          |
-| Inline loading                  | `/platform/ui-reference/components/inline-loading`                   |
-| Link                            | `/platform/ui-reference/components/link`                             |
-| Data and Content Pattern        | `/platform/ui-reference/patterns/data-content`                       |
-| Tables Pattern                  | `/platform/ui-reference/patterns/tables`                             |
-| Table toolbar planned gap       | `/platform/ui-reference/patterns/tables`                             |
-| Forms Pattern                   | `/platform/ui-reference/patterns/forms`                              |
-| Overlay and Feedback Pattern    | `/platform/ui-reference/patterns/overlays-feedback`                  |
-| Boundary and validation Pattern | `/platform/ui-reference/patterns`                                    |
-| Color Element                   | `/platform/ui-reference/elements/color`                              |
-| Spacing Element                 | `/platform/ui-reference/elements/spacing`                            |
-| Typography Element              | `/platform/ui-reference/elements/typography`                         |
-| Themes Element                  | `/platform/ui-reference/elements/themes`                             |
-| Icons Element                   | `/platform/ui-reference/elements/icons`                              |
-| Motion Element                  | `/platform/ui-reference/elements/motion`                             |
-| 2x Grid Element                 | `/platform/ui-reference/elements/2x-grid`                            |
+| Search                          | `not installed`                           |
+| Text input                      | `not installed`                       |
+| Select                          | `not installed`                           |
+| Dropdown                        | `not installed`                         |
+| Checkbox                        | `not installed`                         |
+| Button                          | `not installed`                           |
+| Menu buttons                    | `not installed`                     |
+| Pagination                      | `not installed`                       |
+| Data table                      | `not installed`                       |
+| Tag                             | `not installed`                              |
+| Notification                    | `not installed`                     |
+| Loading                         | `not installed`                          |
+| Inline loading                  | `not installed`                   |
+| Link                            | `not installed`                             |
+| Data and Content Pattern        | `not installed`                       |
+| Tables Pattern                  | `not installed`                             |
+| Table toolbar planned gap       | `not installed`                             |
+| Forms Pattern                   | `not installed`                              |
+| Overlay and Feedback Pattern    | `not installed`                  |
+| Boundary and validation Pattern | `not installed`                                    |
+| Color Element                   | `not installed`                              |
+| Spacing Element                 | `not installed`                            |
+| Typography Element              | `not installed`                         |
+| Themes Element                  | `not installed`                             |
+| Icons Element                   | `not installed`                              |
+| Motion Element                  | `not installed`                             |
+| 2x Grid Element                 | `not installed`                            |
 | Canonical interactions doc      | `/platform/docs?path=02-standards%2Fui%2Fpatterns%2Finteractions.md` |
 | Carbon search pattern           | `https://carbondesignsystem.com/patterns/search-pattern/`            |
 | Carbon filtering pattern        | `https://carbondesignsystem.com/patterns/filtering/`                 |
@@ -834,4 +834,4 @@ $response->assertDontSee('row col-');
 - [Button Component Standard](../components/button.md)
 - [Loading Component Standard](../components/loading.md)
 - [Boundary and Validation Pattern](boundary-and-validation.md)
-- Carbon Patterns overview, Search Pattern, Filtering Pattern, and Data table guidance inform the goal-based composition model, broad-to-narrow search/filter behavior, batch-versus-instant filter decisions, visible multiple-filter categories, toolbar placement, batch action row behavior, and pagination/result-region relationships. Login App keeps its own Pattern APIs, Component APIs, Foundation Element token model, app-owned `ui-*` classes, feature-owned data behavior, and UI Reference proof.
+- Carbon Patterns overview, Search Pattern, Filtering Pattern, and Data table guidance inform the goal-based composition model, broad-to-narrow search/filter behavior, batch-versus-instant filter decisions, visible multiple-filter categories, toolbar placement, batch action row behavior, and pagination/result-region relationships. Login App keeps its own Pattern APIs, Component APIs, Foundation Element token model, app-owned `ui-*` classes, feature-owned data behavior, and rendered evidence proof.

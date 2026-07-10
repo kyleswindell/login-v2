@@ -1,0 +1,145 @@
+/* ==========================================================================
+   File: resources/css/patterns/account.css
+   Purpose: Account pattern styles.
+
+   Notes:
+   - Defines Account pattern selectors only.
+   - Route/page tabs remain owned by the app shell.
+   - Local section tabs are composed with x-ui.tabs.
+   - Account cards provide simple settings-panel grouping.
+   ========================================================================== */
+
+@layer components {
+    /* ----------------------------------------------------------------------
+       Account section tabs
+       ---------------------------------------------------------------------- */
+
+    .ui-account-section-tabs {
+        inline-size: 100%;
+        max-inline-size: 100%;
+    }
+
+    .ui-account-section-tabs > .ui-tabs {
+        inline-size: 100%;
+        max-inline-size: 100%;
+    }
+
+    .ui-account-section-tabs--vertical > .ui-tabs.ui-tabs-vertical {
+        min-block-size: 16rem;
+    }
+
+    /* ----------------------------------------------------------------------
+   Account cards
+   ---------------------------------------------------------------------- */
+
+    .ui-account-card {
+        inline-size: 100%;
+        min-inline-size: 0;
+        border: 1px solid var(--ui-border-subtle-01);
+        background-color: var(--ui-layer);
+        padding: var(--ui-spacing-06);
+    }
+
+    .ui-account-card__header {
+        display: block;
+        margin-block-end: var(--ui-spacing-06);
+    }
+
+    .ui-account-card__heading {
+        max-inline-size: 40rem;
+    }
+
+    .ui-account-card__heading .ui-card-copy {
+        margin-block-start: var(--ui-spacing-03);
+    }
+
+    .ui-account-card__details {
+        margin-block-start: var(--ui-spacing-06);
+    }
+
+    .ui-account-card__footer {
+        display: flex;
+        justify-content: flex-end;
+        margin-block-start: var(--ui-spacing-06);
+    }
+
+    .ui-account-card__footer .ui-btn {
+        min-inline-size: 10rem;
+    }
+
+    /* ----------------------------------------------------------------------
+   Profile summary
+   ---------------------------------------------------------------------- */
+
+    .ui-account-profile-summary {
+        display: grid;
+        grid-template-columns: auto minmax(0, 1fr);
+        gap: var(--ui-spacing-05);
+        align-items: center;
+    }
+
+    .ui-account-profile-summary__identity {
+        min-inline-size: 0;
+    }
+
+    .ui-account-profile-summary__name-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: var(--ui-spacing-03);
+        align-items: center;
+    }
+
+    .ui-account-profile-avatar {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        inline-size: 5rem;
+        block-size: 5rem;
+        min-inline-size: 5rem;
+        overflow: hidden;
+        border: 1px solid var(--ui-border-subtle-01);
+        border-radius: 50%;
+        background-color: var(--ui-layer-accent);
+        color: var(--ui-text-primary);
+    }
+
+    .ui-account-profile-avatar__image {
+        display: block;
+        inline-size: 100%;
+        block-size: 100%;
+        object-fit: cover;
+    }
+
+    .ui-account-profile-avatar__initials {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: var(--ui-type-heading-compact-01-font-size);
+        font-weight: var(--ui-type-heading-compact-01-font-weight);
+        line-height: 1;
+    }
+
+    /* ----------------------------------------------------------------------
+   Key/value display refinements in account cards
+   ---------------------------------------------------------------------- */
+
+    .ui-account-card .ui-pattern-key-value-display {
+        inline-size: 100%;
+    }
+
+    .ui-account-card .ui-pattern-key-value-label {
+        color: var(--ui-text-secondary);
+    }
+
+    .ui-account-card .ui-pattern-key-value-value {
+        color: var(--ui-text-primary);
+    }
+
+    /* ----------------------------------------------------------------------
+       Contained lists in account cards
+       ---------------------------------------------------------------------- */
+
+    .ui-account-card .ui-contained-list {
+        background-color: transparent;
+    }
+}

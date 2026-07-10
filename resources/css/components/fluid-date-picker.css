@@ -1,0 +1,1522 @@
+/* ==========================================================================
+   File: resources/css/components/fluid-date-picker.css
+   Purpose: Fluid Date Picker component styles.
+
+   Notes:
+   - Defines Fluid Date Picker selectors only.
+   - Do not define primitive palette tokens here.
+   - Do not define theme role tokens here.
+   - Supports fluid date picker layout, simple/single/range variants,
+     floating labels, invalid/warning states, range dividers, readonly,
+     skeleton layout, AI label/decorator/slug states, reduced-motion,
+     and forced-colors behavior.
+   ========================================================================== */
+
+@layer components {
+    /* ----------------------------------------------------------------------
+       Root
+       ---------------------------------------------------------------------- */
+
+    .ui-date-picker-fluid,
+    .ui-date-picker--fluid {
+        display: inline-flex;
+        background: var(--ui-field);
+    }
+
+    .ui-date-picker-fluid .ui-date-picker,
+    .ui-date-picker--fluid .ui-date-picker {
+        position: relative;
+        inline-size: 100%;
+        block-size: 100%;
+        transition:
+            background-color var(--ui-duration-fast-01)
+                var(--ui-motion-standard-productive),
+            outline var(--ui-duration-fast-01)
+                var(--ui-motion-standard-productive);
+    }
+
+    /* ----------------------------------------------------------------------
+       Label
+       ---------------------------------------------------------------------- */
+
+    .ui-date-picker-fluid .ui-label,
+    .ui-date-picker--fluid .ui-label {
+        position: absolute;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        inline-size: calc(100% - 2rem);
+        block-size: 1rem;
+        margin: 0;
+        inset-block-start: 0.8125rem;
+        inset-inline-start: var(--ui-spacing-05);
+    }
+
+    .ui-date-picker-fluid .ui-label::-webkit-scrollbar,
+    .ui-date-picker--fluid .ui-label::-webkit-scrollbar,
+    .ui-date-picker-fluid .ui-label .ui-toggletip-label::-webkit-scrollbar,
+    .ui-date-picker--fluid .ui-label .ui-toggletip-label::-webkit-scrollbar {
+        display: none;
+    }
+
+    .ui-date-picker-fluid .ui-label:not(:has(.ui-toggletip-label)),
+    .ui-date-picker--fluid .ui-label:not(:has(.ui-toggletip-label)),
+    .ui-date-picker-fluid .ui-label .ui-toggletip-label,
+    .ui-date-picker--fluid .ui-label .ui-toggletip-label {
+        overflow-x: scroll;
+        white-space: nowrap;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    /* ----------------------------------------------------------------------
+       Input wrapper and input
+       ---------------------------------------------------------------------- */
+
+    .ui-date-picker-fluid .ui-date-picker-input-wrapper > span,
+    .ui-date-picker-fluid .ui-date-picker-input__wrapper > span,
+    .ui-date-picker--fluid .ui-date-picker-input-wrapper > span,
+    .ui-date-picker--fluid .ui-date-picker-input__wrapper > span {
+        inline-size: 100%;
+    }
+
+    .ui-date-picker-fluid .ui-date-picker-input-wrapper .ui-date-picker-input,
+    .ui-date-picker-fluid .ui-date-picker-input-wrapper .ui-date-picker__input,
+    .ui-date-picker-fluid .ui-date-picker-input__wrapper .ui-date-picker-input,
+    .ui-date-picker-fluid .ui-date-picker-input__wrapper .ui-date-picker__input,
+    .ui-date-picker--fluid .ui-date-picker-input-wrapper .ui-date-picker-input,
+    .ui-date-picker--fluid .ui-date-picker-input-wrapper .ui-date-picker__input,
+    .ui-date-picker--fluid .ui-date-picker-input__wrapper .ui-date-picker-input,
+    .ui-date-picker--fluid
+        .ui-date-picker-input__wrapper
+        .ui-date-picker__input {
+        min-inline-size: 9rem;
+        min-block-size: 4rem;
+        border-block-end: none;
+        padding: 2rem var(--ui-spacing-05) 0.8125rem;
+        background: transparent;
+    }
+
+    /* ----------------------------------------------------------------------
+       Simple variant
+       ---------------------------------------------------------------------- */
+
+    .ui-date-picker-fluid .ui-date-picker-simple .ui-date-picker-icon,
+    .ui-date-picker-fluid .ui-date-picker-simple .ui-date-picker__icon,
+    .ui-date-picker-fluid .ui-date-picker--simple .ui-date-picker-icon,
+    .ui-date-picker-fluid .ui-date-picker--simple .ui-date-picker__icon,
+    .ui-date-picker--fluid .ui-date-picker-simple .ui-date-picker-icon,
+    .ui-date-picker--fluid .ui-date-picker-simple .ui-date-picker__icon,
+    .ui-date-picker--fluid .ui-date-picker--simple .ui-date-picker-icon,
+    .ui-date-picker--fluid .ui-date-picker--simple .ui-date-picker__icon {
+        display: none;
+    }
+
+    .ui-date-picker-fluid
+        .ui-date-picker-simple
+        .ui-date-picker-input:not(.ui-date-picker-input-invalid):not(
+            .ui-date-picker-input--invalid
+        ):not(.ui-date-picker-input-warn):not(.ui-date-picker-input--warn),
+    .ui-date-picker-fluid
+        .ui-date-picker-simple
+        .ui-date-picker__input:not(.ui-date-picker__input--invalid):not(
+            .ui-date-picker__input--warn
+        ),
+    .ui-date-picker-fluid
+        .ui-date-picker--simple
+        .ui-date-picker-input:not(.ui-date-picker-input-invalid):not(
+            .ui-date-picker-input--invalid
+        ):not(.ui-date-picker-input-warn):not(.ui-date-picker-input--warn),
+    .ui-date-picker-fluid
+        .ui-date-picker--simple
+        .ui-date-picker__input:not(.ui-date-picker__input--invalid):not(
+            .ui-date-picker__input--warn
+        ),
+    .ui-date-picker-fluid .ui-date-picker-simple .ui-date-picker-fluid-warn,
+    .ui-date-picker-fluid .ui-date-picker-simple .ui-date-picker--fluid--warn,
+    .ui-date-picker-fluid .ui-date-picker--simple .ui-date-picker-fluid-warn,
+    .ui-date-picker-fluid .ui-date-picker--simple .ui-date-picker--fluid--warn,
+    .ui-date-picker--fluid
+        .ui-date-picker-simple
+        .ui-date-picker-input:not(.ui-date-picker-input-invalid):not(
+            .ui-date-picker-input--invalid
+        ):not(.ui-date-picker-input-warn):not(.ui-date-picker-input--warn),
+    .ui-date-picker--fluid
+        .ui-date-picker-simple
+        .ui-date-picker__input:not(.ui-date-picker__input--invalid):not(
+            .ui-date-picker__input--warn
+        ),
+    .ui-date-picker--fluid
+        .ui-date-picker--simple
+        .ui-date-picker-input:not(.ui-date-picker-input-invalid):not(
+            .ui-date-picker-input--invalid
+        ):not(.ui-date-picker-input-warn):not(.ui-date-picker-input--warn),
+    .ui-date-picker--fluid
+        .ui-date-picker--simple
+        .ui-date-picker__input:not(.ui-date-picker__input--invalid):not(
+            .ui-date-picker__input--warn
+        ),
+    .ui-date-picker--fluid .ui-date-picker-simple .ui-date-picker-fluid-warn,
+    .ui-date-picker--fluid .ui-date-picker-simple .ui-date-picker--fluid--warn,
+    .ui-date-picker--fluid .ui-date-picker--simple .ui-date-picker-fluid-warn,
+    .ui-date-picker--fluid
+        .ui-date-picker--simple
+        .ui-date-picker--fluid--warn {
+        border-block-end: 1px solid var(--ui-border-strong);
+    }
+
+    /* ----------------------------------------------------------------------
+       Single and range shared icon placement
+       ---------------------------------------------------------------------- */
+
+    .ui-date-picker-fluid .ui-date-picker-icon,
+    .ui-date-picker-fluid .ui-date-picker__icon,
+    .ui-date-picker--fluid .ui-date-picker-icon,
+    .ui-date-picker--fluid .ui-date-picker__icon {
+        inset-block-start: 2.6875rem;
+    }
+
+    /* ----------------------------------------------------------------------
+       Single variant
+       ---------------------------------------------------------------------- */
+
+    .ui-date-picker-fluid .ui-date-picker-single .ui-date-picker-input,
+    .ui-date-picker-fluid .ui-date-picker-single .ui-date-picker__input,
+    .ui-date-picker-fluid .ui-date-picker--single .ui-date-picker-input,
+    .ui-date-picker-fluid .ui-date-picker--single .ui-date-picker__input,
+    .ui-date-picker--fluid .ui-date-picker-single .ui-date-picker-input,
+    .ui-date-picker--fluid .ui-date-picker-single .ui-date-picker__input,
+    .ui-date-picker--fluid .ui-date-picker--single .ui-date-picker-input,
+    .ui-date-picker--fluid .ui-date-picker--single .ui-date-picker__input {
+        inline-size: 100%;
+    }
+
+    .ui-date-picker-fluid .ui-date-picker-single,
+    .ui-date-picker-fluid .ui-date-picker--single,
+    .ui-date-picker--fluid .ui-date-picker-single,
+    .ui-date-picker--fluid .ui-date-picker--single {
+        border-block-end: none;
+    }
+
+    .ui-date-picker-fluid
+        .ui-date-picker-single
+        .ui-date-picker-input:not(.ui-date-picker-input-invalid):not(
+            .ui-date-picker-input--invalid
+        ),
+    .ui-date-picker-fluid
+        .ui-date-picker-single
+        .ui-date-picker__input:not(.ui-date-picker__input--invalid),
+    .ui-date-picker-fluid
+        .ui-date-picker--single
+        .ui-date-picker-input:not(.ui-date-picker-input-invalid):not(
+            .ui-date-picker-input--invalid
+        ),
+    .ui-date-picker-fluid
+        .ui-date-picker--single
+        .ui-date-picker__input:not(.ui-date-picker__input--invalid),
+    .ui-date-picker--fluid
+        .ui-date-picker-single
+        .ui-date-picker-input:not(.ui-date-picker-input-invalid):not(
+            .ui-date-picker-input--invalid
+        ),
+    .ui-date-picker--fluid
+        .ui-date-picker-single
+        .ui-date-picker__input:not(.ui-date-picker__input--invalid),
+    .ui-date-picker--fluid
+        .ui-date-picker--single
+        .ui-date-picker-input:not(.ui-date-picker-input-invalid):not(
+            .ui-date-picker-input--invalid
+        ),
+    .ui-date-picker--fluid
+        .ui-date-picker--single
+        .ui-date-picker__input:not(.ui-date-picker__input--invalid),
+    .ui-date-picker-single .ui-date-picker-fluid-warn,
+    .ui-date-picker-single .ui-date-picker--fluid--warn,
+    .ui-date-picker--single .ui-date-picker-fluid-warn,
+    .ui-date-picker--single .ui-date-picker--fluid--warn {
+        border-block-end: 1px solid var(--ui-border-strong);
+    }
+
+    /* ----------------------------------------------------------------------
+       Range variant
+       ---------------------------------------------------------------------- */
+
+    .ui-date-picker-fluid:not(.ui-date-picker-fluid-invalid):not(
+            .ui-date-picker--fluid--invalid
+        ):not(.ui-date-picker-fluid-warn):not(.ui-date-picker--fluid--warn)
+        .ui-date-picker-range
+        .ui-date-picker-container:not(.ui-date-picker-fluid-invalid):not(
+            .ui-date-picker--fluid--invalid
+        ),
+    .ui-date-picker-fluid:not(.ui-date-picker-fluid-invalid):not(
+            .ui-date-picker--fluid--invalid
+        ):not(.ui-date-picker-fluid-warn):not(.ui-date-picker--fluid--warn)
+        .ui-date-picker--range
+        .ui-date-picker-container:not(.ui-date-picker-fluid-invalid):not(
+            .ui-date-picker--fluid--invalid
+        ),
+    .ui-date-picker--fluid:not(.ui-date-picker-fluid-invalid):not(
+            .ui-date-picker--fluid--invalid
+        ):not(.ui-date-picker-fluid-warn):not(.ui-date-picker--fluid--warn)
+        .ui-date-picker-range
+        .ui-date-picker-container:not(.ui-date-picker-fluid-invalid):not(
+            .ui-date-picker--fluid--invalid
+        ),
+    .ui-date-picker--fluid:not(.ui-date-picker-fluid-invalid):not(
+            .ui-date-picker--fluid--invalid
+        ):not(.ui-date-picker-fluid-warn):not(.ui-date-picker--fluid--warn)
+        .ui-date-picker--range
+        .ui-date-picker-container:not(.ui-date-picker-fluid-invalid):not(
+            .ui-date-picker--fluid--invalid
+        ) {
+        border-block-end: 1px solid var(--ui-border-strong);
+    }
+
+    .ui-date-picker-fluid .ui-date-picker-range .ui-date-picker-input,
+    .ui-date-picker-fluid .ui-date-picker-range .ui-date-picker__input,
+    .ui-date-picker-fluid .ui-date-picker-range .ui-date-picker-container,
+    .ui-date-picker-fluid .ui-date-picker--range .ui-date-picker-input,
+    .ui-date-picker-fluid .ui-date-picker--range .ui-date-picker__input,
+    .ui-date-picker-fluid .ui-date-picker--range .ui-date-picker-container,
+    .ui-date-picker--fluid .ui-date-picker-range .ui-date-picker-input,
+    .ui-date-picker--fluid .ui-date-picker-range .ui-date-picker__input,
+    .ui-date-picker--fluid .ui-date-picker-range .ui-date-picker-container,
+    .ui-date-picker--fluid .ui-date-picker--range .ui-date-picker-input,
+    .ui-date-picker--fluid .ui-date-picker--range .ui-date-picker__input,
+    .ui-date-picker--fluid .ui-date-picker--range .ui-date-picker-container {
+        inline-size: 100%;
+        min-inline-size: 9rem;
+        min-block-size: 3.9375rem;
+    }
+
+    .ui-date-picker-fluid
+        .ui-date-picker-range
+        > .ui-date-picker-container:first-child,
+    .ui-date-picker-fluid
+        .ui-date-picker--range
+        > .ui-date-picker-container:first-child,
+    .ui-date-picker--fluid
+        .ui-date-picker-range
+        > .ui-date-picker-container:first-child,
+    .ui-date-picker--fluid
+        .ui-date-picker--range
+        > .ui-date-picker-container:first-child {
+        margin-inline-end: 0;
+    }
+
+    .ui-date-picker-fluid
+        .ui-date-picker-range
+        > .ui-date-picker-container:last-child
+        .ui-date-picker-input,
+    .ui-date-picker-fluid
+        .ui-date-picker-range
+        > .ui-date-picker-container:last-child
+        .ui-date-picker__input,
+    .ui-date-picker-fluid
+        .ui-date-picker--range
+        > .ui-date-picker-container:last-child
+        .ui-date-picker-input,
+    .ui-date-picker-fluid
+        .ui-date-picker--range
+        > .ui-date-picker-container:last-child
+        .ui-date-picker__input,
+    .ui-date-picker--fluid
+        .ui-date-picker-range
+        > .ui-date-picker-container:last-child
+        .ui-date-picker-input,
+    .ui-date-picker--fluid
+        .ui-date-picker-range
+        > .ui-date-picker-container:last-child
+        .ui-date-picker__input,
+    .ui-date-picker--fluid
+        .ui-date-picker--range
+        > .ui-date-picker-container:last-child
+        .ui-date-picker-input,
+    .ui-date-picker--fluid
+        .ui-date-picker--range
+        > .ui-date-picker-container:last-child
+        .ui-date-picker__input {
+        border-inline-start: 1px solid var(--ui-border-strong);
+    }
+
+    /* ----------------------------------------------------------------------
+       Invalid and warning states
+       ---------------------------------------------------------------------- */
+
+    .ui-date-picker-fluid.ui-date-picker-fluid-invalid,
+    .ui-date-picker-fluid.ui-date-picker--fluid--invalid,
+    .ui-date-picker--fluid.ui-date-picker-fluid-invalid,
+    .ui-date-picker--fluid.ui-date-picker--fluid--invalid,
+    .ui-date-picker-container.ui-date-picker-fluid-invalid,
+    .ui-date-picker-container.ui-date-picker--fluid--invalid {
+        outline: 2px solid var(--ui-support-error);
+        outline-offset: -2px;
+    }
+
+    .ui-date-picker-fluid.ui-date-picker-fluid-invalid,
+    .ui-date-picker-fluid.ui-date-picker--fluid--invalid,
+    .ui-date-picker-fluid.ui-date-picker-fluid-warn,
+    .ui-date-picker-fluid.ui-date-picker--fluid--warn,
+    .ui-date-picker--fluid.ui-date-picker-fluid-invalid,
+    .ui-date-picker--fluid.ui-date-picker--fluid--invalid,
+    .ui-date-picker--fluid.ui-date-picker-fluid-warn,
+    .ui-date-picker--fluid.ui-date-picker--fluid--warn {
+        position: relative;
+    }
+
+    .ui-date-picker-fluid
+        .ui-date-picker-container.ui-date-picker-fluid-invalid
+        .ui-date-picker-input-invalid,
+    .ui-date-picker-fluid
+        .ui-date-picker-container.ui-date-picker-fluid-invalid
+        .ui-date-picker-input--invalid,
+    .ui-date-picker-fluid
+        .ui-date-picker-container.ui-date-picker-fluid-invalid
+        .ui-date-picker__input--invalid,
+    .ui-date-picker-fluid
+        .ui-date-picker-container.ui-date-picker--fluid--invalid
+        .ui-date-picker-input-invalid,
+    .ui-date-picker-fluid
+        .ui-date-picker-container.ui-date-picker--fluid--invalid
+        .ui-date-picker-input--invalid,
+    .ui-date-picker-fluid
+        .ui-date-picker-container.ui-date-picker--fluid--invalid
+        .ui-date-picker__input--invalid,
+    .ui-date-picker--fluid
+        .ui-date-picker-container.ui-date-picker-fluid-invalid
+        .ui-date-picker-input-invalid,
+    .ui-date-picker--fluid
+        .ui-date-picker-container.ui-date-picker-fluid-invalid
+        .ui-date-picker-input--invalid,
+    .ui-date-picker--fluid
+        .ui-date-picker-container.ui-date-picker-fluid-invalid
+        .ui-date-picker__input--invalid,
+    .ui-date-picker--fluid
+        .ui-date-picker-container.ui-date-picker--fluid--invalid
+        .ui-date-picker-input-invalid,
+    .ui-date-picker--fluid
+        .ui-date-picker-container.ui-date-picker--fluid--invalid
+        .ui-date-picker-input--invalid,
+    .ui-date-picker--fluid
+        .ui-date-picker-container.ui-date-picker--fluid--invalid
+        .ui-date-picker__input--invalid {
+        outline: none;
+    }
+
+    .ui-date-picker-fluid
+        .ui-date-picker-container:last-child.ui-date-picker-fluid-invalid
+        .ui-date-picker-input-invalid,
+    .ui-date-picker-fluid
+        .ui-date-picker-container:last-child.ui-date-picker-fluid-invalid
+        .ui-date-picker-input--invalid,
+    .ui-date-picker-fluid
+        .ui-date-picker-container:last-child.ui-date-picker-fluid-invalid
+        .ui-date-picker__input--invalid,
+    .ui-date-picker-fluid
+        .ui-date-picker-container:last-child.ui-date-picker--fluid--invalid
+        .ui-date-picker-input-invalid,
+    .ui-date-picker-fluid
+        .ui-date-picker-container:last-child.ui-date-picker--fluid--invalid
+        .ui-date-picker-input--invalid,
+    .ui-date-picker-fluid
+        .ui-date-picker-container:last-child.ui-date-picker--fluid--invalid
+        .ui-date-picker__input--invalid,
+    .ui-date-picker-fluid
+        .ui-date-picker-container.ui-date-picker-fluid-invalid
+        + .ui-date-picker-container
+        .ui-date-picker-input,
+    .ui-date-picker-fluid
+        .ui-date-picker-container.ui-date-picker-fluid-invalid
+        + .ui-date-picker-container
+        .ui-date-picker__input,
+    .ui-date-picker-fluid
+        .ui-date-picker-container.ui-date-picker--fluid--invalid
+        + .ui-date-picker-container
+        .ui-date-picker-input,
+    .ui-date-picker-fluid
+        .ui-date-picker-container.ui-date-picker--fluid--invalid
+        + .ui-date-picker-container
+        .ui-date-picker__input,
+    .ui-date-picker--fluid
+        .ui-date-picker-container:last-child.ui-date-picker-fluid-invalid
+        .ui-date-picker-input-invalid,
+    .ui-date-picker--fluid
+        .ui-date-picker-container:last-child.ui-date-picker-fluid-invalid
+        .ui-date-picker-input--invalid,
+    .ui-date-picker--fluid
+        .ui-date-picker-container:last-child.ui-date-picker-fluid-invalid
+        .ui-date-picker__input--invalid,
+    .ui-date-picker--fluid
+        .ui-date-picker-container:last-child.ui-date-picker--fluid--invalid
+        .ui-date-picker-input-invalid,
+    .ui-date-picker--fluid
+        .ui-date-picker-container:last-child.ui-date-picker--fluid--invalid
+        .ui-date-picker-input--invalid,
+    .ui-date-picker--fluid
+        .ui-date-picker-container:last-child.ui-date-picker--fluid--invalid
+        .ui-date-picker__input--invalid,
+    .ui-date-picker--fluid
+        .ui-date-picker-container.ui-date-picker-fluid-invalid
+        + .ui-date-picker-container
+        .ui-date-picker-input,
+    .ui-date-picker--fluid
+        .ui-date-picker-container.ui-date-picker-fluid-invalid
+        + .ui-date-picker-container
+        .ui-date-picker__input,
+    .ui-date-picker--fluid
+        .ui-date-picker-container.ui-date-picker--fluid--invalid
+        + .ui-date-picker-container
+        .ui-date-picker-input,
+    .ui-date-picker--fluid
+        .ui-date-picker-container.ui-date-picker--fluid--invalid
+        + .ui-date-picker-container
+        .ui-date-picker__input {
+        border-inline-start: none;
+    }
+
+    .ui-date-picker-container.ui-date-picker-fluid-invalid .ui-form-requirement,
+    .ui-date-picker-container.ui-date-picker-fluid-invalid
+        .ui-form__requirement,
+    .ui-date-picker-container.ui-date-picker--fluid--invalid
+        .ui-form-requirement,
+    .ui-date-picker-container.ui-date-picker--fluid--invalid
+        .ui-form__requirement,
+    .ui-date-picker-container.ui-date-picker-fluid-warn .ui-form-requirement,
+    .ui-date-picker-container.ui-date-picker-fluid-warn .ui-form__requirement,
+    .ui-date-picker-container.ui-date-picker--fluid--warn .ui-form-requirement,
+    .ui-date-picker-container.ui-date-picker--fluid--warn
+        .ui-form__requirement {
+        margin: 0;
+        padding: var(--ui-spacing-03) 2.5rem var(--ui-spacing-03)
+            var(--ui-spacing-05);
+    }
+
+    .ui-date-picker-container.ui-date-picker-fluid-invalid
+        .ui-date-picker-fluid.ui-date-picker-fluid-invalid
+        .ui-date-picker,
+    .ui-date-picker-container.ui-date-picker--fluid--invalid
+        .ui-date-picker--fluid.ui-date-picker--fluid--invalid
+        .ui-date-picker,
+    .ui-date-picker-fluid.ui-date-picker-fluid-invalid .ui-date-picker,
+    .ui-date-picker-fluid.ui-date-picker--fluid--invalid .ui-date-picker,
+    .ui-date-picker--fluid.ui-date-picker-fluid-invalid .ui-date-picker,
+    .ui-date-picker--fluid.ui-date-picker--fluid--invalid .ui-date-picker,
+    .ui-date-picker-fluid
+        .ui-date-picker-single
+        .ui-date-picker-fluid-warn
+        .ui-date-picker-input,
+    .ui-date-picker-fluid
+        .ui-date-picker-single
+        .ui-date-picker-fluid-warn
+        .ui-date-picker__input,
+    .ui-date-picker-fluid
+        .ui-date-picker--single
+        .ui-date-picker--fluid--warn
+        .ui-date-picker-input,
+    .ui-date-picker-fluid
+        .ui-date-picker--single
+        .ui-date-picker--fluid--warn
+        .ui-date-picker__input,
+    .ui-date-picker--fluid
+        .ui-date-picker-single
+        .ui-date-picker-fluid-warn
+        .ui-date-picker-input,
+    .ui-date-picker--fluid
+        .ui-date-picker-single
+        .ui-date-picker-fluid-warn
+        .ui-date-picker__input,
+    .ui-date-picker--fluid
+        .ui-date-picker--single
+        .ui-date-picker--fluid--warn
+        .ui-date-picker-input,
+    .ui-date-picker--fluid
+        .ui-date-picker--single
+        .ui-date-picker--fluid--warn
+        .ui-date-picker__input,
+    .ui-date-picker-fluid.ui-date-picker-fluid-warn
+        .ui-date-picker-range
+        .ui-date-picker-container,
+    .ui-date-picker-fluid.ui-date-picker--fluid--warn
+        .ui-date-picker--range
+        .ui-date-picker-container,
+    .ui-date-picker--fluid.ui-date-picker-fluid-warn
+        .ui-date-picker-range
+        .ui-date-picker-container,
+    .ui-date-picker--fluid.ui-date-picker--fluid--warn
+        .ui-date-picker--range
+        .ui-date-picker-container {
+        border-block-end: 1px solid transparent;
+    }
+
+    .ui-date-picker-fluid.ui-date-picker-fluid-invalid
+        .ui-date-picker-range
+        > .ui-date-picker-container:last-child
+        .ui-date-picker-input,
+    .ui-date-picker-fluid.ui-date-picker-fluid-invalid
+        .ui-date-picker-range
+        > .ui-date-picker-container:last-child
+        .ui-date-picker__input,
+    .ui-date-picker-fluid.ui-date-picker--fluid--invalid
+        .ui-date-picker--range
+        > .ui-date-picker-container:last-child
+        .ui-date-picker-input,
+    .ui-date-picker-fluid.ui-date-picker--fluid--invalid
+        .ui-date-picker--range
+        > .ui-date-picker-container:last-child
+        .ui-date-picker__input,
+    .ui-date-picker-fluid.ui-date-picker-fluid-warn
+        .ui-date-picker-range
+        > .ui-date-picker-container:last-child
+        .ui-date-picker-input,
+    .ui-date-picker-fluid.ui-date-picker-fluid-warn
+        .ui-date-picker-range
+        > .ui-date-picker-container:last-child
+        .ui-date-picker__input,
+    .ui-date-picker-fluid.ui-date-picker--fluid--warn
+        .ui-date-picker--range
+        > .ui-date-picker-container:last-child
+        .ui-date-picker-input,
+    .ui-date-picker-fluid.ui-date-picker--fluid--warn
+        .ui-date-picker--range
+        > .ui-date-picker-container:last-child
+        .ui-date-picker__input,
+    .ui-date-picker-fluid
+        .ui-date-picker-fluid-warn
+        + .ui-date-picker-container:last-child
+        .ui-date-picker-input,
+    .ui-date-picker-fluid
+        .ui-date-picker-fluid-warn
+        + .ui-date-picker-container:last-child
+        .ui-date-picker__input,
+    .ui-date-picker-fluid
+        .ui-date-picker--fluid--warn
+        + .ui-date-picker-container:last-child
+        .ui-date-picker-input,
+    .ui-date-picker-fluid
+        .ui-date-picker--fluid--warn
+        + .ui-date-picker-container:last-child
+        .ui-date-picker__input,
+    .ui-date-picker-fluid
+        .ui-date-picker-fluid-warn.ui-date-picker-container:last-child
+        .ui-date-picker-input,
+    .ui-date-picker-fluid
+        .ui-date-picker-fluid-warn.ui-date-picker-container:last-child
+        .ui-date-picker__input,
+    .ui-date-picker-fluid
+        .ui-date-picker--fluid--warn.ui-date-picker-container:last-child
+        .ui-date-picker-input,
+    .ui-date-picker-fluid
+        .ui-date-picker--fluid--warn.ui-date-picker-container:last-child
+        .ui-date-picker__input {
+        border-inline-start: 1px solid transparent;
+    }
+
+    .ui-date-picker-fluid.ui-date-picker-fluid-invalid
+        .ui-date-picker-range
+        > .ui-date-picker-container:first-child::after,
+    .ui-date-picker-fluid.ui-date-picker--fluid--invalid
+        .ui-date-picker--range
+        > .ui-date-picker-container:first-child::after,
+    .ui-date-picker-fluid.ui-date-picker-fluid-warn
+        .ui-date-picker-range
+        > .ui-date-picker-container:first-child::after,
+    .ui-date-picker-fluid.ui-date-picker--fluid--warn
+        .ui-date-picker--range
+        > .ui-date-picker-container:first-child::after,
+    .ui-date-picker-fluid
+        .ui-date-picker-range
+        .ui-date-picker-fluid-warn.ui-date-picker-container:first-child::after,
+    .ui-date-picker-fluid
+        .ui-date-picker--range
+        .ui-date-picker--fluid--warn.ui-date-picker-container:first-child::after,
+    .ui-date-picker-fluid
+        .ui-date-picker-range
+        .ui-date-picker-fluid-warn.ui-date-picker-container:last-child::after,
+    .ui-date-picker-fluid
+        .ui-date-picker--range
+        .ui-date-picker--fluid--warn.ui-date-picker-container:last-child::after {
+        position: absolute;
+        display: block;
+        inline-size: 1px;
+        block-size: calc(100% - 1rem);
+        background: var(--ui-border-strong);
+        content: "";
+        inset-block-start: 0.5rem;
+        inset-inline-end: 0;
+    }
+
+    .ui-date-picker-fluid
+        .ui-date-picker-fluid-warn.ui-date-picker-container:last-child::after,
+    .ui-date-picker-fluid
+        .ui-date-picker--fluid--warn.ui-date-picker-container:last-child::after,
+    .ui-date-picker--fluid
+        .ui-date-picker-fluid-warn.ui-date-picker-container:last-child::after,
+    .ui-date-picker--fluid
+        .ui-date-picker--fluid--warn.ui-date-picker-container:last-child::after {
+        inset-inline-start: 0;
+    }
+
+    .ui-date-picker-fluid .ui-date-picker-divider,
+    .ui-date-picker-fluid .ui-date-picker__divider,
+    .ui-date-picker--fluid .ui-date-picker-divider,
+    .ui-date-picker--fluid .ui-date-picker__divider {
+        inline-size: calc(100% - 2rem);
+        margin: 0 1rem;
+        border-style: solid;
+        border-color: var(--ui-border-subtle);
+        border-block-end: none;
+    }
+
+    .ui-date-picker-container.ui-date-picker-fluid-invalid
+        .ui-date-picker-icon-invalid,
+    .ui-date-picker-container.ui-date-picker-fluid-invalid
+        .ui-date-picker__icon--invalid,
+    .ui-date-picker-container.ui-date-picker--fluid--invalid
+        .ui-date-picker-icon-invalid,
+    .ui-date-picker-container.ui-date-picker--fluid--invalid
+        .ui-date-picker__icon--invalid,
+    .ui-date-picker-container.ui-date-picker-fluid-warn
+        .ui-date-picker-icon-warn,
+    .ui-date-picker-container.ui-date-picker-fluid-warn
+        .ui-date-picker__icon--warn,
+    .ui-date-picker-container.ui-date-picker--fluid--warn
+        .ui-date-picker-icon-warn,
+    .ui-date-picker-container.ui-date-picker--fluid--warn
+        .ui-date-picker__icon--warn {
+        inset-block-start: 5rem;
+    }
+
+    .ui-date-picker-fluid
+        .ui-date-picker-simple
+        .ui-date-picker-fluid-invalid
+        .ui-date-picker-icon-invalid,
+    .ui-date-picker-fluid
+        .ui-date-picker-simple
+        .ui-date-picker-fluid-invalid
+        .ui-date-picker__icon--invalid,
+    .ui-date-picker-fluid
+        .ui-date-picker--simple
+        .ui-date-picker--fluid--invalid
+        .ui-date-picker-icon-invalid,
+    .ui-date-picker-fluid
+        .ui-date-picker--simple
+        .ui-date-picker--fluid--invalid
+        .ui-date-picker__icon--invalid,
+    .ui-date-picker-fluid
+        .ui-date-picker-simple
+        .ui-date-picker-fluid-warn
+        .ui-date-picker-icon-warn,
+    .ui-date-picker-fluid
+        .ui-date-picker-simple
+        .ui-date-picker-fluid-warn
+        .ui-date-picker__icon--warn,
+    .ui-date-picker-fluid
+        .ui-date-picker--simple
+        .ui-date-picker--fluid--warn
+        .ui-date-picker-icon-warn,
+    .ui-date-picker-fluid
+        .ui-date-picker--simple
+        .ui-date-picker--fluid--warn
+        .ui-date-picker__icon--warn {
+        display: block;
+    }
+
+    .ui-date-picker-container.ui-date-picker-fluid-invalid
+        .ui-date-picker-input:focus,
+    .ui-date-picker-container.ui-date-picker-fluid-invalid
+        .ui-date-picker__input:focus,
+    .ui-date-picker-container.ui-date-picker--fluid--invalid
+        .ui-date-picker-input:focus,
+    .ui-date-picker-container.ui-date-picker--fluid--invalid
+        .ui-date-picker__input:focus {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+    }
+
+    .ui-date-picker-fluid.ui-date-picker-fluid-invalid
+        .ui-date-picker-range
+        ~ .ui-form-requirement,
+    .ui-date-picker-fluid.ui-date-picker-fluid-invalid
+        .ui-date-picker-range
+        ~ .ui-form__requirement,
+    .ui-date-picker-fluid.ui-date-picker--fluid--invalid
+        .ui-date-picker--range
+        ~ .ui-form-requirement,
+    .ui-date-picker-fluid.ui-date-picker--fluid--invalid
+        .ui-date-picker--range
+        ~ .ui-form__requirement,
+    .ui-date-picker-fluid.ui-date-picker-fluid-warn
+        .ui-date-picker-range
+        ~ .ui-form-requirement,
+    .ui-date-picker-fluid.ui-date-picker-fluid-warn
+        .ui-date-picker-range
+        ~ .ui-form__requirement,
+    .ui-date-picker-fluid.ui-date-picker--fluid--warn
+        .ui-date-picker--range
+        ~ .ui-form-requirement,
+    .ui-date-picker-fluid.ui-date-picker--fluid--warn
+        .ui-date-picker--range
+        ~ .ui-form__requirement,
+    .ui-date-picker--fluid.ui-date-picker-fluid-invalid
+        .ui-date-picker-range
+        ~ .ui-form-requirement,
+    .ui-date-picker--fluid.ui-date-picker-fluid-invalid
+        .ui-date-picker-range
+        ~ .ui-form__requirement,
+    .ui-date-picker--fluid.ui-date-picker--fluid--invalid
+        .ui-date-picker--range
+        ~ .ui-form-requirement,
+    .ui-date-picker--fluid.ui-date-picker--fluid--invalid
+        .ui-date-picker--range
+        ~ .ui-form__requirement,
+    .ui-date-picker--fluid.ui-date-picker-fluid-warn
+        .ui-date-picker-range
+        ~ .ui-form-requirement,
+    .ui-date-picker--fluid.ui-date-picker-fluid-warn
+        .ui-date-picker-range
+        ~ .ui-form__requirement,
+    .ui-date-picker--fluid.ui-date-picker--fluid--warn
+        .ui-date-picker--range
+        ~ .ui-form-requirement,
+    .ui-date-picker--fluid.ui-date-picker--fluid--warn
+        .ui-date-picker--range
+        ~ .ui-form__requirement {
+        display: block;
+        overflow: visible;
+        max-block-size: 100%;
+        margin-block-start: 0;
+        padding: var(--ui-spacing-03) 2.5rem var(--ui-spacing-03)
+            var(--ui-spacing-05);
+    }
+
+    .ui-date-picker-fluid.ui-date-picker-fluid-invalid
+        .ui-date-picker-range
+        ~ .ui-form-requirement,
+    .ui-date-picker-fluid.ui-date-picker-fluid-invalid
+        .ui-date-picker-range
+        ~ .ui-form__requirement,
+    .ui-date-picker-fluid.ui-date-picker--fluid--invalid
+        .ui-date-picker--range
+        ~ .ui-form-requirement,
+    .ui-date-picker-fluid.ui-date-picker--fluid--invalid
+        .ui-date-picker--range
+        ~ .ui-form__requirement,
+    .ui-date-picker--fluid.ui-date-picker-fluid-invalid
+        .ui-date-picker-range
+        ~ .ui-form-requirement,
+    .ui-date-picker--fluid.ui-date-picker-fluid-invalid
+        .ui-date-picker-range
+        ~ .ui-form__requirement,
+    .ui-date-picker--fluid.ui-date-picker--fluid--invalid
+        .ui-date-picker--range
+        ~ .ui-form-requirement,
+    .ui-date-picker--fluid.ui-date-picker--fluid--invalid
+        .ui-date-picker--range
+        ~ .ui-form__requirement {
+        color: var(--ui-text-error);
+    }
+
+    .ui-date-picker-fluid.ui-date-picker-fluid-invalid
+        .ui-date-picker-range
+        + .ui-date-picker-icon,
+    .ui-date-picker-fluid.ui-date-picker-fluid-invalid
+        .ui-date-picker-range
+        + .ui-date-picker__icon,
+    .ui-date-picker-fluid.ui-date-picker--fluid--invalid
+        .ui-date-picker--range
+        + .ui-date-picker-icon,
+    .ui-date-picker-fluid.ui-date-picker--fluid--invalid
+        .ui-date-picker--range
+        + .ui-date-picker__icon,
+    .ui-date-picker-fluid.ui-date-picker-fluid-warn
+        .ui-date-picker-range
+        + .ui-date-picker-icon,
+    .ui-date-picker-fluid.ui-date-picker-fluid-warn
+        .ui-date-picker-range
+        + .ui-date-picker__icon,
+    .ui-date-picker-fluid.ui-date-picker--fluid--warn
+        .ui-date-picker--range
+        + .ui-date-picker-icon,
+    .ui-date-picker-fluid.ui-date-picker--fluid--warn
+        .ui-date-picker--range
+        + .ui-date-picker__icon,
+    .ui-date-picker--fluid.ui-date-picker-fluid-invalid
+        .ui-date-picker-range
+        + .ui-date-picker-icon,
+    .ui-date-picker--fluid.ui-date-picker-fluid-invalid
+        .ui-date-picker-range
+        + .ui-date-picker__icon,
+    .ui-date-picker--fluid.ui-date-picker--fluid--invalid
+        .ui-date-picker--range
+        + .ui-date-picker-icon,
+    .ui-date-picker--fluid.ui-date-picker--fluid--invalid
+        .ui-date-picker--range
+        + .ui-date-picker__icon,
+    .ui-date-picker--fluid.ui-date-picker-fluid-warn
+        .ui-date-picker-range
+        + .ui-date-picker-icon,
+    .ui-date-picker--fluid.ui-date-picker-fluid-warn
+        .ui-date-picker-range
+        + .ui-date-picker__icon,
+    .ui-date-picker--fluid.ui-date-picker--fluid--warn
+        .ui-date-picker--range
+        + .ui-date-picker-icon,
+    .ui-date-picker--fluid.ui-date-picker--fluid--warn
+        .ui-date-picker--range
+        + .ui-date-picker__icon {
+        inset-block-start: 5rem;
+    }
+
+    /* ----------------------------------------------------------------------
+       Skeleton
+       ---------------------------------------------------------------------- */
+
+    .ui-date-picker-fluid-skeleton,
+    .ui-date-picker--fluid__skeleton {
+        block-size: 4rem;
+        border-block-end: 1px solid var(--ui-skeleton-element);
+        background: var(--ui-skeleton-background);
+    }
+
+    .ui-date-picker-fluid-skeleton-container,
+    .ui-date-picker--fluid__skeleton--container {
+        position: relative;
+        inline-size: 100%;
+        block-size: 100%;
+    }
+
+    .ui-date-picker-fluid-skeleton .ui-skeleton,
+    .ui-date-picker--fluid__skeleton .ui-skeleton {
+        position: absolute;
+        inline-size: 25%;
+        block-size: 0.5rem;
+        inset-block-start: var(--ui-spacing-05);
+        inset-inline-start: var(--ui-spacing-05);
+    }
+
+    .ui-date-picker-fluid-skeleton .ui-label,
+    .ui-date-picker--fluid__skeleton .ui-label {
+        margin-block-end: 0.25rem;
+    }
+
+    .ui-date-picker-fluid-skeleton .ui-text-input,
+    .ui-date-picker--fluid__skeleton .ui-text-input {
+        position: absolute;
+        inline-size: 50%;
+        block-size: 0.5rem;
+        padding: 0;
+        inset-block-start: 2.25rem;
+        inset-inline-start: var(--ui-spacing-05);
+    }
+
+    .ui-date-picker-fluid-skeleton-container .ui-date-picker-icon,
+    .ui-date-picker-fluid-skeleton-container .ui-date-picker__icon,
+    .ui-date-picker--fluid__skeleton--container .ui-date-picker-icon,
+    .ui-date-picker--fluid__skeleton--container .ui-date-picker__icon {
+        inset-block: auto var(--ui-spacing-03);
+    }
+
+    .ui-date-picker-fluid-skeleton-range,
+    .ui-date-picker--fluid__skeleton--range {
+        display: flex;
+        flex-direction: row;
+    }
+
+    .ui-date-picker-fluid-skeleton-range
+        .ui-date-picker-fluid-skeleton-container,
+    .ui-date-picker-fluid-skeleton-range
+        .ui-date-picker--fluid__skeleton--container,
+    .ui-date-picker--fluid__skeleton--range
+        .ui-date-picker-fluid-skeleton-container,
+    .ui-date-picker--fluid__skeleton--range
+        .ui-date-picker--fluid__skeleton--container {
+        display: flex;
+        flex-direction: column;
+        inline-size: 50%;
+    }
+
+    .ui-date-picker-fluid-skeleton-range
+        .ui-date-picker-fluid-skeleton-container:first-of-type,
+    .ui-date-picker-fluid-skeleton-range
+        .ui-date-picker--fluid__skeleton--container:first-of-type,
+    .ui-date-picker--fluid__skeleton--range
+        .ui-date-picker-fluid-skeleton-container:first-of-type,
+    .ui-date-picker--fluid__skeleton--range
+        .ui-date-picker--fluid__skeleton--container:first-of-type {
+        border-inline-end: 1px solid var(--ui-skeleton-element);
+    }
+
+    .ui-date-picker-fluid-skeleton-range
+        .ui-date-picker-fluid-skeleton-container
+        .ui-date-picker-icon,
+    .ui-date-picker-fluid-skeleton-range
+        .ui-date-picker-fluid-skeleton-container
+        .ui-date-picker__icon,
+    .ui-date-picker-fluid-skeleton-range
+        .ui-date-picker--fluid__skeleton--container
+        .ui-date-picker-icon,
+    .ui-date-picker-fluid-skeleton-range
+        .ui-date-picker--fluid__skeleton--container
+        .ui-date-picker__icon,
+    .ui-date-picker--fluid__skeleton--range
+        .ui-date-picker-fluid-skeleton-container
+        .ui-date-picker-icon,
+    .ui-date-picker--fluid__skeleton--range
+        .ui-date-picker-fluid-skeleton-container
+        .ui-date-picker__icon,
+    .ui-date-picker--fluid__skeleton--range
+        .ui-date-picker--fluid__skeleton--container
+        .ui-date-picker-icon,
+    .ui-date-picker--fluid__skeleton--range
+        .ui-date-picker--fluid__skeleton--container
+        .ui-date-picker__icon {
+        inset-block-end: var(--ui-spacing-03);
+    }
+
+    /* ----------------------------------------------------------------------
+       Readonly
+       ---------------------------------------------------------------------- */
+
+    .ui-date-picker-fluid.ui-date-picker-fluid-readonly:not(
+            .ui-date-picker-fluid-invalid
+        ):not(.ui-date-picker--fluid--invalid):not(
+            .ui-date-picker-fluid-warn
+        ):not(.ui-date-picker--fluid--warn)
+        .ui-date-picker
+        > .ui-date-picker-container,
+    .ui-date-picker-fluid.ui-date-picker--fluid--readonly:not(
+            .ui-date-picker-fluid-invalid
+        ):not(.ui-date-picker--fluid--invalid):not(
+            .ui-date-picker-fluid-warn
+        ):not(.ui-date-picker--fluid--warn)
+        .ui-date-picker
+        > .ui-date-picker-container,
+    .ui-date-picker-fluid.ui-date-picker-fluid-readonly:not(
+            .ui-date-picker-fluid-invalid
+        ):not(.ui-date-picker--fluid--invalid):not(
+            .ui-date-picker-fluid-warn
+        ):not(.ui-date-picker--fluid--warn)
+        .ui-date-picker
+        .ui-date-picker-input,
+    .ui-date-picker-fluid.ui-date-picker-fluid-readonly:not(
+            .ui-date-picker-fluid-invalid
+        ):not(.ui-date-picker--fluid--invalid):not(
+            .ui-date-picker-fluid-warn
+        ):not(.ui-date-picker--fluid--warn)
+        .ui-date-picker
+        .ui-date-picker__input,
+    .ui-date-picker-fluid.ui-date-picker--fluid--readonly:not(
+            .ui-date-picker-fluid-invalid
+        ):not(.ui-date-picker--fluid--invalid):not(
+            .ui-date-picker-fluid-warn
+        ):not(.ui-date-picker--fluid--warn)
+        .ui-date-picker
+        .ui-date-picker-input,
+    .ui-date-picker-fluid.ui-date-picker--fluid--readonly:not(
+            .ui-date-picker-fluid-invalid
+        ):not(.ui-date-picker--fluid--invalid):not(
+            .ui-date-picker-fluid-warn
+        ):not(.ui-date-picker--fluid--warn)
+        .ui-date-picker
+        .ui-date-picker__input,
+    .ui-date-picker--fluid.ui-date-picker-fluid-readonly:not(
+            .ui-date-picker-fluid-invalid
+        ):not(.ui-date-picker--fluid--invalid):not(
+            .ui-date-picker-fluid-warn
+        ):not(.ui-date-picker--fluid--warn)
+        .ui-date-picker
+        > .ui-date-picker-container,
+    .ui-date-picker--fluid.ui-date-picker--fluid--readonly:not(
+            .ui-date-picker-fluid-invalid
+        ):not(.ui-date-picker--fluid--invalid):not(
+            .ui-date-picker-fluid-warn
+        ):not(.ui-date-picker--fluid--warn)
+        .ui-date-picker
+        > .ui-date-picker-container,
+    .ui-date-picker--fluid.ui-date-picker-fluid-readonly:not(
+            .ui-date-picker-fluid-invalid
+        ):not(.ui-date-picker--fluid--invalid):not(
+            .ui-date-picker-fluid-warn
+        ):not(.ui-date-picker--fluid--warn)
+        .ui-date-picker
+        .ui-date-picker-input,
+    .ui-date-picker--fluid.ui-date-picker-fluid-readonly:not(
+            .ui-date-picker-fluid-invalid
+        ):not(.ui-date-picker--fluid--invalid):not(
+            .ui-date-picker-fluid-warn
+        ):not(.ui-date-picker--fluid--warn)
+        .ui-date-picker
+        .ui-date-picker__input,
+    .ui-date-picker--fluid.ui-date-picker--fluid--readonly:not(
+            .ui-date-picker-fluid-invalid
+        ):not(.ui-date-picker--fluid--invalid):not(
+            .ui-date-picker-fluid-warn
+        ):not(.ui-date-picker--fluid--warn)
+        .ui-date-picker
+        .ui-date-picker-input,
+    .ui-date-picker--fluid.ui-date-picker--fluid--readonly:not(
+            .ui-date-picker-fluid-invalid
+        ):not(.ui-date-picker--fluid--invalid):not(
+            .ui-date-picker-fluid-warn
+        ):not(.ui-date-picker--fluid--warn)
+        .ui-date-picker
+        .ui-date-picker__input {
+        border-block-end-color: var(--ui-border-subtle);
+    }
+
+    .ui-date-picker-fluid.ui-date-picker-fluid-readonly:not(
+            .ui-date-picker-fluid-invalid
+        ):not(.ui-date-picker--fluid--invalid):not(
+            .ui-date-picker-fluid-warn
+        ):not(.ui-date-picker--fluid--warn)
+        .ui-date-picker-range
+        > .ui-date-picker-container:last-child
+        .ui-date-picker-input,
+    .ui-date-picker-fluid.ui-date-picker-fluid-readonly:not(
+            .ui-date-picker-fluid-invalid
+        ):not(.ui-date-picker--fluid--invalid):not(
+            .ui-date-picker-fluid-warn
+        ):not(.ui-date-picker--fluid--warn)
+        .ui-date-picker-range
+        > .ui-date-picker-container:last-child
+        .ui-date-picker__input,
+    .ui-date-picker-fluid.ui-date-picker--fluid--readonly:not(
+            .ui-date-picker-fluid-invalid
+        ):not(.ui-date-picker--fluid--invalid):not(
+            .ui-date-picker-fluid-warn
+        ):not(.ui-date-picker--fluid--warn)
+        .ui-date-picker--range
+        > .ui-date-picker-container:last-child
+        .ui-date-picker-input,
+    .ui-date-picker-fluid.ui-date-picker--fluid--readonly:not(
+            .ui-date-picker-fluid-invalid
+        ):not(.ui-date-picker--fluid--invalid):not(
+            .ui-date-picker-fluid-warn
+        ):not(.ui-date-picker--fluid--warn)
+        .ui-date-picker--range
+        > .ui-date-picker-container:last-child
+        .ui-date-picker__input {
+        border-inline-start-color: var(--ui-border-subtle);
+    }
+
+    /* ----------------------------------------------------------------------
+       AI label / decorator
+       ---------------------------------------------------------------------- */
+
+    .ui-date-picker-fluid
+        .ui-date-picker-input-wrapper-decorator
+        .ui-date-picker-input-inner-wrapper-decorator
+        > *,
+    .ui-date-picker-fluid
+        .ui-date-picker-input-wrapper-decorator
+        .ui-date-picker-input-inner-wrapper--decorator
+        > *,
+    .ui-date-picker-fluid
+        .ui-date-picker-input__wrapper--decorator
+        .ui-date-picker-input-inner-wrapper-decorator
+        > *,
+    .ui-date-picker-fluid
+        .ui-date-picker-input__wrapper--decorator
+        .ui-date-picker-input-inner-wrapper--decorator
+        > *,
+    .ui-date-picker-fluid .ui-date-picker-input-wrapper-slug .ui-ai-label,
+    .ui-date-picker-fluid .ui-date-picker-input-wrapper-slug .ui-slug,
+    .ui-date-picker-fluid .ui-date-picker-input__wrapper--slug .ui-ai-label,
+    .ui-date-picker-fluid .ui-date-picker-input__wrapper--slug .ui-slug,
+    .ui-date-picker--fluid
+        .ui-date-picker-input-wrapper-decorator
+        .ui-date-picker-input-inner-wrapper-decorator
+        > *,
+    .ui-date-picker--fluid
+        .ui-date-picker-input-wrapper-decorator
+        .ui-date-picker-input-inner-wrapper--decorator
+        > *,
+    .ui-date-picker--fluid
+        .ui-date-picker-input__wrapper--decorator
+        .ui-date-picker-input-inner-wrapper-decorator
+        > *,
+    .ui-date-picker--fluid
+        .ui-date-picker-input__wrapper--decorator
+        .ui-date-picker-input-inner-wrapper--decorator
+        > *,
+    .ui-date-picker--fluid .ui-date-picker-input-wrapper-slug .ui-ai-label,
+    .ui-date-picker--fluid .ui-date-picker-input-wrapper-slug .ui-slug,
+    .ui-date-picker--fluid .ui-date-picker-input__wrapper--slug .ui-ai-label,
+    .ui-date-picker--fluid .ui-date-picker-input__wrapper--slug .ui-slug {
+        inset-block-start: 2.6875rem;
+    }
+
+    .ui-date-picker-fluid
+        .ui-date-picker-input-wrapper-slug
+        .ui-date-picker-input:has(~ .ui-ai-label):not(
+            :has(~ .ui-ai-label--revert)
+        ),
+    .ui-date-picker-fluid
+        .ui-date-picker-input-wrapper-slug
+        .ui-date-picker__input:has(~ .ui-ai-label):not(
+            :has(~ .ui-ai-label--revert)
+        ),
+    .ui-date-picker-fluid
+        .ui-date-picker-input__wrapper--slug
+        .ui-date-picker-input:has(~ .ui-ai-label):not(
+            :has(~ .ui-ai-label--revert)
+        ),
+    .ui-date-picker-fluid
+        .ui-date-picker-input__wrapper--slug
+        .ui-date-picker__input:has(~ .ui-ai-label):not(
+            :has(~ .ui-ai-label--revert)
+        ),
+    .ui-date-picker-fluid
+        .ui-date-picker-input-wrapper-slug
+        .ui-date-picker-input:has(~ .ui-slug):not(:has(~ .ui-slug--revert)),
+    .ui-date-picker-fluid
+        .ui-date-picker-input-wrapper-slug
+        .ui-date-picker__input:has(~ .ui-slug):not(:has(~ .ui-slug--revert)),
+    .ui-date-picker-fluid
+        .ui-date-picker-input__wrapper--slug
+        .ui-date-picker-input:has(~ .ui-slug):not(:has(~ .ui-slug--revert)),
+    .ui-date-picker-fluid
+        .ui-date-picker-input__wrapper--slug
+        .ui-date-picker__input:has(~ .ui-slug):not(:has(~ .ui-slug--revert)),
+    .ui-date-picker--fluid
+        .ui-date-picker-input-wrapper-slug
+        .ui-date-picker-input:has(~ .ui-ai-label):not(
+            :has(~ .ui-ai-label--revert)
+        ),
+    .ui-date-picker--fluid
+        .ui-date-picker-input-wrapper-slug
+        .ui-date-picker__input:has(~ .ui-ai-label):not(
+            :has(~ .ui-ai-label--revert)
+        ),
+    .ui-date-picker--fluid
+        .ui-date-picker-input__wrapper--slug
+        .ui-date-picker-input:has(~ .ui-ai-label):not(
+            :has(~ .ui-ai-label--revert)
+        ),
+    .ui-date-picker--fluid
+        .ui-date-picker-input__wrapper--slug
+        .ui-date-picker__input:has(~ .ui-ai-label):not(
+            :has(~ .ui-ai-label--revert)
+        ),
+    .ui-date-picker--fluid
+        .ui-date-picker-input-wrapper-slug
+        .ui-date-picker-input:has(~ .ui-slug):not(:has(~ .ui-slug--revert)),
+    .ui-date-picker--fluid
+        .ui-date-picker-input-wrapper-slug
+        .ui-date-picker__input:has(~ .ui-slug):not(:has(~ .ui-slug--revert)),
+    .ui-date-picker--fluid
+        .ui-date-picker-input__wrapper--slug
+        .ui-date-picker-input:has(~ .ui-slug):not(:has(~ .ui-slug--revert)),
+    .ui-date-picker--fluid
+        .ui-date-picker-input__wrapper--slug
+        .ui-date-picker__input:has(~ .ui-slug):not(:has(~ .ui-slug--revert)) {
+        background: var(--ui-ai-gradient, var(--ui-field));
+    }
+
+    .ui-date-picker-fluid
+        .ui-date-picker-input-wrapper-slug:has(.ui-ai-label):not(
+            :has(.ui-ai-label--revert)
+        )
+        .ui-date-picker-input:not(.ui-date-picker-input-invalid):not(
+            .ui-date-picker-input--invalid
+        ),
+    .ui-date-picker-fluid
+        .ui-date-picker-input-wrapper-slug:has(.ui-ai-label):not(
+            :has(.ui-ai-label--revert)
+        )
+        .ui-date-picker__input:not(.ui-date-picker__input--invalid),
+    .ui-date-picker-fluid
+        .ui-date-picker-input__wrapper--slug:has(.ui-ai-label):not(
+            :has(.ui-ai-label--revert)
+        )
+        .ui-date-picker-input:not(.ui-date-picker-input-invalid):not(
+            .ui-date-picker-input--invalid
+        ),
+    .ui-date-picker-fluid
+        .ui-date-picker-input__wrapper--slug:has(.ui-ai-label):not(
+            :has(.ui-ai-label--revert)
+        )
+        .ui-date-picker__input:not(.ui-date-picker__input--invalid),
+    .ui-date-picker-fluid
+        .ui-date-picker-input-wrapper-slug:has(.ui-slug):not(
+            :has(.ui-slug--revert)
+        )
+        .ui-date-picker-input:not(.ui-date-picker-input-invalid):not(
+            .ui-date-picker-input--invalid
+        ),
+    .ui-date-picker-fluid
+        .ui-date-picker-input-wrapper-slug:has(.ui-slug):not(
+            :has(.ui-slug--revert)
+        )
+        .ui-date-picker__input:not(.ui-date-picker__input--invalid),
+    .ui-date-picker-fluid
+        .ui-date-picker-input__wrapper--slug:has(.ui-slug):not(
+            :has(.ui-slug--revert)
+        )
+        .ui-date-picker-input:not(.ui-date-picker-input-invalid):not(
+            .ui-date-picker-input--invalid
+        ),
+    .ui-date-picker-fluid
+        .ui-date-picker-input__wrapper--slug:has(.ui-slug):not(
+            :has(.ui-slug--revert)
+        )
+        .ui-date-picker__input:not(.ui-date-picker__input--invalid),
+    .ui-date-picker--fluid
+        .ui-date-picker-input-wrapper-slug:has(.ui-ai-label):not(
+            :has(.ui-ai-label--revert)
+        )
+        .ui-date-picker-input:not(.ui-date-picker-input-invalid):not(
+            .ui-date-picker-input--invalid
+        ),
+    .ui-date-picker--fluid
+        .ui-date-picker-input-wrapper-slug:has(.ui-ai-label):not(
+            :has(.ui-ai-label--revert)
+        )
+        .ui-date-picker__input:not(.ui-date-picker__input--invalid),
+    .ui-date-picker--fluid
+        .ui-date-picker-input__wrapper--slug:has(.ui-ai-label):not(
+            :has(.ui-ai-label--revert)
+        )
+        .ui-date-picker-input:not(.ui-date-picker-input-invalid):not(
+            .ui-date-picker-input--invalid
+        ),
+    .ui-date-picker--fluid
+        .ui-date-picker-input__wrapper--slug:has(.ui-ai-label):not(
+            :has(.ui-ai-label--revert)
+        )
+        .ui-date-picker__input:not(.ui-date-picker__input--invalid),
+    .ui-date-picker--fluid
+        .ui-date-picker-input-wrapper-slug:has(.ui-slug):not(
+            :has(.ui-slug--revert)
+        )
+        .ui-date-picker-input:not(.ui-date-picker-input-invalid):not(
+            .ui-date-picker-input--invalid
+        ),
+    .ui-date-picker--fluid
+        .ui-date-picker-input-wrapper-slug:has(.ui-slug):not(
+            :has(.ui-slug--revert)
+        )
+        .ui-date-picker__input:not(.ui-date-picker__input--invalid),
+    .ui-date-picker--fluid
+        .ui-date-picker-input__wrapper--slug:has(.ui-slug):not(
+            :has(.ui-slug--revert)
+        )
+        .ui-date-picker-input:not(.ui-date-picker-input-invalid):not(
+            .ui-date-picker-input--invalid
+        ),
+    .ui-date-picker--fluid
+        .ui-date-picker-input__wrapper--slug:has(.ui-slug):not(
+            :has(.ui-slug--revert)
+        )
+        .ui-date-picker__input:not(.ui-date-picker__input--invalid) {
+        border-block-end-color: var(--ui-ai-border-strong);
+    }
+
+    .ui-date-picker-fluid
+        .ui-date-picker-input-wrapper-decorator
+        .ui-date-picker-input,
+    .ui-date-picker-fluid
+        .ui-date-picker-input-wrapper-decorator
+        .ui-date-picker__input,
+    .ui-date-picker-fluid
+        .ui-date-picker-input__wrapper--decorator
+        .ui-date-picker-input,
+    .ui-date-picker-fluid
+        .ui-date-picker-input__wrapper--decorator
+        .ui-date-picker__input,
+    .ui-date-picker-fluid-invalid
+        .ui-date-picker-input-wrapper-decorator
+        .ui-date-picker-input,
+    .ui-date-picker-fluid-invalid
+        .ui-date-picker-input-wrapper-decorator
+        .ui-date-picker__input,
+    .ui-date-picker--fluid--invalid
+        .ui-date-picker-input__wrapper--decorator
+        .ui-date-picker-input,
+    .ui-date-picker--fluid--invalid
+        .ui-date-picker-input__wrapper--decorator
+        .ui-date-picker__input,
+    .ui-date-picker-fluid-warn
+        .ui-date-picker-input-wrapper-decorator
+        .ui-date-picker-input,
+    .ui-date-picker-fluid-warn
+        .ui-date-picker-input-wrapper-decorator
+        .ui-date-picker__input,
+    .ui-date-picker--fluid--warn
+        .ui-date-picker-input__wrapper--decorator
+        .ui-date-picker-input,
+    .ui-date-picker--fluid--warn
+        .ui-date-picker-input__wrapper--decorator
+        .ui-date-picker__input,
+    .ui-date-picker-fluid
+        .ui-date-picker-input-wrapper-slug
+        .ui-date-picker-input,
+    .ui-date-picker-fluid
+        .ui-date-picker-input-wrapper-slug
+        .ui-date-picker__input,
+    .ui-date-picker-fluid
+        .ui-date-picker-input__wrapper--slug
+        .ui-date-picker-input,
+    .ui-date-picker-fluid
+        .ui-date-picker-input__wrapper--slug
+        .ui-date-picker__input,
+    .ui-date-picker-fluid-invalid
+        .ui-date-picker-input-wrapper-slug
+        .ui-date-picker-input,
+    .ui-date-picker-fluid-invalid
+        .ui-date-picker-input-wrapper-slug
+        .ui-date-picker__input,
+    .ui-date-picker--fluid--invalid
+        .ui-date-picker-input__wrapper--slug
+        .ui-date-picker-input,
+    .ui-date-picker--fluid--invalid
+        .ui-date-picker-input__wrapper--slug
+        .ui-date-picker__input,
+    .ui-date-picker-fluid-warn
+        .ui-date-picker-input-wrapper-slug
+        .ui-date-picker-input,
+    .ui-date-picker-fluid-warn
+        .ui-date-picker-input-wrapper-slug
+        .ui-date-picker__input,
+    .ui-date-picker--fluid--warn
+        .ui-date-picker-input__wrapper--slug
+        .ui-date-picker-input,
+    .ui-date-picker--fluid--warn
+        .ui-date-picker-input__wrapper--slug
+        .ui-date-picker__input {
+        padding-inline-end: var(--ui-spacing-10);
+    }
+
+    /* ----------------------------------------------------------------------
+       Reduced motion
+       ---------------------------------------------------------------------- */
+
+    @media screen and (prefers-reduced-motion: reduce) {
+        .ui-date-picker-fluid .ui-date-picker,
+        .ui-date-picker--fluid .ui-date-picker {
+            transition: none;
+        }
+    }
+
+    /* ----------------------------------------------------------------------
+       Forced colors
+       ---------------------------------------------------------------------- */
+
+    @media screen and (-ms-high-contrast: active), (forced-colors: active) {
+        .ui-date-picker-fluid,
+        .ui-date-picker--fluid,
+        .ui-date-picker-fluid
+            .ui-date-picker-input-wrapper
+            .ui-date-picker-input,
+        .ui-date-picker-fluid
+            .ui-date-picker-input-wrapper
+            .ui-date-picker__input,
+        .ui-date-picker-fluid
+            .ui-date-picker-input__wrapper
+            .ui-date-picker-input,
+        .ui-date-picker-fluid
+            .ui-date-picker-input__wrapper
+            .ui-date-picker__input,
+        .ui-date-picker--fluid
+            .ui-date-picker-input-wrapper
+            .ui-date-picker-input,
+        .ui-date-picker--fluid
+            .ui-date-picker-input-wrapper
+            .ui-date-picker__input,
+        .ui-date-picker--fluid
+            .ui-date-picker-input__wrapper
+            .ui-date-picker-input,
+        .ui-date-picker--fluid
+            .ui-date-picker-input__wrapper
+            .ui-date-picker__input {
+            background: Canvas;
+            color: CanvasText;
+        }
+
+        .ui-date-picker-fluid .ui-label,
+        .ui-date-picker--fluid .ui-label {
+            color: CanvasText;
+        }
+
+        .ui-date-picker-fluid.ui-date-picker-fluid-invalid,
+        .ui-date-picker-fluid.ui-date-picker--fluid--invalid,
+        .ui-date-picker--fluid.ui-date-picker-fluid-invalid,
+        .ui-date-picker--fluid.ui-date-picker--fluid--invalid,
+        .ui-date-picker-container.ui-date-picker-fluid-invalid,
+        .ui-date-picker-container.ui-date-picker--fluid--invalid {
+            outline-color: Mark;
+        }
+
+        .ui-date-picker-container.ui-date-picker-fluid-invalid
+            .ui-date-picker-input:focus,
+        .ui-date-picker-container.ui-date-picker-fluid-invalid
+            .ui-date-picker__input:focus,
+        .ui-date-picker-container.ui-date-picker--fluid--invalid
+            .ui-date-picker-input:focus,
+        .ui-date-picker-container.ui-date-picker--fluid--invalid
+            .ui-date-picker__input:focus {
+            outline-color: Highlight;
+        }
+
+        .ui-date-picker-fluid.ui-date-picker-fluid-invalid
+            .ui-date-picker-range
+            ~ .ui-form-requirement,
+        .ui-date-picker-fluid.ui-date-picker-fluid-invalid
+            .ui-date-picker-range
+            ~ .ui-form__requirement,
+        .ui-date-picker-fluid.ui-date-picker--fluid--invalid
+            .ui-date-picker--range
+            ~ .ui-form-requirement,
+        .ui-date-picker-fluid.ui-date-picker--fluid--invalid
+            .ui-date-picker--range
+            ~ .ui-form__requirement,
+        .ui-date-picker--fluid.ui-date-picker-fluid-invalid
+            .ui-date-picker-range
+            ~ .ui-form-requirement,
+        .ui-date-picker--fluid.ui-date-picker-fluid-invalid
+            .ui-date-picker-range
+            ~ .ui-form__requirement,
+        .ui-date-picker--fluid.ui-date-picker--fluid--invalid
+            .ui-date-picker--range
+            ~ .ui-form-requirement,
+        .ui-date-picker--fluid.ui-date-picker--fluid--invalid
+            .ui-date-picker--range
+            ~ .ui-form__requirement {
+            color: Mark;
+        }
+
+        .ui-date-picker-fluid .ui-date-picker-divider,
+        .ui-date-picker-fluid .ui-date-picker__divider,
+        .ui-date-picker--fluid .ui-date-picker-divider,
+        .ui-date-picker--fluid .ui-date-picker__divider {
+            border-color: CanvasText;
+        }
+
+        .ui-date-picker-fluid.ui-date-picker-fluid-invalid
+            .ui-date-picker-range
+            > .ui-date-picker-container:first-child::after,
+        .ui-date-picker-fluid.ui-date-picker--fluid--invalid
+            .ui-date-picker--range
+            > .ui-date-picker-container:first-child::after,
+        .ui-date-picker-fluid.ui-date-picker-fluid-warn
+            .ui-date-picker-range
+            > .ui-date-picker-container:first-child::after,
+        .ui-date-picker-fluid.ui-date-picker--fluid--warn
+            .ui-date-picker--range
+            > .ui-date-picker-container:first-child::after,
+        .ui-date-picker-fluid
+            .ui-date-picker-range
+            .ui-date-picker-fluid-warn.ui-date-picker-container:first-child::after,
+        .ui-date-picker-fluid
+            .ui-date-picker--range
+            .ui-date-picker--fluid--warn.ui-date-picker-container:first-child::after,
+        .ui-date-picker-fluid
+            .ui-date-picker-range
+            .ui-date-picker-fluid-warn.ui-date-picker-container:last-child::after,
+        .ui-date-picker-fluid
+            .ui-date-picker--range
+            .ui-date-picker--fluid--warn.ui-date-picker-container:last-child::after {
+            background: CanvasText;
+        }
+    }
+}

@@ -1,80 +1,213 @@
 /* ==========================================================================
-File: resources/css/components/combo-button.css
-Purpose: Combo Button component styles.
-Carbon reference:
+   File: resources/css/components/combo-box.css
+   Purpose: Combo Box component styles.
 
-* reference/carbon-main/packages/styles/scss/components/combo-button/
-
-Notes:
-
-* Defines Combo Button selectors only.
-* Do not define primitive palette tokens here.
-* Do not define theme role tokens here.
-* Combo Button composes Button and Menu behavior.
-  ========================================================================== */
+   Notes:
+   - Defines Combo Box selectors only.
+   - Do not define primitive palette tokens here.
+   - Do not define theme role tokens here.
+   - Supports hover, light, expanded, highlighted first item,
+     focused input, invalid/warning field padding, readonly state,
+     disabled readonly icons, reduced-motion, and forced-colors behavior.
+   ========================================================================== */
 
 @layer components {
     /* ----------------------------------------------------------------------
-   Base combo button
-   ---------------------------------------------------------------------- */
+       Root
+       ---------------------------------------------------------------------- */
 
-    .ui-combo-button {
-        display: inline-flex;
-        column-gap: 1px;
+    .ui-combo-box:hover {
+        background-color: var(--ui-field);
     }
 
-    .ui-combo-button .ui-menu-composition {
-        display: inline-flex;
+    .ui-combo-box.ui-list-box-light:hover,
+    .ui-combo-box.ui-list-box--light:hover {
+        background-color: var(--ui-field-02);
     }
 
-    .ui-combo-button-primary {
-        min-inline-size: calc(10rem - 3rem);
-    }
+    /* ----------------------------------------------------------------------
+       Highlighted first item
+       ---------------------------------------------------------------------- */
 
-    .ui-combo-button-sm .ui-combo-button-primary {
-        min-inline-size: calc(10rem - 2rem);
-    }
-
-    .ui-combo-button-md .ui-combo-button-primary {
-        min-inline-size: calc(10rem - 2.5rem);
-    }
-
-    .ui-combo-button-lg .ui-combo-button-primary {
-        min-inline-size: calc(10rem - 3rem);
-    }
-
-    .ui-combo-button-primary .ui-button {
+    .ui-combo-box
+        .ui-list-box-menu-item:first-child.ui-list-box-menu-item-highlighted::before,
+    .ui-combo-box
+        .ui-list-box-menu-item:first-child.ui-list-box__menu-item--highlighted::before,
+    .ui-combo-box
+        .ui-list-box__menu-item:first-child.ui-list-box-menu-item-highlighted::before,
+    .ui-combo-box
+        .ui-list-box__menu-item:first-child.ui-list-box__menu-item--highlighted::before {
+        position: absolute;
         inline-size: 100%;
-        max-inline-size: 14.9375rem;
-        min-inline-size: 6.9375rem;
-        border-start-end-radius: 0;
-        border-end-end-radius: 0;
+        block-size: 100%;
+        border: 2px solid var(--ui-focus);
+        border-block-start: 1px solid var(--ui-focus);
+        content: "";
     }
 
-    .ui-combo-button-primary button {
-        display: block;
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+    .ui-combo-box
+        .ui-list-box-menu-item:first-child.ui-list-box-menu-item-highlighted,
+    .ui-combo-box
+        .ui-list-box-menu-item:first-child.ui-list-box__menu-item--highlighted,
+    .ui-combo-box
+        .ui-list-box__menu-item:first-child.ui-list-box-menu-item-highlighted,
+    .ui-combo-box
+        .ui-list-box__menu-item:first-child.ui-list-box__menu-item--highlighted {
+        outline: 2px solid transparent;
+        outline-offset: -2px;
     }
 
-    .ui-combo-button-trigger.ui-button {
-        border-start-start-radius: 0;
-        border-end-start-radius: 0;
+    /* ----------------------------------------------------------------------
+       Text input
+       ---------------------------------------------------------------------- */
+
+    .ui-combo-box .ui-text-input::-ms-clear {
+        display: none;
     }
 
-    .ui-combo-button-trigger svg {
-        transition: transform var(--ui-duration-fast-02)
-            var(--ui-motion-standard-productive);
+    .ui-combo-box.ui-list-box-expanded .ui-text-input,
+    .ui-combo-box.ui-list-box--expanded .ui-text-input {
+        border-block-end-color: var(--ui-border-subtle);
     }
 
-    .ui-combo-button-open .ui-combo-button-trigger svg {
-        transform: rotate(180deg);
+    .ui-combo-box-input-focus.ui-text-input,
+    .ui-combo-box--input--focus.ui-text-input {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
     }
 
-    .ui-combo-button-top,
-    .ui-combo-button-top-start,
-    .ui-combo-button-top-end {
-        transform: translate(0, calc(-100% - 3rem));
+    .ui-combo-box.ui-list-box-expanded:has(
+            input[aria-activedescendant]:not([aria-activedescendant=""])
+        )
+        .ui-combo-box-input-focus.ui-text-input,
+    .ui-combo-box.ui-list-box-expanded:has(
+            input[aria-activedescendant]:not([aria-activedescendant=""])
+        )
+        .ui-combo-box--input--focus.ui-text-input,
+    .ui-combo-box.ui-list-box--expanded:has(
+            input[aria-activedescendant]:not([aria-activedescendant=""])
+        )
+        .ui-combo-box-input-focus.ui-text-input,
+    .ui-combo-box.ui-list-box--expanded:has(
+            input[aria-activedescendant]:not([aria-activedescendant=""])
+        )
+        .ui-combo-box--input--focus.ui-text-input {
+        outline-width: 1px;
+        outline-offset: -1px;
+    }
+
+    /* ----------------------------------------------------------------------
+       List box field
+       ---------------------------------------------------------------------- */
+
+    .ui-combo-box .ui-list-box-field,
+    .ui-combo-box .ui-list-box__field,
+    .ui-combo-box.ui-list-box[data-invalid] .ui-list-box-field,
+    .ui-combo-box.ui-list-box[data-invalid] .ui-list-box__field,
+    .ui-combo-box.ui-list-box-warning .ui-list-box-field,
+    .ui-combo-box.ui-list-box-warning .ui-list-box__field,
+    .ui-combo-box.ui-list-box--warning .ui-list-box-field,
+    .ui-combo-box.ui-list-box--warning .ui-list-box__field,
+    .ui-combo-box.ui-list-box-disabled.ui-list-box[data-invalid]
+        .ui-list-box-field,
+    .ui-combo-box.ui-list-box-disabled.ui-list-box[data-invalid]
+        .ui-list-box__field,
+    .ui-combo-box.ui-list-box--disabled.ui-list-box[data-invalid]
+        .ui-list-box-field,
+    .ui-combo-box.ui-list-box--disabled.ui-list-box[data-invalid]
+        .ui-list-box__field,
+    .ui-combo-box.ui-list-box-disabled.ui-list-box-warning .ui-list-box-field,
+    .ui-combo-box.ui-list-box-disabled.ui-list-box-warning .ui-list-box__field,
+    .ui-combo-box.ui-list-box--disabled.ui-list-box--warning .ui-list-box-field,
+    .ui-combo-box.ui-list-box--disabled.ui-list-box--warning
+        .ui-list-box__field {
+        padding: 0;
+    }
+
+    /* ----------------------------------------------------------------------
+       Readonly
+       ---------------------------------------------------------------------- */
+
+    .ui-combo-box-readonly,
+    .ui-combo-box-readonly:hover,
+    .ui-combo-box--readonly,
+    .ui-combo-box--readonly:hover {
+        background-color: transparent;
+    }
+
+    .ui-combo-box-readonly .ui-text-input,
+    .ui-combo-box--readonly .ui-text-input {
+        border-block-end-color: var(--ui-border-subtle);
+    }
+
+    .ui-combo-box-readonly .ui-list-box-menu-icon,
+    .ui-combo-box-readonly .ui-list-box__menu-icon,
+    .ui-combo-box-readonly .ui-list-box-selection,
+    .ui-combo-box-readonly .ui-list-box__selection,
+    .ui-combo-box--readonly .ui-list-box-menu-icon,
+    .ui-combo-box--readonly .ui-list-box__menu-icon,
+    .ui-combo-box--readonly .ui-list-box-selection,
+    .ui-combo-box--readonly .ui-list-box__selection {
+        cursor: default;
+    }
+
+    .ui-combo-box-readonly .ui-list-box-menu-icon svg,
+    .ui-combo-box-readonly .ui-list-box__menu-icon svg,
+    .ui-combo-box-readonly .ui-list-box-selection svg,
+    .ui-combo-box-readonly .ui-list-box__selection svg,
+    .ui-combo-box--readonly .ui-list-box-menu-icon svg,
+    .ui-combo-box--readonly .ui-list-box__menu-icon svg,
+    .ui-combo-box--readonly .ui-list-box-selection svg,
+    .ui-combo-box--readonly .ui-list-box__selection svg {
+        fill: var(--ui-icon-disabled);
+    }
+
+    /* ----------------------------------------------------------------------
+       Forced colors
+       ---------------------------------------------------------------------- */
+
+    @media screen and (-ms-high-contrast: active), (forced-colors: active) {
+        .ui-combo-box:hover,
+        .ui-combo-box.ui-list-box-light:hover,
+        .ui-combo-box.ui-list-box--light:hover,
+        .ui-combo-box-readonly,
+        .ui-combo-box-readonly:hover,
+        .ui-combo-box--readonly,
+        .ui-combo-box--readonly:hover {
+            background-color: Canvas;
+            color: CanvasText;
+        }
+
+        .ui-combo-box
+            .ui-list-box-menu-item:first-child.ui-list-box-menu-item-highlighted::before,
+        .ui-combo-box
+            .ui-list-box-menu-item:first-child.ui-list-box__menu-item--highlighted::before,
+        .ui-combo-box
+            .ui-list-box__menu-item:first-child.ui-list-box-menu-item-highlighted::before,
+        .ui-combo-box
+            .ui-list-box__menu-item:first-child.ui-list-box__menu-item--highlighted::before,
+        .ui-combo-box-input-focus.ui-text-input,
+        .ui-combo-box--input--focus.ui-text-input {
+            border-color: Highlight;
+            outline-color: Highlight;
+        }
+
+        .ui-combo-box.ui-list-box-expanded .ui-text-input,
+        .ui-combo-box.ui-list-box--expanded .ui-text-input,
+        .ui-combo-box-readonly .ui-text-input,
+        .ui-combo-box--readonly .ui-text-input {
+            border-block-end-color: CanvasText;
+        }
+
+        .ui-combo-box-readonly .ui-list-box-menu-icon svg,
+        .ui-combo-box-readonly .ui-list-box__menu-icon svg,
+        .ui-combo-box-readonly .ui-list-box-selection svg,
+        .ui-combo-box-readonly .ui-list-box__selection svg,
+        .ui-combo-box--readonly .ui-list-box-menu-icon svg,
+        .ui-combo-box--readonly .ui-list-box__menu-icon svg,
+        .ui-combo-box--readonly .ui-list-box-selection svg,
+        .ui-combo-box--readonly .ui-list-box__selection svg {
+            fill: GrayText;
+        }
     }
 }

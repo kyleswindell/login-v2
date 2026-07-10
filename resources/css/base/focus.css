@@ -1,0 +1,83 @@
+/* ==========================================================================
+   File: resources/css/base/focus.css
+   Purpose: Focus outline utilities.
+   Notes:
+   - Defines reusable focus outline behavior only.
+   - Focus color is owned by active theme tokens.
+   - Support/error color is owned by active theme tokens.
+   ========================================================================== */
+
+@layer base {
+    /*
+     * Border focus.
+     * Equivalent to source focus-outline("border").
+     */
+    :where(.ui-focus-border):focus-visible,
+    :where(.ui-focus-outline-border):focus-visible {
+        outline: 1px solid var(--ui-focus);
+    }
+
+    /*
+     * Blurred focus.
+     * Equivalent to source focus-outline("blurred").
+     */
+    :where(.ui-focus-blurred):focus-visible,
+    :where(.ui-focus-outline-blurred):focus-visible {
+        outline: 1px solid transparent;
+        box-shadow: 0 0 0 3px var(--ui-focus);
+    }
+
+    /*
+     * Inset outline focus.
+     * Equivalent to source focus-outline("outline").
+     */
+    :where(.ui-focus-outline):focus-visible,
+    :where(.ui-focus-outline-inset):focus-visible {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+    }
+
+    /*
+     * Compatibility outline using border instead of outline.
+     * Equivalent to source focus-outline("outline-compat").
+     */
+    :where(.ui-focus-outline-compat):focus-visible {
+        box-sizing: border-box;
+        border: 2px solid var(--ui-focus);
+    }
+
+    /*
+     * Invalid focus.
+     * Equivalent to source focus-outline("invalid").
+     */
+    :where(.ui-focus-invalid):focus-visible,
+    :where(.ui-focus-outline-invalid):focus-visible {
+        outline: 2px solid var(--ui-support-error);
+        outline-offset: -2px;
+    }
+
+    /*
+     * Reset focus.
+     * Equivalent to source focus-outline("reset").
+     */
+    :where(.ui-focus-reset):focus-visible,
+    :where(.ui-focus-outline-reset):focus-visible {
+        outline: 2px solid transparent;
+        outline-offset: -2px;
+    }
+
+    @media screen and (prefers-contrast) {
+        :where(.ui-focus-border):focus-visible,
+        :where(.ui-focus-outline-border):focus-visible,
+        :where(.ui-focus-outline):focus-visible,
+        :where(.ui-focus-outline-inset):focus-visible,
+        :where(.ui-focus-invalid):focus-visible,
+        :where(.ui-focus-outline-invalid):focus-visible {
+            outline-style: dotted;
+        }
+
+        :where(.ui-focus-outline-compat):focus-visible {
+            border-style: dotted;
+        }
+    }
+}

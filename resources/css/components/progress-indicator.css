@@ -1,76 +1,488 @@
 /* ==========================================================================
-File: resources/css/components/progress-indicator.css
-Purpose: Progress Indicator component styles.
-Carbon reference:
+   File: resources/css/components/progress-indicator.css
+   Purpose: Progress Indicator component styles.
 
-* reference/carbon-main/packages/styles/scss/components/progress-indicator/
-
-Notes:
-
-* Defines Progress Indicator selectors only.
-* Do not define primitive palette tokens here.
-* Do not define theme role tokens here.
-* Progress state colors consume theme and status tokens.
-  ========================================================================== */
+   Notes:
+   - Defines Progress Indicator selectors only.
+   - Do not define primitive palette tokens here.
+   - Do not define theme role tokens here.
+   - Supports horizontal, vertical, space-equal, current, incomplete,
+     complete, disabled, warning/error, tooltip overflow, optional text,
+     skeleton, and unclickable step states.
+   ========================================================================== */
 
 @layer components {
-    .ui-progress-indicator {
+    /* ----------------------------------------------------------------------
+       Root
+       ---------------------------------------------------------------------- */
+
+    .ui-progress {
+        box-sizing: border-box;
         display: flex;
-        inline-size: 100%;
+        margin: 0;
+        border: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .ui-progress *,
+    .ui-progress *::before,
+    .ui-progress *::after {
+        box-sizing: inherit;
     }
 
     .ui-progress-step {
         position: relative;
+        display: inline-flex;
+        flex-direction: row;
+        overflow: visible;
+        inline-size: 8rem;
+        min-inline-size: 7rem;
+    }
+
+    .ui-progress-step .ui-tooltip-label,
+    .ui-progress-step .ui-tooltip__label {
+        display: block;
+    }
+
+    .ui-progress-space-equal .ui-progress-step,
+    .ui-progress--space-equal .ui-progress-step {
+        flex-grow: 1;
+        min-inline-size: 8rem;
+    }
+
+    /* ----------------------------------------------------------------------
+       Line
+       ---------------------------------------------------------------------- */
+
+    .ui-progress-line {
+        position: absolute;
+        inset-inline-start: 0;
+        inline-size: 8rem;
+        block-size: 2px;
+        border: 1px inset transparent;
+    }
+
+    .ui-progress-space-equal .ui-progress-line,
+    .ui-progress--space-equal .ui-progress-line {
+        inline-size: 100%;
+        min-inline-size: 8rem;
+    }
+
+    /* ----------------------------------------------------------------------
+       Icon
+       ---------------------------------------------------------------------- */
+
+    .ui-progress-step svg {
+        position: relative;
+        z-index: 1;
+        flex-shrink: 0;
+        inline-size: var(--ui-spacing-05);
+        block-size: var(--ui-spacing-05);
+        margin-block-start: 0.625rem;
+        margin-inline-end: var(--ui-spacing-03);
+        border-radius: 50%;
+        fill: var(--ui-interactive, var(--ui-border-interactive));
+    }
+
+    .ui-progress-warning > *,
+    .ui-progress__warning > * {
+        fill: var(--ui-support-error);
+    }
+
+    /* ----------------------------------------------------------------------
+       Text / label
+       ---------------------------------------------------------------------- */
+
+    .ui-progress-text {
         display: flex;
-        flex: 1 1 0;
         flex-direction: column;
-        gap: var(--ui-spacing-03);
+    }
+
+    .ui-progress-space-equal .ui-progress-text,
+    .ui-progress--space-equal .ui-progress-text {
+        overflow: hidden;
+        margin: calc(-1 * var(--ui-spacing-01));
+        padding: var(--ui-spacing-01);
+    }
+
+    .ui-progress-label {
+        display: block;
+        overflow: hidden;
+        max-inline-size: 5.5rem;
+        margin: var(--ui-spacing-03) 0 0;
+        color: var(--ui-text-primary);
+        font-size: var(--ui-type-body-compact-01-font-size);
+        font-weight: var(--ui-type-body-compact-01-font-weight);
+        line-height: 1.45;
+        letter-spacing: var(--ui-type-body-compact-01-letter-spacing);
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        transition:
+            box-shadow var(--ui-duration-fast-02)
+                var(--ui-motion-standard-productive),
+            color var(--ui-duration-fast-02)
+                var(--ui-motion-standard-productive);
+    }
+
+    .ui-progress-label::before {
+        display: block;
+        content: "";
+    }
+
+    .ui-progress-label:hover {
+        color: var(--ui-link-primary-hover, var(--ui-link-primary));
+        box-shadow: 0 1px var(--ui-link-primary-hover, var(--ui-link-primary));
+        cursor: pointer;
+    }
+
+    .ui-progress-space-equal .ui-progress-label,
+    .ui-progress--space-equal .ui-progress-label {
+        max-inline-size: 100%;
+        margin-inline-end: 0.75rem;
+    }
+
+    .ui-progress-optional {
+        position: absolute;
+        inset-inline-start: 0;
+        display: block;
+        margin-block-start: 1.75rem;
+        margin-inline-start: var(--ui-spacing-06);
         color: var(--ui-text-secondary);
         font-size: var(--ui-type-label-01-font-size);
+        font-weight: var(--ui-type-label-01-font-weight);
         line-height: var(--ui-type-label-01-line-height);
+        letter-spacing: var(--ui-type-label-01-letter-spacing);
+        text-align: start;
     }
 
-    .ui-progress-step::before {
-        content: "";
-        inline-size: 1rem;
-        block-size: 1rem;
-        border: 1px solid var(--ui-border-strong-01);
-        border-radius: 50%;
-        background-color: var(--ui-background);
+    /* ----------------------------------------------------------------------
+       Step button
+       ---------------------------------------------------------------------- */
+
+    .ui-progress-step-button {
+        box-sizing: border-box;
+        display: flex;
+        margin: 0;
+        border: 0;
+        padding: 0;
+        appearance: none;
+        background: none;
+        color: inherit;
+        cursor: pointer;
+        font: inherit;
+        text-align: start;
     }
 
-    .ui-progress-step::after {
-        content: "";
-        position: absolute;
-        inset-block-start: 0.5rem;
-        inset-inline-start: 1rem;
-        inline-size: calc(100% - 1rem);
-        block-size: 1px;
-        background-color: var(--ui-border-subtle-01);
+    .ui-progress-step-button::-moz-focus-inner {
+        border: 0;
     }
 
-    .ui-progress-step:last-child::after {
+    .ui-progress-step-button:focus {
+        outline: none;
+    }
+
+    .ui-progress-step-button:focus-visible .ui-progress-label {
+        color: var(--ui-focus);
+        outline: 1px solid var(--ui-focus);
+    }
+
+    .ui-progress-step-button:not(.ui-progress-step-button-unclickable):not(
+            .ui-progress-step-button--unclickable
+        )
+        .ui-progress-label:active {
+        color: var(--ui-text-primary);
+        box-shadow: 0 1px 0 0 var(--ui-text-primary);
+    }
+
+    .ui-progress-step-button-unclickable,
+    .ui-progress-step-button--unclickable {
+        cursor: default;
+        outline: none;
+    }
+
+    .ui-progress-step-button-unclickable .ui-progress-label:hover,
+    .ui-progress-step-button--unclickable .ui-progress-label:hover {
+        color: var(--ui-text-primary);
+        box-shadow: none;
+        cursor: default;
+    }
+
+    .ui-progress-step-button-unclickable .ui-tooltip-label:hover,
+    .ui-progress-step-button-unclickable .ui-tooltip__label:hover,
+    .ui-progress-step-button--unclickable .ui-tooltip-label:hover,
+    .ui-progress-step-button--unclickable .ui-tooltip__label:hover {
+        color: var(--ui-link-primary);
+        box-shadow: 0 1px var(--ui-link-primary);
+        cursor: pointer;
+    }
+
+    /* ----------------------------------------------------------------------
+       Tooltip overflow
+       ---------------------------------------------------------------------- */
+
+    .ui-progress-label-overflow:hover ~ .ui-tooltip,
+    .ui-progress-label-overflow:focus ~ .ui-tooltip {
+        visibility: inherit;
+    }
+
+    .ui-progress-step .ui-tooltip .ui-tooltip-caret,
+    .ui-progress-step .ui-tooltip .ui-tooltip__caret {
+        margin-inline-start: 0.625rem;
+    }
+
+    .ui-tooltip-text,
+    .ui-tooltip__text {
+        margin: 0;
+        padding: 0;
+        font-weight: normal;
+    }
+
+    .ui-progress-step .ui-tooltip {
+        display: block;
+        inline-size: 7.8125rem;
+        min-inline-size: 7.1875rem;
+        min-block-size: var(--ui-spacing-06);
+        margin-block-start: 2.5rem;
+        margin-inline-start: 1.375rem;
+        padding: var(--ui-spacing-03) var(--ui-spacing-05);
+        color: var(--ui-text-inverse);
+        font-size: var(--ui-type-body-01-font-size);
+        font-weight: var(--ui-type-body-01-font-weight);
+        line-height: var(--ui-type-body-01-line-height);
+        letter-spacing: var(--ui-type-body-01-letter-spacing);
+        visibility: hidden;
+    }
+
+    .ui-progress-step .ui-tooltip-multi,
+    .ui-progress-step .ui-tooltip_multi {
+        inline-size: 9.375rem;
+        block-size: auto;
+        color: var(--ui-text-inverse);
+        font-size: var(--ui-type-body-01-font-size);
+        font-weight: var(--ui-type-body-01-font-weight);
+        line-height: var(--ui-type-body-01-line-height);
+        letter-spacing: var(--ui-type-body-01-letter-spacing);
+    }
+
+    /* ----------------------------------------------------------------------
+       Current / incomplete / complete states
+       ---------------------------------------------------------------------- */
+
+    .ui-progress-step-current .ui-progress-line,
+    .ui-progress-step--current .ui-progress-line {
+        background-color: var(--ui-interactive, var(--ui-border-interactive));
+    }
+
+    .ui-progress-step-incomplete svg,
+    .ui-progress-step--incomplete svg {
+        fill: var(--ui-icon-primary);
+    }
+
+    .ui-progress-step-incomplete .ui-progress-line,
+    .ui-progress-step--incomplete .ui-progress-line {
+        background-color: var(--ui-border-subtle);
+    }
+
+    .ui-progress-step-complete .ui-progress-line,
+    .ui-progress-step--complete .ui-progress-line {
+        background-color: var(--ui-interactive, var(--ui-border-interactive));
+    }
+
+    /* ----------------------------------------------------------------------
+       Disabled state
+       ---------------------------------------------------------------------- */
+
+    .ui-progress-step-disabled,
+    .ui-progress-step--disabled {
+        cursor: not-allowed;
+        pointer-events: none;
+    }
+
+    .ui-progress-step-disabled svg,
+    .ui-progress-step--disabled svg {
+        cursor: not-allowed;
+        fill: var(--ui-icon-disabled);
+    }
+
+    .ui-progress-step-disabled .ui-progress-label,
+    .ui-progress-step-disabled .ui-progress-label:hover,
+    .ui-progress-step--disabled .ui-progress-label,
+    .ui-progress-step--disabled .ui-progress-label:hover {
+        color: var(--ui-text-disabled);
+        box-shadow: none;
+        cursor: not-allowed;
+    }
+
+    .ui-progress-step-disabled .ui-progress-line,
+    .ui-progress-step--disabled .ui-progress-line {
+        cursor: not-allowed;
+    }
+
+    .ui-progress-step-disabled
+        .ui-progress-label-overflow:hover
+        ~ .ui-tooltip-definition
+        .ui-tooltip-definition-bottom,
+    .ui-progress-step-disabled
+        .ui-progress-label-overflow:hover
+        ~ .ui-tooltip--definition
+        .ui-tooltip--definition__bottom,
+    .ui-progress-step--disabled
+        .ui-progress-label-overflow:hover
+        ~ .ui-tooltip-definition
+        .ui-tooltip-definition-bottom,
+    .ui-progress-step--disabled
+        .ui-progress-label-overflow:hover
+        ~ .ui-tooltip--definition
+        .ui-tooltip--definition__bottom {
         display: none;
     }
 
-    .ui-progress-step-current {
-        color: var(--ui-text-primary);
+    /* ----------------------------------------------------------------------
+       Skeleton state
+       ---------------------------------------------------------------------- */
+
+    .ui-progress.ui-skeleton .ui-progress-label,
+    .ui-progress-skeleton .ui-progress-label {
+        position: relative;
+        overflow: hidden;
+        inline-size: 2.5rem;
+        block-size: 0.875rem;
+        margin-block-start: 0.625rem;
+        background-color: var(--ui-skeleton-element);
+        color: transparent;
     }
 
-    .ui-progress-step-current::before {
-        border-color: var(--ui-border-interactive);
-        box-shadow: inset 0 0 0 3px var(--ui-background);
-        background-color: var(--ui-border-interactive);
+    .ui-progress.ui-skeleton .ui-progress-label::before,
+    .ui-progress-skeleton .ui-progress-label::before {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+            90deg,
+            transparent,
+            var(--ui-skeleton-background, rgb(255 255 255 / 0.18)),
+            transparent
+        );
+        content: "";
+        animation: ui-skeleton-shimmer 1.5s infinite linear;
     }
 
-    .ui-progress-step-complete::before,
-    .ui-progress-step-complete::after {
-        border-color: var(--ui-support-success);
-        background-color: var(--ui-support-success);
+    .ui-progress.ui-progress-vertical.ui-skeleton .ui-progress-label,
+    .ui-progress.ui-progress--vertical.ui-skeleton .ui-progress-label,
+    .ui-progress-skeleton.ui-progress-vertical .ui-progress-label,
+    .ui-progress-skeleton.ui-progress--vertical .ui-progress-label {
+        margin-block-start: 0.0625rem;
     }
 
-    .ui-progress-step-invalid::before {
-        border-color: var(--ui-support-error);
-        background-color: var(--ui-support-error);
+    /* ----------------------------------------------------------------------
+       Vertical variant
+       ---------------------------------------------------------------------- */
+
+    .ui-progress-vertical,
+    .ui-progress--vertical {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .ui-progress-vertical .ui-progress-step,
+    .ui-progress-vertical .ui-progress-step-button,
+    .ui-progress--vertical .ui-progress-step,
+    .ui-progress--vertical .ui-progress-step-button {
+        align-content: flex-start;
+        inline-size: initial;
+        min-inline-size: initial;
+        min-block-size: 3.625rem;
+    }
+
+    .ui-progress-vertical .ui-progress-step svg,
+    .ui-progress-vertical .ui-progress-step-button svg,
+    .ui-progress--vertical .ui-progress-step svg,
+    .ui-progress--vertical .ui-progress-step-button svg {
+        display: inline-block;
+        margin: 0.0625rem var(--ui-spacing-03) 0;
+    }
+
+    .ui-progress-vertical .ui-progress-label,
+    .ui-progress--vertical .ui-progress-label {
+        display: inline-block;
+        inline-size: initial;
+        max-inline-size: 10rem;
+        margin: 0;
+        vertical-align: top;
+        white-space: initial;
+    }
+
+    .ui-progress-vertical .ui-progress-step .ui-tooltip,
+    .ui-progress--vertical .ui-progress-step .ui-tooltip {
+        margin-block-start: 0.5rem;
+    }
+
+    .ui-progress-vertical .ui-progress-optional,
+    .ui-progress--vertical .ui-progress-optional {
+        position: static;
+        inline-size: 100%;
+        margin: 0 0 auto;
+    }
+
+    .ui-progress-vertical .ui-progress-line,
+    .ui-progress--vertical .ui-progress-line {
+        position: absolute;
+        inset-block-start: 0;
+        inset-inline-start: 0;
+        inline-size: 1px;
+        block-size: 100%;
+    }
+
+    /* ----------------------------------------------------------------------
+       Reduced motion
+       ---------------------------------------------------------------------- */
+
+    @media (prefers-reduced-motion: reduce) {
+        .ui-progress-label,
+        .ui-progress.ui-skeleton .ui-progress-label::before,
+        .ui-progress-skeleton .ui-progress-label::before {
+            animation: none;
+            transition: none;
+        }
+    }
+
+    /* ----------------------------------------------------------------------
+       Forced colors
+       ---------------------------------------------------------------------- */
+
+    @media screen and (-ms-high-contrast: active), (forced-colors: active) {
+        .ui-progress-step svg {
+            fill: ButtonText;
+        }
+
+        .ui-progress-step-current .ui-progress-line,
+        .ui-progress-step--current .ui-progress-line,
+        .ui-progress-step-complete .ui-progress-line,
+        .ui-progress-step--complete .ui-progress-line {
+            background-color: Highlight;
+        }
+
+        .ui-progress-step-incomplete .ui-progress-line,
+        .ui-progress-step--incomplete .ui-progress-line {
+            background-color: CanvasText;
+        }
+
+        .ui-progress-step-disabled svg,
+        .ui-progress-step--disabled svg,
+        .ui-progress-step-disabled .ui-progress-label,
+        .ui-progress-step--disabled .ui-progress-label {
+            color: GrayText;
+            fill: GrayText;
+        }
+
+        .ui-progress-step-button:focus-visible .ui-progress-label {
+            color: Highlight;
+            outline-color: Highlight;
+        }
+
+        .ui-progress-warning > *,
+        .ui-progress__warning > * {
+            fill: Mark;
+        }
     }
 }

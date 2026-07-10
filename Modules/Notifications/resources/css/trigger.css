@@ -1,0 +1,76 @@
+/* ==========================================================================
+   File: Modules/Notifications/resources/css/notifications/trigger.css
+   Purpose: Header notification trigger and unread badge styles.
+
+   Notes:
+   - Generic header action sizing remains in header-actions.css.
+   - Notification popover sizing lives in notifications/popover.css.
+   - This file only owns notification-specific trigger state and badge placement.
+   ========================================================================== */
+
+@layer components {
+    /* ----------------------------------------------------------------------
+       Header trigger button
+       ---------------------------------------------------------------------- */
+
+    .ui-shell-notifications-menu__trigger {
+        color: var(--ui-icon-secondary);
+        outline: var(--ui-shell-focus-outline-width) solid transparent;
+        outline-offset: var(--ui-shell-focus-outline-offset);
+        transition:
+            background-color var(--ui-shell-transition-standard),
+            color var(--ui-shell-transition-standard),
+            outline var(--ui-shell-transition-standard);
+    }
+
+    .ui-shell-notifications-menu__trigger:hover {
+        background-color: var(--ui-background-hover);
+        color: var(--ui-icon-primary);
+    }
+
+    .ui-shell-notifications-menu__trigger:focus-visible {
+        outline: var(--ui-shell-focus-outline-width) solid var(--ui-focus);
+        outline-offset: var(--ui-shell-focus-outline-offset);
+    }
+
+    .ui-shell-notifications-menu__trigger[aria-expanded="true"] {
+        background-color: var(--ui-layer);
+        color: var(--ui-icon-primary);
+    }
+
+    .ui-shell-notifications-menu__trigger > svg,
+    .ui-shell-notifications-menu__trigger .ui-icon {
+        display: block;
+        inline-size: var(--ui-shell-header-action-icon-size);
+        block-size: var(--ui-shell-header-action-icon-size);
+        fill: currentColor;
+    }
+
+    /* ----------------------------------------------------------------------
+       Header unread badge
+       ---------------------------------------------------------------------- */
+
+    .ui-shell-header__notification-badge {
+        position: absolute;
+        inset-block-start: var(--ui-shell-header-notification-badge-offset);
+        inset-inline-end: var(--ui-shell-header-notification-badge-offset);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-inline-size: var(--ui-shell-header-notification-badge-size);
+        block-size: var(--ui-shell-header-notification-badge-size);
+        border-radius: 999px;
+        background-color: var(--ui-support-error);
+        color: var(--ui-text-inverse);
+        font-size: var(--ui-shell-header-notification-badge-font-size);
+        font-weight: var(--ui-font-weight-semibold);
+        line-height: 1;
+        pointer-events: none;
+    }
+
+    .ui-shell-header__notification-badge.hidden,
+    .ui-shell-header__notification-badge[hidden],
+    .ui-shell-header__notification-badge[data-notification-trigger-badge-hidden="true"] {
+        display: none;
+    }
+}

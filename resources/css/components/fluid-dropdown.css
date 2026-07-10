@@ -1,0 +1,13 @@
+/* ==========================================================================
+   File: resources/css/components/fluid-dropdown.css
+   Purpose: Fluid Dropdown variant placeholder.
+
+   Notes:
+   - No additional styles are required for Fluid Dropdown.
+   - Fluid Dropdown behavior is provided by dropdown.css and fluid-list-box.css.
+   - Keep this file only as an explicit component-family placeholder.
+   ========================================================================== */
+
+@layer components {
+    /* Intentionally empty. */
+}

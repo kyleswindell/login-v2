@@ -1,71 +1,477 @@
 /* ==========================================================================
-File: resources/css/components/form.css
-Purpose: Form component foundation styles.
-Carbon reference:
+   File: resources/css/components/form.css
+   Purpose: Form component styles.
 
-* reference/carbon-main/packages/styles/scss/components/form/
-
-Notes:
-
-* Defines Form foundation selectors only.
-* Do not define primitive palette tokens here.
-* Do not define theme role tokens here.
-* Control-specific rendering belongs in the owning control file.
-  ========================================================================== */
+   Notes:
+   - Defines Form selectors only.
+   - Do not define primitive palette tokens here.
+   - Do not define theme role tokens here.
+   - Supports fieldset, form item, label, label tooltip,
+     toggletip label, helper text, disabled labels/helper text,
+     validation requirements, warning requirements, inline select
+     requirements, fluid forms, skeleton label, autofill override,
+     and Firefox invalid-ring normalization.
+   ========================================================================== */
 
 @layer components {
-    .ui-field {
-        display: block;
-        min-inline-size: 0;
+    /* ----------------------------------------------------------------------
+       Browser autofill override
+       ---------------------------------------------------------------------- */
+
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    textarea:-webkit-autofill,
+    textarea:-webkit-autofill:hover,
+    textarea:-webkit-autofill:focus {
+        box-shadow: 0 0 0 1000px var(--ui-field) inset;
+        -webkit-text-fill-color: var(--ui-text-primary);
     }
 
     /* ----------------------------------------------------------------------
-   Form item and fieldset
-   ---------------------------------------------------------------------- */
+       Fieldset
+       ---------------------------------------------------------------------- */
 
     .ui-fieldset {
-        min-inline-size: 0;
+        box-sizing: border-box;
         margin: 0;
         border: 0;
         padding: 0;
+        font: inherit;
+        vertical-align: baseline;
     }
+
+    /* ----------------------------------------------------------------------
+       Form item
+       ---------------------------------------------------------------------- */
 
     .ui-form-item {
         display: flex;
         flex: 1 1 auto;
         flex-direction: column;
         align-items: flex-start;
-        min-inline-size: 0;
+        color: var(--ui-text-primary);
         font-size: var(--ui-type-body-compact-01-font-size);
         font-weight: var(--ui-type-body-compact-01-font-weight);
         line-height: var(--ui-type-body-compact-01-line-height);
         letter-spacing: var(--ui-type-body-compact-01-letter-spacing);
     }
 
-    .ui-form-fluid .ui-form-item {
-        inline-size: 100%;
-    }
-
     /* ----------------------------------------------------------------------
-   Labels and helper text
-   ---------------------------------------------------------------------- */
+       Label
+       ---------------------------------------------------------------------- */
 
     .ui-label {
         display: inline-block;
-        margin: 0 0 var(--ui-spacing-03);
+        box-sizing: border-box;
+        margin: 0;
+        margin-block-end: var(--ui-spacing-03);
+        border: 0;
+        padding: 0;
         color: var(--ui-text-secondary);
         font-size: var(--ui-type-label-01-font-size);
-        font-weight: var(--ui-type-label-01-font-weight);
+        font-weight: var(--ui-input-label-weight, 400);
         line-height: 1rem;
         letter-spacing: var(--ui-type-label-01-letter-spacing);
         vertical-align: baseline;
     }
 
-    .ui-label-no-margin {
+    .ui-label .ui-toggletip-label {
+        font-size: var(--ui-type-label-01-font-size);
+        font-weight: var(--ui-type-label-01-font-weight);
+        line-height: var(--ui-type-label-01-line-height);
+        letter-spacing: var(--ui-type-label-01-letter-spacing);
+    }
+
+    .ui-label-no-margin,
+    .ui-label--no-margin {
         margin-block-end: 0;
     }
 
-    .ui-helper-text {
+    /* ----------------------------------------------------------------------
+       Label tooltip and toggletip
+       ---------------------------------------------------------------------- */
+
+    .ui-label + .ui-tooltip {
+        position: relative;
+        inset-block-start: 0.2rem;
+        inset-inline-start: 0.5rem;
+    }
+
+    .ui-label + .ui-tooltip .ui-tooltip-trigger,
+    .ui-label + .ui-tooltip .ui-tooltip__trigger {
+        display: flex;
+        box-sizing: border-box;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+        border: 0;
+        padding: 0;
+        background: none;
+        color: inherit;
+        cursor: pointer;
+        font: inherit;
+        font-size: var(--ui-type-label-01-font-size);
+        font-weight: var(--ui-type-label-01-font-weight);
+        line-height: var(--ui-type-label-01-line-height);
+        letter-spacing: var(--ui-type-label-01-letter-spacing);
+        text-align: inherit;
+        vertical-align: baseline;
+        appearance: none;
+    }
+
+    .ui-label + .ui-tooltip .ui-tooltip-trigger:focus,
+    .ui-label + .ui-tooltip .ui-tooltip__trigger:focus {
+        outline: 1px solid var(--ui-focus);
+    }
+
+    .ui-label + .ui-tooltip .ui-tooltip-trigger svg,
+    .ui-label + .ui-tooltip .ui-tooltip__trigger svg {
+        fill: var(--ui-icon-secondary);
+    }
+
+    .ui-label + .ui-tooltip .ui-tooltip-trigger svg :hover,
+    .ui-label + .ui-tooltip .ui-tooltip__trigger svg :hover {
+        fill: var(--ui-icon-primary);
+    }
+
+    .ui-label + .ui-toggletip {
+        inset-block-start: 0.2rem;
+        inset-inline-start: 0.5rem;
+    }
+
+    /* ----------------------------------------------------------------------
+       Label skeleton
+       ---------------------------------------------------------------------- */
+
+    .ui-label.ui-skeleton {
+        position: relative;
+        overflow: hidden;
+        inline-size: 4.6875rem;
+        block-size: 0.875rem;
+        background-color: var(--ui-skeleton-background);
+        color: transparent;
+    }
+
+    .ui-label.ui-skeleton::before {
+        position: absolute;
+        inset: 0;
+        background: var(--ui-skeleton-element);
+        content: "";
+        animation: ui-form-skeleton-pulse 3000ms ease-in-out infinite;
+    }
+
+    @keyframes ui-form-skeleton-pulse {
+        0% {
+            opacity: 0.3;
+        }
+
+        50% {
+            opacity: 1;
+        }
+
+        100% {
+            opacity: 0.3;
+        }
+    }
+
+    /* ----------------------------------------------------------------------
+       Input font normalization
+       ---------------------------------------------------------------------- */
+
+    input[type="number"],
+    input[type="text"].ui-number {
+        font-family: var(--ui-font-family-sans);
+    }
+
+    /* ----------------------------------------------------------------------
+       Invalid focus outline
+       ---------------------------------------------------------------------- */
+
+    input[data-invalid]:not(:focus),
+    .ui-number[data-invalid] input[type="number"]:not(:focus),
+    .ui-number[data-invalid] input[type="text"]:not(:focus),
+    .ui-text-input-field-wrapper[data-invalid]
+        > .ui-text-input-invalid:not(:focus),
+    .ui-text-input-field-wrapper[data-invalid]
+        > .ui-text-input--invalid:not(:focus),
+    .ui-text-input__field-wrapper[data-invalid]
+        > .ui-text-input-invalid:not(:focus),
+    .ui-text-input__field-wrapper[data-invalid]
+        > .ui-text-input--invalid:not(:focus),
+    .ui-text-area-wrapper[data-invalid] > .ui-text-area-invalid:not(:focus),
+    .ui-text-area-wrapper[data-invalid] > .ui-text-area--invalid:not(:focus),
+    .ui-text-area__wrapper[data-invalid] > .ui-text-area-invalid:not(:focus),
+    .ui-text-area__wrapper[data-invalid] > .ui-text-area--invalid:not(:focus),
+    .ui-select-input-wrapper[data-invalid] .ui-select-input:not(:focus),
+    .ui-select-input__wrapper[data-invalid] .ui-select-input:not(:focus),
+    .ui-list-box[data-invalid]:not(
+            .ui-multi-select-invalid-focused,
+            .ui-multi-select--invalid--focused,
+            .ui-combo-box-invalid-focused,
+            .ui-combo-box--invalid--focused
+        ),
+    .ui-combo-box[data-invalid]:not(.ui-multi-select-selected):not(
+            .ui-multi-select--selected
+        )
+        .ui-text-input:not(:focus) {
+        outline: 2px solid var(--ui-support-error);
+        outline-offset: -2px;
+    }
+
+    /* ----------------------------------------------------------------------
+       Requirement visibility
+       ---------------------------------------------------------------------- */
+
+    input[data-invalid] ~ .ui-form-requirement,
+    .ui-number[data-invalid] .ui-number-input-wrapper ~ .ui-form-requirement,
+    .ui-number[data-invalid] .ui-number__input-wrapper ~ .ui-form-requirement,
+    .ui-number-input-wrapper-warning ~ .ui-form-requirement,
+    .ui-number__input-wrapper--warning ~ .ui-form-requirement,
+    .ui-date-picker-input-wrapper ~ .ui-form-requirement,
+    .ui-date-picker-input__wrapper ~ .ui-form-requirement,
+    .ui-date-picker-input-wrapper-warn ~ .ui-form-requirement,
+    .ui-date-picker-input__wrapper--warn ~ .ui-form-requirement,
+    .ui-date-picker-input-wrapper-invalid ~ .ui-form-requirement,
+    .ui-date-picker-input__wrapper--invalid ~ .ui-form-requirement,
+    .ui-time-picker-invalid ~ .ui-form-requirement,
+    .ui-time-picker--invalid ~ .ui-form-requirement,
+    .ui-time-picker-warning ~ .ui-form-requirement,
+    .ui-time-picker--warning ~ .ui-form-requirement,
+    .ui-text-input-field-wrapper[data-invalid] ~ .ui-form-requirement,
+    .ui-text-input__field-wrapper[data-invalid] ~ .ui-form-requirement,
+    .ui-text-input-field-wrapper-warning ~ .ui-form-requirement,
+    .ui-text-input__field-wrapper--warning ~ .ui-form-requirement,
+    .ui-text-input-field-wrapper-warning
+        > .ui-text-input
+        ~ .ui-form-requirement,
+    .ui-text-input__field-wrapper--warning
+        > .ui-text-input
+        ~ .ui-form-requirement,
+    .ui-text-area-wrapper[data-invalid] ~ .ui-form-requirement,
+    .ui-text-area__wrapper[data-invalid] ~ .ui-form-requirement,
+    .ui-text-area-wrapper-warn ~ .ui-form-requirement,
+    .ui-text-area__wrapper--warn ~ .ui-form-requirement,
+    .ui-select-input-wrapper[data-invalid] ~ .ui-form-requirement,
+    .ui-select-input__wrapper[data-invalid] ~ .ui-form-requirement,
+    .ui-select-warning .ui-select-input-wrapper ~ .ui-form-requirement,
+    .ui-select-warning .ui-select-input__wrapper ~ .ui-form-requirement,
+    .ui-select--warning .ui-select-input-wrapper ~ .ui-form-requirement,
+    .ui-select--warning .ui-select-input__wrapper ~ .ui-form-requirement,
+    .ui-time-picker[data-invalid] ~ .ui-form-requirement,
+    .ui-list-box[data-invalid] ~ .ui-form-requirement,
+    .ui-list-box-warning ~ .ui-form-requirement,
+    .ui-list-box--warning ~ .ui-form-requirement {
+        display: block;
+        overflow: visible;
+        max-block-size: 12.5rem;
+        font-weight: 400;
+    }
+
+    input[data-invalid] ~ .ui-form__requirement,
+    .ui-number[data-invalid] .ui-number-input-wrapper ~ .ui-form__requirement,
+    .ui-number[data-invalid] .ui-number__input-wrapper ~ .ui-form__requirement,
+    .ui-number-input-wrapper-warning ~ .ui-form__requirement,
+    .ui-number__input-wrapper--warning ~ .ui-form__requirement,
+    .ui-date-picker-input-wrapper ~ .ui-form__requirement,
+    .ui-date-picker-input__wrapper ~ .ui-form__requirement,
+    .ui-date-picker-input-wrapper-warn ~ .ui-form__requirement,
+    .ui-date-picker-input__wrapper--warn ~ .ui-form__requirement,
+    .ui-date-picker-input-wrapper-invalid ~ .ui-form__requirement,
+    .ui-date-picker-input__wrapper--invalid ~ .ui-form__requirement,
+    .ui-time-picker-invalid ~ .ui-form__requirement,
+    .ui-time-picker--invalid ~ .ui-form__requirement,
+    .ui-time-picker-warning ~ .ui-form__requirement,
+    .ui-time-picker--warning ~ .ui-form__requirement,
+    .ui-text-input-field-wrapper[data-invalid] ~ .ui-form__requirement,
+    .ui-text-input__field-wrapper[data-invalid] ~ .ui-form__requirement,
+    .ui-text-input-field-wrapper-warning ~ .ui-form__requirement,
+    .ui-text-input__field-wrapper--warning ~ .ui-form__requirement,
+    .ui-text-input-field-wrapper-warning
+        > .ui-text-input
+        ~ .ui-form__requirement,
+    .ui-text-input__field-wrapper--warning
+        > .ui-text-input
+        ~ .ui-form__requirement,
+    .ui-text-area-wrapper[data-invalid] ~ .ui-form__requirement,
+    .ui-text-area__wrapper[data-invalid] ~ .ui-form__requirement,
+    .ui-text-area-wrapper-warn ~ .ui-form__requirement,
+    .ui-text-area__wrapper--warn ~ .ui-form__requirement,
+    .ui-select-input-wrapper[data-invalid] ~ .ui-form__requirement,
+    .ui-select-input__wrapper[data-invalid] ~ .ui-form__requirement,
+    .ui-select-warning .ui-select-input-wrapper ~ .ui-form__requirement,
+    .ui-select-warning .ui-select-input__wrapper ~ .ui-form__requirement,
+    .ui-select--warning .ui-select-input-wrapper ~ .ui-form__requirement,
+    .ui-select--warning .ui-select-input__wrapper ~ .ui-form__requirement,
+    .ui-time-picker[data-invalid] ~ .ui-form__requirement,
+    .ui-list-box[data-invalid] ~ .ui-form__requirement,
+    .ui-list-box-warning ~ .ui-form__requirement,
+    .ui-list-box--warning ~ .ui-form__requirement {
+        display: block;
+        overflow: visible;
+        max-block-size: 12.5rem;
+        font-weight: 400;
+    }
+
+    /* ----------------------------------------------------------------------
+       Inline select requirement
+       ---------------------------------------------------------------------- */
+
+    .ui-select-inline.ui-select-warning
+        .ui-select-input-inline-wrapper
+        ~ .ui-form-requirement,
+    .ui-select-inline.ui-select-warning
+        .ui-select-input--inline__wrapper
+        ~ .ui-form-requirement,
+    .ui-select--inline.ui-select--warning
+        .ui-select-input-inline-wrapper
+        ~ .ui-form-requirement,
+    .ui-select--inline.ui-select--warning
+        .ui-select-input--inline__wrapper
+        ~ .ui-form-requirement,
+    .ui-select-input-inline-wrapper[data-invalid] ~ .ui-form-requirement,
+    .ui-select-input--inline__wrapper[data-invalid] ~ .ui-form-requirement,
+    .ui-select-inline.ui-select-warning
+        .ui-select-input-inline-wrapper
+        ~ .ui-form__requirement,
+    .ui-select-inline.ui-select-warning
+        .ui-select-input--inline__wrapper
+        ~ .ui-form__requirement,
+    .ui-select--inline.ui-select--warning
+        .ui-select-input-inline-wrapper
+        ~ .ui-form__requirement,
+    .ui-select--inline.ui-select--warning
+        .ui-select-input--inline__wrapper
+        ~ .ui-form__requirement,
+    .ui-select-input-inline-wrapper[data-invalid] ~ .ui-form__requirement,
+    .ui-select-input--inline__wrapper[data-invalid] ~ .ui-form__requirement {
+        display: inline-flex;
+        overflow: visible;
+        inline-size: 100%;
+        max-block-size: 100%;
+        margin: 0;
+        margin-block-end: 0;
+        padding-inline-start: var(--ui-spacing-03);
+    }
+
+    /* ----------------------------------------------------------------------
+       Invalid requirement color
+       ---------------------------------------------------------------------- */
+
+    input[data-invalid] ~ .ui-form-requirement,
+    .ui-number[data-invalid] .ui-number-input-wrapper ~ .ui-form-requirement,
+    .ui-number[data-invalid] .ui-number__input-wrapper ~ .ui-form-requirement,
+    .ui-date-picker-input-wrapper ~ .ui-form-requirement,
+    .ui-date-picker-input__wrapper ~ .ui-form-requirement,
+    .ui-date-picker-input-wrapper-invalid ~ .ui-form-requirement,
+    .ui-date-picker-input__wrapper--invalid ~ .ui-form-requirement,
+    .ui-time-picker-invalid ~ .ui-form-requirement,
+    .ui-time-picker--invalid ~ .ui-form-requirement,
+    .ui-text-input-field-wrapper[data-invalid] ~ .ui-form-requirement,
+    .ui-text-input__field-wrapper[data-invalid] ~ .ui-form-requirement,
+    .ui-text-area-wrapper[data-invalid] ~ .ui-form-requirement,
+    .ui-text-area__wrapper[data-invalid] ~ .ui-form-requirement,
+    .ui-select-input-wrapper[data-invalid] ~ .ui-form-requirement,
+    .ui-select-input__wrapper[data-invalid] ~ .ui-form-requirement,
+    .ui-time-picker[data-invalid] ~ .ui-form-requirement,
+    .ui-list-box[data-invalid] ~ .ui-form-requirement,
+    .ui-select-input-inline-wrapper[data-invalid] ~ .ui-form-requirement,
+    .ui-select-input--inline__wrapper[data-invalid] ~ .ui-form-requirement,
+    input[data-invalid] ~ .ui-form__requirement,
+    .ui-number[data-invalid] .ui-number-input-wrapper ~ .ui-form__requirement,
+    .ui-number[data-invalid] .ui-number__input-wrapper ~ .ui-form__requirement,
+    .ui-date-picker-input-wrapper ~ .ui-form__requirement,
+    .ui-date-picker-input__wrapper ~ .ui-form__requirement,
+    .ui-date-picker-input-wrapper-invalid ~ .ui-form__requirement,
+    .ui-date-picker-input__wrapper--invalid ~ .ui-form__requirement,
+    .ui-time-picker-invalid ~ .ui-form__requirement,
+    .ui-time-picker--invalid ~ .ui-form__requirement,
+    .ui-text-input-field-wrapper[data-invalid] ~ .ui-form__requirement,
+    .ui-text-input__field-wrapper[data-invalid] ~ .ui-form__requirement,
+    .ui-text-area-wrapper[data-invalid] ~ .ui-form__requirement,
+    .ui-text-area__wrapper[data-invalid] ~ .ui-form__requirement,
+    .ui-select-input-wrapper[data-invalid] ~ .ui-form__requirement,
+    .ui-select-input__wrapper[data-invalid] ~ .ui-form__requirement,
+    .ui-time-picker[data-invalid] ~ .ui-form__requirement,
+    .ui-list-box[data-invalid] ~ .ui-form__requirement,
+    .ui-select-input-inline-wrapper[data-invalid] ~ .ui-form__requirement,
+    .ui-select-input--inline__wrapper[data-invalid] ~ .ui-form__requirement {
+        color: var(--ui-text-error);
+    }
+
+    /* ----------------------------------------------------------------------
+       Fluid form
+       ---------------------------------------------------------------------- */
+
+    .ui-form-fluid .ui-text-input-field-wrapper[data-invalid],
+    .ui-form-fluid .ui-text-input-field-wrapper-warning,
+    .ui-form-fluid .ui-text-input__field-wrapper[data-invalid],
+    .ui-form-fluid .ui-text-input__field-wrapper--warning,
+    .ui-form--fluid .ui-text-input-field-wrapper[data-invalid],
+    .ui-form--fluid .ui-text-input-field-wrapper-warning,
+    .ui-form--fluid .ui-text-input__field-wrapper[data-invalid],
+    .ui-form--fluid .ui-text-input__field-wrapper--warning {
+        display: block;
+    }
+
+    .ui-form-fluid input[data-invalid],
+    .ui-form--fluid input[data-invalid] {
+        outline: none;
+    }
+
+    .ui-form-fluid .ui-form-requirement,
+    .ui-form-fluid .ui-form__requirement,
+    .ui-form--fluid .ui-form-requirement,
+    .ui-form--fluid .ui-form__requirement {
+        margin: 0;
+        padding: var(--ui-spacing-03) 2.5rem var(--ui-spacing-03)
+            var(--ui-spacing-05);
+    }
+
+    /* ----------------------------------------------------------------------
+       Firefox invalid-ring normalization
+       ---------------------------------------------------------------------- */
+
+    input:not(output, [data-invalid]):-moz-ui-invalid {
+        box-shadow: none;
+    }
+
+    /* ----------------------------------------------------------------------
+       Form requirement
+       ---------------------------------------------------------------------- */
+
+    .ui-form-requirement,
+    .ui-form__requirement {
+        display: none;
+        overflow: hidden;
+        box-sizing: border-box;
+        max-block-size: 0;
+        margin: var(--ui-spacing-02) 0 0;
+        border: 0;
+        padding: 0;
+        color: var(--ui-text-helper);
+        font-size: var(--ui-type-helper-text-01-font-size);
+        font-weight: var(--ui-type-helper-text-01-font-weight);
+        line-height: var(--ui-type-helper-text-01-line-height);
+        letter-spacing: var(--ui-type-helper-text-01-letter-spacing);
+        overflow-wrap: break-word;
+        vertical-align: baseline;
+        word-break: break-word;
+    }
+
+    /* ----------------------------------------------------------------------
+       Helper text
+       ---------------------------------------------------------------------- */
+
+    .ui-select-inline .ui-form-helper-text,
+    .ui-select-inline .ui-form__helper-text,
+    .ui-select--inline .ui-form-helper-text,
+    .ui-select--inline .ui-form__helper-text {
+        margin-block-start: 0;
+    }
+
+    .ui-form-helper-text,
+    .ui-form__helper-text {
         z-index: 0;
         inline-size: 100%;
         margin-block-start: var(--ui-spacing-02);
@@ -77,89 +483,27 @@ Notes:
         opacity: 1;
     }
 
-    .ui-field-label {
-        display: inline-block;
-        margin-block-end: var(--ui-spacing-03);
-        color: var(--ui-text-secondary);
-        font-size: var(--ui-type-label-01-font-size);
-        font-weight: var(--ui-type-label-01-font-weight);
-        line-height: var(--ui-type-label-01-line-height);
-        letter-spacing: var(--ui-type-label-01-letter-spacing);
-    }
-
-    .ui-field-required,
-    .ui-field-label-indicator {
-        color: var(--ui-text-helper);
-        font-weight: var(--ui-font-weight-regular);
-    }
-
-    .ui-field-helper,
-    .ui-field-error,
-    .ui-field-warning {
-        inline-size: 100%;
-        margin-block-start: var(--ui-spacing-02);
-        color: var(--ui-text-helper);
-        font-size: var(--ui-type-helper-text-01-font-size);
-        font-weight: var(--ui-type-helper-text-01-font-weight);
-        line-height: var(--ui-type-helper-text-01-line-height);
-        letter-spacing: var(--ui-type-helper-text-01-letter-spacing);
-        overflow-wrap: break-word;
-        word-break: break-word;
-    }
-
-    .ui-field-error {
-        color: var(--ui-text-error);
-    }
-
-    .ui-field-warning {
-        color: var(--ui-text-primary);
-    }
-
     .ui-label-disabled,
-    .ui-helper-text-disabled,
-    fieldset:disabled .ui-label,
-    fieldset:disabled .ui-helper-text {
+    .ui-label--disabled,
+    .ui-form-helper-text-disabled,
+    .ui-form-helper-text--disabled,
+    .ui-form__helper-text--disabled {
+        color: var(--ui-text-disabled);
+    }
+
+    fieldset[disabled] .ui-label,
+    fieldset[disabled] .ui-form-helper-text,
+    fieldset[disabled] .ui-form__helper-text {
         color: var(--ui-text-disabled);
     }
 
     /* ----------------------------------------------------------------------
-   Validation and warning requirements
-   ---------------------------------------------------------------------- */
+       Reduced motion
+       ---------------------------------------------------------------------- */
 
-    .ui-form-requirement {
-        display: none;
-        overflow: hidden;
-        max-block-size: 0;
-        margin: var(--ui-spacing-02) 0 0;
-        color: var(--ui-text-error);
-        font-size: var(--ui-type-helper-text-01-font-size);
-        font-weight: var(--ui-type-helper-text-01-font-weight);
-        line-height: var(--ui-type-helper-text-01-line-height);
-        letter-spacing: var(--ui-type-helper-text-01-letter-spacing);
-        overflow-wrap: break-word;
-        word-break: break-word;
-    }
-
-    [data-invalid] ~ .ui-form-requirement,
-    .ui-field-invalid ~ .ui-form-requirement,
-    .ui-field-warning ~ .ui-form-requirement {
-        display: block;
-        overflow: visible;
-        max-block-size: 12.5rem;
-        font-weight: var(--ui-font-weight-regular);
-    }
-
-    .ui-field-warning ~ .ui-form-requirement {
-        color: var(--ui-text-primary);
-    }
-
-    .ui-form-fluid .ui-form-requirement {
-        margin: 0;
-        padding: var(--ui-spacing-03) 2.5rem var(--ui-spacing-03)
-            var(--ui-spacing-05);
-    }
-
-    input:not(output, [data-invalid]):-moz-ui-invalid {
-        box-shadow: none;
+    @media screen and (prefers-reduced-motion: reduce) {
+        .ui-label.ui-skeleton::before {
+            animation: none;
+        }
     }
 }

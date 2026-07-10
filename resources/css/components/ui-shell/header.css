@@ -1,0 +1,477 @@
+/* ==========================================================================
+   File: resources/css/components/ui-shell/header.css
+   Purpose: UI shell header styles.
+
+   Source: Converted from the UI shell header SCSS mixin.
+   Notes:
+   - Sass variables are converted to app design tokens.
+   - Sass helper values such as mini-units() are converted to rem values.
+   - Sass mixins are expanded directly where they emit CSS behavior.
+   - Header action composition styles live in header-actions.css.
+   ========================================================================== */
+
+@layer components {
+    /* ----------------------------------------------------------------------
+       Header
+       ---------------------------------------------------------------------- */
+
+    .ui-shell-header {
+        box-sizing: border-box;
+        position: fixed;
+        z-index: var(--ui-z-index-shell-header);
+        inset-block-start: 0;
+        inset-inline: 0;
+        display: flex;
+        align-items: center;
+        block-size: var(--ui-shell-header-block-size);
+        border-block-end: var(--ui-shell-header-border-width) solid
+            var(--ui-border-subtle);
+        background-color: var(--ui-background);
+    }
+
+    .ui-shell-header *,
+    .ui-shell-header *::before,
+    .ui-shell-header *::after {
+        box-sizing: inherit;
+    }
+
+    .ui-shell-header__action {
+        box-sizing: border-box;
+        display: inline-flex;
+        inline-size: var(--ui-shell-header-action-size);
+        block-size: var(--ui-shell-header-action-size);
+        margin: 0;
+        border: var(--ui-shell-header-border-width) solid transparent;
+        padding: 0;
+        appearance: none;
+        background: none;
+        color: inherit;
+        cursor: pointer;
+        font: inherit;
+        text-align: inherit;
+        transition:
+            background-color var(--ui-duration-fast-02),
+            border-color var(--ui-duration-fast-02);
+    }
+
+    .ui-shell-header__action::-moz-focus-inner {
+        border: 0;
+    }
+
+    @media (max-width: 41.98rem) {
+        .ui-shell-header__action {
+            min-inline-size: var(--ui-shell-header-action-size);
+        }
+    }
+
+    .ui-shell-header__global .ui-popover {
+        z-index: var(--ui-z-index-shell-header-popover);
+    }
+
+    .ui-shell-header__action > :first-child {
+        margin-block-start: 0;
+    }
+
+    .ui-shell-header__action > svg.ui-shell-navigation-menu-panel-collapse-icon,
+    .ui-shell-header__action--active
+        > svg.ui-shell-navigation-menu-panel-expand-icon {
+        display: none;
+    }
+
+    .ui-shell-header__action--active
+        > svg.ui-shell-navigation-menu-panel-collapse-icon {
+        display: inline;
+    }
+
+    .ui-shell-header__action:hover {
+        background-color: var(--ui-background-hover);
+    }
+
+    .ui-shell-header__action--active {
+        border-block-end: var(--ui-shell-header-border-width) solid transparent;
+        border-inline-end: var(--ui-shell-header-border-width) solid
+            var(--ui-border-subtle);
+        border-inline-start: var(--ui-shell-header-border-width) solid
+            var(--ui-border-subtle);
+        background: var(--ui-layer);
+    }
+
+    .ui-shell-header__action--active > svg {
+        fill: var(--ui-icon-primary);
+    }
+
+    .ui-shell-header__action:focus {
+        border-color: var(--ui-focus);
+        outline: none;
+    }
+
+    .ui-shell-header__action:active {
+        background-color: var(--ui-background-active);
+    }
+
+    .ui-shell-header__action.ui-button--icon-only {
+        align-items: center;
+        justify-content: center;
+    }
+
+    .ui-button.ui-button--icon-only.ui-shell-header__action svg {
+        fill: var(--ui-icon-secondary);
+    }
+
+    .ui-button.ui-button--icon-only.ui-shell-header__action:hover svg,
+    .ui-button.ui-button--icon-only.ui-shell-header__action:active svg,
+    .ui-button.ui-button--icon-only.ui-shell-header__action--active svg {
+        fill: var(--ui-icon-primary);
+    }
+
+    .ui-shell-header__menu-trigger > svg {
+        fill: var(--ui-icon-primary);
+    }
+
+    .ui-shell-header__menu-trigger:hover > svg {
+        fill: var(--ui-icon-primary);
+    }
+
+    .ui-shell-header__menu-toggle {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    @media (min-width: 66rem) {
+        .ui-shell-header__menu-toggle__hidden {
+            display: none;
+        }
+    }
+
+    /* ----------------------------------------------------------------------
+       Header - Name
+       ---------------------------------------------------------------------- */
+
+    a.ui-shell-header__name {
+        display: flex;
+        align-items: center;
+        block-size: 100%;
+        border: var(--ui-shell-header-focus-border-width) solid transparent;
+        padding: 0 var(--ui-shell-header-name-padding-inline-end) 0
+            var(--ui-shell-header-name-padding-inline-start);
+        color: var(--ui-text-primary);
+        font-size: var(--ui-type-body-compact-01-font-size);
+        font-weight: var(--ui-font-weight-semibold);
+        line-height: var(--ui-type-body-compact-01-line-height);
+        letter-spacing: var(--ui-type-body-compact-01-letter-spacing);
+        outline: none;
+        text-decoration: none;
+        transition: border-color var(--ui-duration-fast-02);
+        user-select: none;
+    }
+
+    @media (max-width: 41.98rem) {
+        a.ui-shell-header__name {
+            padding: 0 var(--ui-spacing-05);
+        }
+    }
+
+    a.ui-shell-header__name:focus {
+        border-color: var(--ui-focus);
+    }
+
+    .ui-shell-header__name--prefix {
+        font-weight: var(--ui-font-weight-regular);
+    }
+
+    a.ui-shell-header__name,
+    a.ui-shell-header__name:hover {
+        color: var(--ui-text-primary);
+    }
+
+    .ui-shell-header__menu-toggle:not(.ui-shell-header__menu-toggle__hidden)
+        ~ .ui-shell-header__name {
+        padding-inline-start: var(
+            --ui-shell-header-name-padding-inline-start-condensed
+        );
+    }
+
+    /* ----------------------------------------------------------------------
+       Header - Navigation
+       ---------------------------------------------------------------------- */
+
+    .ui-shell-header__nav {
+        position: relative;
+        display: none;
+        block-size: 100%;
+        padding-inline-start: var(--ui-shell-header-nav-padding-inline-start);
+    }
+
+    @media (min-width: 66rem) {
+        .ui-shell-header__nav {
+            display: block;
+        }
+    }
+
+    .ui-shell-header__nav::before {
+        position: absolute;
+        inset-block-start: 50%;
+        inset-inline-start: 0;
+        display: block;
+        inline-size: var(--ui-shell-header-border-width);
+        block-size: var(--ui-shell-header-nav-divider-block-size);
+        background-color: var(--ui-border-subtle);
+        content: "";
+        transform: translateY(-50%);
+    }
+
+    .ui-shell-header__menu-bar {
+        box-sizing: border-box;
+        display: flex;
+        block-size: 100%;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    a.ui-shell-header__menu-item {
+        position: relative;
+        display: flex;
+        align-items: center;
+        block-size: 100%;
+        border: var(--ui-shell-header-focus-border-width) solid transparent;
+        padding: 0 var(--ui-shell-header-menu-item-padding-inline);
+        background-color: var(--ui-background);
+        color: var(--ui-text-secondary);
+        font-size: var(--ui-type-body-compact-01-font-size);
+        font-weight: var(--ui-type-body-compact-01-font-weight);
+        line-height: var(--ui-type-body-compact-01-line-height);
+        letter-spacing: var(--ui-type-body-compact-01-letter-spacing);
+        text-decoration: none;
+        transition:
+            background-color var(--ui-duration-fast-02),
+            border-color var(--ui-duration-fast-02),
+            color var(--ui-duration-fast-02);
+        user-select: none;
+    }
+
+    a.ui-shell-header__menu-item:hover {
+        background-color: var(--ui-background-hover);
+        color: var(--ui-text-primary);
+    }
+
+    .ui-shell-header__action:active,
+    a.ui-shell-header__menu-item:active {
+        background-color: var(--ui-background-active);
+        color: var(--ui-text-primary);
+    }
+
+    a.ui-shell-header__menu-item:focus {
+        border-color: var(--ui-focus);
+        outline: none;
+    }
+
+    a.ui-shell-header__menu-item:hover > svg,
+    a.ui-shell-header__menu-item:active > svg {
+        fill: var(--ui-icon-primary);
+    }
+
+    /* ----------------------------------------------------------------------
+       Header - Navigation selected state
+       ---------------------------------------------------------------------- */
+
+    a.ui-shell-header__menu-item[aria-current="page"],
+    .ui-shell-header__menu-item--current {
+        color: var(--ui-text-primary);
+    }
+
+    a.ui-shell-header__menu-item[aria-current="page"]::after,
+    .ui-shell-header__menu-item--current::after {
+        position: absolute;
+        inset-block-end: calc(-1 * var(--ui-shell-header-focus-border-width));
+        inset-inline-start: calc(
+            -1 * var(--ui-shell-header-focus-border-width)
+        );
+        inline-size: calc(
+            100% + (var(--ui-shell-header-focus-border-width) * 2)
+        );
+        block-size: var(--ui-shell-header-current-indicator-size);
+        background-color: var(--ui-border-interactive);
+        content: "";
+    }
+
+    a.ui-shell-header__menu-item[aria-current="page"]:focus::after,
+    .ui-shell-header__menu-item--current:focus::after {
+        border: 0;
+    }
+
+    .ui-shell-header__submenu
+        .ui-shell-header__menu
+        a.ui-shell-header__menu-item[aria-current="page"]::after,
+    .ui-shell-header__submenu
+        .ui-shell-header__menu
+        .ui-shell-header__menu-item--current::after {
+        inset-block-start: calc(-1 * var(--ui-shell-header-focus-border-width));
+        inset-inline-start: calc(
+            -1 * var(--ui-shell-header-focus-border-width)
+        );
+        inline-size: var(--ui-shell-header-current-indicator-size);
+        block-size: calc(
+            100% + (var(--ui-shell-header-focus-border-width) * 2)
+        );
+        background-color: var(--ui-border-interactive);
+    }
+
+    .ui-shell-header__submenu
+        .ui-shell-header__menu
+        a.ui-shell-header__menu-item[aria-current="page"]:focus::after,
+    .ui-shell-header__submenu
+        .ui-shell-header__menu
+        .ui-shell-header__menu-item--current:focus::after {
+        inset-block-start: calc(-1 * var(--ui-shell-header-focus-border-width));
+        inset-inline-start: calc(
+            -1 * var(--ui-shell-header-focus-border-width)
+        );
+        inline-size: var(--ui-shell-header-current-focus-indicator-size);
+        block-size: calc(
+            100% + (var(--ui-shell-header-focus-border-width) * 2)
+        );
+        background-color: var(--ui-border-interactive);
+    }
+
+    a.ui-shell-header__menu-item[aria-current="page"]:focus,
+    a.ui-shell-header__menu-item.ui-shell-header__menu-item--current:focus {
+        border: var(--ui-shell-header-focus-border-width) solid var(--ui-focus);
+    }
+
+    /* ----------------------------------------------------------------------
+       Header - Submenu
+       ---------------------------------------------------------------------- */
+
+    .ui-shell-header__submenu {
+        position: relative;
+    }
+
+    .ui-shell-header__menu-title[aria-haspopup="true"] {
+        position: relative;
+    }
+
+    .ui-shell-header__menu-title[aria-expanded="true"] {
+        z-index: var(--ui-z-index-shell-header-menu-trigger);
+        background-color: var(--ui-layer);
+        color: var(--ui-text-secondary);
+    }
+
+    .ui-shell-header__menu-title[aria-expanded="true"]
+        > .ui-shell-header__menu-arrow {
+        transform: rotate(180deg);
+    }
+
+    .ui-shell-header__menu {
+        display: none;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .ui-shell-header__menu-title[aria-expanded="true"]
+        + .ui-shell-header__menu {
+        position: absolute;
+        z-index: var(--ui-z-index-shell-header-menu);
+        inset-block-end: 0;
+        inset-inline-start: 0;
+        display: flex;
+        flex-direction: column;
+        inline-size: var(--ui-shell-header-menu-inline-size);
+        background-color: var(--ui-layer);
+        box-shadow: var(--ui-shadow-floating);
+        transform: translateY(100%);
+    }
+
+    .ui-shell-header__menu-title[aria-expanded="true"]
+        + .ui-shell-header__menu
+        .ui-shell-header__menu-item {
+        background-color: var(--ui-layer);
+    }
+
+    .ui-shell-header__menu-title[aria-expanded="true"]
+        + .ui-shell-header__menu
+        .ui-shell-header__menu-item:hover {
+        background-color: var(--ui-layer-hover);
+        color: var(--ui-text-primary);
+    }
+
+    .ui-shell-header__menu-title[aria-expanded="true"]
+        + .ui-shell-header__menu
+        .ui-shell-header__menu-item:active {
+        background-color: var(--ui-layer-active);
+        color: var(--ui-text-primary);
+    }
+
+    .ui-shell-header__menu-title[aria-expanded="true"]
+        + .ui-shell-header__menu
+        .ui-shell-header__menu-item.ui-shell-header__menu-item--current {
+        background-color: var(--ui-layer-selected);
+    }
+
+    .ui-shell-header__menu-title[aria-expanded="true"]
+        + .ui-shell-header__menu
+        .ui-shell-header__menu-item.ui-shell-header__menu-item--current:hover {
+        background-color: var(--ui-layer-selected-hover);
+    }
+
+    .ui-shell-header__menu .ui-shell-header__menu-item {
+        block-size: var(--ui-shell-header-block-size);
+    }
+
+    .ui-shell-header__menu-arrow {
+        margin-inline-start: var(
+            --ui-shell-header-menu-arrow-margin-inline-start
+        );
+        fill: var(--ui-icon-secondary);
+        transition:
+            transform var(--ui-duration-fast-02),
+            fill var(--ui-duration-fast-02);
+    }
+
+    /* ----------------------------------------------------------------------
+       Header - Global
+       ---------------------------------------------------------------------- */
+
+    .ui-shell-header__global {
+        display: flex;
+        flex: 1 1 0%;
+        justify-content: flex-end;
+        block-size: 100%;
+    }
+
+    /* ----------------------------------------------------------------------
+       Header - Skip to content
+       ---------------------------------------------------------------------- */
+
+    .ui-shell-skip-to-content {
+        position: absolute;
+        overflow: hidden;
+        inline-size: 1px;
+        block-size: 1px;
+        margin: -1px;
+        border: 0;
+        padding: 0;
+        clip: rect(0, 0, 0, 0);
+        visibility: inherit;
+        white-space: nowrap;
+    }
+
+    .ui-shell-skip-to-content:focus {
+        z-index: var(--ui-z-index-shell-skip-link);
+        inset-block-start: 0;
+        inset-inline-start: 0;
+        display: flex;
+        align-items: center;
+        inline-size: auto;
+        block-size: var(--ui-shell-header-block-size);
+        border: var(--ui-shell-skip-link-focus-border-width) solid
+            var(--ui-focus);
+        padding: 0 var(--ui-shell-header-menu-item-padding-inline);
+        clip: auto;
+        background-color: var(--ui-background);
+        color: var(--ui-text-secondary);
+        outline: none;
+    }
+}

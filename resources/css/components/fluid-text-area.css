@@ -1,0 +1,950 @@
+/* ==========================================================================
+   File: resources/css/components/fluid-text-area.css
+   Purpose: Fluid Text Area component styles.
+
+   Notes:
+   - Defines Fluid Text Area selectors only.
+   - Do not define primitive palette tokens here.
+   - Do not define theme role tokens here.
+   - Supports fluid wrapper layout, modal field layer override,
+     floating labels, label counters, toggletip button spacing,
+     hidden helper text, invalid/warning states, requirement text,
+     divider treatment, skeleton state, AI label/decorator/slug states,
+     reduced-motion, and forced-colors behavior.
+   ========================================================================== */
+
+@layer components {
+    /* ----------------------------------------------------------------------
+       Root and wrapper
+       ---------------------------------------------------------------------- */
+
+    .ui-text-area-fluid .ui-text-area-wrapper,
+    .ui-text-area-fluid .ui-text-area__wrapper,
+    .ui-text-area--fluid .ui-text-area-wrapper,
+    .ui-text-area--fluid .ui-text-area__wrapper {
+        position: relative;
+        flex-direction: column;
+        block-size: 100%;
+        background: var(--ui-field);
+    }
+
+    .ui-modal .ui-text-area-fluid .ui-text-area-wrapper,
+    .ui-modal .ui-text-area-fluid .ui-text-area__wrapper,
+    .ui-modal .ui-text-area--fluid .ui-text-area-wrapper,
+    .ui-modal .ui-text-area--fluid .ui-text-area__wrapper {
+        background: var(--ui-field-02);
+    }
+
+    .ui-text-area-fluid .ui-text-area-label-wrapper,
+    .ui-text-area-fluid .ui-text-area__label-wrapper,
+    .ui-text-area--fluid .ui-text-area-label-wrapper,
+    .ui-text-area--fluid .ui-text-area__label-wrapper {
+        position: relative;
+        block-size: 100%;
+    }
+
+    /* ----------------------------------------------------------------------
+       Label and counter
+       ---------------------------------------------------------------------- */
+
+    .ui-text-area-fluid .ui-label,
+    .ui-text-area--fluid .ui-label {
+        position: absolute;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        block-size: 1rem;
+        margin: 0;
+        inset-block-start: 0.8125rem;
+    }
+
+    .ui-text-area-fluid
+        .ui-label:not(.ui-text-area-label-counter):not(
+            .ui-text-area__label-counter
+        ),
+    .ui-text-area--fluid
+        .ui-label:not(.ui-text-area-label-counter):not(
+            .ui-text-area__label-counter
+        ) {
+        inline-size: auto;
+        inset-inline-end: auto;
+        inset-inline-start: var(--ui-spacing-05);
+    }
+
+    .ui-text-area-fluid .ui-label.ui-text-area-label-counter,
+    .ui-text-area-fluid .ui-label.ui-text-area__label-counter,
+    .ui-text-area--fluid .ui-label.ui-text-area-label-counter,
+    .ui-text-area--fluid .ui-label.ui-text-area__label-counter {
+        inline-size: auto;
+        inset-inline-end: var(--ui-spacing-05);
+        inset-inline-start: auto;
+    }
+
+    .ui-text-area-fluid .ui-label .ui-toggletip-button,
+    .ui-text-area--fluid .ui-label .ui-toggletip-button {
+        min-inline-size: var(--ui-spacing-06);
+        min-block-size: var(--ui-spacing-06);
+        margin-inline-start: calc(var(--ui-spacing-02) * -1);
+        padding: var(--ui-spacing-02);
+    }
+
+    .ui-text-area-fluid .ui-label::-webkit-scrollbar,
+    .ui-text-area--fluid .ui-label::-webkit-scrollbar,
+    .ui-text-area-fluid .ui-label .ui-toggletip-label::-webkit-scrollbar,
+    .ui-text-area--fluid .ui-label .ui-toggletip-label::-webkit-scrollbar {
+        display: none;
+    }
+
+    .ui-text-area-fluid .ui-label:not(:has(.ui-toggletip-label)),
+    .ui-text-area--fluid .ui-label:not(:has(.ui-toggletip-label)),
+    .ui-text-area-fluid .ui-label .ui-toggletip-label,
+    .ui-text-area--fluid .ui-label .ui-toggletip-label {
+        overflow-x: scroll;
+        white-space: nowrap;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    .ui-text-area-fluid div.ui-label,
+    .ui-text-area--fluid div.ui-label {
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    /* ----------------------------------------------------------------------
+       Text area and helper text
+       ---------------------------------------------------------------------- */
+
+    .ui-text-area-fluid .ui-text-area,
+    .ui-text-area--fluid .ui-text-area {
+        min-block-size: 4rem;
+        margin-block-start: 2rem;
+        padding: 0 var(--ui-spacing-05) 0.8125rem;
+        outline: none;
+    }
+
+    .ui-text-area-fluid .ui-form-helper-text,
+    .ui-text-area-fluid .ui-form__helper-text,
+    .ui-text-area--fluid .ui-form-helper-text,
+    .ui-text-area--fluid .ui-form__helper-text {
+        display: none;
+    }
+
+    /* ----------------------------------------------------------------------
+       Invalid and warning states
+       ---------------------------------------------------------------------- */
+
+    .ui-text-area-fluid .ui-text-area-invalid,
+    .ui-text-area-fluid .ui-text-area--invalid,
+    .ui-text-area-fluid .ui-text-area:focus,
+    .ui-text-area--fluid .ui-text-area-invalid,
+    .ui-text-area--fluid .ui-text-area--invalid,
+    .ui-text-area--fluid .ui-text-area:focus {
+        border-block-end: 1px solid transparent;
+    }
+
+    .ui-text-area-divider,
+    .ui-text-area__divider,
+    .ui-text-area-fluid .ui-text-area-divider,
+    .ui-text-area-fluid .ui-text-area__divider,
+    .ui-text-area--fluid .ui-text-area-divider,
+    .ui-text-area--fluid .ui-text-area__divider {
+        display: none;
+    }
+
+    .ui-text-area-fluid .ui-text-area-invalid,
+    .ui-text-area-fluid .ui-text-area--invalid,
+    .ui-text-area-fluid .ui-text-area-warn,
+    .ui-text-area-fluid .ui-text-area--warn,
+    .ui-text-area--fluid .ui-text-area-invalid,
+    .ui-text-area--fluid .ui-text-area--invalid,
+    .ui-text-area--fluid .ui-text-area-warn,
+    .ui-text-area--fluid .ui-text-area--warn {
+        resize: none;
+    }
+
+    .ui-text-area-fluid .ui-text-area-invalid,
+    .ui-text-area-fluid .ui-text-area--invalid,
+    .ui-text-area--fluid .ui-text-area-invalid,
+    .ui-text-area--fluid .ui-text-area--invalid {
+        margin-block-start: 1.875rem;
+        padding: 0 0.875rem 0.8125rem;
+    }
+
+    .ui-text-area-fluid
+        .ui-text-area-wrapper[data-invalid]
+        .ui-text-area-divider,
+    .ui-text-area-fluid
+        .ui-text-area-wrapper[data-invalid]
+        .ui-text-area__divider,
+    .ui-text-area-fluid
+        .ui-text-area__wrapper[data-invalid]
+        .ui-text-area-divider,
+    .ui-text-area-fluid
+        .ui-text-area__wrapper[data-invalid]
+        .ui-text-area__divider,
+    .ui-text-area-fluid .ui-text-area-wrapper-warn .ui-text-area-divider,
+    .ui-text-area-fluid .ui-text-area-wrapper-warn .ui-text-area__divider,
+    .ui-text-area-fluid .ui-text-area__wrapper--warn .ui-text-area-divider,
+    .ui-text-area-fluid .ui-text-area__wrapper--warn .ui-text-area__divider,
+    .ui-text-area--fluid
+        .ui-text-area-wrapper[data-invalid]
+        .ui-text-area-divider,
+    .ui-text-area--fluid
+        .ui-text-area-wrapper[data-invalid]
+        .ui-text-area__divider,
+    .ui-text-area--fluid
+        .ui-text-area__wrapper[data-invalid]
+        .ui-text-area-divider,
+    .ui-text-area--fluid
+        .ui-text-area__wrapper[data-invalid]
+        .ui-text-area__divider,
+    .ui-text-area--fluid .ui-text-area-wrapper-warn .ui-text-area-divider,
+    .ui-text-area--fluid .ui-text-area-wrapper-warn .ui-text-area__divider,
+    .ui-text-area--fluid .ui-text-area__wrapper--warn .ui-text-area-divider,
+    .ui-text-area--fluid .ui-text-area__wrapper--warn .ui-text-area__divider {
+        display: block;
+        margin: 0 1rem;
+        border-style: solid;
+        border-color: var(--ui-border-subtle);
+        border-block-end: none;
+    }
+
+    .ui-text-area-fluid
+        .ui-text-area-wrapper[data-invalid]
+        .ui-form-requirement.ui-form-requirement,
+    .ui-text-area-fluid
+        .ui-text-area-wrapper[data-invalid]
+        .ui-form__requirement.ui-form__requirement,
+    .ui-text-area-fluid
+        .ui-text-area__wrapper[data-invalid]
+        .ui-form-requirement.ui-form-requirement,
+    .ui-text-area-fluid
+        .ui-text-area__wrapper[data-invalid]
+        .ui-form__requirement.ui-form__requirement,
+    .ui-text-area-fluid
+        .ui-text-area-wrapper-warn
+        .ui-form-requirement.ui-form-requirement,
+    .ui-text-area-fluid
+        .ui-text-area-wrapper-warn
+        .ui-form__requirement.ui-form__requirement,
+    .ui-text-area-fluid
+        .ui-text-area__wrapper--warn
+        .ui-form-requirement.ui-form-requirement,
+    .ui-text-area-fluid
+        .ui-text-area__wrapper--warn
+        .ui-form__requirement.ui-form__requirement,
+    .ui-text-area--fluid
+        .ui-text-area-wrapper[data-invalid]
+        .ui-form-requirement.ui-form-requirement,
+    .ui-text-area--fluid
+        .ui-text-area-wrapper[data-invalid]
+        .ui-form__requirement.ui-form__requirement,
+    .ui-text-area--fluid
+        .ui-text-area__wrapper[data-invalid]
+        .ui-form-requirement.ui-form-requirement,
+    .ui-text-area--fluid
+        .ui-text-area__wrapper[data-invalid]
+        .ui-form__requirement.ui-form__requirement,
+    .ui-text-area--fluid
+        .ui-text-area-wrapper-warn
+        .ui-form-requirement.ui-form-requirement,
+    .ui-text-area--fluid
+        .ui-text-area-wrapper-warn
+        .ui-form__requirement.ui-form__requirement,
+    .ui-text-area--fluid
+        .ui-text-area__wrapper--warn
+        .ui-form-requirement.ui-form-requirement,
+    .ui-text-area--fluid
+        .ui-text-area__wrapper--warn
+        .ui-form__requirement.ui-form__requirement {
+        position: relative;
+        display: block;
+        overflow: visible;
+        max-block-size: 12.5rem;
+        margin: 0;
+        padding: 0.5rem 2.5rem 0.5rem 1rem;
+        background: var(--ui-field);
+    }
+
+    .ui-text-area-fluid
+        .ui-text-area-wrapper-warn
+        .ui-form-requirement.ui-form-requirement,
+    .ui-text-area-fluid
+        .ui-text-area-wrapper-warn
+        .ui-form__requirement.ui-form__requirement,
+    .ui-text-area-fluid
+        .ui-text-area__wrapper--warn
+        .ui-form-requirement.ui-form-requirement,
+    .ui-text-area-fluid
+        .ui-text-area__wrapper--warn
+        .ui-form__requirement.ui-form__requirement,
+    .ui-text-area--fluid
+        .ui-text-area-wrapper-warn
+        .ui-form-requirement.ui-form-requirement,
+    .ui-text-area--fluid
+        .ui-text-area-wrapper-warn
+        .ui-form__requirement.ui-form__requirement,
+    .ui-text-area--fluid
+        .ui-text-area__wrapper--warn
+        .ui-form-requirement.ui-form-requirement,
+    .ui-text-area--fluid
+        .ui-text-area__wrapper--warn
+        .ui-form__requirement.ui-form__requirement {
+        border-block-end: 1px solid var(--ui-border-strong);
+        color: var(--ui-text-primary);
+    }
+
+    .ui-text-area-fluid
+        .ui-text-area-wrapper[data-invalid]
+        .ui-form-requirement.ui-form-requirement,
+    .ui-text-area-fluid
+        .ui-text-area-wrapper[data-invalid]
+        .ui-form__requirement.ui-form__requirement,
+    .ui-text-area-fluid
+        .ui-text-area__wrapper[data-invalid]
+        .ui-form-requirement.ui-form-requirement,
+    .ui-text-area-fluid
+        .ui-text-area__wrapper[data-invalid]
+        .ui-form__requirement.ui-form__requirement,
+    .ui-text-area--fluid
+        .ui-text-area-wrapper[data-invalid]
+        .ui-form-requirement.ui-form-requirement,
+    .ui-text-area--fluid
+        .ui-text-area-wrapper[data-invalid]
+        .ui-form__requirement.ui-form__requirement,
+    .ui-text-area--fluid
+        .ui-text-area__wrapper[data-invalid]
+        .ui-form-requirement.ui-form-requirement,
+    .ui-text-area--fluid
+        .ui-text-area__wrapper[data-invalid]
+        .ui-form__requirement.ui-form__requirement {
+        border-block-end: none;
+        color: var(--ui-text-error);
+    }
+
+    .ui-text-area-fluid .ui-text-area-warn,
+    .ui-text-area-fluid .ui-text-area--warn,
+    .ui-text-area--fluid .ui-text-area-warn,
+    .ui-text-area--fluid .ui-text-area--warn {
+        border-block-end: none;
+    }
+
+    .ui-modal
+        .ui-text-area-fluid
+        .ui-text-area-wrapper[data-invalid]
+        .ui-text-area-divider
+        + .ui-form-requirement,
+    .ui-modal
+        .ui-text-area-fluid
+        .ui-text-area-wrapper[data-invalid]
+        .ui-text-area__divider
+        + .ui-form-requirement,
+    .ui-modal
+        .ui-text-area-fluid
+        .ui-text-area__wrapper[data-invalid]
+        .ui-text-area-divider
+        + .ui-form-requirement,
+    .ui-modal
+        .ui-text-area-fluid
+        .ui-text-area__wrapper[data-invalid]
+        .ui-text-area__divider
+        + .ui-form-requirement,
+    .ui-modal
+        .ui-text-area--fluid
+        .ui-text-area-wrapper[data-invalid]
+        .ui-text-area-divider
+        + .ui-form-requirement,
+    .ui-modal
+        .ui-text-area--fluid
+        .ui-text-area-wrapper[data-invalid]
+        .ui-text-area__divider
+        + .ui-form-requirement,
+    .ui-modal
+        .ui-text-area--fluid
+        .ui-text-area__wrapper[data-invalid]
+        .ui-text-area-divider
+        + .ui-form-requirement,
+    .ui-modal
+        .ui-text-area--fluid
+        .ui-text-area__wrapper[data-invalid]
+        .ui-text-area__divider
+        + .ui-form-requirement {
+        background: var(--ui-field-02);
+    }
+
+    .ui-text-area-fluid .ui-text-area-invalid-icon,
+    .ui-text-area-fluid .ui-text-area__invalid-icon,
+    .ui-text-area--fluid .ui-text-area-invalid-icon,
+    .ui-text-area--fluid .ui-text-area__invalid-icon {
+        inset-block-start: 0.5rem;
+    }
+
+    .ui-text-area-fluid .ui-text-area-wrapper[data-invalid]:not(:focus),
+    .ui-text-area-fluid .ui-text-area__wrapper[data-invalid]:not(:focus),
+    .ui-text-area--fluid .ui-text-area-wrapper[data-invalid]:not(:focus),
+    .ui-text-area--fluid .ui-text-area__wrapper[data-invalid]:not(:focus) {
+        border: 2px solid var(--ui-support-error);
+    }
+
+    .ui-text-area-fluid .ui-text-area-wrapper[data-invalid]:focus-within,
+    .ui-text-area-fluid .ui-text-area__wrapper[data-invalid]:focus-within,
+    .ui-text-area-fluid .ui-text-area-wrapper:focus-within,
+    .ui-text-area-fluid .ui-text-area__wrapper:focus-within,
+    .ui-text-area--fluid .ui-text-area-wrapper[data-invalid]:focus-within,
+    .ui-text-area--fluid .ui-text-area__wrapper[data-invalid]:focus-within,
+    .ui-text-area--fluid .ui-text-area-wrapper:focus-within,
+    .ui-text-area--fluid .ui-text-area__wrapper:focus-within {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+    }
+
+    .ui-text-area-fluid
+        .ui-text-area-wrapper[data-invalid]
+        > .ui-text-area-invalid:focus,
+    .ui-text-area-fluid
+        .ui-text-area-wrapper[data-invalid]
+        > .ui-text-area--invalid:focus,
+    .ui-text-area-fluid
+        .ui-text-area__wrapper[data-invalid]
+        > .ui-text-area-invalid:focus,
+    .ui-text-area-fluid
+        .ui-text-area__wrapper[data-invalid]
+        > .ui-text-area--invalid:focus,
+    .ui-text-area-fluid .ui-text-area-wrapper > .ui-text-area:focus,
+    .ui-text-area-fluid .ui-text-area__wrapper > .ui-text-area:focus,
+    .ui-text-area-fluid .ui-text-area-wrapper > .ui-text-area:active,
+    .ui-text-area-fluid .ui-text-area__wrapper > .ui-text-area:active,
+    .ui-text-area-fluid
+        .ui-text-area-wrapper[data-invalid]
+        > .ui-text-area-invalid,
+    .ui-text-area-fluid
+        .ui-text-area-wrapper[data-invalid]
+        > .ui-text-area--invalid,
+    .ui-text-area-fluid
+        .ui-text-area__wrapper[data-invalid]
+        > .ui-text-area-invalid,
+    .ui-text-area-fluid
+        .ui-text-area__wrapper[data-invalid]
+        > .ui-text-area--invalid,
+    .ui-text-area--fluid
+        .ui-text-area-wrapper[data-invalid]
+        > .ui-text-area-invalid:focus,
+    .ui-text-area--fluid
+        .ui-text-area-wrapper[data-invalid]
+        > .ui-text-area--invalid:focus,
+    .ui-text-area--fluid
+        .ui-text-area__wrapper[data-invalid]
+        > .ui-text-area-invalid:focus,
+    .ui-text-area--fluid
+        .ui-text-area__wrapper[data-invalid]
+        > .ui-text-area--invalid:focus,
+    .ui-text-area--fluid .ui-text-area-wrapper > .ui-text-area:focus,
+    .ui-text-area--fluid .ui-text-area__wrapper > .ui-text-area:focus,
+    .ui-text-area--fluid .ui-text-area-wrapper > .ui-text-area:active,
+    .ui-text-area--fluid .ui-text-area__wrapper > .ui-text-area:active,
+    .ui-text-area--fluid
+        .ui-text-area-wrapper[data-invalid]
+        > .ui-text-area-invalid,
+    .ui-text-area--fluid
+        .ui-text-area-wrapper[data-invalid]
+        > .ui-text-area--invalid,
+    .ui-text-area--fluid
+        .ui-text-area__wrapper[data-invalid]
+        > .ui-text-area-invalid,
+    .ui-text-area--fluid
+        .ui-text-area__wrapper[data-invalid]
+        > .ui-text-area--invalid {
+        outline: none;
+        transition: none;
+    }
+
+    /* ----------------------------------------------------------------------
+       Skeleton
+       ---------------------------------------------------------------------- */
+
+    .ui-text-area-fluid-skeleton,
+    .ui-text-area--fluid__skeleton {
+        border-block-end: 1px solid var(--ui-skeleton-element);
+        padding: var(--ui-spacing-05);
+        background: var(--ui-skeleton-background);
+    }
+
+    .ui-text-area-fluid-skeleton .ui-skeleton,
+    .ui-text-area--fluid__skeleton .ui-skeleton,
+    .ui-text-area-fluid-skeleton .ui-text-area.ui-skeleton::before,
+    .ui-text-area--fluid__skeleton .ui-text-area.ui-skeleton::before {
+        block-size: 0.5rem;
+    }
+
+    .ui-text-area-fluid-skeleton .ui-label,
+    .ui-text-area--fluid__skeleton .ui-label {
+        margin-block-end: var(--ui-spacing-04);
+    }
+
+    .ui-text-area-fluid-skeleton .ui-text-area.ui-skeleton,
+    .ui-text-area--fluid__skeleton .ui-text-area.ui-skeleton {
+        inline-size: 80%;
+        block-size: 4rem;
+    }
+
+    /* ----------------------------------------------------------------------
+       AI label / decorator
+       ---------------------------------------------------------------------- */
+
+    .ui-text-area-fluid
+        .ui-text-area-wrapper-decorator:has(
+            .ui-text-area-inner-wrapper-decorator .ui-ai-label
+        ):not(:has(.ui-text-area-inner-wrapper-decorator .ui-ai-label--revert)),
+    .ui-text-area-fluid
+        .ui-text-area__wrapper--decorator:has(
+            .ui-text-area__inner-wrapper--decorator .ui-ai-label
+        ):not(
+            :has(.ui-text-area__inner-wrapper--decorator .ui-ai-label--revert)
+        ),
+    .ui-text-area--fluid
+        .ui-text-area-wrapper-decorator:has(
+            .ui-text-area-inner-wrapper-decorator .ui-ai-label
+        ):not(:has(.ui-text-area-inner-wrapper-decorator .ui-ai-label--revert)),
+    .ui-text-area--fluid
+        .ui-text-area__wrapper--decorator:has(
+            .ui-text-area__inner-wrapper--decorator .ui-ai-label
+        ):not(
+            :has(.ui-text-area__inner-wrapper--decorator .ui-ai-label--revert)
+        ),
+    .ui-text-area-fluid
+        .ui-text-area-wrapper-slug:has(.ui-ai-label):not(
+            :has(.ui-ai-label--revert)
+        ),
+    .ui-text-area-fluid
+        .ui-text-area__wrapper--slug:has(.ui-ai-label):not(
+            :has(.ui-ai-label--revert)
+        ),
+    .ui-text-area--fluid
+        .ui-text-area-wrapper-slug:has(.ui-ai-label):not(
+            :has(.ui-ai-label--revert)
+        ),
+    .ui-text-area--fluid
+        .ui-text-area__wrapper--slug:has(.ui-ai-label):not(
+            :has(.ui-ai-label--revert)
+        ),
+    .ui-text-area-fluid
+        .ui-text-area-wrapper-slug:has(.ui-slug):not(:has(.ui-slug--revert)),
+    .ui-text-area-fluid
+        .ui-text-area__wrapper--slug:has(.ui-slug):not(:has(.ui-slug--revert)),
+    .ui-text-area--fluid
+        .ui-text-area-wrapper-slug:has(.ui-slug):not(:has(.ui-slug--revert)),
+    .ui-text-area--fluid
+        .ui-text-area__wrapper--slug:has(.ui-slug):not(:has(.ui-slug--revert)) {
+        background: var(--ui-ai-gradient, var(--ui-field));
+    }
+
+    .ui-text-area-fluid
+        .ui-text-area-wrapper-decorator
+        .ui-text-area-invalid
+        ~ .ui-text-area-inner-wrapper-decorator
+        > *,
+    .ui-text-area-fluid
+        .ui-text-area-wrapper-decorator
+        .ui-text-area--invalid
+        ~ .ui-text-area-inner-wrapper-decorator
+        > *,
+    .ui-text-area-fluid
+        .ui-text-area__wrapper--decorator
+        .ui-text-area-invalid
+        ~ .ui-text-area__inner-wrapper--decorator
+        > *,
+    .ui-text-area-fluid
+        .ui-text-area__wrapper--decorator
+        .ui-text-area--invalid
+        ~ .ui-text-area__inner-wrapper--decorator
+        > *,
+    .ui-text-area-fluid
+        .ui-text-area-wrapper-decorator
+        .ui-text-area-warn
+        ~ .ui-text-area-inner-wrapper-decorator
+        > *,
+    .ui-text-area-fluid
+        .ui-text-area-wrapper-decorator
+        .ui-text-area--warn
+        ~ .ui-text-area-inner-wrapper-decorator
+        > *,
+    .ui-text-area-fluid
+        .ui-text-area__wrapper--decorator
+        .ui-text-area-warn
+        ~ .ui-text-area__inner-wrapper--decorator
+        > *,
+    .ui-text-area-fluid
+        .ui-text-area__wrapper--decorator
+        .ui-text-area--warn
+        ~ .ui-text-area__inner-wrapper--decorator
+        > *,
+    .ui-text-area-fluid
+        .ui-text-area-wrapper-slug
+        .ui-text-area-invalid
+        ~ .ui-ai-label,
+    .ui-text-area-fluid
+        .ui-text-area-wrapper-slug
+        .ui-text-area--invalid
+        ~ .ui-ai-label,
+    .ui-text-area-fluid
+        .ui-text-area__wrapper--slug
+        .ui-text-area-invalid
+        ~ .ui-ai-label,
+    .ui-text-area-fluid
+        .ui-text-area__wrapper--slug
+        .ui-text-area--invalid
+        ~ .ui-ai-label,
+    .ui-text-area-fluid
+        .ui-text-area-wrapper-slug
+        .ui-text-area-warn
+        ~ .ui-ai-label,
+    .ui-text-area-fluid
+        .ui-text-area-wrapper-slug
+        .ui-text-area--warn
+        ~ .ui-ai-label,
+    .ui-text-area-fluid
+        .ui-text-area__wrapper--slug
+        .ui-text-area-warn
+        ~ .ui-ai-label,
+    .ui-text-area-fluid
+        .ui-text-area__wrapper--slug
+        .ui-text-area--warn
+        ~ .ui-ai-label,
+    .ui-text-area-fluid
+        .ui-text-area-wrapper-slug
+        .ui-text-area-invalid
+        ~ .ui-slug,
+    .ui-text-area-fluid
+        .ui-text-area-wrapper-slug
+        .ui-text-area--invalid
+        ~ .ui-slug,
+    .ui-text-area-fluid
+        .ui-text-area__wrapper--slug
+        .ui-text-area-invalid
+        ~ .ui-slug,
+    .ui-text-area-fluid
+        .ui-text-area__wrapper--slug
+        .ui-text-area--invalid
+        ~ .ui-slug,
+    .ui-text-area-fluid
+        .ui-text-area-wrapper-slug
+        .ui-text-area-warn
+        ~ .ui-slug,
+    .ui-text-area-fluid
+        .ui-text-area-wrapper-slug
+        .ui-text-area--warn
+        ~ .ui-slug,
+    .ui-text-area-fluid
+        .ui-text-area__wrapper--slug
+        .ui-text-area-warn
+        ~ .ui-slug,
+    .ui-text-area-fluid
+        .ui-text-area__wrapper--slug
+        .ui-text-area--warn
+        ~ .ui-slug,
+    .ui-text-area--fluid
+        .ui-text-area-wrapper-decorator
+        .ui-text-area-invalid
+        ~ .ui-text-area-inner-wrapper-decorator
+        > *,
+    .ui-text-area--fluid
+        .ui-text-area-wrapper-decorator
+        .ui-text-area--invalid
+        ~ .ui-text-area-inner-wrapper-decorator
+        > *,
+    .ui-text-area--fluid
+        .ui-text-area__wrapper--decorator
+        .ui-text-area-invalid
+        ~ .ui-text-area__inner-wrapper--decorator
+        > *,
+    .ui-text-area--fluid
+        .ui-text-area__wrapper--decorator
+        .ui-text-area--invalid
+        ~ .ui-text-area__inner-wrapper--decorator
+        > *,
+    .ui-text-area--fluid
+        .ui-text-area-wrapper-decorator
+        .ui-text-area-warn
+        ~ .ui-text-area-inner-wrapper-decorator
+        > *,
+    .ui-text-area--fluid
+        .ui-text-area-wrapper-decorator
+        .ui-text-area--warn
+        ~ .ui-text-area-inner-wrapper-decorator
+        > *,
+    .ui-text-area--fluid
+        .ui-text-area__wrapper--decorator
+        .ui-text-area-warn
+        ~ .ui-text-area__inner-wrapper--decorator
+        > *,
+    .ui-text-area--fluid
+        .ui-text-area__wrapper--decorator
+        .ui-text-area--warn
+        ~ .ui-text-area__inner-wrapper--decorator
+        > *,
+    .ui-text-area--fluid
+        .ui-text-area-wrapper-slug
+        .ui-text-area-invalid
+        ~ .ui-ai-label,
+    .ui-text-area--fluid
+        .ui-text-area-wrapper-slug
+        .ui-text-area--invalid
+        ~ .ui-ai-label,
+    .ui-text-area--fluid
+        .ui-text-area__wrapper--slug
+        .ui-text-area-invalid
+        ~ .ui-ai-label,
+    .ui-text-area--fluid
+        .ui-text-area__wrapper--slug
+        .ui-text-area--invalid
+        ~ .ui-ai-label,
+    .ui-text-area--fluid
+        .ui-text-area-wrapper-slug
+        .ui-text-area-warn
+        ~ .ui-ai-label,
+    .ui-text-area--fluid
+        .ui-text-area-wrapper-slug
+        .ui-text-area--warn
+        ~ .ui-ai-label,
+    .ui-text-area--fluid
+        .ui-text-area__wrapper--slug
+        .ui-text-area-warn
+        ~ .ui-ai-label,
+    .ui-text-area--fluid
+        .ui-text-area__wrapper--slug
+        .ui-text-area--warn
+        ~ .ui-ai-label,
+    .ui-text-area--fluid
+        .ui-text-area-wrapper-slug
+        .ui-text-area-invalid
+        ~ .ui-slug,
+    .ui-text-area--fluid
+        .ui-text-area-wrapper-slug
+        .ui-text-area--invalid
+        ~ .ui-slug,
+    .ui-text-area--fluid
+        .ui-text-area__wrapper--slug
+        .ui-text-area-invalid
+        ~ .ui-slug,
+    .ui-text-area--fluid
+        .ui-text-area__wrapper--slug
+        .ui-text-area--invalid
+        ~ .ui-slug,
+    .ui-text-area--fluid
+        .ui-text-area-wrapper-slug
+        .ui-text-area-warn
+        ~ .ui-slug,
+    .ui-text-area--fluid
+        .ui-text-area-wrapper-slug
+        .ui-text-area--warn
+        ~ .ui-slug,
+    .ui-text-area--fluid
+        .ui-text-area__wrapper--slug
+        .ui-text-area-warn
+        ~ .ui-slug,
+    .ui-text-area--fluid
+        .ui-text-area__wrapper--slug
+        .ui-text-area--warn
+        ~ .ui-slug {
+        inset-inline-end: var(--ui-spacing-05);
+    }
+
+    .ui-text-area-fluid .ui-text-area-wrapper-decorator .ui-text-area-invalid,
+    .ui-text-area-fluid .ui-text-area-wrapper-decorator .ui-text-area--invalid,
+    .ui-text-area-fluid .ui-text-area__wrapper--decorator .ui-text-area-invalid,
+    .ui-text-area-fluid
+        .ui-text-area__wrapper--decorator
+        .ui-text-area--invalid,
+    .ui-text-area-fluid .ui-text-area-wrapper-slug .ui-text-area-invalid,
+    .ui-text-area-fluid .ui-text-area-wrapper-slug .ui-text-area--invalid,
+    .ui-text-area-fluid .ui-text-area__wrapper--slug .ui-text-area-invalid,
+    .ui-text-area-fluid .ui-text-area__wrapper--slug .ui-text-area--invalid,
+    .ui-text-area--fluid .ui-text-area-wrapper-decorator .ui-text-area-invalid,
+    .ui-text-area--fluid .ui-text-area-wrapper-decorator .ui-text-area--invalid,
+    .ui-text-area--fluid
+        .ui-text-area__wrapper--decorator
+        .ui-text-area-invalid,
+    .ui-text-area--fluid
+        .ui-text-area__wrapper--decorator
+        .ui-text-area--invalid,
+    .ui-text-area--fluid .ui-text-area-wrapper-slug .ui-text-area-invalid,
+    .ui-text-area--fluid .ui-text-area-wrapper-slug .ui-text-area--invalid,
+    .ui-text-area--fluid .ui-text-area__wrapper--slug .ui-text-area-invalid,
+    .ui-text-area--fluid .ui-text-area__wrapper--slug .ui-text-area--invalid {
+        border-block-end-color: transparent;
+    }
+
+    /* ----------------------------------------------------------------------
+       Reduced motion
+       ---------------------------------------------------------------------- */
+
+    @media screen and (prefers-reduced-motion: reduce) {
+        .ui-text-area-fluid
+            .ui-text-area-wrapper[data-invalid]
+            > .ui-text-area-invalid,
+        .ui-text-area-fluid
+            .ui-text-area-wrapper[data-invalid]
+            > .ui-text-area--invalid,
+        .ui-text-area-fluid
+            .ui-text-area__wrapper[data-invalid]
+            > .ui-text-area-invalid,
+        .ui-text-area-fluid
+            .ui-text-area__wrapper[data-invalid]
+            > .ui-text-area--invalid,
+        .ui-text-area-fluid .ui-text-area-wrapper > .ui-text-area,
+        .ui-text-area-fluid .ui-text-area__wrapper > .ui-text-area,
+        .ui-text-area--fluid
+            .ui-text-area-wrapper[data-invalid]
+            > .ui-text-area-invalid,
+        .ui-text-area--fluid
+            .ui-text-area-wrapper[data-invalid]
+            > .ui-text-area--invalid,
+        .ui-text-area--fluid
+            .ui-text-area__wrapper[data-invalid]
+            > .ui-text-area-invalid,
+        .ui-text-area--fluid
+            .ui-text-area__wrapper[data-invalid]
+            > .ui-text-area--invalid,
+        .ui-text-area--fluid .ui-text-area-wrapper > .ui-text-area,
+        .ui-text-area--fluid .ui-text-area__wrapper > .ui-text-area {
+            transition: none;
+        }
+    }
+
+    /* ----------------------------------------------------------------------
+       Forced colors
+       ---------------------------------------------------------------------- */
+
+    @media screen and (-ms-high-contrast: active), (forced-colors: active) {
+        .ui-text-area-fluid .ui-text-area-wrapper,
+        .ui-text-area-fluid .ui-text-area__wrapper,
+        .ui-text-area--fluid .ui-text-area-wrapper,
+        .ui-text-area--fluid .ui-text-area__wrapper,
+        .ui-modal .ui-text-area-fluid .ui-text-area-wrapper,
+        .ui-modal .ui-text-area-fluid .ui-text-area__wrapper,
+        .ui-modal .ui-text-area--fluid .ui-text-area-wrapper,
+        .ui-modal .ui-text-area--fluid .ui-text-area__wrapper {
+            background: Canvas;
+        }
+
+        .ui-text-area-fluid .ui-label,
+        .ui-text-area--fluid .ui-label,
+        .ui-text-area-fluid .ui-text-area,
+        .ui-text-area--fluid .ui-text-area {
+            color: CanvasText;
+        }
+
+        .ui-text-area-fluid .ui-text-area-wrapper[data-invalid]:not(:focus),
+        .ui-text-area-fluid .ui-text-area__wrapper[data-invalid]:not(:focus),
+        .ui-text-area--fluid .ui-text-area-wrapper[data-invalid]:not(:focus),
+        .ui-text-area--fluid .ui-text-area__wrapper[data-invalid]:not(:focus) {
+            border-color: Mark;
+        }
+
+        .ui-text-area-fluid .ui-text-area-wrapper[data-invalid]:focus-within,
+        .ui-text-area-fluid .ui-text-area__wrapper[data-invalid]:focus-within,
+        .ui-text-area-fluid .ui-text-area-wrapper:focus-within,
+        .ui-text-area-fluid .ui-text-area__wrapper:focus-within,
+        .ui-text-area--fluid .ui-text-area-wrapper[data-invalid]:focus-within,
+        .ui-text-area--fluid .ui-text-area__wrapper[data-invalid]:focus-within,
+        .ui-text-area--fluid .ui-text-area-wrapper:focus-within,
+        .ui-text-area--fluid .ui-text-area__wrapper:focus-within {
+            outline-color: Highlight;
+        }
+
+        .ui-text-area-fluid
+            .ui-text-area-wrapper[data-invalid]
+            .ui-form-requirement.ui-form-requirement,
+        .ui-text-area-fluid
+            .ui-text-area-wrapper[data-invalid]
+            .ui-form__requirement.ui-form__requirement,
+        .ui-text-area-fluid
+            .ui-text-area__wrapper[data-invalid]
+            .ui-form-requirement.ui-form-requirement,
+        .ui-text-area-fluid
+            .ui-text-area__wrapper[data-invalid]
+            .ui-form__requirement.ui-form__requirement,
+        .ui-text-area--fluid
+            .ui-text-area-wrapper[data-invalid]
+            .ui-form-requirement.ui-form-requirement,
+        .ui-text-area--fluid
+            .ui-text-area-wrapper[data-invalid]
+            .ui-form__requirement.ui-form__requirement,
+        .ui-text-area--fluid
+            .ui-text-area__wrapper[data-invalid]
+            .ui-form-requirement.ui-form-requirement,
+        .ui-text-area--fluid
+            .ui-text-area__wrapper[data-invalid]
+            .ui-form__requirement.ui-form__requirement {
+            background: Canvas;
+            color: Mark;
+        }
+
+        .ui-text-area-fluid
+            .ui-text-area-wrapper-warn
+            .ui-form-requirement.ui-form-requirement,
+        .ui-text-area-fluid
+            .ui-text-area-wrapper-warn
+            .ui-form__requirement.ui-form__requirement,
+        .ui-text-area-fluid
+            .ui-text-area__wrapper--warn
+            .ui-form-requirement.ui-form-requirement,
+        .ui-text-area-fluid
+            .ui-text-area__wrapper--warn
+            .ui-form__requirement.ui-form__requirement,
+        .ui-text-area--fluid
+            .ui-text-area-wrapper-warn
+            .ui-form-requirement.ui-form-requirement,
+        .ui-text-area--fluid
+            .ui-text-area-wrapper-warn
+            .ui-form__requirement.ui-form__requirement,
+        .ui-text-area--fluid
+            .ui-text-area__wrapper--warn
+            .ui-form-requirement.ui-form-requirement,
+        .ui-text-area--fluid
+            .ui-text-area__wrapper--warn
+            .ui-form__requirement.ui-form__requirement {
+            background: Canvas;
+            border-block-end-color: CanvasText;
+            color: CanvasText;
+        }
+
+        .ui-text-area-fluid
+            .ui-text-area-wrapper[data-invalid]
+            .ui-text-area-divider,
+        .ui-text-area-fluid
+            .ui-text-area-wrapper[data-invalid]
+            .ui-text-area__divider,
+        .ui-text-area-fluid
+            .ui-text-area__wrapper[data-invalid]
+            .ui-text-area-divider,
+        .ui-text-area-fluid
+            .ui-text-area__wrapper[data-invalid]
+            .ui-text-area__divider,
+        .ui-text-area-fluid .ui-text-area-wrapper-warn .ui-text-area-divider,
+        .ui-text-area-fluid .ui-text-area-wrapper-warn .ui-text-area__divider,
+        .ui-text-area-fluid .ui-text-area__wrapper--warn .ui-text-area-divider,
+        .ui-text-area-fluid .ui-text-area__wrapper--warn .ui-text-area__divider,
+        .ui-text-area--fluid
+            .ui-text-area-wrapper[data-invalid]
+            .ui-text-area-divider,
+        .ui-text-area--fluid
+            .ui-text-area-wrapper[data-invalid]
+            .ui-text-area__divider,
+        .ui-text-area--fluid
+            .ui-text-area__wrapper[data-invalid]
+            .ui-text-area-divider,
+        .ui-text-area--fluid
+            .ui-text-area__wrapper[data-invalid]
+            .ui-text-area__divider,
+        .ui-text-area--fluid .ui-text-area-wrapper-warn .ui-text-area-divider,
+        .ui-text-area--fluid .ui-text-area-wrapper-warn .ui-text-area__divider,
+        .ui-text-area--fluid .ui-text-area__wrapper--warn .ui-text-area-divider,
+        .ui-text-area--fluid
+            .ui-text-area__wrapper--warn
+            .ui-text-area__divider {
+            border-color: CanvasText;
+        }
+    }
+}

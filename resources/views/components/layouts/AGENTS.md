@@ -2,12 +2,12 @@
 
 ## Purpose
 
-Application layout components and shell-level Blade fragments.
+Application layout components and layout-private Blade fragments.
 
 ## Read Order
 
 1. Open the affected layout or shell fragment only.
-2. Open `app/AGENTS.md` before expanding the `x-layouts.app` partial folder.
+2. Open `app/AGENTS.md` before expanding the `x-layouts.app` private layout tree.
 3. Cross-check architecture/runbook docs only when shell ownership or navigation behavior changes.
 
 ## Avoid

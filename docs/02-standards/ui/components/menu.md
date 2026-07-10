@@ -6,9 +6,9 @@ status: implemented-pending-manual-review
 system_maturity: partial
 category: actions
 priority: tier-b-common-reusable-component
-ui_reference_route: /platform/ui-reference/components/menu
+rendered_evidence_route: null
 canonical_doc: docs/02-standards/ui/components/menu.md
-source_owner: /platform/ui-reference/components/menu
+source_owner: not installed
 blade_api:
   - x-ui.menu
   - x-ui.menu-item
@@ -27,8 +27,8 @@ data_attributes:
   - data-ui-menu-divider
   - data-ui-menu-placement
 source_files:
-  - resources/views/components/ui/menu.blade.php
-  - resources/views/components/ui/menu-item.blade.php
+  - resources/views/components/ui/menu/index.blade.php
+  - resources/views/components/ui/menu-item/index.blade.php
   - resources/js/ui-controls/menus.js
   - resources/css/components/menu.css
 foundation_elements:
@@ -87,10 +87,10 @@ carbon_reference:
 - [11. Content contract](#11-content-contract)
 - [12. Prohibited usage](#12-prohibited-usage)
 - [13. Deferred or gated capabilities](#13-deferred-or-gated-capabilities)
-- [14. Implementation and UI Reference Checklist](#14-implementation-and-ui-reference-checklist)
+- [14. Implementation and Rendered Evidence Checklist](#14-implementation-and-ui-reference-checklist)
   - [14.1. Implementation checklist](#141-implementation-checklist)
-  - [14.2. UI Reference proof checklist](#142-ui-reference-proof-checklist)
-- [15. UI Reference requirements](#15-ui-reference-requirements)
+  - [14.2. rendered evidence proof checklist](#142-ui-reference-proof-checklist)
+- [15. Rendered evidence requirements](#15-ui-reference-requirements)
   - [15.1. Required Live examples internal sections:](#151-required-live-examples-internal-sections)
 - [16. Testing and acceptance criteria](#16-testing-and-acceptance-criteria)
   - [16.1. Suggested automated assertions:](#161-suggested-automated-assertions)
@@ -101,7 +101,7 @@ carbon_reference:
 
 Menus present contextual actions behind a trigger without crowding the page.
 
-Canonical API owner: `/platform/ui-reference/components/menu`. Use this Component API instead of creating local markup, styling, or behavior for the same UI role.
+Canonical API owner: `not installed`. Use this Component API instead of creating local markup, styling, or behavior for the same UI role.
 
 Menu is the installed Login App 2.0 contextual action disclosure API. It owns menu trigger semantics, open/closed state, keyboard navigation, focus return, row overflow action menus, divided action groups, destructive item treatment, selected/checkable item treatment, one-level submenu boundaries, alignment, RTL mirroring, token-backed item states, and the JavaScript initializer required to operate menu behavior. It does not own page-level action hierarchy, table row business logic, permissions, destructive confirmation flows, form validation, modal placement, or command execution.
 
@@ -118,7 +118,7 @@ Menu is the installed Login App 2.0 contextual action disclosure API. It owns me
 - Reserve the selected/checkable indicator column across mixed selected, unselected, and non-select action rows when a menu includes selected/checkable items.
 - Support approved sizes and placements through component props/classes.
 - Consume Foundation Element APIs for color, spacing, typography, themes, motion, and icons.
-- Prove variants, states, keyboard behavior, alignment, RTL behavior, implementation details, prohibited usage, and deferred gates on the UI Reference page.
+- Prove variants, states, keyboard behavior, alignment, RTL behavior, implementation details, prohibited usage, and deferred gates on the rendered evidence page.
 
 ### 1.2. Non-owned responsibilities:
 
@@ -132,25 +132,25 @@ Menu is the installed Login App 2.0 contextual action disclosure API. It owns me
 
 ## 2. Status and ownership
 
-| Field                        | Value                                                                                                                                                             |
-| ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Status                       | Implemented - pending manual review                                                                                                                               |
-| System maturity              | Partial                                                                                                                                                           |
-| API layer                    | Component API                                                                                                                                                     |
-| Component slug               | `menu`                                                                                                                                                            |
-| Category                     | Actions                                                                                                                                                           |
-| Priority                     | Tier B - Common reusable component                                                                                                                                |
-| UI Reference route           | `/platform/ui-reference/components/menu`                                                                                                                          |
-| Canonical doc                | `docs/02-standards/ui/components/menu.md`                                                                                                                         |
-| Source owner                 | `/platform/ui-reference/components/menu`                                                                                                                          |
-| Blade API                    | `x-ui.menu`; `x-ui.menu-item`                                                                                                                                     |
-| JavaScript API               | `initMenus` exported from `resources/js/ui-controls/menus.js`                                                                                                     |
-| Data attributes              | Component-owned `data-ui-menu*` hooks documented in this standard                                                                                                 |
-| Source files                 | `resources/views/components/ui/menu.blade.php`; `resources/views/components/ui/menu-item.blade.php`; `resources/js/ui-controls/menus.js`; `resources/css/components/menu.css` |
-| Foundation Elements consumed | Color, Spacing, Typography, Themes, Motion, Icons                                                                                                                 |
-| Carbon benchmark             | Carbon Menu, Menu buttons, and Overflow menu usage, style, and accessibility guidance                                                                             |
+| Field                        | Value                                                                                                                                                                         |
+| ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Status                       | Implemented - pending manual review                                                                                                                                           |
+| System maturity              | Partial                                                                                                                                                                       |
+| API layer                    | Component API                                                                                                                                                                 |
+| Component slug               | `menu`                                                                                                                                                                        |
+| Category                     | Actions                                                                                                                                                                       |
+| Priority                     | Tier B - Common reusable component                                                                                                                                            |
+| Rendered evidence route           | `not installed`                                                                                                                                      |
+| Canonical doc                | `docs/02-standards/ui/components/menu.md`                                                                                                                                     |
+| Source owner                 | `not installed`                                                                                                                                      |
+| Blade API                    | `x-ui.menu`; `x-ui.menu-item`                                                                                                                                                 |
+| JavaScript API               | `initMenus` exported from `resources/js/ui-controls/menus.js`                                                                                                                 |
+| Data attributes              | Component-owned `data-ui-menu*` hooks documented in this standard                                                                                                             |
+| Source files                 | `resources/views/components/ui/menu/index.blade.php`; `resources/views/components/ui/menu-item/index.blade.php`; `resources/js/ui-controls/menus.js`; `resources/css/components/menu.css` |
+| Foundation Elements consumed | Color, Spacing, Typography, Themes, Motion, Icons                                                                                                                             |
+| Carbon benchmark             | Carbon Menu, Menu buttons, and Overflow menu usage, style, and accessibility guidance                                                                                         |
 
-`Implemented - pending manual review` means the component API, behavior initializer, and UI Reference page are installed, but the canonical standard must be reviewed against the rendered implementation before the status can move to fully implemented. Until that review is complete, new feature work must stay within this documented API and must not extend Menu locally.
+`Implemented - pending manual review` means the component API, behavior initializer, and rendered evidence page are installed, but the canonical standard must be reviewed against the rendered implementation before the status can move to fully implemented. Until that review is complete, new feature work must stay within this documented API and must not extend Menu locally.
 
 ## 3. Installed standard
 
@@ -177,7 +177,7 @@ Menu is installed as a Blade component plus JavaScript behavior initializer. The
 - Use approved placements and RTL mirroring; do not create local positioning logic.
 - Parent Patterns own external spacing, table row context, page header grouping, and workflow orchestration.
 
-Carbon alignment note: Carbon documents Menu anatomy as a trigger, action items, dividers, submenu indicators, shortcuts, selected items, submenus, and a menu container; it documents dividers, shortcuts, single-select/multi-select visual treatment, danger hover, four item sizes, minimum/maximum menu width, and keyboard/ARIA behavior. Login App maps those principles to its own `x-ui.menu`, `x-ui.menu-item`, `initMenus`, Heroicons, and app-owned `ui-*` classes rather than adopting Carbon implementation classes directly.
+Carbon alignment note: Carbon documents Menu anatomy as a trigger, action items, dividers, submenu indicators, shortcuts, selected items, submenus, and a menu container; it documents dividers, shortcuts, single-select/multi-select visual treatment, danger hover, four item sizes, minimum/maximum menu width, and keyboard/ARIA behavior. Login App maps those principles to its own `x-ui.menu`, `x-ui.menu-item`, `initMenus`, internal icon components, and app-owned `ui-*` classes rather than adopting Carbon implementation classes directly.
 
 ## 4. Public API
 
@@ -219,7 +219,7 @@ Use an icon-only overflow trigger for row actions when the table/card context al
 <x-ui.menu
     :items="$rowActions"
     trigger-label="Open actions for {{ $tenant->name }}"
-    trigger-icon="heroicon-o-ellipsis-vertical"
+    trigger-icon="overflow-menu--vertical"
     trigger-variant="ghost"
     placement="bottom-end"
     size="sm"
@@ -264,17 +264,17 @@ Do not hand-build menu buttons, dropdown panels, overflow menus, or row action m
 
 ### 4.2. API surfaces
 
-| API surface            | Installed value                                                                                                                                                   |
-| ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Menu Blade API         | `x-ui.menu`                                                                                                                                                       |
-| Menu item Blade API    | `x-ui.menu-item`                                                                                                                                                  |
-| JavaScript initializer | `initMenus` from `resources/js/ui-controls/menus.js`                                                                                                              |
-| Root semantic element  | Component-owned wrapper containing a native trigger button and menu panel                                                                                         |
-| Trigger semantics      | Native `<button>` with `aria-haspopup="menu"`, `aria-expanded`, and `aria-controls`                                                                               |
-| Menu semantics         | Panel with `role="menu"`; items use `role="menuitem"`, `role="menuitemcheckbox"`, or `role="menuitemradio"` as applicable                                         |
-| Data attributes        | Component-owned `data-ui-menu*` hooks documented below                                                                                                            |
-| CSS namespace          | App-owned `ui-*` menu classes documented by the component implementation                                                                                          |
-| Source files           | `resources/views/components/ui/menu.blade.php`; `resources/views/components/ui/menu-item.blade.php`; `resources/js/ui-controls/menus.js`; `resources/css/components/menu.css` |
+| API surface            | Installed value                                                                                                                                                               |
+| ---------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Menu Blade API         | `x-ui.menu`                                                                                                                                                                   |
+| Menu item Blade API    | `x-ui.menu-item`                                                                                                                                                              |
+| JavaScript initializer | `initMenus` from `resources/js/ui-controls/menus.js`                                                                                                                          |
+| Root semantic element  | Component-owned wrapper containing a native trigger button and menu panel                                                                                                     |
+| Trigger semantics      | Native `<button>` with `aria-haspopup="menu"`, `aria-expanded`, and `aria-controls`                                                                                           |
+| Menu semantics         | Panel with `role="menu"`; items use `role="menuitem"`, `role="menuitemcheckbox"`, or `role="menuitemradio"` as applicable                                                     |
+| Data attributes        | Component-owned `data-ui-menu*` hooks documented below                                                                                                                        |
+| CSS namespace          | App-owned `ui-*` menu classes documented by the component implementation                                                                                                      |
+| Source files           | `resources/views/components/ui/menu/index.blade.php`; `resources/views/components/ui/menu-item/index.blade.php`; `resources/js/ui-controls/menus.js`; `resources/css/components/menu.css` |
 
 ### 4.3. JavaScript initializer
 
@@ -294,7 +294,7 @@ import { initMenus } from './ui-controls/menus';
 initMenus(containerElement);
 ```
 
-Feature views must not add custom `onclick` handlers, Bootstrap dropdown behavior, Alpine-only local disclosure state, or one-off keyboard handlers for menus. If the installed initializer cannot support a needed behavior, update the component owner, this standard, UI Reference proof, and tests before using the behavior in production.
+Feature views must not add custom `onclick` handlers, Bootstrap dropdown behavior, Alpine-only local disclosure state, or one-off keyboard handlers for menus. If the installed initializer cannot support a needed behavior, update the component owner, this standard, rendered evidence proof, and tests before using the behavior in production.
 
 ### 4.4. `x-ui.menu` props and options
 
@@ -302,7 +302,7 @@ Feature views must not add custom `onclick` handlers, Bootstrap dropdown behavio
 | ----------------- | --------------- | ------------------------------------------------------------ | ---------------------------------------------------- | -------- | ------------------------------------------------------------------------------------------------------------------------- |
 | `items`           | `array / null`  | `null`                                                       | Array matching the item data contract                | No       | Use for simple menus. Slot items may be used instead.                                                                     |
 | `trigger-label`   | `string`        | none                                                         | Short action/disclosure label                        | Yes      | Visible for standard triggers; accessible label for icon-only triggers.                                                   |
-| `trigger-icon`    | `string / null` | `null`                                                       | Approved Heroicon alias/component                    | No       | Use `heroicon-o-ellipsis-vertical` for row overflow menus unless the component owner approves another icon.               |
+| `trigger-icon`    | `string / null` | `null`                                                       | Internal icon alias/component                    | No       | Use `overflow-menu--vertical` for row overflow menus unless the component owner approves another icon.               |
 | `trigger-variant` | `string`        | `tertiary` for labeled menus; `ghost` for icon-only overflow | `primary`, `tertiary`, `ghost`                       | No       | Aligns trigger with Button hierarchy. Do not invent menu-only trigger colors.                                             |
 | `size`            | `string`        | `md`                                                         | `xs`, `sm`, `md`, `lg`                               | No       | Item height and trigger density must match where the trigger is button-like.                                              |
 | `placement`       | `string`        | `bottom-start`                                               | `bottom-start`, `bottom-end`, `top-start`, `top-end` | No       | Placement must mirror in RTL contexts.                                                                                    |
@@ -311,57 +311,57 @@ Feature views must not add custom `onclick` handlers, Bootstrap dropdown behavio
 | `menu-label`      | `string / null` | derived from `trigger-label`                                 | Short label for the menu panel                       | No       | Use when the trigger label alone is not enough for the panel context.                                                     |
 | `class`           | `string / null` | `null`                                                       | Layout passthrough if supported                      | No       | Parent Patterns may pass layout classes. Do not use for local color, state, typography, placement, or behavior overrides. |
 
-Any prop not listed here is not public. If a feature needs another option, update the component implementation, this standard, and the UI Reference proof before production use.
+Any prop not listed here is not public. If a feature needs another option, update the component implementation, this standard, and the rendered evidence proof before production use.
 
 ### 4.5. `x-ui.menu-item` props and options
 
-| Prop/option                                      | Type                  | Default  | Allowed values                                        | Required                         | Notes                                                                                         |
-| ------------------------------------------------ | --------------------- | -------- | ----------------------------------------------------- | -------------------------------- | --------------------------------------------------------------------------------------------- |
-| Slot/`label`                                     | `string / HtmlString` | none     | Short action label                                    | Required for action items        | Use sentence case and concrete command labels.                                                |
-| `type`                                           | `string`              | `item`   | `item`, `divider`                                     | No                               | Divider items are not focusable and do not need labels.                                       |
-| `href`                                           | `string / null`       | `null`   | Valid URL generated by Laravel route helpers          | No                               | Use for command-like navigation. External destinations must be clear in the label or context. |
-| `button` / no `href`                             | boolean behavior      | inferred | Component renders a button item                       | No                               | Use when JavaScript or form behavior is owned by the parent Pattern.                          |
-| `action`                                         | `string / null`       | `null`   | App-owned action identifier                           | No                               | Metadata hook only. The owning Pattern or controller owns execution.                          |
-| `method`                                         | `string / null`       | `null`   | `GET`, `POST`, `PATCH`, `DELETE`                      | No                               | Metadata hook only. Non-GET form submission remains gated until a submission contract exists. |
-| `tone`                                           | `string / null`       | `null`   | `danger`                                             | No                               | Preferred array/prop hook for destructive item treatment.                                    |
-| `danger`                                         | `bool`                | `false`  | `true`, `false`                                       | No                               | Use only for destructive or high-impact actions.                                              |
-| `danger-description`                             | `string / null`       | `null`   | Short assistive warning                               | No                               | Adds hidden assistive text for destructive items that need additional context.                 |
-| `disabled`                                       | `bool`                | `false`  | `true`, `false`                                       | No                               | Use only when the action may become available later.                                          |
-| `selected`                                       | `bool`                | `false`  | `true`, `false`                                       | No                               | Use with `selection-type` for checkable command settings.                                     |
-| `selection-type`                                 | `string / null`       | `null`   | `single`, `multi`                                     | Required when `selected` is used | Maps to `menuitemradio` or `menuitemcheckbox` semantics.                                      |
-| `shortcut`                                       | `string / null`       | `null`   | Short key chord text                                  | No                               | Metadata only. Do not use as the action label.                                                |
-| `submenu`                                        | `bool`                | `false`  | `true`, `false`                                      | No                               | Marks a submenu trigger when slot composition owns the submenu panel. Prefer `children` for array-driven menus. |
-| `children`                                       | `array / null`        | `null`   | One nested item array                                | No                               | One submenu level only. Deeper nesting is prohibited.                                         |
-| `title`                                          | `string / null`       | `null`   | Full label text                                       | No                               | Use for rare truncated labels when the full label must be exposed.                            |
-| `class`                                          | `string / null`       | `null`   | Not for visual overrides                              | No                               | Do not use to create local item states.                                                       |
+| Prop/option          | Type                  | Default  | Allowed values                               | Required                         | Notes                                                                                                           |
+| -------------------- | --------------------- | -------- | -------------------------------------------- | -------------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| Slot/`label`         | `string / HtmlString` | none     | Short action label                           | Required for action items        | Use sentence case and concrete command labels.                                                                  |
+| `type`               | `string`              | `item`   | `item`, `divider`                            | No                               | Divider items are not focusable and do not need labels.                                                         |
+| `href`               | `string / null`       | `null`   | Valid URL generated by Laravel route helpers | No                               | Use for command-like navigation. External destinations must be clear in the label or context.                   |
+| `button` / no `href` | boolean behavior      | inferred | Component renders a button item              | No                               | Use when JavaScript or form behavior is owned by the parent Pattern.                                            |
+| `action`             | `string / null`       | `null`   | App-owned action identifier                  | No                               | Metadata hook only. The owning Pattern or controller owns execution.                                            |
+| `method`             | `string / null`       | `null`   | `GET`, `POST`, `PATCH`, `DELETE`             | No                               | Metadata hook only. Non-GET form submission remains gated until a submission contract exists.                   |
+| `tone`               | `string / null`       | `null`   | `danger`                                     | No                               | Preferred array/prop hook for destructive item treatment.                                                       |
+| `danger`             | `bool`                | `false`  | `true`, `false`                              | No                               | Use only for destructive or high-impact actions.                                                                |
+| `danger-description` | `string / null`       | `null`   | Short assistive warning                      | No                               | Adds hidden assistive text for destructive items that need additional context.                                  |
+| `disabled`           | `bool`                | `false`  | `true`, `false`                              | No                               | Use only when the action may become available later.                                                            |
+| `selected`           | `bool`                | `false`  | `true`, `false`                              | No                               | Use with `selection-type` for checkable command settings.                                                       |
+| `selection-type`     | `string / null`       | `null`   | `single`, `multi`                            | Required when `selected` is used | Maps to `menuitemradio` or `menuitemcheckbox` semantics.                                                        |
+| `shortcut`           | `string / null`       | `null`   | Short key chord text                         | No                               | Metadata only. Do not use as the action label.                                                                  |
+| `submenu`            | `bool`                | `false`  | `true`, `false`                              | No                               | Marks a submenu trigger when slot composition owns the submenu panel. Prefer `children` for array-driven menus. |
+| `children`           | `array / null`        | `null`   | One nested item array                        | No                               | One submenu level only. Deeper nesting is prohibited.                                                           |
+| `title`              | `string / null`       | `null`   | Full label text                              | No                               | Use for rare truncated labels when the full label must be exposed.                                              |
+| `class`              | `string / null`       | `null`   | Not for visual overrides                     | No                               | Do not use to create local item states.                                                                         |
 
 ### 4.6. Item data contract
 
 Array-driven menus must use the same contract as the Blade item API.
 
-| Field           | Type                  | Required                                   | Notes                                                                 |
-| --------------- | --------------------- | ------------------------------------------ | --------------------------------------------------------------------- |
-| `type`          | `item / divider`      | No                                         | Defaults to `item`. Divider entries are separators and are not focusable. |
-| `label`         | `string`              | Required for `item`                        | Rendered as the menu item label.                                      |
-| `href`          | `string / null`       | No                                         | Use for command-like links. Prefer route helpers.                     |
-| `action`        | `string / null`       | No                                         | App-owned action identifier emitted as metadata.                      |
-| `method`        | `GET / POST / PATCH / DELETE` | No                                  | Metadata only; non-GET submission remains gated.                      |
-| `tone`          | `danger / null`       | No                                         | Preferred destructive item hook.                                      |
-| `danger`        | `bool`                | No                                         | Applies destructive item treatment.                                   |
-| `dangerDescription` | `string / null`   | No                                         | Hidden assistive warning for destructive items that need context.     |
-| `dividerBefore` | `bool`                | No                                         | Inserts a separator before the item without creating an unlabeled row. |
-| `disabled`      | `bool`                | No                                         | Renders disabled state only when the action may become available.     |
-| `hidden`        | `bool`                | No                                         | Use for permission-impossible actions. Hidden items are not rendered. |
-| `selected`      | `bool`                | No                                         | Shows selected/checkable state.                                       |
-| `selectionType` | `single / multi`      | Required when selected/checkable semantics are used | Selects `menuitemradio` or `menuitemcheckbox` semantics.              |
-| `shortcut`      | `string / null`       | No                                         | Renders a keyboard shortcut or equivalent secondary metadata.         |
-| `children`      | `array / null`        | No                                         | One-level submenu items. Children must follow this same contract.     |
-| `title`         | `string / null`       | No                                         | Full text for rare truncated labels.                                  |
-| `ariaLabel`     | `string / null`       | No                                         | Use only when visible label needs additional accessible context.      |
+| Field               | Type                          | Required                                            | Notes                                                                     |
+| ------------------- | ----------------------------- | --------------------------------------------------- | ------------------------------------------------------------------------- |
+| `type`              | `item / divider`              | No                                                  | Defaults to `item`. Divider entries are separators and are not focusable. |
+| `label`             | `string`                      | Required for `item`                                 | Rendered as the menu item label.                                          |
+| `href`              | `string / null`               | No                                                  | Use for command-like links. Prefer route helpers.                         |
+| `action`            | `string / null`               | No                                                  | App-owned action identifier emitted as metadata.                          |
+| `method`            | `GET / POST / PATCH / DELETE` | No                                                  | Metadata only; non-GET submission remains gated.                          |
+| `tone`              | `danger / null`               | No                                                  | Preferred destructive item hook.                                          |
+| `danger`            | `bool`                        | No                                                  | Applies destructive item treatment.                                       |
+| `dangerDescription` | `string / null`               | No                                                  | Hidden assistive warning for destructive items that need context.         |
+| `dividerBefore`     | `bool`                        | No                                                  | Inserts a separator before the item without creating an unlabeled row.    |
+| `disabled`          | `bool`                        | No                                                  | Renders disabled state only when the action may become available.         |
+| `hidden`            | `bool`                        | No                                                  | Use for permission-impossible actions. Hidden items are not rendered.     |
+| `selected`          | `bool`                        | No                                                  | Shows selected/checkable state.                                           |
+| `selectionType`     | `single / multi`              | Required when selected/checkable semantics are used | Selects `menuitemradio` or `menuitemcheckbox` semantics.                  |
+| `shortcut`          | `string / null`               | No                                                  | Renders a keyboard shortcut or equivalent secondary metadata.             |
+| `children`          | `array / null`                | No                                                  | One-level submenu items. Children must follow this same contract.         |
+| `title`             | `string / null`               | No                                                  | Full text for rare truncated labels.                                      |
+| `ariaLabel`         | `string / null`               | No                                                  | Use only when visible label needs additional accessible context.          |
 
 ### 4.7. Data attribute contract
 
-Data attributes are component-owned implementation hooks. They may be emitted by `x-ui.menu` and `x-ui.menu-item`, and they may appear in UI Reference examples to prove the implementation. Feature views must not invent new data attributes for menu behavior.
+Data attributes are component-owned implementation hooks. They may be emitted by `x-ui.menu` and `x-ui.menu-item`, and they may appear in rendered evidence examples to prove the implementation. Feature views must not invent new data attributes for menu behavior.
 
 | Attribute                      | Owner            | Purpose                                                                                |
 | ------------------------------ | ---------------- | -------------------------------------------------------------------------------------- |
@@ -419,7 +419,7 @@ The rendered implementation may differ in internal element names only when it pr
 | Name                       | Type               | Status                       | API                                                                         | Notes                                                                             |
 | -------------------------- | ------------------ | ---------------------------- | --------------------------------------------------------------------------- | --------------------------------------------------------------------------------- |
 | Contextual action menu     | Mode               | Implemented                  | `<x-ui.menu trigger-label="Actions" />`                                     | Use for object-level or region-level grouped actions.                             |
-| Row action overflow menu   | Mode               | Implemented                  | `trigger-icon="heroicon-o-ellipsis-vertical"` with specific `trigger-label` | Use in table rows, cards, and compact surfaces.                                   |
+| Row action overflow menu   | Mode               | Implemented                  | `trigger-icon="overflow-menu--vertical"` with specific `trigger-label` | Use in table rows, cards, and compact surfaces.                                   |
 | Labeled trigger            | Trigger variant    | Implemented                  | `trigger-label` visible                                                     | Preferred when menu is page-level or object-level.                                |
 | Icon-only overflow trigger | Trigger variant    | Implemented                  | `trigger-icon` plus `trigger-label`                                         | Requires object-specific accessible label.                                        |
 | Primary trigger            | Trigger semantic   | Implemented                  | `trigger-variant="primary"`                                                 | Use sparingly when the grouped actions collectively represent the primary action. |
@@ -658,22 +658,22 @@ Feature views must not create local `dropdown-*`, `menu-*`, `overflow-*`, `actio
 
 ## 13. Deferred or gated capabilities
 
-| Capability                                      | Status      | Gate                                                                                                                                          |
-| ----------------------------------------------- | ----------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
-| Combo/split menu button                         | Gated       | Requires dedicated Menu buttons or Button API ownership, trigger/action split semantics, keyboard proof, and UI Reference examples.           |
-| Context/right-click menu                        | Deferred    | Requires pointer and keyboard trigger parity, focus management, collision handling, dismissal rules, and UI Reference proof.                  |
-| Deep nested submenu                             | Not allowed | One-level submenu boundary only. Requires new accessibility review before any deeper nesting.                                                 |
-| Typeahead/search/filterable menu                | Deferred    | Requires search input semantics, results management, keyboard model, and proof. Use Select/Combobox Pattern when the user is choosing values. |
-| Async item loading                              | Deferred    | Requires loading semantics, disabled/pending item behavior, error recovery, and Pattern ownership.                                            |
-| Virtualized or scroll-heavy action menu         | Deferred    | Requires long-list keyboard proof and content strategy. Prefer visible pages, tables, or selection components.                                |
-| Custom placement/collision strategies           | Gated       | Must be implemented in `initMenus`, documented in this standard, and proven in UI Reference.                                                  |
-| Arbitrary item icons                            | Gated       | Requires Icons Element alignment and item layout proof. Do not add local icons to menu items.                                                 |
+| Capability                                      | Status      | Gate                                                                                                                                                                            |
+| ----------------------------------------------- | ----------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Combo/split menu button                         | Gated       | Requires dedicated Menu buttons or Button API ownership, trigger/action split semantics, keyboard proof, and rendered evidence examples.                                             |
+| Context/right-click menu                        | Deferred    | Requires pointer and keyboard trigger parity, focus management, collision handling, dismissal rules, and rendered evidence proof.                                                    |
+| Deep nested submenu                             | Not allowed | One-level submenu boundary only. Requires new accessibility review before any deeper nesting.                                                                                   |
+| Typeahead/search/filterable menu                | Deferred    | Requires search input semantics, results management, keyboard model, and proof. Use Select/Combobox Pattern when the user is choosing values.                                   |
+| Async item loading                              | Deferred    | Requires loading semantics, disabled/pending item behavior, error recovery, and Pattern ownership.                                                                              |
+| Virtualized or scroll-heavy action menu         | Deferred    | Requires long-list keyboard proof and content strategy. Prefer visible pages, tables, or selection components.                                                                  |
+| Custom placement/collision strategies           | Gated       | Must be implemented in `initMenus`, documented in this standard, and proven in rendered evidence.                                                                                    |
+| Arbitrary item icons                            | Gated       | Requires Icons Element alignment and item layout proof. Do not add local icons to menu items.                                                                                   |
 | Form submission menu items with non-GET methods | Gated       | Menu may emit `data-ui-menu-method` metadata, but execution requires CSRF/method spoofing contract, confirmation rules, and tests. Prefer explicit forms or confirmation flows. |
-| Non-closing multi-select menus                  | Gated       | Requires documented interaction model, checked-state announcements, Escape/outside dismissal behavior, and tests.                             |
+| Non-closing multi-select menus                  | Gated       | Requires documented interaction model, checked-state announcements, Escape/outside dismissal behavior, and tests.                                                               |
 
-Future extensions require an updated Component standard and UI Reference proof before production use.
+Future extensions require an updated Component standard and rendered evidence proof before production use.
 
-## 14. Implementation and UI Reference Checklist
+## 14. Implementation and Rendered Evidence Checklist
 ### 14.1. Implementation checklist
 | Requirement                | Standard expectation                                                                                                                               |
 | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -682,9 +682,9 @@ Future extensions require an updated Component standard and UI Reference proof b
 | States                     | Default, hover, focus-visible, active/pressed, disabled, loading, validation, selected, empty, or not-applicable states are defined as relevant.   |
 | Accessibility/content      | Keyboard, focus, naming, ARIA, contrast, reduced-motion, label, helper, error, and copy requirements are defined.                                  |
 | Element consumption        | Required Color, Spacing, Typography, Icons, Motion, Themes, and 2x Grid dependencies are named.                                                    |
-| Tests                      | Source/API assertions and UI Reference route assertions block generic fallback content.                                                            |
+| Tests                      | Source/API assertions and Rendered evidence route assertions block generic fallback content.                                                            |
 
-### 14.2. UI Reference proof checklist
+### 14.2. rendered evidence proof checklist
 | Requirement               | Visual proof expectation                                                                              |
 | ------------------------- | ----------------------------------------------------------------------------------------------------- |
 | Live examples             | The page renders production examples through the documented API or explicit native/class contract.    |
@@ -693,34 +693,34 @@ Future extensions require an updated Component standard and UI Reference proof b
 | Developer implementation  | Real canonical calls and token-backed code snippets appear instead of placeholder comments.           |
 | Related APIs              | Nearby Components, owning Patterns, consumed Elements, source files, and canonical docs are linked.   |
 | Manual review             | The page provides enough rendered proof for visual review of behavior, layout, and state correctness. |
-## 15. UI Reference requirements
+## 15. Rendered evidence requirements
 
-The UI Reference page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
+The rendered evidence page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
 
 The Menu page is a broad action component reference page. The Live examples card may use matrices, grouped examples, keyboard notes, alignment demos, and state tables. It must not use generic placeholder scaffolding or fake menu controls that bypass `x-ui.menu` and `initMenus`.
 
 ### 15.1. Required Live examples internal sections:
 
-| Required proof              | Rendered behavior                                                                                                                                       | Variants/options shown                                                                                                  |
-| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| Contextual action menu      | A labeled menu button opens object-level actions in predictable order and returns focus on close.                                                       | Enabled item, Hover item, Focus item, Focus and hover, Danger item, Danger hover, Danger hover and focus, Disabled item |
-| Row action menu             | Table/card rows use icon-only overflow triggers with object-specific accessible labels and short menus.                                                 | Divided groups, Extra small, Small, Medium, Large, Icon-only trigger, Disabled item                                     |
-| Grouped and selected menu   | Dividers, selected rows, shortcuts, title tooltips, multi-section groups, and submenu indicators keep larger menus scannable.                            | Dividers, Multi-section grouping, Keyboard shortcut, Submenu actions, Single-select, Multi-select, Selected item, Truncated label with title |
-| Alignment and RTL           | Open menus align to available space and mirror start/end, item direction, shortcut direction, submenu side, and caret direction in RTL contexts.         | Bottom start, Bottom end, Top start, Top end, RTL mirrored                                                              |
-| Size scale                  | Approved item sizes render with matching density and no mixed trigger/item height.                                                                      | Extra small, Small, Medium, Large                                                                                       |
-| State matrix                | Menu item states render with token-backed classes and no local CSS.                                                                                     | Default, Hover, Focus-visible, Focus and hover, Selected, Danger, Disabled, Open, Closed                                |
-| Keyboard behavior           | A developer-facing example documents trigger activation, arrow navigation, Enter/Space activation, Escape close, outside click, and submenu arrows.     | `aria-haspopup`, `aria-expanded`, roving item focus, focus return, one-level submenu                                    |
-| JavaScript implementation   | The page shows the `initMenus` import and initialization contract.                                                                                      | `initMenus`, component-owned data attributes, no local scripts                                                          |
-| Data attribute proof        | Rendered examples expose the installed `data-ui-menu*` hooks through component output or code examples.                                                 | `data-ui-menu`, `data-ui-menu-trigger`, `data-ui-menu-panel`, `data-ui-menu-item`                                       |
-| Content behavior            | Labels demonstrate short action text, grouped destructive actions, object-specific icon-only labels, shortcut metadata, and rare truncation title text. | Sentence case, explicit danger label, title text for truncation, object-specific trigger label                          |
-| Prohibited usage            | The page shows forbidden local markup, Bootstrap dropdowns, direct Carbon classes, hover-only menus, overlong menus, and deep nesting as not allowed.   | Prohibited examples and deferred gates                                                                                  |
-| Related component selection | The page distinguishes Menu from Button, Select/Dropdown, navigation, Tooltip/Popover, Modal, and Table toolbar Patterns.                               | Selection matrix and related APIs                                                                                       |
+| Required proof              | Rendered behavior                                                                                                                                       | Variants/options shown                                                                                                                       |
+| --------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------- |
+| Contextual action menu      | A labeled menu button opens object-level actions in predictable order and returns focus on close.                                                       | Enabled item, Hover item, Focus item, Focus and hover, Danger item, Danger hover, Danger hover and focus, Disabled item                      |
+| Row action menu             | Table/card rows use icon-only overflow triggers with object-specific accessible labels and short menus.                                                 | Divided groups, Extra small, Small, Medium, Large, Icon-only trigger, Disabled item                                                          |
+| Grouped and selected menu   | Dividers, selected rows, shortcuts, title tooltips, multi-section groups, and submenu indicators keep larger menus scannable.                           | Dividers, Multi-section grouping, Keyboard shortcut, Submenu actions, Single-select, Multi-select, Selected item, Truncated label with title |
+| Alignment and RTL           | Open menus align to available space and mirror start/end, item direction, shortcut direction, submenu side, and caret direction in RTL contexts.        | Bottom start, Bottom end, Top start, Top end, RTL mirrored                                                                                   |
+| Size scale                  | Approved item sizes render with matching density and no mixed trigger/item height.                                                                      | Extra small, Small, Medium, Large                                                                                                            |
+| State matrix                | Menu item states render with token-backed classes and no local CSS.                                                                                     | Default, Hover, Focus-visible, Focus and hover, Selected, Danger, Disabled, Open, Closed                                                     |
+| Keyboard behavior           | A developer-facing example documents trigger activation, arrow navigation, Enter/Space activation, Escape close, outside click, and submenu arrows.     | `aria-haspopup`, `aria-expanded`, roving item focus, focus return, one-level submenu                                                         |
+| JavaScript implementation   | The page shows the `initMenus` import and initialization contract.                                                                                      | `initMenus`, component-owned data attributes, no local scripts                                                                               |
+| Data attribute proof        | Rendered examples expose the installed `data-ui-menu*` hooks through component output or code examples.                                                 | `data-ui-menu`, `data-ui-menu-trigger`, `data-ui-menu-panel`, `data-ui-menu-item`                                                            |
+| Content behavior            | Labels demonstrate short action text, grouped destructive actions, object-specific icon-only labels, shortcut metadata, and rare truncation title text. | Sentence case, explicit danger label, title text for truncation, object-specific trigger label                                               |
+| Prohibited usage            | The page shows forbidden local markup, Bootstrap dropdowns, direct Carbon classes, hover-only menus, overlong menus, and deep nesting as not allowed.   | Prohibited examples and deferred gates                                                                                                       |
+| Related component selection | The page distinguishes Menu from Button, Select/Dropdown, navigation, Tooltip/Popover, Modal, and Table toolbar Patterns.                               | Selection matrix and related APIs                                                                                                            |
 
 The page must show the actual installed API, rendered variants/options, rendered states, JavaScript initializer, data attributes, prohibited usage, deferred gates, and Foundation Elements consumed.
 
 ## 16. Testing and acceptance criteria
 
-- `/platform/ui-reference/components/menu` returns 200 for authorized users.
+- `not installed` returns 200 for authorized users.
 - The page shows the installed API, states, variants/options, prohibited usage, deferred gates, and Foundation Elements consumed.
 - Implemented APIs render production examples; deferred APIs render trigger conditions instead of fake controls.
 - The Purpose, Use cases, Component contract, Live examples, and Related components and patterns cards render in that top-level order.
@@ -744,7 +744,7 @@ The page must show the actual installed API, rendered variants/options, rendered
 ### 16.1. Suggested automated assertions:
 
 ```php
-$response = $this->actingAs($admin)->get('/platform/ui-reference/components/menu');
+$response = $this->actingAs($admin)->get('not installed');
 
 $response->assertOk();
 $response->assertSee('Menu');
@@ -793,21 +793,21 @@ $response->assertDontSee('bx--');
 
 | API                      | Route                                                          |
 | ------------------------ | -------------------------------------------------------------- |
-| Button                   | `/platform/ui-reference/components/button`                     |
-| Tooltip                  | `/platform/ui-reference/components/tooltip`                    |
-| Data table               | `/platform/ui-reference/components/data-table`                 |
-| Notification             | `/platform/ui-reference/components/notification`               |
-| Layout Pattern           | `/platform/ui-reference/patterns/layout`                       |
-| Tables Pattern           | `/platform/ui-reference/patterns/tables`                       |
-| Forms pattern            | `/platform/ui-reference/patterns/forms`                        |
-| Overlay/feedback pattern | `/platform/ui-reference/patterns/overlays-feedback`            |
-| Color element            | `/platform/ui-reference/elements/color`                        |
-| Spacing element          | `/platform/ui-reference/elements/spacing`                      |
-| Typography element       | `/platform/ui-reference/elements/typography`                   |
-| Themes element           | `/platform/ui-reference/elements/themes`                       |
-| Motion element           | `/platform/ui-reference/elements/motion`                       |
-| Icons element            | `/platform/ui-reference/elements/icons`                        |
-| Components overview      | `/platform/ui-reference/components`                            |
+| Button                   | `not installed`                     |
+| Tooltip                  | `not installed`                    |
+| Data table               | `not installed`                 |
+| Notification             | `not installed`               |
+| Layout Pattern           | `not installed`                       |
+| Tables Pattern           | `not installed`                       |
+| Forms pattern            | `not installed`                        |
+| Overlay/feedback pattern | `not installed`            |
+| Color element            | `not installed`                        |
+| Spacing element          | `not installed`                      |
+| Typography element       | `not installed`                   |
+| Themes element           | `not installed`                       |
+| Motion element           | `not installed`                       |
+| Icons element            | `not installed`                        |
+| Components overview      | `not installed`                            |
 | Canonical menu doc       | `/platform/docs?path=02-standards%2Fui%2Fcomponents%2Fmenu.md` |
 | Carbon menu usage        | `https://carbondesignsystem.com/components/menu/usage/`        |
 
@@ -817,5 +817,5 @@ $response->assertDontSee('bx--');
 - [Component Implementation Checklist](checklist.md)
 - [Foundation Elements Standards](../elements/index.md)
 - [Pattern Standards Index](../patterns/index.md)
-- Carbon Menu usage, style, and accessibility guidance inform menu anatomy, dividers, shortcuts, selected/checkable items, danger treatment, sizing, width, keyboard navigation, ARIA roles, and submenu boundaries. Login App keeps its own Blade API, JavaScript initializer, Heroicons icon standard, app-owned `ui-*` classes, and UI Reference proof.
+- Carbon Menu usage, style, and accessibility guidance inform menu anatomy, dividers, shortcuts, selected/checkable items, danger treatment, sizing, width, keyboard navigation, ARIA roles, and submenu boundaries. Login App keeps its own Blade API, JavaScript initializer, internal icon standard, app-owned `ui-*` classes, and rendered evidence proof.
 - Carbon Menu buttons and Overflow menu guidance inform trigger selection, row overflow use, size alignment, accessible icon-only triggers, and action-count limits. Login App documents only the installed `x-ui.menu` behavior here and gates combo/split/right-click behavior until app-owned proof exists.

@@ -4,12 +4,15 @@ This document defines the canonical scope and intent for System Overview.
 
 ## System Model
 
-Login App 2.0 is one Laravel codebase with two runtime contexts:
+Login App 2.0 is one Laravel codebase with three target contexts:
 
-- `platform` context for Parasolutions internal operations and platform management
-- `tenant` context for client-specific application instances
+- `control_plane` for Parasolutions internal administration, support, tenant registry, provisioning, security, runtime readiness, and module governance
+- `internal_workspace` for Parasolutions' own business operations using shared workspace systems
+- `tenant_workspace` for client-specific workspace runtime
 
-The platform context is the first internal instance of the shared core app, with platform-only management capabilities layered on top.
+Platform is the Parasolutions control plane. Platform is not itself a tenant.
+
+Parasolutions may own an `internal_workspace` that behaves like a workspace for business modules. That workspace should use the same shared workspace module model intended for future client tenant workspaces.
 
 ## Foundation Direction
 
@@ -19,18 +22,20 @@ Canonical stack definition is owned by:
 
 ## Domain And Context Direction
 
-Platform administration is owned by Parasolutions. Tenant administration is owned per client instance and resolved from domain metadata in the central platform database.
+Control-plane administration is owned by Parasolutions. Tenant administration is owned per client workspace and resolved from domain metadata in the central platform database.
 
 Domain resolution is a runtime boundary concern, not a feature-level concern.
 
 ## Ownership Boundaries
 
-- shared core capabilities should be reusable across platform and tenant contexts
-- platform-management capabilities stay platform-only
-- tenant application data stays tenant-local except explicit platform-level metadata and operations data
+- shared core capabilities should be reusable across internal workspace and tenant workspace contexts
+- platform-management capabilities stay control-plane-only unless explicitly reclassified
+- tenant application data stays tenant-local except explicit control-plane metadata and operations data
+- Parasolutions internal workspace data should be separated from control-plane data before shared business modules are built
 
 ## Related
 
+- [Platform Context Model](platform-context-model.md)
 - [Platform Boundary](platform-boundary.md)
 - [Tenancy](tenancy.md)
 - [Core Platform Layer Model](subsystems/core-platform-layer-model.md)

@@ -9,13 +9,11 @@ Login App 2.0 is built and planned around this stack:
 - PHP `8.3`
 - Laravel `13.x` application codebase
 - Blade for the current foundation UI
-- Filament for planned admin panels
 - Livewire for planned reactive panel behavior
 - PostgreSQL `16` for the platform database and future tenant databases
 - Redis `7` for cache and queue infrastructure
 - Docker Compose for local orchestration
 - Vite for frontend asset bundling
-- Tailwind CSS for utility-first styling
 - Apache + PHP-FPM for the planned production runtime
 
 ## How The Pieces Fit Together
@@ -26,7 +24,7 @@ Laravel is the application framework and the main source of routing, middleware,
 
 ### Admin UI layer
 
-Filament and Livewire are planned for the long-term panel UI. Blade remains the right choice for low-level bootstrap pages and simple foundation screens until Filament is introduced.
+Blade owns the current foundation and platform UI. Livewire remains available for planned reactive panel behavior where it is justified. The retired Filament console/proof surface is not an active app surface or target UI architecture.
 
 ### Data layer
 
@@ -38,7 +36,7 @@ Redis supports cache, queue, and other fast transient state. It is not the sourc
 
 ### Frontend build layer
 
-Vite and Tailwind handle asset compilation and styling. Laravel serves the application while Vite handles the asset pipeline.
+Vite handles asset compilation and styling. Laravel serves the application while Vite handles the asset pipeline.
 
 ### Local development layer
 
@@ -53,8 +51,8 @@ Apache proxies PHP execution through PHP-FPM. This keeps the production runtime 
 - Keep Laravel as the integration center of the stack.
 - Keep PostgreSQL as the authoritative data store.
 - Keep Redis limited to fast infrastructure concerns such as cache and queues.
-- Keep Blade for foundation pages and Filament for panel-heavy admin workflows.
-- Keep Vite and Tailwind as build and styling tools, not as application state managers.
+- Keep Blade as the current foundation UI and use Livewire only where reactive behavior is justified.
+- Keep Vite as build and styling tools, not as application state managers.
 - Keep Docker Compose as the standard local contract even if some contributors also run services natively.
 - Keep Apache + PHP-FPM configuration simple and explicit.
 

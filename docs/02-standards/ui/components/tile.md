@@ -6,15 +6,15 @@ status: implemented-pending-review
 system_maturity: implemented
 category: data-display
 priority: tier-b-common-reusable-component
-ui_reference_route: /platform/ui-reference/components/tile
+rendered_evidence_route: null
 canonical_doc: docs/02-standards/ui/components/tile.md
-source_owner: /platform/ui-reference/components/tile
+source_owner: not installed
 blade_api:
   - x-ui.tile
 javascript_api:
   - initTiles
 source_files:
-  - resources/views/components/ui/tile.blade.php
+  - resources/views/components/ui/tile/index.blade.php
   - resources/js/ui-controls/tiles.js
   - resources/js/ui-controls.js
   - resources/js/app.js
@@ -173,7 +173,7 @@ Tiles are their own layer surface and remain on the same visual plane as page co
 | Selectable/expandable icon | `$icon-primary` |
 | Disabled icon | `$icon-disabled` |
 
-Contextual layer tokens must resolve according to the layer where the tile is placed. Do not set Tile to Layer 02 globally to compensate for card-heavy UI Reference wrappers; fix the parent surface depth instead.
+Contextual layer tokens must resolve according to the layer where the tile is placed. Do not set Tile to Layer 02 globally to compensate for card-heavy rendered evidence wrappers; fix the parent surface depth instead.
 
 ## 6. Structure
 
@@ -253,12 +253,12 @@ Grid proportion guidance:
 | Tile group helper | Pattern-owned | Requires `x-ui.tile-group` API, group labels, keyboard expectations, grid behavior, and tests. |
 | AI presence | Gated | Requires AI presence standards, explainability disclosure, and token coverage. |
 | Skeleton tile component | Pattern-owned / deferred | Requires Loading Pattern ownership, grid loading policy, and reduced-motion proof. |
-| Custom density | Not allowed | Requires Spacing, Typography, and UI Reference updates. |
+| Custom density | Not allowed | Requires Spacing, Typography, and rendered evidence updates. |
 | Custom border/shadow treatment | Not allowed | Requires Color, Themes, and accessibility proof. |
 
-## 12. UI Reference Requirements
+## 12. Rendered evidence requirements
 
-The Tile UI Reference page must render:
+The Tile rendered evidence page must render:
 
 - approved variant tabs for base tile, clickable tile, selectable tile, expandable tile, and expandable tile with interactive elements
 - applicable states inside each variant tab before live examples
@@ -305,27 +305,27 @@ The Tile UI Reference page must render:
 
 | API | Route |
 | --- | --- |
-| Button | `/platform/ui-reference/components/button` |
-| Icon button | `/platform/ui-reference/components/button` |
-| Link | `/platform/ui-reference/components/link` |
-| Checkbox | `/platform/ui-reference/components/checkbox` |
-| Radio button | `/platform/ui-reference/components/radio-button` |
-| Tag | `/platform/ui-reference/components/tag` |
-| Structured list | `/platform/ui-reference/components/structured-list` |
-| Data table | `/platform/ui-reference/components/data-table` |
-| Loading | `/platform/ui-reference/components/loading` |
-| Inline loading | `/platform/ui-reference/components/inline-loading` |
-| Forms pattern | `/platform/ui-reference/patterns/forms` |
-| Cards pattern | `/platform/ui-reference/patterns/cards` |
-| Navigation Pattern | `/platform/ui-reference/patterns/navigation` |
-| Tables Pattern | `/platform/ui-reference/patterns/tables` |
-| Search results pattern | `/platform/ui-reference/patterns/search-results` |
-| Color element | `/platform/ui-reference/elements/color` |
-| Spacing element | `/platform/ui-reference/elements/spacing` |
-| Typography element | `/platform/ui-reference/elements/typography` |
-| Themes element | `/platform/ui-reference/elements/themes` |
-| Motion element | `/platform/ui-reference/elements/motion` |
-| 2x Grid element | `/platform/ui-reference/elements/2x-grid` |
+| Button | `not installed` |
+| Icon button | `not installed` |
+| Link | `not installed` |
+| Checkbox | `not installed` |
+| Radio button | `not installed` |
+| Tag | `not installed` |
+| Structured list | `not installed` |
+| Data table | `not installed` |
+| Loading | `not installed` |
+| Inline loading | `not installed` |
+| Forms pattern | `not installed` |
+| Cards pattern | `not installed` |
+| Navigation Pattern | `not installed` |
+| Tables Pattern | `not installed` |
+| Search results pattern | `not installed` |
+| Color element | `not installed` |
+| Spacing element | `not installed` |
+| Typography element | `not installed` |
+| Themes element | `not installed` |
+| Motion element | `not installed` |
+| 2x Grid element | `not installed` |
 
 ## 15. References
 
@@ -333,4 +333,4 @@ The Tile UI Reference page must render:
 - [Component Implementation Checklist](checklist.md)
 - [Foundation Elements Standards](../elements/index.md)
 - [Pattern Standards Index](../patterns/index.md)
-- Carbon Tile usage, style, and accessibility guidance inform static/clickable/selectable/expandable role boundaries, interactive affordance, accessible selected/disclosure behavior, disabled treatment, and the prohibition against nested interactive controls inside directly interactive tiles. Login App keeps its own Blade API, `ui-*` namespace, Foundation tokens, and UI Reference proof.
+- Carbon Tile usage, style, and accessibility guidance inform static/clickable/selectable/expandable role boundaries, interactive affordance, accessible selected/disclosure behavior, disabled treatment, and the prohibition against nested interactive controls inside directly interactive tiles. Login App keeps its own Blade API, `ui-*` namespace, Foundation tokens, and rendered evidence proof.

@@ -2,17 +2,31 @@
 
 namespace App\Http\Requests\Platform;
 
-use App\Support\InternalPhoneFormatter;
 use App\Models\User;
+use App\Modules\Roles\Services\AssignmentGuard;
+use App\Modules\Auth\Services\Password\LocalPasswordPolicy;
+use App\Support\InternalPhoneFormatter;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
-use Illuminate\Validation\Rules\Password;
 
 class UpdatePlatformUserRequest extends FormRequest
 {
     public function authorize(): bool
     {
-        return true;
+        /** @var User|null $user */
+        $user = $this->route('user');
+
+        if (! $user instanceof User) {
+            return false;
+        }
+
+        $guard = app(AssignmentGuard::class);
+
+        return $guard->canAssignRoles(
+            $this->user(),
+            $guard->roleNamesFromInput($this->input('roles', [])),
+            $user,
+        );
     }
 
     /**
@@ -27,7 +41,11 @@ class UpdatePlatformUserRequest extends FormRequest
             'first_name' => ['required', 'string', 'max:100'],
             'last_name' => ['required', 'string', 'max:100'],
             'email' => ['required', 'string', 'email', 'max:255', Rule::unique('users', 'email')->ignore($user->id)],
-            'password' => ['nullable', 'string', Password::defaults()],
+            'password' => [
+                'nullable',
+                'string',
+                ...LocalPasswordPolicy::rules(LocalPasswordPolicy::contextWordsForInput($this->all())),
+            ],
             'hourly_rate' => ['nullable', 'numeric', 'min:0', 'max:999999.99'],
             'phone' => ['nullable', 'string', 'max:50'],
             'facebook' => ['nullable', 'string', 'max:255'],

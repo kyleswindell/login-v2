@@ -4,7 +4,7 @@ slug: motion
 api_layer: Foundation Element API
 guide_status: implemented
 system_maturity: partial
-ui_reference_route: /platform/ui-reference/elements/motion
+rendered_evidence_route: null
 canonical_doc: docs/02-standards/ui/elements/motion.md
 carbon_reference:
   - https://carbondesignsystem.com/elements/motion/overview/
@@ -73,10 +73,10 @@ related_patterns:
 - [10. State behavior](#10-state-behavior)
 - [11. Prohibited usage](#11-prohibited-usage)
 - [12. Deferred or gated capabilities](#12-deferred-or-gated-capabilities)
-- [13. Implementation and UI Reference Checklist](#13-implementation-and-ui-reference-checklist)
+- [13. Implementation and Rendered Evidence Checklist](#13-implementation-and-ui-reference-checklist)
   - [13.1. Implementation checklist](#131-implementation-checklist)
-  - [13.2. UI Reference proof checklist](#132-ui-reference-proof-checklist)
-- [14. UI Reference requirements](#14-ui-reference-requirements)
+  - [13.2. rendered evidence proof checklist](#132-ui-reference-proof-checklist)
+- [14. Rendered evidence requirements](#14-ui-reference-requirements)
   - [14.1. Productive easing demos](#141-productive-easing-demos)
   - [14.2. Expressive easing demos](#142-expressive-easing-demos)
   - [14.3. Common UI motion examples](#143-common-ui-motion-examples)
@@ -109,7 +109,7 @@ Motion is the installed transition and animation standard for Login App 2.0. It 
 - Loading and skeleton motion boundaries.
 - Motion accessibility constraints.
 - Prohibited animation patterns.
-- UI Reference proof requirements.
+- rendered evidence proof requirements.
 
 ### Non-owned responsibilities:
 
@@ -130,7 +130,7 @@ Use Motion only when it helps users understand what changed, where focus or cont
 | System maturity              | Partial                                                                                                                 |
 | API layer                    | Foundation Element API                                                                                                  |
 | Element slug                 | motion                                                                                                                  |
-| UI Reference route           | `/platform/ui-reference/elements/motion`                                                                                |
+| Rendered evidence route           | `not installed`                                                                                |
 | Canonical doc                | `docs/02-standards/ui/elements/motion.md`                                                                               |
 | Primary implementation model | Tailwind transition utilities, component-owned CSS classes, and `prefers-reduced-motion` rules                          |
 | Primary consumers            | Buttons, links, forms, dropdowns, menus, accordions, modals, notifications, loading states, shell panels, table actions |
@@ -166,7 +166,7 @@ Login App 2.0 uses restrained productive motion by default. Motion should be fas
 | Nearby panel exit | Surface leaves but remains spatially associated with the trigger.               | Side panel, collapsible shell panel.                                           | Standard easing instead of aggressive exit easing.                                    |
 | Loading motion    | Indicates active local work or pending region state.                            | Spinner, inline loading, skeleton shimmer if approved.                         | Loading Component API owns semantics; Motion owns reduced-motion limits.              |
 | Progress motion   | Reinforces measured progress, not generic waiting.                              | Progress bar, progress indicator.                                              | Progress Component APIs own updates; Motion prevents decorative looping.              |
-| Expressive moment | High-attention motion used sparingly.                                           | Major system notice, route-level Pattern transition, high-impact confirmation. | Gated. Requires explicit owner and UI Reference proof.                                |
+| Expressive moment | High-attention motion used sparingly.                                           | Major system notice, route-level Pattern transition, high-impact confirmation. | Gated. Requires explicit owner and rendered evidence proof.                                |
 
 ### 3.2. Productive motion as default
 
@@ -186,7 +186,7 @@ Expressive motion is not globally available. It may be used only when all of the
 1. A Pattern or product workflow explicitly owns the moment.
 2. The motion communicates meaningful state, priority, or spatial context.
 3. The same message remains understandable with reduced motion.
-4. The UI Reference page demonstrates the motion and reduced-motion fallback.
+4. The rendered evidence page demonstrates the motion and reduced-motion fallback.
 5. Accessibility review confirms it does not introduce vestibular, focus, timing, or distraction issues.
 
 Examples that may qualify if explicitly approved:
@@ -291,22 +291,22 @@ Only use Token API rows as installed standards where the helper, class, componen
 | Tailwind transition utilities             | Implemented                              | Foundation Element API + Tailwind config              | Allowed when used with approved durations/easing and component ownership.                           |
 | Component-owned motion classes            | Implemented / expanding                  | Component APIs                                        | Allowed for Accordion, Modal, Loading, Notification, Dropdown/Menu, and other installed components. |
 | `@media (prefers-reduced-motion: reduce)` | Implemented requirement                  | Foundation Element API                                | Required for non-essential animation and transform motion.                                          |
-| `--ui-motion-*` CSS variables             | Deferred / queued unless present in code | Motion Element API                                    | Do not consume until installed and proven on the UI Reference route.                                |
+| `--ui-motion-*` CSS variables             | Deferred / queued unless present in code | Motion Element API                                    | Do not consume until installed and proven on the Rendered evidence route.                                |
 | Custom keyframes                          | Deferred / gated                         | Component or Pattern API plus Motion Element approval | Not allowed in feature code without a specific standard update.                                     |
-| External animation library                | Not implemented                          | No default owner                                      | Requires decision record, accessibility review, and UI Reference proof.                             |
+| External animation library                | Not implemented                          | No default owner                                      | Requires decision record, accessibility review, and rendered evidence proof.                             |
 
 ## 5. CSS variable API
 
 Use only the CSS variables and token aliases listed in the Token API table or the linked token standards. Do not introduce feature-local CSS variables for this Element without updating this standard.
 
-Current installed usage is utility-first and component-owned. Named CSS variables such as `--ui-motion-duration-fast`, `--ui-motion-duration-moderate`, `--ui-motion-easing-productive`, or `--ui-motion-easing-expressive` are not public feature-code API unless they exist in the codebase and are demonstrated by the UI Reference route.
+Current installed usage is utility-first and component-owned. Named CSS variables such as `--ui-motion-duration-fast`, `--ui-motion-duration-moderate`, `--ui-motion-easing-productive`, or `--ui-motion-easing-expressive` are not public feature-code API unless they exist in the codebase and are demonstrated by the Rendered evidence route.
 
 Allowed CSS variable usage:
 
 | Variable family                   | Status                           | Owner              | Allowed usage                                                                                                                         |
 | --------------------------------- | -------------------------------- | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------- |
 | Component-owned custom properties | Implemented where present        | Component API      | Use only through the component's documented props/classes. Example: an accordion panel max-height custom property owned by Accordion. |
-| `--ui-motion-*`                   | Deferred / queued unless present | Motion Element API | May be introduced only by updating this standard, the UI Reference page, and tests.                                                   |
+| `--ui-motion-*`                   | Deferred / queued unless present | Motion Element API | May be introduced only by updating this standard, the rendered evidence page, and tests.                                                   |
 | Feature-local motion variables    | Prohibited                       | No owner           | Do not create variables such as `--reports-card-delay` or `--dashboard-bounce-duration`.                                              |
 
 Rules:
@@ -319,7 +319,7 @@ Rules:
 
 ## 6. Utility class/helper API
 
-Allowed utility classes, Blade helpers, and component wrappers are those listed in the Token API table and demonstrated by the UI Reference route.
+Allowed utility classes, Blade helpers, and component wrappers are those listed in the Token API table and demonstrated by the Rendered evidence route.
 
 ### 6.1. Allowed utility classes
 
@@ -439,7 +439,7 @@ Pattern-owned motion must still consume this Motion Element API. Do not create P
 
 ## 9. Theme behavior
 
-This Element must remain valid in supported light, dark, inline, inverse, and high-contrast contexts when those contexts apply. Theme behavior is proven on the UI Reference page.
+This Element must remain valid in supported light, dark, inline, inverse, and high-contrast contexts when those contexts apply. Theme behavior is proven on the rendered evidence page.
 
 Motion itself is not a color token, but many moving states change color, background, border, shadow, opacity, or layer. Motion must preserve theme correctness:
 
@@ -483,7 +483,7 @@ Additional prohibitions:
 
 - Do not add arbitrary animation durations or easing values in feature views.
 - Do not create feature-local `@keyframes`.
-- Do not use animation libraries without a decision record and UI Reference proof.
+- Do not use animation libraries without a decision record and rendered evidence proof.
 - Do not animate required instructions, labels, helper text, or validation so they appear late.
 - Do not move focus as part of a visual animation without an accessibility contract.
 - Do not delay keyboard access until animation completes.
@@ -498,18 +498,18 @@ Additional prohibitions:
 
 | Capability                                     | Status                                     | Gate                                                                                                    |
 | ---------------------------------------------- | ------------------------------------------ | ------------------------------------------------------------------------------------------------------- |
-| Named `--ui-motion-*` CSS variables            | Deferred / queued unless installed in code | Requires token definition, UI Reference proof, docs update, and tests.                                  |
-| Expressive motion                              | Gated                                      | Requires product/workflow owner, accessibility review, reduced-motion fallback, and UI Reference proof. |
+| Named `--ui-motion-*` CSS variables            | Deferred / queued unless installed in code | Requires token definition, rendered evidence proof, docs update, and tests.                                  |
+| Expressive motion                              | Gated                                      | Requires product/workflow owner, accessibility review, reduced-motion fallback, and rendered evidence proof. |
 | Page or route transitions                      | Gated Pattern capability                   | Requires Pattern API ownership, focus/scroll behavior, reduced-motion fallback, and testing.            |
 | Custom keyframes                               | Gated                                      | Requires component/pattern standard update and no safer utility alternative.                            |
-| External animation library                     | Not implemented                            | Requires decision record, bundle/performance review, accessibility review, and UI Reference proof.      |
+| External animation library                     | Not implemented                            | Requires decision record, bundle/performance review, accessibility review, and rendered evidence proof.      |
 | Lottie or illustrated animation                | Not implemented                            | Requires brand/content/design review and reduced-motion fallback.                                       |
 | Parallax or scroll-linked animation            | Not allowed by default                     | Requires explicit exception; generally inappropriate for admin UI.                                      |
 | Motion choreography across multiple components | Gated Pattern capability                   | Requires one Pattern owner and clear state/focus contracts.                                             |
 
-No additional capability is approved without updating this Element standard and UI Reference proof.
+No additional capability is approved without updating this Element standard and rendered evidence proof.
 
-## 13. Implementation and UI Reference Checklist
+## 13. Implementation and Rendered Evidence Checklist
 
 ### 13.1. Implementation checklist
 
@@ -522,7 +522,7 @@ No additional capability is approved without updating this Element standard and 
 | Prohibited usage            | Feature code, Components, and Patterns are told what they must not redefine locally.                                              |
 | Tests                       | Route/content/API assertions are defined to prove the Element contract.                                                           |
 
-### 13.2. UI Reference proof checklist
+### 13.2. rendered evidence proof checklist
 
 | Requirement          | Visual proof expectation                                                                                            |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------- |
@@ -532,9 +532,9 @@ No additional capability is approved without updating this Element standard and 
 | Accessibility proof  | Contrast, focus, semantics, hit targets, reduced motion, or equivalent Element constraints are shown or documented. |
 | Related APIs         | Consuming Components, Patterns, source files, and the canonical standard are linked.                                |
 | Manual review        | The page provides enough rendered proof for visual review without opening source code first.                        |
-## 14. UI Reference requirements
+## 14. Rendered evidence requirements
 
-The UI Reference page must prove this standard with live rendered examples using app CSS/JS. It must not rely on screenshots only.
+The rendered evidence page must prove this standard with live rendered examples using app CSS/JS. It must not rely on screenshots only.
 
 Required sections and examples:
 
@@ -624,7 +624,7 @@ The page must display:
 
 ## 15. Testing and acceptance criteria
 
-- `/platform/ui-reference/elements/motion` returns 200 for authorized users.
+- `not installed` returns 200 for authorized users.
 - The page renders live examples with app CSS/JS rather than screenshots only.
 - The page shows token/class/helper API references, allowed usage, prohibited usage, accessibility constraints, and implementation status.
 - The page identifies productive motion as the default for admin UI.
@@ -665,19 +665,19 @@ $response->assertDontSee('generic fallback', false);
 
 | API                           | Route                                                                            |
 | ----------------------------- | -------------------------------------------------------------------------------- |
-| Accordion component           | `/platform/ui-reference/components/accordion`                                    |
-| Button component              | `/platform/ui-reference/components/button`                                       |
-| Dropdown component            | `/platform/ui-reference/components/dropdown`                                     |
-| Menu buttons component        | `/platform/ui-reference/components/menu-buttons`                                 |
-| Modal component               | `/platform/ui-reference/components/modal`                                        |
-| Notification component        | `/platform/ui-reference/components/notification`                                 |
-| Loading component             | `/platform/ui-reference/components/loading`                                      |
-| Inline loading component      | `/platform/ui-reference/components/inline-loading`                               |
-| Progress bar component        | `/platform/ui-reference/components/progress-bar`                                 |
-| Progress indicator component  | `/platform/ui-reference/components/progress-indicator`                           |
-| Overlays and feedback pattern | `/platform/ui-reference/patterns/overlays-feedback`                              |
-| Layout pattern                | `/platform/ui-reference/patterns/layout`                                         |
-| Navigation pattern            | `/platform/ui-reference/patterns/navigation`                                     |
+| Accordion component           | `not installed`                                    |
+| Button component              | `not installed`                                       |
+| Dropdown component            | `not installed`                                     |
+| Menu buttons component        | `not installed`                                 |
+| Modal component               | `not installed`                                        |
+| Notification component        | `not installed`                                 |
+| Loading component             | `not installed`                                      |
+| Inline loading component      | `not installed`                               |
+| Progress bar component        | `not installed`                                 |
+| Progress indicator component  | `not installed`                           |
+| Overlays and feedback pattern | `not installed`                              |
+| Layout pattern                | `not installed`                                         |
+| Navigation pattern            | `not installed`                                     |
 | Canonical motion doc          | `/platform/docs?path=02-standards%2Fui%2Felements%2Fmotion.md`                   |
 | Carbon motion overview        | `https://carbondesignsystem.com/elements/motion/overview/`                       |
 | MDN prefers-reduced-motion    | `https://developer.mozilla.org/en-US/docs/Web/CSS/@media/prefers-reduced-motion` |

@@ -1,0 +1,72 @@
+/* ==========================================================================
+   File: resources/css/patterns/forms/actions.css
+   Purpose: Form Actions pattern layout and submit-state styles.
+   Carbon reference:
+
+   * reference/carbon-main/packages/styles/scss/components/button/
+   * reference/carbon-main/packages/styles/scss/components/inline-loading/
+   * reference/carbon-main/packages/react/src/components/InlineLoading/
+
+   Notes:
+   * Carbon has no one-to-one Form Actions component.
+   * This file owns the app's form action row layout, Button Set integration,
+     and local submit-state replacement treatment.
+   * Generic Button, Button Set, and Inline Loading primitive styles must remain
+     in their respective component CSS files.
+   * Do not define primitive palette tokens here.
+   * Do not define theme role tokens here.
+   ========================================================================== */
+
+@layer components {
+    /* ==========================================================================
+   Form Actions status button-slot replacement
+   ========================================================================== */
+
+    .ui-form-actions__status--button-slot {
+        display: inline-flex;
+        flex: 0 0 var(--ui-form-actions-status-inline-size, auto);
+        align-items: var(--ui-form-actions-status-align-items, center);
+        justify-content: var(
+            --ui-form-actions-status-justify-content,
+            flex-start
+        );
+        box-sizing: border-box;
+        inline-size: var(--ui-form-actions-status-inline-size, auto);
+        min-inline-size: var(--ui-form-actions-status-inline-size, 0);
+        block-size: var(--ui-form-actions-status-block-size, auto);
+        min-block-size: var(--ui-form-actions-status-block-size, 0);
+        padding-block-start: var(
+            --ui-form-actions-status-padding-block-start,
+            0
+        );
+        padding-block-end: var(--ui-form-actions-status-padding-block-end, 0);
+        padding-inline-start: var(
+            --ui-form-actions-status-padding-inline-start,
+            0
+        );
+        padding-inline-end: var(--ui-form-actions-status-padding-inline-end, 0);
+        overflow: hidden;
+    }
+
+    .ui-form-actions__status--button-slot > .ui-inline-loading {
+        display: inline-flex;
+        flex: 1 1 auto;
+        align-items: center;
+        inline-size: 100%;
+        min-inline-size: 0;
+        max-inline-size: none;
+    }
+
+    .ui-form-actions__status--button-slot .ui-inline-loading__animation {
+        flex: 0 0 auto;
+    }
+
+    .ui-form-actions__status--button-slot .ui-inline-loading__text {
+        flex: 1 1 auto;
+        min-inline-size: 0;
+        max-inline-size: none;
+        overflow: visible;
+        text-overflow: clip;
+        white-space: nowrap;
+    }
+}

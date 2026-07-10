@@ -2,7 +2,7 @@
 
 ## Purpose
 
-Laravel application code. This folder owns backend application behavior, service classes, controllers, models, providers, policies, Livewire classes, and Filament integration.
+Laravel application code. This folder owns backend application behavior, service classes, controllers, models, providers, policies, and Livewire classes.
 
 ## Read Order
 

@@ -6,9 +6,9 @@ status: implemented-standard
 system_maturity: partial
 category: layout
 priority: baseline-pattern-structure
-ui_reference_route: /platform/ui-reference/patterns/layout
+rendered_evidence_route: null
 canonical_doc: docs/02-standards/ui/patterns/layout.md
-source_owner: /platform/ui-reference/patterns/layout
+source_owner: not installed
 pattern_family: layout
 consumed_elements:
   - color
@@ -64,10 +64,10 @@ carbon_reference:
   - [15. Content contract](#15-content-contract)
   - [16. Prohibited usage](#16-prohibited-usage)
   - [17. Deferred or gated capabilities](#17-deferred-or-gated-capabilities)
-  - [Implementation and UI Reference Checklist](#implementation-and-ui-reference-checklist)
+  - [Implementation and Rendered Evidence Checklist](#implementation-and-ui-reference-checklist)
     - [Implementation checklist](#implementation-checklist)
-    - [UI Reference proof checklist](#ui-reference-proof-checklist)
-  - [19. UI Reference requirements](#19-ui-reference-requirements)
+    - [rendered evidence proof checklist](#ui-reference-proof-checklist)
+  - [19. Rendered evidence requirements](#19-ui-reference-requirements)
   - [20. Testing and acceptance criteria](#20-testing-and-acceptance-criteria)
   - [21. Related APIs](#21-related-apis)
   - [22. References](#22-references)
@@ -76,7 +76,7 @@ carbon_reference:
 
 Layout patterns define page, section, dashboard, widget, and content-region structure using approved grid and spacing APIs.
 
-Canonical API owner: `/platform/ui-reference/patterns/layout`. Use this Pattern API instead of creating local page scaffolds, local grid systems, arbitrary card shells, one-off widget wrappers, custom breakpoints, or feature-specific layout rhythm for the same UI role.
+Canonical API owner: `not installed`. Use this Pattern API instead of creating local page scaffolds, local grid systems, arbitrary card shells, one-off widget wrappers, custom breakpoints, or feature-specific layout rhythm for the same UI role.
 
 Layout Patterns are the installed Login App 2.0 composition API for arranging pages and major content regions. They own page bands, content section blocks, dashboard grids, widget shells, widget span behavior, card grids, split content regions, local action rows, page-region loading/empty/error fallbacks, and responsive collapse order. They do not own primitive visual tokens, child Component internals, business rules, permissions, persistence, data fetching, route authorization, or workflow-specific branching.
 
@@ -88,7 +88,7 @@ Canonical Pattern responsibilities:
 - Own external spacing between content regions and child Components.
 - Own page-region loading, empty-region fallback, widget error fallback, and responsive collapse state.
 - Keep headings, landmarks, reading order, and action placement predictable.
-- Prove page band, section block, dashboard grid, widget shell, widget spans, card grid, split content region, action row, fallback states, and responsive behavior on the UI Reference page.
+- Prove page band, section block, dashboard grid, widget shell, widget spans, card grid, split content region, action row, fallback states, and responsive behavior on the rendered evidence page.
 
 Non-owned responsibilities:
 
@@ -98,7 +98,7 @@ Non-owned responsibilities:
 - App shell right-panel behavior unless the UI shell Pattern/Component explicitly approves it.
 - One-off CSS layout hacks created inside feature views.
 
-Carbon alignment note: Carbon frames Patterns as reusable goal-oriented combinations of components and templates. Login App maps that principle to installed Pattern API contracts that define composition ownership, consumed Element APIs, child Component boundaries, responsive behavior, accessibility, content, UI Reference proof, and tests rather than copying Carbon implementation classes directly.
+Carbon alignment note: Carbon frames Patterns as reusable goal-oriented combinations of components and templates. Login App maps that principle to installed Pattern API contracts that define composition ownership, consumed Element APIs, child Component boundaries, responsive behavior, accessibility, content, rendered evidence proof, and tests rather than copying Carbon implementation classes directly.
 
 ## 2. Status and ownership
 
@@ -109,16 +109,16 @@ Carbon alignment note: Carbon frames Patterns as reusable goal-oriented combinat
 | API layer                   | Pattern API                                                                                                |
 | Pattern slug                | `layout`                                                                                                   |
 | Category                    | Layout                                                                                                     |
-| Owner route                 | `/platform/ui-reference/patterns/layout`                                                                   |
-| UI Reference proof          | `/platform/ui-reference/patterns/layout`                                                                   |
+| Owner route                 | `not installed`                                                                   |
+| rendered evidence proof          | `not installed`                                                                   |
 | Canonical path              | `docs/02-standards/ui/patterns/layout.md`                                                                  |
-| Source owner                | `/platform/ui-reference/patterns/layout`                                                                   |
+| Source owner                | `not installed`                                                                   |
 | Consumed Element APIs       | Color, Spacing, Typography, Icons, Motion, Themes, 2x Grid                                                 |
 | Owned Component composition | Button, Link, Notification, Loading, Inline loading, Tile, Data table, Structured list, List as applicable |
 | Related Pattern families    | Forms, Data and content, Feedback, Overlay and action, Navigation                                          |
 | Carbon benchmark            | Carbon Patterns overview and 2x Grid usage guidance                                                        |
 
-`Implemented standard` means the Layout Pattern API is approved as the composition contract for page, dashboard, widget, and content-region layout. Individual layout examples may still need manual review against this standard as the UI Reference page and feature pages are corrected.
+`Implemented standard` means the Layout Pattern API is approved as the composition contract for page, dashboard, widget, and content-region layout. Individual layout examples may still need manual review against this standard as the rendered evidence page and feature pages are corrected.
 
 ## 3. Installed standard
 
@@ -185,7 +185,7 @@ Use the installed app-owned Pattern classes instead of raw utility clusters or f
 | `.ui-pattern-region-empty`     | Fallback state       | Implemented                       | Hosts empty-region content and recovery actions.                               |
 | `.ui-pattern-region-error`     | Fallback state       | Implemented                       | Hosts widget/region error fallback and recovery guidance.                      |
 
-Any class not documented here is not public. If a feature needs another layout option, update the Pattern implementation, this standard, and the UI Reference proof before use.
+Any class not documented here is not public. If a feature needs another layout option, update the Pattern implementation, this standard, and the rendered evidence proof before use.
 
 ### 4.2. Page band
 
@@ -299,9 +299,9 @@ Use Pattern-owned fallback wrappers and approved child Components.
     </div>
 
     <div class="ui-pattern-widget-body ui-pattern-region-error">
-        <x-ui.inline-alert semantic="danger" title="Export status unavailable">
+        <x-ui.notification.inline kind="error" title="Export status unavailable">
             Refresh the page or try again later.
-        </x-ui.inline-alert>
+        </x-ui.notification.inline>
     </div>
 </section>
 ```
@@ -338,7 +338,7 @@ Layout Patterns must compose these approved Element and Component APIs when the 
 | Section and widget actions                          | Button and Link Components                                                                      |
 | Region feedback                                     | Notification, Loading, Inline loading Components                                                |
 | Dashboard summaries                                 | Tile, List, Structured list, Data table, Tag, Progress bar, or related Components as applicable |
-| Code examples on UI Reference page                  | Code snippet Component where installed                                                          |
+| Code examples on rendered evidence page                  | Code snippet Component where installed                                                          |
 
 Required source-order rules:
 
@@ -386,7 +386,7 @@ Carbon color composition mapping:
 | Page, section, card, widget, and nested surfaces | `$background`, `$layer-*`, layer hover/active/selected rows | Color + Themes Elements | Layout chooses depth and grouping; color values come from global surface/layer roles. |
 | Borders, dividers, and section separation | `$border-subtle-*`, `$border-strong-*` | Color Element | Layout borders use Color-owned roles only. |
 | Empty/error/loading region composition | Notification, Loading, Button, Link, Tag rows | Feedback/Data and Content Patterns + child Components | Layout places states; child APIs own status/loading/action colors. |
-| Widget action rows and page headers | Button, Link, Menu buttons, Tabs rows | Navigation Pattern + child Components | Layout coordinates placement only. |
+| Widget action rows and page headers | Button, Link, Menu buttons, Tabs rows | Navigation Pattern + `x-shell.page-header`/`x-shell.page-title`/`x-shell.page-tabs` + child Components | Layout coordinates placement only. |
 | Focus-visible inside layout regions | `$focus`, `$focus-inset`, `$focus-inverse` | Child interactive Components + Color Element | Layout does not define focus colors. |
 
 Element restrictions:
@@ -409,7 +409,7 @@ Layout Patterns do not own Component internals. They own the composition boundar
 | Grid placement                   | Layout owns page, section, dashboard, widget, card, and split-region grid placement.                          |
 | Section hierarchy                | Layout owns headings, section wrappers, body regions, and local action placement.                             |
 | Widget span behavior             | Layout owns which widgets span available dashboard columns.                                                   |
-| Page region composition          | Layout owns how sections, widgets, empty states, loading states, and error states fit together.               |
+| Page region composition          | Layout owns how shell page-header placement, sections, widgets, empty states, loading states, and error states fit together. |
 | Responsive collapse              | Layout owns collapse order and spacing between collapsed regions.                                             |
 | Local action alignment           | Layout owns how Buttons/Links align in action rows; Button/Link own semantics and internal styling.           |
 | Fallback placement               | Layout owns where Loading, Notification, empty copy, and recovery actions appear inside a region.             |
@@ -612,12 +612,12 @@ Recommended heading patterns:
 - Do not use `order-*`, absolute positioning, sticky positioning, or transform hacks to solve layout without Pattern proof.
 - Do not introduce direct Carbon production classes such as `cds--*` or `bx--*`.
 - Do not introduce Bootstrap grid/card classes such as `.row`, `.col-*`, `.card`, `.container`, or `.container-fluid` as approved Pattern implementation.
-- Do not create right-panel, sticky-action, nested-dashboard, or custom breakpoint behavior without a gated update and UI Reference proof.
-- Do not render placeholder copy such as `Pattern-specific API pending correction`, `Reference Examples`, `Legacy Contract Summary`, `Live Examples Card`, `Generic fallback`, or `TODO` on the implemented UI Reference page.
+- Do not create right-panel, sticky-action, nested-dashboard, or custom breakpoint behavior without a gated update and rendered evidence proof.
+- Do not render placeholder copy such as `Pattern-specific API pending correction`, `Reference Examples`, `Legacy Contract Summary`, `Live Examples Card`, `Generic fallback`, or `TODO` on the implemented rendered evidence page.
 
 ## 17. Deferred or gated capabilities
 
-No deferred capability blocks the installed Layout Pattern API for page bands, content sections, dashboard grids, widget shells, card grids, split regions, and local action rows. Future extensions require an updated Pattern standard and UI Reference proof before production use.
+No deferred capability blocks the installed Layout Pattern API for page bands, content sections, dashboard grids, widget shells, card grids, split regions, and local action rows. Future extensions require an updated Pattern standard and rendered evidence proof before production use.
 
 | Capability                         | Status      | Trigger conditions before use                                                                                                                  |
 | ---------------------------------- | ----------- | ---------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -628,11 +628,11 @@ No deferred capability blocks the installed Layout Pattern API for page bands, c
 | User-customizable dashboard layout | Deferred    | Requires persistence, drag/drop or reorder accessibility, reset behavior, and tests.                                                           |
 | Nested dashboard grids             | Gated       | Requires semantic hierarchy proof, spacing proof, and no card-in-card structure.                                                               |
 | Masonry/freeform card grid         | Not allowed | Requires new Grid Element behavior and accessibility review.                                                                                   |
-| Route-specific breakpoint          | Not allowed | Requires 2x Grid Element update and UI Reference proof.                                                                                        |
-| Local surface variant              | Not allowed | Requires Color/Theme Element update and UI Reference proof.                                                                                    |
+| Route-specific breakpoint          | Not allowed | Requires 2x Grid Element update and rendered evidence proof.                                                                                        |
+| Local surface variant              | Not allowed | Requires Color/Theme Element update and rendered evidence proof.                                                                                    |
 | Pattern-owned right-side rail      | Gated       | Requires distinction from UI shell, split region, and overlay behavior.                                                                        |
 
-## Implementation and UI Reference Checklist
+## Implementation and Rendered Evidence Checklist
 ### Implementation checklist
 | Requirement                | Standard expectation                                                                                                                      |
 | -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
@@ -643,10 +643,10 @@ No deferred capability blocks the installed Layout Pattern API for page bands, c
 | Accessibility/content      | Page/workflow semantics, heading structure, focus flow, status messaging, action labels, and non-color meaning are defined.               |
 | Tests                      | Route/content/API assertions prove the Pattern and coordinated Component usage.                                                           |
 
-### UI Reference proof checklist
+### rendered evidence proof checklist
 | Requirement        | Visual proof expectation                                                                                                           |
 | ------------------ | ---------------------------------------------------------------------------------------------------------------------------------- |
-| Live examples      | The UI Reference renders Pattern-level workflow or composition examples using installed Component and Element APIs.                |
+| Live examples      | The rendered evidence renders Pattern-level workflow or composition examples using installed Component and Element APIs.                |
 | Composition proof  | Required and optional child Components are shown in realistic Pattern-owned structure, spacing, and responsive contexts.           |
 | State proof        | Pattern-owned loading, empty, error, blocked, validation, persistence, responsive, and overflow states are rendered when relevant. |
 | Developer snippets | Examples show the canonical Pattern helper/partial/classes and child Component composition.                                        |
@@ -654,9 +654,9 @@ No deferred capability blocks the installed Layout Pattern API for page bands, c
 | Related APIs       | Related Elements, Components, and Patterns are linked.                                                                             |
 | Manual review      | The page provides enough rendered proof for visual review of composition, hierarchy, responsive behavior, and workflow boundaries. |
 
-## 19. UI Reference requirements
+## 19. Rendered evidence requirements
 
-The UI Reference page must render the approved five-card scaffold: Purpose, Use cases, Pattern contract, Live examples, and Related components and patterns.
+The rendered evidence page must render the approved five-card scaffold: Purpose, Use cases, Pattern contract, Live examples, and Related components and patterns.
 
 The Layout Pattern page is a broad Pattern reference page. It should use rendered full-width examples, comparison grids, dashboard/widget matrices, responsive examples, fallback-state examples, and developer implementation snippets. It must not be abstract notes only.
 
@@ -680,7 +680,7 @@ Required Live examples:
 | Developer implementation     | Canonical Pattern classes and Blade composition render as token-backed code snippets.                       | `ui-pattern-*` classes, approved Components, no local grids                                    |
 | Prohibited usage proof       | The page calls out non-approved local patterns without rendering them as approved examples.                 | No Bootstrap grid/card, no direct Carbon classes, no one-off breakpoints, no component margins |
 
-UI Reference page requirements:
+rendered evidence page requirements:
 
 - Rendered examples must use app-owned Pattern classes, approved Element APIs, and approved Component APIs.
 - Examples must show real layout compositions, not abstract notes only.
@@ -691,7 +691,7 @@ UI Reference page requirements:
 
 ## 20. Testing and acceptance criteria
 
-- `/platform/ui-reference/patterns/layout` returns 200 for authorized users.
+- `not installed` returns 200 for authorized users.
 - The page shows the installed Pattern API, states, variants/layout options, prohibited usage, deferred gates, and consumed Foundation Elements.
 - Implemented Pattern APIs render production examples; deferred APIs render trigger conditions instead of fake controls.
 - The Purpose, Use cases, Pattern contract, Live examples, and Related components and patterns cards render in that top-level order.
@@ -710,7 +710,7 @@ UI Reference page requirements:
 Suggested automated assertions:
 
 ```php
-$response = $this->actingAs($admin)->get('/platform/ui-reference/patterns/layout');
+$response = $this->actingAs($admin)->get('not installed');
 
 $response->assertOk();
 $response->assertSee('Layout');
@@ -753,28 +753,28 @@ For implementation tests, add page-specific assertions that rendered examples in
 | ------------------------------- | ------------------------------------------------------------------------------- |
 | Pattern Library Checklist       | `/platform/docs?path=02-standards%2Fui%2Fpatterns%2Fchecklist.md`               |
 | Pattern Boundary and Validation | `/platform/docs?path=02-standards%2Fui%2Fpatterns%2Fboundary-and-validation.md` |
-| Form Patterns                   | `/platform/ui-reference/patterns/forms`                                         |
-| Data and Content Patterns       | `/platform/ui-reference/patterns/data-and-content`                              |
-| Feedback Patterns               | `/platform/ui-reference/patterns/feedback`                                      |
-| Overlay and Action Patterns     | `/platform/ui-reference/patterns/overlays-and-actions`                          |
-| Navigation Patterns             | `/platform/ui-reference/patterns/navigation`                                    |
-| Notification and Toast Patterns | `/platform/ui-reference/patterns/notifications-and-toasts`                      |
-| 2x Grid element                 | `/platform/ui-reference/elements/2x-grid`                                       |
-| Spacing element                 | `/platform/ui-reference/elements/spacing`                                       |
-| Color element                   | `/platform/ui-reference/elements/color`                                         |
-| Typography element              | `/platform/ui-reference/elements/typography`                                    |
-| Icons element                   | `/platform/ui-reference/elements/icons`                                         |
-| Motion element                  | `/platform/ui-reference/elements/motion`                                        |
-| Themes element                  | `/platform/ui-reference/elements/themes`                                        |
-| Button                          | `/platform/ui-reference/components/button`                                      |
-| Link                            | `/platform/ui-reference/components/link`                                        |
-| Notification                    | `/platform/ui-reference/components/notification`                                |
-| Loading                         | `/platform/ui-reference/components/loading`                                     |
-| Inline loading                  | `/platform/ui-reference/components/inline-loading`                              |
-| Tile                            | `/platform/ui-reference/components/tile`                                        |
-| Data table                      | `/platform/ui-reference/components/data-table`                                  |
-| Structured list                 | `/platform/ui-reference/components/structured-list`                             |
-| List                            | `/platform/ui-reference/components/list`                                        |
+| Form Patterns                   | `not installed`                                         |
+| Data and Content Patterns       | `not installed`                              |
+| Feedback Patterns               | `not installed`                                      |
+| Overlay and Action Patterns     | `not installed`                          |
+| Navigation Patterns             | `not installed`                                    |
+| Notification and Toast Patterns | `not installed`                      |
+| 2x Grid element                 | `not installed`                                       |
+| Spacing element                 | `not installed`                                       |
+| Color element                   | `not installed`                                         |
+| Typography element              | `not installed`                                    |
+| Icons element                   | `not installed`                                         |
+| Motion element                  | `not installed`                                        |
+| Themes element                  | `not installed`                                        |
+| Button                          | `not installed`                                      |
+| Link                            | `not installed`                                        |
+| Notification                    | `not installed`                                |
+| Loading                         | `not installed`                                     |
+| Inline loading                  | `not installed`                              |
+| Tile                            | `not installed`                                        |
+| Data table                      | `not installed`                                  |
+| Structured list                 | `not installed`                             |
+| List                            | `not installed`                                        |
 | Canonical layout doc            | `/platform/docs?path=02-standards%2Fui%2Fpatterns%2Flayout.md`                  |
 | Carbon patterns overview        | `https://carbondesignsystem.com/patterns/overview/`                             |
 | Carbon 2x Grid usage            | `https://carbondesignsystem.com/elements/2x-grid/usage/`                        |
@@ -788,5 +788,5 @@ For implementation tests, add page-specific assertions that rendered examples in
 - [Foundation Elements Standards](../elements/index.md)
 - [2x Grid Element Standard](../elements/2x-grid.md)
 - [Spacing Element Standard](../elements/spacing.md)
-- Carbon Patterns overview informs the goal-oriented Pattern framing. Login App keeps its own Pattern API contracts, app-owned `ui-pattern-*` class namespace, Foundation Element consumption rules, Component ownership boundaries, route ownership, and UI Reference proof requirements.
+- Carbon Patterns overview informs the goal-oriented Pattern framing. Login App keeps its own Pattern API contracts, app-owned `ui-pattern-*` class namespace, Foundation Element consumption rules, Component ownership boundaries, route ownership, and rendered evidence proof requirements.
 - Carbon 2x Grid usage informs the emphasis on layout helping users understand page structure, identify relevant content, and pursue the page objective. Login App keeps its own 2x Grid Element API and Pattern-specific layout proof.

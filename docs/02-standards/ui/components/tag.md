@@ -6,12 +6,12 @@ status: implemented-pending-review
 system_maturity: installed
 category: feedback-and-loading
 priority: tier-b-common-reusable-component
-ui_reference_route: /platform/ui-reference/components/tag
+rendered_evidence_route: null
 canonical_doc: docs/02-standards/ui/components/tag.md
-source_owner: /platform/ui-reference/components/tag
+source_owner: not installed
 blade_api:
   - x-ui.tag
-  - x-ui.tag-group
+  - x-patterns.tag-group
 related_components:
   - notification
   - tooltip
@@ -37,16 +37,16 @@ carbon_reference:
 - [4. Tag group](#4-tag-group)
 - [5. Structure and behavior](#5-structure-and-behavior)
 - [6. Color model](#6-color-model)
-- [7. UI Reference requirements](#7-ui-reference-requirements)
+- [7. Rendered evidence requirements](#7-ui-reference-requirements)
 - [8. Acceptance criteria](#8-acceptance-criteria)
 
 ## 1. Ownership
 
 The public API is `x-ui.tag`. Use it for compact metadata, filter tokens, selectable choices, and operational tag disclosure.
 
-`x-ui.tag-group` owns tag grouping semantics, wrapping, spacing, accessible group labels, and optional `selection-mode="single|multiple"` declarations.
+`x-patterns.tag-group` owns tag grouping semantics, wrapping, spacing, accessible group labels, and optional `selection-mode="single|multiple"` declarations. Tag Group is a Pattern API that composes `x-ui.tag`; it is not a Component API contract.
 
-Legacy `x-ui.badge` and `x-ui.status` are deprecated for new tag work. They may remain only as transitional status-taxonomy helpers until a later migration replaces legacy badge usage.
+Legacy Badge component usage is deprecated for new tag work. Status may remain only as a transitional status-taxonomy helper until a later migration replaces legacy status usage.
 
 Tags do not replace Notifications, Buttons, Menu buttons, Tabs, Breadcrumbs, or long-form feedback surfaces.
 
@@ -55,7 +55,7 @@ Tags do not replace Notifications, Buttons, Menu buttons, Tabs, Breadcrumbs, or 
 ```blade
 <x-ui.tag text="Internal" />
 
-<x-ui.tag type="green" text="Verified" icon="heroicon-o-check-circle" />
+<x-ui.tag type="green" text="Verified" icon="checkmark" />
 
 <x-ui.tag
     variant="dismissible"
@@ -106,10 +106,10 @@ Operational tags are not Menu buttons and do not get a default caret. Full Popov
 ## 4. Tag group
 
 ```blade
-<x-ui.tag-group label="Status filters" selection-mode="single">
+<x-patterns.tag-group label="Status filters" selection-mode="single">
     <x-ui.tag variant="selectable" text="Open" selected />
     <x-ui.tag variant="selectable" text="Closed" />
-</x-ui.tag-group>
+</x-patterns.tag-group>
 ```
 
 Tag group owns:
@@ -117,7 +117,7 @@ Tag group owns:
 - `role="group"`
 - accessible label
 - 8px wrapping gap
-- `data-ui-tag-selection-mode="single|multiple"` when selection behavior must be coordinated
+- `data-ui-tag-group-selection-mode="single|multiple"` when selection behavior must be coordinated by `x-patterns.tag-group`
 
 Tag JavaScript owns toggling behavior. The group does not become a full form-control framework in this pass.
 
@@ -221,9 +221,9 @@ Gray 90 and Gray 100 themes use these values:
 
 Do not promote tag color families into the global Color Element standard as generic roles.
 
-## 7. UI Reference requirements
+## 7. Rendered evidence requirements
 
-The Tag UI Reference page must show:
+The Tag rendered evidence page must show:
 
 - Approved variant tabs for Read-only, Dismissible, Selectable, and Operational.
 - Live dismissible removal.
@@ -235,15 +235,15 @@ The Tag UI Reference page must show:
 - Operational color proof for `gray`, `cool-gray`, `warm-gray`, `red`, `magenta`, `purple`, `blue`, `cyan`, `teal`, and `green`.
 - Selectable proof shown separately with core-token enabled, hover, focus, selected, disabled, and skeleton states.
 - Start, middle, and end truncation support where needed.
-- Related API boundaries that mark `x-ui.badge` as deprecated for new tag work.
+- Related API boundaries that mark the legacy Badge component as deprecated for new tag work.
 
-The UI Reference page must not use raw `<details>/<summary>` as the operational tag implementation.
+The rendered evidence page must not use raw `<details>/<summary>` as the operational tag implementation.
 
 ## 8. Acceptance criteria
 
-- `/platform/ui-reference/components/tag` renders authorized UI Reference examples.
+- `not installed` renders authorized rendered evidence examples.
 - Existing active `x-ui.tag` usages use canonical props.
-- `x-ui.tag-group` renders group semantics and selection-mode hooks.
+- `x-patterns.tag-group` renders group semantics and selection-mode hooks.
 - Tag JavaScript initializes dismissible, selectable, and operational behavior idempotently.
 - Selectable tags expose `aria-pressed`.
 - Operational tags expose `aria-expanded` and target the paired disclosure element.

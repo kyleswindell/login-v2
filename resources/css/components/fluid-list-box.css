@@ -1,0 +1,583 @@
+/* ==========================================================================
+   File: resources/css/components/fluid-list-box.css
+   Purpose: Fluid List Box variant styles.
+
+   Notes:
+   - Defines Fluid List Box selectors only.
+   - Do not define primitive palette tokens here.
+   - Do not define theme role tokens here.
+   - This is a List Box variant, not a separate public component.
+   - AI label / slug decorator positioning is intentionally excluded here.
+   ========================================================================== */
+
+@layer components {
+    /* ----------------------------------------------------------------------
+       Root
+       ---------------------------------------------------------------------- */
+
+    .ui-list-box-wrapper-fluid.ui-list-box-wrapper,
+    .ui-list-box__wrapper--fluid.ui-list-box__wrapper {
+        position: relative;
+        block-size: 100%;
+        background-color: var(--ui-field);
+        transition:
+            background-color var(--ui-duration-fast-01)
+                var(--ui-motion-standard-productive),
+            outline var(--ui-duration-fast-01)
+                var(--ui-motion-standard-productive);
+    }
+
+    .ui-list-box-wrapper-fluid .ui-list-box,
+    .ui-list-box__wrapper--fluid .ui-list-box {
+        min-block-size: 4rem;
+        padding: 0;
+    }
+
+    /* ----------------------------------------------------------------------
+       Label
+       ---------------------------------------------------------------------- */
+
+    .ui-list-box-wrapper-fluid .ui-label,
+    .ui-list-box__wrapper--fluid .ui-label {
+        position: absolute;
+        z-index: 1;
+        inset-block-start: 0.8125rem;
+        inset-inline-start: var(--ui-spacing-05);
+        display: flex;
+        align-items: center;
+        inline-size: calc(100% - 2rem);
+        block-size: 1rem;
+        margin: 0;
+    }
+
+    .ui-list-box-wrapper-fluid .ui-label::-webkit-scrollbar,
+    .ui-list-box__wrapper--fluid .ui-label::-webkit-scrollbar,
+    .ui-list-box-wrapper-fluid .ui-label .ui-toggletip-label::-webkit-scrollbar,
+    .ui-list-box__wrapper--fluid
+        .ui-label
+        .ui-toggletip-label::-webkit-scrollbar {
+        display: none;
+    }
+
+    .ui-list-box-wrapper-fluid .ui-label:not(:has(.ui-toggletip-label)),
+    .ui-list-box__wrapper--fluid .ui-label:not(:has(.ui-toggletip-label)),
+    .ui-list-box-wrapper-fluid .ui-label .ui-toggletip-label,
+    .ui-list-box__wrapper--fluid .ui-label .ui-toggletip-label {
+        overflow-x: scroll;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+        white-space: nowrap;
+    }
+
+    /* ----------------------------------------------------------------------
+       Field and menu icon
+       ---------------------------------------------------------------------- */
+
+    .ui-list-box-wrapper-fluid .ui-list-box-field,
+    .ui-list-box-wrapper-fluid .ui-list-box__field,
+    .ui-list-box__wrapper--fluid .ui-list-box-field,
+    .ui-list-box__wrapper--fluid .ui-list-box__field {
+        padding-block: 2.0625rem 0.8125rem;
+        padding-inline-start: var(--ui-spacing-05);
+    }
+
+    .ui-list-box-wrapper-fluid .ui-list-box-menu-icon,
+    .ui-list-box-wrapper-fluid .ui-list-box__menu-icon,
+    .ui-list-box__wrapper--fluid .ui-list-box-menu-icon,
+    .ui-list-box__wrapper--fluid .ui-list-box__menu-icon {
+        inline-size: 1rem;
+        block-size: 1rem;
+    }
+
+    .ui-list-box-wrapper-fluid:not(.ui-list-box-wrapper-fluid-condensed):not(
+            .ui-list-box__wrapper--fluid--condensed
+        )
+        .ui-list-box-menu-item,
+    .ui-list-box-wrapper-fluid:not(.ui-list-box-wrapper-fluid-condensed):not(
+            .ui-list-box__wrapper--fluid--condensed
+        )
+        .ui-list-box__menu-item,
+    .ui-list-box__wrapper--fluid:not(.ui-list-box-wrapper-fluid-condensed):not(
+            .ui-list-box__wrapper--fluid--condensed
+        )
+        .ui-list-box-menu-item,
+    .ui-list-box__wrapper--fluid:not(.ui-list-box-wrapper-fluid-condensed):not(
+            .ui-list-box__wrapper--fluid--condensed
+        )
+        .ui-list-box__menu-item {
+        block-size: var(--ui-spacing-10);
+    }
+
+    .ui-list-box-wrapper-fluid:not(.ui-list-box-wrapper-fluid-condensed):not(
+            .ui-list-box__wrapper--fluid--condensed
+        )
+        .ui-list-box-menu-item-selected-icon,
+    .ui-list-box-wrapper-fluid:not(.ui-list-box-wrapper-fluid-condensed):not(
+            .ui-list-box__wrapper--fluid--condensed
+        )
+        .ui-list-box__menu-item__selected-icon,
+    .ui-list-box__wrapper--fluid:not(.ui-list-box-wrapper-fluid-condensed):not(
+            .ui-list-box__wrapper--fluid--condensed
+        )
+        .ui-list-box-menu-item-selected-icon,
+    .ui-list-box__wrapper--fluid:not(.ui-list-box-wrapper-fluid-condensed):not(
+            .ui-list-box__wrapper--fluid--condensed
+        )
+        .ui-list-box__menu-item__selected-icon {
+        inset-block-start: 1.25rem;
+    }
+
+    /* ----------------------------------------------------------------------
+       Disabled label / toggletip handling
+       ---------------------------------------------------------------------- */
+
+    .ui-list-box-wrapper-fluid .ui-label-disabled .ui-toggletip-label,
+    .ui-list-box-wrapper-fluid .ui-label--disabled .ui-toggletip-label,
+    .ui-list-box__wrapper--fluid .ui-label-disabled .ui-toggletip-label,
+    .ui-list-box__wrapper--fluid .ui-label--disabled .ui-toggletip-label {
+        color: var(--ui-text-disabled);
+    }
+
+    .ui-list-box-wrapper-fluid .ui-label-disabled .ui-toggletip-button,
+    .ui-list-box-wrapper-fluid .ui-label--disabled .ui-toggletip-button,
+    .ui-list-box__wrapper--fluid .ui-label-disabled .ui-toggletip-button,
+    .ui-list-box__wrapper--fluid .ui-label--disabled .ui-toggletip-button {
+        cursor: not-allowed;
+        pointer-events: none;
+    }
+
+    .ui-list-box-wrapper-fluid .ui-label-disabled .ui-toggletip-button svg,
+    .ui-list-box-wrapper-fluid .ui-label--disabled .ui-toggletip-button svg,
+    .ui-list-box__wrapper--fluid .ui-label-disabled .ui-toggletip-button svg,
+    .ui-list-box__wrapper--fluid .ui-label--disabled .ui-toggletip-button svg {
+        fill: var(--ui-icon-disabled);
+    }
+
+    /* ----------------------------------------------------------------------
+       Focus state
+       ---------------------------------------------------------------------- */
+
+    .ui-list-box-wrapper-fluid.ui-list-box-wrapper-fluid-focus,
+    .ui-list-box__wrapper--fluid.ui-list-box__wrapper--fluid--focus {
+        z-index: 2;
+        outline: 2px solid var(--ui-focus);
+        outline-offset: 0;
+    }
+
+    .ui-list-box-wrapper-fluid.ui-list-box-wrapper-fluid-focus:has(
+            .ui-list-box-expanded.ui-multi-select-selected
+        ),
+    .ui-list-box-wrapper-fluid.ui-list-box-wrapper-fluid-focus:has(
+            .ui-list-box--expanded.ui-multi-select--selected
+        ),
+    .ui-list-box__wrapper--fluid.ui-list-box__wrapper--fluid--focus:has(
+            .ui-list-box--expanded.ui-multi-select--selected
+        ) {
+        outline-width: 1px;
+    }
+
+    .ui-list-box-wrapper-fluid-focus .ui-list-box-field:focus,
+    .ui-list-box-wrapper-fluid-focus .ui-list-box__field:focus,
+    .ui-list-box__wrapper--fluid--focus .ui-list-box-field:focus,
+    .ui-list-box__wrapper--fluid--focus .ui-list-box__field:focus {
+        outline: none;
+        outline-offset: 0;
+    }
+
+    /* ----------------------------------------------------------------------
+       Invalid / warning states
+       ---------------------------------------------------------------------- */
+
+    .ui-list-box-wrapper-fluid.ui-list-box-wrapper-fluid-invalid:not(
+            .ui-list-box-wrapper-fluid-focus
+        ),
+    .ui-list-box__wrapper--fluid.ui-list-box__wrapper--fluid--invalid:not(
+            .ui-list-box__wrapper--fluid--focus
+        ) {
+        z-index: 2;
+        outline: 2px solid var(--ui-support-error);
+        outline-offset: 0;
+    }
+
+    .ui-list-box-wrapper-fluid.ui-list-box-wrapper-fluid-focus
+        .ui-list-box:not(.ui-list-box-invalid):not(.ui-list-box--invalid),
+    .ui-list-box-wrapper-fluid.ui-list-box-wrapper-fluid-focus
+        .ui-list-box
+        .ui-text-input,
+    .ui-list-box-wrapper-fluid.ui-list-box-wrapper-fluid-invalid
+        .ui-list-box
+        .ui-text-input,
+    .ui-list-box-wrapper-fluid .ui-combo-box.ui-list-box-warning .ui-text-input,
+    .ui-list-box-wrapper-fluid
+        .ui-combo-box.ui-list-box--warning
+        .ui-text-input,
+    .ui-list-box__wrapper--fluid.ui-list-box__wrapper--fluid--focus
+        .ui-list-box:not(.ui-list-box-invalid):not(.ui-list-box--invalid),
+    .ui-list-box__wrapper--fluid.ui-list-box__wrapper--fluid--focus
+        .ui-list-box
+        .ui-text-input,
+    .ui-list-box__wrapper--fluid.ui-list-box__wrapper--fluid--invalid
+        .ui-list-box
+        .ui-text-input,
+    .ui-list-box__wrapper--fluid
+        .ui-combo-box.ui-list-box--warning
+        .ui-text-input {
+        border-block-end: 1px solid transparent;
+    }
+
+    .ui-list-box-wrapper-fluid.ui-list-box-wrapper-fluid-invalid .ui-list-box,
+    .ui-list-box-wrapper-fluid.ui-list-box-wrapper-fluid-invalid
+        .ui-list-box-field:focus,
+    .ui-list-box-wrapper-fluid.ui-list-box-wrapper-fluid-invalid
+        .ui-list-box__field:focus,
+    .ui-list-box-wrapper-fluid.ui-list-box-wrapper-fluid-invalid
+        .ui-combo-box[data-invalid]
+        .ui-text-input,
+    .ui-list-box__wrapper--fluid.ui-list-box__wrapper--fluid--invalid
+        .ui-list-box,
+    .ui-list-box__wrapper--fluid.ui-list-box__wrapper--fluid--invalid
+        .ui-list-box-field:focus,
+    .ui-list-box__wrapper--fluid.ui-list-box__wrapper--fluid--invalid
+        .ui-list-box__field:focus,
+    .ui-list-box__wrapper--fluid.ui-list-box__wrapper--fluid--invalid
+        .ui-combo-box[data-invalid]
+        .ui-text-input {
+        outline: none;
+        outline-offset: 0;
+    }
+
+    .ui-list-box-wrapper-fluid.ui-list-box-wrapper-fluid-invalid:focus-within,
+    .ui-list-box__wrapper--fluid.ui-list-box__wrapper--fluid--invalid:focus-within {
+        outline-offset: 0;
+    }
+
+    .ui-list-box-wrapper-fluid.ui-list-box-wrapper-fluid-invalid .ui-list-box,
+    .ui-list-box-wrapper-fluid .ui-list-box-warning,
+    .ui-list-box-wrapper-fluid .ui-list-box--warning,
+    .ui-list-box__wrapper--fluid.ui-list-box__wrapper--fluid--invalid
+        .ui-list-box,
+    .ui-list-box__wrapper--fluid .ui-list-box-warning,
+    .ui-list-box__wrapper--fluid .ui-list-box--warning {
+        border-block-end: 1px solid transparent;
+    }
+
+    .ui-list-box-wrapper-fluid.ui-list-box-wrapper-fluid-invalid
+        .ui-form-requirement,
+    .ui-list-box-wrapper-fluid .ui-list-box-warning ~ .ui-form-requirement,
+    .ui-list-box-wrapper-fluid .ui-list-box--warning ~ .ui-form-requirement,
+    .ui-list-box__wrapper--fluid.ui-list-box__wrapper--fluid--invalid
+        .ui-form-requirement,
+    .ui-list-box__wrapper--fluid .ui-list-box-warning ~ .ui-form-requirement,
+    .ui-list-box__wrapper--fluid .ui-list-box--warning ~ .ui-form-requirement {
+        margin-block-start: 0;
+        padding-block: 0.5rem;
+        padding-inline: var(--ui-spacing-05) 4rem;
+    }
+
+    .ui-list-box-wrapper-fluid .ui-list-box-warning ~ .ui-form-requirement,
+    .ui-list-box-wrapper-fluid .ui-list-box--warning ~ .ui-form-requirement,
+    .ui-list-box__wrapper--fluid .ui-list-box-warning ~ .ui-form-requirement,
+    .ui-list-box__wrapper--fluid .ui-list-box--warning ~ .ui-form-requirement {
+        border-block-end: 1px solid var(--ui-border-strong);
+    }
+
+    .ui-list-box-wrapper-fluid.ui-list-box-wrapper-fluid-invalid
+        .ui-form-requirement:empty,
+    .ui-list-box-wrapper-fluid
+        .ui-list-box-warning
+        ~ .ui-form-requirement:empty,
+    .ui-list-box-wrapper-fluid
+        .ui-list-box--warning
+        ~ .ui-form-requirement:empty,
+    .ui-list-box__wrapper--fluid.ui-list-box__wrapper--fluid--invalid
+        .ui-form-requirement:empty,
+    .ui-list-box__wrapper--fluid
+        .ui-list-box-warning
+        ~ .ui-form-requirement:empty,
+    .ui-list-box__wrapper--fluid
+        .ui-list-box--warning
+        ~ .ui-form-requirement:empty {
+        block-size: 2rem;
+    }
+
+    .ui-list-box-wrapper-fluid.ui-list-box-wrapper-fluid-invalid
+        .ui-list-box[data-invalid]
+        .ui-list-box-invalid-icon,
+    .ui-list-box-wrapper-fluid.ui-list-box-wrapper-fluid-invalid
+        .ui-list-box[data-invalid]
+        .ui-list-box__invalid-icon,
+    .ui-list-box-wrapper-fluid
+        .ui-list-box.ui-list-box-warning
+        .ui-list-box-invalid-icon,
+    .ui-list-box-wrapper-fluid
+        .ui-list-box.ui-list-box-warning
+        .ui-list-box__invalid-icon,
+    .ui-list-box-wrapper-fluid
+        .ui-list-box.ui-list-box--warning
+        .ui-list-box-invalid-icon,
+    .ui-list-box-wrapper-fluid
+        .ui-list-box.ui-list-box--warning
+        .ui-list-box__invalid-icon,
+    .ui-list-box__wrapper--fluid.ui-list-box__wrapper--fluid--invalid
+        .ui-list-box[data-invalid]
+        .ui-list-box-invalid-icon,
+    .ui-list-box__wrapper--fluid.ui-list-box__wrapper--fluid--invalid
+        .ui-list-box[data-invalid]
+        .ui-list-box__invalid-icon,
+    .ui-list-box__wrapper--fluid
+        .ui-list-box.ui-list-box-warning
+        .ui-list-box-invalid-icon,
+    .ui-list-box__wrapper--fluid
+        .ui-list-box.ui-list-box-warning
+        .ui-list-box__invalid-icon,
+    .ui-list-box__wrapper--fluid
+        .ui-list-box.ui-list-box--warning
+        .ui-list-box-invalid-icon,
+    .ui-list-box__wrapper--fluid
+        .ui-list-box.ui-list-box--warning
+        .ui-list-box__invalid-icon {
+        inset-block-start: 5.0625rem;
+        inset-inline-end: var(--ui-spacing-05);
+        pointer-events: none;
+    }
+
+    .ui-list-box-wrapper-fluid.ui-list-box-wrapper-fluid-invalid
+        .ui-list-box[data-invalid]:not(.ui-combo-box)
+        .ui-list-box-field,
+    .ui-list-box-wrapper-fluid.ui-list-box-wrapper-fluid-invalid
+        .ui-list-box[data-invalid]:not(.ui-combo-box)
+        .ui-list-box__field,
+    .ui-list-box__wrapper--fluid.ui-list-box__wrapper--fluid--invalid
+        .ui-list-box[data-invalid]:not(.ui-combo-box)
+        .ui-list-box-field,
+    .ui-list-box__wrapper--fluid.ui-list-box__wrapper--fluid--invalid
+        .ui-list-box[data-invalid]:not(.ui-combo-box)
+        .ui-list-box__field {
+        padding-inline-end: var(--ui-spacing-09);
+    }
+
+    .ui-list-box-wrapper-fluid.ui-list-box-wrapper-fluid-invalid
+        .ui-list-box[data-invalid].ui-combo-box
+        .ui-text-input,
+    .ui-list-box__wrapper--fluid.ui-list-box__wrapper--fluid--invalid
+        .ui-list-box[data-invalid].ui-combo-box
+        .ui-text-input {
+        padding-inline-end: var(--ui-spacing-10);
+    }
+
+    /* ----------------------------------------------------------------------
+       Error / warning divider
+       ---------------------------------------------------------------------- */
+
+    .ui-list-box-wrapper-fluid .ui-list-box-divider,
+    .ui-list-box-wrapper-fluid .ui-list-box__divider,
+    .ui-list-box__wrapper--fluid .ui-list-box-divider,
+    .ui-list-box__wrapper--fluid .ui-list-box__divider {
+        display: none;
+        transition: border-color var(--ui-duration-fast-01)
+            var(--ui-motion-standard-productive);
+    }
+
+    .ui-list-box-wrapper-fluid .ui-list-box-invalid ~ .ui-list-box-divider,
+    .ui-list-box-wrapper-fluid .ui-list-box-invalid ~ .ui-list-box__divider,
+    .ui-list-box-wrapper-fluid .ui-list-box--invalid ~ .ui-list-box-divider,
+    .ui-list-box-wrapper-fluid .ui-list-box--invalid ~ .ui-list-box__divider,
+    .ui-list-box-wrapper-fluid .ui-list-box-warning ~ .ui-list-box-divider,
+    .ui-list-box-wrapper-fluid .ui-list-box-warning ~ .ui-list-box__divider,
+    .ui-list-box-wrapper-fluid .ui-list-box--warning ~ .ui-list-box-divider,
+    .ui-list-box-wrapper-fluid .ui-list-box--warning ~ .ui-list-box__divider,
+    .ui-list-box__wrapper--fluid .ui-list-box-invalid ~ .ui-list-box-divider,
+    .ui-list-box__wrapper--fluid .ui-list-box-invalid ~ .ui-list-box__divider,
+    .ui-list-box__wrapper--fluid .ui-list-box--invalid ~ .ui-list-box-divider,
+    .ui-list-box__wrapper--fluid .ui-list-box--invalid ~ .ui-list-box__divider,
+    .ui-list-box__wrapper--fluid .ui-list-box-warning ~ .ui-list-box-divider,
+    .ui-list-box__wrapper--fluid .ui-list-box-warning ~ .ui-list-box__divider,
+    .ui-list-box__wrapper--fluid .ui-list-box--warning ~ .ui-list-box-divider,
+    .ui-list-box__wrapper--fluid .ui-list-box--warning ~ .ui-list-box__divider {
+        display: block;
+        margin: 0 var(--ui-spacing-05);
+        border: none;
+        border-block-end: 1px solid var(--ui-border-subtle);
+    }
+
+    .ui-list-box-wrapper-fluid
+        .ui-list-box-invalid:hover:not(.ui-combo-box)
+        ~ .ui-list-box-divider,
+    .ui-list-box-wrapper-fluid
+        .ui-list-box-invalid:hover:not(.ui-combo-box)
+        ~ .ui-list-box__divider,
+    .ui-list-box-wrapper-fluid
+        .ui-list-box--invalid:hover:not(.ui-combo-box)
+        ~ .ui-list-box-divider,
+    .ui-list-box-wrapper-fluid
+        .ui-list-box--invalid:hover:not(.ui-combo-box)
+        ~ .ui-list-box__divider,
+    .ui-list-box-wrapper-fluid
+        .ui-list-box-warning:hover:not(.ui-combo-box)
+        ~ .ui-list-box-divider,
+    .ui-list-box-wrapper-fluid
+        .ui-list-box-warning:hover:not(.ui-combo-box)
+        ~ .ui-list-box__divider,
+    .ui-list-box-wrapper-fluid
+        .ui-list-box--warning:hover:not(.ui-combo-box)
+        ~ .ui-list-box-divider,
+    .ui-list-box-wrapper-fluid
+        .ui-list-box--warning:hover:not(.ui-combo-box)
+        ~ .ui-list-box__divider,
+    .ui-list-box__wrapper--fluid
+        .ui-list-box-invalid:hover:not(.ui-combo-box)
+        ~ .ui-list-box-divider,
+    .ui-list-box__wrapper--fluid
+        .ui-list-box-invalid:hover:not(.ui-combo-box)
+        ~ .ui-list-box__divider,
+    .ui-list-box__wrapper--fluid
+        .ui-list-box--invalid:hover:not(.ui-combo-box)
+        ~ .ui-list-box-divider,
+    .ui-list-box__wrapper--fluid
+        .ui-list-box--invalid:hover:not(.ui-combo-box)
+        ~ .ui-list-box__divider,
+    .ui-list-box__wrapper--fluid
+        .ui-list-box-warning:hover:not(.ui-combo-box)
+        ~ .ui-list-box-divider,
+    .ui-list-box__wrapper--fluid
+        .ui-list-box-warning:hover:not(.ui-combo-box)
+        ~ .ui-list-box__divider,
+    .ui-list-box__wrapper--fluid
+        .ui-list-box--warning:hover:not(.ui-combo-box)
+        ~ .ui-list-box-divider,
+    .ui-list-box__wrapper--fluid
+        .ui-list-box--warning:hover:not(.ui-combo-box)
+        ~ .ui-list-box__divider {
+        border-color: transparent;
+    }
+
+    /* ----------------------------------------------------------------------
+       Direction: top
+       ---------------------------------------------------------------------- */
+
+    .ui-list-box-wrapper-fluid.ui-list-box-up .ui-list-box-menu,
+    .ui-list-box-wrapper-fluid.ui-list-box-up .ui-list-box__menu,
+    .ui-list-box-wrapper-fluid.ui-list-box--up .ui-list-box-menu,
+    .ui-list-box-wrapper-fluid.ui-list-box--up .ui-list-box__menu,
+    .ui-list-box__wrapper--fluid.ui-list-box-up .ui-list-box-menu,
+    .ui-list-box__wrapper--fluid.ui-list-box-up .ui-list-box__menu,
+    .ui-list-box__wrapper--fluid.ui-list-box--up .ui-list-box-menu,
+    .ui-list-box__wrapper--fluid.ui-list-box--up .ui-list-box__menu {
+        inset-block-end: var(--ui-spacing-10);
+    }
+
+    /* ----------------------------------------------------------------------
+       Selection / menu-icon positioning
+       ---------------------------------------------------------------------- */
+
+    .ui-list-box-wrapper-fluid .ui-list-box-selection,
+    .ui-list-box-wrapper-fluid .ui-list-box__selection,
+    .ui-list-box__wrapper--fluid .ui-list-box-selection,
+    .ui-list-box__wrapper--fluid .ui-list-box__selection {
+        inset-inline-end: 2.5625rem;
+    }
+
+    .ui-list-box-wrapper-fluid:has(.ui-multi-select) .ui-list-box-menu-icon,
+    .ui-list-box-wrapper-fluid:has(.ui-multi-select) .ui-list-box__menu-icon,
+    .ui-list-box__wrapper--fluid:has(.ui-multi-select) .ui-list-box-menu-icon,
+    .ui-list-box__wrapper--fluid:has(.ui-multi-select) .ui-list-box__menu-icon {
+        inset-inline-end: var(--ui-spacing-04);
+    }
+
+    .ui-list-box-wrapper-fluid:has(.ui-dropdown) .ui-list-box-menu-icon,
+    .ui-list-box-wrapper-fluid:has(.ui-dropdown) .ui-list-box__menu-icon,
+    .ui-list-box__wrapper--fluid:has(.ui-dropdown) .ui-list-box-menu-icon,
+    .ui-list-box__wrapper--fluid:has(.ui-dropdown) .ui-list-box__menu-icon {
+        inset-inline-end: var(--ui-spacing-05);
+    }
+
+    /* ----------------------------------------------------------------------
+       Skeleton
+       ---------------------------------------------------------------------- */
+
+    .ui-list-box-wrapper-fluid .ui-skeleton,
+    .ui-list-box__wrapper--fluid .ui-skeleton {
+        border-block-end: 1px solid var(--ui-skeleton-element);
+        background-color: var(--ui-skeleton-background);
+    }
+
+    .ui-list-box-wrapper-fluid .ui-skeleton .ui-list-box-field,
+    .ui-list-box-wrapper-fluid .ui-skeleton .ui-list-box__field,
+    .ui-list-box__wrapper--fluid .ui-skeleton .ui-list-box-field,
+    .ui-list-box__wrapper--fluid .ui-skeleton .ui-list-box__field {
+        position: absolute;
+        inset-block-start: 2.25rem;
+        inset-inline-start: var(--ui-spacing-05);
+        inline-size: 50%;
+        block-size: 0.5rem;
+        padding: 0;
+        background-color: var(--ui-skeleton-element);
+    }
+
+    .ui-list-box-wrapper-fluid .ui-skeleton .ui-list-box-label,
+    .ui-list-box-wrapper-fluid .ui-skeleton .ui-list-box__label,
+    .ui-list-box__wrapper--fluid .ui-skeleton .ui-list-box-label,
+    .ui-list-box__wrapper--fluid .ui-skeleton .ui-list-box__label {
+        position: absolute;
+        inset-block-start: var(--ui-spacing-05);
+        inset-inline-start: var(--ui-spacing-05);
+        inline-size: 25%;
+        block-size: 0.5rem;
+        background-color: var(--ui-skeleton-element);
+    }
+
+    /* ----------------------------------------------------------------------
+       Reduced motion
+       ---------------------------------------------------------------------- */
+
+    @media (prefers-reduced-motion: reduce) {
+        .ui-list-box-wrapper-fluid.ui-list-box-wrapper,
+        .ui-list-box__wrapper--fluid.ui-list-box__wrapper,
+        .ui-list-box-wrapper-fluid .ui-list-box-divider,
+        .ui-list-box-wrapper-fluid .ui-list-box__divider,
+        .ui-list-box__wrapper--fluid .ui-list-box-divider,
+        .ui-list-box__wrapper--fluid .ui-list-box__divider {
+            transition: none;
+        }
+    }
+
+    /* ----------------------------------------------------------------------
+       Forced colors
+       ---------------------------------------------------------------------- */
+
+    @media screen and (-ms-high-contrast: active), (forced-colors: active) {
+        .ui-list-box-wrapper-fluid.ui-list-box-wrapper-fluid-focus,
+        .ui-list-box__wrapper--fluid.ui-list-box__wrapper--fluid--focus {
+            outline-color: Highlight;
+        }
+
+        .ui-list-box-wrapper-fluid.ui-list-box-wrapper-fluid-invalid:not(
+                .ui-list-box-wrapper-fluid-focus
+            ),
+        .ui-list-box__wrapper--fluid.ui-list-box__wrapper--fluid--invalid:not(
+                .ui-list-box__wrapper--fluid--focus
+            ) {
+            outline-color: Mark;
+        }
+
+        .ui-list-box-wrapper-fluid .ui-label-disabled .ui-toggletip-label,
+        .ui-list-box-wrapper-fluid .ui-label--disabled .ui-toggletip-label,
+        .ui-list-box__wrapper--fluid .ui-label-disabled .ui-toggletip-label,
+        .ui-list-box__wrapper--fluid .ui-label--disabled .ui-toggletip-label {
+            color: GrayText;
+        }
+
+        .ui-list-box-wrapper-fluid .ui-label-disabled .ui-toggletip-button svg,
+        .ui-list-box-wrapper-fluid .ui-label--disabled .ui-toggletip-button svg,
+        .ui-list-box__wrapper--fluid
+            .ui-label-disabled
+            .ui-toggletip-button
+            svg,
+        .ui-list-box__wrapper--fluid
+            .ui-label--disabled
+            .ui-toggletip-button
+            svg {
+            fill: GrayText;
+        }
+    }
+}

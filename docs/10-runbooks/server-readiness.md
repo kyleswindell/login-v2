@@ -1,48 +1,208 @@
+<!--
+DOC-META
+title: Server Readiness
+doc_type: runbook
+status: active
+owner: ops
+canonical: true
+canonical_path: docs/10-runbooks/server-readiness.md
+parent: docs/10-runbooks/index.md
+template: docs/09-reference/templates/docs/_runbook.md
+summary: Defines pre-deployment server capability, service, extension, network, permission, environment, and application hardening checks.
+-->
+
 # Server Readiness
 
-This document defines the canonical scope and intent for Server Readiness.
+Parent: [Runbook Index](index.md)
 
-## Production Host
+## Purpose
 
-SSH alias:
+Verify that a target server can safely host the current Login 2.0 staging runtime.
 
-```sshconfig
-Host platform-prod
-    HostName 159.89.185.57
-    User deploy
-    IdentityFile C:\Users\kswin\.ssh\id_ed25519
-    Port 22
-    StrictHostKeyChecking accept-new
-```
+## Use When
 
-## Known Installed Services
+Use before:
 
-Based on planning notes:
+- first application bootstrap
+- significant runtime upgrade
+- deployment troubleshooting
+- declaring a server deployment-ready
 
-* Apache2
-* PHP 8.3 and required modules
-* PostgreSQL
-* Redis server
+## Prerequisites
 
-## Verification Checklist
+- authorized SSH access
+- configured SSH alias
+- sudo access for approved checks
+- target environment identified
+- no secrets copied into evidence
 
-Before deployment scaffold work:
+Set:
 
-* Confirm PHP 8.3 CLI is installed.
-* Confirm PHP-FPM is installed and enabled if Apache + PHP-FPM remains the production path.
-* Confirm Apache modules for proxy/FPM, rewrite, headers, SSL, and vhosts.
-* Confirm PHP extensions for PostgreSQL, Redis, mbstring, XML, cURL, zip, bcmath, intl, image handling, and fileinfo.
-* Confirm Composer is installed.
-* Confirm PostgreSQL is running and reachable locally.
-* Confirm Redis is running and not publicly exposed.
-* Confirm Node.js/npm availability for Vite and future Astro builds.
-* Confirm firewall rules only expose expected ports.
-* Confirm Certbot/Let's Encrypt plan for platform and tenant domains.
-* Confirm backup plan before tenant data is created.
+    SERVER_ALIAS=<configured-ssh-alias>
+
+Connect:
+
+    ssh "$SERVER_ALIAS"
+
+## Host Identity
+
+Run:
+
+    hostnamectl
+    uname -a
+    lsb_release -a
+
+Confirm the expected host and environment before continuing.
+
+## Runtime Versions
+
+Run:
+
+    php -v
+    composer --version
+    node --version
+    npm --version
+    psql --version
+    redis-server --version
+    apache2 -v
+
+Confirm versions match current architecture and support policy.
+
+## Service Status
+
+Run:
+
+    systemctl is-active apache2
+    systemctl is-active php8.3-fpm
+    systemctl is-active postgresql
+    systemctl is-active redis-server
+
+All required services must report active.
+
+## PHP Extensions
+
+Run:
+
+    php -m | sort
+
+Confirm:
+
+- bcmath
+- curl
+- fileinfo
+- intl
+- mbstring
+- pdo_pgsql
+- pgsql
+- redis
+- xml
+- zip
+
+Add image-processing extensions when current features require them.
+
+## Apache
+
+Run:
+
+    sudo apache2ctl configtest
+    sudo apache2ctl -M
+
+Confirm:
+
+- configuration syntax passes
+- rewrite is enabled
+- headers is enabled
+- proxy and proxy_fcgi are enabled
+- SSL modules are available when HTTPS is required
+
+## PostgreSQL
+
+Run:
+
+    systemctl status postgresql --no-pager
+    sudo -u postgres psql -c "select version();"
+
+Do not expose PostgreSQL publicly.
+
+## Redis
+
+Run:
+
+    redis-cli ping
+    ss -lntp | grep 6379 || true
+
+Expected response:
+
+    PONG
+
+Confirm Redis is bound only to approved interfaces.
+
+## Filesystem
+
+Confirm application paths:
+
+    ls -ld /var/www/platform
+    ls -ld /var/www/platform/releases
+    ls -ld /var/www/platform/shared
+    readlink -f /var/www/platform/current
+
+Confirm deploy and web-service users can access required paths.
+
+## Network And Firewall
+
+Run approved checks:
+
+    sudo ufw status verbose
+    ss -lntup
+
+Confirm only required ports are exposed.
+
+## Environment
+
+From the deployed application root, confirm required values exist without printing secrets:
+
+    php artisan about
+    php artisan config:show app.name
+    php artisan config:show app.env
+    php artisan config:show app.debug
+
+Do not print the full environment file.
+
+## Security Runtime Check
+
+On an HTTPS staging surface:
+
+    php artisan platform:security-runtime-check --target=staging --url=https://staging.parasolutions.com
+
+The check must pass before the environment is used as security-hardening evidence.
+
+## Failure Handling
+
+When a check fails:
+
+- record the command and sanitized output
+- identify the owning service
+- do not continue to deployment when the failure affects data, security, runtime compatibility, or rollback
+- create a bounded issue
+- rerun the failed check after correction
+
+## Completion Criteria
+
+The server is ready when:
+
+- host identity is correct
+- runtime versions are supported
+- required services are active
+- extensions are present
+- Apache configuration passes
+- PostgreSQL and Redis are reachable locally
+- filesystem ownership is correct
+- firewall exposure is approved
+- application bootstrap works
+- security runtime check passes when HTTPS is enabled
 
 ## Related
 
-* [Runbook Index](index.md)
-* [00-start-here](../00-start-here.md)
-* [Stack - Apache And PHP-FPM](../09-reference/architecture/phase-2-stack-and-ui-system-notes.md)
-* [Stack - Docker Compose](../09-reference/architecture/phase-2-stack-and-ui-system-notes.md)
+- [Deployment](deployment.md)
+- [Server Bootstrap](server-bootstrap.md)
+- [Staging Deployment](staging-deployment.md)

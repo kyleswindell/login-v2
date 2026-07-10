@@ -6,9 +6,9 @@ status: implemented-standard
 system_maturity: governance-standard
 category: pattern-governance
 priority: baseline-pattern-governance
-ui_reference_route: /platform/ui-reference/patterns
+rendered_evidence_route: null
 canonical_doc: docs/02-standards/ui/patterns/boundary-and-validation.md
-source_owner: /platform/ui-reference/patterns
+source_owner: not installed
 pattern_api:
   - boundary-decision-checklist
   - primitive-consumption-rule
@@ -71,10 +71,10 @@ carbon_reference:
 - [15. Content contract](#15-content-contract)
 - [16. Prohibited usage](#16-prohibited-usage)
 - [17. Deferred or gated capabilities](#17-deferred-or-gated-capabilities)
-- [Implementation and UI Reference Checklist](#implementation-and-ui-reference-checklist)
+- [Implementation and Rendered Evidence Checklist](#implementation-and-ui-reference-checklist)
   - [Implementation checklist](#implementation-checklist)
-  - [UI Reference proof checklist](#ui-reference-proof-checklist)
-- [19. UI Reference requirements](#19-ui-reference-requirements)
+  - [rendered evidence proof checklist](#ui-reference-proof-checklist)
+- [19. Rendered evidence requirements](#19-ui-reference-requirements)
 - [20. Testing and acceptance criteria](#20-testing-and-acceptance-criteria)
 - [21. Related APIs](#21-related-apis)
 - [22. References](#22-references)
@@ -83,7 +83,7 @@ carbon_reference:
 
 Boundary and validation defines how reusable Patterns consume Foundation Elements and Components without redefining them, and how validation responsibilities are split between Patterns, Components, and feature modules.
 
-Canonical API owner: `/platform/ui-reference/patterns`. Use this Pattern API whenever a UI surface needs to decide whether behavior belongs to a Foundation Element, Component, Pattern, or feature module.
+Canonical API owner: `not installed`. Use this Pattern API whenever a UI surface needs to decide whether behavior belongs to a Foundation Element, Component, Pattern, or feature module.
 
 Patterns are reusable solutions for user goals. They combine installed Foundation Element and Component APIs into layout, state-placement, orchestration, and workflow-adjacent compositions. They do not redefine primitive visual decisions, component internals, or feature-specific business rules.
 
@@ -96,7 +96,7 @@ Canonical API responsibilities:
 - Define feature-owned validation handoff for business rules, permissions, server validation, persistence, and workflow-specific branching.
 - Define how deferred or gated capabilities are recorded without fake examples.
 - Prevent local one-off markup from filling missing Component or Pattern API gaps.
-- Prove boundary review, validation placement review, and deferred capability review on the Pattern UI Reference route.
+- Prove boundary review, validation placement review, and deferred capability review on the Pattern Rendered evidence route.
 
 Non-owned responsibilities:
 
@@ -117,17 +117,17 @@ Carbon alignment note: Carbon describes Patterns as reusable best-practice solut
 | Pattern slug                 | boundary-and-validation                                                  |
 | Category                     | Pattern governance                                                       |
 | Priority                     | Baseline pattern governance                                              |
-| Owner route                  | `/platform/ui-reference/patterns`                                        |
+| Owner route                  | `not installed`                                        |
 | Canonical path               | `docs/02-standards/ui/patterns/boundary-and-validation.md`               |
-| UI Reference proof           | `/platform/ui-reference/patterns`                                        |
-| Source owner                 | `/platform/ui-reference/patterns`                                        |
+| rendered evidence proof           | `not installed`                                        |
+| Source owner                 | `not installed`                                        |
 | Blade API                    | None; this standard governs Pattern composition and ownership decisions  |
 | JavaScript API               | None; Pattern-specific behavior must be documented by the owning Pattern |
 | Data attributes              | None approved by this governance standard                                |
 | Foundation Elements consumed | Color, Spacing, Typography, Themes, Icons, Motion, 2x Grid               |
 | Carbon benchmark             | Carbon Patterns overview and relevant pattern guidance                   |
 
-`Implemented standard` means this governance contract is active for all Login App 2.0 Pattern standards and UI Reference Pattern examples.
+`Implemented standard` means this governance contract is active for all Login App 2.0 Pattern standards and rendered evidence Pattern examples.
 
 `Governance standard` means this document is not a visual component or a one-off page layout. It defines how Pattern API ownership is decided and how reusable Pattern examples must prove they are consuming approved APIs correctly.
 
@@ -145,7 +145,7 @@ The installed standard is:
 - Pattern validation placement must show where summaries, blocked states, unavailable states, empty states, field groups, and recovery actions appear.
 - Business validation rules must be handed to feature code and server validation instead of being encoded in UI standards.
 - Missing reusable behavior must be recorded as deferred or gated instead of patched with local markup, local CSS, local JavaScript, or fake examples.
-- UI Reference Pattern examples must render concrete compositions that consume app-owned tokens, classes, helpers, and Blade components where available.
+- rendered evidence Pattern examples must render concrete compositions that consume app-owned tokens, classes, helpers, and Blade components where available.
 
 Installed review modes:
 
@@ -156,7 +156,7 @@ Installed review modes:
 | Validation placement review  | Implemented | Decide where validation, status, blocked, empty, unavailable, and recovery UI appears.                   |
 | Business validation handoff  | Implemented | Keep feature-specific rules in the feature/server layer while letting the Pattern place the UI response. |
 | Deferred capability review   | Implemented | Record missing reusable capability as gated with trigger conditions.                                     |
-| UI Reference proof review    | Implemented | Ensure rendered examples prove real installed compositions and do not present fake controls.             |
+| rendered evidence proof review    | Implemented | Ensure rendered examples prove real installed compositions and do not present fake controls.             |
 
 ## 4. Pattern API
 
@@ -252,7 +252,7 @@ Pattern examples must show the consumed APIs explicitly enough that a developer 
 | ---------------------- | ------- | ------------------------------------------------------------------------------------------------------- |
 | Queue item references  | Allowed | Use when a requested behavior is known but gated. Include trigger conditions and approved alternatives. |
 | Feature links          | Allowed | Link to consuming workflows when a Pattern is proven by a concrete app use case.                        |
-| Example route links    | Allowed | Use UI Reference or app route references when examples require context.                                 |
+| Example route links    | Allowed | Use rendered evidence or app route references when examples require context.                                 |
 | Implementation notes   | Allowed | Keep notes scoped to the Pattern and avoid library-wide TODOs.                                          |
 | Migration notes        | Allowed | Use only when replacing legacy local markup with an installed Pattern API.                              |
 | Carbon benchmark notes | Allowed | Use as completeness guidance only; do not install Carbon classes or variants directly.                  |
@@ -295,7 +295,7 @@ Patterns do not own Component internals. They may own cross-component compositio
 | Primitive consumption review                  | Review mode        | Implemented                              | Element/Component consumption matrix      | Use to prevent Pattern-local primitives.                                                      |
 | Feature handoff review                        | Review mode        | Implemented                              | Feature-owned business validation handoff | Use to keep rule truth outside UI standards.                                                  |
 | Deferred capability review                    | Review mode        | Implemented                              | Gated disposition rows                    | Use when a missing reusable behavior is requested.                                            |
-| UI Reference proof review                     | Review mode        | Implemented                              | Rendered examples and route tests         | Use to ensure examples are concrete and not abstract notes only.                              |
+| rendered evidence proof review                     | Review mode        | Implemented                              | Rendered examples and route tests         | Use to ensure examples are concrete and not abstract notes only.                              |
 | Pattern-owned responsive layout               | Layout option      | Implemented where Pattern-specific       | Owning Pattern classes/wrappers           | Must consume 2x Grid and Spacing APIs.                                                        |
 | Pattern-owned validation summary              | Composition option | Implemented where Pattern-specific       | Forms/feedback Pattern                    | Must link to or identify affected fields.                                                     |
 | Pattern-owned blocked/empty/unavailable state | Composition option | Implemented where Pattern-specific       | Owning Pattern + Components               | Must distinguish UI placement from feature rule truth.                                        |
@@ -445,8 +445,8 @@ Boundary examples:
 - Do not create local CSS variables, local token names, local icon sources, local focus rings, raw colors, or arbitrary spacing.
 - Do not use direct Carbon production classes such as `cds--*` or `bx--*`.
 - Do not use Bootstrap grid, form, navbar, offcanvas, badge, alert, or utility classes as Pattern APIs.
-- Do not create fake UI Reference examples for deferred capabilities.
-- Do not mark a deferred capability as implemented until source, docs, UI Reference proof, and tests are updated.
+- Do not create fake rendered evidence examples for deferred capabilities.
+- Do not mark a deferred capability as implemented until source, docs, rendered evidence proof, and tests are updated.
 - Do not create broad library-wide corrections from this governance Pattern.
 - Do not place required instructions in hover-only, pointer-only, or optional disclosure content.
 - Do not create Pattern-owned JavaScript without a documented API, data attributes, lifecycle, accessibility contract, and tests.
@@ -455,7 +455,7 @@ Boundary examples:
 
 | Capability                                      | Status                                  | Gate                                                                                                                                |
 | ----------------------------------------------- | --------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| New reusable orchestration Pattern              | Gated                                   | Requires at least one concrete app use case, source owner, composition contract, consumed APIs, UI Reference proof, and tests.      |
+| New reusable orchestration Pattern              | Gated                                   | Requires at least one concrete app use case, source owner, composition contract, consumed APIs, rendered evidence proof, and tests.      |
 | Pattern-owned JavaScript controller             | Gated                                   | Requires documented data attributes, lifecycle, keyboard/focus behavior, reduced-motion behavior, teardown rules, and tests.        |
 | Pattern-owned overlay/drawer/panel behavior     | Gated                                   | Requires Overlay/feedback ownership, focus trap or focus management, dismissal, inert/background rules, scroll behavior, and tests. |
 | Pattern-owned validation summary helper         | Gated unless installed by Forms Pattern | Requires field ID mapping, focus behavior, links to fields, screen-reader behavior, and tests.                                      |
@@ -465,7 +465,7 @@ Boundary examples:
 | New Component primitive introduced by a Pattern | Not allowed                             | Add or update the Component API first.                                                                                              |
 | Fake examples for deferred capabilities         | Not allowed                             | Use trigger-condition rows and approved alternatives instead.                                                                       |
 
-## Implementation and UI Reference Checklist
+## Implementation and Rendered Evidence Checklist
 ### Implementation checklist
 | Requirement                | Standard expectation                                                                                                                      |
 | -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
@@ -476,7 +476,7 @@ Boundary examples:
 | Accessibility/content      | Page/workflow semantics, heading structure, focus flow, status messaging, action labels, and non-color meaning are defined.               |
 | Tests                      | Route/content/API assertions prove the Pattern and coordinated Component usage.                                                           |
 
-### UI Reference proof checklist
+### rendered evidence proof checklist
 | Requirement            | Visual proof expectation                                                                                                           |
 | ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
 | Live compositions      | The page renders production-like composed examples, not isolated primitive samples.                                                |
@@ -485,11 +485,11 @@ Boundary examples:
 | Variants/states        | Required layout variants, responsive states, empty/loading/error/blocked states, or explicit gates are visible.                    |
 | Related APIs           | Coordinated Components, consumed Elements, planned sub-APIs, source files, and canonical docs are linked.                          |
 | Manual review          | The page provides enough rendered proof for visual review of composition, hierarchy, responsive behavior, and workflow boundaries. |
-## 19. UI Reference requirements
+## 19. Rendered evidence requirements
 
-The UI Reference Pattern index must render concrete governance proof, not abstract notes only.
+The rendered evidence Pattern index must render concrete governance proof, not abstract notes only.
 
-Required UI Reference sections:
+Required rendered evidence sections:
 
 | Required proof               | Rendered behavior                                                                                                                               | Variants/options shown                                                        |
 | ---------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------- |
@@ -504,7 +504,7 @@ Required UI Reference sections:
 | Prohibited usage proof       | Page shows token redefinition, local markup, local JS, direct Carbon classes, Bootstrap classes, and business rules in standards as prohibited. | Raw tokens, Local markup, Local JS, Carbon classes, Bootstrap, Business rules |
 | Related API links            | Page links to this canonical standard and consumed Element/Component/Pattern standards.                                                         | Elements, Components, Patterns, Checklist                                     |
 
-All Pattern UI Reference examples must:
+All Pattern rendered evidence examples must:
 
 - Use app-owned tokens, classes, helpers, and Blade components where available.
 - Link to consumed Element and Component standards.
@@ -514,7 +514,7 @@ All Pattern UI Reference examples must:
 
 ## 20. Testing and acceptance criteria
 
-- `/platform/ui-reference/patterns` returns 200 for authorized users.
+- `not installed` returns 200 for authorized users.
 - The Pattern route links to `docs/02-standards/ui/patterns/boundary-and-validation.md` or equivalent docs view.
 - Rendered examples include boundary decision, primitive consumption, validation placement, feature handoff, responsive behavior, accessibility boundary, and deferred capability sections.
 - Rendered examples include required composition markers and consumed Component/Element links.
@@ -530,7 +530,7 @@ All Pattern UI Reference examples must:
 Suggested automated assertions:
 
 ```php
-$response = $this->actingAs($admin)->get('/platform/ui-reference/patterns');
+$response = $this->actingAs($admin)->get('not installed');
 
 $response->assertOk();
 $response->assertSee('Boundary and validation');
@@ -567,28 +567,28 @@ $response->assertDontSee('row col-');
 
 | API                                   | Route                                                                           |
 | ------------------------------------- | ------------------------------------------------------------------------------- |
-| Pattern standards index               | `/platform/ui-reference/patterns`                                               |
+| Pattern standards index               | `not installed`                                               |
 | Pattern implementation checklist      | `/platform/docs?path=02-standards%2Fui%2Fpatterns%2Fchecklist.md`               |
-| Component standards index             | `/platform/ui-reference/components`                                             |
+| Component standards index             | `not installed`                                             |
 | Component implementation checklist    | `/platform/docs?path=02-standards%2Fui%2Fcomponents%2Fchecklist.md`             |
-| Foundation Elements standards index   | `/platform/ui-reference/elements`                                               |
-| Color element                         | `/platform/ui-reference/elements/color`                                         |
-| Spacing element                       | `/platform/ui-reference/elements/spacing`                                       |
-| Typography element                    | `/platform/ui-reference/elements/typography`                                    |
-| Themes element                        | `/platform/ui-reference/elements/themes`                                        |
-| Icons element                         | `/platform/ui-reference/elements/icons`                                         |
-| Motion element                        | `/platform/ui-reference/elements/motion`                                        |
-| 2x Grid element                       | `/platform/ui-reference/elements/2x-grid`                                       |
-| Forms pattern                         | `/platform/ui-reference/patterns/forms`                                         |
-| Navigation pattern                    | `/platform/ui-reference/patterns/navigation`                                    |
-| Page header planned gap               | `/platform/ui-reference/patterns/layout`                                        |
-| Table toolbar planned gap             | `/platform/ui-reference/patterns/tables`                                        |
-| Overlay and feedback patterns         | `/platform/ui-reference/patterns/overlays-feedback`                             |
-| Button                                | `/platform/ui-reference/components/button`                                      |
-| Notification                          | `/platform/ui-reference/components/notification`                                |
-| Loading                               | `/platform/ui-reference/components/loading`                                     |
-| Tag                                   | `/platform/ui-reference/components/tag`                                         |
-| UI shell                              | `/platform/ui-reference/components/ui-shell`                                    |
+| Foundation Elements standards index   | `not installed`                                               |
+| Color element                         | `not installed`                                         |
+| Spacing element                       | `not installed`                                       |
+| Typography element                    | `not installed`                                    |
+| Themes element                        | `not installed`                                        |
+| Icons element                         | `not installed`                                         |
+| Motion element                        | `not installed`                                        |
+| 2x Grid element                       | `not installed`                                       |
+| Forms pattern                         | `not installed`                                         |
+| Navigation pattern                    | `not installed`                                    |
+| Page header planned gap               | `not installed`                                        |
+| Table toolbar planned gap             | `not installed`                                        |
+| Overlay and feedback patterns         | `not installed`                             |
+| Button                                | `not installed`                                      |
+| Notification                          | `not installed`                                |
+| Loading                               | `not installed`                                     |
+| Tag                                   | `not installed`                                         |
+| UI shell                              | `not installed`                                    |
 | Canonical boundary and validation doc | `/platform/docs?path=02-standards%2Fui%2Fpatterns%2Fboundary-and-validation.md` |
 | Carbon Patterns overview              | `https://carbondesignsystem.com/patterns/overview/`                             |
 
@@ -599,4 +599,4 @@ $response->assertDontSee('row col-');
 - [Component Standards](../components/index.md)
 - [Component Implementation Checklist](../components/checklist.md)
 - [Foundation Elements Standards](../elements/index.md)
-- Carbon Patterns overview guidance informs the Pattern API definition: reusable best-practice compositions that help users achieve goals through sequences and flows. Login App keeps its own Element, Component, Pattern, and feature-module boundaries, app-owned APIs, UI Reference proof, and gated-capability model.
+- Carbon Patterns overview guidance informs the Pattern API definition: reusable best-practice compositions that help users achieve goals through sequences and flows. Login App keeps its own Element, Component, Pattern, and feature-module boundaries, app-owned APIs, rendered evidence proof, and gated-capability model.

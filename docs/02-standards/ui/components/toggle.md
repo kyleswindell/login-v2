@@ -6,9 +6,9 @@ status: implemented-pending-correction
 system_maturity: partial
 category: selection-controls
 priority: tier-a-baseline-app-development
-ui_reference_route: /platform/ui-reference/components/toggle
+rendered_evidence_route: null
 canonical_doc: docs/02-standards/ui/components/toggle.md
-source_owner: /platform/ui-reference/components/toggle
+source_owner: not installed
 blade_api: []
 native_api:
   - label
@@ -17,7 +17,7 @@ native_api:
 javascript_api: []
 source_files:
   - resources/css/app.css
-  - route-owned UI Reference view for /platform/ui-reference/components/toggle
+  - route-owned rendered evidence view for not installed
 foundation_elements:
   - color
   - spacing
@@ -79,10 +79,10 @@ carbon_reference:
   - [11.1. Recommended label/state patterns:](#111-recommended-labelstate-patterns)
 - [12. Prohibited usage](#12-prohibited-usage)
 - [13. Deferred or gated capabilities](#13-deferred-or-gated-capabilities)
-- [14. Implementation and UI Reference Checklist](#14-implementation-and-ui-reference-checklist)
+- [14. Implementation and Rendered Evidence Checklist](#14-implementation-and-ui-reference-checklist)
   - [14.1. Implementation checklist](#141-implementation-checklist)
-  - [14.2. UI Reference proof checklist](#142-ui-reference-proof-checklist)
-- [15. UI Reference requirements](#15-ui-reference-requirements)
+  - [14.2. rendered evidence proof checklist](#142-ui-reference-proof-checklist)
+- [15. Rendered evidence requirements](#15-ui-reference-requirements)
   - [15.1. Required Live examples internal sections:](#151-required-live-examples-internal-sections)
 - [16. Testing and acceptance criteria](#16-testing-and-acceptance-criteria)
   - [16.1. Suggested automated assertions:](#161-suggested-automated-assertions)
@@ -93,7 +93,7 @@ carbon_reference:
 
 Toggle controls immediate on/off settings.
 
-Canonical API owner: `/platform/ui-reference/components/toggle`. Use this Component API instead of creating local markup, styling, animation, labels, state text, ARIA behavior, or settings-control behavior for the same UI role.
+Canonical API owner: `not installed`. Use this Component API instead of creating local markup, styling, animation, labels, state text, ARIA behavior, or settings-control behavior for the same UI role.
 
 Toggle is the installed Login App 2.0 binary immediate-setting API. It owns the on/off switch control, visible label association, selected/unselected state, state text where space permits, helper/status text, disabled behavior, token-backed focus treatment, reduced-motion behavior for the switch transition, and immediate-setting selection guidance. It does not own multi-select choices, mutually exclusive option groups, deferred submit workflows, view switching, destructive confirmations, permission explanations, async persistence orchestration, or page-level form layout.
 
@@ -110,7 +110,7 @@ Toggle is the installed Login App 2.0 binary immediate-setting API. It owns the 
 - Treat warning/error messaging as helper/status composition around the control, not as custom switch colors.
 - Apply setting changes immediately. If a submit button is required to apply the choice, use Checkbox, Radio button, Select, or a Forms Pattern instead.
 - Consume Foundation Element APIs for color, spacing, typography, themes, motion, and 2x Grid where placement is relevant.
-- Prove immediate setting, selected/unselected, focus-visible, disabled, helper text, validation/status boundary, responsive, reduced-motion, and implementation behavior on the UI Reference page.
+- Prove immediate setting, selected/unselected, focus-visible, disabled, helper text, validation/status boundary, responsive, reduced-motion, and implementation behavior on the rendered evidence page.
 
 ### 1.2. Non-owned responsibilities:
 
@@ -123,7 +123,7 @@ Toggle is the installed Login App 2.0 binary immediate-setting API. It owns the 
 - Async save/persistence, optimistic updates, rollback, and failure messaging. Parent Patterns own the workflow and may compose Notification.
 - External spacing, grid placement, field grouping, and page-level layout. Parent Patterns own layout.
 
-Carbon alignment note: Carbon defines Toggle as a binary control for immediate on/off changes, distinguishes default and small sizes, expects default toggles to show label and state text, uses redundant state information so meaning is not color-only, documents focus, disabled, read-only, and skeleton states, and requires keyboard operation. Login App maps those completeness principles to native checkbox/switch markup, app-owned `ui-*` classes, Foundation tokens, and route-owned UI Reference proof rather than adopting Carbon implementation classes directly.
+Carbon alignment note: Carbon defines Toggle as a binary control for immediate on/off changes, distinguishes default and small sizes, expects default toggles to show label and state text, uses redundant state information so meaning is not color-only, documents focus, disabled, read-only, and skeleton states, and requires keyboard operation. Login App maps those completeness principles to native checkbox/switch markup, app-owned `ui-*` classes, Foundation tokens, and route-owned rendered evidence proof rather than adopting Carbon implementation classes directly.
 
 ## 2. Status and ownership
 
@@ -135,17 +135,17 @@ Carbon alignment note: Carbon defines Toggle as a binary control for immediate o
 | Component slug               | `toggle`                                                                                              |
 | Category                     | Selection controls                                                                                    |
 | Priority                     | Tier A - Baseline app development                                                                     |
-| UI Reference route           | `/platform/ui-reference/components/toggle`                                                            |
+| Rendered evidence route           | `not installed`                                                            |
 | Canonical doc                | `docs/02-standards/ui/components/toggle.md`                                                           |
-| Source owner                 | `/platform/ui-reference/components/toggle`                                                            |
+| Source owner                 | `not installed`                                                            |
 | Blade API                    | No dedicated `x-ui.toggle` Blade component is documented as installed                                 |
 | Native API                   | `<input type="checkbox" role="switch">` with associated `<label>`/text and app-owned classes          |
 | JavaScript API               | No dedicated JavaScript controller required for baseline checked/unchecked behavior                   |
-| Source files                 | `resources/css/app.css`; route-owned UI Reference view for `/platform/ui-reference/components/toggle` |
+| Source files                 | `resources/css/app.css`; route-owned rendered evidence view for `not installed` |
 | Foundation Elements consumed | Color, Spacing, Typography, Themes, Motion, 2x Grid where composed in layouts                         |
 | Carbon benchmark             | Carbon Toggle usage, style, code, and accessibility guidance                                          |
 
-`Approved API` means the installed route and examples exist, but the canonical standard, UI Reference page, and tests must be corrected so Toggle is documented as an immediate binary setting control with explicit native semantics, labels, state text, states, validation/status boundaries, and prohibited usage instead of placeholder API text.
+`Approved API` means the installed route and examples exist, but the canonical standard, rendered evidence page, and tests must be corrected so Toggle is documented as an immediate binary setting control with explicit native semantics, labels, state text, states, validation/status boundaries, and prohibited usage instead of placeholder API text.
 
 ## 3. Installed standard
 
@@ -283,7 +283,7 @@ Use the native API and `ui-toggle*` classes instead of hand-building switch trac
 | JavaScript       | No dedicated JavaScript controller required for baseline on/off behavior                     |
 | Data attributes  | No public data attributes for baseline Toggle behavior                                       |
 | CSS namespace    | App-owned `ui-toggle*` classes documented by this standard and the component implementation  |
-| Source owner     | `/platform/ui-reference/components/toggle`                                                   |
+| Source owner     | `not installed`                                                   |
 | Token ownership  | Foundation Color, Spacing, Typography, Themes, Motion, and 2x Grid where composed in layouts |
 
 ### 4.6. Markup and attribute contract
@@ -314,14 +314,14 @@ Use the native API and `ui-toggle*` classes instead of hand-building switch trac
 | `.ui-toggle-field-danger`  | Status wrapper       | Implemented / required proof | Optional                                 | Error/status copy around the control, not custom switch color alone.                                                                                                   |
 | `.ui-toggle-message`       | Message class        | Implemented / required proof | Optional                                 | Helper/error/warning/status message associated with the input.                                                                                                         |
 
-Any class, attribute, prop, or behavior not listed here is not public. If a feature needs another option, update the component implementation, this standard, and the UI Reference proof before use.
+Any class, attribute, prop, or behavior not listed here is not public. If a feature needs another option, update the component implementation, this standard, and the rendered evidence proof before use.
 
 ### 4.7. Size contract
 
 | Size    | Status                                       | API                | Use when                                                                                                                      | Do not use when                                                                    |
 | ------- | -------------------------------------------- | ------------------ | ----------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
 | Default | Implemented                                  | `.ui-toggle`       | Forms, settings pages, preference panels, and full-width content where visible label and state text fit.                      | Dense table rows or compact inline metadata where the label/state text cannot fit. |
-| Small   | Gated unless proved by the UI Reference page | `.ui-toggle-small` | Dense inline settings where the surrounding text already labels the control and redundant state treatment is still available. | The setting is critical, ambiguous, or missing a persistent accessible label.      |
+| Small   | Gated unless proved by the rendered evidence page | `.ui-toggle-small` | Dense inline settings where the surrounding text already labels the control and redundant state treatment is still available. | The setting is critical, ambiguous, or missing a persistent accessible label.      |
 
 Small Toggle must not be treated as installed until the route proves size, target, redundant state, focus, disabled, and responsive behavior. If compact behavior is not installed, use the default Toggle or a Checkbox/Pattern-owned layout.
 
@@ -404,7 +404,7 @@ Toggle does not expose an icon API. Small-toggle redundant state may use a compo
 | ----------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Color       | Label text, helper text, state text, off track, on track, handle, disabled state, warning/error message, and focus-visible treatment.                          |
 | Spacing     | Label/control gap, helper/message gap, state text gap, toggle control dimensions, grouped toggle spacing when delegated by a Pattern, and responsive wrapping. |
-| Typography  | Label text, state text, helper text, warning/error text, and code-snippet examples on the UI Reference page.                                                   |
+| Typography  | Label text, state text, helper text, warning/error text, and code-snippet examples on the rendered evidence page.                                                   |
 | Themes      | Light/dark token resolution for label, state text, track, handle, disabled, warning/error, focus, and helper text.                                             |
 | Motion      | Productive handle movement, track transition, and reduced-motion behavior where transitions exist.                                                             |
 | 2x Grid     | Parent placement in form rows, settings panels, table-adjacent controls, and responsive layouts.                                                               |
@@ -567,11 +567,11 @@ Feature views must not create `toggle-*`, Bootstrap form-switch patterns, raw ut
 - Do not create custom on/off colors, dimensions, animation timing, focus rings, helper text styling, or disabled treatment.
 - Do not add local click handlers or keyboard handlers for baseline checked behavior.
 - Do not use read-only checkbox hacks such as inline `onclick="return false"`.
-- Do not render placeholder copy such as `Component-specific API pending correction` or `Allowed variants: None` on the implemented UI Reference page.
+- Do not render placeholder copy such as `Component-specific API pending correction` or `Allowed variants: None` on the implemented rendered evidence page.
 
 ## 13. Deferred or gated capabilities
 
-No deferred capability blocks the installed default Toggle API. Future extensions still require an updated Component standard and UI Reference proof before production use.
+No deferred capability blocks the installed default Toggle API. Future extensions still require an updated Component standard and rendered evidence proof before production use.
 
 | Capability                              | Status                          | Gate                                                                                                                      |
 | --------------------------------------- | ------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
@@ -581,13 +581,13 @@ No deferred capability blocks the installed default Toggle API. Future extension
 | Async saving state                      | Pattern-owned / gated           | Requires persistence owner, pending text, rollback behavior, failed-save handling, and tests.                             |
 | Group-level validation                  | Pattern-owned                   | Requires Forms Pattern ownership, fieldset/legend behavior, summary behavior, and tests.                                  |
 | Toggle groups                           | Pattern-owned                   | Requires grouping, headings/legend, spacing, keyboard order, and validation/status ownership.                             |
-| Custom state text pairs                 | Gated                           | Requires content rules, localization review, and UI Reference proof.                                                      |
+| Custom state text pairs                 | Gated                           | Requires content rules, localization review, and rendered evidence proof.                                                      |
 | Icon/tickmark API                       | Gated                           | Requires Icons/Foundation proof or component-owned CSS mark, state redundancy, and accessibility proof.                   |
 | Toggle as disclosure trigger            | Not owned by Toggle             | Use Button, Accordion, Toggletip, or Modal as appropriate.                                                                |
 | Toggle as navigation/view switch        | Not owned by Toggle             | Use Tabs or Content switcher.                                                                                             |
-| Custom colors/sizes/motion              | Not allowed                     | Requires Color, Spacing, Typography, and Motion Element updates plus UI Reference proof.                                  |
+| Custom colors/sizes/motion              | Not allowed                     | Requires Color, Spacing, Typography, and Motion Element updates plus rendered evidence proof.                                  |
 
-## 14. Implementation and UI Reference Checklist
+## 14. Implementation and Rendered Evidence Checklist
 ### 14.1. Implementation checklist
 | Requirement                | Standard expectation                                                                                                                               |
 | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -596,9 +596,9 @@ No deferred capability blocks the installed default Toggle API. Future extension
 | States                     | Default, hover, focus-visible, active/pressed, disabled, loading, validation, selected, empty, or not-applicable states are defined as relevant.   |
 | Accessibility/content      | Keyboard, focus, naming, ARIA, contrast, reduced-motion, label, helper, error, and copy requirements are defined.                                  |
 | Element consumption        | Required Color, Spacing, Typography, Icons, Motion, Themes, and 2x Grid dependencies are named.                                                    |
-| Tests                      | Source/API assertions and UI Reference route assertions block generic fallback content.                                                            |
+| Tests                      | Source/API assertions and Rendered evidence route assertions block generic fallback content.                                                            |
 
-### 14.2. UI Reference proof checklist
+### 14.2. rendered evidence proof checklist
 | Requirement               | Visual proof expectation                                                                              |
 | ------------------------- | ----------------------------------------------------------------------------------------------------- |
 | Live examples             | The page renders production examples through the documented API or explicit native/class contract.    |
@@ -607,9 +607,9 @@ No deferred capability blocks the installed default Toggle API. Future extension
 | Developer implementation  | Real canonical calls and token-backed code snippets appear instead of placeholder comments.           |
 | Related APIs              | Nearby Components, owning Patterns, consumed Elements, source files, and canonical docs are linked.   |
 | Manual review             | The page provides enough rendered proof for visual review of behavior, layout, and state correctness. |
-## 15. UI Reference requirements
+## 15. Rendered evidence requirements
 
-The UI Reference page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
+The rendered evidence page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
 
 The Toggle page is a broad selection-control reference page. It should use matrices, comparison grids, state tables, grouped examples, responsive examples, content examples, and developer implementation examples. It does not need to force every example into the Accordion-style tab model.
 
@@ -636,7 +636,7 @@ The page must not display generic fallback/reference sections or placeholder dev
 
 ## 16. Testing and acceptance criteria
 
-- `/platform/ui-reference/components/toggle` returns 200 for authorized users.
+- `not installed` returns 200 for authorized users.
 - The page shows the installed API, states, variants/options, prohibited usage, deferred gates, and Foundation Elements consumed.
 - Implemented APIs render production examples; deferred APIs render trigger conditions instead of fake controls.
 - The Purpose, Use cases, Component contract, Live examples, and Related components and patterns cards render in that top-level order.
@@ -656,7 +656,7 @@ The page must not display generic fallback/reference sections or placeholder dev
 ### 16.1. Suggested automated assertions:
 
 ```php
-$response = $this->actingAs($admin)->get('/platform/ui-reference/components/toggle');
+$response = $this->actingAs($admin)->get('not installed');
 
 $response->assertOk();
 $response->assertSee('Toggle');
@@ -697,25 +697,25 @@ For implementation tests, add page-specific assertions that rendered examples in
 
 | API                           | Route                                                            |
 | ----------------------------- | ---------------------------------------------------------------- |
-| Components overview           | `/platform/ui-reference/components`                              |
-| Checkbox                      | `/platform/ui-reference/components/checkbox`                     |
-| Radio button                  | `/platform/ui-reference/components/radio-button`                 |
-| Content switcher              | `/platform/ui-reference/components/content-switcher`             |
-| Button                        | `/platform/ui-reference/components/button`                       |
-| Notification                  | `/platform/ui-reference/components/notification`                 |
-| Inline loading                | `/platform/ui-reference/components/inline-loading`               |
-| Tooltip                       | `/platform/ui-reference/components/tooltip`                      |
-| Toggletip                     | `/platform/ui-reference/components/toggletip`                    |
-| Forms pattern                 | `/platform/ui-reference/patterns/forms`                          |
-| Overlay and feedback patterns | `/platform/ui-reference/patterns/overlays-feedback`              |
-| Tables Pattern                | `/platform/ui-reference/patterns/tables`                         |
-| Layout Pattern                | `/platform/ui-reference/patterns/layout`                         |
-| Color element                 | `/platform/ui-reference/elements/color`                          |
-| Spacing element               | `/platform/ui-reference/elements/spacing`                        |
-| Typography element            | `/platform/ui-reference/elements/typography`                     |
-| Motion element                | `/platform/ui-reference/elements/motion`                         |
-| Themes element                | `/platform/ui-reference/elements/themes`                         |
-| 2x Grid element               | `/platform/ui-reference/elements/2x-grid`                        |
+| Components overview           | `not installed`                              |
+| Checkbox                      | `not installed`                     |
+| Radio button                  | `not installed`                 |
+| Content switcher              | `not installed`             |
+| Button                        | `not installed`                       |
+| Notification                  | `not installed`                 |
+| Inline loading                | `not installed`               |
+| Tooltip                       | `not installed`                      |
+| Toggletip                     | `not installed`                    |
+| Forms pattern                 | `not installed`                          |
+| Overlay and feedback patterns | `not installed`              |
+| Tables Pattern                | `not installed`                         |
+| Layout Pattern                | `not installed`                         |
+| Color element                 | `not installed`                          |
+| Spacing element               | `not installed`                        |
+| Typography element            | `not installed`                     |
+| Motion element                | `not installed`                         |
+| Themes element                | `not installed`                         |
+| 2x Grid element               | `not installed`                        |
 | Canonical toggle doc          | `/platform/docs?path=02-standards%2Fui%2Fcomponents%2Ftoggle.md` |
 | Carbon toggle usage           | `https://carbondesignsystem.com/components/toggle/usage/`        |
 
@@ -725,4 +725,4 @@ For implementation tests, add page-specific assertions that rendered examples in
 - [Component Implementation Checklist](checklist.md)
 - [Foundation Elements Standards](../elements/index.md)
 - [Pattern Standards Index](../patterns/index.md)
-- Carbon Toggle usage, style, code, and accessibility guidance inform immediate binary-setting usage, default/small size boundaries, label/state text anatomy, focus/disabled/read-only/skeleton considerations, redundant state information, and keyboard/accessibility expectations. Login App keeps its own native markup contract, app-owned `ui-*` class namespace, Foundation Element token model, route ownership, and UI Reference proof requirements.
+- Carbon Toggle usage, style, code, and accessibility guidance inform immediate binary-setting usage, default/small size boundaries, label/state text anatomy, focus/disabled/read-only/skeleton considerations, redundant state information, and keyboard/accessibility expectations. Login App keeps its own native markup contract, app-owned `ui-*` class namespace, Foundation Element token model, route ownership, and rendered evidence proof requirements.

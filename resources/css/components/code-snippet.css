@@ -1,219 +1,700 @@
 /* ==========================================================================
-File: resources/css/components/code-snippet.css
-Purpose: Code Snippet component styles.
-Carbon reference:
+   File: resources/css/components/code-snippet.css
+   Purpose: Code Snippet component styles.
 
-* reference/carbon-main/packages/styles/scss/components/code-snippet/
+   Source: Converted from Carbon CodeSnippet SCSS.
 
-Notes:
-
-* Defines Code Snippet selectors only.
-* Do not define primitive palette tokens here.
-* Do not define theme role tokens here.
-* Copy feedback uses shared base feedback keyframes.
-  ========================================================================== */
+   Notes:
+   - Defines Code Snippet selectors only.
+   - Matches the local Blade structure:
+     .ui-code-snippet-shell
+       > .ui-code-snippet-container
+       > pre.ui-code-snippet
+       > code
+   - Supports inline, single-line, multi-line, disabled, light, no-copy,
+     copy feedback, expand/collapse, wrap text, skeleton, RTL, reduced motion,
+     and forced-colors states.
+   ========================================================================== */
 
 @layer components {
-    .ui-code-snippet {
+    /* ----------------------------------------------------------------------
+       Root
+       ---------------------------------------------------------------------- */
+
+    .ui-code-snippet-shell {
+        --ui-code-snippet-background: var(--ui-layer-02, var(--ui-layer));
+        --ui-code-snippet-background-hover: var(--ui-layer-hover);
+        --ui-code-snippet-background-active: var(--ui-layer-active);
+        --ui-code-snippet-feedback-background: var(--ui-background-inverse);
+        --ui-code-snippet-feedback-color: var(--ui-text-inverse);
+        --ui-code-snippet-copy-action-size: 3rem;
+        --ui-code-snippet-max-inline-size: 48rem;
+
+        box-sizing: border-box;
         position: relative;
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) auto;
-        align-items: start;
         inline-size: 100%;
-        background-color: var(--ui-layer-01);
+        max-inline-size: var(--ui-code-snippet-max-inline-size);
+        min-inline-size: 0;
+        margin: 0;
+        border: 0;
+        padding: 0;
+        background-color: var(--ui-code-snippet-background);
         color: var(--ui-text-primary);
-        font-family: var(--ui-font-family-mono);
-        font-size: var(--ui-type-code-01-font-size);
-        line-height: var(--ui-type-code-01-line-height);
+        font-family: var(--ui-font-family-mono, monospace);
     }
 
-    .ui-code-snippet-content {
-        overflow: auto;
+    .ui-code-snippet-shell *,
+    .ui-code-snippet-shell *::before,
+    .ui-code-snippet-shell *::after {
+        box-sizing: inherit;
+    }
+
+    .ui-code-snippet-shell code,
+    .ui-code-snippet-shell pre {
+        font-family: var(--ui-font-family-mono, monospace);
+        font-size: var(--ui-type-code-01-font-size);
+        font-weight: var(--ui-type-code-01-font-weight);
+        line-height: var(--ui-type-code-01-line-height);
+        letter-spacing: var(--ui-type-code-01-letter-spacing);
+    }
+
+    .ui-code-snippet-shell pre {
+        margin: 0;
+    }
+
+    /* ----------------------------------------------------------------------
+       Disabled state
+       ---------------------------------------------------------------------- */
+
+    .ui-code-snippet-shell-disabled,
+    .ui-code-snippet-shell[aria-disabled="true"],
+    .ui-code-snippet-shell-disabled .ui-code-snippet-expand-button,
+    .ui-code-snippet-shell[aria-disabled="true"]
+        .ui-code-snippet-expand-button {
+        background-color: var(--ui-layer);
+        color: var(--ui-text-disabled);
+    }
+
+    .ui-code-snippet-shell-disabled .ui-code-snippet-expand-button:hover,
+    .ui-code-snippet-shell[aria-disabled="true"]
+        .ui-code-snippet-expand-button:hover,
+    .ui-code-snippet-shell-disabled .ui-copy-btn,
+    .ui-code-snippet-shell-disabled .ui-copy-btn:hover,
+    .ui-code-snippet-shell[aria-disabled="true"] .ui-copy-btn,
+    .ui-code-snippet-shell[aria-disabled="true"] .ui-copy-btn:hover {
+        background-color: var(--ui-layer);
+        color: var(--ui-text-disabled);
+        cursor: not-allowed;
+    }
+
+    .ui-code-snippet-shell-disabled svg,
+    .ui-code-snippet-shell[aria-disabled="true"] svg {
+        fill: var(--ui-icon-disabled);
+    }
+
+    /* ----------------------------------------------------------------------
+       Inline snippet
+       ---------------------------------------------------------------------- */
+
+    .ui-code-snippet-shell-inline {
+        position: relative;
+        display: inline;
+        inline-size: initial;
+        max-inline-size: unset;
+        min-inline-size: 0;
+        block-size: 1.25rem;
+        min-block-size: 1.25rem;
+        margin: 0;
+        border: 1px solid transparent;
+        border-radius: 0.25rem;
+        padding: 0;
+        background-color: var(--ui-code-snippet-background);
+        color: var(--ui-text-primary);
+        cursor: pointer;
+        font-family: var(--ui-font-family-mono, monospace);
+    }
+
+    .ui-code-snippet-shell-inline:hover {
+        background-color: var(--ui-code-snippet-background-hover);
+    }
+
+    .ui-code-snippet-shell-inline:active {
+        background-color: var(--ui-code-snippet-background-active);
+    }
+
+    .ui-code-snippet-shell-inline:focus,
+    .ui-code-snippet-shell-inline:focus-visible {
+        border-color: var(--ui-focus);
+        outline: none;
+    }
+
+    .ui-code-snippet-shell-inline code {
+        padding: 0 var(--ui-spacing-03);
+        white-space: pre;
+    }
+
+    .ui-code-snippet-shell-inline.ui-code-snippet-shell-no-copy,
+    .ui-code-snippet-shell-inline:not(button) {
+        display: inline-block;
+        cursor: auto;
+    }
+
+    .ui-code-snippet-shell-inline.ui-code-snippet-shell-no-copy:hover,
+    .ui-code-snippet-shell-inline:not(button):hover {
+        background-color: var(--ui-code-snippet-background);
+    }
+
+    .ui-code-snippet-shell-light.ui-code-snippet-shell-inline.ui-code-snippet-shell-no-copy:hover,
+    .ui-code-snippet-shell-light.ui-code-snippet-shell-inline:not(
+            button
+        ):hover {
+        background-color: var(--ui-code-snippet-background-hover);
+    }
+
+    /* ----------------------------------------------------------------------
+       Inline copy feedback
+       ---------------------------------------------------------------------- */
+
+    .ui-code-snippet-shell-inline::before {
+        position: absolute;
+        z-index: var(--ui-z-index-floating);
+        display: none;
+        inline-size: 0;
+        block-size: 0;
+        border: none;
+        border-inline: 0.25rem solid transparent;
+        border-block-end: 0.25rem solid
+            var(--ui-code-snippet-feedback-background);
+        content: "";
+        inset-block-start: calc(100% - 0.25rem);
+        inset-inline-start: 50%;
+        transform: translateX(-50%);
+    }
+
+    .ui-code-snippet-shell-inline .ui-copy-btn__feedback,
+    .ui-code-snippet-shell-inline [data-ui-code-copy-feedback] {
+        position: absolute;
+        z-index: var(--ui-z-index-floating);
+        inset-block-start: calc(100% + 0.25rem);
+        inset-inline-start: 50%;
+        display: none;
+        overflow: visible;
+        box-sizing: content-box;
+        margin: auto;
+        border-radius: 0.125rem;
+        padding: var(--ui-spacing-03);
+        clip: auto;
+        background-color: var(--ui-code-snippet-feedback-background);
+        color: var(--ui-code-snippet-feedback-color);
+        font-family: var(--ui-font-family-sans);
+        font-size: var(--ui-type-label-01-font-size);
+        font-weight: var(--ui-type-label-01-font-weight);
+        line-height: var(--ui-type-label-01-line-height);
+        letter-spacing: var(--ui-type-label-01-letter-spacing);
+        white-space: nowrap;
+        transform: translateX(-50%);
+    }
+
+    .ui-code-snippet-shell-inline.ui-copy-btn--animating::before,
+    .ui-code-snippet-shell-inline.ui-copy-btn--animating .ui-copy-btn__feedback,
+    .ui-code-snippet-shell-inline.ui-copy-btn--animating
+        [data-ui-code-copy-feedback],
+    .ui-code-snippet-shell-inline[data-ui-code-copy-state="copied"]::before,
+    .ui-code-snippet-shell-inline[data-ui-code-copy-state="copied"]
+        [data-ui-code-copy-feedback] {
+        display: block;
+    }
+
+    .ui-code-snippet-shell-inline.ui-copy-btn--animating.ui-copy-btn--fade-in::before,
+    .ui-code-snippet-shell-inline.ui-copy-btn--animating.ui-copy-btn--fade-in
+        .ui-copy-btn__feedback,
+    .ui-code-snippet-shell-inline.ui-copy-btn--animating.ui-copy-btn--fade-in
+        [data-ui-code-copy-feedback] {
+        animation: ui-code-snippet-show-feedback var(--ui-duration-fast-02)
+            var(--ui-motion-standard-productive);
+    }
+
+    .ui-code-snippet-shell-inline.ui-copy-btn--animating.ui-copy-btn--fade-out::before,
+    .ui-code-snippet-shell-inline.ui-copy-btn--animating.ui-copy-btn--fade-out
+        .ui-copy-btn__feedback,
+    .ui-code-snippet-shell-inline.ui-copy-btn--animating.ui-copy-btn--fade-out
+        [data-ui-code-copy-feedback] {
+        animation: ui-code-snippet-hide-feedback var(--ui-duration-fast-02)
+            var(--ui-motion-standard-productive);
+    }
+
+    @keyframes ui-code-snippet-show-feedback {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes ui-code-snippet-hide-feedback {
+        from {
+            opacity: 1;
+        }
+
+        to {
+            opacity: 0;
+        }
+    }
+
+    /* ----------------------------------------------------------------------
+       Shared block snippet surface
+       ---------------------------------------------------------------------- */
+
+    .ui-code-snippet-shell-single,
+    .ui-code-snippet-shell-multi {
+        position: relative;
+        inline-size: 100%;
+        max-inline-size: var(--ui-code-snippet-max-inline-size);
+        min-inline-size: 0;
+        border: 0;
+        background-color: var(--ui-code-snippet-background);
+        color: var(--ui-text-primary);
+    }
+
+    .ui-code-snippet-shell-single {
+        display: flex;
+        align-items: center;
+        block-size: var(--ui-spacing-08);
+        padding-inline-end: var(--ui-spacing-08);
+    }
+
+    .ui-code-snippet-shell-single.ui-code-snippet-shell-no-copy {
+        padding: 0;
+    }
+
+    .ui-code-snippet-shell-multi {
+        display: flex;
         padding: var(--ui-spacing-05);
     }
 
-    .ui-code-snippet-single {
+    /* ----------------------------------------------------------------------
+       Snippet container
+       ---------------------------------------------------------------------- */
+
+    .ui-code-snippet-container {
+        position: relative;
+        pointer-events: auto;
+    }
+
+    .ui-code-snippet-container:focus,
+    .ui-code-snippet-container:focus-visible {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+    }
+
+    .ui-code-snippet-shell-single .ui-code-snippet-container {
+        position: relative;
+        display: flex;
         align-items: center;
+        block-size: 100%;
+        inline-size: 100%;
+        min-inline-size: 0;
+        overflow-x: auto;
+        padding-inline-start: var(--ui-spacing-05);
+        mask-image: linear-gradient(
+            to right,
+            #000 calc(100% - var(--ui-spacing-07)),
+            transparent 100%
+        );
+        pointer-events: auto;
     }
 
-    .ui-code-snippet-single .ui-code-snippet-content {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
+    [dir="rtl"] .ui-code-snippet-shell-single .ui-code-snippet-container {
+        mask-image: linear-gradient(
+            to left,
+            #000 calc(100% - var(--ui-spacing-07)),
+            transparent 100%
+        );
     }
 
-    .ui-code-snippet-multi .ui-code-snippet-content {
-        max-block-size: 18rem;
-        white-space: pre;
-    }
-
-    .ui-code-snippet-copy {
-        align-self: stretch;
-    }
-}
-
-@layer components {
-    /* Laravel UI code-snippet shell API migrated from app.css after Carbon SCSS ownership audit. */
-    .ui-code-snippet-shell {
-        @apply relative w-full max-w-3xl overflow-visible;
-        --ui-code-snippet-layer: var(--ui-layer-02);
-        --ui-card-layer: var(--ui-code-snippet-layer);
-    }
-
-    .ui-code-snippet-shell-light {
-        --ui-code-snippet-layer: var(--ui-layer-01);
-    }
-
-    .ui-code-snippet-header {
-        @apply flex min-h-10 items-center justify-between gap-3 px-4 py-2 text-xs font-semibold uppercase tracking-[0.12em];
-        background-color: var(--ui-code-snippet-layer);
-        color: var(--ui-text-helper);
-    }
-
-    .ui-code-snippet-shell .ui-code-snippet {
-        @apply rounded-none border-0;
-        background-color: var(--ui-code-snippet-layer);
-    }
-
-    .ui-code-snippet-copy-control {
-        @apply absolute right-4 top-4 z-30;
-    }
-
-    .ui-code-snippet-copy-control .ui-copy-button {
-        @apply h-8 min-h-8 w-8 min-w-8 rounded-none border-0 p-0 shadow-none;
-        background-color: transparent;
-        color: var(--ui-icon-primary);
-    }
-
-    .ui-code-snippet-copy-control .ui-copy-button:hover,
-    .ui-code-snippet-copy-control .ui-copy-button.is-hover {
-        background-color: var(--ui-action-ghost-bg-hover);
-        color: var(--ui-action-ghost-text-hover);
-    }
-
-    .ui-code-snippet-copy-control .ui-copy-button:active,
-    .ui-code-snippet-copy-control .ui-copy-button.is-active {
-        background-color: var(--ui-action-ghost-bg-active);
-        color: var(--ui-action-ghost-text-active);
-    }
-
-    .ui-code-snippet-copy-control .ui-copy-button:disabled {
-        background-color: transparent;
-        color: var(--ui-icon-disabled);
-    }
-
-    .ui-code-snippet-shell[data-ui-code-copy-state="copied"]
-        .ui-code-snippet-copy-control
-        .ui-copy-button {
-        color: var(--ui-support-success);
-    }
-
-    .ui-code-snippet-footer {
-        @apply px-4 py-2;
-        background-color: var(--ui-code-snippet-layer);
-    }
-
-    .ui-code-snippet-toggle {
-        @apply min-h-10 px-4 py-2;
-    }
-
-
-}
-
-@layer components {
-    /* Laravel UI code-snippet base API migrated from app.css after Carbon SCSS ownership audit. */
-    .ui-code-snippet {
-        @apply overflow-x-auto rounded-lg border p-4 font-mono text-xs leading-6;
-        border-color: var(--ui-border-subtle-01);
-        background-color: var(--ui-layer-02);
-        color: var(--ui-text-primary);
-        max-width: 48rem;
-        scrollbar-gutter: stable;
-    }
-
-    .ui-code-snippet code {
-        @apply block;
-        width: max-content;
-        min-width: 100%;
-        white-space: pre;
+    .ui-code-snippet-shell-single:focus-within .ui-code-snippet-container,
+    .ui-code-snippet-shell-multi:focus-within .ui-code-snippet-container {
+        mask-image: none;
     }
 
     .ui-code-snippet-shell-single .ui-code-snippet {
-        @apply min-h-10 py-2 pl-4 pr-12;
+        padding-inline-end: var(--ui-spacing-07);
+        overflow: visible;
+        white-space: pre;
     }
 
+    .ui-code-snippet-shell-multi {
+        position: relative;
+    }
+
+    .ui-code-snippet-shell-multi .ui-code-snippet-container {
+        position: relative;
+        order: 1;
+        inline-size: 100%;
+        max-block-size: 100%;
+        min-block-size: 100%;
+        overflow-y: auto;
+        mask-composite: intersect;
+        mask-image:
+            linear-gradient(
+                to right,
+                #000 calc(100% - var(--ui-spacing-07)),
+                transparent 100%
+            ),
+            linear-gradient(
+                to bottom,
+                #000 calc(100% - var(--ui-spacing-05)),
+                transparent 100%
+            );
+        pointer-events: auto;
+        transition: max-height var(--ui-duration-moderate-01)
+            var(--ui-motion-standard-productive);
+    }
+
+    [dir="rtl"] .ui-code-snippet-shell-multi .ui-code-snippet-container {
+        mask-image:
+            linear-gradient(
+                to left,
+                #000 calc(100% - var(--ui-spacing-07)),
+                transparent 100%
+            ),
+            linear-gradient(
+                to bottom,
+                #000 calc(100% - var(--ui-spacing-05)),
+                transparent 100%
+            );
+    }
+
+    .ui-code-snippet-shell-multi.ui-code-snippet-shell-expand
+        .ui-code-snippet-container,
+    .ui-code-snippet-shell-multi[data-ui-code-snippet-expanded="true"]
+        .ui-code-snippet-container {
+        padding-block-end: var(--ui-spacing-05);
+        transition: max-height var(--ui-duration-moderate-01)
+            var(--ui-motion-standard-productive);
+    }
+
+    .ui-code-snippet-shell-multi.ui-code-snippet-shell-wraptext
+        .ui-code-snippet {
+        white-space: pre-wrap;
+        word-wrap: break-word;
+    }
+
+    .ui-code-snippet-shell-multi .ui-code-snippet-container pre,
     .ui-code-snippet-shell-multi .ui-code-snippet {
-        min-height: 18rem;
-        padding: 1rem 2.5rem 1rem 1rem;
+        overflow: auto;
+        padding-block-end: var(--ui-spacing-06);
+        padding-inline-end: var(--ui-spacing-06);
     }
 
-    .ui-code-snippet-shell-expandable[data-ui-code-snippet-expanded="false"]
+    .ui-code-snippet-shell-multi.ui-code-snippet-shell-no-copy
+        .ui-code-snippet-container
+        pre,
+    .ui-code-snippet-shell-multi.ui-code-snippet-shell-no-copy
         .ui-code-snippet {
-        min-height: 0;
-        max-height: calc(
-            (var(--ui-code-snippet-collapsed-lines, 9) * 1.5rem) + 2rem
-        );
-        overflow-y: hidden;
+        padding-inline-end: 0;
     }
 
-    .ui-code-snippet-shell-expandable[data-ui-code-snippet-expanded="true"]
-        .ui-code-snippet {
-        max-height: none;
+    .ui-code-snippet-shell-multi .ui-code-snippet-container pre code,
+    .ui-code-snippet-shell-multi .ui-code-snippet code {
+        display: block;
+        overflow: hidden;
     }
 
-    .ui-code-snippet-inline {
-        @apply inline-flex min-h-4 items-center rounded-sm border-0 px-2 font-mono text-xs leading-4 transition;
-        background-color: var(--ui-layer-01);
+    .ui-code-snippet-shell:not(.ui-code-snippet-shell-wraptext)
+        .ui-code-snippet,
+    .ui-code-snippet-shell:not(.ui-code-snippet-shell-wraptext)
+        .ui-code-snippet
+        code {
+        white-space: pre;
+    }
+
+    .ui-code-snippet-shell-wraptext .ui-code-snippet,
+    .ui-code-snippet-shell-wraptext .ui-code-snippet code {
+        white-space: pre-wrap;
+        word-wrap: break-word;
+    }
+
+    /* ----------------------------------------------------------------------
+   Copy button
+   ---------------------------------------------------------------------- */
+
+    .ui-code-snippet-shell .ui-snippet__icon,
+    .ui-code-snippet-shell .ui-code-snippet__icon,
+    .ui-code-snippet-shell .ui-copy-btn__icon {
+        block-size: 1rem;
+        inline-size: 1rem;
+        fill: var(--ui-icon-primary);
+        transition: all var(--ui-duration-fast-01)
+            var(--ui-motion-standard-productive);
+    }
+
+    .ui-code-snippet-copy-control {
+        position: absolute;
+        z-index: 10;
+        inset-block-start: 0;
+        inset-inline-end: 0;
+        font-family: var(--ui-font-family-sans);
+    }
+
+    .ui-code-snippet-shell-single .ui-code-snippet-copy-control {
+        inline-size: var(--ui-code-snippet-copy-action-size);
+        block-size: 100%;
+    }
+
+    .ui-code-snippet-shell-multi .ui-code-snippet-copy-control {
+        inset-block-start: 0.5rem;
+        inset-inline-end: 0.5rem;
+    }
+
+    .ui-code-snippet-copy-control .ui-tooltip,
+    .ui-code-snippet-copy-control .ui-copy-btn__wrapper,
+    .ui-code-snippet-copy-control .ui-tooltip-trigger,
+    .ui-code-snippet-copy-control .ui-tooltip-trigger__wrapper {
+        position: static;
+    }
+
+    .ui-code-snippet-shell .ui-copy-btn {
+        display: flex;
+        overflow: visible;
+        align-items: center;
+        justify-content: center;
+        margin: 0;
+        border: none;
+        padding: 0;
+        background-color: var(--ui-code-snippet-background);
+        color: var(--ui-icon-primary);
+        cursor: pointer;
+        outline: none;
+    }
+
+    .ui-code-snippet-shell-single .ui-copy-btn {
+        inline-size: var(--ui-code-snippet-copy-action-size);
+        block-size: 100%;
+    }
+
+    .ui-code-snippet-shell-multi .ui-copy-btn {
+        z-index: 10;
+    }
+
+    .ui-code-snippet-shell .ui-copy-btn:hover {
+        background-color: var(--ui-code-snippet-background-hover);
+        color: var(--ui-icon-primary);
+    }
+
+    .ui-code-snippet-shell .ui-copy-btn:active {
+        background-color: var(--ui-code-snippet-background-active);
+    }
+
+    .ui-code-snippet-shell .ui-copy-btn:focus,
+    .ui-code-snippet-shell .ui-copy-btn:focus-visible {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+    }
+
+    /* ----------------------------------------------------------------------
+       Show more / less button
+       ---------------------------------------------------------------------- */
+
+    .ui-code-snippet-expand-button {
+        position: absolute;
+        z-index: 10;
+        inset-block-end: 0;
+        inset-inline-end: 0;
+        display: inline-flex;
+        align-items: center;
+        block-size: 2rem;
+        border: 0;
+        padding: var(--ui-spacing-03) var(--ui-spacing-05);
+        background-color: var(--ui-code-snippet-background);
+        color: var(--ui-text-primary);
+        font-family: var(--ui-font-family-sans);
+        font-size: var(--ui-type-body-compact-01-font-size);
+        font-weight: var(--ui-type-body-compact-01-font-weight);
+        line-height: var(--ui-type-body-compact-01-line-height);
+        letter-spacing: var(--ui-type-body-compact-01-letter-spacing);
+        cursor: pointer;
+    }
+
+    .ui-code-snippet-expand-button[hidden] {
+        display: none;
+    }
+
+    .ui-code-snippet-expand-button:hover {
+        background-color: var(--ui-code-snippet-background-hover);
         color: var(--ui-text-primary);
     }
 
-    .ui-code-snippet-inline-copyable {
-        @apply cursor-pointer;
+    .ui-code-snippet-expand-button:active {
+        background-color: var(--ui-code-snippet-background-active);
     }
 
-    .ui-code-snippet-inline:hover,
-    .ui-code-snippet-inline-copyable.is-hover {
-        background-color: var(--ui-layer-hover-01);
-    }
-
-    .ui-code-snippet-inline:focus-visible,
-    .ui-code-snippet-shell:focus-within {
+    .ui-code-snippet-expand-button:focus,
+    .ui-code-snippet-expand-button:focus-visible {
         outline: 2px solid var(--ui-focus);
-        outline-offset: 2px;
+        outline-offset: -2px;
     }
 
-    .ui-code-snippet-inline:active,
-    .ui-code-snippet-inline-copyable.is-active {
-        background-color: var(--ui-layer-active-01);
+    .ui-code-snippet-expand-button:disabled {
+        background-color: var(--ui-layer);
+        color: var(--ui-text-disabled);
+        cursor: not-allowed;
     }
 
-    .ui-code-token-keyword {
-        color: var(--ui-code-token-keyword);
+    .ui-code-snippet-expand-button:disabled svg {
+        fill: var(--ui-icon-disabled);
     }
 
-    .ui-code-token-property {
-        color: var(--ui-code-token-property);
+    .ui-code-snippet-expand-button [data-ui-code-snippet-expand-text] {
+        position: relative;
+        inset-block-start: -1px;
     }
 
-    .ui-code-token-string {
-        color: var(--ui-code-token-string);
+    .ui-code-snippet-expand-icon {
+        block-size: 1rem;
+        inline-size: 1rem;
+        margin-inline-start: var(--ui-spacing-03);
+        fill: var(--ui-icon-primary);
+        transform: rotate(0deg);
+        transition: transform
+            var(--ui-transition-expansion, var(--ui-duration-moderate-01));
     }
 
-    .ui-code-token-comment {
-        color: var(--ui-code-token-comment);
+    .ui-code-snippet-shell-expand .ui-code-snippet-expand-icon,
+    .ui-code-snippet-shell[data-ui-code-snippet-expanded="true"]
+        .ui-code-snippet-expand-icon {
+        transform: rotate(180deg);
     }
 
-    .ui-code-token-punctuation {
-        color: var(--ui-code-token-punctuation);
+    /* ----------------------------------------------------------------------
+       Light variant
+       ---------------------------------------------------------------------- */
+
+    .ui-code-snippet-shell-light,
+    .ui-code-snippet-shell-light .ui-copy-btn,
+    .ui-code-snippet-shell-light .ui-code-snippet-expand-button {
+        background-color: var(--ui-layer);
     }
 
-    .ui-code-token-number {
-        color: var(--ui-code-token-number);
+    .ui-code-snippet-shell-light.ui-code-snippet-shell-inline:hover,
+    .ui-code-snippet-shell-light .ui-copy-btn:hover,
+    .ui-code-snippet-shell-light .ui-code-snippet-expand-button:hover {
+        background-color: var(--ui-layer-hover);
     }
 
-    .ui-code-token-function {
-        color: var(--ui-code-token-function);
+    .ui-code-snippet-shell-light.ui-code-snippet-shell-inline:active,
+    .ui-code-snippet-shell-light .ui-copy-btn:active,
+    .ui-code-snippet-shell-light .ui-code-snippet-expand-button:active {
+        background-color: var(--ui-layer-active);
     }
 
+    /* ----------------------------------------------------------------------
+       Skeleton state
+       ---------------------------------------------------------------------- */
 
+    .ui-code-snippet-shell.ui-skeleton .ui-code-snippet-container {
+        block-size: 100%;
+        inline-size: 100%;
+    }
+
+    .ui-code-snippet-shell-multi.ui-skeleton {
+        block-size: 6.125rem;
+    }
+
+    .ui-code-snippet-shell-single.ui-skeleton {
+        block-size: 3.5rem;
+    }
+
+    .ui-code-snippet-shell.ui-skeleton span {
+        position: relative;
+        display: block;
+        inline-size: 100%;
+        block-size: 1rem;
+        margin-block-start: 0.5rem;
+        overflow: hidden;
+        background-color: var(--ui-skeleton-background);
+        color: transparent;
+    }
+
+    .ui-code-snippet-shell.ui-skeleton span::before {
+        position: absolute;
+        inset: 0;
+        background-color: var(--ui-skeleton-element);
+        content: "";
+    }
+
+    .ui-code-snippet-shell.ui-skeleton span:first-child {
+        margin: 0;
+    }
+
+    .ui-code-snippet-shell.ui-skeleton span:nth-child(2) {
+        inline-size: 85%;
+    }
+
+    .ui-code-snippet-shell.ui-skeleton span:nth-child(3) {
+        inline-size: 95%;
+    }
+
+    .ui-code-snippet-shell-single.ui-skeleton .ui-code-snippet-container {
+        padding-block-end: 0;
+    }
+
+    /* ----------------------------------------------------------------------
+       Reduced motion
+       ---------------------------------------------------------------------- */
+
+    @media (prefers-reduced-motion: reduce) {
+        .ui-code-snippet-shell svg,
+        .ui-code-snippet-container,
+        .ui-code-snippet-expand-icon,
+        .ui-copy-btn,
+        .ui-code-snippet-expand-button,
+        .ui-code-snippet-shell-inline.ui-copy-btn--animating::before,
+        .ui-code-snippet-shell-inline.ui-copy-btn--animating
+            .ui-copy-btn__feedback,
+        .ui-code-snippet-shell-inline.ui-copy-btn--animating
+            [data-ui-code-copy-feedback] {
+            animation: none;
+            transition: none;
+        }
+    }
+
+    /* ----------------------------------------------------------------------
+       Forced colors
+       ---------------------------------------------------------------------- */
+
+    @media screen and (-ms-high-contrast: active), (forced-colors: active) {
+        .ui-code-snippet-shell-inline:focus,
+        .ui-code-snippet-shell-inline:focus-visible {
+            border-color: Highlight;
+        }
+
+        .ui-code-snippet-shell-single,
+        .ui-code-snippet-shell-multi {
+            outline: 1px solid CanvasText;
+        }
+
+        .ui-code-snippet-container:focus,
+        .ui-code-snippet-container:focus-visible,
+        .ui-code-snippet-expand-button:focus,
+        .ui-code-snippet-expand-button:focus-visible,
+        .ui-code-snippet-shell .ui-copy-btn:focus,
+        .ui-code-snippet-shell .ui-copy-btn:focus-visible {
+            outline-color: Highlight;
+        }
+
+        .ui-code-snippet-shell-disabled,
+        .ui-code-snippet-shell[aria-disabled="true"],
+        .ui-code-snippet-shell-disabled .ui-copy-btn,
+        .ui-code-snippet-shell[aria-disabled="true"] .ui-copy-btn {
+            color: GrayText;
+        }
+
+        .ui-code-snippet-shell-disabled svg,
+        .ui-code-snippet-shell[aria-disabled="true"] svg {
+            fill: GrayText;
+        }
+    }
 }

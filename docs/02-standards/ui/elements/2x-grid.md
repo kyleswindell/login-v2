@@ -4,7 +4,7 @@ slug: 2x-grid
 api_layer: Foundation Element API
 guide_status: implemented
 system_maturity: partial
-ui_reference_route: /platform/ui-reference/elements/2x-grid
+rendered_evidence_route: null
 canonical_doc: docs/02-standards/ui/elements/2x-grid.md
 carbon_reference:
   - https://carbondesignsystem.com/elements/2x-grid/overview/
@@ -43,10 +43,10 @@ related_patterns:
 - [10. State behavior](#10-state-behavior)
 - [11. Prohibited usage](#11-prohibited-usage)
 - [12. Deferred or gated capabilities](#12-deferred-or-gated-capabilities)
-- [13. Implementation and UI Reference Checklist](#13-implementation-and-ui-reference-checklist)
+- [13. Implementation and Rendered Evidence Checklist](#13-implementation-and-ui-reference-checklist)
   - [13.1. Implementation checklist](#131-implementation-checklist)
-  - [13.2. UI Reference proof checklist](#132-ui-reference-proof-checklist)
-- [14. UI Reference requirements](#14-ui-reference-requirements)
+  - [13.2. rendered evidence proof checklist](#132-ui-reference-proof-checklist)
+- [14. Rendered evidence requirements](#14-ui-reference-requirements)
   - [14.1. Required live views](#141-required-live-views)
   - [14.2. Required page text](#142-required-page-text)
   - [14.3. Required API display](#143-required-api-display)
@@ -91,12 +91,12 @@ Use the 2x Grid Element when the geometry is part of the page or pattern contrac
 | System maturity    | Partial                                                                                             |
 | API layer          | Foundation Element API                                                                              |
 | Element slug       | 2x-grid                                                                                             |
-| UI Reference route | `/platform/ui-reference/elements/2x-grid`                                                           |
+| Rendered evidence route | `not installed`                                                           |
 | Canonical doc      | `docs/02-standards/ui/elements/2x-grid.md`                                                          |
 | Primary consumers  | Page shell, layout patterns, dashboard patterns, data-heavy views, split views, side-panel patterns |
 | Carbon benchmark   | Carbon 2x Grid overview and usage                                                                   |
 
-`System maturity: Partial` means the app has an installed grid direction and known utilities, but the full reusable wrapper/component API is still being normalized through the UI Reference and Pattern API docs.
+`System maturity: Partial` means the app has an installed grid direction and known utilities, but the full reusable wrapper/component API is still being normalized through the rendered evidence and Pattern API docs.
 
 ## 3. Installed standard
 
@@ -141,7 +141,7 @@ Do not assume Tailwind's default breakpoint names are Carbon-compatible. If a vi
 | Standard gutter                           | Implemented                          | Use for most page sections, dashboard cards, forms, and major content groups.                               |
 | Gutterless                                | Implemented where needed             | Use only when content is closely related and the parent pattern still preserves readable alignment.         |
 | Dense/condensed dashboard gutter          | Pattern-owned                        | Dashboard or tile patterns may use a denser gutter only when the pattern documents border/layer separation. |
-| Carbon wide/narrow/condensed gutter modes | Not implemented as universal helpers | Do not expose these as global API until documented in this Element and proven in the UI Reference.          |
+| Carbon wide/narrow/condensed gutter modes | Not implemented as universal helpers | Do not expose these as global API until documented in this Element and proven in the rendered evidence.          |
 
 ### 3.3. Installed alignment rule
 
@@ -152,20 +152,20 @@ Type, component bodies, and content edges should align to the content/padding ed
 | Token/helper          | Variable or value                                                              | Allowed API/consumer                                    | Example                                                            |
 | --------------------- | ------------------------------------------------------------------------------ | ------------------------------------------------------- | ------------------------------------------------------------------ |
 | Mini unit             | `8px`-centered spacing model                                                   | Tailwind gap/padding utilities and app grid wrappers    | `grid gap-4 md:grid-cols-2 xl:grid-cols-4`                         |
-| Breakpoint test set   | `320px`, `672px`, `1056px`, `1312px`, `1584px`                                 | UI Reference tests, responsive QA, layout Pattern docs  | Test page geometry at all five widths when grid alignment matters. |
+| Breakpoint test set   | `320px`, `672px`, `1056px`, `1312px`, `1584px`                                 | rendered evidence tests, responsive QA, layout Pattern docs  | Test page geometry at all five widths when grid alignment matters. |
 | Small grid            | 4 columns at `320px`                                                           | Page shell, compact layouts, mobile dashboard summaries | Single-column or 2-column local content depending on readability.  |
 | Medium grid           | 8 columns at `672px`                                                           | Settings shells, split views, compact dashboard regions | `md:grid-cols-2` when content supports two columns.                |
 | Large grid            | 16 columns at `1056px+`                                                        | Desktop page shell, dashboards, data/table regions      | `xl:grid-cols-4` dashboard summary cards.                          |
 | Standard box padding  | 16px page/grid box padding baseline                                            | Page sections, grid boxes, cards, panels                | Align headings and text to the padded content edge.                |
 | Standard gutter       | 32px total separation when two 16px padded boxes meet                          | Page sections, cards, dashboard modules                 | `gap-4` or pattern-owned equivalent when using 16px app spacing.   |
-| Dashboard grid        | `--ui-dashboard-grid-row-size` / `--ui-dashboard-grid-gap`                     | `x-ui.patterns.dashboard-grid`                          | `<x-ui.patterns.dashboard-grid>...</x-ui.patterns.dashboard-grid>` |
+| Dashboard grid        | `--ui-dashboard-grid-row-size` / `--ui-dashboard-grid-gap`                     | `x-patterns.dashboard-grid`                             | `<x-patterns.dashboard-grid>...</x-patterns.dashboard-grid>`       |
 | Content region        | Layout-owned max width and grid columns                                        | Page shell and pattern wrappers                         | `<section class="grid gap-4 xl:grid-cols-4">...</section>`         |
 | Fluid content region  | Percentage-based columns inside an owning grid                                 | Dashboard, table, chart, wide card regions              | Data table container spans full content width.                     |
 | Fixed box region      | Fixed-size boxes from an approved size scale                                   | Tiles, compact widgets, icon groups                     | Repeated cards tile and wrap without arbitrary widths.             |
 | Hybrid region         | Fluid width with fixed/content-driven height, or fixed width with fluid height | Header, toolbar, side panel, menu, data table           | App shell header spans fluid width with fixed height.              |
 | Aspect-ratio guidance | `1:1`, `2:1`, `2:3`, `3:2`, `4:3`, `16:9` where applicable                     | Tile, card, media, dashboard, chart patterns            | Use a documented ratio for repeated same-size tiles.               |
 
-Only use Token API rows as installed standards where the related utility/component exists or the owning Pattern API documents it. If a new helper is needed, update this Element standard and the UI Reference proof before using it in feature code.
+Only use Token API rows as installed standards where the related utility/component exists or the owning Pattern API documents it. If a new helper is needed, update this Element standard and the rendered evidence proof before using it in feature code.
 
 ## 5. CSS variable API
 
@@ -187,7 +187,7 @@ Rules:
 
 ## 6. Utility class/helper API
 
-Allowed utility classes, Blade helpers, and component wrappers are those listed in the Token API table and demonstrated by the UI Reference route.
+Allowed utility classes, Blade helpers, and component wrappers are those listed in the Token API table and demonstrated by the Rendered evidence route.
 
 ### 6.1. Allowed utility families
 
@@ -205,11 +205,11 @@ Use these only in page, section, dashboard, shell, or Pattern-owned layout code:
 
 ### 6.2. Allowed Blade or Pattern helpers
 
-| Helper/API                       | Status                      | Allowed use                                                                                 |
-| -------------------------------- | --------------------------- | ------------------------------------------------------------------------------------------- |
-| `<x-ui.patterns.dashboard-grid>` | Implemented / Pattern-owned | Dashboard widgets and repeated metric cards.                                                |
-| Page shell content wrapper       | Implemented / Pattern-owned | Main application content alignment.                                                         |
-| Layout Pattern API wrappers      | Implemented as documented   | Reusable app layouts such as settings, dashboard, split view, shell, or panel compositions. |
+| Helper/API                    | Status                      | Allowed use                                                                                 |
+| ----------------------------- | --------------------------- | ------------------------------------------------------------------------------------------- |
+| `<x-patterns.dashboard-grid>` | Implemented / Pattern-owned | Dashboard widgets and repeated metric cards.                                                |
+| Page shell content wrapper    | Implemented / Pattern-owned | Main application content alignment.                                                         |
+| Layout Pattern API wrappers   | Implemented as documented   | Reusable app layouts such as settings, dashboard, split view, shell, or panel compositions. |
 
 Do not create local helpers that duplicate these responsibilities. Promote repeated layout code into the Pattern API instead.
 
@@ -262,21 +262,21 @@ Those cases belong to the Spacing Element or the owning Component API.
 
 Components and Patterns must consume this Element through documented tokens, utilities, or wrappers. They must not hard-code alternate local values for the same role.
 
-| Consumer                     | Must consume 2x Grid by                                                                  | Must not do                                                   |
-| ---------------------------- | ---------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
-| Dashboard Pattern            | `x-ui.patterns.dashboard-grid`, dashboard row/gap variables, approved responsive columns | Create feature-local card widths or row heights.              |
-| App Shell Pattern            | Shell/content wrappers and documented responsive region behavior                         | Add local margins to align content with nav manually.         |
-| Settings Layout Pattern      | Pattern-owned grid and section wrappers                                                  | Use arbitrary Bootstrap rows or one-off split widths.         |
-| Data Table Component/Pattern | Fluid content region, overflow-safe wrappers                                             | Let table width force page-level horizontal overflow.         |
-| Tile/Card Patterns           | Fixed or fluid box sizing from this standard                                             | Use arbitrary card dimensions that break the repeated rhythm. |
-| Modal/Side Panel Patterns    | Hybrid region rules and shell interaction constraints                                    | Define page-level grid behavior inside modal body content.    |
-| Form Patterns                | Form-specific layout wrappers that consume grid/spacing standards                        | Use grid to patch field internals or label/input spacing.     |
+| Consumer                     | Must consume 2x Grid by                                                               | Must not do                                                   |
+| ---------------------------- | ------------------------------------------------------------------------------------- | ------------------------------------------------------------- |
+| Dashboard Pattern            | `x-patterns.dashboard-grid`, dashboard row/gap variables, approved responsive columns | Create feature-local card widths or row heights.              |
+| App Shell Pattern            | Shell/content wrappers and documented responsive region behavior                      | Add local margins to align content with nav manually.         |
+| Settings Layout Pattern      | Pattern-owned grid and section wrappers                                               | Use arbitrary Bootstrap rows or one-off split widths.         |
+| Data Table Component/Pattern | Fluid content region, overflow-safe wrappers                                          | Let table width force page-level horizontal overflow.         |
+| Tile/Card Patterns           | Fixed or fluid box sizing from this standard                                          | Use arbitrary card dimensions that break the repeated rhythm. |
+| Modal/Side Panel Patterns    | Hybrid region rules and shell interaction constraints                                 | Define page-level grid behavior inside modal body content.    |
+| Form Patterns                | Form-specific layout wrappers that consume grid/spacing standards                     | Use grid to patch field internals or label/input spacing.     |
 
 If a Component needs layout behavior not defined here, create or update a Pattern API. Do not bury page-level geometry inside a Component API.
 
 ## 9. Theme behavior
 
-This Element must remain valid in supported light, dark, inline, inverse, and high-contrast contexts when those contexts apply. Theme behavior is proven on the UI Reference page.
+This Element must remain valid in supported light, dark, inline, inverse, and high-contrast contexts when those contexts apply. Theme behavior is proven on the rendered evidence page.
 
 2x Grid geometry is mostly theme-neutral. Theme behavior appears through the surfaces placed on the grid:
 
@@ -324,24 +324,24 @@ Interactive states such as hover, active, selected, focus-visible, disabled, loa
 - Do not hang type into gutters.
 - Do not use grid wrappers to patch component-internal spacing.
 - Do not place tables, charts, cards, or panels in a grid region that cannot handle overflow.
-- Do not use screenshots as the only proof of grid behavior in the UI Reference page.
+- Do not use screenshots as the only proof of grid behavior in the rendered evidence page.
 - Do not treat Carbon 2x Grid as a direct package clone unless the app has explicitly installed and documented that package.
 
 ## 12. Deferred or gated capabilities
 
-- No additional capability is approved without updating this Element standard and UI Reference proof.
+- No additional capability is approved without updating this Element standard and rendered evidence proof.
 
 | Capability                                        | Status      | Gate                                                                                        |
 | ------------------------------------------------- | ----------- | ------------------------------------------------------------------------------------------- |
-| Global Carbon grid package clone                  | Deferred    | Requires implementation decision, app-wide migration plan, and UI Reference proof.          |
+| Global Carbon grid package clone                  | Deferred    | Requires implementation decision, app-wide migration plan, and rendered evidence proof.          |
 | Universal wide/narrow/condensed gutter helper API | Deferred    | Requires token/class API, visual examples, and compatibility tests.                         |
 | Custom app breakpoint set                         | Gated       | Requires documentation of mapping against Carbon-compatible widths and Tailwind config.     |
 | User-resizable grid regions                       | Deferred    | Requires Pattern API, persistence rules, keyboard/mouse behavior, and accessibility review. |
 | Masonry or asymmetric dashboard grids             | Deferred    | Requires dashboard Pattern API and responsive overflow contract.                            |
-| Nested subgrid helper API                         | Deferred    | Requires browser support review, Pattern ownership, and UI Reference examples.              |
+| Nested subgrid helper API                         | Deferred    | Requires browser support review, Pattern ownership, and rendered evidence examples.              |
 | Feature-local layout variables                    | Not allowed | Promote to Element or Pattern API first.                                                    |
 
-## 13. Implementation and UI Reference Checklist
+## 13. Implementation and Rendered Evidence Checklist
 
 ### 13.1. Implementation checklist
 
@@ -354,7 +354,7 @@ Interactive states such as hover, active, selected, focus-visible, disabled, loa
 | Prohibited usage            | Feature code, Components, and Patterns are told what they must not redefine locally.                                              |
 | Tests                       | Route/content/API assertions are defined to prove the Element contract.                                                           |
 
-### 13.2. UI Reference proof checklist
+### 13.2. rendered evidence proof checklist
 
 | Requirement          | Visual proof expectation                                                                                            |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------- |
@@ -364,9 +364,9 @@ Interactive states such as hover, active, selected, focus-visible, disabled, loa
 | Accessibility proof  | Contrast, focus, semantics, hit targets, reduced motion, or equivalent Element constraints are shown or documented. |
 | Related APIs         | Consuming Components, Patterns, source files, and the canonical standard are linked.                                |
 | Manual review        | The page provides enough rendered proof for visual review without opening source code first.                        |
-## 14. UI Reference requirements
+## 14. Rendered evidence requirements
 
-The UI Reference page at `/platform/ui-reference/elements/2x-grid` must prove this Element API with rendered examples using app CSS/JS, not screenshots only.
+The rendered evidence page at `not installed` must prove this Element API with rendered examples using app CSS/JS, not screenshots only.
 
 ### 14.1. Required live views
 
@@ -379,7 +379,7 @@ The UI Reference page at `/platform/ui-reference/elements/2x-grid` must prove th
 | Padding and margin alignment | Shows correct alignment of type and content to padding edge; shows prohibited misalignment as a labeled anti-example if useful.   | Correct alignment, incorrect/hard-coded alignment note.                              |
 | Fluid/fixed/hybrid regions   | Shows dashboard/table fluid regions, fixed tile/card regions, and hybrid shell/panel regions.                                     | Fluid, fixed, hybrid.                                                                |
 | App scaffold                 | Shows header, global/left nav region, local nav/side panel region, main content, right/floating panel, modal/dialog relationship. | Fixed panel, flexible/collapsed panel, floating panel/deferred if not implemented.   |
-| Dashboard grid API           | Shows `<x-ui.patterns.dashboard-grid>` or the current installed dashboard wrapper with real widget examples.                      | Row size and gap variable labels.                                                    |
+| Dashboard grid API           | Shows `<x-patterns.dashboard-grid>` or the current installed dashboard wrapper with real widget examples.                         | Row size and gap variable labels.                                                    |
 
 ### 14.2. Required page text
 
@@ -403,7 +403,7 @@ Carbon 2x Grid maps to Login App as an 8px-compatible layout foundation, not a C
 
 ### 14.3. Required API display
 
-The UI Reference page must show:
+The rendered evidence page must show:
 
 - Implementation status.
 - System maturity.
@@ -419,8 +419,8 @@ The UI Reference page must show:
 
 ## 15. Testing and acceptance criteria
 
-- `/platform/ui-reference/elements/2x-grid` returns `200` for authorized users.
-- The route remains admin-only or development-only according to the app's UI Reference access policy.
+- `not installed` returns `200` for authorized users.
+- The route remains admin-only or development-only according to the app's rendered evidence access policy.
 - The page renders live examples with app CSS/JS rather than screenshots only.
 - The page shows token/class/helper API references, allowed usage, prohibited usage, accessibility constraints, and implementation status.
 - The page includes the Carbon-compatible breakpoint set: `320px`, `672px`, `1056px`, `1312px`, and `1584px`.
@@ -438,13 +438,13 @@ The UI Reference page must show:
 
 | API                     | Route                                                           |
 | ----------------------- | --------------------------------------------------------------- |
-| Spacing element         | `/platform/ui-reference/elements/spacing`                       |
-| Color element           | `/platform/ui-reference/elements/color`                         |
-| Themes element          | `/platform/ui-reference/elements/themes`                        |
-| Typography element      | `/platform/ui-reference/elements/typography`                    |
-| Layout patterns         | `/platform/ui-reference/patterns/layout`                        |
-| Dashboard grid pattern  | `/platform/ui-reference/patterns/dashboard-grid`                |
-| App shell pattern       | `/platform/ui-reference/patterns/app-shell`                     |
+| Spacing element         | `not installed`                       |
+| Color element           | `not installed`                         |
+| Themes element          | `not installed`                        |
+| Typography element      | `not installed`                    |
+| Layout patterns         | `not installed`                        |
+| Dashboard grid pattern  | `not installed`                |
+| App shell pattern       | `not installed`                     |
 | Canonical 2x Grid doc   | `/platform/docs?path=02-standards%2Fui%2Felements%2F2x-grid.md` |
 | Carbon 2x Grid overview | `https://carbondesignsystem.com/elements/2x-grid/overview/`     |
 | Carbon 2x Grid usage    | `https://carbondesignsystem.com/elements/2x-grid/usage/`        |

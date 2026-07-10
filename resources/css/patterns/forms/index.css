@@ -1,0 +1,11 @@
+/* ==========================================================================
+   File: resources/css/patterns/forms/index.css
+   Purpose: Forms pattern stylesheet bundle.
+
+   Notes:
+   - Imports pattern-level Forms styles only.
+   - Primitive form component styles remain owned by component CSS files.
+   - Add additional Forms pattern imports here as forms/* patterns are migrated.
+   ========================================================================== */
+
+@import "./actions.css";

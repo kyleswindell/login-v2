@@ -105,7 +105,7 @@ This file is not the Login App Color Element API. The canonical app color rules 
 | Primary app standard   | `docs/02-standards/ui/elements/color.md`                                                        |
 | Source report          | Uploaded Carbon color-token research report                                                     |
 | Canonical support path | `docs/02-standards/ui/elements/color-carbon-token-inventory.md`                                 |
-| UI Reference owner     | `/platform/ui-reference/elements/color`                                                         |
+| rendered evidence owner     | `not installed`                                                         |
 | Carbon scope           | Current public Carbon color, component style, and pattern pages identified by the research pass |
 
 ## 3. Installed standard relationship

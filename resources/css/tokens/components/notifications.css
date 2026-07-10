@@ -1,20 +1,261 @@
 /* ==========================================================================
-File: resources/css/tokens/components/notifications.css
-Purpose: Notification component color tokens.
-Notes:
+   File: resources/css/tokens/components/notifications.css
+   Purpose: Notification component color tokens.
 
-* Defines notification component tokens only.
-* Do not place component selectors in this file.
-* Do not define global theme role tokens in this file.
-* Do not use notification component tokens as global semantic colors.
-* These tokens may consume button and theme role tokens where the source
-  mapping intentionally references inverse/tertiary button behavior.
-  ========================================================================== */
+   Notes:
+   - Defines notification component tokens only.
+   - Do not place component selectors in this file.
+   - Do not define global theme role tokens in this file.
+   - Do not use notification component tokens as global semantic colors.
+   - Carbon notification source exposes dedicated component tokens for
+     low-contrast backgrounds and actionable notification button colors.
+   - Carbon notification rendering also consumes theme role tokens for text,
+     icons, borders, high-contrast background, and inverse support colors.
+   ========================================================================== */
 
 @layer base {
     /* ----------------------------------------------------------------------
-Notification component tokens: white theme
----------------------------------------------------------------------- */
+       Notification component tokens: shared rendering aliases
+       ---------------------------------------------------------------------- */
+
+    :root,
+    html[data-theme-resolved],
+    [data-theme-resolved] {
+        /* ------------------------------------------------------------------
+           Low-contrast notification role aliases
+           ------------------------------------------------------------------ */
+
+        --ui-notification-low-contrast-title-color: var(--ui-text-primary);
+        --ui-notification-low-contrast-subtitle-color: var(--ui-text-primary);
+        --ui-notification-low-contrast-close-icon-color: var(--ui-icon-primary);
+
+        --ui-notification-low-contrast-background-error: var(
+            --ui-notification-background-error
+        );
+        --ui-notification-low-contrast-background-success: var(
+            --ui-notification-background-success
+        );
+        --ui-notification-low-contrast-background-info: var(
+            --ui-notification-background-info
+        );
+        --ui-notification-low-contrast-background-warning: var(
+            --ui-notification-background-warning
+        );
+
+        --ui-notification-low-contrast-border-error: var(
+            --ui-support-error,
+            var(--ui-red-60)
+        );
+        --ui-notification-low-contrast-border-success: var(
+            --ui-support-success,
+            var(--ui-green-60)
+        );
+        --ui-notification-low-contrast-border-info: var(
+            --ui-support-info,
+            var(--ui-blue-70)
+        );
+        --ui-notification-low-contrast-border-warning: var(
+            --ui-support-warning,
+            var(--ui-yellow-30)
+        );
+
+        --ui-notification-low-contrast-icon-error: var(
+            --ui-support-error,
+            var(--ui-red-60)
+        );
+        --ui-notification-low-contrast-icon-success: var(
+            --ui-support-success,
+            var(--ui-green-60)
+        );
+        --ui-notification-low-contrast-icon-info: var(
+            --ui-support-info,
+            var(--ui-blue-70)
+        );
+        --ui-notification-low-contrast-icon-warning: var(
+            --ui-support-warning,
+            var(--ui-yellow-30)
+        );
+
+        /* ------------------------------------------------------------------
+           High-contrast notification role aliases
+           ------------------------------------------------------------------ */
+
+        --ui-notification-high-contrast-border-error: var(
+            --ui-support-error-inverse,
+            var(--ui-red-50)
+        );
+        --ui-notification-high-contrast-border-success: var(
+            --ui-support-success-inverse,
+            var(--ui-green-40)
+        );
+        --ui-notification-high-contrast-border-info: var(
+            --ui-support-info-inverse,
+            var(--ui-blue-50)
+        );
+        --ui-notification-high-contrast-border-warning: var(
+            --ui-support-warning-inverse,
+            var(--ui-yellow-30)
+        );
+
+        --ui-notification-high-contrast-icon-error: var(
+            --ui-support-error-inverse,
+            var(--ui-red-50)
+        );
+        --ui-notification-high-contrast-icon-success: var(
+            --ui-support-success-inverse,
+            var(--ui-green-40)
+        );
+        --ui-notification-high-contrast-icon-info: var(
+            --ui-support-info-inverse,
+            var(--ui-blue-50)
+        );
+        --ui-notification-high-contrast-icon-warning: var(
+            --ui-support-warning-inverse,
+            var(--ui-yellow-30)
+        );
+
+        /* ------------------------------------------------------------------
+           Default low-contrast consumption aliases
+           ------------------------------------------------------------------ */
+
+        --ui-notification-title-color: var(
+            --ui-notification-low-contrast-title-color
+        );
+        --ui-notification-subtitle-color: var(
+            --ui-notification-low-contrast-subtitle-color
+        );
+        --ui-notification-close-icon-color: var(
+            --ui-notification-low-contrast-close-icon-color
+        );
+
+        --ui-notification-error-background-color: var(
+            --ui-notification-background-error
+        );
+        --ui-notification-success-background-color: var(
+            --ui-notification-background-success
+        );
+        --ui-notification-info-background-color: var(
+            --ui-notification-background-info
+        );
+        --ui-notification-warning-background-color: var(
+            --ui-notification-background-warning
+        );
+
+        --ui-notification-background-color-error: var(
+            --ui-notification-background-error
+        );
+        --ui-notification-background-color-success: var(
+            --ui-notification-background-success
+        );
+        --ui-notification-background-color-info: var(
+            --ui-notification-background-info
+        );
+        --ui-notification-background-color-warning: var(
+            --ui-notification-background-warning
+        );
+
+        --ui-notification-border-error: var(
+            --ui-notification-low-contrast-border-error
+        );
+        --ui-notification-border-success: var(
+            --ui-notification-low-contrast-border-success
+        );
+        --ui-notification-border-info: var(
+            --ui-notification-low-contrast-border-info
+        );
+        --ui-notification-border-warning: var(
+            --ui-notification-low-contrast-border-warning
+        );
+
+        --ui-notification-icon-error: var(
+            --ui-notification-low-contrast-icon-error
+        );
+        --ui-notification-icon-success: var(
+            --ui-notification-low-contrast-icon-success
+        );
+        --ui-notification-icon-info: var(
+            --ui-notification-low-contrast-icon-info
+        );
+        --ui-notification-icon-warning: var(
+            --ui-notification-low-contrast-icon-warning
+        );
+
+        --ui-notification-status-error: var(--ui-notification-border-error);
+        --ui-notification-status-success: var(--ui-notification-border-success);
+        --ui-notification-status-info: var(--ui-notification-border-info);
+        --ui-notification-status-warning: var(--ui-notification-border-warning);
+
+        /* ------------------------------------------------------------------
+           High-contrast consumption aliases
+           ------------------------------------------------------------------ */
+
+        --ui-notification-inverse-title-color: var(
+            --ui-notification-high-contrast-title-color
+        );
+        --ui-notification-inverse-subtitle-color: var(
+            --ui-notification-high-contrast-subtitle-color
+        );
+        --ui-notification-inverse-close-icon-color: var(
+            --ui-notification-high-contrast-close-icon-color
+        );
+        --ui-notification-inverse-background-color: var(
+            --ui-notification-high-contrast-background
+        );
+
+        --ui-notification-inverse-border-error: var(
+            --ui-notification-high-contrast-border-error
+        );
+        --ui-notification-inverse-border-success: var(
+            --ui-notification-high-contrast-border-success
+        );
+        --ui-notification-inverse-border-info: var(
+            --ui-notification-high-contrast-border-info
+        );
+        --ui-notification-inverse-border-warning: var(
+            --ui-notification-high-contrast-border-warning
+        );
+
+        --ui-notification-inverse-icon-error: var(
+            --ui-notification-high-contrast-icon-error
+        );
+        --ui-notification-inverse-icon-success: var(
+            --ui-notification-high-contrast-icon-success
+        );
+        --ui-notification-inverse-icon-info: var(
+            --ui-notification-high-contrast-icon-info
+        );
+        --ui-notification-inverse-icon-warning: var(
+            --ui-notification-high-contrast-icon-warning
+        );
+
+        /* ------------------------------------------------------------------
+           Actionable notification aliases
+           ------------------------------------------------------------------ */
+
+        --ui-notification-action-background-hover: var(
+            --ui-notification-action-hover
+        );
+        --ui-notification-action-border-color: var(
+            --ui-notification-action-tertiary-inverse
+        );
+        --ui-notification-action-border-color-active: var(
+            --ui-notification-action-tertiary-inverse-active
+        );
+        --ui-notification-action-border-color-hover: var(
+            --ui-notification-action-tertiary-inverse-hover
+        );
+        --ui-notification-action-text-color: var(
+            --ui-notification-action-tertiary-inverse-text
+        );
+        --ui-notification-action-disabled-text-color: var(
+            --ui-notification-action-tertiary-inverse-text-on-color-disabled
+        );
+    }
+
+    /* ----------------------------------------------------------------------
+       Notification component tokens: white / light theme
+       ---------------------------------------------------------------------- */
+
     :root,
     html[data-theme-resolved="light"],
     html[data-theme-resolved="white"],
@@ -34,11 +275,29 @@ Notification component tokens: white theme
         --ui-notification-action-tertiary-inverse-text-on-color-disabled: rgb(
             var(--ui-white-rgb) / 0.25
         );
+
+        --ui-notification-high-contrast-background: var(
+            --ui-background-inverse,
+            var(--ui-gray-80)
+        );
+        --ui-notification-high-contrast-title-color: var(
+            --ui-text-inverse,
+            var(--ui-white)
+        );
+        --ui-notification-high-contrast-subtitle-color: var(
+            --ui-text-inverse,
+            var(--ui-white)
+        );
+        --ui-notification-high-contrast-close-icon-color: var(
+            --ui-icon-inverse,
+            var(--ui-white)
+        );
     }
 
     /* ----------------------------------------------------------------------
-   Notification component tokens: gray 10 theme
-   ---------------------------------------------------------------------- */
+       Notification component tokens: gray 10 theme
+       ---------------------------------------------------------------------- */
+
     html[data-theme-resolved="gray-10"],
     [data-theme-resolved="gray-10"] {
         --ui-notification-background-error: var(--ui-red-10);
@@ -55,11 +314,29 @@ Notification component tokens: white theme
         --ui-notification-action-tertiary-inverse-text-on-color-disabled: rgb(
             var(--ui-white-rgb) / 0.25
         );
+
+        --ui-notification-high-contrast-background: var(
+            --ui-background-inverse,
+            var(--ui-gray-80)
+        );
+        --ui-notification-high-contrast-title-color: var(
+            --ui-text-inverse,
+            var(--ui-white)
+        );
+        --ui-notification-high-contrast-subtitle-color: var(
+            --ui-text-inverse,
+            var(--ui-white)
+        );
+        --ui-notification-high-contrast-close-icon-color: var(
+            --ui-icon-inverse,
+            var(--ui-white)
+        );
     }
 
     /* ----------------------------------------------------------------------
-   Notification component tokens: gray 90 theme
-   ---------------------------------------------------------------------- */
+       Notification component tokens: gray 90 / dark theme
+       ---------------------------------------------------------------------- */
+
     html[data-theme-resolved="dark"],
     html[data-theme-resolved="gray-90"],
     [data-theme-resolved="dark"],
@@ -69,12 +346,10 @@ Notification component tokens: white theme
         --ui-notification-background-info: var(--ui-gray-80);
         --ui-notification-background-warning: var(--ui-gray-80);
 
-        /*
-       The source mapping only defines action-hover for white and gray-10.
-       For dark themes, pin this to the hover value that corresponds to the
-       active notification background to prevent light-theme inheritance.
-    */
-        --ui-notification-action-hover: var(--ui-gray-80-hover);
+        --ui-notification-action-hover: var(
+            --ui-layer-hover,
+            var(--ui-gray-80-hover)
+        );
 
         --ui-notification-action-tertiary-inverse: var(--ui-blue-60);
         --ui-notification-action-tertiary-inverse-active: var(--ui-blue-80);
@@ -85,11 +360,29 @@ Notification component tokens: white theme
         --ui-notification-action-tertiary-inverse-text-on-color-disabled: var(
             --ui-gray-50
         );
+
+        --ui-notification-high-contrast-background: var(
+            --ui-background-inverse,
+            var(--ui-gray-10)
+        );
+        --ui-notification-high-contrast-title-color: var(
+            --ui-text-inverse,
+            var(--ui-gray-100)
+        );
+        --ui-notification-high-contrast-subtitle-color: var(
+            --ui-text-inverse,
+            var(--ui-gray-100)
+        );
+        --ui-notification-high-contrast-close-icon-color: var(
+            --ui-icon-inverse,
+            var(--ui-gray-100)
+        );
     }
 
     /* ----------------------------------------------------------------------
-   Notification component tokens: gray 100 theme
-   ---------------------------------------------------------------------- */
+       Notification component tokens: gray 100 theme
+       ---------------------------------------------------------------------- */
+
     html[data-theme-resolved="gray-100"],
     [data-theme-resolved="gray-100"] {
         --ui-notification-background-error: var(--ui-gray-90);
@@ -97,12 +390,10 @@ Notification component tokens: white theme
         --ui-notification-background-info: var(--ui-gray-90);
         --ui-notification-background-warning: var(--ui-gray-90);
 
-        /*
-       The source mapping only defines action-hover for white and gray-10.
-       For dark themes, pin this to the hover value that corresponds to the
-       active notification background to prevent light-theme inheritance.
-    */
-        --ui-notification-action-hover: var(--ui-gray-90-hover);
+        --ui-notification-action-hover: var(
+            --ui-layer-hover,
+            var(--ui-gray-90-hover)
+        );
 
         --ui-notification-action-tertiary-inverse: var(--ui-blue-60);
         --ui-notification-action-tertiary-inverse-active: var(--ui-blue-80);
@@ -113,5 +404,139 @@ Notification component tokens: white theme
         --ui-notification-action-tertiary-inverse-text-on-color-disabled: var(
             --ui-gray-50
         );
+
+        --ui-notification-high-contrast-background: var(
+            --ui-background-inverse,
+            var(--ui-gray-10)
+        );
+        --ui-notification-high-contrast-title-color: var(
+            --ui-text-inverse,
+            var(--ui-gray-100)
+        );
+        --ui-notification-high-contrast-subtitle-color: var(
+            --ui-text-inverse,
+            var(--ui-gray-100)
+        );
+        --ui-notification-high-contrast-close-icon-color: var(
+            --ui-icon-inverse,
+            var(--ui-gray-100)
+        );
+    }
+    /* ----------------------------------------------------------------------
+   Notification row content layout
+   ----------------------------------------------------------------------
+   Keeps timestamps end-aligned for both server-rendered rows and realtime
+   inserted rows. Realtime rows may arrive before the full contained-list item
+   class normalization runs, so selectors include the notification classes.
+   ---------------------------------------------------------------------- */
+
+    .ui-shell-notification-row__content,
+    .ui-shell-notification-row__content.ui-contained-list-item-text {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        column-gap: var(--ui-spacing-03);
+        align-content: start;
+        min-inline-size: 0;
+    }
+
+    .ui-shell-notification-row__content:has(.ui-shell-notification-row__meta)
+        .ui-shell-notification-row__meta,
+    .ui-shell-notification-row__meta.ui-contained-list-item-meta {
+        grid-column: 2;
+        grid-row: 1;
+        justify-self: end;
+        max-inline-size: 10rem;
+        margin-block-end: var(--ui-spacing-02);
+        overflow: hidden;
+        color: var(--ui-text-secondary);
+        font-size: var(--ui-type-label-01-font-size);
+        font-weight: var(--ui-font-weight-regular);
+        line-height: var(--ui-type-label-01-line-height);
+        text-align: end;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .ui-shell-notification-row__content:has(.ui-shell-notification-row__meta)
+        .ui-shell-notification-row__title,
+    .ui-shell-notification-row__title.ui-contained-list-item-title {
+        grid-column: 1 / -1;
+        grid-row: 2;
+    }
+
+    .ui-shell-notification-row__content:has(.ui-shell-notification-row__meta)
+        .ui-shell-notification-row__subtitle,
+    .ui-shell-notification-row__subtitle.ui-contained-list-item-description {
+        grid-column: 1 / -1;
+        grid-row: 3;
+    }
+
+    /* ----------------------------------------------------------------------
+   Notification panel scroll height
+   ----------------------------------------------------------------------
+   Keep the notification panel contained, but allow more visible rows before
+   the list body scrolls.
+   ---------------------------------------------------------------------- */
+
+    .ui-shell-notifications-popover.ui-popover-container
+        > .ui-popover
+        > .ui-popover-content {
+        max-block-size: var(
+            --ui-shell-header-notifications-menu-max-block-size,
+            min(42rem, calc(100vh - var(--ui-shell-header-block-size) - 2rem))
+        );
+    }
+
+    .ui-shell-notifications-menu {
+        max-block-size: var(
+            --ui-shell-header-notifications-menu-max-block-size,
+            min(42rem, calc(100vh - var(--ui-shell-header-block-size) - 2rem))
+        );
+    }
+
+    .ui-shell-notifications-menu__body {
+        max-block-size: var(
+            --ui-shell-notifications-list-max-block-size,
+            min(32rem, calc(100vh - var(--ui-shell-header-block-size) - 11rem))
+        );
+    }
+
+    /* ----------------------------------------------------------------------
+   Notification panel fixed-height scroll region
+   ----------------------------------------------------------------------
+   The popover/menu height stays fixed. Only the notification body scrolls.
+   ---------------------------------------------------------------------- */
+
+    .ui-shell-notifications-popover.ui-popover-container
+        > .ui-popover
+        > .ui-popover-content {
+        block-size: var(
+            --ui-shell-header-notifications-menu-block-size,
+            min(34rem, calc(100vh - var(--ui-shell-header-block-size) - 2rem))
+        );
+        max-block-size: var(
+            --ui-shell-header-notifications-menu-block-size,
+            min(34rem, calc(100vh - var(--ui-shell-header-block-size) - 2rem))
+        );
+    }
+
+    .ui-shell-notifications-menu {
+        block-size: 100%;
+        max-block-size: 100%;
+        min-block-size: 0;
+    }
+
+    .ui-shell-notifications-menu__header,
+    .ui-shell-notifications-menu__filters,
+    .ui-shell-notifications-menu__footer {
+        flex: 0 0 auto;
+    }
+
+    .ui-shell-notifications-menu__body {
+        flex: 1 1 auto;
+        min-block-size: 0;
+        max-block-size: none;
+        overflow-y: auto;
+        overscroll-behavior: contain;
     }
 }

@@ -6,21 +6,21 @@ status: implemented
 system_maturity: standard
 category: data-entry
 priority: tier-a-baseline-app-development
-ui_reference_route: /platform/ui-reference/patterns/forms
+rendered_evidence_route: null
 canonical_doc: docs/02-standards/ui/patterns/forms.md
-source_owner: /platform/ui-reference/patterns/forms
+source_owner: not installed
 blade_api:
-  - x-ui.patterns.form-section
-  - x-ui.patterns.inline-form-row
-  - x-ui.patterns.form-actions
+  - x-patterns.form-section
+  - x-patterns.inline-form-row
+  - x-patterns.form-actions
   - validation summary composition
   - field group spacing utilities
 javascript_api: []
 data_attributes: []
 source_files:
-  - resources/views/components/ui/patterns/form-section.blade.php
-  - resources/views/components/ui/patterns/inline-form-row.blade.php
-  - resources/views/components/ui/patterns/form-actions.blade.php
+  - resources/views/components/patterns/form-section.blade.php
+  - resources/views/components/patterns/inline-form-row.blade.php
+  - resources/views/components/patterns/form-actions.blade.php
   - resources/css/app.css
 foundation_elements:
   - color
@@ -42,6 +42,7 @@ consumed_components:
   - inline-loading
   - toggletip
 related_patterns:
+  - common-actions
   - overlays-feedback
   - page-header
   - table-toolbar
@@ -59,9 +60,9 @@ carbon_reference:
 - [4. Pattern API](#4-pattern-api)
   - [4.1. Canonical calls](#41-canonical-calls)
   - [4.2. API surfaces](#42-api-surfaces)
-  - [4.3. `x-ui.patterns.form-section` props](#43-x-uipatternsform-section-props)
-  - [4.4. `x-ui.patterns.inline-form-row` props](#44-x-uipatternsinline-form-row-props)
-  - [4.5. `x-ui.patterns.form-actions` props](#45-x-uipatternsform-actions-props)
+  - [4.3. `x-patterns.form-section` props](#43-x-uipatternsform-section-props)
+  - [4.4. `x-patterns.inline-form-row` props](#44-x-uipatternsinline-form-row-props)
+  - [4.5. `x-patterns.form-actions` props](#45-x-uipatternsform-actions-props)
   - [4.6. Validation summary composition](#46-validation-summary-composition)
   - [4.7. Field group spacing utilities](#47-field-group-spacing-utilities)
 - [5. Required composition](#5-required-composition)
@@ -77,10 +78,10 @@ carbon_reference:
 - [15. Content contract](#15-content-contract)
 - [16. Prohibited usage](#16-prohibited-usage)
 - [17. Deferred or gated capabilities](#17-deferred-or-gated-capabilities)
-- [18. Implementation and UI Reference Checklist](#18-implementation-and-ui-reference-checklist)
+- [18. Implementation and Rendered Evidence Checklist](#18-implementation-and-ui-reference-checklist)
   - [18.1. Implementation checklist](#181-implementation-checklist)
-  - [18.2. UI Reference proof checklist](#182-ui-reference-proof-checklist)
-- [19. UI Reference requirements](#19-ui-reference-requirements)
+  - [18.2. rendered evidence proof checklist](#182-ui-reference-proof-checklist)
+- [19. Rendered evidence requirements](#19-ui-reference-requirements)
 - [20. Testing and acceptance criteria](#20-testing-and-acceptance-criteria)
 - [21. Related APIs](#21-related-apis)
 - [22. References](#22-references)
@@ -89,7 +90,7 @@ carbon_reference:
 
 Form patterns define how field Components, validation feedback, helper text, section structure, and actions compose into reliable data-entry surfaces.
 
-Canonical API owner: `/platform/ui-reference/patterns/forms`. Use this Pattern API instead of creating local form layouts, validation placement, action rows, or field-group spacing for the same UI role.
+Canonical API owner: `not installed`. Use this Pattern API instead of creating local form layouts, validation placement, action rows, or field-group spacing for the same UI role.
 
 Forms is the installed Login App 2.0 data-entry composition API. It owns form section structure, field grouping, validation-summary placement, submit/action placement, read-only/editable group composition, status placement, responsive field layout, and orchestration between approved field Components. It does not redefine field internals, primitive tokens, validation business rules, permissions, persistence, controller behavior, or feature-specific branching.
 
@@ -103,34 +104,35 @@ Canonical API responsibilities:
 - Support standard settings forms, inline rows, dense groups, read-only detail groups, and validation-summary forms.
 - Own submitting, saved, validation-summary, and blocked form states.
 - Consume Foundation Element APIs for color, spacing, typography, themes, motion, icons, and 2x grid where layout requires it.
-- Prove rendered compositions on the UI Reference page with canonical app examples, consumed Component links, deferred gates, and regression assertions.
+- Prove rendered compositions on the rendered evidence page with canonical app examples, consumed Component links, deferred gates, and regression assertions.
 
 Non-owned responsibilities:
 
 - Field-specific markup and local states. Text input, textarea, select, checkbox, radio, toggle, file uploader, and similar Components own labels, helper text, error/warning rendering, focus, disabled, read-only, and internal spacing.
 - Button variants, button loading internals, and icon-button behavior. Button owns command controls; Forms owns action-row placement and hierarchy.
+- Shared action vocabulary such as save, cancel, reset, clear, destructive action, and command/navigation distinctions. Common Actions owns those semantics; Forms applies them to form submit areas.
 - Notifications and validation message component internals. Notification owns message surface styling; Forms owns where summary/status feedback appears.
 - Business validation rules, authorization, request classes, persistence, save endpoints, data loading, and workflow branching.
 - Modal focus trapping, overlay placement, and blocking-dialog behavior. Overlay/feedback Patterns own those contexts.
 
 ## 2. Status and ownership
 
-| Field                        | Value                                                                                                                                                      |
-| ---------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Status                       | Implemented standard                                                                                                                                       |
-| System maturity              | Standard                                                                                                                                                   |
-| API layer                    | Pattern API                                                                                                                                                |
-| Pattern slug                 | `forms`                                                                                                                                                    |
-| Category                     | Data entry                                                                                                                                                 |
-| Priority                     | Tier A - Baseline app development                                                                                                                          |
-| UI Reference route           | `/platform/ui-reference/patterns/forms`                                                                                                                    |
-| Canonical doc                | `docs/02-standards/ui/patterns/forms.md`                                                                                                                   |
-| Source owner                 | `/platform/ui-reference/patterns/forms`                                                                                                                    |
-| Blade API                    | `x-ui.patterns.form-section`; `x-ui.patterns.inline-form-row`; `x-ui.patterns.form-actions`; validation summary composition; field group spacing utilities |
-| JavaScript API               | None required for installed static form composition                                                                                                        |
-| Data attributes              | None required for installed pattern behavior                                                                                                               |
-| Foundation Elements consumed | Color, Spacing, Typography, Themes, Motion, Icons, 2x Grid                                                                                                 |
-| Carbon benchmark             | Carbon Forms pattern and Form component guidance                                                                                                           |
+| Field                        | Value                                                                                                                                             |
+| ---------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Status                       | Implemented standard                                                                                                                              |
+| System maturity              | Standard                                                                                                                                          |
+| API layer                    | Pattern API                                                                                                                                       |
+| Pattern slug                 | `forms`                                                                                                                                           |
+| Category                     | Data entry                                                                                                                                        |
+| Priority                     | Tier A - Baseline app development                                                                                                                 |
+| Rendered evidence route           | `not installed`                                                                                                           |
+| Canonical doc                | `docs/02-standards/ui/patterns/forms.md`                                                                                                          |
+| Source owner                 | `not installed`                                                                                                           |
+| Blade API                    | `x-patterns.form-section`; `x-patterns.inline-form-row`; `x-patterns.form-actions`; validation summary composition; field group spacing utilities |
+| JavaScript API               | None required for installed static form composition                                                                                               |
+| Data attributes              | None required for installed pattern behavior                                                                                                      |
+| Foundation Elements consumed | Color, Spacing, Typography, Themes, Motion, Icons, 2x Grid                                                                                        |
+| Carbon benchmark             | Carbon Forms pattern and Form component guidance                                                                                                  |
 
 `Implemented standard` means the form composition pattern is approved for production use when it composes installed Element and Component APIs. Feature modules may implement business-specific forms, but they must use this Pattern API for grouping, spacing, validation placement, action placement, and responsive composition.
 
@@ -140,9 +142,9 @@ Use form patterns for settings, create/edit pages, account/profile editing, setu
 
 The installed standard is:
 
-- Use `<x-ui.patterns.form-section>` for a titled group of related fields.
-- Use `<x-ui.patterns.inline-form-row>` when a field label/description and control should sit on the same row at supported widths.
-- Use `<x-ui.patterns.form-actions>` for submit/cancel/secondary action placement.
+- Use `<x-patterns.form-section>` for a titled group of related fields.
+- Use `<x-patterns.inline-form-row>` when a field label/description and control should sit on the same row at supported widths.
+- Use `<x-patterns.form-actions>` for submit/cancel/secondary action placement.
 - Use app-owned validation summary composition when multiple field errors must be summarized above the form or section.
 - Use field group spacing utilities only where documented by this Pattern API.
 - Use field Components for all actual inputs; do not hand-build text inputs, selects, textareas, toggles, checkboxes, radios, or uploaders inside a form.
@@ -155,7 +157,7 @@ The installed standard is:
 - Do not hide required fields in collapsed content.
 - Do not introduce arbitrary margins on child Components to make form spacing work.
 
-Carbon alignment note: Carbon defines forms as groups of related controls for submitting information, emphasizes consistency across product form types, documents one-column and two-column form structures with mobile collapse to one column, and calls out accessible inline error/warning messages and keyboard-accessible help. Login App maps those principles to its own Pattern components, `ui-*` class contract, installed field Components, Button actions, Notification/Inline loading feedback, and UI Reference proof rather than adopting Carbon implementation classes directly.
+Carbon alignment note: Carbon defines forms as groups of related controls for submitting information, emphasizes consistency across product form types, documents one-column and two-column form structures with mobile collapse to one column, and calls out accessible inline error/warning messages and keyboard-accessible help. Login App maps those principles to its own Pattern components, `ui-*` class contract, installed field Components, Button actions, Notification/Inline loading feedback, and rendered evidence proof rather than adopting Carbon implementation classes directly.
 
 ## 4. Pattern API
 
@@ -168,7 +170,7 @@ Use form sections for standard page, settings, account, and create/edit forms.
     @csrf
     @method('PUT')
 
-    <x-ui.patterns.form-section
+    <x-patterns.form-section
         title="Profile details"
         description="Update the account information shown to administrators."
     >
@@ -188,9 +190,9 @@ Use form sections for standard page, settings, account, and create/edit forms.
             autocomplete="email"
             required
         />
-    </x-ui.patterns.form-section>
+    </x-patterns.form-section>
 
-    <x-ui.patterns.form-actions>
+    <x-patterns.form-actions>
         <x-ui.button type="submit" semantic="primary">
             Save changes
         </x-ui.button>
@@ -198,18 +200,18 @@ Use form sections for standard page, settings, account, and create/edit forms.
         <x-ui.button type="button" semantic="ghost">
             Cancel
         </x-ui.button>
-    </x-ui.patterns.form-actions>
+    </x-patterns.form-actions>
 </form>
 ```
 
 Use inline rows when the setting name and explanatory copy belong beside a compact control.
 
 ```blade
-<x-ui.patterns.form-section
+<x-patterns.form-section
     title="Security"
     description="Manage sign-in and account protection settings."
 >
-    <x-ui.patterns.inline-form-row
+    <x-patterns.inline-form-row
         label="Require two-factor authentication"
         description="Require users to verify their identity when signing in."
     >
@@ -219,8 +221,8 @@ Use inline rows when the setting name and explanatory copy belong beside a compa
             label="Require two-factor authentication"
             label-visibility="sr-only"
         />
-    </x-ui.patterns.inline-form-row>
-</x-ui.patterns.form-section>
+    </x-patterns.inline-form-row>
+</x-patterns.form-section>
 ```
 
 Use validation summaries when the form has multiple blocking errors or when a submit action can move focus to a summary before field-level repair.
@@ -244,7 +246,7 @@ Use validation summaries when the form has multiple blocking errors or when a su
 Use read-only detail groups when the user is inspecting structured data in the same layout family without edit permission.
 
 ```blade
-<x-ui.patterns.form-section
+<x-patterns.form-section
     title="Account details"
     description="Current account information."
     mode="readonly"
@@ -260,24 +262,24 @@ Use read-only detail groups when the user is inspecting structured data in the s
             <dd class="ui-form-readonly-value">{{ $user->email }}</dd>
         </div>
     </dl>
-</x-ui.patterns.form-section>
+</x-patterns.form-section>
 ```
 
 ### 4.2. API surfaces
 
 | API surface           | Installed value                                                                    |
 | --------------------- | ---------------------------------------------------------------------------------- |
-| Section Blade API     | `x-ui.patterns.form-section`                                                       |
-| Inline row Blade API  | `x-ui.patterns.inline-form-row`                                                    |
-| Action row Blade API  | `x-ui.patterns.form-actions`                                                       |
+| Section Blade API     | `x-patterns.form-section`                                                          |
+| Inline row Blade API  | `x-patterns.inline-form-row`                                                       |
+| Action row Blade API  | `x-patterns.form-actions`                                                          |
 | Validation summary    | Notification-based composition using app-owned form summary classes                |
 | Field group utilities | App-owned `ui-form-*` spacing and grouping classes documented here                 |
 | JavaScript            | No dedicated JavaScript controller required for installed form layout composition  |
 | Data attributes       | None required for installed pattern behavior                                       |
 | CSS namespace         | App-owned `ui-form-*` and related `ui-*` classes                                   |
-| Source ownership      | `/platform/ui-reference/patterns/forms`; shared styling in `resources/css/app.css` |
+| Source ownership      | `not installed`; shared styling in `resources/css/app.css` |
 
-### 4.3. `x-ui.patterns.form-section` props
+### 4.3. `x-patterns.form-section` props
 
 | Prop/option   | Type     | Default    | Allowed values         | Required                                  | Notes                                                                        |
 | ------------- | -------- | ---------- | ---------------------- | ----------------------------------------- | ---------------------------------------------------------------------------- |
@@ -289,7 +291,7 @@ Use read-only detail groups when the user is inspecting structured data in the s
 | `status`      | `string  | null`      | `null`                 | `saved`, `submitting`, `blocked`, `error` | No                                                                           | Section-level status only; field errors remain field-owned.                          |
 | `class`       | `string  | null`      | `null`                 | Layout passthrough if supported           | No                                                                           | Parent layouts may pass placement classes. Do not override tokens or states locally. |
 
-### 4.4. `x-ui.patterns.inline-form-row` props
+### 4.4. `x-patterns.inline-form-row` props
 
 | Prop/option   | Type       | Default   | Allowed values                             | Required               | Notes                                                                |
 | ------------- | ---------- | --------- | ------------------------------------------ | ---------------------- | -------------------------------------------------------------------- |
@@ -299,7 +301,7 @@ Use read-only detail groups when the user is inspecting structured data in the s
 | `density`     | `string`   | `default` | `default`, `dense`                         | No                     | Must match the parent form-section density.                          |
 | Default slot  | Blade slot | none      | One field Component or compact field group | Yes                    | Do not put unrelated actions or complex layouts in an inline row.    |
 
-### 4.5. `x-ui.patterns.form-actions` props
+### 4.5. `x-patterns.form-actions` props
 
 | Prop/option  | Type       | Default | Allowed values                             | Required                                  | Notes                                                                                    |
 | ------------ | ---------- | ------- | ------------------------------------------ | ----------------------------------------- | ---------------------------------------------------------------------------------------- |
@@ -395,7 +397,7 @@ Required Element APIs:
 | Read-only field group                          | Implemented    | Structured data should remain form-like but not editable.                 | Use semantic description list or read-only Component states.           |
 | Progressive disclosure for optional assistance | Gated          | Optional help would otherwise distract from the core form.                | Use approved disclosure/toggletip APIs; do not hide required fields.   |
 | Section-level save status                      | Implemented    | One section saves independently or needs local saved/submitting feedback. | Use Notification, Inline loading, or action-row status.                |
-| Sticky actions                                 | Gated          | Long forms need persistent actions.                                       | Requires overlap/scroll proof and responsive behavior in UI Reference. |
+| Sticky actions                                 | Gated          | Long forms need persistent actions.                                       | Requires overlap/scroll proof and responsive behavior in rendered evidence. |
 | Multi-step wizard forms                        | Deferred/gated | A feature has a real linear setup flow.                                   | Requires Progress indicator ownership review and Pattern proof.        |
 
 ## 7. Consumed Element APIs
@@ -408,13 +410,13 @@ Required Element APIs:
 
 Carbon color composition mapping:
 
-| Pattern need | Carbon benchmark role | Login App owner to compose | Mapping rule |
-| ------------ | --------------------- | -------------------------- | ------------ |
-| Field surfaces, borders, labels, helper text, validation, disabled, read-only | Text input, Select, Dropdown, Checkbox, Radio button, Search field rows | Field Components + Color Element | Forms must compose field Component mappings; no form-local field colors. |
-| Submit, cancel, secondary, destructive, and loading actions | Button token families | Button Component | Action rows consume Button semantic roles only. |
-| Validation summary, saved/blocked/submitting status | Notification, Inline loading, Loading support/status rows | Notification / Inline Loading / Loading Components | Forms place feedback; Components own status surfaces, icons, text, and focus. |
-| Section and read-only detail surfaces | `$layer`, `$background`, text/border roles | Layout/Data and Content Patterns + Color Element | Forms may group surfaces but must not create route-specific card colors. |
-| Multi-step or wizard progress | Progress indicator rows | Progress Indicator Component | Forms compose progress state; Progress indicator owns marker/connector colors. |
+| Pattern need                                                                  | Carbon benchmark role                                                   | Login App owner to compose                         | Mapping rule                                                                   |
+| ----------------------------------------------------------------------------- | ----------------------------------------------------------------------- | -------------------------------------------------- | ------------------------------------------------------------------------------ |
+| Field surfaces, borders, labels, helper text, validation, disabled, read-only | Text input, Select, Dropdown, Checkbox, Radio button, Search field rows | Field Components + Color Element                   | Forms must compose field Component mappings; no form-local field colors.       |
+| Submit, cancel, secondary, destructive, and loading actions                   | Button token families                                                   | Button Component                                   | Action rows consume Button semantic roles only.                                |
+| Validation summary, saved/blocked/submitting status                           | Notification, Inline loading, Loading support/status rows               | Notification / Inline Loading / Loading Components | Forms place feedback; Components own status surfaces, icons, text, and focus.  |
+| Section and read-only detail surfaces                                         | `$layer`, `$background`, text/border roles                              | Layout/Data and Content Patterns + Color Element   | Forms may group surfaces but must not create route-specific card colors.       |
+| Multi-step or wizard progress                                                 | Progress indicator rows                                                 | Progress Indicator Component                       | Forms compose progress state; Progress indicator owns marker/connector colors. |
 
 ## 8. Owned Component APIs
 
@@ -431,21 +433,21 @@ The Forms Pattern owns composition rules around installed Components. It does no
 
 ## 9. Allowed variants and layout options
 
-| Name                       | Type           | Status                                | API                                                         | Notes                                                    |
-| -------------------------- | -------------- | ------------------------------------- | ----------------------------------------------------------- | -------------------------------------------------------- |
-| Standard settings form     | Variant        | Implemented                           | `x-ui.patterns.form-section` + `x-ui.patterns.form-actions` | Default for account/profile/settings editing.            |
-| Create/edit form           | Variant        | Implemented                           | `form-section`, field Components, `form-actions`            | Use for feature entities and structured data submission. |
-| Inline form row            | Layout option  | Implemented                           | `x-ui.patterns.inline-form-row`                             | Best for compact settings and toggles.                   |
-| Dense field group          | Density option | Implemented                           | `density="dense"` or `.ui-form-dense`                       | Productive admin context only.                           |
-| Two-column field grid      | Layout option  | Implemented/gated by responsive proof | `columns="two"` or `.ui-form-field-grid-two`                | Must collapse without changing semantic order.           |
-| Read-only detail group     | Mode           | Implemented                           | `mode="readonly"` or read-only composition                  | Use for inspection or no-edit permission contexts.       |
-| Validation summary form    | Composition    | Implemented                           | Notification summary + field errors                         | Use for multiple blocking errors.                        |
-| Section-level save status  | Composition    | Implemented                           | `status` prop or Notification/Inline loading composition    | Use when sections save independently.                    |
-| Progressive optional help  | Composition    | Gated                                 | Toggletip/disclosure composition                            | Do not hide required content.                            |
-| Sticky form actions        | Composition    | Gated                                 | `sticky` if installed/proven                                | Requires scroll and overlap proof.                       |
-| Multi-step wizard form     | Variant        | Deferred/gated                        | Progress indicator + Forms Pattern                          | Requires feature trigger and ownership review.           |
-| Inline editable table form | Variant        | Pattern-owned elsewhere               | Data table pattern                                          | Do not use Forms Pattern alone for table editing.        |
-| Custom local form layout   | Not allowed    | none                                  | Use this Pattern API instead.                               |
+| Name                       | Type           | Status                                | API                                                      | Notes                                                    |
+| -------------------------- | -------------- | ------------------------------------- | -------------------------------------------------------- | -------------------------------------------------------- |
+| Standard settings form     | Variant        | Implemented                           | `x-patterns.form-section` + `x-patterns.form-actions`    | Default for account/profile/settings editing.            |
+| Create/edit form           | Variant        | Implemented                           | `form-section`, field Components, `form-actions`         | Use for feature entities and structured data submission. |
+| Inline form row            | Layout option  | Implemented                           | `x-patterns.inline-form-row`                             | Best for compact settings and toggles.                   |
+| Dense field group          | Density option | Implemented                           | `density="dense"` or `.ui-form-dense`                    | Productive admin context only.                           |
+| Two-column field grid      | Layout option  | Implemented/gated by responsive proof | `columns="two"` or `.ui-form-field-grid-two`             | Must collapse without changing semantic order.           |
+| Read-only detail group     | Mode           | Implemented                           | `mode="readonly"` or read-only composition               | Use for inspection or no-edit permission contexts.       |
+| Validation summary form    | Composition    | Implemented                           | Notification summary + field errors                      | Use for multiple blocking errors.                        |
+| Section-level save status  | Composition    | Implemented                           | `status` prop or Notification/Inline loading composition | Use when sections save independently.                    |
+| Progressive optional help  | Composition    | Gated                                 | Toggletip/disclosure composition                         | Do not hide required content.                            |
+| Sticky form actions        | Composition    | Gated                                 | `sticky` if installed/proven                             | Requires scroll and overlap proof.                       |
+| Multi-step wizard form     | Variant        | Deferred/gated                        | Progress indicator + Forms Pattern                       | Requires feature trigger and ownership review.           |
+| Inline editable table form | Variant        | Pattern-owned elsewhere               | Data table pattern                                       | Do not use Forms Pattern alone for table editing.        |
+| Custom local form layout   | Not allowed    | none                                  | Use this Pattern API instead.                            |
 
 ## 10. State ownership
 
@@ -477,7 +479,7 @@ Responsive requirements:
 - Label, helper text, control, and field-level validation must remain visually and semantically grouped.
 - Action rows may stack at narrow widths, but submit/cancel hierarchy must remain clear.
 - Destructive actions must not move next to primary submit actions in a way that implies equal hierarchy.
-- Sticky or persistent action rows are gated until UI Reference proves safe behavior across scroll and viewport sizes.
+- Sticky or persistent action rows are gated until rendered evidence proves safe behavior across scroll and viewport sizes.
 - Multi-column visual order must match DOM order.
 - Do not use CSS ordering to change semantic sequence.
 
@@ -584,7 +586,7 @@ Use modal patterns only when the form is brief, blocking, and context-preserving
 
 | Capability                           | Status                  | Gate                                                                                                                                                            |
 | ------------------------------------ | ----------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Multi-step wizard forms              | Deferred/gated          | Requires feature-backed trigger, Progress indicator ownership review, step validation rules, state persistence, back/continue behavior, and UI Reference proof. |
+| Multi-step wizard forms              | Deferred/gated          | Requires feature-backed trigger, Progress indicator ownership review, step validation rules, state persistence, back/continue behavior, and rendered evidence proof. |
 | Sticky action bars                   | Gated                   | Requires scroll, overlap, keyboard, mobile, and reduced-motion proof.                                                                                           |
 | Route-leave unsaved changes guard    | Deferred                | Requires app-wide dirty-state contract, modal/notification ownership, and tests.                                                                                |
 | Async field validation orchestration | Deferred                | Requires field API ownership, debounce rules, pending/error states, and server parity.                                                                          |
@@ -595,9 +597,9 @@ Use modal patterns only when the form is brief, blocking, and context-preserving
 | Autosave forms                       | Deferred                | Requires saved/dirty/error/pending states and recovery behavior.                                                                                                |
 | Local custom form components         | Not allowed             | Update the relevant Component or Pattern API instead.                                                                                                           |
 
-Future extensions require an updated Pattern standard and UI Reference proof before production use.
+Future extensions require an updated Pattern standard and rendered evidence proof before production use.
 
-## 18. Implementation and UI Reference Checklist
+## 18. Implementation and Rendered Evidence Checklist
 ### 18.1. Implementation checklist
 | Requirement                | Standard expectation                                                                                                                      |
 | -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
@@ -608,7 +610,7 @@ Future extensions require an updated Pattern standard and UI Reference proof bef
 | Accessibility/content      | Page/workflow semantics, heading structure, focus flow, status messaging, action labels, and non-color meaning are defined.               |
 | Tests                      | Route/content/API assertions prove the Pattern and coordinated Component usage.                                                           |
 
-### 18.2. UI Reference proof checklist
+### 18.2. rendered evidence proof checklist
 | Requirement            | Visual proof expectation                                                                                                           |
 | ---------------------- | ---------------------------------------------------------------------------------------------------------------------------------- |
 | Live compositions      | The page renders production-like composed examples, not isolated primitive samples.                                                |
@@ -617,32 +619,32 @@ Future extensions require an updated Pattern standard and UI Reference proof bef
 | Variants/states        | Required layout variants, responsive states, empty/loading/error/blocked states, or explicit gates are visible.                    |
 | Related APIs           | Coordinated Components, consumed Elements, planned sub-APIs, source files, and canonical docs are linked.                          |
 | Manual review          | The page provides enough rendered proof for visual review of composition, hierarchy, responsive behavior, and workflow boundaries. |
-## 19. UI Reference requirements
+## 19. Rendered evidence requirements
 
-The UI Reference page must render rendered examples of approved pattern compositions, not abstract notes only. It must link to this canonical standard and to consumed Element and Component standards. Deferred capabilities must appear as explicit gated disposition rows with trigger conditions, not as fake complete examples. Examples must use app-owned tokens, classes, helpers, and Blade components where available.
+The rendered evidence page must render rendered examples of approved pattern compositions, not abstract notes only. It must link to this canonical standard and to consumed Element and Component standards. Deferred capabilities must appear as explicit gated disposition rows with trigger conditions, not as fake complete examples. Examples must use app-owned tokens, classes, helpers, and Blade components where available.
 
 The Forms page must render the approved five-card scaffold: Purpose, Use cases, Pattern contract, Live examples, and Related components and patterns.
 
 Required Live examples internal sections:
 
-| Required proof            | Rendered behavior                                                                                                  | Variants/options shown                                                                                                      |
-| ------------------------- | ------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------- |
-| Standard settings form    | A page/settings form renders grouped sections, helper text, field Components, and a clear action row.              | Form section, Text input, Select, Toggle, Button actions, Section description                                               |
-| Inline form row           | A compact settings row places label/description and a compact control together while preserving accessible labels. | Inline row, Toggle/checkbox/select control, Row description, Responsive stacking                                            |
-| Dense field group         | A productive admin form shows tighter spacing without local margins or field API overrides.                        | Dense section, Field group spacing, Two-column collapse                                                                     |
-| Read-only detail group    | Structured data renders in form-like label/value grouping without editable controls.                               | Read-only mode, Description list, Permission/no-edit context                                                                |
-| Validation summary form   | A form with multiple blocking errors renders a summary plus field-level validation.                                | Validation summary, Field errors, Error notification, Submit blocked                                                        |
-| Action row hierarchy      | Save/cancel/destructive actions render with clear hierarchy and responsive stacking.                               | Primary submit, Cancel/back, Destructive separation, Button loading                                                         |
-| Section-level save status | A section shows saved/submitting/blocked status near the relevant section or action row.                           | Saved, Submitting, Blocked, Notification/Inline loading                                                                     |
-| Responsive composition    | Multi-column and inline rows collapse without changing semantic order.                                             | One-column, Two-column, Inline-to-stacked, Action stacking                                                                  |
-| Deferred wizard gate      | Multi-step wizard form appears as a gated capability with trigger conditions and approved alternatives.            | Progress indicator review, No fake wizard                                                                                   |
-| Developer implementation  | Canonical Blade calls and field composition examples render as real code examples.                                 | `x-ui.patterns.form-section`, `x-ui.patterns.inline-form-row`, `x-ui.patterns.form-actions`, validation summary composition |
+| Required proof            | Rendered behavior                                                                                                  | Variants/options shown                                                                                             |
+| ------------------------- | ------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------ |
+| Standard settings form    | A page/settings form renders grouped sections, helper text, field Components, and a clear action row.              | Form section, Text input, Select, Toggle, Button actions, Section description                                      |
+| Inline form row           | A compact settings row places label/description and a compact control together while preserving accessible labels. | Inline row, Toggle/checkbox/select control, Row description, Responsive stacking                                   |
+| Dense field group         | A productive admin form shows tighter spacing without local margins or field API overrides.                        | Dense section, Field group spacing, Two-column collapse                                                            |
+| Read-only detail group    | Structured data renders in form-like label/value grouping without editable controls.                               | Read-only mode, Description list, Permission/no-edit context                                                       |
+| Validation summary form   | A form with multiple blocking errors renders a summary plus field-level validation.                                | Validation summary, Field errors, Error notification, Submit blocked                                               |
+| Action row hierarchy      | Save/cancel/destructive actions render with clear hierarchy and responsive stacking.                               | Primary submit, Cancel/back, Destructive separation, Button loading                                                |
+| Section-level save status | A section shows saved/submitting/blocked status near the relevant section or action row.                           | Saved, Submitting, Blocked, Notification/Inline loading                                                            |
+| Responsive composition    | Multi-column and inline rows collapse without changing semantic order.                                             | One-column, Two-column, Inline-to-stacked, Action stacking                                                         |
+| Deferred wizard gate      | Multi-step wizard form appears as a gated capability with trigger conditions and approved alternatives.            | Progress indicator review, No fake wizard                                                                          |
+| Developer implementation  | Canonical Blade calls and field composition examples render as real code examples.                                 | `x-patterns.form-section`, `x-patterns.inline-form-row`, `x-patterns.form-actions`, validation summary composition |
 
 The page must not display generic fallback/reference sections or placeholder developer comments. It must show installed Pattern APIs, rendered variants/options, state ownership, prohibited usage, deferred gates, consumed Element APIs, consumed Component APIs, and source ownership expectations.
 
 ## 20. Testing and acceptance criteria
 
-- `/platform/ui-reference/patterns/forms` returns 200 for authorized users.
+- `not installed` returns 200 for authorized users.
 - The page shows the installed Pattern API, state ownership, variants/options, prohibited usage, deferred gates, consumed Foundation Elements, and consumed Components.
 - Implemented Pattern APIs render production examples.
 - Deferred capabilities render trigger conditions instead of fake controls.
@@ -657,20 +659,20 @@ The page must not display generic fallback/reference sections or placeholder dev
 - Validation summary examples include both summary feedback and field-level errors.
 - Action row examples show primary, cancel/back, loading/submitting, and destructive hierarchy rules.
 - Responsive examples prove two-column and inline layouts collapse without reordering content.
-- Developer examples use `x-ui.patterns.form-section`, `x-ui.patterns.inline-form-row`, `x-ui.patterns.form-actions`, and approved Component APIs.
+- Developer examples use `x-patterns.form-section`, `x-patterns.inline-form-row`, `x-patterns.form-actions`, and approved Component APIs.
 - Tests assert stale labels and legacy scaffolding remain absent when they are not part of approved UI copy.
 - Tests assert no raw Bootstrap form groups, hard-coded colors, arbitrary local spacing, feature-local form layout classes, or direct Carbon production classes are presented as approved.
 
 Suggested automated assertions:
 
 ```php
-$response = $this->actingAs($admin)->get('/platform/ui-reference/patterns/forms');
+$response = $this->actingAs($admin)->get('not installed');
 
 $response->assertOk();
 $response->assertSee('Forms');
-$response->assertSee('x-ui.patterns.form-section');
-$response->assertSee('x-ui.patterns.inline-form-row');
-$response->assertSee('x-ui.patterns.form-actions');
+$response->assertSee('x-patterns.form-section');
+$response->assertSee('x-patterns.inline-form-row');
+$response->assertSee('x-patterns.form-actions');
 $response->assertSee('validation summary');
 $response->assertSee('Standard settings form');
 $response->assertSee('Inline form row');
@@ -701,28 +703,29 @@ $response->assertDontSee('bx--');
 
 | API                       | Route                                                         |
 | ------------------------- | ------------------------------------------------------------- |
-| Text input                | `/platform/ui-reference/components/text-input`                |
-| Textarea                  | `/platform/ui-reference/components/textarea`                  |
-| Select                    | `/platform/ui-reference/components/select`                    |
-| Checkbox                  | `/platform/ui-reference/components/checkbox`                  |
-| Radio button              | `/platform/ui-reference/components/radio-button`              |
-| Toggle                    | `/platform/ui-reference/components/toggle`                    |
-| File uploader             | `/platform/ui-reference/components/file-uploader`             |
-| Button                    | `/platform/ui-reference/components/button`                    |
-| Notification              | `/platform/ui-reference/components/notification`              |
-| Inline loading            | `/platform/ui-reference/components/inline-loading`            |
-| Toggletip                 | `/platform/ui-reference/components/toggletip`                 |
-| Progress indicator        | `/platform/ui-reference/components/progress-indicator`        |
-| Color element             | `/platform/ui-reference/elements/color`                       |
-| Spacing element           | `/platform/ui-reference/elements/spacing`                     |
-| Typography element        | `/platform/ui-reference/elements/typography`                  |
-| Themes element            | `/platform/ui-reference/elements/themes`                      |
-| Motion element            | `/platform/ui-reference/elements/motion`                      |
-| Icons element             | `/platform/ui-reference/elements/icons`                       |
-| 2x Grid element           | `/platform/ui-reference/elements/2x-grid`                     |
-| Overlay/feedback patterns | `/platform/ui-reference/patterns/overlays-feedback`           |
-| Page header planned gap   | `/platform/ui-reference/patterns/layout`                      |
-| Patterns overview         | `/platform/ui-reference/patterns`                             |
+| Text input                | `not installed`                |
+| Textarea                  | `not installed`                  |
+| Select                    | `not installed`                    |
+| Checkbox                  | `not installed`                  |
+| Radio button              | `not installed`              |
+| Toggle                    | `not installed`                    |
+| File uploader             | `not installed`             |
+| Button                    | `not installed`                    |
+| Notification              | `not installed`              |
+| Inline loading            | `not installed`            |
+| Toggletip                 | `not installed`                 |
+| Progress indicator        | `not installed`        |
+| Color element             | `not installed`                       |
+| Spacing element           | `not installed`                     |
+| Typography element        | `not installed`                  |
+| Themes element            | `not installed`                      |
+| Motion element            | `not installed`                      |
+| Icons element             | `not installed`                       |
+| 2x Grid element           | `not installed`                     |
+| Overlay/feedback patterns | `not installed`           |
+| Common Actions patterns   | `docs/02-standards/ui/patterns/common-actions/index.md`       |
+| Page header planned gap   | `not installed`                      |
+| Patterns overview         | `not installed`                             |
 | Canonical forms doc       | `/platform/docs?path=02-standards%2Fui%2Fpatterns%2Fforms.md` |
 | Carbon forms pattern      | `https://carbondesignsystem.com/patterns/forms-pattern/`      |
 
@@ -732,4 +735,4 @@ $response->assertDontSee('bx--');
 - [Component Standards](../components/index.md)
 - [Foundation Elements Standards](../elements/index.md)
 - [Pattern Standards Index](index.md)
-- Carbon Forms pattern and Form component guidance inform form consistency, required/optional treatment, one-column/two-column structure, mobile collapse behavior, spacing, validation, inline warnings/errors, and keyboard-accessible help. Login App keeps its own Pattern APIs, Blade components, Component standards, Element token model, app-owned `ui-*` classes, and UI Reference proof.
+- Carbon Forms pattern and Form component guidance inform form consistency, required/optional treatment, one-column/two-column structure, mobile collapse behavior, spacing, validation, inline warnings/errors, and keyboard-accessible help. Login App keeps its own Pattern APIs, Blade components, Component standards, Element token model, app-owned `ui-*` classes, and rendered evidence proof.

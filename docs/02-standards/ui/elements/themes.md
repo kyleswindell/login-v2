@@ -4,7 +4,7 @@ slug: themes
 api_layer: Foundation Element API
 guide_status: implemented
 system_maturity: partial
-ui_reference_route: /platform/ui-reference/elements/themes
+rendered_evidence_route: null
 canonical_doc: docs/02-standards/ui/elements/themes.md
 carbon_reference:
   - https://carbondesignsystem.com/elements/themes/overview/
@@ -62,12 +62,13 @@ related_patterns:
 - [12. Content contract](#12-content-contract)
 - [13. Prohibited usage](#13-prohibited-usage)
 - [14. Deferred or gated capabilities](#14-deferred-or-gated-capabilities)
-- [15. Implementation and UI Reference Checklist](#15-implementation-and-ui-reference-checklist)
+- [15. Implementation and Rendered Evidence Checklist](#15-implementation-and-ui-reference-checklist)
   - [15.1. Implementation checklist](#151-implementation-checklist)
-  - [15.2. UI Reference proof checklist](#152-ui-reference-proof-checklist)
-- [16. UI Reference requirements](#16-ui-reference-requirements)
+  - [15.2. rendered evidence proof checklist](#152-ui-reference-proof-checklist)
+- [16. Rendered evidence requirements](#16-ui-reference-requirements)
   - [16.1. Required live examples](#161-required-live-examples)
   - [16.2. Required page text](#162-required-page-text)
+  - [16.3. Current rendered evidence page responsibility model](#163-current-ui-reference-page-responsibility-model)
 - [17. Testing and acceptance criteria](#17-testing-and-acceptance-criteria)
   - [17.1. Suggested automated assertions](#171-suggested-automated-assertions)
 - [18. Related APIs](#18-related-apis)
@@ -79,7 +80,7 @@ Themes change token values while preserving token roles across light, dark, inli
 
 Themes is a Foundation Element API. Component and Pattern APIs must consume it instead of redefining local values.
 
-Themes is the installed token-resolution standard for Login App 2.0. It defines how theme context is applied, where theme variables are allowed to live, how components inherit theme roles, and how supported theme states are proven by the UI Reference route. It does not authorize feature-local color overrides, component-specific theme systems, or raw color patches in Blade views.
+Themes is the installed token-resolution standard for Login App 2.0. It defines how theme context is applied, where theme variables are allowed to live, how components inherit theme roles, and how supported theme states are proven by the Rendered evidence route. It does not authorize feature-local color overrides, component-specific theme systems, or raw color patches in Blade views.
 
 ### 1.1. Canonical API responsibilities:
 
@@ -90,7 +91,7 @@ Themes is the installed token-resolution standard for Login App 2.0. It defines 
 - High-contrast compatibility checks where the app exposes high-contrast contexts.
 - Approved theme override documentation.
 - Component and Pattern theme-readiness requirements.
-- UI Reference proof for theme behavior.
+- rendered evidence proof for theme behavior.
 
 ### 1.2. Non-owned responsibilities:
 
@@ -111,7 +112,7 @@ Use the Themes Element API whenever a surface, component, page shell, overlay, o
 | System maturity    | Partial                                                                                                   |
 | API layer          | Foundation Element API                                                                                    |
 | Element slug       | themes                                                                                                    |
-| UI Reference route | `/platform/ui-reference/elements/themes`                                                                  |
+| Rendered evidence route | `not installed`                                                                  |
 | Canonical doc      | `docs/02-standards/ui/elements/themes.md`                                                                 |
 | Primary consumers  | App shell, cards, fields, buttons, tables, notifications, overlays, docs pages, component reference pages |
 | Carbon benchmark   | Carbon Themes overview                                                                                    |
@@ -132,7 +133,7 @@ The installed standard is:
 4. Feature views do not hard-code alternate color values for theme-specific styling.
 5. Light and dark contexts must be supported wherever the app exposes them.
 6. Inline, inverse, and high-contrast contexts are allowed only through documented wrappers or Pattern APIs.
-7. Any custom theme override must document the reason, owner, source file, token role, old value, new value, and UI Reference proof.
+7. Any custom theme override must document the reason, owner, source file, token role, old value, new value, and rendered evidence proof.
 8. Components cannot be marked complete until their supported variants and states remain readable in approved theme contexts.
 
 ### 3.1. Theme resolution model
@@ -146,7 +147,7 @@ The installed standard is:
 | High-contrast context   | App-approved high-contrast wrapper or OS/browser compatibility layer                        | Themes + Accessibility owner            | Must preserve text, border, icon, focus, and semantic meaning.               |
 | Component-local value   | Component-specific variable inside a Component API                                          | Component owner                         | Allowed only when documented by that component and backed by Element tokens. |
 
-Do not introduce a new theme resolution mechanism in a feature view. Add it to this Element standard and prove it on the UI Reference route first.
+Do not introduce a new theme resolution mechanism in a feature view. Add it to this Element standard and prove it on the Rendered evidence route first.
 
 ### 3.2. Supported theme contexts
 
@@ -156,7 +157,7 @@ Do not introduce a new theme resolution mechanism in a feature view. Add it to t
 | Dark               | Implemented / expanding       | Page, shell, overlay, and component tokens resolve to readable dark-context values. | Approved where the owning page or Pattern supports it.        |
 | Inline light/dark  | Partial                       | Nested region may intentionally switch theme context while preserving token roles.  | Use only through documented wrappers or Pattern APIs.         |
 | Inverse            | Partial / pattern-owned       | Inverse surfaces use inverse text, icon, border, and focus roles.                   | Use only where the owning component or Pattern documents it.  |
-| High contrast      | Partial / accessibility-gated | Contrast, focus, borders, and semantic cues remain visible.                         | Requires explicit UI Reference proof before claiming support. |
+| High contrast      | Partial / accessibility-gated | Contrast, focus, borders, and semantic cues remain visible.                         | Requires explicit rendered evidence proof before claiming support. |
 | Custom brand theme | Deferred                      | App-owned token map with documented role values and tests.                          | Not approved unless this standard is updated.                 |
 
 ### 3.3. Token role rule
@@ -212,7 +213,7 @@ Every approved override must include:
 | Owner              | Person, team, or API owner.                                              |
 | Reason             | Accessibility, readability, brand alignment, or component compatibility. |
 | Source file        | CSS/config file that owns the override.                                  |
-| UI Reference proof | Route and section where the override is rendered.                        |
+| rendered evidence proof | Route and section where the override is rendered.                        |
 | Test coverage      | Visual, feature, or accessibility assertion.                             |
 
 Feature-local fixes such as `style="color: #fff"` or `.reports-dark-card { background: #111; }` are not theme overrides. They are prohibited usage.
@@ -230,17 +231,17 @@ Feature-local fixes such as `style="color: #fff"` or `.reports-dark-card { backg
 | Theme surfaces         | `--ui-surface`, `--ui-surface-elevated`                                                        | `ui-card`, shell cards, layout surfaces                          | `<section class="ui-card">...</section>`                              |
 | Theme layers           | `--ui-layer-01`, `--ui-layer-02`, `--ui-layer-03`, `--ui-layer-04`, `--ui-layer-05`             | Cards, nested panels, menus, overlays                            | `<aside style="background-color: var(--ui-layer-02);">...</aside>`    |
 | Theme text             | `--ui-text-primary`, `--ui-text-secondary`, `--ui-text-helper`, `--ui-text-inverse`            | Typography roles and component text                              | `<p class="ui-card-copy">Supporting copy</p>`                         |
-| Theme icons            | `--ui-icon-primary`, `--ui-icon-secondary`, `--ui-icon-inverse`, semantic icon roles           | Icons Element and Component APIs                                 | Heroicons using `currentColor` from resolved text/status/action role. |
+| Theme icons            | `--ui-icon-primary`, `--ui-icon-secondary`, `--ui-icon-inverse`, semantic icon roles           | Icons Element and Component APIs                                 | Internal icon components using `currentColor` from resolved text/status/action role. |
 | Theme borders          | `--ui-border-subtle-01`, `--ui-border-strong-01`, `--ui-border-inverse` when installed         | Cards, fields, dividers, tables, overlays                        | `<div style="border-color: var(--ui-border-subtle-01);">...</div>`    |
 | Theme fields           | `--ui-field`, `--ui-field-hover`, `--ui-field-disabled` when installed                         | Text input, select, textarea, search, date picker                | `<input class="ui-field" />`                                          |
 | Theme actions          | `--ui-action-*`                                                                                | `<x-ui.button>` semantic variants and approved action components | `<x-ui.button semantic="danger">Delete</x-ui.button>`                 |
-| Theme statuses         | `--ui-status-success-*`, `--ui-status-warning-*`, `--ui-status-danger-*`, `--ui-status-info-*` | Notification, badge, status, validation, progress summaries      | `<x-ui.badge tone="success">Active</x-ui.badge>`                      |
+| Theme statuses         | `--ui-status-success-*`, `--ui-status-warning-*`, `--ui-status-danger-*`, `--ui-status-info-*` | Notification, tag, status, validation, progress summaries        | `<x-ui.tag label="Active" tone="success" />`                          |
 | Theme focus            | `--ui-focus-ring`, `--ui-focus`                                                                | Every interactive component                                      | Focus-visible rings and outlines.                                     |
 | Theme overlay          | `--ui-overlay`, shadow/elevation aliases when installed                                        | Modal, drawer, popover, floating layers                          | Pattern-owned overlay treatment.                                      |
 | Theme loading          | `--ui-skeleton-*`, spinner aliases when installed                                              | Loading and skeleton APIs                                        | `<span class="ui-spinner"></span>`                                    |
 | Theme code             | `--ui-code-token-*`                                                                            | Code snippets and syntax roles                                   | `<pre class="ui-code-snippet"><code>...</code></pre>`                 |
 
-Only use Token API rows as installed standards where the variable, helper, wrapper, class, or component exists in the application. If a token or wrapper is listed as partial, queued, or pattern-owned, do not use it in feature code until the owning API marks it implemented and the UI Reference route proves it.
+Only use Token API rows as installed standards where the variable, helper, wrapper, class, or component exists in the application. If a token or wrapper is listed as partial, queued, or pattern-owned, do not use it in feature code until the owning API marks it implemented and the Rendered evidence route proves it.
 
 ### 4.1. Token status rules
 
@@ -252,7 +253,7 @@ Only use Token API rows as installed standards where the variable, helper, wrapp
 | Queued          | Needed for completeness but not installed.                           | Do not use in feature code.                                    |
 | Component-owned | Defined inside a Component API.                                      | Do not use outside that component.                             |
 | Pattern-owned   | Defined inside a Pattern API.                                        | Do not use outside that pattern.                               |
-| Deferred        | Not approved.                                                        | Requires a new standards update and UI Reference proof.        |
+| Deferred        | Not approved.                                                        | Requires a new standards update and rendered evidence proof.        |
 
 ## 5. CSS variable API
 
@@ -281,7 +282,7 @@ Use only the CSS variables and token aliases listed in the Token API table or th
 | `--ui-border-*`     | Themes + Color                         | Preserve boundaries, key lines, dividers, and field borders. |
 | `--ui-field-*`      | Themes + Color + Field Components      | Preserve field readability and state differentiation.        |
 | `--ui-action-*`     | Button/Menu button owners + Themes     | Preserve action hierarchy and interactive states.            |
-| `--ui-status-*`     | Notification/Tag/Badge owners + Themes | Preserve semantic status meaning and contrast.               |
+| `--ui-status-*`     | Notification/Tag/Status owners + Themes | Preserve semantic status meaning and contrast.               |
 | `--ui-focus*`       | Themes + Color + Accessibility         | Preserve visible focus in every theme.                       |
 | `--ui-overlay*`     | Overlay Pattern + Themes               | Preserve modal/drawer/popover backdrops and depth.           |
 | `--ui-skeleton-*`   | Loading Component + Themes             | Preserve loading placeholders without low-contrast shimmer.  |
@@ -292,12 +293,12 @@ Rules:
 - Do not create feature-local variables such as `--reports-dark-bg`, `--settings-card-theme`, `--admin-inverse-text`, or `--custom-theme-focus`.
 - Do not place raw values in Blade markup to fix one theme.
 - Do not set component color directly when a role token exists.
-- If a theme value fails contrast or readability, update the token role value at the appropriate owner and prove it on the UI Reference page.
+- If a theme value fails contrast or readability, update the token role value at the appropriate owner and prove it on the rendered evidence page.
 - If a component requires a component-local variable, document it in that Component API and map it to Element roles.
 
 ## 6. Utility class/helper API
 
-Allowed utility classes, Blade helpers, and component wrappers are those listed in the Token API table and demonstrated by the UI Reference route.
+Allowed utility classes, Blade helpers, and component wrappers are those listed in the Token API table and demonstrated by the Rendered evidence route.
 
 ### 6.1. Approved helpers and selectors
 
@@ -315,9 +316,9 @@ Allowed utility classes, Blade helpers, and component wrappers are those listed 
 | `ui-card-title`                     | Implemented                      | Theme-aware card heading.                                        |
 | `ui-card-copy`                      | Implemented                      | Theme-aware card supporting copy.                                |
 | `ui-link`                           | Implemented                      | Theme-aware link treatment.                                      |
-| `ui-inline-alert`                   | Implemented / notification-owned | Theme-aware inline feedback.                                     |
+| `ui-inline-notification`            | Implemented / notification-owned | Theme-aware inline feedback.                                     |
 | `<x-ui.button>`                     | Implemented                      | Theme-aware button semantics.                                    |
-| `<x-ui.badge>` / `<x-ui.status>`    | Implemented where installed      | Theme-aware status labels.                                       |
+| `<x-ui.tag>` / `<x-ui.status>`      | Implemented where installed      | Theme-aware status labels.                                       |
 | `<x-ui.icon-button>`                | Implemented where installed      | Theme-aware icon-only action with accessible name.               |
 
 ### 6.2. Utility class boundary
@@ -381,7 +382,7 @@ Every theme-aware Component or Pattern must document:
 - Which component-local variables, if any, it owns.
 - Which states are theme-tested.
 - Which contexts are deferred or not supported.
-- Which UI Reference example proves the behavior.
+- Which rendered evidence example proves the behavior.
 
 ### 8.2. Component examples
 
@@ -408,7 +409,7 @@ If a Component or Pattern cannot meet this contract, mark the unsupported contex
 
 ## 9. Theme behavior
 
-This Element must remain valid in supported light, dark, inline, inverse, and high-contrast contexts when those contexts apply. Theme behavior is proven on the UI Reference page.
+This Element must remain valid in supported light, dark, inline, inverse, and high-contrast contexts when those contexts apply. Theme behavior is proven on the rendered evidence page.
 
 ### 9.1. Required behavior by context
 
@@ -465,14 +466,14 @@ Requirements:
 
 ## 12. Content contract
 
-Theme documentation and UI Reference copy must name the role, not only the visual value.
+Theme documentation and rendered evidence copy must name the role, not only the visual value.
 
 Use:
 
 - `Primary text on Layer 01`.
 - `Danger action in dark context`.
 - `Focus-visible ring on inverse surface`.
-- `Status warning badge in light and dark themes`.
+- `Status warning tag in light and dark themes`.
 
 Avoid:
 
@@ -495,14 +496,14 @@ Color names may appear only when documenting actual value differences, not when 
 - Do not use Tailwind color utilities to patch theme failures.
 - Do not override semantic status colors for decoration.
 - Do not use inverse styles outside an approved inverse surface.
-- Do not claim high-contrast support without visible UI Reference proof.
+- Do not claim high-contrast support without visible rendered evidence proof.
 - Do not introduce a new theme name, wrapper, token family, or resolver without updating this Element standard.
 
 ## 14. Deferred or gated capabilities
 
 | Capability                    | Status                    | Gate                                                                                             |
 | ----------------------------- | ------------------------- | ------------------------------------------------------------------------------------------------ |
-| Additional named app themes   | Deferred                  | Requires product/design approval, full token map, UI Reference proof, and tests.                 |
+| Additional named app themes   | Deferred                  | Requires product/design approval, full token map, rendered evidence proof, and tests.                 |
 | Per-user custom theme values  | Deferred                  | Requires personalization contract, persistence, accessibility guardrails, and rollback behavior. |
 | High-contrast theme mode      | Partial / gated           | Requires complete text, focus, icon, border, and state proof across core components.             |
 | Inline mixed-theme regions    | Partial / pattern-owned   | Requires approved wrapper and Pattern ownership.                                                 |
@@ -510,9 +511,9 @@ Color names may appear only when documenting actual value differences, not when 
 | Runtime theme editor          | Not approved              | Requires separate product capability and security/accessibility review.                          |
 | Feature-local theme overrides | Not allowed               | Use the Element API and owning Component/Pattern API instead.                                    |
 
-No additional capability is approved without updating this Element standard and UI Reference proof.
+No additional capability is approved without updating this Element standard and rendered evidence proof.
 
-## 15. Implementation and UI Reference Checklist
+## 15. Implementation and Rendered Evidence Checklist
 
 ### 15.1. Implementation checklist
 
@@ -525,7 +526,7 @@ No additional capability is approved without updating this Element standard and 
 | Prohibited usage            | Feature code, Components, and Patterns are told what they must not redefine locally.                                              |
 | Tests                       | Route/content/API assertions are defined to prove the Element contract.                                                           |
 
-### 15.2. UI Reference proof checklist
+### 15.2. rendered evidence proof checklist
 
 | Requirement          | Visual proof expectation                                                                                            |
 | -------------------- | ------------------------------------------------------------------------------------------------------------------- |
@@ -535,53 +536,69 @@ No additional capability is approved without updating this Element standard and 
 | Accessibility proof  | Contrast, focus, semantics, hit targets, reduced motion, or equivalent Element constraints are shown or documented. |
 | Related APIs         | Consuming Components, Patterns, source files, and the canonical standard are linked.                                |
 | Manual review        | The page provides enough rendered proof for visual review without opening source code first.                        |
-## 16. UI Reference requirements
+## 16. Rendered evidence requirements
 
-The `/platform/ui-reference/elements/themes` route must render live examples with app CSS/JS rather than screenshots only.
+The `not installed` route must render live examples with app CSS/JS rather than screenshots only.
 
 Required sections:
 
-- Theme matrix.
-- Component preview matrix.
-- Layer inheritance.
-- Inline theme examples.
-- Approved overrides.
+- Theme anatomy.
+- Usage rules.
+- Theme value matrix.
+- Theme context stack.
+- Theme comparison examples.
 
 ### 16.1. Required live examples
 
-| Example                  | Required rendered proof                                                                                                                                   |
-| ------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Theme matrix             | Shows light and dark contexts at minimum. Include inline, inverse, and high-contrast contexts only where installed or mark them deferred.                 |
-| Token role comparison    | Shows the same token roles across contexts: surface, layer, text, border, icon, link, action, status, focus, field, skeleton/loading.                     |
-| Component preview matrix | Shows common components in supported themes: button, link, form field, card, table row, notification, badge/status, modal or overlay sample, icon button. |
-| Layer inheritance        | Shows page background, Layer 01, Layer 02, Layer 03, Layer 04, Layer 05, overlay, and inverse surface.                                                     |
-| Inline theme example     | Shows a nested context using an approved wrapper and documents whether it is implemented, partial, or deferred.                                           |
-| Inverse context example  | Shows tooltip/shell/overlay-like inverse treatment where installed.                                                                                       |
-| State matrix             | Shows hover, active/pressed, selected/current, focus-visible, disabled, loading, error, warning, success, and informational roles where applicable.       |
-| Approved overrides       | Lists any custom theme override with owner, reason, source file, and rendered proof. If none exist, display `No approved custom overrides`.               |
-| Prohibited examples      | Shows why local raw color, local dark-mode patching, and decorative semantic color are not allowed.                                                       |
+| Example                    | Required rendered proof                                                                                                  |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------------------ |
+| Sign-in comparison         | Shows the same authentication UI across `white`, `gray-10`, `gray-90`, and `gray-100`.                                  |
+| Settings form comparison   | Shows field surfaces, helper text, warning text, and tags inheriting theme values.                                       |
+| Data table comparison      | Shows table rows, borders, text, and status tags under installed theme contexts.                                         |
+| Notification comparison    | Shows semantic feedback preserving meaning while theme values change.                                                    |
+| Scoped context stack       | Shows inherited root, scoped, and nested theme contexts while child UI keeps the same token names.                       |
+| Value matrix               | Shows the same role names resolving to installed values across the supported themes.                                     |
+| Prohibited usage guidance  | Explains why local raw color, local dark-mode patching, and decorative semantic color are not allowed.                  |
 
 ### 16.2. Required page text
 
-The UI Reference page must communicate:
+The rendered evidence page must communicate:
 
 - Themes change token values, not token roles.
 - Components must use theme-aware tokens for background, text, border, icon, focus, and support states.
-- Custom theme overrides require documented ownership and UI Reference proof.
+- Custom theme overrides require documented ownership and rendered evidence proof.
 - Unsupported contexts must be marked `Deferred`, `Not implemented`, or `App-approved exception`.
 - Components must be tested in all supported contexts before being marked complete.
 
+### 16.3. Current rendered evidence page responsibility model
+
+The Themes reference implementation keeps durable API truth in `resources/views/elements/themes/contract.php` and rendered evidence presentation in `resources/views/elements/themes/reference.php` plus `resources/views/elements/themes/reference/**`.
+
+Current page ownership:
+
+| Page | Responsibility | Must not own |
+| ---- | -------------- | ------------ |
+| Overview | Theme anatomy, installed theme contexts, relationship to Color, source orientation, and navigation to focused detail pages. | Full token/value matrices or example galleries. |
+| Usage | Rules for applying, scoping, and switching root or local theme contexts. | Color role definitions or component-specific color rules. |
+| Values | Cross-theme value matrices for installed role names. | Color token role meaning or general usage guidance. |
+| Contexts | Root, scoped, nested, and inherited theme behavior. | General component example galleries. |
+| Examples | Same UI rendered across installed themes: sign-in, settings form, data table, and notification/status examples. | Token catalogs, context theory, or Color role definitions. |
+
+Color defines the stable role name. Themes resolve that role name to installed values. For example, Color owns what `--ui-text-primary` means, while Themes owns how `--ui-text-primary` resolves in `white`, `gray-10`, `gray-90`, and `gray-100`.
+
+Only examples declared by the Themes contract and selected by the Themes reference pages should render in the Examples page. Parked or future example files may exist under `resources/views/elements/themes/examples/**`, but they are not active rendered evidence examples until they are registered by `contract.php` and selected by `reference.php`.
+
 ## 17. Testing and acceptance criteria
 
-- `/platform/ui-reference/elements/themes` returns 200 for authorized users.
+- `not installed` returns 200 for authorized users.
 - Unauthorized users cannot access the route.
 - The page renders live examples with app CSS/JS rather than screenshots only.
 - The page shows token/class/helper API references, allowed usage, prohibited usage, accessibility constraints, and implementation status.
-- The page includes a theme matrix with at least light and dark contexts.
-- The page includes token role comparisons for text, surface, layer, border, icon, action, status, focus, and field roles.
-- The page includes component preview examples that use actual app classes/components.
+- The page includes theme anatomy with `white`, `gray-10`, `gray-90`, and `gray-100`.
+- The page includes value matrices for text, surface, layer, border, icon, focus, and field roles.
+- The page includes comparison examples that use actual app classes/components.
 - The page documents inline, inverse, and high-contrast contexts as implemented, partial, deferred, or not implemented.
-- The page includes approved override documentation or an explicit `No approved custom overrides` message.
+- The page clearly marks unsupported custom override work as gated or deferred.
 - The page avoids raw hex examples except when documenting prohibited usage or source-token value tables.
 - The page includes related links to Color, UI shell, overlays/feedback, and the canonical doc route.
 
@@ -590,24 +607,24 @@ The UI Reference page must communicate:
 - Assert route returns 200 for authorized users.
 - Assert route contains `data-ui-reference-element="themes"` or equivalent page marker.
 - Assert rendered output includes `html[data-theme-resolved="light"]` and `html[data-theme-resolved="dark"]` as documented selectors or examples.
-- Assert rendered output includes `Theme matrix`, `Component preview matrix`, `Layer inheritance`, `Inline theme examples`, and `Approved overrides`.
-- Assert `No approved custom overrides` appears when no override data exists.
-- Assert examples reference `--ui-surface`, `--ui-layer-01`, `--ui-text-primary`, `--ui-border-subtle-01`, `--ui-action-*`, `--ui-status-*`, and `--ui-focus*` roles.
+- Assert rendered output includes `Theme anatomy`, `Theme values`, `Theme contexts`, `Theme comparison examples`, and `Scoped theme resolution`.
+- Assert the active examples render `auth-comparison`, `form-comparison`, `table-comparison`, and `notification-comparison`.
+- Assert examples reference `--ui-background`, `--ui-layer-01`, `--ui-text-primary`, `--ui-border-subtle-01`, and `--ui-focus` roles.
 - Assert there is no generic fallback text such as `Coming soon`, `Example component`, or placeholder-only theme copy.
 
 ## 18. Related APIs
 
 | API                           | Route                                                          |
 | ----------------------------- | -------------------------------------------------------------- |
-| Color element                 | `/platform/ui-reference/elements/color`                        |
-| Typography element            | `/platform/ui-reference/elements/typography`                   |
-| Spacing element               | `/platform/ui-reference/elements/spacing`                      |
-| Motion element                | `/platform/ui-reference/elements/motion`                       |
-| Icons element                 | `/platform/ui-reference/elements/icons`                        |
-| UI shell                      | `/platform/ui-reference/components/ui-shell`                   |
-| Button component              | `/platform/ui-reference/components/button`                     |
-| Notification component        | `/platform/ui-reference/components/notification`               |
-| Overlays and feedback pattern | `/platform/ui-reference/patterns/overlays-feedback`            |
+| Color element                 | `not installed`                        |
+| Typography element            | `not installed`                   |
+| Spacing element               | `not installed`                      |
+| Motion element                | `not installed`                       |
+| Icons element                 | `not installed`                        |
+| UI shell                      | `not installed`                   |
+| Button component              | `not installed`                     |
+| Notification component        | `not installed`               |
+| Overlays and feedback pattern | `not installed`            |
 | Canonical themes doc          | `/platform/docs?path=02-standards%2Fui%2Felements%2Fthemes.md` |
 | Carbon themes overview        | `https://carbondesignsystem.com/elements/themes/overview/`     |
 

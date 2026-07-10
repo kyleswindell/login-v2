@@ -1,0 +1,78 @@
+{{-- ==========================================================================
+    File: {{ bladePath }}
+    Purpose: {{ label }} component.
+
+    Notes:
+    - Emits the installed .ui-{{ component }} selector contract.
+    - Public props, slots, variants, states, classes, and data attributes must
+      remain aligned with {{ contractPath }}.
+    - Styles are handled by {{ cssPath }}.
+    - Interactive behavior is handled by {{ jsPath }} when required.
+    - Manual visual review is required for design-sensitive changes.
+    ========================================================================== --}}
+
+@props([
+    /*
+     * Declare only approved public props.
+     */
+])
+
+@php
+    /*
+    |--------------------------------------------------------------------------
+    | Resolve Values
+    |--------------------------------------------------------------------------
+    |
+    | Normalize aliases and derive display values here. Do not perform queries,
+    | authorization decisions, or business mutations.
+    |
+    */
+
+    /*
+    |--------------------------------------------------------------------------
+    | Render State
+    |--------------------------------------------------------------------------
+    |
+    | Derive variant and state booleans here. Document state precedence when
+    | multiple states can be requested simultaneously.
+    |
+    */
+
+    /*
+    |--------------------------------------------------------------------------
+    | CSS Class Contract
+    |--------------------------------------------------------------------------
+    |
+    | These classes must remain aligned with the owning contract and CSS file.
+    |
+    */
+
+    $rootClasses = [
+        'ui-{{ component }}',
+    ];
+
+    /*
+    |--------------------------------------------------------------------------
+    | Attribute Handling
+    |--------------------------------------------------------------------------
+    |
+    | Decide explicitly which attributes belong on the root and which belong on
+    | nested native controls.
+    |
+    */
+@endphp
+
+<div
+    {{ $attributes->class($rootClasses) }}
+    data-ui-component="{{ component }}"
+    data-ui-{{ component }}
+>
+    {{-- ----------------------------------------------------------------------
+        Component content
+        ----------------------------------------------------------------------
+        Remove the default slot when the approved component API does not expose
+        arbitrary child content.
+        ---------------------------------------------------------------------- --}}
+
+    {{ $slot }}
+</div>

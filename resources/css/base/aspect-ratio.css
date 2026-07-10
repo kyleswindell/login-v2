@@ -1,0 +1,118 @@
+/* ==========================================================================
+   File: resources/css/base/aspect-ratio.css
+   Purpose: Aspect ratio layout utility classes.
+
+   Notes:
+   - Defines aspect-ratio utility selectors only.
+   - Do not define primitive palette tokens here.
+   - Do not define theme role tokens here.
+   - Use for media wrappers, cards, preview frames, and fixed-ratio regions.
+   ========================================================================== */
+
+@layer base {
+    .ui-aspect-ratio {
+        position: relative;
+    }
+
+    .ui-aspect-ratio::before {
+        float: left;
+        inline-size: 1px;
+        block-size: 0;
+        margin-inline-start: -1px;
+        content: "";
+    }
+
+    .ui-aspect-ratio::after {
+        display: table;
+        clear: both;
+        content: "";
+    }
+
+    .ui-aspect-ratio-16x9::before,
+    .ui-aspect-ratio--16x9::before {
+        padding-block-start: 56.25%;
+    }
+
+    .ui-aspect-ratio-9x16::before,
+    .ui-aspect-ratio--9x16::before {
+        padding-block-start: 177.7778%;
+    }
+
+    .ui-aspect-ratio-2x1::before,
+    .ui-aspect-ratio--2x1::before {
+        padding-block-start: 50%;
+    }
+
+    .ui-aspect-ratio-1x2::before,
+    .ui-aspect-ratio--1x2::before {
+        padding-block-start: 200%;
+    }
+
+    .ui-aspect-ratio-4x3::before,
+    .ui-aspect-ratio--4x3::before {
+        padding-block-start: 75%;
+    }
+
+    .ui-aspect-ratio-3x4::before,
+    .ui-aspect-ratio--3x4::before {
+        padding-block-start: 133.3333%;
+    }
+
+    .ui-aspect-ratio-3x2::before,
+    .ui-aspect-ratio--3x2::before {
+        padding-block-start: 66.6667%;
+    }
+
+    .ui-aspect-ratio-2x3::before,
+    .ui-aspect-ratio--2x3::before {
+        padding-block-start: 150%;
+    }
+
+    .ui-aspect-ratio-1x1::before,
+    .ui-aspect-ratio--1x1::before {
+        padding-block-start: 100%;
+    }
+
+    .ui-aspect-ratio > img,
+    .ui-aspect-ratio > video,
+    .ui-aspect-ratio > iframe,
+    .ui-aspect-ratio > picture,
+    .ui-aspect-ratio > canvas,
+    .ui-aspect-ratio > svg {
+        display: block;
+        inline-size: 100%;
+        block-size: 100%;
+        object-fit: cover;
+    }
+
+    .ui-aspect-ratio-fill > img,
+    .ui-aspect-ratio-fill > video,
+    .ui-aspect-ratio-fill > iframe,
+    .ui-aspect-ratio-fill > picture,
+    .ui-aspect-ratio-fill > canvas,
+    .ui-aspect-ratio-fill > svg,
+    .ui-aspect-ratio--fill > img,
+    .ui-aspect-ratio--fill > video,
+    .ui-aspect-ratio--fill > iframe,
+    .ui-aspect-ratio--fill > picture,
+    .ui-aspect-ratio--fill > canvas,
+    .ui-aspect-ratio--fill > svg {
+        position: absolute;
+        inset: 0;
+    }
+
+    .ui-aspect-ratio-contain > img,
+    .ui-aspect-ratio-contain > video,
+    .ui-aspect-ratio-contain > iframe,
+    .ui-aspect-ratio-contain > picture,
+    .ui-aspect-ratio-contain > canvas,
+    .ui-aspect-ratio-contain > svg,
+    .ui-aspect-ratio--contain > img,
+    .ui-aspect-ratio--contain > video,
+    .ui-aspect-ratio--contain > iframe,
+    .ui-aspect-ratio--contain > picture,
+    .ui-aspect-ratio--contain > canvas,
+    .ui-aspect-ratio--contain > svg {
+        object-fit: contain;
+    }
+}

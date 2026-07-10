@@ -1,9 +1,9 @@
 ---
 status: implemented-pending-review
 slug: date-picker
-ui_reference_route: /platform/ui-reference/components/date-picker
+rendered_evidence_route: null
 canonical_doc: docs/02-standards/ui/components/date-picker.md
-source_owner: /platform/ui-reference/components/date-picker
+source_owner: not installed
 ---
 
 # Date Picker Component Standard
@@ -29,7 +29,7 @@ Time Picker is not a Date Picker variant. Time entry is a separate composed text
 | CSS namespace | `ui-date-picker*`, app-owned token overrides for Flatpickr calendar markup |
 | Reference support | `docs/09-reference/ui/flatpickr-date-picker-dependency-review.md` |
 
-Flatpickr is a behavior dependency only. Login owns the Blade API, `ui-*` classes, data attributes, token mapping, UI Reference examples, and accessibility labels.
+Flatpickr is a behavior dependency only. Login owns the Blade API, `ui-*` classes, data attributes, token mapping, rendered evidence examples, and accessibility labels.
 
 ## Approved API
 
@@ -64,7 +64,7 @@ Wrapper props:
 | `disable`, `enable` | array | Date allow/deny lists passed to Flatpickr. |
 | `allow-input` | boolean | Defaults to true. |
 | `close-on-select` | boolean | Defaults to true for `single`, false for `range`. |
-| `inline` | boolean | Inline calendar mode; use sparingly in UI Reference proof only. |
+| `inline` | boolean | Inline calendar mode; use sparingly in rendered evidence proof only. |
 | `append-to` | selector | Optional calendar portal target. |
 | `prev-month-aria-label`, `next-month-aria-label` | string | Applied to calendar navigation controls. |
 
@@ -145,9 +145,9 @@ Date Picker input states follow Text Input state rules:
 
 For range validation, apply invalid/warning state only to the field causing the issue. Do not mark the whole range invalid when only start or end needs correction.
 
-## UI Reference Requirements
+## Rendered evidence requirements
 
-The Date Picker UI Reference page must show:
+The Date Picker rendered evidence page must show:
 
 - Approved tabs: Simple, Single, Range, Skeleton.
 - Simple examples with no Flatpickr initialization hooks.
@@ -157,7 +157,7 @@ The Date Picker UI Reference page must show:
 - No Date + Time combo picker.
 - No Time Picker tab on the Date Picker page.
 - No legacy `variant="calendar"` or `calendar=true` wrapper API.
-- No custom UI Reference-only range calendar proof path.
+- No custom rendered evidence-only range calendar proof path.
 
 ## Source References
 

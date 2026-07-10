@@ -1,0 +1,765 @@
+/* ==========================================================================
+   File: resources/css/components/fluid-text-input.css
+   Purpose: Fluid Text Input component styles.
+
+   Notes:
+   - Defines Fluid Text Input selectors only.
+   - Do not define primitive palette tokens here.
+   - Do not define theme role tokens here.
+   - Supports fluid wrapper layout, floating labels, label counters,
+     readonly text color, hidden helper text, invalid/warning states,
+     form requirements, password visibility toggle, skeleton state,
+     AI label/decorator positioning, reduced-motion, and forced-colors
+     behavior.
+   ========================================================================== */
+
+@layer components {
+    /* ----------------------------------------------------------------------
+       Root
+       ---------------------------------------------------------------------- */
+
+    .ui-text-input-fluid.ui-text-input-wrapper,
+    .ui-text-input--fluid.ui-text-input-wrapper {
+        position: relative;
+        block-size: 100%;
+        background: var(--ui-field);
+        transition:
+            background-color var(--ui-duration-fast-01)
+                var(--ui-motion-standard-productive),
+            outline var(--ui-duration-fast-01)
+                var(--ui-motion-standard-productive);
+    }
+
+    /* ----------------------------------------------------------------------
+       Label and counter
+       ---------------------------------------------------------------------- */
+
+    .ui-text-input-fluid .ui-label,
+    .ui-text-input--fluid .ui-label {
+        position: absolute;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        block-size: 1rem;
+        margin: 0;
+        inset-block-start: 0.8125rem;
+    }
+
+    .ui-text-input-fluid
+        .ui-label:not(.ui-text-input-label-counter):not(
+            .ui-text-input__label-counter
+        ),
+    .ui-text-input--fluid
+        .ui-label:not(.ui-text-input-label-counter):not(
+            .ui-text-input__label-counter
+        ) {
+        inline-size: auto;
+        inset-inline-end: auto;
+        inset-inline-start: var(--ui-spacing-05);
+    }
+
+    .ui-text-input-fluid .ui-label.ui-text-input-label-counter,
+    .ui-text-input-fluid .ui-label.ui-text-input__label-counter,
+    .ui-text-input--fluid .ui-label.ui-text-input-label-counter,
+    .ui-text-input--fluid .ui-label.ui-text-input__label-counter {
+        inline-size: auto;
+        inset-inline-end: var(--ui-spacing-05);
+        inset-inline-start: auto;
+    }
+
+    .ui-text-input-fluid .ui-label::-webkit-scrollbar,
+    .ui-text-input--fluid .ui-label::-webkit-scrollbar,
+    .ui-text-input-fluid .ui-label .ui-toggletip-label::-webkit-scrollbar,
+    .ui-text-input--fluid .ui-label .ui-toggletip-label::-webkit-scrollbar {
+        display: none;
+    }
+
+    .ui-text-input-fluid .ui-label:not(:has(.ui-toggletip-label)),
+    .ui-text-input--fluid .ui-label:not(:has(.ui-toggletip-label)),
+    .ui-text-input-fluid .ui-label .ui-toggletip-label,
+    .ui-text-input--fluid .ui-label .ui-toggletip-label {
+        overflow-x: scroll;
+        white-space: nowrap;
+        scrollbar-width: none;
+        -ms-overflow-style: none;
+    }
+
+    /* ----------------------------------------------------------------------
+       Readonly
+       ---------------------------------------------------------------------- */
+
+    .ui-text-input-fluid.ui-text-input-wrapper-readonly
+        .ui-text-input-field-wrapper
+        .ui-text-input,
+    .ui-text-input-fluid.ui-text-input-wrapper-readonly
+        .ui-text-input__field-wrapper
+        .ui-text-input,
+    .ui-text-input-fluid.ui-text-input-wrapper--readonly
+        .ui-text-input-field-wrapper
+        .ui-text-input,
+    .ui-text-input-fluid.ui-text-input-wrapper--readonly
+        .ui-text-input__field-wrapper
+        .ui-text-input,
+    .ui-text-input--fluid.ui-text-input-wrapper-readonly
+        .ui-text-input-field-wrapper
+        .ui-text-input,
+    .ui-text-input--fluid.ui-text-input-wrapper-readonly
+        .ui-text-input__field-wrapper
+        .ui-text-input,
+    .ui-text-input--fluid.ui-text-input-wrapper--readonly
+        .ui-text-input-field-wrapper
+        .ui-text-input,
+    .ui-text-input--fluid.ui-text-input-wrapper--readonly
+        .ui-text-input__field-wrapper
+        .ui-text-input {
+        color: var(--ui-text-secondary);
+    }
+
+    /* ----------------------------------------------------------------------
+       Input and helper text
+       ---------------------------------------------------------------------- */
+
+    .ui-text-input-fluid .ui-form-helper-text,
+    .ui-text-input-fluid .ui-form__helper-text,
+    .ui-text-input--fluid .ui-form-helper-text,
+    .ui-text-input--fluid .ui-form__helper-text {
+        display: none;
+    }
+
+    .ui-text-input-fluid .ui-text-input,
+    .ui-text-input--fluid .ui-text-input {
+        min-block-size: 4rem;
+        padding: 2rem var(--ui-spacing-05) 0.8125rem;
+    }
+
+    .ui-text-input-divider,
+    .ui-text-input__divider,
+    .ui-text-input-fluid .ui-text-input-divider,
+    .ui-text-input-fluid .ui-text-input__divider,
+    .ui-text-input--fluid .ui-text-input-divider,
+    .ui-text-input--fluid .ui-text-input__divider {
+        display: none;
+    }
+
+    /* ----------------------------------------------------------------------
+       Invalid and warning wrappers
+       ---------------------------------------------------------------------- */
+
+    .ui-text-input-fluid .ui-text-input-field-wrapper[data-invalid],
+    .ui-text-input-fluid .ui-text-input__field-wrapper[data-invalid],
+    .ui-text-input-fluid .ui-text-input-field-wrapper-warning,
+    .ui-text-input-fluid .ui-text-input__field-wrapper--warning,
+    .ui-text-input--fluid .ui-text-input-field-wrapper[data-invalid],
+    .ui-text-input--fluid .ui-text-input__field-wrapper[data-invalid],
+    .ui-text-input--fluid .ui-text-input-field-wrapper-warning,
+    .ui-text-input--fluid .ui-text-input__field-wrapper--warning {
+        display: block;
+    }
+
+    .ui-text-input-fluid input[data-invalid],
+    .ui-text-input--fluid input[data-invalid] {
+        outline: none;
+    }
+
+    .ui-text-input-fluid .ui-form-requirement,
+    .ui-text-input-fluid .ui-form__requirement,
+    .ui-text-input--fluid .ui-form-requirement,
+    .ui-text-input--fluid .ui-form__requirement {
+        margin: 0;
+        padding: var(--ui-spacing-03) 2.5rem var(--ui-spacing-03)
+            var(--ui-spacing-05);
+    }
+
+    .ui-text-input-fluid .ui-text-input-invalid,
+    .ui-text-input-fluid .ui-text-input--invalid,
+    .ui-text-input-fluid .ui-text-input-warning,
+    .ui-text-input-fluid .ui-text-input--warning,
+    .ui-text-input--fluid .ui-text-input-invalid,
+    .ui-text-input--fluid .ui-text-input--invalid,
+    .ui-text-input--fluid .ui-text-input-warning,
+    .ui-text-input--fluid .ui-text-input--warning {
+        border-block-end: none;
+    }
+
+    .ui-text-input-fluid .ui-text-input-invalid ~ .ui-text-input-divider,
+    .ui-text-input-fluid .ui-text-input-invalid ~ .ui-text-input__divider,
+    .ui-text-input-fluid .ui-text-input--invalid ~ .ui-text-input-divider,
+    .ui-text-input-fluid .ui-text-input--invalid ~ .ui-text-input__divider,
+    .ui-text-input-fluid .ui-text-input-warning ~ .ui-text-input-divider,
+    .ui-text-input-fluid .ui-text-input-warning ~ .ui-text-input__divider,
+    .ui-text-input-fluid .ui-text-input--warning ~ .ui-text-input-divider,
+    .ui-text-input-fluid .ui-text-input--warning ~ .ui-text-input__divider,
+    .ui-text-input--fluid .ui-text-input-invalid ~ .ui-text-input-divider,
+    .ui-text-input--fluid .ui-text-input-invalid ~ .ui-text-input__divider,
+    .ui-text-input--fluid .ui-text-input--invalid ~ .ui-text-input-divider,
+    .ui-text-input--fluid .ui-text-input--invalid ~ .ui-text-input__divider,
+    .ui-text-input--fluid .ui-text-input-warning ~ .ui-text-input-divider,
+    .ui-text-input--fluid .ui-text-input-warning ~ .ui-text-input__divider,
+    .ui-text-input--fluid .ui-text-input--warning ~ .ui-text-input-divider,
+    .ui-text-input--fluid .ui-text-input--warning ~ .ui-text-input__divider {
+        display: block;
+        margin: 0 1rem;
+        border-style: solid;
+        border-color: var(--ui-border-subtle);
+        border-block-end: none;
+    }
+
+    .ui-text-input-fluid .ui-text-input-invalid-icon,
+    .ui-text-input-fluid .ui-text-input__invalid-icon,
+    .ui-text-input--fluid .ui-text-input-invalid-icon,
+    .ui-text-input--fluid .ui-text-input__invalid-icon {
+        inset-block-start: 5rem;
+    }
+
+    .ui-text-input-fluid
+        .ui-text-input-field-wrapper[data-invalid]
+        > .ui-text-input-invalid,
+    .ui-text-input-fluid
+        .ui-text-input-field-wrapper[data-invalid]
+        > .ui-text-input--invalid,
+    .ui-text-input-fluid
+        .ui-text-input__field-wrapper[data-invalid]
+        > .ui-text-input-invalid,
+    .ui-text-input-fluid
+        .ui-text-input__field-wrapper[data-invalid]
+        > .ui-text-input--invalid,
+    .ui-text-input-fluid
+        .ui-text-input-field-wrapper-warning
+        > .ui-text-input-warning,
+    .ui-text-input-fluid
+        .ui-text-input-field-wrapper-warning
+        > .ui-text-input--warning,
+    .ui-text-input-fluid
+        .ui-text-input__field-wrapper--warning
+        > .ui-text-input-warning,
+    .ui-text-input-fluid
+        .ui-text-input__field-wrapper--warning
+        > .ui-text-input--warning,
+    .ui-text-input--fluid
+        .ui-text-input-field-wrapper[data-invalid]
+        > .ui-text-input-invalid,
+    .ui-text-input--fluid
+        .ui-text-input-field-wrapper[data-invalid]
+        > .ui-text-input--invalid,
+    .ui-text-input--fluid
+        .ui-text-input__field-wrapper[data-invalid]
+        > .ui-text-input-invalid,
+    .ui-text-input--fluid
+        .ui-text-input__field-wrapper[data-invalid]
+        > .ui-text-input--invalid,
+    .ui-text-input--fluid
+        .ui-text-input-field-wrapper-warning
+        > .ui-text-input-warning,
+    .ui-text-input--fluid
+        .ui-text-input-field-wrapper-warning
+        > .ui-text-input--warning,
+    .ui-text-input--fluid
+        .ui-text-input__field-wrapper--warning
+        > .ui-text-input-warning,
+    .ui-text-input--fluid
+        .ui-text-input__field-wrapper--warning
+        > .ui-text-input--warning {
+        outline: none;
+    }
+
+    .ui-text-input-fluid .ui-text-input-field-wrapper-warning,
+    .ui-text-input-fluid .ui-text-input__field-wrapper--warning,
+    .ui-text-input--fluid .ui-text-input-field-wrapper-warning,
+    .ui-text-input--fluid .ui-text-input__field-wrapper--warning {
+        border-block-end: 1px solid var(--ui-border-strong);
+    }
+
+    .ui-text-input-fluid .ui-text-input-field-wrapper[data-invalid]:not(:focus),
+    .ui-text-input-fluid
+        .ui-text-input__field-wrapper[data-invalid]:not(:focus),
+    .ui-text-input--fluid
+        .ui-text-input-field-wrapper[data-invalid]:not(:focus),
+    .ui-text-input--fluid
+        .ui-text-input__field-wrapper[data-invalid]:not(:focus) {
+        outline: 2px solid var(--ui-support-error);
+        outline-offset: -2px;
+    }
+
+    .ui-text-input-fluid
+        .ui-text-input-field-wrapper[data-invalid]:focus-within,
+    .ui-text-input-fluid
+        .ui-text-input__field-wrapper[data-invalid]:focus-within,
+    .ui-text-input-fluid .ui-text-input-field-wrapper-warning:focus-within,
+    .ui-text-input-fluid .ui-text-input__field-wrapper--warning:focus-within,
+    .ui-text-input--fluid
+        .ui-text-input-field-wrapper[data-invalid]:focus-within,
+    .ui-text-input--fluid
+        .ui-text-input__field-wrapper[data-invalid]:focus-within,
+    .ui-text-input--fluid .ui-text-input-field-wrapper-warning:focus-within,
+    .ui-text-input--fluid .ui-text-input__field-wrapper--warning:focus-within {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+    }
+
+    .ui-text-input-fluid
+        .ui-text-input-field-wrapper[data-invalid]
+        > .ui-text-input-invalid:focus,
+    .ui-text-input-fluid
+        .ui-text-input-field-wrapper[data-invalid]
+        > .ui-text-input--invalid:focus,
+    .ui-text-input-fluid
+        .ui-text-input__field-wrapper[data-invalid]
+        > .ui-text-input-invalid:focus,
+    .ui-text-input-fluid
+        .ui-text-input__field-wrapper[data-invalid]
+        > .ui-text-input--invalid:focus,
+    .ui-text-input-fluid
+        .ui-text-input-field-wrapper-warning
+        > .ui-text-input-warning:focus,
+    .ui-text-input-fluid
+        .ui-text-input-field-wrapper-warning
+        > .ui-text-input--warning:focus,
+    .ui-text-input-fluid
+        .ui-text-input__field-wrapper--warning
+        > .ui-text-input-warning:focus,
+    .ui-text-input-fluid
+        .ui-text-input__field-wrapper--warning
+        > .ui-text-input--warning:focus,
+    .ui-text-input--fluid
+        .ui-text-input-field-wrapper[data-invalid]
+        > .ui-text-input-invalid:focus,
+    .ui-text-input--fluid
+        .ui-text-input-field-wrapper[data-invalid]
+        > .ui-text-input--invalid:focus,
+    .ui-text-input--fluid
+        .ui-text-input__field-wrapper[data-invalid]
+        > .ui-text-input-invalid:focus,
+    .ui-text-input--fluid
+        .ui-text-input__field-wrapper[data-invalid]
+        > .ui-text-input--invalid:focus,
+    .ui-text-input--fluid
+        .ui-text-input-field-wrapper-warning
+        > .ui-text-input-warning:focus,
+    .ui-text-input--fluid
+        .ui-text-input-field-wrapper-warning
+        > .ui-text-input--warning:focus,
+    .ui-text-input--fluid
+        .ui-text-input__field-wrapper--warning
+        > .ui-text-input-warning:focus,
+    .ui-text-input--fluid
+        .ui-text-input__field-wrapper--warning
+        > .ui-text-input--warning:focus {
+        outline: none;
+    }
+
+    /* ----------------------------------------------------------------------
+       Password input
+       ---------------------------------------------------------------------- */
+
+    .ui-text-input-fluid .ui-text-input.ui-password-input,
+    .ui-text-input-fluid .ui-text-input.ui-text-input-password,
+    .ui-text-input--fluid .ui-text-input.ui-password-input,
+    .ui-text-input--fluid .ui-text-input.ui-text-input-password {
+        padding-inline-end: var(--ui-spacing-08);
+    }
+
+    .ui-text-input-fluid.ui-password-input-wrapper .ui-text-input-invalid-icon,
+    .ui-text-input-fluid.ui-password-input-wrapper .ui-text-input__invalid-icon,
+    .ui-text-input--fluid.ui-password-input-wrapper .ui-text-input-invalid-icon,
+    .ui-text-input--fluid.ui-password-input-wrapper
+        .ui-text-input__invalid-icon {
+        inset-inline-end: var(--ui-spacing-05);
+    }
+
+    .ui-text-input-fluid .ui-toggle-password-tooltip,
+    .ui-text-input--fluid .ui-toggle-password-tooltip {
+        position: absolute;
+        inline-size: 3rem;
+        block-size: 4rem;
+        cursor: pointer;
+        outline: 2px solid transparent;
+        outline-offset: -2px;
+        inset-block-start: 0;
+        inset-inline-end: 0;
+        transition: outline var(--ui-duration-fast-01)
+            var(--ui-motion-standard-productive);
+    }
+
+    .ui-text-input-fluid .ui-toggle-password-tooltip .ui-popover,
+    .ui-text-input--fluid .ui-toggle-password-tooltip .ui-popover {
+        inset-inline-start: 0;
+    }
+
+    .ui-text-input-fluid
+        .ui-btn.ui-text-input-password-visibility-toggle.ui-tooltip-trigger,
+    .ui-text-input-fluid
+        .ui-btn.ui-text-input-password-visibility-toggle.ui-tooltip__trigger,
+    .ui-text-input-fluid
+        .ui-btn.ui-text-input--password__visibility__toggle.ui-tooltip-trigger,
+    .ui-text-input-fluid
+        .ui-btn.ui-text-input--password__visibility__toggle.ui-tooltip__trigger,
+    .ui-text-input--fluid
+        .ui-btn.ui-text-input-password-visibility-toggle.ui-tooltip-trigger,
+    .ui-text-input--fluid
+        .ui-btn.ui-text-input-password-visibility-toggle.ui-tooltip__trigger,
+    .ui-text-input--fluid
+        .ui-btn.ui-text-input--password__visibility__toggle.ui-tooltip-trigger,
+    .ui-text-input--fluid
+        .ui-btn.ui-text-input--password__visibility__toggle.ui-tooltip__trigger {
+        inline-size: 2rem;
+        block-size: 2rem;
+        inset-block-start: 1.625rem;
+        inset-inline-end: var(--ui-spacing-03);
+    }
+
+    /* ----------------------------------------------------------------------
+       Skeleton
+       ---------------------------------------------------------------------- */
+
+    .ui-text-input-fluid-skeleton,
+    .ui-text-input--fluid__skeleton {
+        position: relative;
+        block-size: 4rem;
+        border-block-end: 1px solid var(--ui-skeleton-element);
+        background: var(--ui-skeleton-background);
+    }
+
+    .ui-text-input-fluid-skeleton .ui-skeleton,
+    .ui-text-input--fluid__skeleton .ui-skeleton {
+        position: absolute;
+        inline-size: 25%;
+        block-size: 0.5rem;
+        inset-block-start: var(--ui-spacing-05);
+        inset-inline-start: var(--ui-spacing-05);
+    }
+
+    .ui-text-input-fluid-skeleton .ui-label,
+    .ui-text-input--fluid__skeleton .ui-label {
+        position: absolute;
+        inline-size: 50%;
+        block-size: 0.5rem;
+        padding: 0;
+        inset-block-start: 2.25rem;
+        inset-inline-start: var(--ui-spacing-05);
+    }
+
+    /* ----------------------------------------------------------------------
+       AI label / decorator
+       ---------------------------------------------------------------------- */
+
+    .ui-text-input-fluid
+        .ui-text-input-field-wrapper-decorator
+        .ui-text-input-field-inner-wrapper-decorator
+        > *,
+    .ui-text-input-fluid
+        .ui-text-input-field-wrapper-decorator
+        .ui-text-input__field-inner-wrapper--decorator
+        > *,
+    .ui-text-input-fluid
+        .ui-text-input__field-wrapper--decorator
+        .ui-text-input-field-inner-wrapper-decorator
+        > *,
+    .ui-text-input-fluid
+        .ui-text-input__field-wrapper--decorator
+        .ui-text-input__field-inner-wrapper--decorator
+        > *,
+    .ui-text-input-fluid .ui-text-input-field-wrapper-slug .ui-ai-label,
+    .ui-text-input-fluid .ui-text-input-field-wrapper-slug .ui-slug,
+    .ui-text-input-fluid .ui-text-input__field-wrapper--slug .ui-ai-label,
+    .ui-text-input-fluid .ui-text-input__field-wrapper--slug .ui-slug,
+    .ui-text-input--fluid
+        .ui-text-input-field-wrapper-decorator
+        .ui-text-input-field-inner-wrapper-decorator
+        > *,
+    .ui-text-input--fluid
+        .ui-text-input-field-wrapper-decorator
+        .ui-text-input__field-inner-wrapper--decorator
+        > *,
+    .ui-text-input--fluid
+        .ui-text-input__field-wrapper--decorator
+        .ui-text-input-field-inner-wrapper-decorator
+        > *,
+    .ui-text-input--fluid
+        .ui-text-input__field-wrapper--decorator
+        .ui-text-input__field-inner-wrapper--decorator
+        > *,
+    .ui-text-input--fluid .ui-text-input-field-wrapper-slug .ui-ai-label,
+    .ui-text-input--fluid .ui-text-input-field-wrapper-slug .ui-slug,
+    .ui-text-input--fluid .ui-text-input__field-wrapper--slug .ui-ai-label,
+    .ui-text-input--fluid .ui-text-input__field-wrapper--slug .ui-slug {
+        inset-block-start: 2.625rem;
+    }
+
+    .ui-text-input-fluid
+        .ui-text-input-invalid
+        ~ .ui-text-input-field-inner-wrapper-decorator
+        > *,
+    .ui-text-input-fluid
+        .ui-text-input--invalid
+        ~ .ui-text-input-field-inner-wrapper-decorator
+        > *,
+    .ui-text-input-fluid
+        .ui-text-input-invalid
+        ~ .ui-text-input__field-inner-wrapper--decorator
+        > *,
+    .ui-text-input-fluid
+        .ui-text-input--invalid
+        ~ .ui-text-input__field-inner-wrapper--decorator
+        > *,
+    .ui-text-input-fluid
+        .ui-text-input-warning
+        ~ .ui-text-input-field-inner-wrapper-decorator
+        > *,
+    .ui-text-input-fluid
+        .ui-text-input--warning
+        ~ .ui-text-input-field-inner-wrapper-decorator
+        > *,
+    .ui-text-input-fluid
+        .ui-text-input-warning
+        ~ .ui-text-input__field-inner-wrapper--decorator
+        > *,
+    .ui-text-input-fluid
+        .ui-text-input--warning
+        ~ .ui-text-input__field-inner-wrapper--decorator
+        > *,
+    .ui-text-input-fluid .ui-text-input-invalid ~ .ui-ai-label,
+    .ui-text-input-fluid .ui-text-input--invalid ~ .ui-ai-label,
+    .ui-text-input-fluid .ui-text-input-warning ~ .ui-ai-label,
+    .ui-text-input-fluid .ui-text-input--warning ~ .ui-ai-label,
+    .ui-text-input-fluid .ui-text-input-invalid ~ .ui-slug,
+    .ui-text-input-fluid .ui-text-input--invalid ~ .ui-slug,
+    .ui-text-input-fluid .ui-text-input-warning ~ .ui-slug,
+    .ui-text-input-fluid .ui-text-input--warning ~ .ui-slug,
+    .ui-text-input--fluid
+        .ui-text-input-invalid
+        ~ .ui-text-input-field-inner-wrapper-decorator
+        > *,
+    .ui-text-input--fluid
+        .ui-text-input--invalid
+        ~ .ui-text-input-field-inner-wrapper-decorator
+        > *,
+    .ui-text-input--fluid
+        .ui-text-input-invalid
+        ~ .ui-text-input__field-inner-wrapper--decorator
+        > *,
+    .ui-text-input--fluid
+        .ui-text-input--invalid
+        ~ .ui-text-input__field-inner-wrapper--decorator
+        > *,
+    .ui-text-input--fluid
+        .ui-text-input-warning
+        ~ .ui-text-input-field-inner-wrapper-decorator
+        > *,
+    .ui-text-input--fluid
+        .ui-text-input--warning
+        ~ .ui-text-input-field-inner-wrapper-decorator
+        > *,
+    .ui-text-input--fluid
+        .ui-text-input-warning
+        ~ .ui-text-input__field-inner-wrapper--decorator
+        > *,
+    .ui-text-input--fluid
+        .ui-text-input--warning
+        ~ .ui-text-input__field-inner-wrapper--decorator
+        > *,
+    .ui-text-input--fluid .ui-text-input-invalid ~ .ui-ai-label,
+    .ui-text-input--fluid .ui-text-input--invalid ~ .ui-ai-label,
+    .ui-text-input--fluid .ui-text-input-warning ~ .ui-ai-label,
+    .ui-text-input--fluid .ui-text-input--warning ~ .ui-ai-label,
+    .ui-text-input--fluid .ui-text-input-invalid ~ .ui-slug,
+    .ui-text-input--fluid .ui-text-input--invalid ~ .ui-slug,
+    .ui-text-input--fluid .ui-text-input-warning ~ .ui-slug,
+    .ui-text-input--fluid .ui-text-input--warning ~ .ui-slug {
+        inset-inline-end: var(--ui-spacing-05);
+    }
+
+    .ui-text-input-fluid .ui-text-input-field-wrapper-decorator .ui-text-input,
+    .ui-text-input-fluid
+        .ui-text-input-field-wrapper-decorator
+        .ui-text-input-invalid,
+    .ui-text-input-fluid
+        .ui-text-input-field-wrapper-decorator
+        .ui-text-input--invalid,
+    .ui-text-input-fluid
+        .ui-text-input-field-wrapper-decorator
+        .ui-text-input-warning,
+    .ui-text-input-fluid
+        .ui-text-input-field-wrapper-decorator
+        .ui-text-input--warning,
+    .ui-text-input-fluid
+        .ui-text-input__field-wrapper--decorator
+        .ui-text-input,
+    .ui-text-input-fluid
+        .ui-text-input__field-wrapper--decorator
+        .ui-text-input-invalid,
+    .ui-text-input-fluid
+        .ui-text-input__field-wrapper--decorator
+        .ui-text-input--invalid,
+    .ui-text-input-fluid
+        .ui-text-input__field-wrapper--decorator
+        .ui-text-input-warning,
+    .ui-text-input-fluid
+        .ui-text-input__field-wrapper--decorator
+        .ui-text-input--warning,
+    .ui-text-input-fluid .ui-text-input-field-wrapper-slug .ui-text-input,
+    .ui-text-input-fluid
+        .ui-text-input-field-wrapper-slug
+        .ui-text-input-invalid,
+    .ui-text-input-fluid
+        .ui-text-input-field-wrapper-slug
+        .ui-text-input--invalid,
+    .ui-text-input-fluid
+        .ui-text-input-field-wrapper-slug
+        .ui-text-input-warning,
+    .ui-text-input-fluid
+        .ui-text-input-field-wrapper-slug
+        .ui-text-input--warning,
+    .ui-text-input-fluid .ui-text-input__field-wrapper--slug .ui-text-input,
+    .ui-text-input-fluid
+        .ui-text-input__field-wrapper--slug
+        .ui-text-input-invalid,
+    .ui-text-input-fluid
+        .ui-text-input__field-wrapper--slug
+        .ui-text-input--invalid,
+    .ui-text-input-fluid
+        .ui-text-input__field-wrapper--slug
+        .ui-text-input-warning,
+    .ui-text-input-fluid
+        .ui-text-input__field-wrapper--slug
+        .ui-text-input--warning,
+    .ui-text-input--fluid .ui-text-input-field-wrapper-decorator .ui-text-input,
+    .ui-text-input--fluid
+        .ui-text-input-field-wrapper-decorator
+        .ui-text-input-invalid,
+    .ui-text-input--fluid
+        .ui-text-input-field-wrapper-decorator
+        .ui-text-input--invalid,
+    .ui-text-input--fluid
+        .ui-text-input-field-wrapper-decorator
+        .ui-text-input-warning,
+    .ui-text-input--fluid
+        .ui-text-input-field-wrapper-decorator
+        .ui-text-input--warning,
+    .ui-text-input--fluid
+        .ui-text-input__field-wrapper--decorator
+        .ui-text-input,
+    .ui-text-input--fluid
+        .ui-text-input__field-wrapper--decorator
+        .ui-text-input-invalid,
+    .ui-text-input--fluid
+        .ui-text-input__field-wrapper--decorator
+        .ui-text-input--invalid,
+    .ui-text-input--fluid
+        .ui-text-input__field-wrapper--decorator
+        .ui-text-input-warning,
+    .ui-text-input--fluid
+        .ui-text-input__field-wrapper--decorator
+        .ui-text-input--warning,
+    .ui-text-input--fluid .ui-text-input-field-wrapper-slug .ui-text-input,
+    .ui-text-input--fluid
+        .ui-text-input-field-wrapper-slug
+        .ui-text-input-invalid,
+    .ui-text-input--fluid
+        .ui-text-input-field-wrapper-slug
+        .ui-text-input--invalid,
+    .ui-text-input--fluid
+        .ui-text-input-field-wrapper-slug
+        .ui-text-input-warning,
+    .ui-text-input--fluid
+        .ui-text-input-field-wrapper-slug
+        .ui-text-input--warning,
+    .ui-text-input--fluid .ui-text-input__field-wrapper--slug .ui-text-input,
+    .ui-text-input--fluid
+        .ui-text-input__field-wrapper--slug
+        .ui-text-input-invalid,
+    .ui-text-input--fluid
+        .ui-text-input__field-wrapper--slug
+        .ui-text-input--invalid,
+    .ui-text-input--fluid
+        .ui-text-input__field-wrapper--slug
+        .ui-text-input-warning,
+    .ui-text-input--fluid
+        .ui-text-input__field-wrapper--slug
+        .ui-text-input--warning {
+        padding-inline-end: var(--ui-spacing-08);
+    }
+
+    /* ----------------------------------------------------------------------
+       Reduced motion
+       ---------------------------------------------------------------------- */
+
+    @media screen and (prefers-reduced-motion: reduce) {
+        .ui-text-input-fluid.ui-text-input-wrapper,
+        .ui-text-input--fluid.ui-text-input-wrapper,
+        .ui-text-input-fluid .ui-toggle-password-tooltip,
+        .ui-text-input--fluid .ui-toggle-password-tooltip {
+            transition: none;
+        }
+    }
+
+    /* ----------------------------------------------------------------------
+       Forced colors
+       ---------------------------------------------------------------------- */
+
+    @media screen and (-ms-high-contrast: active), (forced-colors: active) {
+        .ui-text-input-fluid.ui-text-input-wrapper,
+        .ui-text-input--fluid.ui-text-input-wrapper {
+            background: Canvas;
+        }
+
+        .ui-text-input-fluid .ui-text-input,
+        .ui-text-input--fluid .ui-text-input {
+            background: Canvas;
+            color: CanvasText;
+        }
+
+        .ui-text-input-fluid .ui-label,
+        .ui-text-input--fluid .ui-label {
+            color: CanvasText;
+        }
+
+        .ui-text-input-fluid
+            .ui-text-input-field-wrapper[data-invalid]:not(:focus),
+        .ui-text-input-fluid
+            .ui-text-input__field-wrapper[data-invalid]:not(:focus),
+        .ui-text-input--fluid
+            .ui-text-input-field-wrapper[data-invalid]:not(:focus),
+        .ui-text-input--fluid
+            .ui-text-input__field-wrapper[data-invalid]:not(:focus) {
+            outline-color: Mark;
+        }
+
+        .ui-text-input-fluid
+            .ui-text-input-field-wrapper[data-invalid]:focus-within,
+        .ui-text-input-fluid
+            .ui-text-input__field-wrapper[data-invalid]:focus-within,
+        .ui-text-input-fluid .ui-text-input-field-wrapper-warning:focus-within,
+        .ui-text-input-fluid
+            .ui-text-input__field-wrapper--warning:focus-within,
+        .ui-text-input--fluid
+            .ui-text-input-field-wrapper[data-invalid]:focus-within,
+        .ui-text-input--fluid
+            .ui-text-input__field-wrapper[data-invalid]:focus-within,
+        .ui-text-input--fluid .ui-text-input-field-wrapper-warning:focus-within,
+        .ui-text-input--fluid
+            .ui-text-input__field-wrapper--warning:focus-within {
+            outline-color: Highlight;
+        }
+
+        .ui-text-input-fluid .ui-text-input-invalid ~ .ui-text-input-divider,
+        .ui-text-input-fluid .ui-text-input-invalid ~ .ui-text-input__divider,
+        .ui-text-input-fluid .ui-text-input--invalid ~ .ui-text-input-divider,
+        .ui-text-input-fluid .ui-text-input--invalid ~ .ui-text-input__divider,
+        .ui-text-input-fluid .ui-text-input-warning ~ .ui-text-input-divider,
+        .ui-text-input-fluid .ui-text-input-warning ~ .ui-text-input__divider,
+        .ui-text-input-fluid .ui-text-input--warning ~ .ui-text-input-divider,
+        .ui-text-input-fluid .ui-text-input--warning ~ .ui-text-input__divider,
+        .ui-text-input--fluid .ui-text-input-invalid ~ .ui-text-input-divider,
+        .ui-text-input--fluid .ui-text-input-invalid ~ .ui-text-input__divider,
+        .ui-text-input--fluid .ui-text-input--invalid ~ .ui-text-input-divider,
+        .ui-text-input--fluid .ui-text-input--invalid ~ .ui-text-input__divider,
+        .ui-text-input--fluid .ui-text-input-warning ~ .ui-text-input-divider,
+        .ui-text-input--fluid .ui-text-input-warning ~ .ui-text-input__divider,
+        .ui-text-input--fluid .ui-text-input--warning ~ .ui-text-input-divider,
+        .ui-text-input--fluid
+            .ui-text-input--warning
+            ~ .ui-text-input__divider {
+            border-color: CanvasText;
+        }
+    }
+}

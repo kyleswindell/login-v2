@@ -1,83 +1,559 @@
 /* ==========================================================================
-File: resources/css/components/toggle.css
-Purpose: Toggle component styles.
-Carbon reference:
+   File: resources/css/components/toggle.css
+   Purpose: Toggle component styles.
+   Reference source:
 
-* reference/carbon-main/packages/styles/scss/components/toggle/
+   * reference/carbon-main/packages/styles/scss/components/toggle/_toggle.scss
 
-Notes:
-
-* Defines Toggle selectors only.
-* Do not define primitive palette tokens here.
-* Do not define theme role tokens here.
-* Toggle consumes form, type, spacing, focus, and theme tokens.
-  ========================================================================== */
+   Notes:
+   - Defines Toggle selectors only.
+   - Do not define primitive palette tokens here.
+   - Do not define theme role tokens here.
+   - Toggle uses an accessible native input, a visual switch, optional text,
+     disabled, readonly, skeleton, small-size, and RTL states.
+   ========================================================================== */
 
 @layer components {
+    /* ----------------------------------------------------------------------
+       Root
+       ---------------------------------------------------------------------- */
+
     .ui-toggle {
+        display: inline-block;
+        user-select: none;
+    }
+
+    .ui-toggle-label,
+    .ui-toggle__label {
+        display: inline-block;
+    }
+
+    .ui-toggle-label-text,
+    .ui-toggle__label-text {
+        display: block;
+        margin-block-end: var(--ui-spacing-05);
+        color: var(--ui-text-secondary);
+        font-size: var(--ui-type-label-01-font-size);
+        font-weight: var(--ui-type-label-01-font-weight);
+        line-height: var(--ui-type-label-01-line-height);
+        letter-spacing: var(--ui-type-label-01-letter-spacing);
+    }
+
+    .ui-toggle-reduced-label-spacing .ui-toggle-label-text,
+    .ui-toggle-reduced-label-spacing .ui-toggle__label-text,
+    .ui-toggle[data-ui-toggle-reduced-label-spacing="true"]
+        .ui-toggle-label-text,
+    .ui-toggle[data-ui-toggle-reduced-label-spacing="true"]
+        .ui-toggle__label-text {
+        margin-block-end: var(--ui-spacing-03);
+    }
+
+    /* ----------------------------------------------------------------------
+       Native input
+       ---------------------------------------------------------------------- */
+
+    .ui-toggle-button,
+    .ui-toggle__button {
         position: absolute;
         overflow: hidden;
-        clip: rect(0 0 0 0);
-        inline-size: 1px;
-        block-size: 1px;
         margin: -1px;
         border: 0;
         padding: 0;
+        inline-size: 1px;
+        block-size: 1px;
+        clip: rect(0, 0, 0, 0);
+        visibility: inherit;
         white-space: nowrap;
     }
 
-    .ui-toggle-label {
-        display: inline-flex;
+    .ui-toggle-button:focus,
+    .ui-toggle__button:focus {
+        outline: none;
+    }
+
+    /* ----------------------------------------------------------------------
+       Visual appearance
+       ---------------------------------------------------------------------- */
+
+    .ui-toggle-appearance,
+    .ui-toggle__appearance {
+        display: inline-grid;
+        grid-template-columns: max-content max-content;
         align-items: center;
-        gap: var(--ui-spacing-03);
-        color: var(--ui-text-primary);
+        column-gap: var(--ui-spacing-03);
         cursor: pointer;
-        font-size: var(--ui-type-body-compact-01-font-size);
-        line-height: var(--ui-type-body-compact-01-line-height);
     }
 
-    .ui-toggle-switch {
+    .ui-toggle-switch,
+    .ui-toggle__switch {
         position: relative;
-        inline-size: 3rem;
-        block-size: 1.5rem;
-        border-radius: 999px;
-        background-color: var(--ui-layer-selected-disabled);
+        inline-size: 3rem; /* 48px */
+        block-size: 1.5rem; /* 24px */
+        border-radius: 0.75rem;
+        background-color: var(--ui-toggle-off, var(--ui-icon-secondary));
         transition: background-color var(--ui-duration-fast-01)
-            var(--ui-motion-standard-productive);
+            var(--ui-motion-exit-productive);
     }
 
-    .ui-toggle-switch::before {
-        content: "";
+    .ui-toggle-switch::before,
+    .ui-toggle__switch::before {
         position: absolute;
-        inset-block-start: 0.1875rem;
-        inset-inline-start: 0.1875rem;
-        inline-size: 1.125rem;
-        block-size: 1.125rem;
+        inset-block-start: 0.1875rem; /* 3px */
+        inset-inline-start: 0.1875rem; /* 3px */
+        inline-size: 1.125rem; /* 18px */
+        block-size: 1.125rem; /* 18px */
         border-radius: 50%;
-        background-color: var(--ui-background);
+        background-color: var(--ui-icon-on-color);
+        content: "";
         transition: transform var(--ui-duration-fast-01)
-            var(--ui-motion-standard-productive);
+            var(--ui-motion-exit-productive);
     }
 
-    .ui-toggle:checked + .ui-toggle-label .ui-toggle-switch {
+    /* ----------------------------------------------------------------------
+       Focus and active treatment
+       ---------------------------------------------------------------------- */
+
+    .ui-toggle-button:focus + .ui-toggle-label .ui-toggle-switch::after,
+    .ui-toggle-button:focus + .ui-toggle__label .ui-toggle__switch::after,
+    .ui-toggle__button:focus + .ui-toggle-label .ui-toggle-switch::after,
+    .ui-toggle__button:focus + .ui-toggle__label .ui-toggle__switch::after,
+    .ui-toggle:not(.ui-toggle-disabled):not(.ui-toggle--disabled):not(
+            [aria-disabled="true"]
+        ):active
+        .ui-toggle-switch::after,
+    .ui-toggle:not(.ui-toggle-disabled):not(.ui-toggle--disabled):not(
+            [aria-disabled="true"]
+        ):active
+        .ui-toggle__switch::after {
+        display: block;
+        inline-size: 100%;
+        block-size: 100%;
+        border-radius: 1rem;
+        outline: 2px solid var(--ui-focus);
+        outline-offset: 1px;
+        content: "";
+    }
+
+    /* ----------------------------------------------------------------------
+       Checked state
+       ---------------------------------------------------------------------- */
+
+    .ui-toggle-switch-checked,
+    .ui-toggle__switch--checked,
+    .ui-toggle-button:checked + .ui-toggle-label .ui-toggle-switch,
+    .ui-toggle-button:checked + .ui-toggle__label .ui-toggle__switch,
+    .ui-toggle__button:checked + .ui-toggle-label .ui-toggle-switch,
+    .ui-toggle__button:checked + .ui-toggle__label .ui-toggle__switch,
+    .ui-toggle[data-ui-toggle-state="on"] .ui-toggle-switch,
+    .ui-toggle[data-ui-toggle-state="on"] .ui-toggle__switch,
+    .ui-toggle[aria-checked="true"] .ui-toggle-switch,
+    .ui-toggle[aria-checked="true"] .ui-toggle__switch {
         background-color: var(--ui-support-success);
     }
 
-    .ui-toggle:checked + .ui-toggle-label .ui-toggle-switch::before {
-        transform: translateX(1.5rem);
+    .ui-toggle-switch-checked::before,
+    .ui-toggle__switch--checked::before,
+    .ui-toggle-button:checked + .ui-toggle-label .ui-toggle-switch::before,
+    .ui-toggle-button:checked + .ui-toggle__label .ui-toggle__switch::before,
+    .ui-toggle__button:checked + .ui-toggle-label .ui-toggle-switch::before,
+    .ui-toggle__button:checked + .ui-toggle__label .ui-toggle__switch::before,
+    .ui-toggle[data-ui-toggle-state="on"] .ui-toggle-switch::before,
+    .ui-toggle[data-ui-toggle-state="on"] .ui-toggle__switch::before,
+    .ui-toggle[aria-checked="true"] .ui-toggle-switch::before,
+    .ui-toggle[aria-checked="true"] .ui-toggle__switch::before {
+        transform: translateX(1.5rem); /* 24px */
     }
 
-    .ui-toggle:focus-visible + .ui-toggle-label .ui-toggle-switch {
-        outline: 2px solid var(--ui-focus);
-        outline-offset: 2px;
+    /* ----------------------------------------------------------------------
+       Text
+       ---------------------------------------------------------------------- */
+
+    .ui-toggle-text,
+    .ui-toggle__text {
+        color: var(--ui-text-primary);
+        font-size: var(--ui-type-body-01-font-size);
+        font-weight: var(--ui-type-body-01-font-weight);
+        line-height: var(--ui-type-body-01-line-height);
+        letter-spacing: var(--ui-type-body-01-letter-spacing);
     }
 
-    .ui-toggle:disabled + .ui-toggle-label {
-        color: var(--ui-text-disabled);
+    /* ----------------------------------------------------------------------
+       Small size
+       ---------------------------------------------------------------------- */
+
+    .ui-toggle-appearance-sm .ui-toggle-switch,
+    .ui-toggle-appearance-sm .ui-toggle__switch,
+    .ui-toggle__appearance--sm .ui-toggle-switch,
+    .ui-toggle__appearance--sm .ui-toggle__switch,
+    .ui-toggle[data-ui-toggle-size="sm"] .ui-toggle-switch,
+    .ui-toggle[data-ui-toggle-size="sm"] .ui-toggle__switch {
+        inline-size: 2rem; /* 32px */
+        block-size: 1rem; /* 16px */
+    }
+
+    .ui-toggle-appearance-sm .ui-toggle-switch::before,
+    .ui-toggle-appearance-sm .ui-toggle__switch::before,
+    .ui-toggle__appearance--sm .ui-toggle-switch::before,
+    .ui-toggle__appearance--sm .ui-toggle__switch::before,
+    .ui-toggle[data-ui-toggle-size="sm"] .ui-toggle-switch::before,
+    .ui-toggle[data-ui-toggle-size="sm"] .ui-toggle__switch::before {
+        inline-size: 0.625rem; /* 10px */
+        block-size: 0.625rem; /* 10px */
+    }
+
+    .ui-toggle-appearance-sm .ui-toggle-switch-checked::before,
+    .ui-toggle-appearance-sm .ui-toggle__switch--checked::before,
+    .ui-toggle__appearance--sm .ui-toggle-switch-checked::before,
+    .ui-toggle__appearance--sm .ui-toggle__switch--checked::before,
+    .ui-toggle[data-ui-toggle-size="sm"][data-ui-toggle-state="on"]
+        .ui-toggle-switch::before,
+    .ui-toggle[data-ui-toggle-size="sm"][data-ui-toggle-state="on"]
+        .ui-toggle__switch::before,
+    .ui-toggle[data-ui-toggle-size="sm"][aria-checked="true"]
+        .ui-toggle-switch::before,
+    .ui-toggle[data-ui-toggle-size="sm"][aria-checked="true"]
+        .ui-toggle__switch::before,
+    .ui-toggle[data-ui-toggle-size="sm"]
+        .ui-toggle-button:checked
+        + .ui-toggle-label
+        .ui-toggle-switch::before,
+    .ui-toggle[data-ui-toggle-size="sm"]
+        .ui-toggle-button:checked
+        + .ui-toggle__label
+        .ui-toggle__switch::before,
+    .ui-toggle[data-ui-toggle-size="sm"]
+        .ui-toggle__button:checked
+        + .ui-toggle-label
+        .ui-toggle-switch::before,
+    .ui-toggle[data-ui-toggle-size="sm"]
+        .ui-toggle__button:checked
+        + .ui-toggle__label
+        .ui-toggle__switch::before {
+        transform: translateX(1rem); /* 16px */
+    }
+
+    /* ----------------------------------------------------------------------
+       Check icon
+       ---------------------------------------------------------------------- */
+
+    .ui-toggle-check,
+    .ui-toggle__check {
+        position: absolute;
+        inset-block-start: 0.375rem; /* 6px */
+        inset-inline-end: 0.3125rem; /* 5px */
+        inline-size: 0.375rem; /* 6px */
+        block-size: 0.3125rem; /* 5px */
+        fill: var(--ui-support-success);
+        visibility: hidden;
+    }
+
+    .ui-toggle-switch-checked .ui-toggle-check,
+    .ui-toggle-switch-checked .ui-toggle__check,
+    .ui-toggle__switch--checked .ui-toggle-check,
+    .ui-toggle__switch--checked .ui-toggle__check,
+    .ui-toggle-button:checked + .ui-toggle-label .ui-toggle-check,
+    .ui-toggle-button:checked + .ui-toggle__label .ui-toggle__check,
+    .ui-toggle__button:checked + .ui-toggle-label .ui-toggle-check,
+    .ui-toggle__button:checked + .ui-toggle__label .ui-toggle__check,
+    .ui-toggle[data-ui-toggle-state="on"] .ui-toggle-check,
+    .ui-toggle[data-ui-toggle-state="on"] .ui-toggle__check,
+    .ui-toggle[aria-checked="true"] .ui-toggle-check,
+    .ui-toggle[aria-checked="true"] .ui-toggle__check {
+        visibility: visible;
+    }
+
+    /* ----------------------------------------------------------------------
+       Disabled state
+       ---------------------------------------------------------------------- */
+
+    .ui-toggle-disabled .ui-toggle-appearance,
+    .ui-toggle-disabled .ui-toggle__appearance,
+    .ui-toggle--disabled .ui-toggle-appearance,
+    .ui-toggle--disabled .ui-toggle__appearance,
+    .ui-toggle[aria-disabled="true"] .ui-toggle-appearance,
+    .ui-toggle[aria-disabled="true"] .ui-toggle__appearance,
+    .ui-toggle[data-disabled="true"] .ui-toggle-appearance,
+    .ui-toggle[data-disabled="true"] .ui-toggle__appearance,
+    .ui-toggle[data-ui-disabled="true"] .ui-toggle-appearance,
+    .ui-toggle[data-ui-disabled="true"] .ui-toggle__appearance {
         cursor: not-allowed;
     }
 
-    .ui-toggle:disabled + .ui-toggle-label .ui-toggle-switch {
-        background-color: var(--ui-layer-selected-disabled);
+    .ui-toggle-disabled .ui-toggle-label-text,
+    .ui-toggle-disabled .ui-toggle__label-text,
+    .ui-toggle-disabled .ui-toggle-text,
+    .ui-toggle-disabled .ui-toggle__text,
+    .ui-toggle--disabled .ui-toggle-label-text,
+    .ui-toggle--disabled .ui-toggle__label-text,
+    .ui-toggle--disabled .ui-toggle-text,
+    .ui-toggle--disabled .ui-toggle__text,
+    .ui-toggle[aria-disabled="true"] .ui-toggle-label-text,
+    .ui-toggle[aria-disabled="true"] .ui-toggle__label-text,
+    .ui-toggle[aria-disabled="true"] .ui-toggle-text,
+    .ui-toggle[aria-disabled="true"] .ui-toggle__text,
+    .ui-toggle[data-disabled="true"] .ui-toggle-label-text,
+    .ui-toggle[data-disabled="true"] .ui-toggle__label-text,
+    .ui-toggle[data-disabled="true"] .ui-toggle-text,
+    .ui-toggle[data-disabled="true"] .ui-toggle__text,
+    .ui-toggle[data-ui-disabled="true"] .ui-toggle-label-text,
+    .ui-toggle[data-ui-disabled="true"] .ui-toggle__label-text,
+    .ui-toggle[data-ui-disabled="true"] .ui-toggle-text,
+    .ui-toggle[data-ui-disabled="true"] .ui-toggle__text {
+        color: var(--ui-text-disabled);
+    }
+
+    .ui-toggle-disabled .ui-toggle-switch,
+    .ui-toggle-disabled .ui-toggle__switch,
+    .ui-toggle--disabled .ui-toggle-switch,
+    .ui-toggle--disabled .ui-toggle__switch,
+    .ui-toggle[aria-disabled="true"] .ui-toggle-switch,
+    .ui-toggle[aria-disabled="true"] .ui-toggle__switch,
+    .ui-toggle[data-disabled="true"] .ui-toggle-switch,
+    .ui-toggle[data-disabled="true"] .ui-toggle__switch,
+    .ui-toggle[data-ui-disabled="true"] .ui-toggle-switch,
+    .ui-toggle[data-ui-disabled="true"] .ui-toggle__switch {
+        background-color: var(--ui-button-disabled, var(--ui-border-disabled));
+    }
+
+    .ui-toggle-disabled .ui-toggle-switch::before,
+    .ui-toggle-disabled .ui-toggle__switch::before,
+    .ui-toggle--disabled .ui-toggle-switch::before,
+    .ui-toggle--disabled .ui-toggle__switch::before,
+    .ui-toggle[aria-disabled="true"] .ui-toggle-switch::before,
+    .ui-toggle[aria-disabled="true"] .ui-toggle__switch::before,
+    .ui-toggle[data-disabled="true"] .ui-toggle-switch::before,
+    .ui-toggle[data-disabled="true"] .ui-toggle__switch::before,
+    .ui-toggle[data-ui-disabled="true"] .ui-toggle-switch::before,
+    .ui-toggle[data-ui-disabled="true"] .ui-toggle__switch::before {
+        background-color: var(--ui-icon-on-color-disabled);
+    }
+
+    .ui-toggle-disabled .ui-toggle-check,
+    .ui-toggle-disabled .ui-toggle__check,
+    .ui-toggle--disabled .ui-toggle-check,
+    .ui-toggle--disabled .ui-toggle__check,
+    .ui-toggle[aria-disabled="true"] .ui-toggle-check,
+    .ui-toggle[aria-disabled="true"] .ui-toggle__check,
+    .ui-toggle[data-disabled="true"] .ui-toggle-check,
+    .ui-toggle[data-disabled="true"] .ui-toggle__check,
+    .ui-toggle[data-ui-disabled="true"] .ui-toggle-check,
+    .ui-toggle[data-ui-disabled="true"] .ui-toggle__check {
+        fill: var(--ui-button-disabled, var(--ui-border-disabled));
+    }
+
+    /* ----------------------------------------------------------------------
+       Readonly state
+       ---------------------------------------------------------------------- */
+
+    .ui-toggle-readonly .ui-toggle-appearance,
+    .ui-toggle-readonly .ui-toggle__appearance,
+    .ui-toggle--readonly .ui-toggle-appearance,
+    .ui-toggle--readonly .ui-toggle__appearance,
+    .ui-toggle[readonly] .ui-toggle-appearance,
+    .ui-toggle[readonly] .ui-toggle__appearance,
+    .ui-toggle[aria-readonly="true"] .ui-toggle-appearance,
+    .ui-toggle[aria-readonly="true"] .ui-toggle__appearance,
+    .ui-toggle[data-readonly="true"] .ui-toggle-appearance,
+    .ui-toggle[data-readonly="true"] .ui-toggle__appearance,
+    .ui-toggle[data-ui-readonly="true"] .ui-toggle-appearance,
+    .ui-toggle[data-ui-readonly="true"] .ui-toggle__appearance {
+        cursor: default;
+    }
+
+    .ui-toggle-readonly .ui-toggle-switch,
+    .ui-toggle-readonly .ui-toggle__switch,
+    .ui-toggle--readonly .ui-toggle-switch,
+    .ui-toggle--readonly .ui-toggle__switch,
+    .ui-toggle[readonly] .ui-toggle-switch,
+    .ui-toggle[readonly] .ui-toggle__switch,
+    .ui-toggle[aria-readonly="true"] .ui-toggle-switch,
+    .ui-toggle[aria-readonly="true"] .ui-toggle__switch,
+    .ui-toggle[data-readonly="true"] .ui-toggle-switch,
+    .ui-toggle[data-readonly="true"] .ui-toggle__switch,
+    .ui-toggle[data-ui-readonly="true"] .ui-toggle-switch,
+    .ui-toggle[data-ui-readonly="true"] .ui-toggle__switch {
+        border: 1px solid var(--ui-icon-disabled);
+        background-color: transparent;
+    }
+
+    .ui-toggle-readonly .ui-toggle-switch::before,
+    .ui-toggle-readonly .ui-toggle__switch::before,
+    .ui-toggle--readonly .ui-toggle-switch::before,
+    .ui-toggle--readonly .ui-toggle__switch::before,
+    .ui-toggle[readonly] .ui-toggle-switch::before,
+    .ui-toggle[readonly] .ui-toggle__switch::before,
+    .ui-toggle[aria-readonly="true"] .ui-toggle-switch::before,
+    .ui-toggle[aria-readonly="true"] .ui-toggle__switch::before,
+    .ui-toggle[data-readonly="true"] .ui-toggle-switch::before,
+    .ui-toggle[data-readonly="true"] .ui-toggle__switch::before,
+    .ui-toggle[data-ui-readonly="true"] .ui-toggle-switch::before,
+    .ui-toggle[data-ui-readonly="true"] .ui-toggle__switch::before {
+        inset-block-start: 0.125rem; /* 2px */
+        inset-inline-start: 0.125rem; /* 2px */
+        background-color: var(--ui-icon-primary);
+    }
+
+    .ui-toggle-readonly .ui-toggle-check,
+    .ui-toggle-readonly .ui-toggle__check,
+    .ui-toggle--readonly .ui-toggle-check,
+    .ui-toggle--readonly .ui-toggle__check,
+    .ui-toggle[readonly] .ui-toggle-check,
+    .ui-toggle[readonly] .ui-toggle__check,
+    .ui-toggle[aria-readonly="true"] .ui-toggle-check,
+    .ui-toggle[aria-readonly="true"] .ui-toggle__check,
+    .ui-toggle[data-readonly="true"] .ui-toggle-check,
+    .ui-toggle[data-readonly="true"] .ui-toggle__check,
+    .ui-toggle[data-ui-readonly="true"] .ui-toggle-check,
+    .ui-toggle[data-ui-readonly="true"] .ui-toggle__check {
+        inset-block-start: 0.3125rem; /* 5px */
+        inset-inline-end: 0.25rem; /* 4px */
+        fill: var(--ui-background);
+    }
+
+    .ui-toggle-readonly .ui-toggle-text,
+    .ui-toggle-readonly .ui-toggle__text,
+    .ui-toggle--readonly .ui-toggle-text,
+    .ui-toggle--readonly .ui-toggle__text,
+    .ui-toggle[readonly] .ui-toggle-text,
+    .ui-toggle[readonly] .ui-toggle__text,
+    .ui-toggle[aria-readonly="true"] .ui-toggle-text,
+    .ui-toggle[aria-readonly="true"] .ui-toggle__text,
+    .ui-toggle[data-readonly="true"] .ui-toggle-text,
+    .ui-toggle[data-readonly="true"] .ui-toggle__text,
+    .ui-toggle[data-ui-readonly="true"] .ui-toggle-text,
+    .ui-toggle[data-ui-readonly="true"] .ui-toggle__text {
+        cursor: text;
+        user-select: text;
+    }
+
+    /* ----------------------------------------------------------------------
+       Skeleton state
+       ---------------------------------------------------------------------- */
+
+    .ui-toggle-skeleton,
+    .ui-toggle--skeleton {
+        display: flex;
+        align-items: center;
+    }
+
+    .ui-toggle-skeleton-circle,
+    .ui-toggle__skeleton-circle {
+        inline-size: 1.125rem; /* 18px */
+        block-size: 1.125rem; /* 18px */
+        border-radius: 50%;
+        background-color: var(--ui-skeleton-element);
+    }
+
+    .ui-toggle-skeleton-rectangle,
+    .ui-toggle__skeleton-rectangle {
+        inline-size: 1.5rem; /* 24px */
+        block-size: 0.5rem; /* 8px */
+        margin-inline-start: 0.5rem;
+        background-color: var(--ui-skeleton-element);
+    }
+
+    /* ----------------------------------------------------------------------
+       RTL overrides
+       ---------------------------------------------------------------------- */
+
+    [dir="rtl"] .ui-toggle-switch-checked::before,
+    [dir="rtl"] .ui-toggle__switch--checked::before,
+    [dir="rtl"]
+        .ui-toggle-button:checked
+        + .ui-toggle-label
+        .ui-toggle-switch::before,
+    [dir="rtl"]
+        .ui-toggle-button:checked
+        + .ui-toggle__label
+        .ui-toggle__switch::before,
+    [dir="rtl"]
+        .ui-toggle__button:checked
+        + .ui-toggle-label
+        .ui-toggle-switch::before,
+    [dir="rtl"]
+        .ui-toggle__button:checked
+        + .ui-toggle__label
+        .ui-toggle__switch::before,
+    [dir="rtl"] .ui-toggle[data-ui-toggle-state="on"] .ui-toggle-switch::before,
+    [dir="rtl"]
+        .ui-toggle[data-ui-toggle-state="on"]
+        .ui-toggle__switch::before,
+    [dir="rtl"] .ui-toggle[aria-checked="true"] .ui-toggle-switch::before,
+    [dir="rtl"] .ui-toggle[aria-checked="true"] .ui-toggle__switch::before {
+        transform: translateX(-1.5rem); /* 24px */
+    }
+
+    [dir="rtl"] .ui-toggle-appearance-sm .ui-toggle-switch-checked::before,
+    [dir="rtl"] .ui-toggle-appearance-sm .ui-toggle__switch--checked::before,
+    [dir="rtl"] .ui-toggle__appearance--sm .ui-toggle-switch-checked::before,
+    [dir="rtl"] .ui-toggle__appearance--sm .ui-toggle__switch--checked::before,
+    [dir="rtl"]
+        .ui-toggle[data-ui-toggle-size="sm"][data-ui-toggle-state="on"]
+        .ui-toggle-switch::before,
+    [dir="rtl"]
+        .ui-toggle[data-ui-toggle-size="sm"][data-ui-toggle-state="on"]
+        .ui-toggle__switch::before,
+    [dir="rtl"]
+        .ui-toggle[data-ui-toggle-size="sm"][aria-checked="true"]
+        .ui-toggle-switch::before,
+    [dir="rtl"]
+        .ui-toggle[data-ui-toggle-size="sm"][aria-checked="true"]
+        .ui-toggle__switch::before {
+        transform: translateX(-1rem); /* 16px */
+    }
+
+    /* ----------------------------------------------------------------------
+       Reduced motion
+       ---------------------------------------------------------------------- */
+
+    @media (prefers-reduced-motion: reduce) {
+        .ui-toggle-switch,
+        .ui-toggle__switch,
+        .ui-toggle-switch::before,
+        .ui-toggle__switch::before {
+            transition: none;
+        }
+    }
+
+    /* ----------------------------------------------------------------------
+       Forced colors
+       ---------------------------------------------------------------------- */
+
+    @media screen and (-ms-high-contrast: active), (forced-colors: active) {
+        .ui-toggle-switch,
+        .ui-toggle__switch,
+        .ui-toggle-switch::before,
+        .ui-toggle__switch::before {
+            outline: 1px solid transparent;
+        }
+
+        .ui-toggle-switch-checked,
+        .ui-toggle__switch--checked,
+        .ui-toggle-button:checked + .ui-toggle-label .ui-toggle-switch,
+        .ui-toggle-button:checked + .ui-toggle__label .ui-toggle__switch,
+        .ui-toggle__button:checked + .ui-toggle-label .ui-toggle-switch,
+        .ui-toggle__button:checked + .ui-toggle__label .ui-toggle__switch,
+        .ui-toggle[data-ui-toggle-state="on"] .ui-toggle-switch,
+        .ui-toggle[data-ui-toggle-state="on"] .ui-toggle__switch,
+        .ui-toggle[aria-checked="true"] .ui-toggle-switch,
+        .ui-toggle[aria-checked="true"] .ui-toggle__switch {
+            background-color: Highlight;
+        }
+
+        .ui-toggle-button:focus + .ui-toggle-label .ui-toggle-switch,
+        .ui-toggle-button:focus + .ui-toggle__label .ui-toggle__switch,
+        .ui-toggle__button:focus + .ui-toggle-label .ui-toggle-switch,
+        .ui-toggle__button:focus + .ui-toggle__label .ui-toggle__switch,
+        .ui-toggle:not(.ui-toggle-disabled):not(.ui-toggle--disabled):not(
+                [aria-disabled="true"]
+            ):active
+            .ui-toggle-switch,
+        .ui-toggle:not(.ui-toggle-disabled):not(.ui-toggle--disabled):not(
+                [aria-disabled="true"]
+            ):active
+            .ui-toggle__switch {
+            color: Highlight;
+            outline: 1px solid Highlight;
+        }
     }
 }

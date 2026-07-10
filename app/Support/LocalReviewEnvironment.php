@@ -3,6 +3,7 @@
 namespace App\Support;
 
 use App\Models\User;
+use App\Modules\Roles\Services\RoleCatalog;
 use Database\Seeders\PlatformRolesAndPermissionsSeeder;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
@@ -19,7 +20,7 @@ class LocalReviewEnvironment
     public const REVERB_SCHEME = 'http';
     public const REVERB_SERVER_HOST = '0.0.0.0';
     public const REVERB_SERVER_PORT = '8080';
-    public const ROLE = 'platform_super_admin';
+    public const ROLE = RoleCatalog::SUPER_ADMIN;
     public const VITE_DOCKER_CHECK_URL = 'http://host.docker.internal:5173';
     public const VITE_URL = 'http://localhost:5173';
 
@@ -92,8 +93,8 @@ class LocalReviewEnvironment
                 'message' => "{$appUrl}/login was not checked.",
             ];
         } else {
-            $checks[] = $this->verifyViteAsset($viteCheckUrl, $viteUrl, 'resources/js/app.js', 'vite js');
-            $checks[] = $this->verifyViteAsset($viteCheckUrl, $viteUrl, 'resources/css/app.css', 'vite css');
+            $checks[] = $this->verifyViteAsset($viteCheckUrl, $viteUrl, $appUrl, 'resources/js/app.js', 'vite js');
+            $checks[] = $this->verifyViteAsset($viteCheckUrl, $viteUrl, $appUrl, 'resources/css/app.css', 'vite css');
             $checks[] = $this->verifyReverb($reverbHost, $reverbPort);
             $checks[] = $this->verifyApp($appUrl);
         }
@@ -245,9 +246,10 @@ class LocalReviewEnvironment
     /**
      * @return array{name: string, status: string, message: string}
      */
-    private function verifyViteAsset(string $viteCheckUrl, string $viteUrl, string $assetPath, string $name): array
+    private function verifyViteAsset(string $viteCheckUrl, string $viteUrl, string $appUrl, string $assetPath, string $name): array
     {
-        $headers = [];
+        $appOrigin = $this->urlOrigin($appUrl);
+        $headers = ['Origin' => $appOrigin];
 
         if ($viteCheckUrl !== $viteUrl) {
             $host = parse_url($viteUrl, PHP_URL_HOST);
@@ -255,12 +257,54 @@ class LocalReviewEnvironment
             $headers['Host'] = $port ? "{$host}:{$port}" : $host;
         }
 
-        return $this->verifyUrl(
-            $name,
-            "{$viteCheckUrl}/{$assetPath}",
-            fn (int $status): bool => $status >= 200 && $status < 300,
-            $headers,
-        );
+        $url = "{$viteCheckUrl}/{$assetPath}";
+
+        try {
+            $response = Http::withHeaders($headers)->timeout(self::HTTP_TIMEOUT_SECONDS)->get($url);
+        } catch (Throwable $exception) {
+            return [
+                'name' => $name,
+                'status' => 'failed',
+                'message' => "{$url} did not respond: {$exception->getMessage()}",
+            ];
+        }
+
+        if (! $response->successful()) {
+            return [
+                'name' => $name,
+                'status' => 'failed',
+                'message' => "{$url} responded with HTTP {$response->status()}.",
+            ];
+        }
+
+        $allowedOrigin = trim((string) $response->header('Access-Control-Allow-Origin'));
+
+        if ($allowedOrigin !== '*' && $allowedOrigin !== $appOrigin) {
+            return [
+                'name' => $name,
+                'status' => 'failed',
+                'message' => "{$url} responded with HTTP {$response->status()} but did not allow browser origin {$appOrigin}.",
+            ];
+        }
+
+        return [
+            'name' => $name,
+            'status' => 'ok',
+            'message' => "{$url} responded with HTTP {$response->status()} and allowed browser origin {$appOrigin}.",
+        ];
+    }
+
+    private function urlOrigin(string $url): string
+    {
+        $scheme = parse_url($url, PHP_URL_SCHEME);
+        $host = parse_url($url, PHP_URL_HOST);
+        $port = parse_url($url, PHP_URL_PORT);
+
+        if (! is_string($scheme) || ! is_string($host)) {
+            return $url;
+        }
+
+        return $scheme.'://'.$host.($port ? ":{$port}" : '');
     }
 
     /**

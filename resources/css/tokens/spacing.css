@@ -1,15 +1,24 @@
 /* ==========================================================================
    File: resources/css/tokens/spacing.css
-   Purpose: Global spacing scale and app spacing aliases.
-   Source: Carbon spacing scale.
+   Purpose: Global spacing, fluid spacing, and layout spacing aliases.
    Notes:
    - Defines spacing tokens only.
    - Component CSS should consume --ui-spacing-* aliases.
+   - Deprecated layout spacing aliases are retained for compatibility.
    ========================================================================== */
 
 @layer base {
     :root {
-        /* Carbon spacing scale */
+        /* ------------------------------------------------------------------
+           Mini unit
+           ------------------------------------------------------------------ */
+
+        --ui-mini-unit: 0.5rem; /* 8px */
+
+        /* ------------------------------------------------------------------
+           Spacing scale
+           ------------------------------------------------------------------ */
+
         --spacing-01: 0.125rem; /* 2px */
         --spacing-02: 0.25rem; /* 4px */
         --spacing-03: 0.5rem; /* 8px */
@@ -22,7 +31,7 @@
         --spacing-10: 4rem; /* 64px */
         --spacing-11: 5rem; /* 80px */
         --spacing-12: 6rem; /* 96px */
-        --spacing-13: 10rem; /* 160px; large layout only */
+        --spacing-13: 10rem; /* 160px */
 
         /* App-facing spacing aliases */
         --ui-spacing-01: var(--spacing-01);
@@ -38,5 +47,41 @@
         --ui-spacing-11: var(--spacing-11);
         --ui-spacing-12: var(--spacing-12);
         --ui-spacing-13: var(--spacing-13);
+
+        /* ------------------------------------------------------------------
+           Fluid spacing
+           ------------------------------------------------------------------ */
+
+        --fluid-spacing-01: 0;
+        --fluid-spacing-02: 2vw;
+        --fluid-spacing-03: 5vw;
+        --fluid-spacing-04: 10vw;
+
+        /* App-facing fluid spacing aliases */
+        --ui-fluid-spacing-01: var(--fluid-spacing-01);
+        --ui-fluid-spacing-02: var(--fluid-spacing-02);
+        --ui-fluid-spacing-03: var(--fluid-spacing-03);
+        --ui-fluid-spacing-04: var(--fluid-spacing-04);
+
+        /* ------------------------------------------------------------------
+           Layout spacing compatibility aliases
+           ------------------------------------------------------------------ */
+
+        --layout-01: var(--spacing-05); /* 16px */
+        --layout-02: var(--spacing-06); /* 24px */
+        --layout-03: var(--spacing-07); /* 32px */
+        --layout-04: var(--spacing-09); /* 48px */
+        --layout-05: var(--spacing-10); /* 64px */
+        --layout-06: var(--spacing-12); /* 96px */
+        --layout-07: var(--spacing-13); /* 160px */
+
+        /* App-facing layout spacing aliases */
+        --ui-layout-01: var(--layout-01);
+        --ui-layout-02: var(--layout-02);
+        --ui-layout-03: var(--layout-03);
+        --ui-layout-04: var(--layout-04);
+        --ui-layout-05: var(--layout-05);
+        --ui-layout-06: var(--layout-06);
+        --ui-layout-07: var(--layout-07);
     }
 }

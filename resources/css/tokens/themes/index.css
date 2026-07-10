@@ -1,13 +1,12 @@
 /* ==========================================================================
    File: resources/css/tokens/themes/index.css
-   Purpose: Theme role token entrypoint.
+   Purpose: Theme token entrypoint.
    Notes:
-   - Theme files map role tokens to primitive palette values.
-   - White loads first as the default light/root theme.
-   - Specific named themes load after the default theme.
+   - Forced-colors overrides must load after concrete theme files.
    ========================================================================== */
 
 @import "./white.css";
 @import "./gray-10.css";
 @import "./gray-90.css";
 @import "./gray-100.css";
+@import "./forced-colors.css";

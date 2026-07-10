@@ -4,7 +4,7 @@
 
 AI label is not implemented until an approved AI-assisted feature exists.
 
-Canonical API owner: `/platform/ui-reference/components/ai-label`. Use this Component API instead of creating local markup, styling, or behavior for the same UI role.
+Canonical API owner: `not installed`. Use this Component API instead of creating local markup, styling, or behavior for the same UI role.
 
 ## Status and ownership
 
@@ -15,9 +15,9 @@ Canonical API owner: `/platform/ui-reference/components/ai-label`. Use this Comp
 | Component slug     | ai-label                                    |
 | Category           | Low-applicability gates                     |
 | Priority           | Tier C - Contextual or deferred             |
-| UI Reference route | /platform/ui-reference/components/ai-label  |
+| Rendered evidence route | not installed  |
 | Canonical doc      | docs/02-standards/ui/components/ai-label.md |
-| Source owner       | /platform/ui-reference/components/ai-label  |
+| Source owner       | not installed  |
 
 ## Installed standard
 
@@ -102,7 +102,7 @@ Components own internal semantics and styling. Parent Patterns own grouping, ext
 - Trigger only when a product AI decision record approves AI-assisted behavior.
 - Do not add AI-specific visual markers to non-AI workflows.
 
-## Implementation and UI Reference Checklist
+## Implementation and Rendered Evidence Checklist
 ### Implementation checklist
 | Requirement                | Standard expectation                                                                                                                               |
 | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -111,9 +111,9 @@ Components own internal semantics and styling. Parent Patterns own grouping, ext
 | States                     | Default, hover, focus-visible, active/pressed, disabled, loading, validation, selected, empty, or not-applicable states are defined as relevant.   |
 | Accessibility/content      | Keyboard, focus, naming, ARIA, contrast, reduced-motion, label, helper, error, and copy requirements are defined.                                  |
 | Element consumption        | Required Color, Spacing, Typography, Icons, Motion, Themes, and 2x Grid dependencies are named.                                                    |
-| Tests                      | Source/API assertions and UI Reference route assertions block generic fallback content.                                                            |
+| Tests                      | Source/API assertions and Rendered evidence route assertions block generic fallback content.                                                            |
 
-### UI Reference proof checklist
+### rendered evidence proof checklist
 | Requirement               | Visual proof expectation                                                                              |
 | ------------------------- | ----------------------------------------------------------------------------------------------------- |
 | Live examples             | The page renders production examples through the documented API or explicit native/class contract.    |
@@ -122,9 +122,9 @@ Components own internal semantics and styling. Parent Patterns own grouping, ext
 | Developer implementation  | Real canonical calls and token-backed code snippets appear instead of placeholder comments.           |
 | Related APIs              | Nearby Components, owning Patterns, consumed Elements, source files, and canonical docs are linked.   |
 | Manual review             | The page provides enough rendered proof for visual review of behavior, layout, and state correctness. |
-## UI Reference requirements
+## Rendered evidence requirements
 
-The UI Reference page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
+The rendered evidence page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
 
 | Required proof     | Rendered behavior                                                                   | Variants/options shown |
 | ------------------ | ----------------------------------------------------------------------------------- | ---------------------- |
@@ -132,7 +132,7 @@ The UI Reference page must render the approved five-card scaffold: Purpose, Use 
 
 ## Testing and acceptance criteria
 
-- `/platform/ui-reference/components/ai-label` returns 200 for authorized users.
+- `not installed` returns 200 for authorized users.
 - The page shows the installed API, states, variants/options, prohibited usage, deferred gates, and Foundation Elements consumed.
 - Implemented APIs render production examples; deferred APIs render trigger conditions instead of fake controls.
 
@@ -140,7 +140,7 @@ The UI Reference page must render the approved five-card scaffold: Purpose, Use 
 
 | API                 | Route                             |
 | ------------------- | --------------------------------- |
-| Components overview | /platform/ui-reference/components |
+| Components overview | not installed |
 
 ## References
 

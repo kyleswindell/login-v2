@@ -1,0 +1,247 @@
+/* ==========================================================================
+   File: resources/css/components/ui-shell/content.css
+   Purpose: UI shell content styles.
+
+   Source: Converted from the UI shell content SCSS mixin.
+   Notes:
+   - Content may render with or without a page header.
+   - Page header is structural shell content, not page-specific layout.
+   ========================================================================== */
+
+@layer components {
+    /* ----------------------------------------------------------------------
+       Content
+       ---------------------------------------------------------------------- */
+
+    .ui-shell-content {
+        color: var(--ui-text-primary);
+        will-change: margin-left;
+    }
+
+    .ui-shell-header ~ .ui-shell-content,
+    div:has(.ui-shell-header) ~ .ui-shell-content {
+        margin-block-start: var(--ui-shell-header-block-size);
+    }
+
+    .ui-shell-side-nav ~ .ui-shell-content {
+        margin-inline-start: var(--ui-shell-side-nav-collapsed-inline-size);
+    }
+
+    .ui-shell-side-nav.ui-shell-side-nav--expanded ~ .ui-shell-content,
+    .ui-shell-side-nav.ui-shell-side-nav--fixed ~ .ui-shell-content {
+        margin-inline-start: var(--ui-shell-side-nav-expanded-inline-size);
+    }
+
+    .ui-shell-content__body {
+        padding: var(--ui-shell-content-padding);
+    }
+
+    .ui-shell-content--with-page-header .ui-shell-content__body {
+        padding-block-start: var(--ui-shell-content-padding);
+    }
+
+    /* ----------------------------------------------------------------------
+       Page header / page title
+       ---------------------------------------------------------------------- */
+
+    .ui-shell-page-header {
+        display: block;
+        background-color: var(--ui-layer);
+        color: var(--ui-text-primary);
+    }
+
+    .ui-shell-page-header[data-ui-shell-page-header-tabs="false"][data-ui-shell-page-header-reserve-tabs="false"] {
+        border-block-end: var(--ui-shell-header-border-width) solid
+            var(--ui-border-subtle);
+    }
+
+    .ui-shell-page-title {
+        padding: var(--ui-shell-page-title-padding-block-start)
+            var(--ui-shell-page-title-padding-inline)
+            var(--ui-shell-page-title-padding-block-end);
+    }
+
+    .ui-shell-page-title__breadcrumbs {
+        margin-block-end: var(
+            --ui-shell-page-title-breadcrumb-margin-block-end
+        );
+    }
+
+    .ui-shell-page-title__breadcrumb-list {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: var(--ui-shell-page-title-breadcrumb-gap);
+        margin: 0;
+        padding: 0;
+        list-style: none;
+    }
+
+    .ui-shell-page-title__breadcrumb-item {
+        display: inline-flex;
+        align-items: center;
+        color: var(--ui-text-secondary);
+        font-size: var(--ui-type-label-01-font-size, 0.75rem);
+        line-height: var(--ui-type-label-01-line-height, 1rem);
+    }
+
+    .ui-shell-page-title__breadcrumb-item:not(:last-child)::after {
+        margin-inline: var(--ui-shell-page-title-breadcrumb-gap);
+        color: var(--ui-text-secondary);
+        content: "/";
+    }
+
+    .ui-shell-page-title__breadcrumb-link {
+        color: var(--ui-link-primary);
+        text-decoration: none;
+    }
+
+    .ui-shell-page-title__breadcrumb-link:hover {
+        color: var(--ui-link-primary-hover, var(--ui-link-primary));
+        text-decoration: underline;
+    }
+
+    .ui-shell-page-title__breadcrumb-current {
+        color: var(--ui-text-secondary);
+    }
+
+    .ui-shell-page-title__row {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: var(--ui-shell-page-title-content-margin-block-start) 1rem;
+    }
+
+    .ui-shell-page-title__text {
+        min-inline-size: 0;
+    }
+
+    .ui-shell-page-title__actions {
+        display: flex;
+        flex: 0 1 auto;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 0.5rem;
+    }
+
+    .ui-shell-page-title__title {
+        margin: 0;
+        color: var(--ui-text-primary);
+        font-size: var(--ui-type-heading-05-font-size, 2rem);
+        font-weight: 400;
+        line-height: var(--ui-type-heading-05-line-height, 2.5rem);
+        letter-spacing: 0;
+    }
+
+    .ui-shell-page-title__subtitle {
+        max-inline-size: 48rem;
+        margin: 0.75rem 0 0;
+        color: var(--ui-text-secondary);
+        font-size: var(--ui-type-body-01-font-size, 0.875rem);
+        line-height: var(--ui-type-body-01-line-height, 1.25rem);
+    }
+
+    .ui-shell-page-title__content {
+        margin-block-start: var(
+            --ui-shell-page-title-content-margin-block-start
+        );
+    }
+
+    .ui-shell-page-header__tabs-region {
+        background-color: var(--ui-layer);
+    }
+
+    .ui-shell-page-header[data-ui-shell-page-header-reserve-tabs="true"]
+        .ui-shell-page-header__tabs-region {
+        min-block-size: var(--ui-shell-page-tabs-reserved-block-size);
+    }
+
+    .ui-shell-page-header__tabs-spacer {
+        display: block;
+        min-block-size: var(--ui-shell-page-tabs-reserved-block-size);
+        border-block-end: var(--ui-shell-header-border-width) solid
+            var(--ui-border-subtle);
+    }
+
+    /* ----------------------------------------------------------------------
+       Page tabs
+       ---------------------------------------------------------------------- */
+
+    .ui-shell-page-tabs {
+        border-block-end: var(--ui-shell-header-border-width) solid
+            var(--ui-border-subtle);
+        padding-inline: var(--ui-shell-page-tabs-padding-inline);
+        background-color: var(--ui-layer);
+    }
+
+    .ui-shell-page-tabs__list {
+        display: flex;
+        align-items: stretch;
+        gap: 0;
+        max-inline-size: 100%;
+        min-inline-size: 0;
+        min-block-size: var(--ui-shell-page-tabs-block-size);
+        margin: 0;
+        padding: 0;
+        overflow-x: auto;
+        list-style: none;
+    }
+
+    .ui-shell-page-tabs__item {
+        display: flex;
+        flex: 0 0 auto;
+    }
+
+    .ui-shell-page-tabs__link {
+        position: relative;
+        display: flex;
+        align-items: center;
+        min-block-size: var(--ui-shell-page-tabs-block-size);
+        padding: 0 var(--ui-shell-page-tabs-link-padding-inline);
+        color: var(--ui-text-secondary);
+        font-size: var(--ui-type-body-compact-01-font-size);
+        font-weight: 400;
+        line-height: var(--ui-type-body-compact-01-line-height);
+        text-decoration: none;
+        white-space: nowrap;
+        outline: 2px solid transparent;
+        outline-offset: -2px;
+        transition:
+            background-color var(--ui-duration-fast-02)
+                var(--ui-motion-standard-productive),
+            color var(--ui-duration-fast-02)
+                var(--ui-motion-standard-productive);
+    }
+
+    .ui-shell-page-tabs__link:hover {
+        background-color: var(--ui-layer-hover);
+        color: var(--ui-text-primary);
+    }
+
+    .ui-shell-page-tabs__link:focus {
+        outline-color: var(--ui-focus);
+    }
+
+    .ui-shell-page-tabs__link--selected,
+    .ui-shell-page-tabs__link[aria-current="page"] {
+        color: var(--ui-text-primary);
+        font-weight: var(--ui-font-weight-semibold);
+    }
+
+    .ui-shell-page-tabs__link--selected::after,
+    .ui-shell-page-tabs__link[aria-current="page"]::after {
+        position: absolute;
+        inset-block-end: 0;
+        inset-inline: 0;
+        block-size: var(--ui-shell-page-tabs-current-indicator-size);
+        background-color: var(--ui-border-interactive);
+        content: "";
+    }
+
+    .ui-shell-page-tabs__link--selected:hover,
+    .ui-shell-page-tabs__link[aria-current="page"]:hover {
+        background-color: transparent;
+    }
+}

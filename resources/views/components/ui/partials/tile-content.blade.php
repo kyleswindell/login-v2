@@ -1,6 +1,6 @@
 @if ($icon)
     <span class="ui-tile__icon" aria-hidden="true">
-        <x-dynamic-component :component="$icon" />
+        <x-ui.icon :name="$icon" />
     </span>
 @endif
 

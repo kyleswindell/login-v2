@@ -1,0 +1,495 @@
+/* ==========================================================================
+   File: resources/css/components/fluid-select.css
+   Purpose: Fluid Select variant styles.
+
+   Notes:
+   - Defines Fluid Select selectors only.
+   - Do not define primitive palette tokens here.
+   - Do not define theme role tokens here.
+   - This is a Select variant, not a separate public component.
+   - AI label / slug decorator positioning is intentionally excluded here.
+   ========================================================================== */
+
+@layer components {
+    /* ----------------------------------------------------------------------
+       Root
+       ---------------------------------------------------------------------- */
+
+    .ui-select-fluid .ui-select,
+    .ui-select--fluid .ui-select {
+        position: relative;
+        block-size: 100%;
+        background-color: var(--ui-field);
+        transition:
+            background-color var(--ui-duration-fast-01)
+                var(--ui-motion-standard-productive),
+            outline var(--ui-duration-fast-01)
+                var(--ui-motion-standard-productive);
+    }
+
+    /* ----------------------------------------------------------------------
+       Label
+       ---------------------------------------------------------------------- */
+
+    .ui-select-fluid .ui-label,
+    .ui-select--fluid .ui-label {
+        position: absolute;
+        z-index: 1;
+        inset-block-start: 0.8125rem;
+        inset-inline-start: var(--ui-spacing-05);
+        display: flex;
+        align-items: center;
+        inline-size: calc(100% - 2rem);
+        block-size: 1rem;
+        margin: 0;
+    }
+
+    .ui-select-fluid .ui-label::-webkit-scrollbar,
+    .ui-select--fluid .ui-label::-webkit-scrollbar,
+    .ui-select-fluid .ui-label .ui-toggletip-label::-webkit-scrollbar,
+    .ui-select--fluid .ui-label .ui-toggletip-label::-webkit-scrollbar {
+        display: none;
+    }
+
+    .ui-select-fluid .ui-label:not(:has(.ui-toggletip-label)),
+    .ui-select--fluid .ui-label:not(:has(.ui-toggletip-label)),
+    .ui-select-fluid .ui-label .ui-toggletip-label,
+    .ui-select--fluid .ui-label .ui-toggletip-label {
+        overflow-x: scroll;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+        white-space: nowrap;
+    }
+
+    /* ----------------------------------------------------------------------
+       Input
+       ---------------------------------------------------------------------- */
+
+    .ui-select-fluid .ui-select-input,
+    .ui-select--fluid .ui-select-input {
+        min-block-size: 4rem;
+        padding-block: 2rem 0.8125rem;
+        padding-inline: var(--ui-spacing-05) 2rem;
+        outline: none;
+        text-overflow: ellipsis;
+    }
+
+    .ui-select-fluid .ui-select-arrow,
+    .ui-select-fluid .ui-select__arrow,
+    .ui-select--fluid .ui-select-arrow,
+    .ui-select--fluid .ui-select__arrow {
+        inset-block-start: 2.125rem;
+        inset-inline-end: var(--ui-spacing-04);
+        block-size: 1rem;
+    }
+
+    .ui-select-fluid .ui-select-divider,
+    .ui-select-fluid .ui-select__divider,
+    .ui-select--fluid .ui-select-divider,
+    .ui-select--fluid .ui-select__divider {
+        display: none;
+        transition: border-color var(--ui-duration-fast-01)
+            var(--ui-motion-standard-productive);
+    }
+
+    .ui-select-fluid .ui-select-input-wrapper,
+    .ui-select-fluid .ui-select-input__wrapper,
+    .ui-select--fluid .ui-select-input-wrapper,
+    .ui-select--fluid .ui-select-input__wrapper {
+        display: block;
+    }
+
+    /* ----------------------------------------------------------------------
+       Invalid / warning states
+       ---------------------------------------------------------------------- */
+
+    .ui-select-fluid .ui-select-invalid .ui-select-input-wrapper,
+    .ui-select-fluid .ui-select-invalid .ui-select-input__wrapper,
+    .ui-select-fluid .ui-select--invalid .ui-select-input-wrapper,
+    .ui-select-fluid .ui-select--invalid .ui-select-input__wrapper,
+    .ui-select--fluid .ui-select-invalid .ui-select-input-wrapper,
+    .ui-select--fluid .ui-select-invalid .ui-select-input__wrapper,
+    .ui-select--fluid .ui-select--invalid .ui-select-input-wrapper,
+    .ui-select--fluid .ui-select--invalid .ui-select-input__wrapper {
+        outline: 2px solid var(--ui-support-error);
+        outline-offset: -2px;
+    }
+
+    .ui-select-fluid .ui-select-invalid .ui-select-divider,
+    .ui-select-fluid .ui-select-invalid .ui-select__divider,
+    .ui-select-fluid .ui-select--invalid .ui-select-divider,
+    .ui-select-fluid .ui-select--invalid .ui-select__divider,
+    .ui-select-fluid .ui-select-warning .ui-select-divider,
+    .ui-select-fluid .ui-select-warning .ui-select__divider,
+    .ui-select-fluid .ui-select--warning .ui-select-divider,
+    .ui-select-fluid .ui-select--warning .ui-select__divider,
+    .ui-select--fluid .ui-select-invalid .ui-select-divider,
+    .ui-select--fluid .ui-select-invalid .ui-select__divider,
+    .ui-select--fluid .ui-select--invalid .ui-select-divider,
+    .ui-select--fluid .ui-select--invalid .ui-select__divider,
+    .ui-select--fluid .ui-select-warning .ui-select-divider,
+    .ui-select--fluid .ui-select-warning .ui-select__divider,
+    .ui-select--fluid .ui-select--warning .ui-select-divider,
+    .ui-select--fluid .ui-select--warning .ui-select__divider {
+        display: block;
+        inline-size: calc(100% - 2rem);
+        margin: 0 var(--ui-spacing-05);
+        border: none;
+        border-block-end: 1px solid var(--ui-border-subtle);
+    }
+
+    .ui-select-fluid .ui-select-input-wrapper[data-invalid] .ui-select-input,
+    .ui-select-fluid .ui-select-input__wrapper[data-invalid] .ui-select-input,
+    .ui-select-fluid .ui-select-warning .ui-select-input,
+    .ui-select-fluid .ui-select--warning .ui-select-input,
+    .ui-select--fluid .ui-select-input-wrapper[data-invalid] .ui-select-input,
+    .ui-select--fluid .ui-select-input__wrapper[data-invalid] .ui-select-input,
+    .ui-select--fluid .ui-select-warning .ui-select-input,
+    .ui-select--fluid .ui-select--warning .ui-select-input {
+        border-block-end: 1px solid transparent;
+        padding-inline-end: 2rem;
+    }
+
+    .ui-select-fluid .ui-select-warning,
+    .ui-select-fluid .ui-select--warning,
+    .ui-select--fluid .ui-select-warning,
+    .ui-select--fluid .ui-select--warning {
+        border-block-end: 1px solid var(--ui-border-strong);
+    }
+
+    .ui-select-fluid
+        .ui-select-input-wrapper[data-invalid]
+        .ui-select-input:not(:focus),
+    .ui-select-fluid
+        .ui-select-input__wrapper[data-invalid]
+        .ui-select-input:not(:focus),
+    .ui-select-fluid .ui-select-warning .ui-select-input:not(:focus),
+    .ui-select-fluid .ui-select--warning .ui-select-input:not(:focus),
+    .ui-select--fluid
+        .ui-select-input-wrapper[data-invalid]
+        .ui-select-input:not(:focus),
+    .ui-select--fluid
+        .ui-select-input__wrapper[data-invalid]
+        .ui-select-input:not(:focus),
+    .ui-select--fluid .ui-select-warning .ui-select-input:not(:focus),
+    .ui-select--fluid .ui-select--warning .ui-select-input:not(:focus) {
+        outline: none;
+    }
+
+    .ui-select-fluid
+        .ui-select-input-wrapper[data-invalid]
+        .ui-form-requirement,
+    .ui-select-fluid
+        .ui-select-input__wrapper[data-invalid]
+        .ui-form-requirement,
+    .ui-select-fluid .ui-select-warning .ui-form-requirement,
+    .ui-select-fluid .ui-select--warning .ui-form-requirement,
+    .ui-select--fluid
+        .ui-select-input-wrapper[data-invalid]
+        .ui-form-requirement,
+    .ui-select--fluid
+        .ui-select-input__wrapper[data-invalid]
+        .ui-form-requirement,
+    .ui-select--fluid .ui-select-warning .ui-form-requirement,
+    .ui-select--fluid .ui-select--warning .ui-form-requirement {
+        display: block;
+        overflow: visible;
+        max-block-size: 100%;
+    }
+
+    .ui-select-fluid
+        .ui-select-input-wrapper[data-invalid]
+        .ui-form-requirement,
+    .ui-select-fluid
+        .ui-select-input__wrapper[data-invalid]
+        .ui-form-requirement,
+    .ui-select--fluid
+        .ui-select-input-wrapper[data-invalid]
+        .ui-form-requirement,
+    .ui-select--fluid
+        .ui-select-input__wrapper[data-invalid]
+        .ui-form-requirement {
+        color: var(--ui-text-error);
+    }
+
+    .ui-select-fluid .ui-form-requirement,
+    .ui-select--fluid .ui-form-requirement {
+        margin: 0;
+        padding-block: var(--ui-spacing-03);
+        padding-inline: var(--ui-spacing-05) 2.5rem;
+    }
+
+    .ui-select-fluid
+        .ui-select-input-wrapper[data-invalid]:hover
+        + .ui-select-divider,
+    .ui-select-fluid
+        .ui-select-input-wrapper[data-invalid]:hover
+        + .ui-select__divider,
+    .ui-select-fluid
+        .ui-select-input__wrapper[data-invalid]:hover
+        + .ui-select-divider,
+    .ui-select-fluid
+        .ui-select-input__wrapper[data-invalid]:hover
+        + .ui-select__divider,
+    .ui-select-fluid
+        .ui-select-warning
+        .ui-select-input-wrapper:hover
+        + .ui-select-divider,
+    .ui-select-fluid
+        .ui-select-warning
+        .ui-select-input__wrapper:hover
+        + .ui-select__divider,
+    .ui-select-fluid
+        .ui-select--warning
+        .ui-select-input-wrapper:hover
+        + .ui-select-divider,
+    .ui-select-fluid
+        .ui-select--warning
+        .ui-select-input__wrapper:hover
+        + .ui-select__divider,
+    .ui-select--fluid
+        .ui-select-input-wrapper[data-invalid]:hover
+        + .ui-select-divider,
+    .ui-select--fluid
+        .ui-select-input-wrapper[data-invalid]:hover
+        + .ui-select__divider,
+    .ui-select--fluid
+        .ui-select-input__wrapper[data-invalid]:hover
+        + .ui-select-divider,
+    .ui-select--fluid
+        .ui-select-input__wrapper[data-invalid]:hover
+        + .ui-select__divider,
+    .ui-select--fluid
+        .ui-select-warning
+        .ui-select-input-wrapper:hover
+        + .ui-select-divider,
+    .ui-select--fluid
+        .ui-select-warning
+        .ui-select-input__wrapper:hover
+        + .ui-select__divider,
+    .ui-select--fluid
+        .ui-select--warning
+        .ui-select-input-wrapper:hover
+        + .ui-select-divider,
+    .ui-select--fluid
+        .ui-select--warning
+        .ui-select-input__wrapper:hover
+        + .ui-select__divider {
+        border-color: transparent;
+    }
+
+    .ui-select-fluid
+        .ui-select-invalid
+        .ui-select-input-wrapper[data-invalid]
+        .ui-select-invalid-icon,
+    .ui-select-fluid
+        .ui-select-invalid
+        .ui-select-input-wrapper[data-invalid]
+        .ui-select__invalid-icon,
+    .ui-select-fluid
+        .ui-select-invalid
+        .ui-select-input__wrapper[data-invalid]
+        .ui-select-invalid-icon,
+    .ui-select-fluid
+        .ui-select-invalid
+        .ui-select-input__wrapper[data-invalid]
+        .ui-select__invalid-icon,
+    .ui-select-fluid
+        .ui-select--invalid
+        .ui-select-input-wrapper[data-invalid]
+        .ui-select-invalid-icon,
+    .ui-select-fluid
+        .ui-select--invalid
+        .ui-select-input__wrapper[data-invalid]
+        .ui-select__invalid-icon,
+    .ui-select-fluid
+        .ui-select-warning
+        .ui-select-input-wrapper
+        .ui-select-invalid-icon,
+    .ui-select-fluid
+        .ui-select-warning
+        .ui-select-input__wrapper
+        .ui-select__invalid-icon,
+    .ui-select-fluid
+        .ui-select--warning
+        .ui-select-input-wrapper
+        .ui-select-invalid-icon,
+    .ui-select-fluid
+        .ui-select--warning
+        .ui-select-input__wrapper
+        .ui-select__invalid-icon,
+    .ui-select--fluid
+        .ui-select-invalid
+        .ui-select-input-wrapper[data-invalid]
+        .ui-select-invalid-icon,
+    .ui-select--fluid
+        .ui-select-invalid
+        .ui-select-input-wrapper[data-invalid]
+        .ui-select__invalid-icon,
+    .ui-select--fluid
+        .ui-select-invalid
+        .ui-select-input__wrapper[data-invalid]
+        .ui-select-invalid-icon,
+    .ui-select--fluid
+        .ui-select-invalid
+        .ui-select-input__wrapper[data-invalid]
+        .ui-select__invalid-icon,
+    .ui-select--fluid
+        .ui-select--invalid
+        .ui-select-input-wrapper[data-invalid]
+        .ui-select-invalid-icon,
+    .ui-select--fluid
+        .ui-select--invalid
+        .ui-select-input__wrapper[data-invalid]
+        .ui-select__invalid-icon,
+    .ui-select--fluid
+        .ui-select-warning
+        .ui-select-input-wrapper
+        .ui-select-invalid-icon,
+    .ui-select--fluid
+        .ui-select-warning
+        .ui-select-input__wrapper
+        .ui-select__invalid-icon,
+    .ui-select--fluid
+        .ui-select--warning
+        .ui-select-input-wrapper
+        .ui-select-invalid-icon,
+    .ui-select--fluid
+        .ui-select--warning
+        .ui-select-input__wrapper
+        .ui-select__invalid-icon {
+        inset-block-start: 4.5625rem;
+        inset-inline-end: var(--ui-spacing-05);
+        pointer-events: none;
+    }
+
+    /* ----------------------------------------------------------------------
+       Focus state
+       ---------------------------------------------------------------------- */
+
+    .ui-select-fluid .ui-select-fluid-focus .ui-select-input-wrapper,
+    .ui-select-fluid .ui-select-fluid-focus .ui-select-input__wrapper,
+    .ui-select-fluid .ui-select--fluid--focus .ui-select-input-wrapper,
+    .ui-select-fluid .ui-select--fluid--focus .ui-select-input__wrapper,
+    .ui-select--fluid .ui-select-fluid-focus .ui-select-input-wrapper,
+    .ui-select--fluid .ui-select-fluid-focus .ui-select-input__wrapper,
+    .ui-select--fluid .ui-select--fluid--focus .ui-select-input-wrapper,
+    .ui-select--fluid .ui-select--fluid--focus .ui-select-input__wrapper {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+    }
+
+    .ui-select-fluid .ui-select-fluid-focus .ui-select-input,
+    .ui-select-fluid .ui-select--fluid--focus .ui-select-input,
+    .ui-select-fluid .ui-select-fluid-focus.ui-select-warning,
+    .ui-select-fluid .ui-select-fluid-focus.ui-select--warning,
+    .ui-select-fluid .ui-select--fluid--focus.ui-select-warning,
+    .ui-select-fluid .ui-select--fluid--focus.ui-select--warning,
+    .ui-select--fluid .ui-select-fluid-focus .ui-select-input,
+    .ui-select--fluid .ui-select--fluid--focus .ui-select-input,
+    .ui-select--fluid .ui-select-fluid-focus.ui-select-warning,
+    .ui-select--fluid .ui-select-fluid-focus.ui-select--warning,
+    .ui-select--fluid .ui-select--fluid--focus.ui-select-warning,
+    .ui-select--fluid .ui-select--fluid--focus.ui-select--warning {
+        border-block-end: 1px solid transparent;
+    }
+
+    /* ----------------------------------------------------------------------
+       Disabled state
+       ---------------------------------------------------------------------- */
+
+    .ui-select-fluid .ui-select-disabled .ui-toggletip-label,
+    .ui-select-fluid .ui-select--disabled .ui-toggletip-label,
+    .ui-select--fluid .ui-select-disabled .ui-toggletip-label,
+    .ui-select--fluid .ui-select--disabled .ui-toggletip-label {
+        color: var(--ui-text-disabled);
+    }
+
+    .ui-select-fluid .ui-select-disabled .ui-toggletip-button,
+    .ui-select-fluid .ui-select--disabled .ui-toggletip-button,
+    .ui-select--fluid .ui-select-disabled .ui-toggletip-button,
+    .ui-select--fluid .ui-select--disabled .ui-toggletip-button {
+        pointer-events: none;
+    }
+
+    .ui-select-fluid .ui-select-disabled .ui-toggletip-button svg,
+    .ui-select-fluid .ui-select--disabled .ui-toggletip-button svg,
+    .ui-select--fluid .ui-select-disabled .ui-toggletip-button svg,
+    .ui-select--fluid .ui-select--disabled .ui-toggletip-button svg {
+        fill: var(--ui-icon-disabled);
+    }
+
+    /* ----------------------------------------------------------------------
+       Skeleton
+       ---------------------------------------------------------------------- */
+
+    .ui-select-fluid-skeleton,
+    .ui-select--fluid__skeleton {
+        position: relative;
+        block-size: 4rem;
+        border-block-end: 1px solid var(--ui-skeleton-element);
+        background-color: var(--ui-skeleton-background);
+    }
+
+    .ui-select-fluid-skeleton .ui-skeleton,
+    .ui-select--fluid__skeleton .ui-skeleton {
+        position: absolute;
+        inset-block-start: var(--ui-spacing-05);
+        inset-inline-start: var(--ui-spacing-05);
+        inline-size: 25%;
+        block-size: 0.5rem;
+    }
+
+    .ui-select-fluid-skeleton .ui-label,
+    .ui-select--fluid__skeleton .ui-label {
+        position: absolute;
+        inset-block-start: 2.25rem;
+        inset-inline-start: var(--ui-spacing-05);
+        inline-size: 50%;
+        block-size: 0.5rem;
+        padding: 0;
+    }
+
+    /* ----------------------------------------------------------------------
+       Reduced motion
+       ---------------------------------------------------------------------- */
+
+    @media (prefers-reduced-motion: reduce) {
+        .ui-select-fluid .ui-select,
+        .ui-select--fluid .ui-select,
+        .ui-select-fluid .ui-select-divider,
+        .ui-select-fluid .ui-select__divider,
+        .ui-select--fluid .ui-select-divider,
+        .ui-select--fluid .ui-select__divider {
+            transition: none;
+        }
+    }
+
+    /* ----------------------------------------------------------------------
+       Forced colors
+       ---------------------------------------------------------------------- */
+
+    @media screen and (-ms-high-contrast: active), (forced-colors: active) {
+        .ui-select-fluid .ui-select-invalid .ui-select-input-wrapper,
+        .ui-select-fluid .ui-select-invalid .ui-select-input__wrapper,
+        .ui-select-fluid .ui-select--invalid .ui-select-input-wrapper,
+        .ui-select-fluid .ui-select--invalid .ui-select-input__wrapper,
+        .ui-select--fluid .ui-select-invalid .ui-select-input-wrapper,
+        .ui-select--fluid .ui-select-invalid .ui-select-input__wrapper,
+        .ui-select--fluid .ui-select--invalid .ui-select-input-wrapper,
+        .ui-select--fluid .ui-select--invalid .ui-select-input__wrapper {
+            outline-color: Mark;
+        }
+
+        .ui-select-fluid .ui-select-fluid-focus .ui-select-input-wrapper,
+        .ui-select-fluid .ui-select-fluid-focus .ui-select-input__wrapper,
+        .ui-select-fluid .ui-select--fluid--focus .ui-select-input-wrapper,
+        .ui-select-fluid .ui-select--fluid--focus .ui-select-input__wrapper,
+        .ui-select--fluid .ui-select-fluid-focus .ui-select-input-wrapper,
+        .ui-select--fluid .ui-select-fluid-focus .ui-select-input__wrapper,
+        .ui-select--fluid .ui-select--fluid--focus .ui-select-input-wrapper,
+        .ui-select--fluid .ui-select--fluid--focus .ui-select-input__wrapper {
+            outline-color: Highlight;
+        }
+    }
+}

@@ -5,9 +5,9 @@ status: implemented-pending-correction
 api_layer: Component API
 category: Utilities
 priority: Tier A - Baseline app development
-ui_reference_route: /platform/ui-reference/components/link
+rendered_evidence_route: null
 canonical_doc: docs/02-standards/ui/components/link.md
-source_owner: /platform/ui-reference/components/link
+source_owner: not installed
 blade_api:
   - x-ui.link
 css_namespace:
@@ -53,10 +53,10 @@ related_patterns:
 - [11. Content contract](#11-content-contract)
 - [12. Prohibited usage](#12-prohibited-usage)
 - [13. Deferred or gated capabilities](#13-deferred-or-gated-capabilities)
-- [14. Implementation and UI Reference Checklist](#14-implementation-and-ui-reference-checklist)
+- [14. Implementation and Rendered Evidence Checklist](#14-implementation-and-ui-reference-checklist)
   - [14.1. Implementation checklist](#141-implementation-checklist)
-  - [14.2. UI Reference proof checklist](#142-ui-reference-proof-checklist)
-- [15. UI Reference requirements](#15-ui-reference-requirements)
+  - [14.2. rendered evidence proof checklist](#142-ui-reference-proof-checklist)
+- [15. Rendered evidence requirements](#15-ui-reference-requirements)
 - [16. Testing and acceptance criteria](#16-testing-and-acceptance-criteria)
 - [17. Related APIs](#17-related-apis)
 - [18. References](#18-references)
@@ -65,7 +65,7 @@ related_patterns:
 
 Links move users to related locations, page sections, protocol destinations, or trusted reference content.
 
-Canonical API owner: `/platform/ui-reference/components/link`. Use this Component API instead of creating local markup, styling, or behavior for the same UI role.
+Canonical API owner: `not installed`. Use this Component API instead of creating local markup, styling, or behavior for the same UI role.
 
 Link is a navigation and resource-reference API. It is not an action-command API. Use Button for commands that submit, save, delete, confirm, cancel, reveal a menu, change state, or manipulate displayed data.
 
@@ -78,9 +78,9 @@ Link is a navigation and resource-reference API. It is not an action-command API
 | Component slug     | link                                    |
 | Category           | Utilities                               |
 | Priority           | Tier A - Baseline app development       |
-| UI Reference route | /platform/ui-reference/components/link  |
+| Rendered evidence route | not installed  |
 | Canonical doc      | docs/02-standards/ui/components/link.md |
-| Source owner       | /platform/ui-reference/components/link  |
+| Source owner       | not installed  |
 
 ## 3. Installed standard
 
@@ -100,7 +100,7 @@ Login App uses the app-owned `ui-link` class and the canonical `x-ui.link` Blade
 | Data attributes | `data-ui-component="link"`, `data-ui-link-variant`, `data-ui-link-size`, `data-ui-link-external`, `data-ui-link-current`, `data-ui-link-visited-policy`, `data-ui-link-disabled` where relevant. Pattern-owned links may add documented pattern attributes. |
 | Props/options   | `href`, `text`, `variant`, `size`, `external`, `newTab`, `icon`, `iconPosition`, `disabled`, `unavailable`, `visited`, `current`, `download`, `navigate`, `ariaLabel`, `describedBy`, `attributes` |
 | CSS namespace   | `ui-link`, `ui-link-inline`, `ui-link-standalone`, `ui-link-sm`, `ui-link-md`, `ui-link-lg`, `ui-link-with-icon`, `ui-link-external`, `ui-link-unavailable`                      |
-| Source files    | `resources/views/components/ui/link.blade.php`; `resources/css/app.css`; UI Reference route `/platform/ui-reference/components/link`                                           |
+| Source files    | `resources/views/components/ui/link/index.blade.php`; `resources/css/app.css`; Rendered evidence route `not installed`                                           |
 
 Example calls:
 
@@ -128,7 +128,7 @@ Example calls:
 | `size`         | `string`        |         `md` | `sm`, `md`, `lg`                             | Size must map to app typography tokens and must not be hard-coded locally.                                         |
 | `external`     | `bool`          |      `false` | `true`, `false`                              | Adds external-link semantics and an external icon when the visual context requires it.                             |
 | `newTab`       | `bool`          |      `false` | `true`, `false`                              | Requires `target="_blank"` and `rel="noopener noreferrer"`. Use only when preserving the current app task matters. |
-| `icon`         | `string / null` |       `null` | approved Heroicon alias                      | Icons are allowed on standalone links only.                                                                        |
+| `icon`         | `string / null` |       `null` | internal icon alias                      | Icons are allowed on standalone links only.                                                                        |
 | `iconPosition` | `string`        |        `end` | `end`, `start`; legacy `trailing` / `leading` aliases may normalize to these values | End/trailing is the default. Start/leading icons are restricted to approved resource-list or navigation compositions. |
 | `disabled`     | `bool`          |      `false` | `true`, `false`                              | Alias for unavailable treatment. Renders non-interactive output and must not keep a navigable `href`.              |
 | `visited`      | `bool`          |      `false` | `true`, `false`                              | Enables visited styling only where knowing prior navigation helps the task.                                        |
@@ -167,7 +167,7 @@ Example calls:
 | Small link                | Size           | Implemented                  | `size="sm"`                                              | Dense helper or metadata regions.                                                                                |
 | Medium link               | Size           | Implemented                  | `size="md"`                                              | Default UI text and standalone links.                                                                            |
 | Large link                | Size           | Implemented                  | `size="lg"`                                              | Page-level or higher-emphasis resource links.                                                                    |
-| Trailing icon             | Modifier       | Implemented                  | `icon="arrow-right"`, `icon="arrow-top-right-on-square"` | Standalone internal/external links where the icon clarifies destination.                                         |
+| Trailing icon             | Modifier       | Implemented                  | `icon="arrow--right"`, `icon="launch"`                   | Standalone internal/external links where the icon clarifies destination.                                         |
 | Leading icon              | Modifier       | App-approved exception       | `iconPosition="leading"`                                 | Only in approved resource-list or navigation compositions where every item uses the same leading icon structure. |
 | Visited style             | Modifier       | Opt-in                       | `visited`                                                | Use only where knowing a previous visit helps task completion.                                                   |
 | Current page/location     | State/modifier | Pattern-owned, supported     | `current="page"`                                         | Navigation contexts such as side nav, breadcrumbs, or local navigation.                                          |
@@ -214,7 +214,7 @@ Link consumes Foundation Color, Spacing, Typography, Themes, Icons, and limited 
 | Color      | Use link, link-hover, visited, disabled, focus, and text tokens. Do not use support or danger colors for decorative links.             |
 | Typography | Link size and line-height must match approved text roles. Inline links inherit surrounding prose size.                                 |
 | Spacing    | Links do not own external margin. Link groups and resource lists are Pattern-owned.                                                    |
-| Icons      | Use approved Heroicons through `currentColor`. Icons are allowed on standalone links only unless a Pattern owns a different structure. |
+| Icons      | Use internal icon components through `currentColor`. Icons are allowed on standalone links only unless a Pattern owns a different structure. |
 | Themes     | Link text, icon color, visited color, and focus ring must remain readable in supported theme contexts.                                 |
 | Motion     | No decorative motion. Only normal hover/focus transitions are allowed.                                                                 |
 
@@ -317,7 +317,7 @@ Do not introduce feature-local link colors, one-off underline rules, arbitrary s
 
 - Do not bypass the installed Component API with one-off Blade markup, raw utility clusters, raw colors, arbitrary spacing, local icons, or custom JavaScript.
 - Do not use links for state-changing commands, form submission, destructive actions, toggles, menu triggers, filtering, sorting, or selection.
-- Do not use action-control language in the Link standard or UI Reference page.
+- Do not use action-control language in the Link standard or rendered evidence page.
 - Do not create local colors, margins, underline rules, focus rings, or hover treatments for links.
 - Do not use support colors or danger colors as decorative link variants.
 - Do not use inline links with icons.
@@ -331,7 +331,7 @@ Do not introduce feature-local link colors, one-off underline rules, arbitrary s
 
 | Capability                  | Status                 | Gate                                                                                                                                   |
 | --------------------------- | ---------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
-| Icon-only link              | Deferred/gated         | Requires an approved navigation/resource pattern, visible focus, accessible-name review, and UI Reference proof.                       |
+| Icon-only link              | Deferred/gated         | Requires an approved navigation/resource pattern, visible focus, accessible-name review, and rendered evidence proof.                       |
 | Leading icon link           | App-approved exception | Allowed only where an approved Pattern owns a repeated leading-icon layout.                                                            |
 | Global visited-link styling | Deferred               | Requires product decision that visited state helps task completion without adding scan noise.                                          |
 | Link opens modal            | Gated                  | Requires Overlay/Modal Pattern approval. Use Button unless the trigger is clearly a navigation/reference handoff to read-only content. |
@@ -339,7 +339,7 @@ Do not introduce feature-local link colors, one-off underline rules, arbitrary s
 | Analytics attributes        | Pattern/feature-owned  | Allowed only through documented analytics helpers; do not add one-off data attributes to the Link API.                                 |
 | Danger link                 | Not approved           | Use Button with danger semantics and confirmation patterns.                                                                            |
 
-## 14. Implementation and UI Reference Checklist
+## 14. Implementation and Rendered Evidence Checklist
 ### 14.1. Implementation checklist
 | Requirement                | Standard expectation                                                                                                                               |
 | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -348,9 +348,9 @@ Do not introduce feature-local link colors, one-off underline rules, arbitrary s
 | States                     | Default, hover, focus-visible, active/pressed, disabled, loading, validation, selected, empty, or not-applicable states are defined as relevant.   |
 | Accessibility/content      | Keyboard, focus, naming, ARIA, contrast, reduced-motion, label, helper, error, and copy requirements are defined.                                  |
 | Element consumption        | Required Color, Spacing, Typography, Icons, Motion, Themes, and 2x Grid dependencies are named.                                                    |
-| Tests                      | Source/API assertions and UI Reference route assertions block generic fallback content.                                                            |
+| Tests                      | Source/API assertions and Rendered evidence route assertions block generic fallback content.                                                            |
 
-### 14.2. UI Reference proof checklist
+### 14.2. rendered evidence proof checklist
 | Requirement               | Visual proof expectation                                                                              |
 | ------------------------- | ----------------------------------------------------------------------------------------------------- |
 | Live examples             | The page renders production examples through the documented API or explicit native/class contract.    |
@@ -359,9 +359,9 @@ Do not introduce feature-local link colors, one-off underline rules, arbitrary s
 | Developer implementation  | Real canonical calls and token-backed code snippets appear instead of placeholder comments.           |
 | Related APIs              | Nearby Components, owning Patterns, consumed Elements, source files, and canonical docs are linked.   |
 | Manual review             | The page provides enough rendered proof for visual review of behavior, layout, and state correctness. |
-## 15. UI Reference requirements
+## 15. Rendered evidence requirements
 
-The UI Reference page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
+The rendered evidence page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
 
 The Link page may use grouped examples, comparison grids, and state tables instead of forcing an Accordion-style tab layout. The page must visually prove the difference between navigation links and action controls.
 
@@ -380,7 +380,7 @@ The Link page may use grouped examples, comparison grids, and state tables inste
 
 ## 16. Testing and acceptance criteria
 
-- `/platform/ui-reference/components/link` returns 200 for authorized users.
+- `not installed` returns 200 for authorized users.
 - The page shows the installed API, states, variants/options, prohibited usage, deferred gates, and Foundation Elements consumed.
 - Implemented APIs render production examples; deferred APIs render trigger conditions instead of fake controls.
 - The page includes examples for inline, standalone, external/help, navigation/current, unavailable, visited policy, and size scale behavior.
@@ -399,18 +399,18 @@ The Link page may use grouped examples, comparison grids, and state tables inste
 
 | API                         | Route                                          |
 | --------------------------- | ---------------------------------------------- |
-| Button                      | /platform/ui-reference/components/button       |
-| Menu buttons                | /platform/ui-reference/components/menu-buttons |
-| Breadcrumb                  | /platform/ui-reference/components/breadcrumb   |
-| Tile                        | /platform/ui-reference/components/tile         |
-| Tooltip                     | /platform/ui-reference/components/tooltip      |
-| Toggletip                   | /platform/ui-reference/components/toggletip    |
-| Color element               | /platform/ui-reference/elements/color          |
-| Typography element          | /platform/ui-reference/elements/typography     |
-| Icons element               | /platform/ui-reference/elements/icons          |
-| Navigation patterns         | /platform/ui-reference/patterns/navigation     |
-| Documentation/help patterns | /platform/ui-reference/patterns/data-content   |
-| Components overview         | /platform/ui-reference/components              |
+| Button                      | not installed       |
+| Menu buttons                | not installed |
+| Breadcrumb                  | not installed   |
+| Tile                        | not installed         |
+| Tooltip                     | not installed      |
+| Toggletip                   | not installed    |
+| Color element               | not installed          |
+| Typography element          | not installed     |
+| Icons element               | not installed          |
+| Navigation patterns         | not installed     |
+| Documentation/help patterns | not installed   |
+| Components overview         | not installed              |
 
 ## 18. References
 
@@ -421,4 +421,4 @@ The Link page may use grouped examples, comparison grids, and state tables inste
 - Carbon Link usage: https://carbondesignsystem.com/components/link/usage/
 - Carbon Link style: https://carbondesignsystem.com/components/link/style/
 - Carbon Link accessibility: https://carbondesignsystem.com/components/link/accessibility/
-- Carbon Link guidance is used as a completeness benchmark for navigation purpose, inline versus standalone variants, states, icon treatment, meaningful text, and accessibility. Login App keeps its own `x-ui.link`, `ui-link`, Heroicons, and token model.
+- Carbon Link guidance is used as a completeness benchmark for navigation purpose, inline versus standalone variants, states, icon treatment, meaningful text, and accessibility. Login App keeps its own `x-ui.link`, `ui-link`, internal icon components, and token model.

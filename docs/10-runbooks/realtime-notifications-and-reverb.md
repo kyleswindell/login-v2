@@ -1,126 +1,207 @@
+<!--
+DOC-META
+title: Realtime Notifications And Reverb
+doc_type: runbook
+status: active
+owner: ops
+canonical: true
+canonical_path: docs/10-runbooks/realtime-notifications-and-reverb.md
+parent: docs/10-runbooks/index.md
+template: docs/09-reference/templates/docs/_runbook.md
+summary: Defines staging and local setup, restart, verification, diagnosis, and recovery for Laravel Reverb and the notification queue worker.
+-->
+
 # Realtime Notifications And Reverb
 
-This document defines the canonical scope and intent for Realtime Notifications And Reverb.
+Parent: [Runbook Index](index.md)
 
 ## Purpose
 
-Document the current staging-first setup for Laravel Reverb, Echo, queue workers, and websocket proxying.
+Operate Laravel Reverb and the notification queue worker for local and staging realtime behavior.
 
-## Current Runtime Shape
+## Current Artifacts
 
-The intended staging runtime is:
+- `ops/staging/systemd/platform-reverb.service`
+- `ops/staging/systemd/platform-queue-worker.service`
+- `ops/staging/apache/platform-reverb-proxy.conf`
 
-* app host: `staging.parasolutions.com`
-* Reverb internal port: `8080`
-* websocket/app endpoint proxied through Apache
-* queue worker running continuously on the same server
+## Staging Prerequisites
 
-The intended local runtime is:
+- HTTPS staging application
+- Redis available
+- queue configured for Redis
+- Reverb environment values configured through approved secrets
+- Apache proxy modules enabled
+- approved systemd units installed
+- authorized service restart
 
-* Laravel app at `http://localhost:8000` or a LAN review URL
-* Reverb exposed directly on port `8080`
-* browser-facing Reverb host matched to the app URL host by `php artisan local:ready`
-* `BROADCAST_CONNECTION=reverb` for local notification review
+## Required Staging Configuration
 
-## Repo Artifacts
+Configure without committing secret values:
 
-Current server templates live here:
+- `APP_URL=https://staging.parasolutions.com`
+- `BROADCAST_CONNECTION=reverb`
+- `QUEUE_CONNECTION=redis`
+- `CACHE_STORE=redis`
+- `REVERB_SERVER_HOST=0.0.0.0`
+- `REVERB_SERVER_PORT=8080`
+- `REVERB_HOST=staging.parasolutions.com`
+- `REVERB_PORT=443`
+- `REVERB_SCHEME=https`
+- Reverb app ID, key, and secret
+- matching Vite Reverb values
 
-* `ops/staging/systemd/platform-reverb.service`
-* `ops/staging/systemd/platform-queue-worker.service`
-* `ops/staging/apache/platform-reverb-proxy.conf`
+`APP_URL` must use HTTPS on staging.
 
-## Required Environment
+## Install Staging Services
 
-Set these values in `/var/www/platform/shared/.env` for staging:
+Copy approved systemd units to:
 
-```env
-APP_URL=https://staging.parasolutions.com
-BROADCAST_CONNECTION=reverb
-QUEUE_CONNECTION=redis
-CACHE_STORE=redis
-REVERB_SERVER_HOST=0.0.0.0
-REVERB_SERVER_PORT=8080
-REVERB_SERVER_PATH=
-REVERB_HOST=staging.parasolutions.com
-REVERB_PORT=443
-REVERB_SCHEME=https
-REVERB_APP_ID=platform-staging
-REVERB_APP_KEY=replace-with-random-key
-REVERB_APP_SECRET=replace-with-random-secret
-REVERB_SCALING_ENABLED=true
-VITE_REVERB_APP_KEY=${REVERB_APP_KEY}
-VITE_REVERB_HOST=${REVERB_HOST}
-VITE_REVERB_PORT=${REVERB_PORT}
-VITE_REVERB_SCHEME=${REVERB_SCHEME}
-```
+- `/etc/systemd/system/`
 
-Important:
+Install the approved Apache proxy snippet in the staging virtual host.
 
-* `APP_URL` must use `https://` on staging. If this is set to `http://`, notification action links can be generated as insecure URLs from CLI/event contexts and lead to browser security warnings plus `405 Method Not Allowed` after redirects.
+Enable required modules when absent:
 
-## Staging Server Setup
+    sudo a2enmod proxy proxy_http proxy_wstunnel
 
-1. Copy the systemd units into `/etc/systemd/system/`
-2. Copy the Apache proxy snippet into the staging vhost
-3. Enable Apache proxy modules if not already enabled:
-   * `proxy`
-   * `proxy_http`
-   * `proxy_wstunnel`
-4. Reload systemd and Apache
-5. Enable and start:
-   * `platform-reverb.service`
-   * `platform-queue-worker.service`
+Validate and reload:
 
-## Local Docker Setup
+    sudo apache2ctl configtest
+    sudo systemctl daemon-reload
+    sudo systemctl reload apache2
 
-Start the Reverb service with the local Compose stack:
+Enable services:
 
-```bash
-docker compose up -d reverb
-docker compose exec app php artisan local:ready
-```
+    sudo systemctl enable --now platform-reverb
+    sudo systemctl enable --now platform-queue-worker
+
+## Restart After Deployment
+
+Run:
+
+    sudo systemctl restart platform-reverb
+    sudo systemctl restart platform-queue-worker
+    sudo systemctl reload apache2
+
+## Staging Verification
+
+Run:
+
+    php artisan channel:list
+    php artisan queue:work --once
+    sudo systemctl status platform-reverb --no-pager
+    sudo systemctl status platform-queue-worker --no-pager
+    journalctl -u platform-reverb --since "15 minutes ago" --no-pager
+    journalctl -u platform-queue-worker --since "15 minutes ago" --no-pager
+    curl -I https://staging.parasolutions.com
+
+Use an approved staging smoke-test user rather than a personal hard-coded email.
+
+Verify in the browser:
+
+- unread count updates
+- preview updates
+- inbox updates
+- a newly persisted notification produces exactly one toast per open recipient tab
+- the initiating command response acknowledges creation without injecting a second persistent notification presentation
+- read and dismiss sync across tabs
+
+When using the Dashboard test-notification action, also verify:
+
+- exactly one `notifications` row is created
+- the JSON command response is `201 Created` and contains only `created` plus `notification_id`
+- the current tab receives one realtime toast and one unread-count increment
+- a second open tab receives the same persisted notification once
+- repeated Livewire navigation does not multiply toast delivery
+
+If Reverb is unavailable, the command may still create the database row without showing a live toast. Reload the header or inbox to verify database-backed recovery instead of retrying the state-changing request automatically.
+
+## Local Setup
+
+Run:
+
+    docker compose up -d reverb queue
+    docker compose exec app php artisan local:ready
 
 For LAN review:
 
-```bash
-docker compose exec app php artisan local:ready --app-url=http://192.168.50.10:8000 --vite-url=http://192.168.50.10:5173
-```
+    docker compose exec app php artisan local:ready --app-url=http://192.168.50.10:8000 --vite-url=http://192.168.50.10:5173
 
-The readiness command normalizes local `.env` so the app broadcasts through Reverb and the browser connects to the same host used for the app URL.
+## Failure Diagnosis
 
-## Deploy Flow Impact
+### Reverb Service
 
-After code deploys, restart the long-lived processes:
+    sudo systemctl status platform-reverb --no-pager
+    journalctl -u platform-reverb -n 200 --no-pager
 
-```bash
-sudo systemctl restart platform-reverb
-sudo systemctl restart platform-queue-worker
-sudo systemctl reload apache2
-```
+### Queue Worker
 
-## Verification
+For Docker:
 
-Use these checks on staging:
+    docker compose logs queue --tail=200
+    docker compose restart queue
+    docker compose exec app php artisan queue:failed
 
-```bash
-php artisan channel:list
-php artisan queue:work --once
-php artisan tinker --execute="\$u=\App\Models\User::where('email','kyle@parasolutions.com')->first(); \$t=now()->toDateTimeString(); app(\App\Platform\Notifications\NotificationService::class)->sendTo(\$u,'system','Realtime smoke '.$t,'Generated from tinker at '.$t,'info');"
-sudo systemctl status platform-reverb
-sudo systemctl status platform-queue-worker
-curl -I https://staging.parasolutions.com
-```
+For staging:
 
-In the browser, verify:
+    sudo systemctl status platform-queue-worker --no-pager
+    journalctl -u platform-queue-worker -n 200 --no-pager
+    php artisan queue:failed
 
-* header unread count updates without refresh
-* header preview updates without refresh
-* notifications inbox updates without refresh
-* a new notification shows a toast
-* read/dismiss in one tab syncs to another tab
+### Apache Proxy
+
+    sudo apache2ctl configtest
+    sudo apache2ctl -M | grep proxy
+    sudo tail -n 200 /var/log/apache2/error.log
+
+### Application
+
+    tail -n 200 storage/logs/laravel.log
+
+Redact sensitive values before retaining evidence.
+
+## Recovery
+
+For transient service failure:
+
+    sudo systemctl restart platform-reverb
+    sudo systemctl restart platform-queue-worker
+
+For configuration failure:
+
+- restore the last known-good environment values through the approved secret process
+- restore the approved Apache proxy configuration
+- reload services
+- rerun verification
+
+Do not rotate or disclose Reverb secrets through this runbook.
+
+## Stop Conditions
+
+Stop when:
+
+- the environment is production
+- secret values are unavailable through an approved channel
+- Apache configuration test fails
+- Redis is unavailable
+- queue failures indicate application defects
+- repeated restarts do not resolve the issue
+- notification content exposes sensitive data
+
+## Completion Criteria
+
+Realtime services are healthy when:
+
+- Reverb and queue worker are active
+- logs show no recurring fatal errors
+- HTTPS and websocket proxying work
+- smoke notifications process
+- browser state updates without refresh
+- failed queue count is understood
 
 ## Related
 
-* [Staging Deployment](staging-deployment.md)
-* [Realtime Notifications And Broadcasting](../04-features/notifications/realtime-notifications-and-broadcasting.md)
+- [Local Browser Review](local-browser-review.md)
+- [Staging Deployment](staging-deployment.md)
+- [Logging Operations](logging-operations.md)

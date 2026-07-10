@@ -4,7 +4,7 @@ slug: typography
 guide_status: implemented
 system_maturity: implemented-standard
 api_layer: Foundation Element API
-ui_reference_route: /platform/ui-reference/elements/typography
+rendered_evidence_route: null
 canonical_doc: docs/02-standards/ui/elements/typography.md
 carbon_reference:
   - https://carbondesignsystem.com/elements/typography/overview/
@@ -128,7 +128,7 @@ related_patterns:
   - [10.2. Expressive state behavior](#102-expressive-state-behavior)
 - [11. Prohibited usage](#11-prohibited-usage)
 - [12. Deferred or gated capabilities](#12-deferred-or-gated-capabilities)
-- [13. UI Reference requirements](#13-ui-reference-requirements)
+- [13. Rendered evidence requirements](#13-ui-reference-requirements)
   - [13.1. Required page structure](#131-required-page-structure)
   - [13.2. Required live examples](#132-required-live-examples)
   - [13.3. Required developer API references on the page](#133-required-developer-api-references-on-the-page)
@@ -179,7 +179,7 @@ Use the Typography Element API whenever implementation needs a text role. Choose
 | System maturity    | Implemented standard                                                                          |
 | API layer          | Foundation Element API                                                                        |
 | Element slug       | typography                                                                                    |
-| UI Reference route | `/platform/ui-reference/elements/typography`; `/platform/ui-reference/elements/typography/type-sets` |
+| Rendered evidence route | `not installed`; `not installed` |
 | Canonical doc      | `docs/02-standards/ui/elements/typography.md`                                                 |
 | Primary consumers  | Components, Patterns, page shell, docs pages, forms, tables, cards, notifications, navigation |
 | Required type sets | Productive Type Set and Expressive Type Set                                                   |
@@ -189,7 +189,7 @@ Use the Typography Element API whenever implementation needs a text role. Choose
 
 ### 2.1. Carbon benchmark note
 
-Carbon uses typography tokens across two type sets: Productive and Expressive. Carbon positions productive styles for task-focused product spaces and expressive styles for larger editorial or marketing-style moments, while also allowing intentional blends when the alternate type set better supports hierarchy or user intent. Login App keeps its own font stack, `ui-*` namespace, CSS variable model, Blade components, and UI Reference proof.
+Carbon uses typography tokens across two type sets: Productive and Expressive. Carbon positions productive styles for task-focused product spaces and expressive styles for larger editorial or marketing-style moments, while also allowing intentional blends when the alternate type set better supports hierarchy or user intent. Login App keeps its own font stack, `ui-*` namespace, CSS variable model, Blade components, and rendered evidence proof.
 
 ## 3. Installed standard
 
@@ -221,7 +221,7 @@ Use Productive Type Set for work surfaces where users need to complete tasks eff
 - Cards in dense product UI.
 - Modals and side panels used for tasks.
 - Notifications and status messages.
-- UI Reference implementation tables and developer examples.
+- rendered evidence implementation tables and developer examples.
 
 #### 3.2.3. Productive rules
 
@@ -252,7 +252,7 @@ Use Expressive Type Set for moments where type needs to create a clearer pause, 
 - Documentation or help landing sections.
 - Learning-oriented feature introductions.
 - Large explanatory cards or banners where the content is not competing with dense controls.
-- Editorial-style UI Reference or platform documentation moments.
+- Editorial-style rendered evidence or platform documentation moments.
 
 #### 3.3.3. Expressive rules
 
@@ -326,7 +326,7 @@ Login App uses system font stacks by default. IBM Plex remains a Carbon comparis
 
 | Role                     | Installed class/API                                            | Type set        | Typical element              | Use when                                                           |
 | ------------------------ | -------------------------------------------------------------- | --------------- | ---------------------------- | ------------------------------------------------------------------ |
-| Productive page title    | `ui-page-header-title`; `ui-type-productive-heading-05`        | Productive      | `h1`                         | Primary title for an app page or UI Reference page.                |
+| Productive page title    | `ui-page-header-title`; `ui-type-productive-heading-05`        | Productive      | `h1`                         | Primary title for an app page or rendered evidence page.                |
 | Productive page intro    | `ui-page-header-copy`; `ui-type-productive-body`               | Productive      | `p`                          | Introductory page guidance under the page title.                   |
 | Expressive page title    | `ui-expressive-page-title`; `ui-type-expressive-heading-05`    | Expressive      | `h1`                         | Pattern-owned onboarding, help, docs, or high-presence page intro. |
 | Expressive page intro    | `ui-expressive-page-copy`; `ui-type-expressive-body`           | Expressive      | `p`                          | Pattern-owned explanatory copy with more comfortable reading.      |
@@ -449,7 +449,7 @@ The following existing role classes remain approved compatibility APIs. They sho
 
 ### 4.6. Type scale guidance
 
-The UI Reference page must display the installed type scale. Use these values through role classes, component APIs, Pattern slots, or documented utility use only.
+The rendered evidence page must display the installed type scale. Use these values through role classes, component APIs, Pattern slots, or documented utility use only.
 
 #### 4.6.1. Productive fixed scale
 
@@ -479,7 +479,7 @@ Do not use arbitrary size utilities such as `text-[15px]`, `text-[17px]`, or `le
 
 ## 5. CSS variable API
 
-Use only the CSS variables and token aliases listed in this standard or the linked Element standards. Do not introduce feature-local CSS variables for Typography without updating this standard and the UI Reference proof.
+Use only the CSS variables and token aliases listed in this standard or the linked Element standards. Do not introduce feature-local CSS variables for Typography without updating this standard and the rendered evidence proof.
 
 ### 5.1. Font-family variables
 
@@ -529,11 +529,11 @@ Typography consumes Color Element API variables for text color and code syntax.
 </p>
 ```
 
-If a new semantic type token is needed, update this Element standard, the consuming Component or Pattern doc, and the UI Reference proof before using it in feature code.
+If a new semantic type token is needed, update this Element standard, the consuming Component or Pattern doc, and the rendered evidence proof before using it in feature code.
 
 ## 6. Utility class/helper API
 
-Allowed utility classes, Blade helpers, and component wrappers are those listed in the Token API table and demonstrated by the UI Reference route.
+Allowed utility classes, Blade helpers, and component wrappers are those listed in the Token API table and demonstrated by the Rendered evidence route.
 
 ### 6.1. Public type-set classes
 
@@ -559,7 +559,7 @@ Allowed utility classes, Blade helpers, and component wrappers are those listed 
 | `ui-expressive-section-title` | Implemented | Pattern-owned expressive section headings.                |
 | `ui-expressive-body`          | Implemented | Pattern-owned expressive body copy.                       |
 | `ui-link`                     | Implemented | Text links and docs/navigation anchors.                   |
-| `ui-code-snippet`             | Implemented | Code examples in docs and UI Reference pages.             |
+| `ui-code-snippet`             | Implemented | Code examples in docs and rendered evidence pages.             |
 | `ui-code-token-keyword`       | Implemented | Syntax token styling inside approved code snippets.       |
 | `ui-code-token-property`      | Implemented | Syntax token styling inside approved code snippets.       |
 | `ui-code-token-string`        | Implemented | Syntax token styling inside approved code snippets.       |
@@ -807,7 +807,7 @@ Forms, filters, tables, and shell navigation should remain productive even when 
 
 - Use inline code for tokens, classes, component names, file paths, commands, and values.
 - Keep code examples canonical and copyable.
-- Do not use placeholder comments instead of real implementation examples in standards docs or UI Reference pages.
+- Do not use placeholder comments instead of real implementation examples in standards docs or rendered evidence pages.
 
 ## 8. Component and pattern consumers
 
@@ -831,7 +831,7 @@ Components must not:
 - Require callers to pass local text color utilities to achieve the approved visual treatment.
 - Use placeholder text as the only label.
 - Use color-only typography to communicate state.
-- Add expressive type internally without documenting the expressive role and UI Reference proof.
+- Add expressive type internally without documenting the expressive role and rendered evidence proof.
 
 ### 8.2. Pattern consumer rules
 
@@ -870,7 +870,7 @@ Feature code must not:
 
 ## 9. Theme behavior
 
-Typography must remain valid in supported light, dark, inline, inverse, and high-contrast contexts when those contexts apply. Theme behavior is proven on the UI Reference page.
+Typography must remain valid in supported light, dark, inline, inverse, and high-contrast contexts when those contexts apply. Theme behavior is proven on the rendered evidence page.
 
 Typography consumes theme-aware Color Element tokens. A text role must preserve readability when the surface changes.
 
@@ -950,20 +950,20 @@ Both Productive and Expressive Type Sets are installed standards. The capabiliti
 
 | Capability                                     | Status                 | Gate                                                                                                                         |
 | ---------------------------------------------- | ---------------------- | ---------------------------------------------------------------------------------------------------------------------------- |
-| Full generated type-token alias layer          | Deferred               | Requires source implementation, token map, docs update, and UI Reference proof.                                              |
+| Full generated type-token alias layer          | Deferred               | Requires source implementation, token map, docs update, and rendered evidence proof.                                              |
 | IBM Plex adoption                              | Deferred / not default | Requires product/design decision, font-loading strategy, performance review, license/source review, and cross-browser proof. |
-| Additional expressive display roles            | Gated                  | Requires Pattern need, responsive/fluid scale, UI Reference examples, and accessibility review.                              |
+| Additional expressive display roles            | Gated                  | Requires Pattern need, responsive/fluid scale, rendered evidence examples, and accessibility review.                              |
 | Custom fluid type outside expressive roles     | Not allowed            | Use installed expressive heading/display roles only.                                                                         |
 | Local feature typography overrides             | Not allowed            | Use Component or Pattern standards instead.                                                                                  |
 | Custom font family per feature                 | Not allowed            | Requires system-level decision, not feature code.                                                                            |
 | Text truncation utilities for critical content | Gated                  | Owning Component must document full-value access and responsive behavior.                                                    |
-| Markdown/prose renderer type scale             | Pattern-owned / gated  | Requires documentation/content Pattern standard and UI Reference proof.                                                      |
+| Markdown/prose renderer type scale             | Pattern-owned / gated  | Requires documentation/content Pattern standard and rendered evidence proof.                                                      |
 | Alternate type-set naming                      | Not allowed            | Productive and Expressive are the app terms.                                                                                 |
 | Direct Carbon token/class adoption             | Not allowed            | Requires explicit app adoption decision and migration plan.                                                                  |
 
-## 13. UI Reference requirements
+## 13. Rendered evidence requirements
 
-The UI Reference pages at `/platform/ui-reference/elements/typography` and `/platform/ui-reference/elements/typography/type-sets` must prove the installed Typography Element API with live rendered examples, not screenshots only. The overview owns font, scale, role, weight, color, and code proof. The nested Type Sets page owns full Productive and Expressive role matrices, comparison, blending, and API proof.
+The rendered evidence pages at `not installed` and `not installed` must prove the installed Typography Element API with live rendered examples, not screenshots only. The overview owns font, scale, role, weight, color, and code proof. The nested Type Sets page owns full Productive and Expressive role matrices, comparison, blending, and API proof.
 
 ### 13.1. Required page structure
 
@@ -993,7 +993,7 @@ The pages should provide enough rendered proof for visual review without opening
 
 ### 13.3. Required developer API references on the page
 
-The UI Reference pages must list or demonstrate:
+The rendered evidence pages must list or demonstrate:
 
 #### 13.3.1. Type-set APIs
 
@@ -1032,7 +1032,7 @@ The UI Reference pages must list or demonstrate:
 
 ### 13.4. Required page text
 
-The UI Reference page should include this implementation note:
+The rendered evidence page should include this implementation note:
 
 ```text
 Use typography by role, not by visual guessing. Productive Type Set is the default for task-focused Login App UI. Expressive Type Set is also an installed standard and must be used for approved high-presence, explanatory, onboarding, help, documentation, and empty-state moments through an owning Pattern. Do not introduce local font sizes, weights, line heights, colors, type sets, or font families in feature views.
@@ -1040,7 +1040,7 @@ Use typography by role, not by visual guessing. Productive Type Set is the defau
 
 ## 14. Testing and acceptance criteria
 
-- `/platform/ui-reference/elements/typography` returns 200 for authorized users.
+- `not installed` returns 200 for authorized users.
 - The page renders live examples with app CSS/JS rather than screenshots only.
 - The page shows token/class/helper API references, allowed usage, prohibited usage, accessibility constraints, and implementation status.
 - The page states that both Productive Type Set and Expressive Type Set are installed standards.
@@ -1062,7 +1062,7 @@ Use typography by role, not by visual guessing. Productive Type Set is the defau
 ### 14.1. Suggested automated assertions
 
 ```php
-$response = $this->actingAs($admin)->get('/platform/ui-reference/elements/typography');
+$response = $this->actingAs($admin)->get('not installed');
 
 $response->assertOk();
 $response->assertSee('Typography');
@@ -1098,23 +1098,23 @@ $response->assertDontSee('bx--type-');
 
 | API                                | Route                                                                  |
 | ---------------------------------- | ---------------------------------------------------------------------- |
-| Color element                      | `/platform/ui-reference/elements/color`                                |
-| Spacing element                    | `/platform/ui-reference/elements/spacing`                              |
-| Themes element                     | `/platform/ui-reference/elements/themes`                               |
-| Icons element                      | `/platform/ui-reference/elements/icons`                                |
-| Motion element                     | `/platform/ui-reference/elements/motion`                               |
-| 2x Grid element                    | `/platform/ui-reference/elements/2x-grid`                              |
-| Form patterns                      | `/platform/ui-reference/patterns/forms`                                |
-| Data and content patterns          | `/platform/ui-reference/patterns/data-content`                         |
-| Layout patterns                    | `/platform/ui-reference/patterns/layout`                               |
-| Navigation patterns                | `/platform/ui-reference/patterns/navigation`                           |
-| Button component                   | `/platform/ui-reference/components/button`                             |
-| Link component                     | `/platform/ui-reference/components/link`                               |
-| Text input component               | `/platform/ui-reference/components/text-input`                         |
-| Textarea component                 | `/platform/ui-reference/components/textarea`                           |
-| Notification component             | `/platform/ui-reference/components/notification`                       |
-| Data table component               | `/platform/ui-reference/components/data-table`                         |
-| Code snippet component             | `/platform/ui-reference/components/code-snippet`                       |
+| Color element                      | `not installed`                                |
+| Spacing element                    | `not installed`                              |
+| Themes element                     | `not installed`                               |
+| Icons element                      | `not installed`                                |
+| Motion element                     | `not installed`                               |
+| 2x Grid element                    | `not installed`                              |
+| Form patterns                      | `not installed`                                |
+| Data and content patterns          | `not installed`                         |
+| Layout patterns                    | `not installed`                               |
+| Navigation patterns                | `not installed`                           |
+| Button component                   | `not installed`                             |
+| Link component                     | `not installed`                               |
+| Text input component               | `not installed`                         |
+| Textarea component                 | `not installed`                           |
+| Notification component             | `not installed`                       |
+| Data table component               | `not installed`                         |
+| Code snippet component             | `not installed`                       |
 | Canonical typography doc           | `/platform/docs?path=02-standards%2Fui%2Felements%2Ftypography.md`     |
 | Carbon typography overview         | `https://carbondesignsystem.com/elements/typography/overview/`         |
 | Carbon typography style strategies | `https://carbondesignsystem.com/elements/typography/style-strategies/` |
@@ -1126,4 +1126,4 @@ $response->assertDontSee('bx--type-');
 - [Foundation Elements Standards](index.md)
 - [Component Standards Index](../components/index.md)
 - [Pattern Standards Index](../patterns/index.md)
-- Carbon Typography overview, style strategies, type sets, and code guidance inform the two type-set model, productive and expressive selection rules, base type-size distinction, fixed and fluid heading behavior, type-set blending, and helper-based implementation discipline. Login App keeps its own system font stack, `ui-*` namespace, Foundation Element tokens, Component APIs, Pattern ownership, and UI Reference proof.
+- Carbon Typography overview, style strategies, type sets, and code guidance inform the two type-set model, productive and expressive selection rules, base type-size distinction, fixed and fluid heading behavior, type-set blending, and helper-based implementation discipline. Login App keeps its own system font stack, `ui-*` namespace, Foundation Element tokens, Component APIs, Pattern ownership, and rendered evidence proof.

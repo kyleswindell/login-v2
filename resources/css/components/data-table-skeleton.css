@@ -1,0 +1,129 @@
+/* ==========================================================================
+   File: resources/css/components/data-table-skeleton.css
+   Purpose: Data Table skeleton styles.
+
+   Notes:
+   - Defines Data Table skeleton selectors only.
+   - Do not define primitive palette tokens here.
+   - Do not define theme role tokens here.
+   ========================================================================== */
+
+@layer components {
+    .ui-data-table.ui-skeleton th {
+        padding-inline-start: var(--ui-spacing-05);
+        vertical-align: middle;
+    }
+
+    .ui-data-table.ui-skeleton th span,
+    .ui-data-table.ui-skeleton td span {
+        display: block;
+        inline-size: 75%;
+        block-size: 1rem;
+        background-color: var(--ui-skeleton-background);
+        color: transparent;
+        pointer-events: none;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .ui-data-table.ui-skeleton th span::before,
+    .ui-data-table.ui-skeleton td span::before {
+        position: absolute;
+        inset: 0;
+        background-color: var(--ui-skeleton-element);
+        content: "";
+    }
+
+    .ui-data-table.ui-skeleton tr:hover,
+    .ui-data-table.ui-skeleton tr:hover td,
+    .ui-data-table.ui-skeleton tr:hover th {
+        background-color: var(--ui-layer);
+        color: transparent;
+    }
+
+    .ui-data-table.ui-skeleton tr:hover td,
+    .ui-data-table.ui-skeleton tr:hover th,
+    .ui-data-table.ui-skeleton tr:hover td:first-of-type,
+    .ui-data-table.ui-skeleton tr:hover td:last-of-type {
+        border-color: var(--ui-border-subtle);
+    }
+
+    .ui-data-table.ui-skeleton .ui-table-sort {
+        pointer-events: none;
+    }
+
+    .ui-data-table.ui-skeleton th span {
+        background-color: var(--ui-skeleton-element);
+    }
+
+    .ui-data-table.ui-skeleton th span::before {
+        background-color: var(--ui-skeleton-background);
+    }
+
+    .ui-data-table-container.ui-skeleton .ui-data-table-header-title,
+    .ui-data-table-container.ui-skeleton .ui-data-table-header__title {
+        inline-size: 7.5rem;
+        block-size: 1.5rem;
+        background-color: var(--ui-skeleton-background);
+        color: transparent;
+        pointer-events: none;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .ui-data-table-container.ui-skeleton .ui-data-table-header-title::before,
+    .ui-data-table-container.ui-skeleton .ui-data-table-header__title::before {
+        position: absolute;
+        inset: 0;
+        background-color: var(--ui-skeleton-element);
+        content: "";
+    }
+
+    .ui-data-table-container.ui-skeleton .ui-data-table-header-description,
+    .ui-data-table-container.ui-skeleton .ui-data-table-header__description {
+        inline-size: 10rem;
+        block-size: 1rem;
+        margin-block-start: var(--ui-spacing-03);
+        background-color: var(--ui-skeleton-background);
+        color: transparent;
+        pointer-events: none;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .ui-data-table-container.ui-skeleton
+        .ui-data-table-header-description::before,
+    .ui-data-table-container.ui-skeleton
+        .ui-data-table-header__description::before {
+        position: absolute;
+        inset: 0;
+        background-color: var(--ui-skeleton-element);
+        content: "";
+    }
+
+    @media screen and (-ms-high-contrast: active), (forced-colors: active) {
+        .ui-data-table.ui-skeleton th span,
+        .ui-data-table.ui-skeleton td span,
+        .ui-data-table-container.ui-skeleton .ui-data-table-header-title,
+        .ui-data-table-container.ui-skeleton .ui-data-table-header__title,
+        .ui-data-table-container.ui-skeleton .ui-data-table-header-description,
+        .ui-data-table-container.ui-skeleton
+            .ui-data-table-header__description {
+            forced-color-adjust: none;
+            background-color: GrayText;
+        }
+
+        .ui-data-table.ui-skeleton th span::before,
+        .ui-data-table.ui-skeleton td span::before,
+        .ui-data-table-container.ui-skeleton
+            .ui-data-table-header-title::before,
+        .ui-data-table-container.ui-skeleton
+            .ui-data-table-header__title::before,
+        .ui-data-table-container.ui-skeleton
+            .ui-data-table-header-description::before,
+        .ui-data-table-container.ui-skeleton
+            .ui-data-table-header__description::before {
+            background-color: Canvas;
+        }
+    }
+}

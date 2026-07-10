@@ -32,8 +32,8 @@ class ActiveBatchReviewQueueTest extends TestCase
 ## Blocked
 MD);
 
-        config()->set('platform.ui_reference.active_batch_review_source_path', $queuePath);
-        config()->set('platform.ui_reference.active_batch_review_manifest_path', $manifestPath);
+        config()->set('platform.active_batch_review.active_batch_review_source_path', $queuePath);
+        config()->set('platform.active_batch_review.active_batch_review_manifest_path', $manifestPath);
 
         ActiveBatchReviewQueue::clearCache();
 
@@ -66,8 +66,8 @@ MD);
   ID: P2-B-CQ-014
 MD);
 
-        config()->set('platform.ui_reference.active_batch_review_source_path', $queuePath);
-        config()->set('platform.ui_reference.active_batch_review_manifest_path', $manifestPath);
+        config()->set('platform.active_batch_review.active_batch_review_source_path', $queuePath);
+        config()->set('platform.active_batch_review.active_batch_review_manifest_path', $manifestPath);
 
         ActiveBatchReviewQueue::clearCache();
         ActiveBatchReviewQueue::syncManifest();

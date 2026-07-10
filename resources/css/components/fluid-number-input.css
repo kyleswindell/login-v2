@@ -1,0 +1,678 @@
+/* ==========================================================================
+   File: resources/css/components/fluid-number-input.css
+   Purpose: Fluid Number Input variant styles.
+
+   Notes:
+   - Defines Fluid Number Input selectors only.
+   - Do not define primitive palette tokens here.
+   - Do not define theme role tokens here.
+   - This is a Number Input variant, not a separate public component.
+   - AI label / slug decorator positioning is intentionally excluded here.
+   ========================================================================== */
+
+@layer components {
+    /* ----------------------------------------------------------------------
+       Root
+       ---------------------------------------------------------------------- */
+
+    .ui-number-input-fluid,
+    .ui-number-input--fluid {
+        position: relative;
+        block-size: 100%;
+        background-color: var(--ui-field);
+    }
+
+    /* ----------------------------------------------------------------------
+       Label
+       ---------------------------------------------------------------------- */
+
+    .ui-number-input-fluid .ui-label,
+    .ui-number-input--fluid .ui-label {
+        position: absolute;
+        z-index: 1;
+        inset-block-start: 0.8125rem;
+        inset-inline-start: var(--ui-spacing-05);
+        display: flex;
+        align-items: center;
+        inline-size: calc(100% - 2rem);
+        block-size: 1rem;
+        margin: 0;
+    }
+
+    .ui-number-input-fluid .ui-label::-webkit-scrollbar,
+    .ui-number-input--fluid .ui-label::-webkit-scrollbar,
+    .ui-number-input-fluid .ui-label .ui-toggletip-label::-webkit-scrollbar,
+    .ui-number-input--fluid .ui-label .ui-toggletip-label::-webkit-scrollbar {
+        display: none;
+    }
+
+    .ui-number-input-fluid .ui-label:not(:has(.ui-toggletip-label)),
+    .ui-number-input--fluid .ui-label:not(:has(.ui-toggletip-label)),
+    .ui-number-input-fluid .ui-label .ui-toggletip-label,
+    .ui-number-input--fluid .ui-label .ui-toggletip-label {
+        overflow-x: scroll;
+        -ms-overflow-style: none;
+        scrollbar-width: none;
+        white-space: nowrap;
+    }
+
+    /* ----------------------------------------------------------------------
+       Input wrapper and field
+       ---------------------------------------------------------------------- */
+
+    .ui-number-input-fluid .ui-number-input-wrapper,
+    .ui-number-input-fluid .ui-number__input-wrapper,
+    .ui-number-input--fluid .ui-number-input-wrapper,
+    .ui-number-input--fluid .ui-number__input-wrapper {
+        position: initial;
+    }
+
+    .ui-number-input-fluid input[type="number"],
+    .ui-number-input-fluid input[type="text"],
+    .ui-number-input--fluid input[type="number"],
+    .ui-number-input--fluid input[type="text"] {
+        min-block-size: 4rem;
+        padding-block: 2rem 0.8125rem;
+        padding-inline: var(--ui-spacing-05) 5rem;
+        background-color: transparent;
+        outline: none;
+    }
+
+    /* ----------------------------------------------------------------------
+       Controls
+       ---------------------------------------------------------------------- */
+
+    .ui-number-input-fluid .ui-number-controls,
+    .ui-number-input-fluid .ui-number__controls,
+    .ui-number-input--fluid .ui-number-controls,
+    .ui-number-input--fluid .ui-number__controls {
+        inset-block-start: 1.4375rem;
+        block-size: 2.5rem;
+        transform: translate(0);
+    }
+
+    .ui-number-input-fluid
+        input[type="number"]:focus
+        ~ .ui-number-controls
+        .ui-number-control-btn,
+    .ui-number-input-fluid
+        input[type="number"]:focus
+        ~ .ui-number__controls
+        .ui-number__control-btn,
+    .ui-number-input-fluid
+        input[type="text"]:focus
+        ~ .ui-number-controls
+        .ui-number-control-btn,
+    .ui-number-input-fluid
+        input[type="text"]:focus
+        ~ .ui-number__controls
+        .ui-number__control-btn,
+    .ui-number-input--fluid
+        input[type="number"]:focus
+        ~ .ui-number-controls
+        .ui-number-control-btn,
+    .ui-number-input--fluid
+        input[type="number"]:focus
+        ~ .ui-number__controls
+        .ui-number__control-btn,
+    .ui-number-input--fluid
+        input[type="text"]:focus
+        ~ .ui-number-controls
+        .ui-number-control-btn,
+    .ui-number-input--fluid
+        input[type="text"]:focus
+        ~ .ui-number__controls
+        .ui-number__control-btn {
+        border-block-end-color: var(--ui-focus);
+        box-shadow: inset 0 -1px var(--ui-focus);
+    }
+
+    .ui-number-input-fluid
+        input[type="number"]:focus
+        ~ .ui-number-controls
+        .ui-number-control-btn:last-of-type,
+    .ui-number-input-fluid
+        input[type="number"]:focus
+        ~ .ui-number__controls
+        .ui-number__control-btn:last-of-type,
+    .ui-number-input-fluid
+        input[type="text"]:focus
+        ~ .ui-number-controls
+        .ui-number-control-btn:last-of-type,
+    .ui-number-input-fluid
+        input[type="text"]:focus
+        ~ .ui-number__controls
+        .ui-number__control-btn:last-of-type,
+    .ui-number-input--fluid
+        input[type="number"]:focus
+        ~ .ui-number-controls
+        .ui-number-control-btn:last-of-type,
+    .ui-number-input--fluid
+        input[type="number"]:focus
+        ~ .ui-number__controls
+        .ui-number__control-btn:last-of-type,
+    .ui-number-input--fluid
+        input[type="text"]:focus
+        ~ .ui-number-controls
+        .ui-number-control-btn:last-of-type,
+    .ui-number-input--fluid
+        input[type="text"]:focus
+        ~ .ui-number__controls
+        .ui-number__control-btn:last-of-type {
+        box-shadow:
+            inset 0 -1px var(--ui-focus),
+            inset -2px 0 var(--ui-focus);
+    }
+
+    /* ----------------------------------------------------------------------
+       Warning / invalid control behavior
+       ---------------------------------------------------------------------- */
+
+    .ui-number-input-fluid
+        .ui-number-input-wrapper-warning
+        input[type="number"]:focus
+        ~ .ui-number-controls
+        .ui-number-control-btn,
+    .ui-number-input-fluid
+        .ui-number-input-wrapper-warning
+        input[type="text"]:focus
+        ~ .ui-number-controls
+        .ui-number-control-btn,
+    .ui-number-input-fluid
+        .ui-number__input-wrapper--warning
+        input[type="number"]:focus
+        ~ .ui-number__controls
+        .ui-number__control-btn,
+    .ui-number-input-fluid
+        .ui-number__input-wrapper--warning
+        input[type="text"]:focus
+        ~ .ui-number__controls
+        .ui-number__control-btn,
+    .ui-number-input-fluid-invalid
+        input[type="number"]:focus
+        ~ .ui-number-controls
+        .ui-number-control-btn,
+    .ui-number-input-fluid-invalid
+        input[type="text"]:focus
+        ~ .ui-number-controls
+        .ui-number-control-btn,
+    .ui-number-input--fluid--invalid
+        input[type="number"]:focus
+        ~ .ui-number__controls
+        .ui-number__control-btn,
+    .ui-number-input--fluid--invalid
+        input[type="text"]:focus
+        ~ .ui-number__controls
+        .ui-number__control-btn {
+        border-block-end-color: transparent;
+        box-shadow: none;
+    }
+
+    .ui-number-input-fluid
+        .ui-number-input-wrapper-warning
+        input[type="number"]:focus
+        ~ .ui-number-controls
+        .ui-number-control-btn:last-of-type,
+    .ui-number-input-fluid
+        .ui-number-input-wrapper-warning
+        input[type="text"]:focus
+        ~ .ui-number-controls
+        .ui-number-control-btn:last-of-type,
+    .ui-number-input-fluid
+        .ui-number__input-wrapper--warning
+        input[type="number"]:focus
+        ~ .ui-number__controls
+        .ui-number__control-btn:last-of-type,
+    .ui-number-input-fluid
+        .ui-number__input-wrapper--warning
+        input[type="text"]:focus
+        ~ .ui-number__controls
+        .ui-number__control-btn:last-of-type,
+    .ui-number-input-fluid-invalid
+        input[type="number"][data-invalid]:focus
+        ~ .ui-number-controls
+        .ui-number-control-btn:last-of-type,
+    .ui-number-input-fluid-invalid
+        input[type="text"][data-invalid]:focus
+        ~ .ui-number-controls
+        .ui-number-control-btn:last-of-type,
+    .ui-number-input--fluid--invalid
+        input[type="number"][data-invalid]:focus
+        ~ .ui-number__controls
+        .ui-number__control-btn:last-of-type,
+    .ui-number-input--fluid--invalid
+        input[type="text"][data-invalid]:focus
+        ~ .ui-number__controls
+        .ui-number__control-btn:last-of-type {
+        box-shadow: inset -2px 0 var(--ui-focus);
+    }
+
+    .ui-number-input-fluid-invalid
+        input[type="number"][data-invalid]:not(:focus)
+        ~ .ui-number-controls
+        .ui-number-control-btn:hover,
+    .ui-number-input-fluid-invalid
+        input[type="text"][data-invalid]:not(:focus)
+        ~ .ui-number-controls
+        .ui-number-control-btn:hover,
+    .ui-number-input--fluid--invalid
+        input[type="number"][data-invalid]:not(:focus)
+        ~ .ui-number__controls
+        .ui-number__control-btn:hover,
+    .ui-number-input--fluid--invalid
+        input[type="text"][data-invalid]:not(:focus)
+        ~ .ui-number__controls
+        .ui-number__control-btn:hover {
+        box-shadow: none;
+    }
+
+    .ui-number-input-fluid-invalid
+        input[type="number"][data-invalid]:not(:focus)
+        ~ .ui-number-controls
+        .ui-number-control-btn:last-of-type:hover,
+    .ui-number-input-fluid-invalid
+        input[type="text"][data-invalid]:not(:focus)
+        ~ .ui-number-controls
+        .ui-number-control-btn:last-of-type:hover,
+    .ui-number-input--fluid--invalid
+        input[type="number"][data-invalid]:not(:focus)
+        ~ .ui-number__controls
+        .ui-number__control-btn:last-of-type:hover,
+    .ui-number-input--fluid--invalid
+        input[type="text"][data-invalid]:not(:focus)
+        ~ .ui-number__controls
+        .ui-number__control-btn:last-of-type:hover {
+        box-shadow: inset -2px 0 var(--ui-support-error);
+    }
+
+    /* ----------------------------------------------------------------------
+       Focus state
+       ---------------------------------------------------------------------- */
+
+    .ui-number-input-fluid.ui-number-input-fluid-focus .ui-number,
+    .ui-number-input--fluid.ui-number-input--fluid--focus .ui-number {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+    }
+
+    .ui-number-input-fluid:not(.ui-number-input-fluid-invalid)
+        .ui-number-input-wrapper:not(.ui-number-input-wrapper-warning)
+        input[type="number"]:focus
+        ~ .ui-number-controls
+        .ui-number-control-btn:hover,
+    .ui-number-input-fluid:not(.ui-number-input-fluid-invalid)
+        .ui-number-input-wrapper:not(.ui-number-input-wrapper-warning)
+        input[type="text"]:focus
+        ~ .ui-number-controls
+        .ui-number-control-btn:hover,
+    .ui-number-input--fluid:not(.ui-number-input--fluid--invalid)
+        .ui-number-input-wrapper:not(.ui-number-input-wrapper__warning)
+        input[type="number"]:focus
+        ~ .ui-number__controls
+        .ui-number__control-btn:hover,
+    .ui-number-input--fluid:not(.ui-number-input--fluid--invalid)
+        .ui-number-input-wrapper:not(.ui-number-input-wrapper__warning)
+        input[type="text"]:focus
+        ~ .ui-number__controls
+        .ui-number__control-btn:hover {
+        border-block-end: 1px solid var(--ui-focus);
+        outline: none;
+    }
+
+    /* ----------------------------------------------------------------------
+       Divider / invalid icon
+       ---------------------------------------------------------------------- */
+
+    .ui-number-input-fluid .ui-number-input-divider,
+    .ui-number-input-fluid .ui-number-input__divider,
+    .ui-number-input--fluid .ui-number-input-divider,
+    .ui-number-input--fluid .ui-number-input__divider {
+        display: none;
+    }
+
+    .ui-number-input-fluid .ui-number-invalid,
+    .ui-number-input-fluid .ui-number__invalid,
+    .ui-number-input--fluid .ui-number-invalid,
+    .ui-number-input--fluid .ui-number__invalid {
+        inset-block-start: 4.5625rem;
+        inset-inline-end: var(--ui-spacing-05);
+        pointer-events: none;
+    }
+
+    .ui-number-input-fluid
+        .ui-number-controls
+        .ui-number-rule-divider:first-of-type,
+    .ui-number-input-fluid
+        .ui-number__controls
+        .ui-number__rule-divider:first-of-type,
+    .ui-number-input--fluid
+        .ui-number-controls
+        .ui-number-rule-divider:first-of-type,
+    .ui-number-input--fluid
+        .ui-number__controls
+        .ui-number__rule-divider:first-of-type {
+        display: none;
+    }
+
+    .ui-number-input-fluid
+        .ui-number-input-wrapper-warning
+        input[type="number"],
+    .ui-number-input-fluid .ui-number-input-wrapper-warning input[type="text"],
+    .ui-number-input-fluid
+        .ui-number__input-wrapper--warning
+        input[type="number"],
+    .ui-number-input-fluid
+        .ui-number__input-wrapper--warning
+        input[type="text"],
+    .ui-number-input--fluid
+        .ui-number-input-wrapper-warning
+        input[type="number"],
+    .ui-number-input--fluid .ui-number-input-wrapper-warning input[type="text"],
+    .ui-number-input--fluid
+        .ui-number__input-wrapper--warning
+        input[type="number"],
+    .ui-number-input--fluid
+        .ui-number__input-wrapper--warning
+        input[type="text"] {
+        border-block-end: 1px solid transparent;
+    }
+
+    .ui-number-input-fluid
+        .ui-number-input-wrapper-warning
+        input[type="number"]:focus,
+    .ui-number-input-fluid
+        .ui-number-input-wrapper-warning
+        input[type="text"]:focus,
+    .ui-number-input-fluid
+        .ui-number__input-wrapper--warning
+        input[type="number"]:focus,
+    .ui-number-input-fluid
+        .ui-number__input-wrapper--warning
+        input[type="text"]:focus,
+    .ui-number-input--fluid
+        .ui-number-input-wrapper-warning
+        input[type="number"]:focus,
+    .ui-number-input--fluid
+        .ui-number-input-wrapper-warning
+        input[type="text"]:focus,
+    .ui-number-input--fluid
+        .ui-number__input-wrapper--warning
+        input[type="number"]:focus,
+    .ui-number-input--fluid
+        .ui-number__input-wrapper--warning
+        input[type="text"]:focus {
+        outline: none;
+    }
+
+    .ui-number-input-fluid.ui-number-input-fluid-invalid
+        .ui-number-input-divider,
+    .ui-number-input-fluid.ui-number-input-fluid-invalid
+        .ui-number-input__divider,
+    .ui-number-input-fluid
+        .ui-number-input-wrapper-warning
+        + .ui-number-input-divider,
+    .ui-number-input-fluid
+        .ui-number__input-wrapper--warning
+        + .ui-number-input__divider,
+    .ui-number-input--fluid.ui-number-input--fluid--invalid
+        .ui-number-input-divider,
+    .ui-number-input--fluid.ui-number-input--fluid--invalid
+        .ui-number-input__divider,
+    .ui-number-input--fluid
+        .ui-number-input-wrapper-warning
+        + .ui-number-input-divider,
+    .ui-number-input--fluid
+        .ui-number__input-wrapper--warning
+        + .ui-number-input__divider {
+        position: absolute;
+        inset-block-start: 3.9375rem;
+        display: block;
+        inline-size: calc(100% - 2rem);
+        block-size: 1px;
+        margin: 0 var(--ui-spacing-05);
+        border: none;
+        border-block-end: 1px solid var(--ui-border-subtle);
+    }
+
+    .ui-number-input-fluid .ui-form-requirement,
+    .ui-number-input--fluid .ui-form-requirement {
+        margin: 0;
+        padding-block: var(--ui-spacing-03);
+        padding-inline: var(--ui-spacing-05) 2.5rem;
+    }
+
+    .ui-number-input-fluid.ui-number-input-fluid-invalid:not(
+            .ui-number-input-fluid-focus
+        )
+        .ui-number,
+    .ui-number-input--fluid.ui-number-input--fluid--invalid:not(
+            .ui-number-input--fluid--focus
+        )
+        .ui-number {
+        outline: 2px solid var(--ui-support-error);
+        outline-offset: -2px;
+    }
+
+    .ui-number-input-fluid-invalid
+        .ui-number[data-invalid]
+        input[type="number"],
+    .ui-number-input-fluid-invalid .ui-number[data-invalid] input[type="text"],
+    .ui-number-input--fluid--invalid
+        .ui-number[data-invalid]
+        input[type="number"],
+    .ui-number-input--fluid--invalid
+        .ui-number[data-invalid]
+        input[type="text"] {
+        border-block-end: 1px solid transparent;
+    }
+
+    .ui-number-input-fluid-invalid
+        .ui-number
+        input[type="number"][data-invalid]
+        ~ .ui-number-controls
+        .ui-number-control-btn:focus,
+    .ui-number-input-fluid-invalid
+        .ui-number
+        input[type="number"][data-invalid]
+        ~ .ui-number-controls
+        .ui-number-control-btn:focus:hover,
+    .ui-number-input-fluid-invalid
+        .ui-number
+        input[type="text"][data-invalid]
+        ~ .ui-number-controls
+        .ui-number-control-btn:focus,
+    .ui-number-input-fluid-invalid
+        .ui-number
+        input[type="text"][data-invalid]
+        ~ .ui-number-controls
+        .ui-number-control-btn:focus:hover,
+    .ui-number-input--fluid--invalid
+        .ui-number
+        input[type="number"][data-invalid]
+        ~ .ui-number__controls
+        .ui-number__control-btn:focus,
+    .ui-number-input--fluid--invalid
+        .ui-number
+        input[type="number"][data-invalid]
+        ~ .ui-number__controls
+        .ui-number__control-btn:focus:hover,
+    .ui-number-input--fluid--invalid
+        .ui-number
+        input[type="text"][data-invalid]
+        ~ .ui-number__controls
+        .ui-number__control-btn:focus,
+    .ui-number-input--fluid--invalid
+        .ui-number
+        input[type="text"][data-invalid]
+        ~ .ui-number__controls
+        .ui-number__control-btn:focus:hover {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+    }
+
+    .ui-number-input-fluid.ui-number-input-invalid
+        .ui-number-input-wrapper
+        input[type="number"]
+        ~ .ui-number-controls
+        .ui-number-control-btn,
+    .ui-number-input-fluid
+        .ui-number-input-wrapper-warning
+        input[type="number"]
+        ~ .ui-number-controls
+        .ui-number-control-btn,
+    .ui-number-input-fluid.ui-number-input-invalid
+        .ui-number-input-wrapper
+        input[type="text"]
+        ~ .ui-number-controls
+        .ui-number-control-btn,
+    .ui-number-input-fluid
+        .ui-number-input-wrapper-warning
+        input[type="text"]
+        ~ .ui-number-controls
+        .ui-number-control-btn,
+    .ui-number-input--fluid.ui-number-input--invalid
+        .ui-number__input-wrapper
+        input[type="number"]
+        ~ .ui-number__controls
+        .ui-number__control-btn,
+    .ui-number-input--fluid
+        .ui-number__input-wrapper--warning
+        input[type="number"]
+        ~ .ui-number__controls
+        .ui-number__control-btn,
+    .ui-number-input--fluid.ui-number-input--invalid
+        .ui-number__input-wrapper
+        input[type="text"]
+        ~ .ui-number__controls
+        .ui-number__control-btn,
+    .ui-number-input--fluid
+        .ui-number__input-wrapper--warning
+        input[type="text"]
+        ~ .ui-number__controls
+        .ui-number__control-btn {
+        border-block-end: none;
+    }
+
+    .ui-number-input-fluid-invalid
+        .ui-number
+        input[type="number"][data-invalid]
+        ~ .ui-number-controls
+        .ui-number-control-btn,
+    .ui-number-input-fluid
+        .ui-number
+        input[type="number"]
+        ~ .ui-number-controls
+        .ui-number-control-btn,
+    .ui-number-input-fluid-invalid
+        .ui-number
+        input[type="text"][data-invalid]
+        ~ .ui-number-controls
+        .ui-number-control-btn,
+    .ui-number-input-fluid
+        .ui-number
+        input[type="text"]
+        ~ .ui-number-controls
+        .ui-number-control-btn,
+    .ui-number-input--fluid--invalid
+        .ui-number
+        input[type="number"][data-invalid]
+        ~ .ui-number__controls
+        .ui-number__control-btn,
+    .ui-number-input--fluid
+        .ui-number
+        input[type="number"]
+        ~ .ui-number__controls
+        .ui-number__control-btn,
+    .ui-number-input--fluid--invalid
+        .ui-number
+        input[type="text"][data-invalid]
+        ~ .ui-number__controls
+        .ui-number__control-btn,
+    .ui-number-input--fluid
+        .ui-number
+        input[type="text"]
+        ~ .ui-number__controls
+        .ui-number__control-btn {
+        border: initial;
+        border-block-end-width: 1px;
+    }
+
+    /* ----------------------------------------------------------------------
+       Disabled state
+       ---------------------------------------------------------------------- */
+
+    .ui-number-input-fluid-disabled:not(.ui-number-input-fluid-invalid)
+        .ui-number,
+    .ui-number-input--fluid--disabled:not(.ui-number-input--fluid--invalid)
+        .ui-number {
+        border-block-end: 1px solid var(--ui-border-subtle);
+    }
+
+    .ui-number-input-fluid-disabled.ui-number-input-fluid-invalid
+        .ui-number
+        input[type="number"]:disabled,
+    .ui-number-input-fluid-disabled.ui-number-input-fluid-invalid
+        .ui-number
+        input[type="text"]:disabled,
+    .ui-number-input--fluid--disabled.ui-number-input--fluid--invalid
+        .ui-number
+        input[type="number"]:disabled,
+    .ui-number-input--fluid--disabled.ui-number-input--fluid--invalid
+        .ui-number
+        input[type="text"]:disabled {
+        background-color: transparent;
+    }
+
+    /* ----------------------------------------------------------------------
+       Reduced motion
+       ---------------------------------------------------------------------- */
+
+    @media (prefers-reduced-motion: reduce) {
+        .ui-number-input-fluid,
+        .ui-number-input--fluid {
+            transition: none;
+        }
+    }
+
+    /* ----------------------------------------------------------------------
+       Forced colors
+       ---------------------------------------------------------------------- */
+
+    @media screen and (-ms-high-contrast: active), (forced-colors: active) {
+        .ui-number-input-fluid.ui-number-input-fluid-focus .ui-number,
+        .ui-number-input--fluid.ui-number-input--fluid--focus .ui-number,
+        .ui-number-input-fluid-invalid
+            .ui-number
+            input[type="number"][data-invalid]
+            ~ .ui-number-controls
+            .ui-number-control-btn:focus,
+        .ui-number-input-fluid-invalid
+            .ui-number
+            input[type="text"][data-invalid]
+            ~ .ui-number-controls
+            .ui-number-control-btn:focus,
+        .ui-number-input--fluid--invalid
+            .ui-number
+            input[type="number"][data-invalid]
+            ~ .ui-number__controls
+            .ui-number__control-btn:focus,
+        .ui-number-input--fluid--invalid
+            .ui-number
+            input[type="text"][data-invalid]
+            ~ .ui-number__controls
+            .ui-number__control-btn:focus {
+            outline-color: Highlight;
+        }
+
+        .ui-number-input-fluid.ui-number-input-fluid-invalid:not(
+                .ui-number-input-fluid-focus
+            )
+            .ui-number,
+        .ui-number-input--fluid.ui-number-input--fluid--invalid:not(
+                .ui-number-input--fluid--focus
+            )
+            .ui-number {
+            outline-color: Mark;
+        }
+    }
+}

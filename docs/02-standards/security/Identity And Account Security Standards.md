@@ -1,75 +1,161 @@
+<!--
+DOC-META
+title: Identity And Account Security Standards
+doc_type: standard
+status: draft
+owner: security
+canonical: true
+canonical_path: docs/02-standards/security/Identity And Account Security Standards.md
+parent: docs/02-standards/security/index.md
+template: docs/09-reference/templates/docs/_doc.md
+summary: Defines authentication, password, MFA, recovery, federation, account-linking, assurance, and identity-abuse requirements.
+-->
+
 # Identity And Account Security Standards
 
-This document defines the canonical scope and intent for Identity And Account Security Standards.
+Parent: [Security Standards Index](index.md)
+- [1. Purpose](#1-purpose)
+- [2. Ownership Boundary](#2-ownership-boundary)
+- [3. Login](#3-login)
+- [4. Passwords](#4-passwords)
+- [5. MFA](#5-mfa)
+- [6. Recovery](#6-recovery)
+- [7. Recent Authentication And Step-Up](#7-recent-authentication-and-step-up)
+- [8. External Identity](#8-external-identity)
+- [9. Account Linking](#9-account-linking)
+- [10. Enterprise Identity](#10-enterprise-identity)
+- [11. Suspicious Authentication](#11-suspicious-authentication)
+- [12. Session Coordination](#12-session-coordination)
+- [13. Verification](#13-verification)
+- [14. Related](#14-related)
 
-## Purpose
+## 1. Purpose
 
-Define the required security baseline for authentication, external identity providers, account creation and linking, MFA assurance, and production credential handling.
+Define the security baseline for proving identity, establishing authenticated sessions, enrolling and recovering factors, linking external identities, and defending account surfaces from abuse.
 
-## External Identity Standards
+## 2. Ownership Boundary
 
-- External sign-in must use OIDC or OAuth flows that keep token exchange on the server side.
-- Browser-based sign-in must use Authorization Code flow with PKCE, `state`, and `nonce`.
-- Do not use implicit flow or password-style grant flows for user sign-in.
-- Redirect URIs must be exact and environment-specific.
-- Provider tokens and claims must be validated for issuer, audience, expiry, replay protection, and intended flow context before any local session is created.
+- Auth owns login, passwords, MFA, recovery, sessions, recent authentication, and future federation.
+- Identity owns user lifecycle, invitations, status, profile, suspension, and deprovisioning.
+- Access owns authorization after authentication succeeds.
+- Account owns self-service entry points while calling Auth and Identity boundaries.
 
-## Identity Resolution Standards
+MFA does not grant permission.
 
-- External provider identity must be keyed from stable provider identity claims, not from email alone.
-- Treat email address as a user-facing attribute and possible discovery hint, not as a trusted linking key by itself.
-- Automatic account linking from matching email alone is not allowed.
-- Automatic account creation is not allowed unless the selected tenant access mode and account-creation policy explicitly allow it.
-- Invitation-only and staff-created enrollment paths must remain available without requiring public self-registration.
-- High-trust or enterprise tenants should default to invitation-only enrollment unless a stricter tenant-approved alternative is defined.
+## 3. Login
 
-## Microsoft Entra Work Account Standards
+Login must:
 
-- When a tenant requires Microsoft work-account sign-in, the app must be able to restrict sign-in to the allowed Microsoft Entra tenant boundary instead of accepting any Microsoft account.
-- Tenant policy may require selected tenant-user surfaces to accept only work or school accounts from a specific connected Microsoft tenant.
-- If a tenant requires stronger Microsoft-side controls, sign-in acceptance must depend on the required provider-side assurance being present rather than on the Microsoft brand alone.
+- rate-limit by account-oriented and network-oriented dimensions
+- avoid user-enumeration responses
+- block non-loginable identity states
+- rotate the session identifier after successful authentication
+- require MFA before full session issuance when policy requires it
+- record safe success, failure, throttle, and rejection evidence
+- never log submitted credentials or factors
 
-## MFA And Assurance Standards
+## 4. Passwords
 
-- Federated sign-in does not by itself prove MFA.
-- MFA must be treated as an assurance requirement that is explicitly enforced or validated per sign-in surface and per privilege level.
-- When provider-side MFA is required, the app must validate the provider result or policy outcome before granting access.
-- When provider-side MFA cannot be required or trusted for the target surface, the app must use local MFA or step-up authentication before granting the protected access level.
-- Privileged actions and privileged admin surfaces must support step-up authentication independent of how the base session was created.
+Local password rules must:
 
-## Login And Abuse Defense Standards
+- use the shared password policy
+- require at least 12 characters
+- allow at least 64 characters
+- avoid arbitrary composition rules
+- reject approved common and context-specific values
+- use a memory-hard password hashing algorithm supported by the framework
+- separate breached-password checking behind an app-owned boundary
+- never send the raw password or full hash to an external provider
+- never log provider payloads or matching suffixes
 
-- Interactive login must apply anti-automation controls such as rate limiting, slowdown, or equivalent abuse defenses.
-- Anti-automation decisions should consider both account-targeted and network-targeted abuse patterns rather than only one dimension.
-- Failure responses must stay generic enough to avoid turning the login surface into an account-enumeration oracle.
-- Suspicious login activity should be auditable and should support escalation to stronger assurance requirements when policy calls for it.
+Breached-password modes may be disabled, report-only, or enforced. Enforced production checking should fail closed unless an accepted policy states otherwise.
 
-## Account Linking Standards
+## 5. MFA
 
-- Linking an external identity to an existing local account requires proof of control of the existing account or a valid invitation/approval path that is already bound to that account.
-- A found email match may start a controlled linking flow, but it must not complete linking automatically.
-- Linking, unlinking, provider-policy changes, and enrollment-mode changes must be auditable events.
+MFA policy must distinguish:
 
-## Secret And Credential Standards
+- not required
+- enrollment required
+- challenge required
+- assurance satisfied
+- recent step-up required
 
-- Do not hardcode secrets, client secrets, certificates, API keys, refresh tokens, or signing material in application code, committed config, fixtures, screenshots, or support docs.
-- Production third-party credentials must be stored in a dedicated secret-management system with access control, auditability, and rotation support.
-- General-purpose application settings storage must not be treated as approved production secret storage unless the storage path actually enforces encryption, access control, and rotation behavior suitable for secrets.
-- For Microsoft-hosted production workloads, prefer managed identity where applicable. When managed identity is not available, prefer certificate-based credentials over long-lived client secrets.
-- App registrations and credentials used only for user sign-in must remain logically separate from app registrations and credentials used for Microsoft Graph or other background API access when the scopes or blast radius differ materially.
-- Third-party API permissions must follow least privilege and only the scopes required for the implemented feature set.
-- Secrets must have ownership, rotation procedure, and expiry monitoring defined before production use.
+TOTP is an acceptable baseline possession factor. High-risk surfaces should plan phishing-resistant factors.
 
-## Logging And Exposure Standards
+MFA secrets must be encrypted when reusable. Recovery codes must be hashed, shown once, and single-use.
 
-- Never log plaintext passwords, tokens, client secrets, certificate private keys, raw authorization codes, or full provider callback payloads.
-- Security-relevant identity events must be recorded with enough metadata to audit the decision path without exposing secret material.
+Enrollment, challenge, failure, reset, disablement, recovery, and policy changes must be auditable.
 
-## Related
+## 6. Recovery
 
-- [Security Standards](Security%20Standards.md)
+Recovery must:
+
+- prove control through an approved path
+- avoid bypassing lifecycle and access controls
+- expire pending artifacts
+- invalidate used artifacts
+- notify the affected user for high-risk recovery actions
+- require recent authentication for self-service factor regeneration when available
+- preserve evidence without storing raw codes or tokens
+
+## 7. Recent Authentication And Step-Up
+
+Require recent authentication or stronger step-up for applicable:
+
+- password or primary email changes
+- MFA disablement or reset
+- recovery-code regeneration
+- elevated-access activation
+- Super Admin assignment
+- restricted export
+- secret reveal
+- critical security configuration changes
+
+Login-time MFA satisfaction does not automatically satisfy later recent-auth requirements.
+
+## 8. External Identity
+
+External sign-in must use Authorization Code flow with PKCE where applicable and must validate state, nonce, issuer, audience, expiry, signature, intended tenant or provider boundary, and replay protection.
+
+Do not use implicit or password grant flows for browser sign-in.
+
+Provider identity must use stable provider identifiers, not email alone.
+
+## 9. Account Linking
+
+Email match alone must not complete linking.
+
+Linking requires proof of the current local account, a bound invitation or approved administrative flow, explicit audit evidence, and safe notification when risk warrants it.
+
+## 10. Enterprise Identity
+
+An enterprise provider must enforce the configured provider and tenant boundary.
+
+Provider branding alone is not assurance.
+
+Provider-side MFA must be validated when it is required. Otherwise, use local MFA or step-up.
+
+## 11. Suspicious Authentication
+
+Detection may begin in audit-only mode.
+
+Audit-only detection must not automatically lock accounts, revoke sessions, notify users, or force assurance changes without an accepted response policy.
+
+Detection metadata must use safe identifiers and deduplicate repeated signals.
+
+## 12. Session Coordination
+
+Session mechanics must follow Transport Session And Browser Security Standards.
+
+Suspension, deactivation, password reset, MFA reset, and compromise response must define session invalidation behavior.
+
+## 13. Verification
+
+Tests must cover enumeration resistance, inactive identity denial, rate limiting, MFA challenge state, factor throttling, recovery-code single use, recent-auth separation, secret-safe audit metadata, account-linking proof, and provider tenant restrictions.
+
+## 14. Related
+
+- [Access Control And Authorization Standards](Access%20Control%20And%20Authorization%20Standards.md)
 - [Transport Session And Browser Security Standards](Transport%20Session%20And%20Browser%20Security%20Standards.md)
-- [Tenant Safety Standards](Tenant%20Safety%20Standards.md)
-- [Auth Architecture](../../03-architecture/auth.md)
-- [Authentication](../../04-features/auth/authentication.md)
-- [Customer Access And OAuth Flow](../../05-flows/customer-access-and-oauth-flow.md)
+- [Secrets Management Standards](Secrets%20Management%20Standards.md)
+- [Auth Core Implementation Planning](../../07-planning/02-core-capabilities/auth-identity-access/auth-core-implementation-planning.md)

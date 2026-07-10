@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Modules\Roles\Services\RoleCatalog;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -14,6 +15,8 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             PlatformRolesAndPermissionsSeeder::class,
+            ModuleContributionRegistrySeeder::class,
+            SecurityRequirementSeeder::class,
         ]);
 
         if (! app()->environment('local')) {
@@ -25,6 +28,6 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
 
-        $user->assignRole('platform_super_admin');
+        $user->assignRole(RoleCatalog::SUPER_ADMIN);
     }
 }

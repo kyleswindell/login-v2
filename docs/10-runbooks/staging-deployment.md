@@ -1,201 +1,246 @@
+<!--
+DOC-META
+title: Staging Deployment
+doc_type: runbook
+status: active
+owner: ops
+canonical: true
+canonical_path: docs/10-runbooks/staging-deployment.md
+parent: docs/10-runbooks/index.md
+template: docs/09-reference/templates/docs/_runbook.md
+summary: Defines authorized branch deployment, verification, restoration, and limited code rollback for the shared staging environment.
+-->
+
 # Staging Deployment
 
-This document defines the canonical scope and intent for Staging Deployment.
+Parent: [Runbook Index](index.md)
 
 ## Purpose
 
-Document the current repeatable staging deployment workflow for `staging.parasolutions.com`.
+Deploy an authorized branch to `https://staging.parasolutions.com`, verify the result, and restore staging ownership afterward.
 
-## Current Deployment Shape
+## Do Not Use For Production
 
-The current staging runtime is:
+This procedure is staging-only.
 
-* app root: `/var/www/platform/current`
-* host: `platform-prod`
-* public URL: `https://staging.parasolutions.com`
+## Current Environment
 
-## Preferred Commands
+- application root: `/var/www/platform/current`
+- public URL: `https://staging.parasolutions.com`
+- remote helper: `scripts/deploy-staging-remote.sh`
+- server helper: `scripts/server/deploy-staging.sh`
+- shared staging owner: one branch at a time
 
-### From your local machine
+## Prerequisites
 
-Canonical local invocation from Windows PowerShell:
+- authorized deploy operator
+- target branch committed and pushed
+- required local tests pass
+- staging ownership is available
+- target branch exists on GitHub
+- current staging branch and commit are recorded
+- migration impact is reviewed
+- code rollback compatibility is understood
+- no server-side uncommitted edits exist
 
-```powershell
-wsl -d Ubuntu -- bash -lc 'cd "/mnt/c/Users/kswin/Desktop/Work 2023/8. Login V2" && TARGET_BRANCH=main bash scripts/deploy-staging-remote.sh'
-```
+Set in WSL:
 
-Use this as the default agent/operator deploy path when working from Windows and the repo lives on the Windows filesystem.
+    LOGIN2_REPO_ROOT=<repository path visible to WSL>
+    TARGET_BRANCH=<branch>
 
-Assumptions:
+## Pre-Deployment Checks
 
-* WSL distro: `Ubuntu`
-* the repo is available at `/mnt/c/Users/kswin/Desktop/Work 2023/8. Login V2`
-* the SSH alias `platform-prod-wsl` is configured inside the Ubuntu environment
-* Docker is not required for the deploy helper itself, but may still be required separately for local verification
+From the local repository:
 
-For a review branch instead of `main`:
+    git status --short --branch
+    git fetch origin
+    git rev-parse "origin/$TARGET_BRANCH"
 
-```powershell
-wsl -d Ubuntu -- bash -lc 'cd "/mnt/c/Users/kswin/Desktop/Work 2023/8. Login V2" && TARGET_BRANCH=feature/[batch-or-review-branch] bash scripts/deploy-staging-remote.sh'
-```
+Record:
 
-Equivalent command once already inside Ubuntu:
+- target branch
+- target SHA
+- current staging branch
+- current staging SHA
+- issue
+- operator
+- time
 
-Use the local helper:
+Stop if the working tree or target branch is not understood.
 
-```bash
-bash scripts/deploy-staging-remote.sh
-```
+## Deploy From WSL
 
-This connects to `platform-prod-wsl` and runs the server deploy script in the current release.
+Run:
 
-To deploy a review branch for staging-only visual QA before close-out:
+    cd "$LOGIN2_REPO_ROOT"
+    TARGET_BRANCH="$TARGET_BRANCH" bash scripts/deploy-staging-remote.sh
 
-```bash
-TARGET_BRANCH=feature/[batch-or-review-branch] bash scripts/deploy-staging-remote.sh
-```
+## Deploy From Windows PowerShell
 
-After review is complete, restore staging to `main` unless the reviewed branch is being promoted immediately:
+Use one logical line:
 
-```bash
-TARGET_BRANCH=main bash scripts/deploy-staging-remote.sh
-```
+    wsl -d Ubuntu -- bash -lc 'cd "$LOGIN2_REPO_ROOT" && TARGET_BRANCH="$TARGET_BRANCH" bash scripts/deploy-staging-remote.sh'
 
-### Directly on the server
+The variables must be defined in the invoked WSL environment.
 
-Use the server script:
+## Direct Server Invocation
 
-```bash
-cd /var/www/platform/current
-bash scripts/server/deploy-staging.sh
-```
+On the server:
 
-## What The Server Script Does
+    cd /var/www/platform/current
+    TARGET_BRANCH="$TARGET_BRANCH" bash scripts/server/deploy-staging.sh
 
-The current server deploy script performs:
+## Expected Server Actions
 
-1. `git fetch origin <target-branch>`
-2. `git checkout <target-branch>`
-3. `git reset --hard origin/<target-branch>`
-4. `composer install --no-interaction --prefer-dist --optimize-autoloader`
-5. `php artisan filament:assets`, when Filament is installed
-6. `npm ci` (falls back to `npm install` if no lockfile exists)
-7. `npm run build`
-8. `php artisan config:clear`
-9. `php artisan migrate --force`
-10. `php artisan optimize:clear`
-11. attempts `sudo -n systemctl reload php8.3-fpm`
-12. attempts `sudo -n systemctl reload apache2`
+The current script should:
 
-Default target branch:
+1. fetch the target branch
+2. check out the target branch
+3. hard-reset to the remote target
+4. install Composer dependencies
+5. install npm dependencies
+6. build assets
+7. clear configuration
+8. run migrations
+9. clear optimized caches
+10. reload PHP-FPM when permitted
+11. reload Apache when permitted
 
-* `main`
+Because the script uses a hard reset, the server working tree must contain no manual changes.
 
-Override mechanism:
+## Long-Lived Services
 
-* set `TARGET_BRANCH` when calling the local helper or server script
+After deployment, restart:
 
-The deploy script now checks out and hard-resets to the target branch instead of using `git pull origin <branch>`. This matters for review branches because `git pull origin feature/x` while currently on `main` would merge the review branch into the server's local `main`, which is not the desired preview behavior.
+    sudo systemctl restart platform-reverb
+    sudo systemctl restart platform-queue-worker
 
-Realtime note:
+Reload:
 
-* after Reverb is enabled on staging, this deploy flow also needs the queue worker and Reverb process restarted
-* see [Realtime Notifications And Reverb](realtime-notifications-and-reverb.md)
+    sudo systemctl reload php8.3-fpm
+    sudo systemctl reload apache2
 
-The script is intentionally honest about the current privilege model:
+Use only the approved limited sudo scope.
 
-* if passwordless sudo is not configured for the `deploy` user, the script prints a message and skips the service reload step instead of hanging for a password prompt
+## Verification
 
-Filament note:
+On the server:
 
-* staging PHP must have the `intl` extension enabled before Composer can install the current Filament stack
-* generated Filament assets are deployment artifacts and are published by the deploy script instead of being committed to the repo
+    cd /var/www/platform/current
+    git rev-parse HEAD
+    git branch --show-current
+    php artisan about
+    php artisan migrate:status
+    php artisan platform:security-runtime-check --target=staging --url=https://staging.parasolutions.com
+    sudo systemctl status platform-reverb --no-pager
+    sudo systemctl status platform-queue-worker --no-pager
+    curl -I https://staging.parasolutions.com
 
-## Current Manual Fallback
+Verify the deployed SHA matches the expected target.
 
-If the deploy script reports skipped reloads, run:
+Perform required browser and manual review.
 
-```bash
-sudo systemctl reload php8.3-fpm
-sudo systemctl reload apache2
-```
+## Review-Branch Deployment
 
-## Storage And Log Permissions
+For a review branch:
 
-Laravel must be able to write to `storage/` and `bootstrap/cache/` as the PHP-FPM user.
+- declare staging ownership
+- deploy the review branch
+- perform review
+- apply fixes to the same branch
+- redeploy as needed
+- merge only after approval
+- restore staging to `main`
 
-If the app reports that `storage/logs/laravel.log` cannot be opened in append mode, repair ownership and permissions from the server:
+## Restore Staging To Main
 
-```bash
-cd /var/www/platform/current
-sudo chown -R deploy:www-data storage bootstrap/cache
-sudo find storage bootstrap/cache -type d -exec chmod 2775 {} +
-sudo find storage bootstrap/cache -type f -exec chmod 664 {} +
-sudo systemctl reload php8.3-fpm
-```
+Run:
 
-The intended staging ownership model is:
+    cd "$LOGIN2_REPO_ROOT"
+    TARGET_BRANCH=main bash scripts/deploy-staging-remote.sh
 
-* owner: `deploy`
-* group: `www-data`
-* directories: group-writable with setgid
-* files: group-writable
+Verify the deployed branch and SHA afterward.
 
-## Recommended Limited Sudoers Rule
+## Code Rollback
 
-For smoother staging deploys, add a narrow sudoers rule for the `deploy` user rather than broad passwordless sudo.
+Before deployment, preserve the prior staging SHA.
 
-Recommended scope:
+When a code rollback is required and the database remains compatible:
 
-* `/usr/bin/systemctl reload php8.3-fpm`
-* `/usr/bin/systemctl reload apache2`
+1. create a temporary remote rollback branch at the known-good SHA
+2. deploy that branch through the normal helper
+3. verify application and services
+4. create an issue for the failed deployment
+5. restore normal staging after correction
 
-Example sudoers entry:
+Example:
 
-```text
-deploy ALL=NOPASSWD: /usr/bin/systemctl reload php8.3-fpm, /usr/bin/systemctl reload apache2
-```
+    git branch "rollback/staging-$(date -u +%Y%m%d%H%M%S)" <known-good-sha>
+    git push origin <rollback-branch>
+    TARGET_BRANCH=<rollback-branch> bash scripts/deploy-staging-remote.sh
 
-This should be added with `visudo` and reviewed carefully before use.
+Do not use code rollback when forward migrations make the old code incompatible.
 
-## Notes
+## Database Limitation
 
-This is the current in-place staging deploy workflow.
+This runbook does not provide general database rollback or restore.
 
-## Visual Review Before Close-Out
+When a migration fails or produces incompatible schema:
 
-Recommended workflow when a batch or phase needs rendered UI review before final close-out:
+- stop
+- preserve logs
+- do not rerun blindly
+- do not execute ad hoc down migrations
+- escalate to the database owner
+- use an approved backup and restore procedure when available
 
-1. complete `/phase-batch-implementation`
-2. run `/phase-batch-review`
-3. if review is clean, commit and push the review branch without merging to `main`
-4. deploy that branch to staging with `TARGET_BRANCH=<review-branch> bash scripts/deploy-staging-remote.sh`
-5. perform manual visual review on `https://staging.parasolutions.com`
-6. if rejected, fix on the same review branch and redeploy that branch
-7. if approved, merge or promote the approved branch into `main`
-8. redeploy `main` to staging
-9. run `/phase-close-out`
-   - if the approved batch or phase changed roadmap state, phase-index status, deferment placement, or other parent planning truth, execute the scoped docs sync path during close-out:
-     - `review-docs-sync`
-     - `implement-docs-sync-fix`
+## Permission Repair
 
-Key constraint:
+When Laravel cannot write to `storage/` or `bootstrap/cache/`:
 
-* staging is a single shared environment, so only one non-main review branch should own staging at a time
-* advisory scope claims do not override this; staging review ownership is still single-branch and must be coordinated explicitly
+    cd /var/www/platform/current
+    sudo chown -R deploy:www-data storage bootstrap/cache
+    sudo find storage bootstrap/cache -type d -exec chmod 2775 {} +
+    sudo find storage bootstrap/cache -type f -exec chmod 664 {} +
+    sudo systemctl reload php8.3-fpm
 
-Recommended naming:
+Do not use world-writable permissions.
 
-* use a branch that makes the review target obvious, for example `review/phase-2-batch-11` or the existing feature branch if it already has narrow scope
+## Failure Handling
 
-Longer term, the preferred direction is still:
+Collect:
 
-* release-based deploy automation
-* optional GitHub Actions or another CI/CD trigger
-* tighter deploy verification and rollback flow
+- deploy output
+- target branch and SHA
+- failed command
+- Laravel logs
+- service status
+- migration status
+- HTTP response
+
+Do not continue when:
+
+- migration fails
+- security runtime check fails
+- service restart fails
+- deployed SHA is wrong
+- staging ownership is disputed
+
+## Completion Criteria
+
+Deployment is complete when:
+
+- expected branch and SHA are deployed
+- dependencies and build pass
+- migrations are current
+- PHP-FPM, Apache, Reverb, and queue worker are healthy
+- security runtime check passes
+- required manual review passes
+- staging ownership is released or restored to `main`
+- issue or review evidence is updated
 
 ## Related
 
-* [Runbook Index](index.md)
-* [Deployment Workflow](deployment-workflow.md)
-* [Server Bootstrap Checklist](server-bootstrap.md)
+- [Deployment](deployment.md)
+- [Server Readiness](server-readiness.md)
+- [Realtime Notifications And Reverb](realtime-notifications-and-reverb.md)

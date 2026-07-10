@@ -6,21 +6,23 @@ This document defines the canonical scope and intent for Dependency Map.
 
 Summarize high-level delivery dependencies across phases and batches.
 
+## Current Delivery Management
+
+GitHub Projects owns active development sequencing, issue status, assignment, and implementation planning. Legacy phase and batch dependencies are deprecated historical references and must not block current work unless they have been restated in GitHub Projects or a current source planning document.
+
 ## Phase Dependencies
 
-1. Phase 0 must complete deployment and workflow baseline before sustained feature delivery.
-2. Phase 1 establishes core authentication, RBAC, tenancy baseline, and logging foundations.
-3. Phase 2 finalizes stack, shell/UI ownership, page archetype starter proofs, and migration gates before outward-facing expansion.
-4. Phase 3 depends on Phase 2 contracts for customer/public access, OAuth, and publishing.
-5. Phase 3 now also owns the security substrate required by outward-facing auth and integration rollout, including login abuse defenses, secret-backed credential storage, auth-bearing surface hardening, and production environment checks for OAuth and Graph-bearing paths.
-6. Phase 4 depends on Phases 2-3 foundations for remaining module rollout.
+Historical phase dependencies are deprecated. Use the current planning entry points for source sequencing:
+
+1. Core capability migration and build sequencing: [Core Service Build Plan Matrix](core-service-build-plan-matrix.md)
+2. Core/package ownership direction: [Core Capability Package Migration Planning](core-capability-package-migration-planning.md)
+3. Access-control sequencing: [Access Control Implementation Planning](access-control-implementation-planning.md)
+4. Identity/users sequencing: [Identity And Users Core Capability Implementation Planning](users-module-implementation-planning.md)
+5. Security planning dependencies: [Cybersecurity Review Backlog Planning](cybersecurity-review-backlog-planning.md)
 
 ## Batch Dependencies
 
-1. Phase 2 Batch A must close before Phase 2 Batch B starts. [satisfied]
-2. Phase 2 Batch B must close before Phase 2 Batch F starts. [satisfied]
-3. Phase 2 Batch F must close before Phase 2 Batch E resumes.
-4. Contract maintenance and QA close-out batches run only after implementation batches reach exit criteria.
+Docs-managed phase batch dependencies are deprecated. GitHub Projects owns active implementation order and blocking relationships.
 
 ## Feature Link Dependencies
 
@@ -31,5 +33,5 @@ Summarize high-level delivery dependencies across phases and batches.
 ## Related
 
 - [Roadmap](roadmap.md)
-- [Phases](phases/index.md)
-- [Batches](batches/index.md)
+- [Deprecated Phases](phases/index.md)
+- [Deprecated Batches](batches/index.md)

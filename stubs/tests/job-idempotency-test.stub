@@ -1,0 +1,28 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
+
+final class {{ class }} extends TestCase
+{
+    use RefreshDatabase;
+
+    public function test_job_performs_the_expected_operation(): void
+    {
+        self::markTestIncomplete('Define the job input and expected durable result.');
+    }
+
+    public function test_duplicate_execution_does_not_duplicate_effects(): void
+    {
+        self::markTestIncomplete('Execute the job twice and verify idempotent behavior.');
+    }
+
+    public function test_failure_rolls_back_or_preserves_a_safe_retry_state(): void
+    {
+        self::markTestIncomplete('Define the failure condition and expected recovery state.');
+    }
+}

@@ -1,0 +1,252 @@
+/* ==========================================================================
+   File: resources/css/base/skeleton.css
+   Purpose: Shared skeleton loading utilities and skeleton element styles.
+
+   Notes:
+   - Defines reusable skeleton surfaces and animation keyframes.
+   - Do not define primitive palette tokens here.
+   - Do not define theme role tokens here.
+   - Do not apply shimmer to bare .ui-skeleton; many components use that as
+     a state class.
+   ========================================================================== */
+
+@layer base {
+    /* ----------------------------------------------------------------------
+       Shared skeleton animation
+       ---------------------------------------------------------------------- */
+
+    @keyframes ui-skeleton {
+        0% {
+            opacity: 0.3;
+            transform: scaleX(0);
+            transform-origin: left;
+        }
+
+        20% {
+            opacity: 1;
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        28% {
+            transform: scaleX(1);
+            transform-origin: right;
+        }
+
+        51% {
+            transform: scaleX(0);
+            transform-origin: right;
+        }
+
+        58% {
+            transform: scaleX(0);
+            transform-origin: right;
+        }
+
+        82% {
+            transform: scaleX(1);
+            transform-origin: right;
+        }
+
+        83% {
+            transform: scaleX(1);
+            transform-origin: left;
+        }
+
+        96%,
+        100% {
+            opacity: 0.3;
+            transform: scaleX(0);
+            transform-origin: left;
+        }
+    }
+
+    /* ----------------------------------------------------------------------
+       Shared skeleton surface
+       ---------------------------------------------------------------------- */
+
+    .ui-skeleton-surface,
+    .ui-skeleton-block,
+    .ui-skeleton__text,
+    .ui-skeleton-text,
+    .ui-skeleton__placeholder,
+    .ui-skeleton-placeholder,
+    .ui-icon--skeleton,
+    .ui-icon-skeleton {
+        position: relative;
+        overflow: hidden;
+        border: none;
+        padding: 0;
+        background-color: var(--ui-skeleton-background);
+        box-shadow: none;
+        color: transparent;
+        pointer-events: none;
+    }
+
+    .ui-skeleton-surface:hover,
+    .ui-skeleton-surface:focus,
+    .ui-skeleton-surface:active,
+    .ui-skeleton-block:hover,
+    .ui-skeleton-block:focus,
+    .ui-skeleton-block:active,
+    .ui-skeleton__text:hover,
+    .ui-skeleton__text:focus,
+    .ui-skeleton__text:active,
+    .ui-skeleton-text:hover,
+    .ui-skeleton-text:focus,
+    .ui-skeleton-text:active,
+    .ui-skeleton__placeholder:hover,
+    .ui-skeleton__placeholder:focus,
+    .ui-skeleton__placeholder:active,
+    .ui-skeleton-placeholder:hover,
+    .ui-skeleton-placeholder:focus,
+    .ui-skeleton-placeholder:active,
+    .ui-icon--skeleton:hover,
+    .ui-icon--skeleton:focus,
+    .ui-icon--skeleton:active,
+    .ui-icon-skeleton:hover,
+    .ui-icon-skeleton:focus,
+    .ui-icon-skeleton:active {
+        border: none;
+        cursor: default;
+        outline: none;
+    }
+
+    .ui-skeleton-surface::before,
+    .ui-skeleton-block::before,
+    .ui-skeleton__text::before,
+    .ui-skeleton-text::before,
+    .ui-skeleton__placeholder::before,
+    .ui-skeleton-placeholder::before,
+    .ui-icon--skeleton::before,
+    .ui-icon-skeleton::before {
+        position: absolute;
+        inset-block-start: 0;
+        inset-inline-start: 0;
+        inline-size: 100%;
+        block-size: 100%;
+        background-color: var(--ui-skeleton-element);
+        content: "";
+        animation: ui-skeleton 3000ms ease-in-out infinite;
+        will-change: transform-origin, transform, opacity;
+    }
+
+    /* ----------------------------------------------------------------------
+       Circular skeleton surface
+       ---------------------------------------------------------------------- */
+
+    .ui-skeleton-circle,
+    .ui-skeleton--circle,
+    .ui-skeleton-circular,
+    .ui-skeleton--circular {
+        position: relative;
+        overflow: hidden;
+        border-radius: 50%;
+        background-color: var(--ui-skeleton-background);
+        color: transparent;
+        pointer-events: none;
+    }
+
+    .ui-skeleton-circle::before,
+    .ui-skeleton--circle::before,
+    .ui-skeleton-circular::before,
+    .ui-skeleton--circular::before {
+        position: absolute;
+        inset-block-start: 0;
+        inset-inline-start: 0;
+        inline-size: 200%;
+        block-size: 100%;
+        background-color: var(--ui-skeleton-element);
+        content: "";
+        animation: ui-skeleton 3000ms ease-in-out infinite;
+        will-change: transform-origin, transform, opacity;
+    }
+
+    /* ----------------------------------------------------------------------
+       Built-in skeleton elements
+       ---------------------------------------------------------------------- */
+
+    .ui-icon--skeleton,
+    .ui-icon-skeleton {
+        display: inline-block;
+        inline-size: 1rem;
+        block-size: 1rem;
+    }
+
+    .ui-skeleton__placeholder,
+    .ui-skeleton-placeholder {
+        inline-size: 6.25rem;
+        block-size: 6.25rem;
+    }
+
+    .ui-skeleton__text,
+    .ui-skeleton-text {
+        inline-size: 100%;
+        block-size: 1rem;
+        margin-block-end: var(--ui-spacing-03);
+    }
+
+    .ui-skeleton__heading,
+    .ui-skeleton-heading {
+        block-size: 1.5rem;
+    }
+
+    /* ----------------------------------------------------------------------
+       Reduced motion
+       ---------------------------------------------------------------------- */
+
+    @media (prefers-reduced-motion: reduce) {
+        .ui-skeleton-surface::before,
+        .ui-skeleton-block::before,
+        .ui-skeleton__text::before,
+        .ui-skeleton-text::before,
+        .ui-skeleton__placeholder::before,
+        .ui-skeleton-placeholder::before,
+        .ui-icon--skeleton::before,
+        .ui-icon-skeleton::before,
+        .ui-skeleton-circle::before,
+        .ui-skeleton--circle::before,
+        .ui-skeleton-circular::before,
+        .ui-skeleton--circular::before {
+            animation: none;
+        }
+    }
+
+    /* ----------------------------------------------------------------------
+       Forced colors
+       ---------------------------------------------------------------------- */
+
+    @media screen and (-ms-high-contrast: active), (forced-colors: active) {
+        .ui-skeleton-surface,
+        .ui-skeleton-block,
+        .ui-skeleton__text,
+        .ui-skeleton-text,
+        .ui-skeleton__placeholder,
+        .ui-skeleton-placeholder,
+        .ui-icon--skeleton,
+        .ui-icon-skeleton,
+        .ui-skeleton-circle,
+        .ui-skeleton--circle,
+        .ui-skeleton-circular,
+        .ui-skeleton--circular {
+            forced-color-adjust: none;
+            background-color: CanvasText;
+        }
+
+        .ui-skeleton-surface::before,
+        .ui-skeleton-block::before,
+        .ui-skeleton__text::before,
+        .ui-skeleton-text::before,
+        .ui-skeleton__placeholder::before,
+        .ui-skeleton-placeholder::before,
+        .ui-icon--skeleton::before,
+        .ui-icon-skeleton::before,
+        .ui-skeleton-circle::before,
+        .ui-skeleton--circle::before,
+        .ui-skeleton-circular::before,
+        .ui-skeleton--circular::before {
+            forced-color-adjust: none;
+            background-color: Canvas;
+        }
+    }
+}

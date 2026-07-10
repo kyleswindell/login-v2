@@ -6,9 +6,9 @@ status: implemented-standard
 system_maturity: implemented
 category: overlays-feedback
 priority: tier-a-baseline-app-development
-ui_reference_route: /platform/ui-reference/patterns/overlays-feedback
+rendered_evidence_route: null
 canonical_doc: docs/02-standards/ui/patterns/notifications-and-toasts.md
-source_owner: /platform/ui-reference/patterns/overlays-feedback
+source_owner: not installed
 pattern_api:
   - toast handoff pattern
   - inline notification stack
@@ -73,7 +73,7 @@ carbon_reference:
 - [15. Content contract](#15-content-contract)
 - [16. Prohibited usage](#16-prohibited-usage)
 - [17. Deferred or gated capabilities](#17-deferred-or-gated-capabilities)
-- [18. UI Reference requirements](#18-ui-reference-requirements)
+- [18. Rendered evidence requirements](#18-ui-reference-requirements)
 - [19. Testing and acceptance criteria](#19-testing-and-acceptance-criteria)
 - [20. Related APIs](#20-related-apis)
 - [21. References](#21-references)
@@ -82,7 +82,7 @@ carbon_reference:
 
 Notification and toast patterns define transient, inline, persistent, and handoff feedback behavior across workflows.
 
-Canonical Pattern owner: `/platform/ui-reference/patterns/overlays-feedback`. Use this Pattern API when the workflow owns when feedback appears, how long it persists, whether it is dismissible, whether it survives navigation, and where the user should recover from it.
+Canonical Pattern owner: `not installed`. Use this Pattern API when the workflow owns when feedback appears, how long it persists, whether it is dismissible, whether it survives navigation, and where the user should recover from it.
 
 Notifications and toasts are workflow feedback patterns, not primitive visual variants. The Pattern composes approved Notification, Inline loading, Loading, Tag, Button, Link, Icon, and Foundation Element APIs. It does not redefine Notification component status colors, icons, internal spacing, dismissal affordances, or feature-specific business behavior.
 
@@ -94,7 +94,7 @@ Canonical Pattern responsibilities:
 - Prevent duplicate or competing messages for the same event.
 - Keep critical errors visible until the user can read and recover.
 - Use approved Components and Element tokens rather than local alert/toast markup.
-- Prove toast, inline, persisted, background job, and system notice compositions on the UI Reference page.
+- Prove toast, inline, persisted, background job, and system notice compositions on the rendered evidence page.
 
 Non-owned responsibilities:
 
@@ -113,9 +113,9 @@ Non-owned responsibilities:
 | Pattern slug        | notifications-and-toasts                                                        |
 | Category            | Overlays and feedback                                                           |
 | Priority            | Tier A - Baseline app development                                               |
-| Owner route         | `/platform/ui-reference/patterns/overlays-feedback`                             |
+| Owner route         | `not installed`                             |
 | Canonical path      | `docs/02-standards/ui/patterns/notifications-and-toasts.md`                     |
-| UI Reference proof  | `/platform/ui-reference/patterns/overlays-feedback`                             |
+| rendered evidence proof  | `not installed`                             |
 | Required Components | Notification, Inline loading, Loading, Tag, Button, Link, Icon where applicable |
 | Required Elements   | Color, Spacing, Typography, Themes, Motion, Icons                               |
 | Carbon benchmark    | Carbon Notification component and notification pattern guidance                 |
@@ -133,17 +133,23 @@ The installed standard is:
 - Use persisted notification references when a message must survive navigation or represent a background event.
 - Use background job completion handoff when work starts locally and completes outside the current view.
 - Use system notice banners for page- or app-wide conditions that users need to see before continuing.
+- Treat persistence and transport as separate decisions: database-backed notifications are durable records, while AJAX and realtime are delivery mechanisms.
+- Use realtime as the only live presentation path for newly persisted notifications; an initiating AJAX response may acknowledge the command but must not inject the same notification into the UI.
+- Recover persistent notification state from the database-backed header and inbox on page load or reload when realtime is unavailable.
+- Use session payloads or the `notifications:toast` browser event for transient feedback that must not affect inbox, unread, or persisted notification state.
+- Deduplicate persistent notification presentation by notification ID across reconnects and repeated client delivery.
 - Use actionable notification composition only when the action is optional or recovery-focused and keyboard reachable.
 - Use dismiss actions only when dismissal does not hide required recovery information.
 - Use undo actions only for reversible operations and only while the undo can still succeed.
 - Use view details links when details belong on a durable page or route.
 - Deduplicate repeated messages for the same event.
+- Do not dismiss and recreate a visible toast when the same explicit toast ID is delivered again.
 - Keep notification stacks short and prioritized.
 - Do not use toast for required validation, destructive confirmation, blocking errors, or critical recovery.
 - Do not auto-dismiss critical errors.
 - Do not stack multiple competing alerts for one problem.
 
-Carbon alignment note: Carbon distinguishes inline, toast, actionable, and callout notification behaviors. Carbon also separates notification components from notification patterns, defines toast as transient non-modal feedback, and warns that actionable notifications can be disruptive because they contain interactive controls and may take focus. Login App maps those principles to its own Notification Component, Pattern lifecycle rules, `ui-*` namespace, and UI Reference proof instead of adopting Carbon implementation classes directly.
+Carbon alignment note: Carbon distinguishes inline, toast, actionable, and callout notification behaviors. Carbon also separates notification components from notification patterns, defines toast as transient non-modal feedback, and warns that actionable notifications can be disruptive because they contain interactive controls and may take focus. Login App maps those principles to its own Notification Component, Pattern lifecycle rules, `ui-*` namespace, and rendered evidence proof instead of adopting Carbon implementation classes directly.
 
 ## 4. Pattern API
 
@@ -557,9 +563,9 @@ Approved examples:
 
 | Capability                               | Status           | Gate                                                                                                                              |
 | ---------------------------------------- | ---------------- | --------------------------------------------------------------------------------------------------------------------------------- |
-| Full notification center                 | Gated            | Requires product retention, read/unread state, routing, grouping, permissions, deletion/archive behavior, and UI Reference proof. |
+| Full notification center                 | Gated            | Requires product retention, read/unread state, routing, grouping, permissions, deletion/archive behavior, and rendered evidence proof. |
 | Cross-route persisted notification inbox | Gated            | Requires durable storage, lifecycle rules, ownership, routing, and privacy/security review.                                       |
-| Actionable toast with focus management   | Gated            | Requires keyboard/focus model, live-region policy, dismissal rules, and UI Reference proof.                                       |
+| Actionable toast with focus management   | Gated            | Requires keyboard/focus model, live-region policy, dismissal rules, and rendered evidence proof.                                       |
 | Undo toast                               | Gated by feature | Requires reversible operation, undo timeout, failure handling, and message update rules.                                          |
 | Toast queue manager public API           | Deferred         | Requires documented initializer/server bridge, deduplication, timers, reduced-motion behavior, cleanup, and tests.                |
 | Priority-based toast stacking            | Deferred         | Requires max stack count, collision behavior, priority rules, and responsive proof.                                               |
@@ -568,11 +574,11 @@ Approved examples:
 | Rich notification content                | Not allowed      | Use details route or page content. Notifications must stay concise.                                                               |
 | Custom status colors/icons               | Not allowed      | Requires Color/Icon Element updates and Notification Component proof.                                                             |
 
-Future extensions require an updated Pattern standard and UI Reference proof before production use.
+Future extensions require an updated Pattern standard and rendered evidence proof before production use.
 
-## 18. UI Reference requirements
+## 18. Rendered evidence requirements
 
-The UI Reference page must show rendered examples of the approved Pattern compositions, not abstract notes only.
+The rendered evidence page must show rendered examples of the approved Pattern compositions, not abstract notes only.
 
 The page must link to this canonical standard and to consumed Element and Component standards.
 
@@ -580,7 +586,7 @@ Deferred capabilities must appear as explicit gated disposition rows with trigge
 
 Examples must use app-owned tokens, classes, helpers, and Blade components where available.
 
-Required UI Reference proof:
+Required rendered evidence proof:
 
 | Required proof                    | Rendered behavior                                                                                                             | Variants/options shown                                                                             |
 | --------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
@@ -597,7 +603,7 @@ Required UI Reference proof:
 
 ## 19. Testing and acceptance criteria
 
-- `/platform/ui-reference/patterns/overlays-feedback` returns 200 for authorized users.
+- `not installed` returns 200 for authorized users.
 - The page links to `docs/02-standards/ui/patterns/notifications-and-toasts.md`.
 - Rendered examples include the required composition markers and consumed Component links.
 - Toast handoff examples render as non-blocking and do not include required recovery-only behavior.
@@ -613,7 +619,7 @@ Required UI Reference proof:
 Suggested automated assertions:
 
 ```php
-$response = $this->actingAs($admin)->get('/platform/ui-reference/patterns/overlays-feedback');
+$response = $this->actingAs($admin)->get('not installed');
 
 $response->assertOk();
 $response->assertSee('Notifications and toasts');
@@ -646,20 +652,20 @@ $response->assertDontSee('Generic ' . 'fallback');
 
 | API                                    | Route                                                                            |
 | -------------------------------------- | -------------------------------------------------------------------------------- |
-| Notification                           | `/platform/ui-reference/components/notification`                                 |
-| Tag                                    | `/platform/ui-reference/components/tag`                                          |
-| Inline loading                         | `/platform/ui-reference/components/inline-loading`                               |
-| Loading                                | `/platform/ui-reference/components/loading`                                      |
-| Button                                 | `/platform/ui-reference/components/button`                                       |
-| Link                                   | `/platform/ui-reference/components/link`                                         |
-| Feedback Pattern                       | `/platform/ui-reference/patterns/overlays-feedback`                              |
-| Forms Pattern                          | `/platform/ui-reference/patterns/forms`                                          |
-| Table toolbar planned gap              | `/platform/ui-reference/patterns/tables`                                         |
-| Page header planned gap                | `/platform/ui-reference/patterns/layout`                                         |
-| Color element                          | `/platform/ui-reference/elements/color`                                          |
-| Motion element                         | `/platform/ui-reference/elements/motion`                                         |
-| Icon element                           | `/platform/ui-reference/elements/icons`                                          |
-| Pattern standards overview             | `/platform/ui-reference/patterns`                                                |
+| Notification                           | `not installed`                                 |
+| Tag                                    | `not installed`                                          |
+| Inline loading                         | `not installed`                               |
+| Loading                                | `not installed`                                      |
+| Button                                 | `not installed`                                       |
+| Link                                   | `not installed`                                         |
+| Feedback Pattern                       | `not installed`                              |
+| Forms Pattern                          | `not installed`                                          |
+| Table toolbar planned gap              | `not installed`                                         |
+| Page header planned gap                | `not installed`                                         |
+| Color element                          | `not installed`                                          |
+| Motion element                         | `not installed`                                         |
+| Icon element                           | `not installed`                                          |
+| Pattern standards overview             | `not installed`                                                |
 | Canonical notifications and toasts doc | `/platform/docs?path=02-standards%2Fui%2Fpatterns%2Fnotifications-and-toasts.md` |
 | Carbon Notification usage              | `https://carbondesignsystem.com/components/notification/usage/`                  |
 | Carbon notification pattern            | `https://carbondesignsystem.com/patterns/notification-pattern/`                  |
@@ -669,4 +675,4 @@ $response->assertDontSee('Generic ' . 'fallback');
 - [Pattern Library Checklist](checklist.md)
 - [Component Standards](../components/index.md)
 - [Foundation Elements Standards](../elements/index.md)
-- Carbon Notification component and notification pattern guidance inform the toast/inline/actionable/callout distinction, lifecycle expectations, content brevity, accessibility boundaries, and persistence decisions. Login App keeps its own Pattern API, Notification Component API, app-owned `ui-*` namespace, Foundation tokens, and UI Reference proof.
+- Carbon Notification component and notification pattern guidance inform the toast/inline/actionable/callout distinction, lifecycle expectations, content brevity, accessibility boundaries, and persistence decisions. Login App keeps its own Pattern API, Notification Component API, app-owned `ui-*` namespace, Foundation tokens, and rendered evidence proof.

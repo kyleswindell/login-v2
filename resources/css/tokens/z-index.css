@@ -1,0 +1,20 @@
+/* ==========================================================================
+   File: resources/css/tokens/z-index.css
+   Purpose: Global z-index layer tokens.
+   Notes:
+   - Defines stacking-order tokens only.
+   - Component CSS should consume --ui-z-index-* aliases.
+   ========================================================================== */
+
+@layer base {
+    :root {
+        --ui-z-index-dropdown: 9100;
+        --ui-z-index-modal: 9000;
+        --ui-z-index-header: 8000;
+        --ui-z-index-overlay: 6000;
+        --ui-z-index-floating: 6000;
+        --ui-z-index-footer: 5000;
+        --ui-z-index-hidden: -1;
+        --ui-z-index-overflow-hidden: -1;
+    }
+}

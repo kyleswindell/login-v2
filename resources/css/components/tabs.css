@@ -1,33 +1,86 @@
 /* ==========================================================================
-File: resources/css/components/tabs.css
-Purpose: Tabs component styles.
-Carbon reference:
+   File: resources/css/components/tabs.css
+   Purpose: Tabs component styles.
 
-* reference/carbon-main/packages/styles/scss/components/tabs/_tabs.scss
-
-Notes:
-
-* Defines Tabs selectors only.
-* Do not define primitive palette tokens here.
-* Do not define theme role tokens here.
-* Tabs color values are provided by active theme tokens.
-  ========================================================================== */
+   Notes:
+   - Defines Tabs selectors only.
+   - x-ui.tabs is array-driven and uses .ui-tabs as the whole component shell.
+   - Carbon React uses its tabs class on TabList only and renders panels as
+     separate .tab-content siblings. This file adapts Carbon behavior to the
+     app-owned Blade contract.
+   - Do not define primitive palette tokens here.
+   - Do not define theme role tokens here.
+   ========================================================================== */
 
 @layer components {
     /* ----------------------------------------------------------------------
-   Base tabs
-   ---------------------------------------------------------------------- */
+       Root / layout context
+       ---------------------------------------------------------------------- */
+
+    .ui-tabs,
+    .ui-tabs *,
+    .ui-tabs *::before,
+    .ui-tabs *::after {
+        box-sizing: border-box;
+    }
 
     .ui-tabs {
-        min-inline-size: 0;
+        --ui-tabs-padding-inline: var(
+            --ui-layout-density-padding-inline-local,
+            var(--ui-spacing-05)
+        );
+        --ui-tabs-height: var(
+            --ui-layout-size-height-local,
+            var(--ui-layout-size-height-md, 2.5rem)
+        );
+        --ui-tabs-contained-height: var(--ui-layout-size-height-lg, 3rem);
+        --ui-tabs-tall-height: var(--ui-layout-size-height-xl, 4rem);
+        --ui-tab-underline-color: var(--ui-border-subtle);
+        --ui-tab-underline-color-hover: var(--ui-border-strong);
+        --ui-tab-text-disabled: var(--ui-text-disabled);
+        --ui-tab-underline-disabled: var(--ui-border-disabled);
+
+        position: relative;
+        display: block;
+        inline-size: 100%;
+        max-inline-size: 100%;
+        margin: 0;
+        border: 0;
+        padding: 0;
+        color: var(--ui-text-primary);
+        font-size: var(--ui-type-body-compact-01-font-size);
+        font-weight: var(--ui-type-body-compact-01-font-weight);
+        line-height: var(--ui-type-body-compact-01-line-height);
+        letter-spacing: var(--ui-type-body-compact-01-letter-spacing);
     }
+
+    .ui-tabs.ui-layout--size-sm {
+        --ui-tabs-height: var(--ui-layout-size-height-sm, 2rem);
+    }
+
+    .ui-tabs.ui-layout--size-md {
+        --ui-tabs-height: var(--ui-layout-size-height-md, 2.5rem);
+    }
+
+    .ui-tabs.ui-layout--size-lg {
+        --ui-tabs-height: var(--ui-layout-size-height-lg, 3rem);
+    }
+
+    .ui-tabs-contained {
+        --ui-tabs-height: var(--ui-tabs-contained-height);
+    }
+
+    /* ----------------------------------------------------------------------
+       Tab list
+       ---------------------------------------------------------------------- */
 
     .ui-tabs-list {
         display: flex;
-        min-inline-size: 0;
-        gap: 0;
+        inline-size: 100%;
+        min-block-size: var(--ui-tabs-height);
         overflow-x: auto;
-        border-block-end: 1px solid var(--ui-border-subtle-01);
+        overflow-y: hidden;
+        scroll-behavior: smooth;
         scrollbar-width: none;
     }
 
@@ -35,179 +88,464 @@ Notes:
         display: none;
     }
 
+    .ui-tabs:not(.ui-tabs-scrollable) > .ui-tabs-list {
+        overflow-x: hidden;
+    }
+
+    .ui-tabs-contained > .ui-tabs-list {
+        background-color: var(--ui-layer-accent);
+    }
+
+    .ui-tabs-full-width.ui-tabs-contained > .ui-tabs-list {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(0, 1fr));
+    }
+
     /* ----------------------------------------------------------------------
-   Tab controls
-   ---------------------------------------------------------------------- */
+       Tab button
+       ---------------------------------------------------------------------- */
 
     .ui-tabs-tab {
+        position: relative;
         display: inline-flex;
+        flex: 0 0 auto;
         align-items: center;
-        justify-content: center;
-        min-block-size: 2.5rem;
-        flex-shrink: 0;
-        gap: var(--ui-spacing-03);
+        justify-content: flex-start;
+        min-inline-size: 6rem;
+        max-inline-size: 20rem;
+        block-size: var(--ui-tabs-height);
+        margin: 0;
         border: 0;
-        border-block-end: 2px solid transparent;
-        padding: var(--ui-spacing-03) var(--ui-spacing-05);
-        background-color: transparent;
+        border-block-end: 2px solid var(--ui-tab-underline-color);
+        padding-block: 0;
+        padding-inline: var(--ui-tabs-padding-inline);
+        appearance: none;
+        background: transparent;
         color: var(--ui-text-secondary);
-        font-size: 0.875rem;
-        font-weight: 600;
-        line-height: 1.25rem;
+        cursor: pointer;
+        font: inherit;
+        outline: 2px solid transparent;
+        outline-offset: -2px;
+        text-align: start;
+        text-decoration: none;
         transition:
             background-color var(--ui-duration-fast-01)
                 var(--ui-motion-standard-productive),
+            border-color var(--ui-duration-fast-01)
+                var(--ui-motion-standard-productive),
             color var(--ui-duration-fast-01)
                 var(--ui-motion-standard-productive),
-            border-color var(--ui-duration-fast-01)
+            outline var(--ui-duration-fast-01)
                 var(--ui-motion-standard-productive);
     }
 
-    .ui-tabs-tab:hover {
-        background-color: var(--ui-layer-hover-01);
-        color: var(--ui-text-primary);
+    .ui-tabs-tab::-moz-focus-inner {
+        border: 0;
     }
 
-    .ui-tabs-tab:focus-visible {
-        outline: 2px solid var(--ui-focus);
-        outline-offset: -2px;
-    }
-
-    .ui-tabs-tab[aria-selected="true"] {
-        border-color: var(--ui-border-interactive);
-        color: var(--ui-text-primary);
-    }
-
-    .ui-tabs-tab:disabled {
-        background-color: transparent;
-        color: var(--ui-text-disabled);
-        cursor: not-allowed;
-    }
-
-    /* ----------------------------------------------------------------------
-   Contained variant
-   ---------------------------------------------------------------------- */
-
-    .ui-tabs-contained .ui-tabs-list {
-        border: 1px solid var(--ui-border-subtle-01);
-        border-radius: 0.5rem 0.5rem 0 0;
-        background-color: var(--ui-layer-02);
+    .ui-tabs-tab + .ui-tabs-tab {
+        margin-inline-start: 1px;
     }
 
     .ui-tabs-contained .ui-tabs-tab {
-        border-block-end-color: transparent;
-        background-color: var(--ui-layer-02);
+        min-inline-size: 8rem;
+        border-block-end: 0;
+        background-color: var(--ui-layer-accent);
+        box-shadow: -1px 0 0 0 var(--ui-border-strong);
     }
 
-    .ui-tabs-contained .ui-tabs-tab[aria-selected="true"] {
-        background-color: var(--ui-layer-01);
+    .ui-tabs-full-width.ui-tabs-contained .ui-tabs-tab {
+        inline-size: 100%;
+        max-inline-size: none;
     }
 
-    .ui-tabs-panels {
-        border-color: var(--ui-border-subtle-01);
-    }
-
-    .ui-tabs-contained .ui-tabs-panels {
-        border: 1px solid var(--ui-border-subtle-01);
-        border-block-start: 0;
-        border-radius: 0 0 0.5rem 0.5rem;
-        background-color: var(--ui-layer-01);
-    }
-
-    /* ----------------------------------------------------------------------
-   Panels
-   ---------------------------------------------------------------------- */
-
-    .ui-tabs-panel {
-        padding: var(--ui-spacing-05);
-        color: var(--ui-text-secondary);
-        font-size: 0.875rem;
-        line-height: 1.5rem;
-    }
-
-    .ui-tabs-panel-title {
-        margin-block-end: var(--ui-spacing-02);
+    .ui-tabs-tab:hover:not(.ui-tabs-tab-selected):not(.ui-tabs-tab-disabled) {
+        border-block-end-color: var(--ui-tab-underline-color-hover);
         color: var(--ui-text-primary);
-        font-size: 0.875rem;
-        font-weight: 600;
-        line-height: 1.25rem;
     }
 
-    /* ----------------------------------------------------------------------
-   Vertical orientation
-   ---------------------------------------------------------------------- */
-
-    .ui-tabs-vertical {
-        display: grid;
-        gap: 0;
+    .ui-tabs-contained
+        .ui-tabs-tab:hover:not(.ui-tabs-tab-selected):not(
+            .ui-tabs-tab-disabled
+        ) {
+        background-color: var(--ui-layer-accent-hover);
     }
 
-    .ui-tabs-vertical .ui-tabs-list {
-        flex-direction: column;
-        overflow-x: visible;
-        overflow-y: auto;
-        border-block-end: 0;
-        border-inline-end: 1px solid var(--ui-border-subtle-01);
-        max-block-size: 22rem;
+    .ui-tabs-tab:focus,
+    .ui-tabs-tab:focus-visible {
+        outline-color: var(--ui-focus);
     }
 
-    .ui-tabs-vertical .ui-tabs-tab {
-        justify-content: space-between;
-        border-block-end: 0;
-        border-inline-end: 2px solid transparent;
-        text-align: start;
+    .ui-tabs-tab-selected {
+        border-block-end-color: var(--ui-border-interactive);
+        color: var(--ui-text-primary);
+        font-size: var(--ui-type-heading-compact-01-font-size);
+        font-weight: var(--ui-type-heading-compact-01-font-weight);
+        line-height: var(--ui-type-heading-compact-01-line-height);
+        letter-spacing: var(--ui-type-heading-compact-01-letter-spacing);
     }
 
-    .ui-tabs-vertical .ui-tabs-panels {
-        min-block-size: 16rem;
+    .ui-tabs-contained .ui-tabs-tab-selected {
+        background-color: var(--ui-layer);
+        box-shadow: inset 0 2px 0 0 var(--ui-border-interactive);
     }
 
-    @media (min-width: 1024px) {
-        .ui-tabs-vertical {
-            grid-template-columns: minmax(12rem, 0.28fr) minmax(0, 1fr);
-        }
+    .ui-tabs-tab-disabled,
+    .ui-tabs-tab:disabled {
+        border-block-end-color: var(--ui-border-subtle);
+        color: var(--ui-tab-text-disabled);
+        cursor: not-allowed;
     }
 
-    /* ----------------------------------------------------------------------
-   Tab content adornments
-   ---------------------------------------------------------------------- */
+    .ui-tabs-contained .ui-tabs-tab-disabled,
+    .ui-tabs-contained .ui-tabs-tab:disabled {
+        background-color: var(--ui-button-disabled, var(--ui-border-disabled));
+        color: var(--ui-text-on-color-disabled);
+    }
 
-    .ui-tabs-tab-icon {
-        flex-shrink: 0;
-        color: var(--ui-icon-secondary);
+    .ui-tabs-tab-label {
+        display: block;
+        min-inline-size: 0;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
     }
 
     .ui-tabs-tab-secondary {
         display: block;
-        color: var(--ui-text-helper);
-        font-size: 0.75rem;
-        font-weight: 500;
-        line-height: 1rem;
+        margin-inline-start: var(--ui-spacing-03);
+        color: var(--ui-text-secondary);
+        font-size: var(--ui-type-label-01-font-size);
+        font-weight: var(--ui-type-label-01-font-weight);
+        line-height: var(--ui-type-label-01-line-height);
+        letter-spacing: var(--ui-type-label-01-letter-spacing);
+    }
+
+    .ui-tabs-tab-icon {
+        display: inline-flex;
+        align-items: center;
+        margin-inline-end: var(--ui-spacing-03);
+    }
+
+    .ui-tabs-tab-icon-only {
+        justify-content: center;
+        min-inline-size: var(--ui-tabs-height);
+        inline-size: var(--ui-tabs-height);
+        padding-inline: 0;
     }
 
     .ui-tabs-tab-dismiss {
         display: inline-flex;
         align-items: center;
         justify-content: center;
-        inline-size: 1.25rem;
-        block-size: 1.25rem;
-        margin-inline-start: var(--ui-spacing-02);
-        border-radius: 0.25rem;
+        margin-inline-start: var(--ui-spacing-03);
         color: var(--ui-icon-secondary);
-    }
-
-    .ui-tabs-tab-dismiss:hover {
-        background-color: var(--ui-layer-hover-01);
-        color: var(--ui-icon-primary);
+        pointer-events: auto;
     }
 
     /* ----------------------------------------------------------------------
-   Reduced motion
+       Panels
+       ---------------------------------------------------------------------- */
+
+    .ui-tabs-panels {
+        display: block;
+        inline-size: 100%;
+        max-inline-size: 100%;
+        margin-block-start: var(--ui-spacing-06);
+    }
+
+    .ui-tabs-panel,
+    .ui-tab-content {
+        display: block;
+        inline-size: 100%;
+        max-inline-size: 100%;
+        min-block-size: 0;
+    }
+
+    .ui-tabs-panel[hidden],
+    .ui-tab-content[hidden] {
+        display: none !important;
+    }
+
+    .ui-tabs-panel:focus-visible,
+    .ui-tab-content:focus-visible {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+    }
+
+    .ui-tabs-panel-title {
+        margin: 0 0 var(--ui-spacing-05);
+        color: var(--ui-text-primary);
+        font-size: var(--ui-type-heading-compact-01-font-size);
+        font-weight: var(--ui-type-heading-compact-01-font-weight);
+        line-height: var(--ui-type-heading-compact-01-line-height);
+        letter-spacing: var(--ui-type-heading-compact-01-letter-spacing);
+    }
+
+    .ui-tabs-contained > .ui-tabs-panels {
+        margin-block-start: 0;
+        padding: var(--ui-spacing-05);
+        background-color: var(--ui-layer);
+    }
+
+    /* ----------------------------------------------------------------------
+       Vertical tabs
+       ---------------------------------------------------------------------- */
+
+    .ui-tabs-vertical {
+        --ui-tabs-height: var(--ui-tabs-tall-height);
+
+        display: grid;
+        grid-template-columns: minmax(12rem, 16rem) minmax(0, 1fr);
+        align-items: start;
+        min-block-size: 0;
+    }
+
+    .ui-tabs-vertical > .ui-tabs-list {
+        flex-direction: column;
+        inline-size: 100%;
+        max-block-size: 100%;
+        overflow-x: hidden;
+        overflow-y: auto;
+        background-color: var(--ui-layer);
+        box-shadow: inset -1px 0 var(--ui-border-subtle);
+    }
+
+    .ui-tabs-vertical > .ui-tabs-list .ui-tabs-tab {
+        inline-size: 100%;
+        max-inline-size: none;
+        block-size: var(--ui-tabs-height);
+        margin-inline-start: 0;
+        border-block-end: 1px solid var(--ui-border-subtle);
+        border-inline-end: 1px solid var(--ui-border-subtle);
+        background-color: var(--ui-layer-01);
+        box-shadow: inset 3px 0 0 0 var(--ui-border-subtle);
+    }
+
+    .ui-tabs-vertical > .ui-tabs-list .ui-tabs-tab-selected {
+        border-inline: none;
+        box-shadow: inset 3px 0 0 0 var(--ui-border-interactive);
+    }
+
+    .ui-tabs-vertical > .ui-tabs-list .ui-tabs-tab-label {
+        white-space: normal;
+    }
+
+    .ui-tabs-vertical > .ui-tabs-panels {
+        min-inline-size: 0;
+        margin-block-start: 0;
+        padding-inline-start: var(--ui-spacing-06);
+    }
+
+    @media (width < 42rem) {
+        .ui-tabs-vertical {
+            display: block;
+        }
+
+        .ui-tabs-vertical > .ui-tabs-list {
+            flex-direction: row;
+            overflow-x: auto;
+            overflow-y: hidden;
+            box-shadow: none;
+        }
+
+        .ui-tabs-vertical > .ui-tabs-list .ui-tabs-tab {
+            inline-size: auto;
+            border-inline-end: 0;
+            box-shadow: none;
+            white-space: nowrap;
+        }
+
+        .ui-tabs-vertical > .ui-tabs-panels {
+            margin-block-start: var(--ui-spacing-06);
+            padding-inline-start: 0;
+        }
+    }
+
+    /* ----------------------------------------------------------------------
+   Vertical contained tabs shell
    ---------------------------------------------------------------------- */
 
+    .ui-tabs.ui-tabs-vertical {
+        display: grid;
+        grid-template-columns: minmax(14rem, 20rem) minmax(0, 1fr);
+        align-items: stretch;
+        inline-size: 100%;
+        min-block-size: 0;
+        background-color: transparent;
+    }
+
+    .ui-tabs.ui-tabs-vertical > .ui-tabs-list {
+        display: flex;
+        flex-direction: column;
+        inline-size: 100%;
+        min-block-size: 100%;
+        overflow-x: hidden;
+        overflow-y: auto;
+        background-color: var(--ui-layer-accent);
+        box-shadow: inset -1px 0 0 0 var(--ui-border-subtle);
+    }
+
+    .ui-tabs.ui-tabs-vertical > .ui-tabs-list > .ui-tabs-tab {
+        inline-size: 100%;
+        max-inline-size: none;
+        min-inline-size: 0;
+        block-size: var(--ui-tabs-tall-height);
+        margin: 0;
+        border-block-end: 1px solid var(--ui-border-subtle);
+        border-inline-end: 1px solid var(--ui-border-subtle);
+        border-inline-start: 3px solid transparent;
+        background-color: var(--ui-layer-accent);
+        box-shadow: none;
+        white-space: normal;
+    }
+
+    .ui-tabs.ui-tabs-vertical
+        > .ui-tabs-list
+        > .ui-tabs-tab:hover:not(.ui-tabs-tab-selected):not(
+            .ui-tabs-tab-disabled
+        ) {
+        background-color: var(--ui-layer-accent-hover);
+    }
+
+    .ui-tabs.ui-tabs-vertical > .ui-tabs-list > .ui-tabs-tab-selected {
+        border-inline-start-color: var(--ui-border-interactive);
+        background-color: var(--ui-layer);
+        color: var(--ui-text-primary);
+    }
+
+    .ui-tabs.ui-tabs-vertical > .ui-tabs-list > .ui-tabs-tab-disabled,
+    .ui-tabs.ui-tabs-vertical > .ui-tabs-list > .ui-tabs-tab:disabled {
+        background-color: var(--ui-layer);
+        color: var(--ui-text-disabled);
+    }
+
+    .ui-tabs.ui-tabs-vertical > .ui-tabs-list .ui-tabs-tab-label {
+        white-space: normal;
+    }
+
+    .ui-tabs.ui-tabs-vertical > .ui-tabs-panels {
+        min-inline-size: 0;
+        margin-block-start: 0;
+        padding-block: var(--ui-spacing-05);
+        padding-inline-start: var(--ui-spacing-06);
+    }
+
+    .ui-tabs.ui-tabs-vertical > .ui-tabs-panels > .ui-tabs-panel {
+        min-inline-size: 0;
+    }
+
+    @media (width < 42rem) {
+        .ui-tabs.ui-tabs-vertical {
+            display: block;
+        }
+
+        .ui-tabs.ui-tabs-vertical > .ui-tabs-list {
+            flex-direction: row;
+            min-block-size: var(--ui-tabs-height);
+            overflow-x: auto;
+            overflow-y: hidden;
+            box-shadow: none;
+        }
+
+        .ui-tabs.ui-tabs-vertical > .ui-tabs-list > .ui-tabs-tab {
+            inline-size: auto;
+            min-inline-size: 6rem;
+            block-size: var(--ui-tabs-height);
+            border-inline: 0;
+            border-block-end: 2px solid var(--ui-tab-underline-color);
+            white-space: nowrap;
+        }
+
+        .ui-tabs.ui-tabs-vertical > .ui-tabs-list > .ui-tabs-tab-selected {
+            border-block-end-color: var(--ui-border-interactive);
+            border-inline-start-color: transparent;
+        }
+
+        .ui-tabs.ui-tabs-vertical > .ui-tabs-panels {
+            margin-block-start: var(--ui-spacing-06);
+            padding-block: 0;
+            padding-inline-start: 0;
+        }
+    }
+
+    /* ----------------------------------------------------------------------
+       Skeleton state
+       ---------------------------------------------------------------------- */
+
+    .ui-tabs.ui-skeleton,
+    .ui-tabs-skeleton {
+        cursor: default;
+        pointer-events: none;
+    }
+
+    .ui-tabs.ui-skeleton .ui-tabs-tab-label,
+    .ui-tabs-skeleton .ui-tabs-tab-label {
+        position: relative;
+        display: block;
+        inline-size: 8rem;
+        block-size: 0.875rem;
+        overflow: hidden;
+        background-color: var(--ui-skeleton-element);
+        color: transparent;
+    }
+
+    .ui-tabs.ui-skeleton .ui-tabs-tab-label::before,
+    .ui-tabs-skeleton .ui-tabs-tab-label::before {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+            90deg,
+            transparent,
+            var(--ui-skeleton-background, rgb(255 255 255 / 0.18)),
+            transparent
+        );
+        content: "";
+        animation: ui-skeleton-shimmer 1.5s infinite linear;
+    }
+
+    /* ----------------------------------------------------------------------
+       Reduced motion
+       ---------------------------------------------------------------------- */
+
     @media (prefers-reduced-motion: reduce) {
-        .ui-tabs-tab {
+        .ui-tabs-list,
+        .ui-tabs-tab,
+        .ui-tabs-tab-dismiss {
+            scroll-behavior: auto;
             transition: none;
+        }
+
+        .ui-tabs.ui-skeleton .ui-tabs-tab-label::before,
+        .ui-tabs-skeleton .ui-tabs-tab-label::before {
+            animation: none;
+        }
+    }
+
+    /* ----------------------------------------------------------------------
+       Forced colors
+       ---------------------------------------------------------------------- */
+
+    @media screen and (-ms-high-contrast: active), (forced-colors: active) {
+        .ui-tabs-tab:focus,
+        .ui-tabs-tab:active,
+        .ui-tabs-tab:focus-visible,
+        .ui-tabs-panel:focus,
+        .ui-tabs-panel:focus-visible,
+        .ui-tab-content:focus,
+        .ui-tab-content:focus-visible {
+            outline-color: Highlight;
+        }
+
+        .ui-tabs-tab-selected {
+            forced-color-adjust: none;
+            background-color: SelectedItem;
+            color: SelectedItemText;
+        }
+
+        .ui-tabs-tab-disabled,
+        .ui-tabs-tab:disabled {
+            color: GrayText;
         }
     }
 }

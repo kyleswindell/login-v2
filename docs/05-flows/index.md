@@ -13,6 +13,8 @@ Execution sequence documentation only. This branch does not own feature contract
 ## Implemented Flows
 
 - [Login Authentication Flow](login-authentication-flow.md)
+- [MFA Enrollment And Challenge Flow](mfa-enrollment-and-challenge-flow.md)
+- [Security Requirements Checklist Flow](security-requirements-checklist-flow.md)
 
 ## Planned Flows
 

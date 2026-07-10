@@ -3,11 +3,11 @@
 namespace Tests\Feature\Platform;
 
 use App\Models\User;
-use App\Platform\Settings\SettingsService;
+use App\Modules\Settings\Services\Store;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
-class SettingsServiceTest extends TestCase
+class SettingsStoreTest extends TestCase
 {
     use RefreshDatabase;
 
@@ -15,14 +15,14 @@ class SettingsServiceTest extends TestCase
     {
         $user = User::factory()->create();
 
-        $setting = app(SettingsService::class)->put(
+        $setting = app(Store::class)->put(
             groupKey: 'platform',
             key: 'timezone',
             value: 'UTC',
             updatedBy: $user->id,
         );
 
-        $this->assertSame('UTC', app(SettingsService::class)->get('platform', 'timezone'));
+        $this->assertSame('UTC', app(Store::class)->get('platform', 'timezone'));
 
         $this->assertDatabaseHas('settings', [
             'id' => $setting->id,

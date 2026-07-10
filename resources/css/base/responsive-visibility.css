@@ -1,0 +1,59 @@
+/* ==========================================================================
+   File: resources/css/base/responsive-visibility.css
+   Purpose: Responsive visibility utilities.
+   Notes:
+   - Defines breakpoint-specific hide utilities only.
+   - Uses literal breakpoint values because CSS custom properties are not
+     reliable in @media conditions.
+   ========================================================================== */
+
+@layer utilities {
+    /*
+     * Hide only from sm to before md.
+     * sm: 20rem to 41.999rem
+     */
+    @media (min-width: 20rem) and (max-width: 41.999rem) {
+        :where(.ui-hide-at-sm) {
+            display: none !important;
+        }
+    }
+
+    /*
+     * Hide only from md to before lg.
+     * md: 42rem to 65.999rem
+     */
+    @media (min-width: 42rem) and (max-width: 65.999rem) {
+        :where(.ui-hide-at-md) {
+            display: none !important;
+        }
+    }
+
+    /*
+     * Hide only from lg to before xlg.
+     * lg: 66rem to 81.999rem
+     */
+    @media (min-width: 66rem) and (max-width: 81.999rem) {
+        :where(.ui-hide-at-lg) {
+            display: none !important;
+        }
+    }
+
+    /*
+     * Hide only from xlg to before max.
+     * xlg: 82rem to 98.999rem
+     */
+    @media (min-width: 82rem) and (max-width: 98.999rem) {
+        :where(.ui-hide-at-xlg) {
+            display: none !important;
+        }
+    }
+
+    /*
+     * Hide at max and above.
+     */
+    @media (min-width: 99rem) {
+        :where(.ui-hide-at-max) {
+            display: none !important;
+        }
+    }
+}

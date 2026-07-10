@@ -2,8 +2,8 @@
 
 namespace Tests\Feature\Platform;
 
-use App\Models\PlatformNotification;
 use App\Models\User;
+use App\Modules\Notifications\Models\Notification;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -15,7 +15,7 @@ class PlatformNotificationsTest extends TestCase
     {
         $user = $this->actingAsPlatformSuperAdmin();
 
-        PlatformNotification::query()->create([
+        Notification::query()->create([
             'uuid' => (string) fake()->uuid(),
             'notifiable_type' => User::class,
             'notifiable_id' => $user->id,
@@ -26,7 +26,7 @@ class PlatformNotificationsTest extends TestCase
             'action_url' => '/dashboard',
         ]);
 
-        $this->get('/platform/notifications')
+        $this->get('/notifications')
             ->assertOk()
             ->assertSee('Notifications')
             ->assertSee('Review needed')
@@ -42,7 +42,16 @@ class PlatformNotificationsTest extends TestCase
         $this->actingAsPlatformSuperAdmin();
 
         $this->get('/platform/administration/notifications')
-            ->assertRedirect('/platform/notifications');
+            ->assertRedirect('/notifications');
+    }
+
+    public function test_authorized_users_can_view_notifications_setup_page(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $this->get('/platform/setup/notifications')
+            ->assertOk()
+            ->assertSee('Notifications Setup');
     }
 
     public function test_notification_index_only_shows_current_user_notifications(): void
@@ -50,7 +59,7 @@ class PlatformNotificationsTest extends TestCase
         $user = $this->actingAsPlatformSuperAdmin();
         $otherUser = User::factory()->create();
 
-        PlatformNotification::query()->create([
+        Notification::query()->create([
             'uuid' => (string) fake()->uuid(),
             'notifiable_type' => User::class,
             'notifiable_id' => $user->id,
@@ -60,7 +69,7 @@ class PlatformNotificationsTest extends TestCase
             'body' => 'Visible body.',
         ]);
 
-        PlatformNotification::query()->create([
+        Notification::query()->create([
             'uuid' => (string) fake()->uuid(),
             'notifiable_type' => User::class,
             'notifiable_id' => $otherUser->id,
@@ -70,7 +79,7 @@ class PlatformNotificationsTest extends TestCase
             'body' => 'Hidden body.',
         ]);
 
-        $this->get('/platform/notifications')
+        $this->get('/notifications')
             ->assertOk()
             ->assertSee('Visible notification')
             ->assertDontSee('Hidden notification');
@@ -81,11 +90,19 @@ class PlatformNotificationsTest extends TestCase
         $user = User::factory()->create();
 
         $this->actingAs($user)
+            ->get('/notifications')
+            ->assertForbidden();
+
+        $this->actingAs($user)
             ->get('/platform/notifications')
             ->assertForbidden();
 
         $this->actingAs($user)
             ->get('/platform/administration/notifications')
+            ->assertForbidden();
+
+        $this->actingAs($user)
+            ->get('/platform/setup/notifications')
             ->assertForbidden();
     }
 
@@ -93,7 +110,7 @@ class PlatformNotificationsTest extends TestCase
     {
         $user = $this->actingAsPlatformSuperAdmin();
 
-        $notification = PlatformNotification::query()->create([
+        $notification = Notification::query()->create([
             'uuid' => (string) fake()->uuid(),
             'notifiable_type' => User::class,
             'notifiable_id' => $user->id,
@@ -103,7 +120,7 @@ class PlatformNotificationsTest extends TestCase
             'body' => 'Read body.',
         ]);
 
-        $this->post("/platform/notifications/{$notification->id}/read")
+        $this->post("/notifications/{$notification->id}/read")
             ->assertRedirect();
 
         $this->assertNotNull($notification->fresh()->read_at);
@@ -114,7 +131,7 @@ class PlatformNotificationsTest extends TestCase
         $this->actingAsPlatformSuperAdmin();
         $otherUser = User::factory()->create();
 
-        $notification = PlatformNotification::query()->create([
+        $notification = Notification::query()->create([
             'uuid' => (string) fake()->uuid(),
             'notifiable_type' => User::class,
             'notifiable_id' => $otherUser->id,
@@ -124,7 +141,7 @@ class PlatformNotificationsTest extends TestCase
             'body' => 'Protected body.',
         ]);
 
-        $this->post("/platform/notifications/{$notification->id}/read")
+        $this->post("/notifications/{$notification->id}/read")
             ->assertNotFound();
     }
 
@@ -133,7 +150,7 @@ class PlatformNotificationsTest extends TestCase
         $user = $this->actingAsPlatformSuperAdmin();
         $otherUser = User::factory()->create();
 
-        $ownedNotification = PlatformNotification::query()->create([
+        $ownedNotification = Notification::query()->create([
             'uuid' => (string) fake()->uuid(),
             'notifiable_type' => User::class,
             'notifiable_id' => $user->id,
@@ -143,7 +160,7 @@ class PlatformNotificationsTest extends TestCase
             'body' => 'Owned body.',
         ]);
 
-        $otherNotification = PlatformNotification::query()->create([
+        $otherNotification = Notification::query()->create([
             'uuid' => (string) fake()->uuid(),
             'notifiable_type' => User::class,
             'notifiable_id' => $otherUser->id,
@@ -153,7 +170,7 @@ class PlatformNotificationsTest extends TestCase
             'body' => 'Other body.',
         ]);
 
-        $this->post('/platform/notifications/mark-all-read')
+        $this->post('/notifications/mark-all-read')
             ->assertRedirect();
 
         $this->assertNotNull($ownedNotification->fresh()->read_at);
@@ -164,7 +181,7 @@ class PlatformNotificationsTest extends TestCase
     {
         $user = $this->actingAsPlatformSuperAdmin();
 
-        $ownedNotification = PlatformNotification::query()->create([
+        $ownedNotification = Notification::query()->create([
             'uuid' => (string) fake()->uuid(),
             'notifiable_type' => User::class,
             'notifiable_id' => $user->id,
@@ -174,7 +191,7 @@ class PlatformNotificationsTest extends TestCase
             'body' => 'Unread body.',
         ]);
 
-        $this->postJson('/platform/notifications/mark-all-read')
+        $this->postJson('/notifications/mark-all-read')
             ->assertOk()
             ->assertJson([
                 'status' => 'All notifications marked as read.',
@@ -189,7 +206,7 @@ class PlatformNotificationsTest extends TestCase
     {
         $user = $this->actingAsPlatformSuperAdmin();
 
-        PlatformNotification::query()->create([
+        Notification::query()->create([
             'uuid' => (string) fake()->uuid(),
             'notifiable_type' => User::class,
             'notifiable_id' => $user->id,
@@ -199,9 +216,9 @@ class PlatformNotificationsTest extends TestCase
             'body' => 'Unread body.',
         ]);
 
-        $this->get('/platform/notifications')
+        $this->get('/notifications')
             ->assertOk()
-            ->assertSee('class="ui-notification-trigger"', false)
+            ->assertSee('data-notification-trigger', false)
             ->assertSee('data-notification-trigger-unread="true"', false)
             ->assertSee('data-notification-trigger-badge-hidden="false"', false)
             ->assertSee('data-notification-mark-all-enabled="true"', false)
@@ -209,18 +226,16 @@ class PlatformNotificationsTest extends TestCase
             ->assertSee('data-notification-preview-unread', false)
             ->assertSee('data-notification-preview-item-unread="true"', false)
             ->assertSee('data-notification-preview-severity="notice"', false)
-            ->assertSee('class="ui-notification-preview-item ui-notification-preview-item-unread"', false)
-            ->assertSee('class="ui-notification-preview-pill ui-notification-preview-pill-notice"', false)
             ->assertSee('1 unread notifications', false)
             ->assertSee('Mark all as read', false)
-            ->assertSee('class="ui-notification-trigger-badge"', false);
+            ->assertSee('data-notification-trigger-summary', false);
     }
 
     public function test_notification_trigger_uses_subdued_state_when_no_unread_notifications_exist(): void
     {
         $user = $this->actingAsPlatformSuperAdmin();
 
-        PlatformNotification::query()->create([
+        Notification::query()->create([
             'uuid' => (string) fake()->uuid(),
             'notifiable_type' => User::class,
             'notifiable_id' => $user->id,
@@ -231,13 +246,13 @@ class PlatformNotificationsTest extends TestCase
             'read_at' => now(),
         ]);
 
-        $this->get('/platform/notifications')
+        $this->get('/notifications')
             ->assertOk()
             ->assertSee('data-notification-trigger-unread="false"', false)
             ->assertSee('data-notification-trigger-badge-hidden="true"', false)
             ->assertSee('data-notification-mark-all-enabled="false"', false)
             ->assertSee('data-notification-preview-item-unread="false"', false)
-            ->assertDontSee('ui-notification-preview-item-unread', false)
+            ->assertDontSee('data-notification-preview-unread', false)
             ->assertSee('No unread notifications', false);
     }
 
@@ -245,7 +260,7 @@ class PlatformNotificationsTest extends TestCase
     {
         $user = $this->actingAsPlatformSuperAdmin();
 
-        $notification = PlatformNotification::query()->create([
+        $notification = Notification::query()->create([
             'uuid' => (string) fake()->uuid(),
             'notifiable_type' => User::class,
             'notifiable_id' => $user->id,
@@ -255,12 +270,12 @@ class PlatformNotificationsTest extends TestCase
             'body' => 'Dismiss body.',
         ]);
 
-        $this->post("/platform/notifications/{$notification->id}/dismiss")
+        $this->post("/notifications/{$notification->id}/dismiss")
             ->assertRedirect();
 
         $this->assertNotNull($notification->fresh()->dismissed_at);
 
-        $this->get('/platform/notifications')
+        $this->get('/notifications')
             ->assertOk()
             ->assertDontSee('Dismiss me');
     }

@@ -868,8 +868,7 @@ Wrapper
    ---------------------------------------------------------------------- */
 
     .ui-list-box-menu-item-highlighted,
-    .ui-list-box-menu-item.is-highlighted,
-    .ui-list-box-menu-item.ui-reference-force-focus {
+    .ui-list-box-menu-item.is-highlighted {
         color: var(--ui-text-primary);
         outline: 2px solid var(--ui-focus);
         outline-offset: -2px;

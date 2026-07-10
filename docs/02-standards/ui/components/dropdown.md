@@ -5,9 +5,9 @@ status: implemented-pending-correction
 api_layer: Component API
 category: Inputs
 priority: Tier B - Common reusable component
-ui_reference_route: /platform/ui-reference/components/dropdown
+rendered_evidence_route: null
 canonical_doc: docs/02-standards/ui/components/dropdown.md
-source_owner: /platform/ui-reference/components/dropdown
+source_owner: not installed
 foundation_elements:
   - color
   - spacing
@@ -49,11 +49,11 @@ related_patterns:
 - [11. Content contract](#11-content-contract)
 - [12. Prohibited usage](#12-prohibited-usage)
 - [13. Deferred or gated capabilities](#13-deferred-or-gated-capabilities)
-- [14. Implementation and UI Reference Checklist](#14-implementation-and-ui-reference-checklist)
+- [14. Implementation and Rendered Evidence Checklist](#14-implementation-and-ui-reference-checklist)
   - [14.1. Implementation checklist](#141-implementation-checklist)
-  - [14.2. UI Reference proof checklist](#142-ui-reference-proof-checklist)
-- [15. UI Reference requirements](#15-ui-reference-requirements)
-  - [15.1. The UI Reference page must also show:](#151-the-ui-reference-page-must-also-show)
+  - [14.2. rendered evidence proof checklist](#142-ui-reference-proof-checklist)
+- [15. Rendered evidence requirements](#15-ui-reference-requirements)
+  - [15.1. The rendered evidence page must also show:](#151-the-ui-reference-page-must-also-show)
 - [16. Testing and acceptance criteria](#16-testing-and-acceptance-criteria)
 - [17. Related APIs](#17-related-apis)
 - [18. References](#18-references)
@@ -62,9 +62,9 @@ related_patterns:
 
 Dropdown chooses one value from a known list of options when a custom listbox handoff is more appropriate than free text, a native select, or an action menu.
 
-Canonical API owner: `/platform/ui-reference/components/dropdown`. Use this Component API instead of creating local markup, styling, or behavior for the same UI role.
+Canonical API owner: `not installed`. Use this Component API instead of creating local markup, styling, or behavior for the same UI role.
 
-Carbon defines Dropdown, Multiselect, Filterable multiselect, and Combo box as a selection-control family. Login App maps that family to app-owned Component APIs: `x-ui.dropdown` owns single-select dropdown behavior, `x-ui.multiselect` owns multiselect and filterable multiselect behavior, and Combo box plus Inline dropdown remain required gaps until dedicated APIs are implemented.
+Carbon defines Dropdown, Multiselect, Filterable multiselect, and Combo box as a selection-control family. Login App maps that family to app-owned Component APIs: `x-ui.dropdown` owns single-select dropdown behavior, `x-ui.multi-select` owns multiselect behavior, `x-ui.filterable-multi-select` owns filterable multiselect behavior, and Combo box plus Inline dropdown remain required gaps until dedicated APIs are implemented.
 
 ## 2. Status and ownership
 
@@ -75,19 +75,19 @@ Carbon defines Dropdown, Multiselect, Filterable multiselect, and Combo box as a
 | Component slug     | dropdown                                      |
 | Category           | Inputs                                        |
 | Priority           | Tier B - Common reusable component            |
-| UI Reference route | `/platform/ui-reference/components/dropdown`  |
+| Rendered evidence route | `not installed`  |
 | Canonical doc      | `docs/02-standards/ui/components/dropdown.md` |
-| Source owner       | `/platform/ui-reference/components/dropdown`  |
+| Source owner       | `not installed`  |
 
 ## 3. Installed standard
 
-Dropdown now has component-specific UI Reference examples that consume approved Foundation Elements.
+Dropdown now has component-specific rendered evidence examples that consume approved Foundation Elements.
 
 The installed Login App standard is:
 
 - Use Dropdown for one value selected from a known option list.
 - Use the app-owned `x-ui.dropdown` API for custom single-selection dropdowns.
-- Treat Carbon's Dropdown, Multiselect, Filterable multiselect, and Combo box as family-level reference coverage; in Login App, base Dropdown owns custom single-select behavior, while Multiselect and Filterable multiselect are installed through `x-ui.multiselect`.
+- Treat Carbon's Dropdown, Multiselect, Filterable multiselect, and Combo box as family-level reference coverage; in Login App, base Dropdown owns custom single-select behavior, while Multiselect and Filterable multiselect are installed through `x-ui.multi-select` and `x-ui.filterable-multi-select`.
 - Use a visible label, optional helper text, visible validation copy, and token-backed field states.
 - Use Dropdown only when native Select is not the better fit for the workflow.
 - Use Menu buttons or Menu for action disclosure; Dropdown options are values, not commands.
@@ -108,7 +108,7 @@ This component owns the single-select field, trigger, selected value display, op
 | Data attributes | `data-ui-dropdown`, `data-ui-dropdown-trigger`, `data-ui-dropdown-field`, `data-ui-dropdown-chevron`, `data-ui-dropdown-menu`, `data-ui-dropdown-option`, `data-ui-dropdown-value`, `data-ui-dropdown-option-value`, `data-ui-dropdown-option-label`, `data-ui-dropdown-hidden-input`. |
 | Props/options   | `name`, `id`, `label`, `options`, `value`, `placeholder`, `helper`, `error`, `warning`, `size`, `variant`, `required`, `disabled`, `readonly`, `menuMaxHeight`, `placement`, `attributes`.                                                                       |
 | CSS namespace   | Use the app-owned `ui-*` namespace documented by the component implementation. Dropdown owns `ui-dropdown*` classes and consumes shared `ui-list-box*` classes for custom listbox structure. |
-| Source files    | `resources/views/components/ui/dropdown.blade.php`, `resources/js/ui-controls/dropdowns.js`, `resources/css/components/dropdown.css`, `resources/css/components/list-box.css`, and UI Reference route `/platform/ui-reference/components/dropdown`. |
+| Source files    | `resources/views/components/ui/dropdown/index.blade.php`, `resources/js/ui-controls/dropdowns.js`, `resources/css/components/dropdown.css`, `resources/css/components/list-box.css`, and Rendered evidence route `not installed`. |
 
 Example call:
 
@@ -179,8 +179,8 @@ The installed Dropdown must preserve Carbon-equivalent field structure through a
 | ---- | ------------------ |
 | Default dropdown | Label margin-bottom 8px; field padding-left 16px; effective field padding-right 48px for the chevron zone; border-bottom 1px; chevron zone 48px with 16px icon padding; helper margin-top 4px; state icon 16px plus 16px spacing. |
 | Fluid dropdown | Label margin-bottom 4px; field height 64px; field padding-left 16px; effective field padding-right 48px; field block padding/margins follow the 13px fluid alignment; chevron zone remains 48px. |
-| Multiselect | Owned by `x-ui.multiselect`; field padding-left 16px; effective field padding-right 48px; selected tag height 24px; selected-value clear behavior stays component-owned. |
-| Filterable multiselect | Owned by `x-ui.multiselect filterable`; typing filters option visibility, clear controls clear typed filter or selected values according to the Multiselect owner. |
+| Multiselect | Owned by `x-ui.multi-select`; field padding-left 16px; effective field padding-right 48px; selected tag height 24px; selected-value clear behavior stays component-owned. |
+| Filterable multiselect | Owned by `x-ui.filterable-multi-select`; typing filters option visibility, clear controls clear typed filter or selected values according to the Multiselect owner. |
 | Combo box | Required gap; when implemented it must provide field padding-right 72px, clear icon, chevron, vertical divider between separately interactive icon controls, filtering/autocomplete, and optional custom value save behavior. |
 | Inline dropdown | Required gap; when implemented it must use inline field text and option padding-left/right 16px and a 16px chevron offset without filtering behavior. |
 
@@ -267,8 +267,8 @@ Dropdown is a custom listbox consumer. It must emit `aria-haspopup="listbox"`, `
 | Long menu with capped height   | Modifier           | Approved API         | `menuMaxHeight="..."`                                                                      | A known option list is long enough to need vertical scrolling.                      |
 | Auto placement                 | Behavior           | Approved API         | `placement="auto"`                                                                         | Menu should open up or down to avoid clipping.                                      |
 | Fluid dropdown                 | Variant            | Approved API         | `variant="fluid"`                                                                          | Use when the surrounding field composition requires Carbon-style fluid spacing.      |
-| Multiselect                    | Related API        | Approved API         | `x-ui.multiselect`                                                                         | More than one option may be selected.                                               |
-| Filterable multiselect         | Related API        | Approved API         | `x-ui.multiselect filterable`                                                              | Users need to filter a known multi-value option set before selecting values.        |
+| Multiselect                    | Related API        | Approved API         | `x-ui.multi-select`                                                                         | More than one option may be selected.                                               |
+| Filterable multiselect         | Related API        | Approved API         | `x-ui.filterable-multi-select`                                                              | Users need to filter a known multi-value option set before selecting values.        |
 | Inline dropdown                | Required gap       | No approved API      | None approved                                                                              | Use only after an inline selection API, sizing, and keyboard contract are approved. |
 | Combo box                      | Required gap       | No approved API      | None approved                                                                              | Users need searchable single selection, autocomplete, or custom value entry.         |
 | Multiple selection             | Related API        | Approved API         | Use Multiselect                                                                            | More than one option may be selected.                                               |
@@ -477,9 +477,9 @@ Use related APIs instead:
 | AI presence                | Gated        | Requires approved AI-assisted feature, AI explainability content, and AI label standard.        |
 | Custom mobile picker       | Deferred     | Requires mobile accessibility, native-control comparison, and platform behavior review.         |
 
-No additional capability is approved without updating this Component standard and UI Reference proof.
+No additional capability is approved without updating this Component standard and rendered evidence proof.
 
-## 14. Implementation and UI Reference Checklist
+## 14. Implementation and Rendered Evidence Checklist
 ### 14.1. Implementation checklist
 | Requirement                | Standard expectation                                                                                                                               |
 | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -488,9 +488,9 @@ No additional capability is approved without updating this Component standard an
 | States                     | Default, hover, focus-visible, active/pressed, disabled, loading, validation, selected, empty, or not-applicable states are defined as relevant.   |
 | Accessibility/content      | Keyboard, focus, naming, ARIA, contrast, reduced-motion, label, helper, error, and copy requirements are defined.                                  |
 | Element consumption        | Required Color, Spacing, Typography, Icons, Motion, Themes, and 2x Grid dependencies are named.                                                    |
-| Tests                      | Source/API assertions and UI Reference route assertions block generic fallback content.                                                            |
+| Tests                      | Source/API assertions and Rendered evidence route assertions block generic fallback content.                                                            |
 
-### 14.2. UI Reference proof checklist
+### 14.2. rendered evidence proof checklist
 | Requirement               | Visual proof expectation                                                                              |
 | ------------------------- | ----------------------------------------------------------------------------------------------------- |
 | Live examples             | The page renders production examples through the documented API or explicit native/class contract.    |
@@ -499,9 +499,9 @@ No additional capability is approved without updating this Component standard an
 | Developer implementation  | Real canonical calls and token-backed code snippets appear instead of placeholder comments.           |
 | Related APIs              | Nearby Components, owning Patterns, consumed Elements, source files, and canonical docs are linked.   |
 | Manual review             | The page provides enough rendered proof for visual review of behavior, layout, and state correctness. |
-## 15. UI Reference requirements
+## 15. Rendered evidence requirements
 
-The UI Reference page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
+The rendered evidence page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
 
 Dropdown is a field/control component. Its Live examples may use grouped examples, state tables, or tabs, but must not show action-menu examples as Dropdown examples.
 
@@ -516,7 +516,7 @@ Dropdown is a field/control component. Its Live examples may use grouped example
 | Dropdown vs related APIs        | Visual comparison explains when to use Dropdown, Select, Menu buttons/Menu, Multiselect, Combo box, Radio button, and Toggle.                         | Boundary examples, required-gap labels where applicable               |
 | Deferred/gated capabilities     | Page shows trigger conditions instead of fake working controls for inline, combo box, async, skeleton, and AI-presence behavior.                      | Required gap, Gated, Deferred                                         |
 
-### 15.1. The UI Reference page must also show:
+### 15.1. The rendered evidence page must also show:
 
 - Installed API and canonical Blade call.
 - Props/options table.
@@ -529,7 +529,7 @@ Dropdown is a field/control component. Its Live examples may use grouped example
 
 ## 16. Testing and acceptance criteria
 
-- `/platform/ui-reference/components/dropdown` returns 200 for authorized users.
+- `not installed` returns 200 for authorized users.
 - The page shows the installed API, states, variants/options, prohibited usage, deferred gates, and Foundation Elements consumed.
 - Implemented APIs render production examples; deferred APIs render trigger conditions instead of fake controls.
 - The page does not contain generic fallback content.
@@ -551,7 +551,7 @@ Dropdown is a field/control component. Its Live examples may use grouped example
 Suggested feature-test assertions:
 
 ```php
-$response = $this->actingAs($admin)->get('/platform/ui-reference/components/dropdown');
+$response = $this->actingAs($admin)->get('not installed');
 
 $response->assertOk();
 $response->assertSee('Dropdown');
@@ -583,17 +583,17 @@ $response->assertDontSee('bx--dropdown');
 
 | API                 | Route                                            |
 | ------------------- | ------------------------------------------------ |
-| Select              | `/platform/ui-reference/components/select`       |
-| Multiselect         | `/platform/ui-reference/components/multiselect`  |
-| Menu buttons        | `/platform/ui-reference/components/menu-buttons` |
-| Radio button        | `/platform/ui-reference/components/radio-button` |
-| Toggle              | `/platform/ui-reference/components/toggle`       |
-| Text input          | `/platform/ui-reference/components/text-input`   |
-| Search              | `/platform/ui-reference/components/search`       |
-| Form patterns       | `/platform/ui-reference/patterns/forms`          |
-| Filter composition  | `/platform/ui-reference/patterns/navigation`     |
-| Tables Patterns     | `/platform/ui-reference/patterns/tables`         |
-| Components overview | `/platform/ui-reference/components`              |
+| Select              | `not installed`       |
+| Multiselect         | `not installed`  |
+| Menu buttons        | `not installed` |
+| Radio button        | `not installed` |
+| Toggle              | `not installed`       |
+| Text input          | `not installed`   |
+| Search              | `not installed`       |
+| Form patterns       | `not installed`          |
+| Filter composition  | `not installed`     |
+| Tables Patterns     | `not installed`         |
+| Components overview | `not installed`              |
 
 ## 18. References
 

@@ -158,13 +158,11 @@ Base tag container
     }
 
     .ui-tag-close:hover:not(:disabled),
-    .ui-tag-dismissible.ui-reference-force-hover .ui-tag-close,
     .ui-tag-dismissible.is-hover .ui-tag-close {
         background-color: var(--ui-tag-hover);
     }
 
     .ui-tag-close:focus-visible,
-    .ui-tag-dismissible.ui-reference-force-focus .ui-tag-close,
     .ui-tag-dismissible.is-focus .ui-tag-close {
         outline: 2px solid var(--ui-focus);
         outline-offset: 0;
@@ -384,16 +382,13 @@ Base tag container
     }
 
     .ui-tag-operational:not(:disabled):not(.ui-tag-disabled):hover,
-    .ui-tag-operational.ui-reference-force-hover,
     .ui-tag-operational.is-hover {
         background-color: var(--ui-tag-hover);
     }
 
     .ui-tag-operational:focus-visible,
-    .ui-tag-operational.ui-reference-force-focus,
     .ui-tag-operational.is-focus,
     .ui-tag-selectable:focus-visible,
-    .ui-tag-selectable.ui-reference-force-focus,
     .ui-tag-selectable.is-focus {
         outline: 2px solid var(--ui-focus);
         outline-offset: 0;
@@ -410,7 +405,6 @@ Base tag container
     }
 
     .ui-tag-selectable:not(:disabled):not(.ui-tag-disabled):hover,
-    .ui-tag-selectable.ui-reference-force-hover,
     .ui-tag-selectable.is-hover {
         background-color: var(--ui-layer-hover-01);
     }

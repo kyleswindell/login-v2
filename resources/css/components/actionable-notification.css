@@ -1,0 +1,725 @@
+/* ==========================================================================
+   File: resources/css/components/actionable-notification.css
+   Purpose: Actionable Notification component styles.
+
+   Notes:
+   - Defines Actionable Notification selectors only.
+   - Do not define primitive palette tokens here.
+   - Do not define theme role tokens here.
+   - Shared notification family variables live in notification.css.
+   ========================================================================== */
+
+@layer components {
+    .ui-actionable-notification {
+        --ui-notification-accent-color: var(--ui-support-info-inverse);
+        --ui-notification-background-color: var(--ui-background-inverse);
+
+        box-sizing: border-box;
+        position: relative;
+        display: flex;
+        flex-wrap: wrap;
+        inline-size: 100%;
+        min-inline-size: var(--ui-notification-inline-min-width, 18rem);
+        max-inline-size: var(--ui-notification-inline-max-width-sm, 18rem);
+        min-block-size: 3rem;
+        block-size: auto;
+        margin: 0;
+        border: 0;
+        border-inline-start: var(--ui-notification-border-width, 3px) solid
+            var(--ui-notification-accent-color);
+        padding: 0;
+        background: var(--ui-notification-background-color);
+        color: var(--ui-text-inverse);
+    }
+
+    .ui-actionable-notification *,
+    .ui-actionable-notification *::before,
+    .ui-actionable-notification *::after {
+        box-sizing: inherit;
+    }
+
+    @media (min-width: 42rem) {
+        .ui-actionable-notification {
+            flex-wrap: nowrap;
+            max-inline-size: var(--ui-notification-inline-max-width-md, 38rem);
+        }
+    }
+
+    @media (min-width: 66rem) {
+        .ui-actionable-notification {
+            max-inline-size: var(--ui-notification-inline-max-width-lg, 46rem);
+        }
+    }
+
+    @media (min-width: 99rem) {
+        .ui-actionable-notification {
+            max-inline-size: var(--ui-notification-inline-max-width-xl, 52rem);
+        }
+    }
+
+    .ui-actionable-notification-toast,
+    .ui-actionable-notification--toast {
+        flex-wrap: wrap;
+        min-inline-size: var(--ui-notification-toast-width, 18rem);
+        max-inline-size: var(--ui-notification-toast-width, 18rem);
+        box-shadow: 0 2px 6px 0 rgb(0 0 0 / 0.2);
+    }
+
+    .ui-actionable-notification:not(
+            .ui-actionable-notification-low-contrast
+        ):not(.ui-actionable-notification--low-contrast)
+        a {
+        color: var(--ui-link-inverse);
+    }
+
+    .ui-actionable-notification a {
+        text-decoration: none;
+    }
+
+    .ui-actionable-notification a:hover {
+        text-decoration: underline;
+    }
+
+    .ui-actionable-notification a:focus {
+        outline: 1px solid var(--ui-focus-inverse);
+    }
+
+    .ui-actionable-notification.ui-actionable-notification-low-contrast a:focus,
+    .ui-actionable-notification.ui-actionable-notification--low-contrast
+        a:focus {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+    }
+
+    /* ----------------------------------------------------------------------
+       Variants
+       ---------------------------------------------------------------------- */
+
+    .ui-actionable-notification-error,
+    .ui-actionable-notification--error {
+        --ui-notification-accent-color: var(--ui-support-error-inverse);
+        --ui-notification-background-color: var(--ui-background-inverse);
+    }
+
+    .ui-actionable-notification-success,
+    .ui-actionable-notification--success {
+        --ui-notification-accent-color: var(--ui-support-success-inverse);
+        --ui-notification-background-color: var(--ui-background-inverse);
+    }
+
+    .ui-actionable-notification-info,
+    .ui-actionable-notification-info-square,
+    .ui-actionable-notification--info,
+    .ui-actionable-notification--info-square {
+        --ui-notification-accent-color: var(--ui-support-info-inverse);
+        --ui-notification-background-color: var(--ui-background-inverse);
+    }
+
+    .ui-actionable-notification-warning,
+    .ui-actionable-notification-warning-alt,
+    .ui-actionable-notification--warning,
+    .ui-actionable-notification--warning-alt {
+        --ui-notification-accent-color: var(--ui-support-warning-inverse);
+        --ui-notification-background-color: var(--ui-background-inverse);
+    }
+
+    /* ----------------------------------------------------------------------
+       Low contrast
+       ---------------------------------------------------------------------- */
+
+    .ui-actionable-notification-low-contrast,
+    .ui-actionable-notification--low-contrast {
+        color: var(--ui-text-primary);
+    }
+
+    .ui-actionable-notification-low-contrast:not(
+            .ui-actionable-notification-toast
+        ):not(.ui-actionable-notification--toast)::before,
+    .ui-actionable-notification--low-contrast:not(
+            .ui-actionable-notification-toast
+        ):not(.ui-actionable-notification--toast)::before {
+        position: absolute;
+        inset-block-start: 0;
+        inset-inline-start: 0;
+        box-sizing: border-box;
+        inline-size: 100%;
+        block-size: 100%;
+        border-width: 1px 1px 1px 0;
+        border-style: solid;
+        border-color: var(--ui-notification-accent-color);
+        content: "";
+        filter: opacity(0.4);
+        pointer-events: none;
+    }
+
+    .ui-actionable-notification-low-contrast.ui-actionable-notification-error,
+    .ui-actionable-notification--low-contrast.ui-actionable-notification--error {
+        --ui-notification-accent-color: var(--ui-support-error);
+        --ui-notification-background-color: var(
+            --ui-notification-background-error
+        );
+    }
+
+    .ui-actionable-notification-low-contrast.ui-actionable-notification-success,
+    .ui-actionable-notification--low-contrast.ui-actionable-notification--success {
+        --ui-notification-accent-color: var(--ui-support-success);
+        --ui-notification-background-color: var(
+            --ui-notification-background-success
+        );
+    }
+
+    .ui-actionable-notification-low-contrast.ui-actionable-notification-info,
+    .ui-actionable-notification-low-contrast.ui-actionable-notification-info-square,
+    .ui-actionable-notification--low-contrast.ui-actionable-notification--info,
+    .ui-actionable-notification--low-contrast.ui-actionable-notification--info-square {
+        --ui-notification-accent-color: var(--ui-support-info);
+        --ui-notification-background-color: var(
+            --ui-notification-background-info
+        );
+    }
+
+    .ui-actionable-notification-low-contrast.ui-actionable-notification-warning,
+    .ui-actionable-notification-low-contrast.ui-actionable-notification-warning-alt,
+    .ui-actionable-notification--low-contrast.ui-actionable-notification--warning,
+    .ui-actionable-notification--low-contrast.ui-actionable-notification--warning-alt {
+        --ui-notification-accent-color: var(--ui-support-warning);
+        --ui-notification-background-color: var(
+            --ui-notification-background-warning
+        );
+    }
+
+    .ui-actionable-notification-low-contrast
+        .ui-actionable-notification-subtitle,
+    .ui-actionable-notification-low-contrast
+        .ui-actionable-notification__subtitle,
+    .ui-actionable-notification-low-contrast
+        .ui-actionable-notification-caption,
+    .ui-actionable-notification-low-contrast
+        .ui-actionable-notification__caption,
+    .ui-actionable-notification--low-contrast
+        .ui-actionable-notification-subtitle,
+    .ui-actionable-notification--low-contrast
+        .ui-actionable-notification__subtitle,
+    .ui-actionable-notification--low-contrast
+        .ui-actionable-notification-caption,
+    .ui-actionable-notification--low-contrast
+        .ui-actionable-notification__caption {
+        color: var(--ui-text-primary);
+    }
+
+    .ui-actionable-notification-low-contrast
+        .ui-actionable-notification-close-icon,
+    .ui-actionable-notification-low-contrast
+        .ui-actionable-notification__close-icon,
+    .ui-actionable-notification--low-contrast
+        .ui-actionable-notification-close-icon,
+    .ui-actionable-notification--low-contrast
+        .ui-actionable-notification__close-icon {
+        fill: var(--ui-icon-primary);
+    }
+
+    /* ----------------------------------------------------------------------
+       Icon
+       ---------------------------------------------------------------------- */
+
+    .ui-actionable-notification-icon,
+    .ui-actionable-notification__icon,
+    .ui-actionable-notification .ui-inline-notification-icon,
+    .ui-actionable-notification .ui-inline-notification__icon {
+        flex-shrink: 0;
+        margin-block-start: 0.875rem;
+        margin-inline-end: var(--ui-spacing-05);
+        fill: var(--ui-notification-accent-color);
+    }
+
+    .ui-actionable-notification .ui-toast-notification-icon,
+    .ui-actionable-notification .ui-toast-notification__icon {
+        flex-shrink: 0;
+        margin-block-start: var(--ui-spacing-05);
+        margin-inline-end: var(--ui-spacing-05);
+        fill: var(--ui-notification-accent-color);
+    }
+
+    .ui-actionable-notification-warning
+        .ui-toast-notification-icon
+        path[opacity="0"],
+    .ui-actionable-notification--warning
+        .ui-toast-notification__icon
+        path[opacity="0"],
+    .ui-actionable-notification-warning-alt
+        .ui-toast-notification-icon
+        path:first-of-type,
+    .ui-actionable-notification--warning-alt
+        .ui-toast-notification__icon
+        path:first-of-type,
+    .ui-actionable-notification-warning
+        .ui-inline-notification-icon
+        path[opacity="0"],
+    .ui-actionable-notification--warning
+        .ui-inline-notification__icon
+        path[opacity="0"],
+    .ui-actionable-notification-warning-alt
+        .ui-inline-notification-icon
+        path:first-of-type,
+    .ui-actionable-notification--warning-alt
+        .ui-inline-notification__icon
+        path:first-of-type {
+        fill: var(--ui-black, #000000);
+        opacity: 1;
+    }
+
+    /* ----------------------------------------------------------------------
+       Content
+       ---------------------------------------------------------------------- */
+
+    .ui-actionable-notification-details,
+    .ui-actionable-notification__details {
+        display: flex;
+        flex-grow: 1;
+        margin-inline: 0.8125rem var(--ui-spacing-09);
+    }
+
+    @media (min-width: 42rem) {
+        .ui-actionable-notification:not(.ui-actionable-notification-toast):not(
+                .ui-actionable-notification--toast
+            )
+            .ui-actionable-notification-details,
+        .ui-actionable-notification:not(.ui-actionable-notification-toast):not(
+                .ui-actionable-notification--toast
+            )
+            .ui-actionable-notification__details {
+            margin: 0 0.8125rem;
+        }
+    }
+
+    .ui-actionable-notification-text-wrapper,
+    .ui-actionable-notification__text-wrapper {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 0.9375rem 0;
+    }
+
+    .ui-actionable-notification-toast .ui-actionable-notification-text-wrapper,
+    .ui-actionable-notification-toast .ui-actionable-notification__text-wrapper,
+    .ui-actionable-notification--toast .ui-actionable-notification-text-wrapper,
+    .ui-actionable-notification--toast
+        .ui-actionable-notification__text-wrapper {
+        padding: 0.9375rem 0 1.4375rem;
+    }
+
+    .ui-actionable-notification-focus-wrapper,
+    .ui-actionable-notification__focus-wrapper {
+        display: contents;
+    }
+
+    .ui-actionable-notification-button-wrapper,
+    .ui-actionable-notification__button-wrapper {
+        display: flex;
+    }
+
+    .ui-actionable-notification-content,
+    .ui-actionable-notification__content {
+        display: flex;
+        flex-wrap: wrap;
+        font-size: var(--ui-type-body-compact-01-font-size);
+        font-weight: var(--ui-type-body-compact-01-font-weight);
+        line-height: var(--ui-type-body-compact-01-line-height);
+        letter-spacing: var(--ui-type-body-compact-01-letter-spacing);
+        word-break: break-word;
+    }
+
+    .ui-actionable-notification-toast .ui-actionable-notification-content,
+    .ui-actionable-notification-toast .ui-actionable-notification__content,
+    .ui-actionable-notification--toast .ui-actionable-notification-content,
+    .ui-actionable-notification--toast .ui-actionable-notification__content {
+        display: block;
+    }
+
+    .ui-actionable-notification-title,
+    .ui-actionable-notification__title {
+        margin-inline-end: var(--ui-spacing-02);
+        font-size: var(--ui-type-heading-compact-01-font-size);
+        font-weight: var(--ui-font-weight-semibold);
+        line-height: var(--ui-type-heading-compact-01-line-height);
+        letter-spacing: var(--ui-type-heading-compact-01-letter-spacing);
+        word-break: break-word;
+    }
+
+    .ui-actionable-notification-toast .ui-actionable-notification-title,
+    .ui-actionable-notification-toast .ui-actionable-notification__title,
+    .ui-actionable-notification--toast .ui-actionable-notification-title,
+    .ui-actionable-notification--toast .ui-actionable-notification__title {
+        margin-inline-end: 0;
+    }
+
+    .ui-actionable-notification-subtitle,
+    .ui-actionable-notification__subtitle {
+        margin-block-start: 0;
+        color: var(--ui-text-inverse);
+        font-size: var(--ui-type-body-compact-01-font-size);
+        font-weight: var(--ui-type-body-compact-01-font-weight);
+        line-height: var(--ui-type-body-compact-01-line-height);
+        letter-spacing: var(--ui-type-body-compact-01-letter-spacing);
+        word-break: break-word;
+    }
+
+    .ui-actionable-notification-caption,
+    .ui-actionable-notification__caption {
+        padding-block-start: var(--ui-spacing-06);
+        color: var(--ui-text-inverse);
+        font-size: var(--ui-type-body-compact-01-font-size);
+        font-weight: var(--ui-type-body-compact-01-font-weight);
+        line-height: var(--ui-type-body-compact-01-line-height);
+        letter-spacing: var(--ui-type-body-compact-01-letter-spacing);
+    }
+
+    /* ----------------------------------------------------------------------
+       Ghost action button
+       ---------------------------------------------------------------------- */
+
+    .ui-actionable-notification-action-button.ui-button-ghost,
+    .ui-actionable-notification-action-button.ui-btn-ghost,
+    .ui-actionable-notification-action-button.ui-btn--ghost,
+    .ui-actionable-notification__action-button.ui-button-ghost,
+    .ui-actionable-notification__action-button.ui-btn-ghost,
+    .ui-actionable-notification__action-button.ui-btn--ghost {
+        block-size: 2rem;
+        margin-block-end: var(--ui-spacing-03);
+        margin-inline-start: var(--ui-spacing-08);
+    }
+
+    @media (min-width: 42rem) {
+        .ui-actionable-notification-action-button.ui-button-ghost,
+        .ui-actionable-notification-action-button.ui-btn-ghost,
+        .ui-actionable-notification-action-button.ui-btn--ghost,
+        .ui-actionable-notification__action-button.ui-button-ghost,
+        .ui-actionable-notification__action-button.ui-btn-ghost,
+        .ui-actionable-notification__action-button.ui-btn--ghost {
+            margin: var(--ui-spacing-03) 0;
+        }
+    }
+
+    .ui-actionable-notification:not(
+            .ui-actionable-notification-low-contrast
+        ):not(.ui-actionable-notification--low-contrast)
+        .ui-actionable-notification-action-button.ui-button-ghost,
+    .ui-actionable-notification:not(
+            .ui-actionable-notification-low-contrast
+        ):not(.ui-actionable-notification--low-contrast)
+        .ui-actionable-notification-action-button.ui-btn-ghost,
+    .ui-actionable-notification:not(
+            .ui-actionable-notification-low-contrast
+        ):not(.ui-actionable-notification--low-contrast)
+        .ui-actionable-notification-action-button.ui-btn--ghost,
+    .ui-actionable-notification:not(
+            .ui-actionable-notification-low-contrast
+        ):not(.ui-actionable-notification--low-contrast)
+        .ui-actionable-notification__action-button.ui-button-ghost,
+    .ui-actionable-notification:not(
+            .ui-actionable-notification-low-contrast
+        ):not(.ui-actionable-notification--low-contrast)
+        .ui-actionable-notification__action-button.ui-btn-ghost,
+    .ui-actionable-notification:not(
+            .ui-actionable-notification-low-contrast
+        ):not(.ui-actionable-notification--low-contrast)
+        .ui-actionable-notification__action-button.ui-btn--ghost {
+        color: var(--ui-link-inverse);
+    }
+
+    .ui-actionable-notification-action-button.ui-button-ghost:hover,
+    .ui-actionable-notification-action-button.ui-button-ghost:active,
+    .ui-actionable-notification-action-button.ui-btn-ghost:hover,
+    .ui-actionable-notification-action-button.ui-btn-ghost:active,
+    .ui-actionable-notification-action-button.ui-btn--ghost:hover,
+    .ui-actionable-notification-action-button.ui-btn--ghost:active,
+    .ui-actionable-notification__action-button.ui-button-ghost:hover,
+    .ui-actionable-notification__action-button.ui-button-ghost:active,
+    .ui-actionable-notification__action-button.ui-btn-ghost:hover,
+    .ui-actionable-notification__action-button.ui-btn-ghost:active,
+    .ui-actionable-notification__action-button.ui-btn--ghost:hover,
+    .ui-actionable-notification__action-button.ui-btn--ghost:active {
+        background-color: var(--ui-background-inverse-hover);
+    }
+
+    .ui-actionable-notification-low-contrast
+        .ui-actionable-notification-action-button.ui-button-ghost:hover,
+    .ui-actionable-notification-low-contrast
+        .ui-actionable-notification-action-button.ui-button-ghost:active,
+    .ui-actionable-notification--low-contrast
+        .ui-actionable-notification__action-button.ui-btn--ghost:hover,
+    .ui-actionable-notification--low-contrast
+        .ui-actionable-notification__action-button.ui-btn--ghost:active {
+        background-color: var(--ui-notification-action-hover);
+    }
+
+    .ui-actionable-notification-action-button.ui-button-ghost:focus,
+    .ui-actionable-notification-action-button.ui-btn-ghost:focus,
+    .ui-actionable-notification-action-button.ui-btn--ghost:focus,
+    .ui-actionable-notification__action-button.ui-button-ghost:focus,
+    .ui-actionable-notification__action-button.ui-btn-ghost:focus,
+    .ui-actionable-notification__action-button.ui-btn--ghost:focus {
+        border-color: transparent;
+        box-shadow: none;
+        outline: 2px solid var(--ui-focus-inverse);
+        outline-offset: -2px;
+    }
+
+    .ui-actionable-notification-low-contrast
+        .ui-actionable-notification-action-button.ui-button-ghost:focus,
+    .ui-actionable-notification--low-contrast
+        .ui-actionable-notification__action-button.ui-btn--ghost:focus {
+        outline-color: var(--ui-focus);
+    }
+
+    /* ----------------------------------------------------------------------
+       Tertiary action button
+       ---------------------------------------------------------------------- */
+
+    .ui-actionable-notification-action-button.ui-button-tertiary,
+    .ui-actionable-notification-action-button.ui-btn-tertiary,
+    .ui-actionable-notification-action-button.ui-btn--tertiary,
+    .ui-actionable-notification__action-button.ui-button-tertiary,
+    .ui-actionable-notification__action-button.ui-btn-tertiary,
+    .ui-actionable-notification__action-button.ui-btn--tertiary {
+        margin-block-end: var(--ui-spacing-05);
+        margin-inline-start: calc(var(--ui-spacing-07) + 1.25rem - 0.125rem);
+        padding-inline: var(--ui-spacing-05);
+    }
+
+    .ui-actionable-notification:not(
+            .ui-actionable-notification-low-contrast
+        ):not(.ui-actionable-notification--low-contrast)
+        .ui-actionable-notification-action-button.ui-button-tertiary,
+    .ui-actionable-notification:not(
+            .ui-actionable-notification-low-contrast
+        ):not(.ui-actionable-notification--low-contrast)
+        .ui-actionable-notification-action-button.ui-btn-tertiary,
+    .ui-actionable-notification:not(
+            .ui-actionable-notification-low-contrast
+        ):not(.ui-actionable-notification--low-contrast)
+        .ui-actionable-notification-action-button.ui-btn--tertiary,
+    .ui-actionable-notification:not(
+            .ui-actionable-notification-low-contrast
+        ):not(.ui-actionable-notification--low-contrast)
+        .ui-actionable-notification__action-button.ui-button-tertiary,
+    .ui-actionable-notification:not(
+            .ui-actionable-notification-low-contrast
+        ):not(.ui-actionable-notification--low-contrast)
+        .ui-actionable-notification__action-button.ui-btn-tertiary,
+    .ui-actionable-notification:not(
+            .ui-actionable-notification-low-contrast
+        ):not(.ui-actionable-notification--low-contrast)
+        .ui-actionable-notification__action-button.ui-btn--tertiary {
+        border-color: var(--ui-notification-action-tertiary-inverse);
+        background-color: transparent;
+        color: var(--ui-notification-action-tertiary-inverse-text);
+    }
+
+    .ui-actionable-notification:not(
+            .ui-actionable-notification-low-contrast
+        ):not(.ui-actionable-notification--low-contrast)
+        .ui-actionable-notification-action-button.ui-button-tertiary:hover,
+    .ui-actionable-notification:not(
+            .ui-actionable-notification-low-contrast
+        ):not(.ui-actionable-notification--low-contrast)
+        .ui-actionable-notification-action-button.ui-btn-tertiary:hover,
+    .ui-actionable-notification:not(
+            .ui-actionable-notification-low-contrast
+        ):not(.ui-actionable-notification--low-contrast)
+        .ui-actionable-notification-action-button.ui-btn--tertiary:hover,
+    .ui-actionable-notification:not(
+            .ui-actionable-notification-low-contrast
+        ):not(.ui-actionable-notification--low-contrast)
+        .ui-actionable-notification__action-button.ui-button-tertiary:hover,
+    .ui-actionable-notification:not(
+            .ui-actionable-notification-low-contrast
+        ):not(.ui-actionable-notification--low-contrast)
+        .ui-actionable-notification__action-button.ui-btn-tertiary:hover,
+    .ui-actionable-notification:not(
+            .ui-actionable-notification-low-contrast
+        ):not(.ui-actionable-notification--low-contrast)
+        .ui-actionable-notification__action-button.ui-btn--tertiary:hover {
+        background-color: var(--ui-notification-action-tertiary-inverse-hover);
+        color: var(--ui-notification-action-tertiary-inverse-text);
+    }
+
+    .ui-actionable-notification:not(
+            .ui-actionable-notification-low-contrast
+        ):not(.ui-actionable-notification--low-contrast)
+        .ui-actionable-notification-action-button.ui-button-tertiary:focus,
+    .ui-actionable-notification:not(
+            .ui-actionable-notification-low-contrast
+        ):not(.ui-actionable-notification--low-contrast)
+        .ui-actionable-notification-action-button.ui-btn-tertiary:focus,
+    .ui-actionable-notification:not(
+            .ui-actionable-notification-low-contrast
+        ):not(.ui-actionable-notification--low-contrast)
+        .ui-actionable-notification-action-button.ui-btn--tertiary:focus,
+    .ui-actionable-notification:not(
+            .ui-actionable-notification-low-contrast
+        ):not(.ui-actionable-notification--low-contrast)
+        .ui-actionable-notification__action-button.ui-button-tertiary:focus,
+    .ui-actionable-notification:not(
+            .ui-actionable-notification-low-contrast
+        ):not(.ui-actionable-notification--low-contrast)
+        .ui-actionable-notification__action-button.ui-btn-tertiary:focus,
+    .ui-actionable-notification:not(
+            .ui-actionable-notification-low-contrast
+        ):not(.ui-actionable-notification--low-contrast)
+        .ui-actionable-notification__action-button.ui-btn--tertiary:focus {
+        border-color: var(--ui-focus-inverse);
+        background-color: var(--ui-notification-action-tertiary-inverse);
+        color: var(--ui-notification-action-tertiary-inverse-text);
+        box-shadow:
+            inset 0 0 0 2px var(--ui-focus-inverse),
+            inset 0 0 0 1px var(--ui-background-inverse);
+    }
+
+    .ui-actionable-notification:not(
+            .ui-actionable-notification-low-contrast
+        ):not(.ui-actionable-notification--low-contrast)
+        .ui-actionable-notification-action-button.ui-button-tertiary:active,
+    .ui-actionable-notification:not(
+            .ui-actionable-notification-low-contrast
+        ):not(.ui-actionable-notification--low-contrast)
+        .ui-actionable-notification-action-button.ui-btn-tertiary:active,
+    .ui-actionable-notification:not(
+            .ui-actionable-notification-low-contrast
+        ):not(.ui-actionable-notification--low-contrast)
+        .ui-actionable-notification-action-button.ui-btn--tertiary:active,
+    .ui-actionable-notification:not(
+            .ui-actionable-notification-low-contrast
+        ):not(.ui-actionable-notification--low-contrast)
+        .ui-actionable-notification__action-button.ui-button-tertiary:active,
+    .ui-actionable-notification:not(
+            .ui-actionable-notification-low-contrast
+        ):not(.ui-actionable-notification--low-contrast)
+        .ui-actionable-notification__action-button.ui-btn-tertiary:active,
+    .ui-actionable-notification:not(
+            .ui-actionable-notification-low-contrast
+        ):not(.ui-actionable-notification--low-contrast)
+        .ui-actionable-notification__action-button.ui-btn--tertiary:active {
+        border-color: transparent;
+        background-color: var(--ui-notification-action-tertiary-inverse-active);
+        color: var(--ui-notification-action-tertiary-inverse-text);
+    }
+
+    .ui-actionable-notification-hide-close-button
+        .ui-actionable-notification-action-button.ui-button-ghost,
+    .ui-actionable-notification-hide-close-button
+        .ui-actionable-notification-action-button.ui-button-tertiary,
+    .ui-actionable-notification--hide-close-button
+        .ui-actionable-notification__action-button.ui-btn--ghost,
+    .ui-actionable-notification--hide-close-button
+        .ui-actionable-notification__action-button.ui-btn--tertiary {
+        margin-inline-end: var(--ui-spacing-03);
+    }
+
+    /* ----------------------------------------------------------------------
+       Close button
+       ---------------------------------------------------------------------- */
+
+    .ui-actionable-notification-close-button,
+    .ui-actionable-notification__close-button {
+        position: absolute;
+        inset-block-start: 0;
+        inset-inline-end: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        inline-size: var(--ui-notification-close-size, 3rem);
+        min-inline-size: var(--ui-notification-close-size, 3rem);
+        max-inline-size: var(--ui-notification-close-size, 3rem);
+        block-size: var(--ui-notification-close-size, 3rem);
+        border: none;
+        padding: 0;
+        background: transparent;
+        cursor: pointer;
+        outline: 2px solid transparent;
+        outline-offset: -2px;
+        transition:
+            outline var(--ui-duration-fast-02)
+                var(--ui-motion-standard-productive),
+            background-color var(--ui-duration-fast-02)
+                var(--ui-motion-standard-productive);
+    }
+
+    @media (min-width: 42rem) {
+        .ui-actionable-notification-close-button,
+        .ui-actionable-notification__close-button {
+            position: static;
+        }
+
+        .ui-actionable-notification-toast
+            .ui-actionable-notification-close-button,
+        .ui-actionable-notification-toast
+            .ui-actionable-notification__close-button,
+        .ui-actionable-notification--toast
+            .ui-actionable-notification-close-button,
+        .ui-actionable-notification--toast
+            .ui-actionable-notification__close-button {
+            position: absolute;
+        }
+    }
+
+    .ui-actionable-notification-close-button:focus,
+    .ui-actionable-notification-close-button:focus-visible,
+    .ui-actionable-notification__close-button:focus,
+    .ui-actionable-notification__close-button:focus-visible {
+        outline-color: var(--ui-focus-inverse);
+    }
+
+    .ui-actionable-notification-close-icon,
+    .ui-actionable-notification__close-icon {
+        fill: var(--ui-icon-inverse);
+    }
+
+    .ui-actionable-notification-low-contrast
+        .ui-actionable-notification-close-button:focus,
+    .ui-actionable-notification-low-contrast
+        .ui-actionable-notification__close-button:focus,
+    .ui-actionable-notification--low-contrast
+        .ui-actionable-notification-close-button:focus,
+    .ui-actionable-notification--low-contrast
+        .ui-actionable-notification__close-button:focus {
+        outline-color: var(--ui-focus);
+    }
+
+    /* ----------------------------------------------------------------------
+       Forced colors
+       ---------------------------------------------------------------------- */
+
+    @media screen and (-ms-high-contrast: active), (forced-colors: active) {
+        .ui-actionable-notification {
+            outline: 1px solid CanvasText;
+        }
+
+        .ui-actionable-notification-close-button:focus,
+        .ui-actionable-notification-close-button:focus-visible,
+        .ui-actionable-notification__close-button:focus,
+        .ui-actionable-notification__close-button:focus-visible,
+        .ui-actionable-notification-action-button.ui-button-ghost:focus,
+        .ui-actionable-notification-action-button.ui-btn-ghost:focus,
+        .ui-actionable-notification-action-button.ui-btn--ghost:focus,
+        .ui-actionable-notification__action-button.ui-button-ghost:focus,
+        .ui-actionable-notification__action-button.ui-btn-ghost:focus,
+        .ui-actionable-notification__action-button.ui-btn--ghost:focus {
+            outline-color: Highlight;
+        }
+
+        .ui-actionable-notification-icon,
+        .ui-actionable-notification__icon,
+        .ui-actionable-notification .ui-inline-notification-icon,
+        .ui-actionable-notification .ui-inline-notification__icon,
+        .ui-actionable-notification .ui-toast-notification-icon,
+        .ui-actionable-notification .ui-toast-notification__icon {
+            fill: CanvasText;
+        }
+
+        .ui-actionable-notification-error .ui-actionable-notification-icon,
+        .ui-actionable-notification--error .ui-actionable-notification__icon {
+            fill: Mark;
+        }
+    }
+}

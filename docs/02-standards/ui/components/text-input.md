@@ -6,9 +6,9 @@ status: implemented-pending-review
 system_maturity: installed
 category: inputs
 priority: tier-a-critical-component
-ui_reference_route: /platform/ui-reference/components/text-input
+rendered_evidence_route: null
 canonical_doc: docs/02-standards/ui/components/text-input.md
-source_owner: /platform/ui-reference/components/text-input
+source_owner: not installed
 blade_api:
   - x-ui.text-input
 related_components:
@@ -41,7 +41,7 @@ carbon_reference:
 - [8. Typography and structure](#8-typography-and-structure)
 - [9. Text area behavior](#9-text-area-behavior)
 - [10. Password behavior](#10-password-behavior)
-- [11. UI Reference requirements](#11-ui-reference-requirements)
+- [11. Rendered evidence requirements](#11-ui-reference-requirements)
 - [12. Testing and acceptance criteria](#12-testing-and-acceptance-criteria)
 - [13. Related APIs](#13-related-apis)
 - [14. References](#14-references)
@@ -201,9 +201,9 @@ Default field text uses 16px left/right padding. Fluid fields use 16px left/righ
 - Password input supports default and fluid styles plus validation, disabled, read-only, focus, warning, and skeleton states.
 - Password helper text should describe password requirements when applicable.
 
-## 11. UI Reference Requirements
+## 11. Rendered evidence requirements
 
-The UI Reference page must show:
+The rendered evidence page must show:
 
 - Default and fluid text input.
 - Default and fluid password input.
@@ -216,25 +216,25 @@ The UI Reference page must show:
 
 ## 12. Testing And Acceptance Criteria
 
-- `/platform/ui-reference/components/text-input` returns 200 for authorized users.
+- `not installed` returns 200 for authorized users.
 - `x-ui.text-input` renders text, password, and textarea variants.
 - Password input renders a separate toggle button and the JavaScript controller toggles the native input type.
 - Error state renders `aria-invalid`, error icon, and associated error message.
 - Warning state renders warning icon and warning message.
 - Fluid style renders a 64px field shell with internal label.
 - Text area renders a resize-capable control and counter examples.
-- Tests assert component source, CSS, JS lifecycle registration, UI Reference examples, and this standard.
+- Tests assert component source, CSS, JS lifecycle registration, rendered evidence examples, and this standard.
 
 ## 13. Related APIs
 
 | API | Route |
 | --- | ----- |
-| Select | `/platform/ui-reference/components/select` |
-| Dropdown | `/platform/ui-reference/components/dropdown` |
-| Radio button | `/platform/ui-reference/components/radio-button` |
-| Checkbox | `/platform/ui-reference/components/checkbox` |
-| Search | `/platform/ui-reference/components/search` |
-| Form patterns | `/platform/ui-reference/patterns/forms` |
+| Select | `not installed` |
+| Dropdown | `not installed` |
+| Radio button | `not installed` |
+| Checkbox | `not installed` |
+| Search | `not installed` |
+| Form patterns | `not installed` |
 
 ## 14. References
 

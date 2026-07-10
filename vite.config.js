@@ -6,8 +6,11 @@ export default defineConfig(({ mode }) => {
     const env = loadEnv(mode, process.cwd(), "");
     const devServerUrl = env.VITE_DEV_SERVER_URL || "http://localhost:5173";
     const appUrl = env.APP_URL || "http://localhost:8000";
+    const browserTestUrl =
+        env.PLAYWRIGHT_BASE_URL || "http://laravel.test:8000";
     const devServer = new URL(devServerUrl);
     const app = new URL(appUrl);
+    const browserTest = new URL(browserTestUrl);
     const usePolling = env.VITE_USE_POLLING === "true";
     const pollingInterval = Number(env.VITE_POLLING_INTERVAL || 1000);
 
@@ -16,7 +19,11 @@ export default defineConfig(({ mode }) => {
             {
                 name: "app-css-full-reload",
                 handleHotUpdate({ file, server }) {
-                    if (file.replaceAll("\\", "/").endsWith("/resources/css/app.css")) {
+                    if (
+                        file
+                            .replaceAll("\\", "/")
+                            .endsWith("/resources/css/app.css")
+                    ) {
                         server.config.logger.info(
                             "app.css changed; sending full browser reload",
                         );
@@ -40,6 +47,7 @@ export default defineConfig(({ mode }) => {
             cors: {
                 origin: [
                     app.origin,
+                    browserTest.origin,
                     "http://localhost:8000",
                     "http://127.0.0.1:8000",
                 ],
@@ -50,6 +58,7 @@ export default defineConfig(({ mode }) => {
                 "host.docker.internal",
                 "node",
                 app.hostname,
+                browserTest.hostname,
                 devServer.hostname,
             ],
             hmr: {

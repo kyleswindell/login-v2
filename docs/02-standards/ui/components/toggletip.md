@@ -6,13 +6,13 @@ status: implemented-pending-correction
 system_maturity: partial
 category: overlays
 priority: tier-b-common-reusable-component
-ui_reference_route: /platform/ui-reference/components/toggletip
+rendered_evidence_route: null
 canonical_doc: docs/02-standards/ui/components/toggletip.md
-source_owner: /platform/ui-reference/components/toggletip
+source_owner: not installed
 blade_api:
   - x-ui.toggletip
 javascript_api:
-  - initToggletips exported from resources/js/ui-controls/toggletips.js
+  - initToggletips exported from resources/js/ui-controls/toggletip.js
 data_attributes:
   - data-ui-toggletip
   - data-ui-toggletip-trigger
@@ -20,8 +20,8 @@ data_attributes:
   - data-ui-toggletip-close
   - data-ui-toggletip-placement
 source_files:
-  - resources/views/components/ui/toggletip.blade.php
-  - resources/js/ui-controls/toggletips.js
+  - resources/views/components/ui/toggletip/index.blade.php
+  - resources/js/ui-controls/toggletip.js
   - resources/css/app.css
 foundation_elements:
   - color
@@ -76,10 +76,10 @@ carbon_reference:
 - [11. Content contract](#11-content-contract)
 - [12. Prohibited usage](#12-prohibited-usage)
 - [13. Deferred or gated capabilities](#13-deferred-or-gated-capabilities)
-- [14. Implementation and UI Reference Checklist](#14-implementation-and-ui-reference-checklist)
+- [14. Implementation and Rendered Evidence Checklist](#14-implementation-and-ui-reference-checklist)
   - [14.1. Implementation checklist](#141-implementation-checklist)
-  - [14.2. UI Reference proof checklist](#142-ui-reference-proof-checklist)
-- [15. UI Reference requirements](#15-ui-reference-requirements)
+  - [14.2. rendered evidence proof checklist](#142-ui-reference-proof-checklist)
+- [15. Rendered evidence requirements](#15-ui-reference-requirements)
   - [15.1. Required Live examples internal sections:](#151-required-live-examples-internal-sections)
 - [16. Testing and acceptance criteria](#16-testing-and-acceptance-criteria)
   - [16.1. Suggested automated assertions:](#161-suggested-automated-assertions)
@@ -90,7 +90,7 @@ carbon_reference:
 
 Toggletip provides focusable, dismissible contextual help.
 
-Canonical API owner: `/platform/ui-reference/components/toggletip`. Use this Component API instead of creating local markup, styling, or behavior for the same UI role.
+Canonical API owner: `not installed`. Use this Component API instead of creating local markup, styling, or behavior for the same UI role.
 
 Toggletip is the installed Login App 2.0 disclosure-help overlay API. It owns the help trigger, open/closed disclosure behavior, dismiss behavior, focus return, optional close control, lightweight rich help content, placement, token-backed panel styling, and keyboard interaction. It does not own required page content, blocking confirmations, full workflow overlays, field validation messages, hover-only supplemental labels, menu actions, or page-level layout.
 
@@ -105,7 +105,7 @@ Toggletip is the installed Login App 2.0 disclosure-help overlay API. It owns th
 - Support short text help and lightweight rich help such as links or a secondary action.
 - Support approved placement values and auto-placement/collision behavior where installed.
 - Consume Foundation Element APIs for color, spacing, typography, themes, motion, and icons.
-- Prove open/closed, focus, dismissal, placement, reduced-motion, and content examples on the UI Reference page.
+- Prove open/closed, focus, dismissal, placement, reduced-motion, and content examples on the rendered evidence page.
 
 ### 1.2. Non-owned responsibilities:
 
@@ -127,21 +127,21 @@ Toggletip is the installed Login App 2.0 disclosure-help overlay API. It owns th
 | Component slug               | `toggletip`                                                                                                            |
 | Category                     | Overlays                                                                                                               |
 | Priority                     | Tier B - Common reusable component                                                                                     |
-| UI Reference route           | `/platform/ui-reference/components/toggletip`                                                                          |
+| Rendered evidence route           | `not installed`                                                                          |
 | Canonical doc                | `docs/02-standards/ui/components/toggletip.md`                                                                         |
-| Source owner                 | `/platform/ui-reference/components/toggletip`                                                                          |
+| Source owner                 | `not installed`                                                                          |
 | Blade API                    | `x-ui.toggletip`                                                                                                       |
-| JavaScript API               | `initToggletips` from `resources/js/ui-controls/toggletips.js`                                                         |
+| JavaScript API               | `initToggletips` from `resources/js/ui-controls/toggletip.js`                                                         |
 | Data attributes              | App-owned `data-ui-toggletip*` attributes emitted by the component implementation                                      |
-| Source files                 | `resources/views/components/ui/toggletip.blade.php`; `resources/js/ui-controls/toggletips.js`; `resources/css/app.css` |
+| Source files                 | `resources/views/components/ui/toggletip/index.blade.php`; `resources/js/ui-controls/toggletip.js`; `resources/css/app.css` |
 | Foundation Elements consumed | Color, Spacing, Typography, Themes, Motion, Icons                                                                      |
 | Carbon benchmark             | Carbon Toggletip usage, style, and accessibility guidance                                                              |
 
-`Approved API` means component-specific UI Reference examples exist, but this canonical standard must replace placeholder API text with the installed disclosure-help contract, explicit options, dismissal behavior, deferred gates, and regression requirements.
+`Approved API` means component-specific rendered evidence examples exist, but this canonical standard must replace placeholder API text with the installed disclosure-help contract, explicit options, dismissal behavior, deferred gates, and regression requirements.
 
 ## 3. Installed standard
 
-Toggletip now has component-specific UI Reference examples that consume approved Foundation Elements.
+Toggletip now has component-specific rendered evidence examples that consume approved Foundation Elements.
 
 ### 3.1. The installed standard is:
 
@@ -158,7 +158,7 @@ Toggletip now has component-specific UI Reference examples that consume approved
 - Use app-owned `ui-*` classes and `data-ui-toggletip*` attributes emitted by the component.
 - Do not create feature-local popover, tooltip, help-icon, or disclosure JavaScript for this role.
 
-Carbon alignment note: Carbon separates toggletips from tooltips by activation and content. Tooltips are exposed on hover/focus for brief non-interactive supplemental information, while toggletips open on click or Enter and may contain interactive elements. Carbon also documents auto placement/collision behavior, specific top/right/bottom/left directions, and dismissal by trigger, Escape, or tabbing away. Login App maps those principles to its own `x-ui.toggletip`, `initToggletips`, Heroicons, app-owned data attributes, and `ui-*` class contract instead of adopting Carbon implementation classes directly.
+Carbon alignment note: Carbon separates toggletips from tooltips by activation and content. Tooltips are exposed on hover/focus for brief non-interactive supplemental information, while toggletips open on click or Enter and may contain interactive elements. Carbon also documents auto placement/collision behavior, specific top/right/bottom/left directions, and dismissal by trigger, Escape, or tabbing away. Login App maps those principles to its own `x-ui.toggletip`, `initToggletips`, internal icon components, app-owned data attributes, and `ui-*` class contract instead of adopting Carbon implementation classes directly.
 
 ## 4. Public API
 
@@ -226,11 +226,11 @@ Do not hand-build local help icons, popovers, or disclosure panels for this role
 | API surface           | Installed value                                                                                                        |
 | --------------------- | ---------------------------------------------------------------------------------------------------------------------- |
 | Blade API             | `x-ui.toggletip`                                                                                                       |
-| JavaScript            | `initToggletips` exported from `resources/js/ui-controls/toggletips.js`                                                |
+| JavaScript            | `initToggletips` exported from `resources/js/ui-controls/toggletip.js`                                                |
 | Root semantic element | Focusable trigger plus disclosure panel                                                                                |
 | Data attributes       | App-owned `data-ui-toggletip*` attributes emitted by the component implementation                                      |
 | CSS namespace         | App-owned `ui-*` toggletip classes documented by this standard                                                         |
-| Source files          | `resources/views/components/ui/toggletip.blade.php`; `resources/js/ui-controls/toggletips.js`; `resources/css/app.css` |
+| Source files          | `resources/views/components/ui/toggletip/index.blade.php`; `resources/js/ui-controls/toggletip.js`; `resources/css/app.css` |
 
 ### 4.3. Props and options
 
@@ -242,12 +242,12 @@ Do not hand-build local help icons, popovers, or disclosure panels for this role
 | `placement`   | `string`        | `auto`                                           | `auto`, `top`, `right`, `bottom`, `left`, `top-start`, `top-end`, `bottom-start`, `bottom-end` | No       | `auto` is preferred. Mobile may force `bottom` when needed.                                                    |
 | `align`       | `string`        | `center`                                         | `start`, `center`, `end`                                                                       | No       | Use only if the component implementation exposes it. Otherwise use placement values.                           |
 | `dismissible` | `bool`          | `false` for simple text, `true` for rich content | `true`, `false`                                                                                | No       | Rich or interactive content should expose a close control.                                                     |
-| `icon`        | `string`        | `heroicon-o-information-circle`                  | Approved Heroicon alias/component                                                              | No       | Use the default information icon unless the component standard is extended.                                    |
+| `icon`        | `string`        | `information`                  | Internal icon alias/component                                                              | No       | Use the default information icon unless the component standard is extended.                                    |
 | `disabled`    | `bool`          | `false`                                          | `true`, `false`                                                                                | No       | Disabled trigger cannot open the panel. Use sparingly.                                                         |
 | `id`          | `string / null` | generated                                        | Unique DOM ID                                                                                  | No       | Use only when stable IDs are needed for tests.                                                                 |
 | `class`       | `string / null` | `null`                                           | Layout passthrough if supported                                                                | No       | Parent Patterns may pass layout classes. Do not use for local color, typography, state, or behavior overrides. |
 
-Any prop not listed here is not public. If a feature needs another option, update the component implementation, this standard, JavaScript initializer, and UI Reference proof before production use.
+Any prop not listed here is not public. If a feature needs another option, update the component implementation, this standard, JavaScript initializer, and rendered evidence proof before production use.
 
 ### 4.4. JavaScript API
 
@@ -288,7 +288,7 @@ These attributes are app-owned implementation hooks. They are emitted by the Bla
 | `data-ui-toggletip-close`     | Component/JavaScript | Optional close control inside the panel.           |
 | `data-ui-toggletip-placement` | Component/JavaScript | Installed placement value when emitted.            |
 
-Do not author new `data-*` hooks for toggletip behavior in feature views. Additions require an update to the component, standard, initializer, and UI Reference proof.
+Do not author new `data-*` hooks for toggletip behavior in feature views. Additions require an update to the component, standard, initializer, and rendered evidence proof.
 
 ## 5. Allowed variants, options, and modifiers
 
@@ -499,13 +499,13 @@ Feature views must not create local `toggletip-*`, `tooltip-*`, `popover-*`, `he
 - Do not render a toggletip with empty or duplicate content.
 - Do not rely on color alone for state or meaning.
 - Do not invent local placement, collision, focus-return, or dismissal scripts.
-- Do not show fake toggletip behavior in UI Reference examples for deferred capabilities.
+- Do not show fake toggletip behavior in rendered evidence examples for deferred capabilities.
 
 ## 13. Deferred or gated capabilities
 
 | Capability                        | Status      | Gate                                                                                                                             |
 | --------------------------------- | ----------- | -------------------------------------------------------------------------------------------------------------------------------- |
-| Custom trigger slot               | Gated       | Requires documented trigger contract, minimum target, accessible name, icon/label rules, focus behavior, and UI Reference proof. |
+| Custom trigger slot               | Gated       | Requires documented trigger contract, minimum target, accessible name, icon/label rules, focus behavior, and rendered evidence proof. |
 | Definition-style inline toggletip | Deferred    | Requires text-trigger semantics, underline/border treatment, keyboard behavior, and content rules.                               |
 | Persistent pinned help            | Deferred    | Requires Popover or Pattern-owned persistence behavior and focus management.                                                     |
 | Rich action groups                | Deferred    | Use Modal, Side panel, or a page flow until a Pattern owns multi-action contextual help.                                         |
@@ -513,12 +513,12 @@ Feature views must not create local `toggletip-*`, `tooltip-*`, `popover-*`, `he
 | Panel scrolling                   | Deferred    | Long content should move to a larger overlay or page.                                                                            |
 | Nested overlays inside toggletip  | Not allowed | Use a larger Pattern-owned overlay instead.                                                                                      |
 | Hover-only toggletip              | Not allowed | Use Tooltip for hover/focus-only supplemental text.                                                                              |
-| Arbitrary placement offsets       | Not allowed | Requires implementation and UI Reference proof.                                                                                  |
+| Arbitrary placement offsets       | Not allowed | Requires implementation and rendered evidence proof.                                                                                  |
 | Custom semantic colors            | Not allowed | Requires Color Element standard update and proof.                                                                                |
 
-Future extensions require an updated Component standard and UI Reference proof before production use.
+Future extensions require an updated Component standard and rendered evidence proof before production use.
 
-## 14. Implementation and UI Reference Checklist
+## 14. Implementation and Rendered Evidence Checklist
 ### 14.1. Implementation checklist
 | Requirement                | Standard expectation                                                                                                                               |
 | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -527,9 +527,9 @@ Future extensions require an updated Component standard and UI Reference proof b
 | States                     | Default, hover, focus-visible, active/pressed, disabled, loading, validation, selected, empty, or not-applicable states are defined as relevant.   |
 | Accessibility/content      | Keyboard, focus, naming, ARIA, contrast, reduced-motion, label, helper, error, and copy requirements are defined.                                  |
 | Element consumption        | Required Color, Spacing, Typography, Icons, Motion, Themes, and 2x Grid dependencies are named.                                                    |
-| Tests                      | Source/API assertions and UI Reference route assertions block generic fallback content.                                                            |
+| Tests                      | Source/API assertions and Rendered evidence route assertions block generic fallback content.                                                            |
 
-### 14.2. UI Reference proof checklist
+### 14.2. rendered evidence proof checklist
 | Requirement               | Visual proof expectation                                                                              |
 | ------------------------- | ----------------------------------------------------------------------------------------------------- |
 | Live examples             | The page renders production examples through the documented API or explicit native/class contract.    |
@@ -538,9 +538,9 @@ Future extensions require an updated Component standard and UI Reference proof b
 | Developer implementation  | Real canonical calls and token-backed code snippets appear instead of placeholder comments.           |
 | Related APIs              | Nearby Components, owning Patterns, consumed Elements, source files, and canonical docs are linked.   |
 | Manual review             | The page provides enough rendered proof for visual review of behavior, layout, and state correctness. |
-## 15. UI Reference requirements
+## 15. Rendered evidence requirements
 
-The UI Reference page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
+The rendered evidence page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
 
 The Toggletip page is an overlay component reference page. The Live examples card should use focused examples, placement rows, state matrices, and dismissal behavior proof. It must not render fake controls for deferred capabilities.
 
@@ -562,12 +562,12 @@ The page must not display generic fallback/reference sections or placeholder dev
 
 ## 16. Testing and acceptance criteria
 
-- `/platform/ui-reference/components/toggletip` returns 200 for authorized users.
+- `not installed` returns 200 for authorized users.
 - The page shows the installed API, states, variants/options, prohibited usage, deferred gates, and Foundation Elements consumed.
 - Implemented APIs render production examples; deferred APIs render trigger conditions instead of fake controls.
 - The Purpose, Use cases, Component contract, Live examples, and Related components and patterns cards render in that top-level order.
 - Developer examples use `x-ui.toggletip`, not placeholder comments or ad hoc markup.
-- JavaScript examples reference `initToggletips` from `resources/js/ui-controls/toggletips.js`.
+- JavaScript examples reference `initToggletips` from `resources/js/ui-controls/toggletip.js`.
 - The trigger exposes a clear accessible label.
 - The trigger synchronizes `aria-expanded` with open/closed state.
 - The page documents open, closed, hover, focus-visible, active/pressed, disabled trigger, dismissal, focus return, and reduced-motion states.
@@ -584,7 +584,7 @@ The page must not display generic fallback/reference sections or placeholder dev
 ### 16.1. Suggested automated assertions:
 
 ```php
-$response = $this->actingAs($admin)->get('/platform/ui-reference/components/toggletip');
+$response = $this->actingAs($admin)->get('not installed');
 
 $response->assertOk();
 $response->assertSee('Toggletip');
@@ -607,7 +607,7 @@ $response->assertSee('Disabled trigger');
 $response->assertDontSee('Component-specific API pending correction');
 $response->assertDontSee('<li>None.</li>', false);
 $response->assertDontSee('Use only documented props/options');
-$response->assertDontSee('See UI Reference developer implementation section');
+$response->assertDontSee('See rendered evidence developer implementation section');
 $response->assertDontSee('Live Examples Card');
 $response->assertDontSee('Reference Examples');
 $response->assertDontSee('Legacy Contract Summary');
@@ -623,22 +623,22 @@ $response->assertDontSee('bx--');
 
 | API                      | Route                                                               |
 | ------------------------ | ------------------------------------------------------------------- |
-| Button                   | `/platform/ui-reference/components/button`                          |
-| Icon button              | `/platform/ui-reference/components/icon-button`                     |
-| Tooltip                  | `/platform/ui-reference/components/tooltip`                         |
-| Popover                  | `/platform/ui-reference/components/popover`                         |
-| Modal                    | `/platform/ui-reference/components/modal`                           |
-| Notification             | `/platform/ui-reference/components/notification`                    |
-| Forms pattern            | `/platform/ui-reference/patterns/forms`                             |
-| Overlay/feedback pattern | `/platform/ui-reference/patterns/overlays-feedback`                 |
-| Layout Pattern           | `/platform/ui-reference/patterns/layout`                            |
-| Color element            | `/platform/ui-reference/elements/color`                             |
-| Spacing element          | `/platform/ui-reference/elements/spacing`                           |
-| Typography element       | `/platform/ui-reference/elements/typography`                        |
-| Themes element           | `/platform/ui-reference/elements/themes`                            |
-| Motion element           | `/platform/ui-reference/elements/motion`                            |
-| Icons element            | `/platform/ui-reference/elements/icons`                             |
-| Components overview      | `/platform/ui-reference/components`                                 |
+| Button                   | `not installed`                          |
+| Icon button              | `not installed`                     |
+| Tooltip                  | `not installed`                         |
+| Popover                  | `not installed`                         |
+| Modal                    | `not installed`                           |
+| Notification             | `not installed`                    |
+| Forms pattern            | `not installed`                             |
+| Overlay/feedback pattern | `not installed`                 |
+| Layout Pattern           | `not installed`                            |
+| Color element            | `not installed`                             |
+| Spacing element          | `not installed`                           |
+| Typography element       | `not installed`                        |
+| Themes element           | `not installed`                            |
+| Motion element           | `not installed`                            |
+| Icons element            | `not installed`                             |
+| Components overview      | `not installed`                                 |
 | Canonical toggletip doc  | `/platform/docs?path=02-standards%2Fui%2Fcomponents%2Ftoggletip.md` |
 | Carbon toggletip usage   | `https://carbondesignsystem.com/components/toggletip/usage/`        |
 
@@ -648,4 +648,4 @@ $response->assertDontSee('bx--');
 - [Component Implementation Checklist](checklist.md)
 - [Foundation Elements Standards](../elements/index.md)
 - [Pattern Standards Index](../patterns/index.md)
-- Carbon Toggletip usage, style, and accessibility guidance inform intentional click/keyboard disclosure, interactive panel content, auto placement, dismissal behavior, focusability, and tooltip/toggletip separation. Login App keeps its own Blade API, JavaScript initializer, Heroicons icon standard, app-owned data attributes, `ui-*` class contract, and UI Reference proof.
+- Carbon Toggletip usage, style, and accessibility guidance inform intentional click/keyboard disclosure, interactive panel content, auto placement, dismissal behavior, focusability, and tooltip/toggletip separation. Login App keeps its own Blade API, JavaScript initializer, internal icon standard, app-owned data attributes, `ui-*` class contract, and rendered evidence proof.

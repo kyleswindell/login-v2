@@ -1,0 +1,128 @@
+/* ==========================================================================
+   File: resources/css/base/field-layer.css
+   Purpose: Field and list-box surface corrections inside layer scopes.
+   Notes:
+   - Defines cross-component field-on-layer behavior only.
+   - Raw field, layer, hover, selected, and focus values are owned by theme
+     and layer token files.
+   - Component CSS should still own component-specific structure.
+   ========================================================================== */
+
+@layer base {
+    /* ----------------------------------------------------------------------
+       Fluid field surfaces inside layer scopes
+       ---------------------------------------------------------------------- */
+
+    :where(.ui-layer-one, .ui-layer-two, .ui-layer-three)
+        :where(
+            .ui-fluid-field,
+            .ui-text-input-fluid .ui-text-input,
+            .ui-text-input--fluid .ui-text-input,
+            .ui-text-area-fluid .ui-text-area-wrapper,
+            .ui-text-area--fluid .ui-text-area-wrapper,
+            .ui-text-area-fluid .ui-text-area,
+            .ui-text-area--fluid .ui-text-area,
+            .ui-search-fluid .ui-search-input,
+            .ui-search--fluid .ui-search-input,
+            .ui-select-fluid .ui-select-input,
+            .ui-select--fluid .ui-select-input,
+            .ui-dropdown-fluid .ui-list-box,
+            .ui-dropdown--fluid .ui-list-box,
+            .ui-list-box-wrapper-fluid .ui-list-box,
+            .ui-list-box-wrapper--fluid .ui-list-box,
+            .ui-list-box-wrapper-fluid.ui-list-box-wrapper,
+            .ui-list-box-wrapper--fluid.ui-list-box-wrapper,
+            .ui-number-input-fluid input[type="number"],
+            .ui-number-input--fluid input[type="number"],
+            .ui-number-input-fluid input[type="text"],
+            .ui-number-input--fluid input[type="text"],
+            .ui-date-picker-fluid .ui-date-picker-input,
+            .ui-date-picker--fluid .ui-date-picker-input
+        ) {
+        background-color: var(--ui-field-01);
+    }
+
+    /* ----------------------------------------------------------------------
+       Fluid list-box menu surfaces inside layer scopes
+       ---------------------------------------------------------------------- */
+
+    :where(.ui-layer-one, .ui-layer-two, .ui-layer-three)
+        :where(
+            .ui-dropdown-fluid .ui-list-box-menu,
+            .ui-dropdown--fluid .ui-list-box-menu,
+            .ui-list-box-wrapper-fluid .ui-list-box-menu,
+            .ui-list-box-wrapper--fluid .ui-list-box-menu
+        ) {
+        background-color: var(--ui-layer-01);
+    }
+
+    :where(.ui-layer-one, .ui-layer-two, .ui-layer-three)
+        :where(
+            .ui-dropdown-fluid .ui-list-box-menu-item:hover,
+            .ui-dropdown--fluid .ui-list-box-menu-item:hover,
+            .ui-list-box-wrapper-fluid .ui-list-box-menu-item:hover,
+            .ui-list-box-wrapper--fluid .ui-list-box-menu-item:hover
+        ) {
+        background-color: var(--ui-layer-hover-02);
+    }
+
+    :where(.ui-layer-one, .ui-layer-two, .ui-layer-three)
+        :where(
+            .ui-dropdown-fluid .ui-list-box-menu-item-active,
+            .ui-dropdown-fluid .ui-list-box-menu-item-selected,
+            .ui-dropdown--fluid .ui-list-box-menu-item-active,
+            .ui-dropdown--fluid .ui-list-box-menu-item-selected,
+            .ui-list-box-wrapper-fluid .ui-list-box-menu-item-active,
+            .ui-list-box-wrapper-fluid .ui-list-box-menu-item-selected,
+            .ui-list-box-wrapper--fluid .ui-list-box-menu-item-active,
+            .ui-list-box-wrapper--fluid .ui-list-box-menu-item-selected
+        ) {
+        background-color: var(--ui-layer-selected-02);
+    }
+
+    :where(.ui-layer-one, .ui-layer-two, .ui-layer-three)
+        :where(
+            .ui-dropdown-fluid .ui-list-box-menu-item-active:hover,
+            .ui-dropdown-fluid .ui-list-box-menu-item-selected:hover,
+            .ui-dropdown--fluid .ui-list-box-menu-item-active:hover,
+            .ui-dropdown--fluid .ui-list-box-menu-item-selected:hover,
+            .ui-list-box-wrapper-fluid .ui-list-box-menu-item-active:hover,
+            .ui-list-box-wrapper-fluid .ui-list-box-menu-item-selected:hover,
+            .ui-list-box-wrapper--fluid .ui-list-box-menu-item-active:hover,
+            .ui-list-box-wrapper--fluid .ui-list-box-menu-item-selected:hover
+        ) {
+        background-color: var(--ui-layer-selected-hover-02);
+    }
+
+    /* ----------------------------------------------------------------------
+       Number input control affordances inside layer scopes
+       ---------------------------------------------------------------------- */
+
+    :where(.ui-layer-one, .ui-layer-two, .ui-layer-three)
+        :where(
+            .ui-number-input-fluid .ui-number-control-button:hover::before,
+            .ui-number-input-fluid .ui-number-control-button:hover::after,
+            .ui-number-input--fluid .ui-number-control-button:hover::before,
+            .ui-number-input--fluid .ui-number-control-button:hover::after,
+            .ui-number-input-fluid .ui-number-control-btn:hover::before,
+            .ui-number-input-fluid .ui-number-control-btn:hover::after,
+            .ui-number-input--fluid .ui-number-control-btn:hover::before,
+            .ui-number-input--fluid .ui-number-control-btn:hover::after
+        ) {
+        background-color: var(--ui-field-hover);
+    }
+
+    :where(.ui-layer-one, .ui-layer-two, .ui-layer-three)
+        :where(
+            .ui-number-input-fluid .ui-number-control-button:focus::before,
+            .ui-number-input-fluid .ui-number-control-button:focus::after,
+            .ui-number-input--fluid .ui-number-control-button:focus::before,
+            .ui-number-input--fluid .ui-number-control-button:focus::after,
+            .ui-number-input-fluid .ui-number-control-btn:focus::before,
+            .ui-number-input-fluid .ui-number-control-btn:focus::after,
+            .ui-number-input--fluid .ui-number-control-btn:focus::before,
+            .ui-number-input--fluid .ui-number-control-btn:focus::after
+        ) {
+        border-inline-start: 2px solid var(--ui-focus);
+    }
+}

@@ -1,0 +1,54 @@
+/* ==========================================================================
+   File: resources/css/base/state.css
+   Purpose: Shared disabled and readonly state utilities.
+   ========================================================================== */
+
+@layer utilities {
+    :where(
+        :disabled,
+        [disabled],
+        [aria-disabled="true"],
+        [data-disabled="true"],
+        [data-ui-disabled="true"],
+        .is-disabled,
+        .ui-disabled,
+        [class^="ui-"][class*="disabled"],
+        [class*=" ui-"][class*="disabled"]
+    ),
+    :where(
+            :disabled,
+            [disabled],
+            [aria-disabled="true"],
+            [data-disabled="true"],
+            [data-ui-disabled="true"],
+            .is-disabled,
+            .ui-disabled,
+            [class^="ui-"][class*="disabled"],
+            [class*=" ui-"][class*="disabled"]
+        )
+        :where(
+            button,
+            a,
+            input,
+            select,
+            textarea,
+            label,
+            summary,
+            [role="button"],
+            [role="option"],
+            [tabindex]
+        ) {
+        cursor: not-allowed;
+    }
+
+    :where(
+        [aria-readonly="true"],
+        [readonly],
+        [data-readonly="true"],
+        [data-ui-readonly="true"],
+        [class^="ui-"][class*="readonly"],
+        [class*=" ui-"][class*="readonly"]
+    ) {
+        cursor: default;
+    }
+}

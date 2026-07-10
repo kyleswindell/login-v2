@@ -5,6 +5,7 @@
    Carbon reference:
 
    * reference/carbon-main/packages/motion/src/index.ts
+   * reference/carbon-main/packages/motion/index.scss
 
    Notes:
    - Defines motion tokens only.
@@ -14,7 +15,7 @@
 
 @layer base {
     :root {
-        /* Carbon duration scale */
+        /* Duration scale */
         --duration-fast-01: 70ms;
         --duration-fast-02: 110ms;
         --duration-moderate-01: 150ms;
@@ -30,7 +31,15 @@
         --ui-duration-slow-01: var(--duration-slow-01);
         --ui-duration-slow-02: var(--duration-slow-02);
 
-        /* Carbon easing curves */
+        /* V10 compatibility duration aliases */
+        --ui-fast-01: var(--ui-duration-fast-01);
+        --ui-fast-02: var(--ui-duration-fast-02);
+        --ui-moderate-01: var(--ui-duration-moderate-01);
+        --ui-moderate-02: var(--ui-duration-moderate-02);
+        --ui-slow-01: var(--ui-duration-slow-01);
+        --ui-slow-02: var(--ui-duration-slow-02);
+
+        /* Easing curves */
         --motion-standard-productive: cubic-bezier(0.2, 0, 0.38, 0.9);
         --motion-standard-expressive: cubic-bezier(0.4, 0.14, 0.3, 1);
         --motion-entrance-productive: cubic-bezier(0, 0, 0.38, 0.9);
@@ -45,5 +54,25 @@
         --ui-motion-entrance-expressive: var(--motion-entrance-expressive);
         --ui-motion-exit-productive: var(--motion-exit-productive);
         --ui-motion-exit-expressive: var(--motion-exit-expressive);
+
+        /* Generic app-facing easing aliases */
+        --ui-motion-standard: var(--ui-motion-standard-productive);
+        --ui-motion-entrance: var(--ui-motion-entrance-productive);
+        --ui-motion-exit: var(--ui-motion-exit-productive);
+
+        /* ------------------------------------------------------------------
+        Motion travel values
+        ------------------------------------------------------------------
+        These values are transform distances, not layout spacing. They may map
+        to spacing/layout tokens when appropriate, but they are owned by Motion.
+        ------------------------------------------------------------------ */
+
+        --ui-motion-travel-subtle: var(--ui-spacing-03); /* 8px */
+        --ui-motion-travel-short: var(--ui-spacing-05); /* 16px */
+        --ui-motion-travel-medium: var(--ui-layout-03); /* 32px */
+        --ui-motion-travel-long: var(--ui-layout-05); /* 64px */
+        --ui-motion-travel-panel: var(--ui-layout-06); /* 96px */
+        --ui-motion-travel-drawer: 20rem;
+        --ui-motion-travel-full: 100%;
     }
 }

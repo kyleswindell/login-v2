@@ -2,8 +2,9 @@
 
 namespace Tests\Feature\Platform;
 
-use App\Platform\Settings\SettingsService;
 use App\Models\User;
+use App\Modules\Roles\Services\RoleCatalog;
+use App\Modules\Settings\Services\Store;
 use Database\Seeders\PlatformRolesAndPermissionsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -41,28 +42,28 @@ class DocsRepositoryViewerTest extends TestCase
             ->assertForbidden();
     }
 
-    public function test_platform_admin_can_access_docs_when_scope_allows_platform_users(): void
+    public function test_admin_can_access_docs_when_scope_allows_platform_users(): void
     {
         $this->seed(PlatformRolesAndPermissionsSeeder::class);
 
         $user = User::factory()->create();
-        $user->assignRole('platform_admin');
+        $user->assignRole(RoleCatalog::ADMIN);
 
-        app(SettingsService::class)->put('docs', 'access_scope', 'all_platform_users', updatedBy: $user->id);
+        app(Store::class)->put('docs', 'access_scope', 'all_platform_users', updatedBy: $user->id);
 
         $this->actingAs($user)
             ->get('/platform/docs')
             ->assertOk();
     }
 
-    public function test_platform_admin_cannot_access_docs_when_scope_is_super_admin_only(): void
+    public function test_admin_cannot_access_docs_when_scope_is_super_admin_only(): void
     {
         $this->seed(PlatformRolesAndPermissionsSeeder::class);
 
         $user = User::factory()->create();
-        $user->assignRole('platform_admin');
+        $user->assignRole(RoleCatalog::ADMIN);
 
-        app(SettingsService::class)->put('docs', 'access_scope', 'super_admins_only', updatedBy: $user->id);
+        app(Store::class)->put('docs', 'access_scope', 'super_admins_only', updatedBy: $user->id);
 
         $this->actingAs($user)
             ->get('/platform/docs')

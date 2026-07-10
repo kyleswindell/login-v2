@@ -5,7 +5,7 @@ status: implemented
 system_maturity: current-standard
 api_layer: Component API governance
 canonical_doc: docs/02-standards/ui/components/checklist.md
-owner_route: /platform/ui-reference/components
+owner_route: not installed
 related_element_index: docs/02-standards/ui/elements/index.md
 related_component_index: docs/02-standards/ui/components/index.md
 related_pattern_index: docs/02-standards/ui/patterns/index.md
@@ -17,7 +17,7 @@ related_pattern_index: docs/02-standards/ui/patterns/index.md
 
 This checklist defines the canonical implementation and documentation gate for Login App 2.0 Component API standards.
 
-Canonical doc: `docs/02-standards/ui/components/checklist.md`. Use this checklist when creating, auditing, correcting, or accepting a Component standard and its UI Reference proof.
+Canonical doc: `docs/02-standards/ui/components/checklist.md`. Use this checklist when creating, auditing, correcting, or accepting a Component standard and its rendered evidence proof.
 
 Component standards are installed API contracts. They define what the component is, what is already built, which Blade APIs/classes/helpers/data attributes are public, which variants/options/states exist, how the component consumes Foundation Elements, how it composes with Patterns, what not to do, and what remains deferred or gated.
 
@@ -39,16 +39,16 @@ Do not create canonical component docs under tier folders. Tier language may app
 | Checklist slug          | component-implementation-checklist               |
 | Canonical doc           | `docs/02-standards/ui/components/checklist.md`   |
 | Applies to              | `docs/02-standards/ui/components/{component}.md` |
-| UI Reference scope      | `/platform/ui-reference/components/{component}`  |
+| rendered evidence scope      | `not installed{component}`  |
 | Related Element index   | `docs/02-standards/ui/elements/index.md`         |
 | Related Component index | `docs/02-standards/ui/components/index.md`       |
 | Related Pattern index   | `docs/02-standards/ui/patterns/index.md`         |
 
-This checklist owns Component standard completeness, Component UI Reference proof expectations, acceptance gates, migration rules, and scope boundaries. It does not own any individual component’s installed API. Each component standard owns its own public API, source files, states, variants, accessibility contract, content contract, prohibited usage, and tests.
+This checklist owns Component standard completeness, Component rendered evidence proof expectations, acceptance gates, migration rules, and scope boundaries. It does not own any individual component’s installed API. Each component standard owns its own public API, source files, states, variants, accessibility contract, content contract, prohibited usage, and tests.
 
 ## Installed standard
 
-Use this checklist for all Component standards and Component UI Reference correction work.
+Use this checklist for all Component standards and Component rendered evidence correction work.
 
 Installed Component standard rules:
 
@@ -61,13 +61,13 @@ Installed Component standard rules:
 - Do not collapse variants/options/modifiers to `None` when states, sizes, modes, dispositions, or capabilities actually exist.
 - Do not list external system variants as implemented unless Login App implements them.
 - Mark uncertain or uninstalled capabilities as `Deferred`, `Gated`, `Not implemented`, `Not owned`, `Pattern-owned`, or `App-approved exception`.
-- Require rendered UI Reference proof for implemented APIs.
+- Require rendered rendered evidence proof for implemented APIs.
 - Require deferred APIs to show trigger conditions instead of fake controls.
 - Preserve Element, Component, Pattern, and feature-module ownership boundaries.
 - Keep feature-owned business rules, permissions, data loading, persistence, and workflow branching out of Component standards.
 - Prevent broad “fix all components,” “update all pages,” renderer-wide, scaffold-wide, or family-wide corrections from a single component ticket.
 
-The accepted Component standard section order is fixed. The UI Reference page must prove the same contract visually through the approved five-card scaffold.
+The accepted Component standard section order is fixed. The rendered evidence page must prove the same contract visually through the approved five-card scaffold.
 
 ## API layer boundary
 
@@ -123,7 +123,7 @@ Every Component standard must define these sections in this order unless the com
 
 ## Deferred or gated capabilities
 
-## UI Reference requirements
+## Rendered evidence requirements
 
 ## Testing and acceptance criteria
 
@@ -132,7 +132,7 @@ Every Component standard must define these sections in this order unless the com
 ## References
 ```
 
-A Component standard is incomplete if any section is missing, vague, generic, or contradicted by the rendered UI Reference page.
+A Component standard is incomplete if any section is missing, vague, generic, or contradicted by the rendered rendered evidence page.
 
 ## Required section expectations
 
@@ -143,7 +143,7 @@ The API summary must state the installed UI role and canonical owner route.
 Required content:
 
 - one-sentence component purpose;
-- canonical UI Reference owner route;
+- canonical rendered evidence owner route;
 - instruction to use the Component API instead of local markup, styling, or behavior for the same UI role;
 - a short ownership summary for what the component owns and what it does not own.
 
@@ -152,7 +152,7 @@ Example:
 ```md
 Button chooses, confirms, or reveals a user command with explicit action hierarchy.
 
-Canonical API owner: `/platform/ui-reference/components/button`. Use this Component API instead of creating local markup, styling, or behavior for the same UI role.
+Canonical API owner: `not installed`. Use this Component API instead of creating local markup, styling, or behavior for the same UI role.
 ```
 
 ### Status and ownership
@@ -169,25 +169,25 @@ Required fields:
 | Component slug               | Must match route and file slug.                                                           |
 | Category                     | Component family/category.                                                                |
 | Priority                     | Implementation priority or historical tier note.                                          |
-| UI Reference route           | `/platform/ui-reference/components/{component}`.                                          |
+| Rendered evidence route           | `not installed{component}`.                                          |
 | Canonical doc                | `docs/02-standards/ui/components/{component}.md`.                                         |
 | Source owner                 | Blade component, app route, Pattern owner, or implementation owner.                       |
 | Blade API                    | Public Blade components, or explicit “none approved”.                                     |
 | JavaScript API               | Controller/initializer, or explicit “none approved/none required”.                        |
 | Data attributes              | Public behavior attributes, or explicit “none approved”.                                  |
-| Source files                 | Known Blade, CSS, JS, route, config, test, or UI Reference files.                         |
+| Source files                 | Known Blade, CSS, JS, route, config, test, or rendered evidence files.                         |
 | Foundation Elements consumed | Concrete Element APIs consumed by the component.                                          |
 
 Approved current status values:
 
 | Status                                | Meaning                                                                                          |
 | ------------------------------------- | ------------------------------------------------------------------------------------------------ |
-| `Implemented`                         | API and UI Reference proof are installed and accepted.                                           |
+| `Implemented`                         | API and rendered evidence proof are installed and accepted.                                           |
 | `Implemented - pending manual review` | API/page exists and needs human verification before acceptance.                                  |
 | `Implemented Pending Correction`      | API/page exists but docs, examples, or tests require correction before acceptance.               |
 | `Partial`                             | Some behavior is installed; missing behavior must be listed as deferred/gated.                   |
 | `Deferred`                            | No production API is approved until trigger conditions are met.                                  |
-| `Not implemented`                     | No app API exists. Do not fake controls in UI Reference.                                         |
+| `Not implemented`                     | No app API exists. Do not fake controls in rendered evidence.                                         |
 | `App-approved exception`              | Intentional app-specific divergence or catalog-only disposition. Must document reason and owner. |
 | `Pattern-owned`                       | Component catalog entry exists, but production composition/API ownership belongs to a Pattern.   |
 
@@ -206,7 +206,7 @@ This section must answer:
 - whether the implementation is complete, partial, deferred, gated, app-specific, or Pattern-owned;
 - which nearby Components or Patterns own adjacent responsibilities.
 
-Do not describe only the abstract design concept. Do not imply a public Blade wrapper exists unless the baseline, source file, or UI Reference context confirms it.
+Do not describe only the abstract design concept. Do not imply a public Blade wrapper exists unless the baseline, source file, or rendered evidence context confirms it.
 
 ### Public API
 
@@ -232,7 +232,7 @@ Use explicit examples. Do not leave placeholder text such as:
 ```text
 Component-specific API pending correction.
 Use only documented props/options.
-See UI Reference developer implementation section.
+See rendered evidence developer implementation section.
 ```
 
 Placeholder examples are allowed only for `Deferred`, `Not implemented`, or catalog-only exception entries, and those docs must state trigger conditions and approved alternatives.
@@ -398,7 +398,7 @@ Include, when applicable:
 - required/optional wording;
 - recovery action wording.
 
-Content rules must be specific enough for UI Reference examples and tests to validate.
+Content rules must be specific enough for rendered evidence examples and tests to validate.
 
 ### Prohibited usage
 
@@ -417,7 +417,7 @@ Every implemented Component standard should also prohibit, when relevant:
 - direct Carbon production classes such as `cds--*` or `bx--*`;
 - Bootstrap classes as app-owned API;
 - feature-local `*-*` class families for the same role;
-- placeholder UI Reference copy;
+- placeholder rendered evidence copy;
 - fake controls for deferred APIs;
 - hard-coded colors, arbitrary spacing, local icons, custom focus rings, and local motion.
 
@@ -429,21 +429,21 @@ Use a table when there is more than one capability:
 
 | Capability         | Status   | Gate or trigger condition                                                                  | Local workaround allowed? |
 | ------------------ | -------- | ------------------------------------------------------------------------------------------ | ------------------------- |
-| Example capability | Deferred | Product need, Component API contract, accessibility review, UI Reference proof, and tests. | No.                       |
+| Example capability | Deferred | Product need, Component API contract, accessibility review, rendered evidence proof, and tests. | No.                       |
 
 Deferred capabilities must include trigger conditions and prohibited local workarounds.
 
 If no deferred capabilities exist, use:
 
 ```md
-No known deferred capability for the installed API. Future extensions require an updated Component standard and UI Reference proof.
+No known deferred capability for the installed API. Future extensions require an updated Component standard and rendered evidence proof.
 ```
 
-### UI Reference requirements
+### Rendered evidence requirements
 
-Every Component standard must define exactly what the live UI Reference page must prove.
+Every Component standard must define exactly what the live rendered evidence page must prove.
 
-The UI Reference page must render the approved five-card scaffold:
+The rendered evidence page must render the approved five-card scaffold:
 
 1. Purpose.
 2. Use cases.
@@ -466,7 +466,7 @@ The `Live examples` card may use the layout that best represents the component:
 
 Do not force broad components into the Accordion tab model. Use tabs for scenario-driven components. Use matrices/scales/grids/sections for broad components.
 
-Every UI Reference requirements section must include a table:
+Every Rendered evidence requirements section must include a table:
 
 | Required proof | Rendered behavior                | Variants/options shown                                    |
 | -------------- | -------------------------------- | --------------------------------------------------------- |
@@ -480,7 +480,7 @@ Every implemented Component standard must include route, rendering, content, API
 
 Required baseline:
 
-- `/platform/ui-reference/components/{component}` returns 200 for authorized users.
+- `not installed{component}` returns 200 for authorized users.
 - The page shows installed API, states, variants/options, prohibited usage, deferred gates, and consumed Foundation Elements.
 - Implemented APIs render production examples.
 - Deferred APIs render trigger conditions instead of fake controls.
@@ -515,7 +515,7 @@ Component-specific assertions must be added for:
 
 ### Related APIs
 
-List concrete app UI Reference routes, not vague references.
+List concrete app Rendered evidence routes, not vague references.
 
 Use related links to prevent boundary mistakes.
 
@@ -523,10 +523,10 @@ Example:
 
 | API           | Route                                      |
 | ------------- | ------------------------------------------ |
-| Button        | `/platform/ui-reference/components/button` |
-| Link          | `/platform/ui-reference/components/link`   |
-| Form patterns | `/platform/ui-reference/patterns/forms`    |
-| Color element | `/platform/ui-reference/elements/color`    |
+| Button        | `not installed` |
+| Link          | `not installed`   |
+| Form patterns | `not installed`    |
+| Color element | `not installed`    |
 
 Include the owning Pattern for Pattern-owned subjects and the most likely alternate Components.
 
@@ -549,14 +549,14 @@ Use these statuses unless the supplied baseline explicitly requires another valu
 
 | Status                                | Use when                                                                        | Required doc behavior                                                                                |
 | ------------------------------------- | ------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| `Implemented`                         | API and UI Reference examples are accepted.                                     | Document full public API, states, variants/options, source ownership, UI Reference proof, and tests. |
+| `Implemented`                         | API and rendered evidence examples are accepted.                                     | Document full public API, states, variants/options, source ownership, rendered evidence proof, and tests. |
 | `Implemented - pending manual review` | API/page exists but still needs human verification.                             | Document full expected API and identify manual review points.                                        |
 | `Implemented Pending Correction`      | API/page exists but standard, examples, or tests are not yet accepted.          | Document installed target API and exact correction/proof requirements.                               |
 | `Partial`                             | Some API exists but not enough for full acceptance.                             | Separate implemented, deferred, gated, and not-owned behavior clearly.                               |
 | `Deferred`                            | Component appears in queue/catalog but no production API is approved.           | State no public API is approved; provide trigger conditions and alternatives; no fake controls.      |
 | `Not implemented`                     | No app API exists.                                                              | Provide prohibited local workaround rules and alternatives.                                          |
 | `App-approved exception`              | App intentionally diverges or keeps catalog-only disposition.                   | Document why, owner, allowed usage, approved alternative, and future gate.                           |
-| `Pattern-owned`                       | Component catalog entry exists but production composition belongs to a Pattern. | Link owning Pattern; do not invent primitive API; require UI Reference disposition proof.            |
+| `Pattern-owned`                       | Component catalog entry exists but production composition belongs to a Pattern. | Link owning Pattern; do not invent primitive API; require rendered evidence disposition proof.            |
 
 Do not use old or ambiguous statuses such as `Approved API` for current correction work unless specifically required by a legacy migration note.
 
@@ -577,15 +577,15 @@ Every Component standard must name and constrain the Foundation Elements it cons
 
 Components must not define raw token values, raw hex colors, arbitrary spacing values, local icon imports, local focus rings, or custom motion timings.
 
-## UI Reference validation
+## rendered evidence validation
 
 Every implemented Component must be represented at:
 
 ```text
-/platform/ui-reference/components/{component}
+not installed{component}
 ```
 
-The UI Reference page is the rendered proof of the Component API standard. It may use Carbon-like page organization and live examples, but it must prove the installed Login App API.
+The rendered evidence page is the rendered proof of the Component API standard. It may use Carbon-like page organization and live examples, but it must prove the installed Login App API.
 
 ### Required top-level cards
 
@@ -615,7 +615,7 @@ Implemented Component pages must not render generic fallback content such as:
 
 - `Component-specific API pending correction.`
 - `Use only documented props/options.` without listing props/options.
-- `See UI Reference developer implementation section.` without defining the API in the standard.
+- `See rendered evidence developer implementation section.` without defining the API in the standard.
 - `Allowed variants: None` when any variants, modes, states, dispositions, or options exist.
 - one-sentence state badges without a state contract.
 - placeholder developer comments instead of canonical calls.
@@ -637,7 +637,7 @@ A component is not accepted until all applicable gates pass.
 | Content gate          | Labels, helper text, errors, statuses, destructive copy, truncation/wrapping, and action wording are documented. |
 | Prohibited-usage gate | Local markup, local CSS, raw tokens, direct external classes, fake APIs, and one-off JS are prohibited.          |
 | Deferred gate         | Deferred/gated/not-owned capabilities have trigger conditions and no local workaround.                           |
-| UI Reference gate     | Five-card scaffold renders at the component route.                                                               |
+| rendered evidence gate     | Five-card scaffold renders at the component route.                                                               |
 | Live example gate     | Required production examples render with app CSS/JS.                                                             |
 | Related API gate      | Nearby alternatives and Pattern ownership are linked.                                                            |
 | Test gate             | Route, content, API, state, accessibility, and regression assertions exist.                                      |
@@ -648,7 +648,7 @@ A component is not accepted until all applicable gates pass.
 Use these checks as the default feature/test coverage for implemented component pages.
 
 ```php
-$response = $this->actingAs($admin)->get('/platform/ui-reference/components/{component}');
+$response = $this->actingAs($admin)->get('not installed{component}');
 
 $response->assertOk();
 $response->assertSee('Purpose');
@@ -684,7 +684,7 @@ Each component must add component-specific assertions for:
 
 ## Deferred component rules
 
-Deferred components must still have a standard if they appear in the UI Reference library, queue, or standards index.
+Deferred components must still have a standard if they appear in the rendered evidence library, queue, or standards index.
 
 A deferred Component page must show:
 
@@ -699,7 +699,7 @@ A deferred Component page must show:
 Recommended deferred language:
 
 ```md
-This API is deferred. Do not build local feature-specific versions. Implementation requires a product-approved use case, canonical Component API, accessibility contract, UI Reference proof, and test coverage.
+This API is deferred. Do not build local feature-specific versions. Implementation requires a product-approved use case, canonical Component API, accessibility contract, rendered evidence proof, and test coverage.
 ```
 
 ## Pattern-owned component disposition rules
@@ -709,9 +709,9 @@ Some app UI subjects have Component catalog pages but Pattern-owned production b
 When a subject is Pattern-owned:
 
 - the Component doc must state the disposition clearly;
-- the Component UI Reference page must link to the owning Pattern;
+- the Component rendered evidence page must link to the owning Pattern;
 - the doc must not invent a primitive Blade API;
-- the UI Reference page must show disposition proof, approved alternatives, and deferred gates;
+- the rendered evidence page must show disposition proof, approved alternatives, and deferred gates;
 - the Pattern doc must own workflow, composition, responsive behavior, and state orchestration;
 - child Components used inside the Pattern must still link back to their Component API standards.
 
@@ -734,7 +734,7 @@ An exception doc must include:
 - what developers should use instead;
 - what is explicitly not installed;
 - what future gate would be required to install the missing API;
-- UI Reference proof that renders the exception/disposition rather than fake controls.
+- rendered evidence proof that renders the exception/disposition rather than fake controls.
 
 ## Required docs migration rules
 
@@ -755,7 +755,7 @@ docs/02-standards/ui/components/tier-b/{component}.md
 
 Migration acceptance:
 
-- UI Reference pages link to the new canonical path.
+- rendered evidence pages link to the new canonical path.
 - Component docs link to sibling component docs using the new flat path unless a heavy component has an approved folder.
 - Queue items may mention historical tiers only as priority/context, not as canonical folder structure.
 - Tests fail if implemented component pages link to deprecated canonical paths.
@@ -791,7 +791,7 @@ When a component is split, `index.md` must remain the hub and include:
 - API summary;
 - status and ownership;
 - documentation map;
-- UI Reference requirements summary;
+- Rendered evidence requirements summary;
 - scope boundary;
 - links to child files.
 
@@ -804,7 +804,7 @@ Every component correction item must include a scope boundary.
 Template:
 
 ```text
-Scope boundary: This ticket updates only the {Component name} UI Reference page, {Component name} Component API, {Component name} canonical docs/config/examples, and {Component name}-specific tests. Do not use this ticket as a broad scaffold, renderer, family-wide, or all-component correction. If another component page needs the same layout or behavior adjustment, create or update that component’s own queue item with its own explicit requirements.
+Scope boundary: This ticket updates only the {Component name} rendered evidence page, {Component name} Component API, {Component name} canonical docs/config/examples, and {Component name}-specific tests. Do not use this ticket as a broad scaffold, renderer, family-wide, or all-component correction. If another component page needs the same layout or behavior adjustment, create or update that component’s own queue item with its own explicit requirements.
 ```
 
 This rule prevents broad queue items from missing page-specific requirements.
@@ -829,7 +829,7 @@ Use this checklist before accepting a corrected Component standard.
 | Content           | Labels, helper/status/error/action copy, wrapping, truncation, and recovery rules are defined.  |
 | Prohibited usage  | Local markup/classes/tokens/JS and direct external classes are prohibited.                      |
 | Deferred gates    | Future capabilities have trigger conditions and no local workaround.                            |
-| UI Reference      | Five-card scaffold and required live proof table are specified.                                 |
+| rendered evidence      | Five-card scaffold and required live proof table are specified.                                 |
 | Tests             | Route, scaffold, API, state, accessibility, content, and regression assertions are included.    |
 | Related APIs      | Concrete app routes are listed.                                                                 |
 | References        | Internal indexes and relevant benchmarks are included.                                          |
@@ -843,9 +843,9 @@ Use this checklist before accepting a corrected Component standard.
 | Pattern Standards Index         | `docs/02-standards/ui/patterns/index.md`     |
 | Pattern Library Checklist       | `docs/02-standards/ui/patterns/checklist.md` |
 | UI API Registry                 | `docs/02-standards/ui/api-registry.md`       |
-| Button                          | `/platform/ui-reference/components/button`   |
-| Form patterns                   | `/platform/ui-reference/patterns/forms`      |
-| Boundary and validation pattern | `/platform/ui-reference/patterns`            |
+| Button                          | `not installed`   |
+| Form patterns                   | `not installed`      |
+| Boundary and validation pattern | `not installed`            |
 
 ## References
 

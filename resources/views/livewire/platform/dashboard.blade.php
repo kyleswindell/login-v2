@@ -1,11 +1,10 @@
 <section class="flex flex-1 flex-col gap-6" data-dashboard-layout-state="{{ $isEditing ? 'editing' : 'locked' }}">
 
         {{-- Page header --}}
-        <x-ui.patterns.page-title-actions-row
+        <x-shell.page-title
             title="Dashboard"
-            description="Welcome back, {{ auth()->user()->name ?? auth()->user()->email }}."
+            subtitle="Welcome back, {{ auth()->user()->name ?? auth()->user()->email }}."
         >
-            <x-slot:actions>
                 @if ($isEditing)
                     <x-ui.button
                         semantic="ghost"
@@ -32,17 +31,16 @@
                         Customize
                     @endif
                 </x-ui.button>
-            </x-slot:actions>
-        </x-ui.patterns.page-title-actions-row>
+        </x-shell.page-title>
 
         @if ($isEditing)
-            <x-ui.inline-alert
-                semantic="notice"
+            <x-ui.notification.inline
+                kind="info"
                 title="Customization saves to your account"
                 data-dashboard-customization-state="editing"
             >
                 Drag the visible widgets into the order you want, use the insertion line and swap target to preview the drop, hide widgets you do not need right now, and lock the dashboard when the layout reads correctly. The saved layout is scoped to your signed-in account and keeps each widget tied to its stable dashboard identity.
-            </x-ui.inline-alert>
+            </x-ui.notification.inline>
         @endif
 
         {{-- Widget grid --}}

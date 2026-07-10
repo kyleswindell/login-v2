@@ -6,16 +6,16 @@ status: implemented-pending-correction
 system_maturity: partial
 category: feedback-and-loading
 priority: tier-b-common-reusable-component
-ui_reference_route: /platform/ui-reference/components/progress-bar
+rendered_evidence_route: null
 canonical_doc: docs/02-standards/ui/components/progress-bar.md
-source_owner: /platform/ui-reference/components/progress-bar
+source_owner: not installed
 blade_api: []
 native_api:
   - progress
 javascript_api: []
 source_files:
   - resources/css/app.css
-  - route-owned UI Reference view for /platform/ui-reference/components/progress-bar
+  - route-owned rendered evidence view for not installed
 foundation_elements:
   - color
   - spacing
@@ -74,10 +74,10 @@ carbon_reference:
   - [11.1. Recommended label/helper patterns:](#111-recommended-labelhelper-patterns)
 - [12. Prohibited usage](#12-prohibited-usage)
 - [13. Deferred or gated capabilities](#13-deferred-or-gated-capabilities)
-- [14. Implementation and UI Reference Checklist](#14-implementation-and-ui-reference-checklist)
+- [14. Implementation and Rendered Evidence Checklist](#14-implementation-and-ui-reference-checklist)
   - [14.1. Implementation checklist](#141-implementation-checklist)
-  - [14.2. UI Reference proof checklist](#142-ui-reference-proof-checklist)
-- [15. UI Reference requirements](#15-ui-reference-requirements)
+  - [14.2. rendered evidence proof checklist](#142-ui-reference-proof-checklist)
+- [15. Rendered evidence requirements](#15-ui-reference-requirements)
   - [15.1. Required Live examples internal sections:](#151-required-live-examples-internal-sections)
 - [16. Testing and acceptance criteria](#16-testing-and-acceptance-criteria)
   - [16.1. Suggested automated assertions:](#161-suggested-automated-assertions)
@@ -88,7 +88,7 @@ carbon_reference:
 
 Progress bar shows measurable completion for a long-running task.
 
-Canonical API owner: `/platform/ui-reference/components/progress-bar`. Use this Component API instead of creating local markup, styling, animation, ARIA attributes, value labels, or status behavior for the same UI role.
+Canonical API owner: `not installed`. Use this Component API instead of creating local markup, styling, animation, ARIA attributes, value labels, or status behavior for the same UI role.
 
 Progress bar is the installed Login App 2.0 measurable-progress API. It owns determinate progress semantics, track/fill styling, label/helper/value structure, success/error completion status, reduced-motion expectations for motion-bearing states, and token-backed color/spacing/typography behavior. It does not own unknown-duration loading, multi-step workflow progress, skeleton placeholders, toast/status messaging, disabled form controls, or page-level loading orchestration.
 
@@ -103,7 +103,7 @@ Progress bar is the installed Login App 2.0 measurable-progress API. It owns det
 - Keep progress values monotonic for the same task; progress must not jump backward unless the task scope restarts and the copy makes that reset clear.
 - Keep indeterminate behavior gated unless the implementation proves animation, reduced-motion, helper text, and accessibility behavior.
 - Consume Foundation Element APIs for color, spacing, typography, themes, motion, and 2x Grid where placement is relevant.
-- Prove determinate, completion, error, label, helper, value, reduced-motion, responsive, and implementation behavior on the UI Reference page.
+- Prove determinate, completion, error, label, helper, value, reduced-motion, responsive, and implementation behavior on the rendered evidence page.
 
 ### 1.2. Non-owned responsibilities:
 
@@ -116,7 +116,7 @@ Progress bar is the installed Login App 2.0 measurable-progress API. It owns det
 - Interactive controls, retry buttons, cancel actions, or workflow commands. Use Button or a Pattern-owned composition outside the Progress bar.
 - External spacing, layout, placement, polling, upload/download implementation, and progress data ownership. Parent Patterns own those responsibilities.
 
-Carbon alignment note: Carbon defines determinate progress bars for calculable progress from 0% to 100%, indeterminate progress bars for unknown progress, active/success/error statuses, label/helper anatomy, role `progressbar` accessibility behavior, and reduced reliance on visual color alone. Login App maps those completeness principles to native `<progress>` markup, app-owned `ui-*` classes, Foundation tokens, and route-owned UI Reference proof rather than adopting Carbon implementation classes directly.
+Carbon alignment note: Carbon defines determinate progress bars for calculable progress from 0% to 100%, indeterminate progress bars for unknown progress, active/success/error statuses, label/helper anatomy, role `progressbar` accessibility behavior, and reduced reliance on visual color alone. Login App maps those completeness principles to native `<progress>` markup, app-owned `ui-*` classes, Foundation tokens, and route-owned rendered evidence proof rather than adopting Carbon implementation classes directly.
 
 ## 2. Status and ownership
 
@@ -128,17 +128,17 @@ Carbon alignment note: Carbon defines determinate progress bars for calculable p
 | Component slug               | `progress-bar`                                                                                              |
 | Category                     | Feedback and loading                                                                                        |
 | Priority                     | Tier B - Common reusable component                                                                          |
-| UI Reference route           | `/platform/ui-reference/components/progress-bar`                                                            |
+| Rendered evidence route           | `not installed`                                                            |
 | Canonical doc                | `docs/02-standards/ui/components/progress-bar.md`                                                           |
-| Source owner                 | `/platform/ui-reference/components/progress-bar`                                                            |
+| Source owner                 | `not installed`                                                            |
 | Blade API                    | No dedicated `x-ui.progress-bar` Blade component is documented as installed                                 |
 | Native API                   | `<progress>` wrapped by app-owned `ui-progress-bar*` classes                                                |
 | JavaScript API               | No dedicated JavaScript controller required for baseline determinate rendering                              |
-| Source files                 | `resources/css/app.css`; route-owned UI Reference view for `/platform/ui-reference/components/progress-bar` |
+| Source files                 | `resources/css/app.css`; route-owned rendered evidence view for `not installed` |
 | Foundation Elements consumed | Color, Spacing, Typography, Themes, Motion, 2x Grid where composed in layouts                               |
 | Carbon benchmark             | Carbon Progress bar usage, style, code, and accessibility guidance                                          |
 
-`Approved API` means the installed route and examples exist, but the canonical standard, UI Reference page, and tests must be corrected so Progress bar is documented as a measurable progress component with explicit value semantics, completion states, accessibility behavior, and deferred indeterminate boundaries instead of placeholder API text.
+`Approved API` means the installed route and examples exist, but the canonical standard, rendered evidence page, and tests must be corrected so Progress bar is documented as a measurable progress component with explicit value semantics, completion states, accessibility behavior, and deferred indeterminate boundaries instead of placeholder API text.
 
 ## 3. Installed standard
 
@@ -260,7 +260,7 @@ Use this native API and `ui-progress-bar*` classes instead of hand-building bar 
 | JavaScript          | No dedicated JavaScript controller required for baseline determinate rendering                    |
 | Data attributes     | No public data attributes for baseline Progress bar behavior                                      |
 | CSS namespace       | App-owned `ui-progress-bar*` classes documented by this standard and the component implementation |
-| Source owner        | `/platform/ui-reference/components/progress-bar`                                                  |
+| Source owner        | `not installed`                                                  |
 | Token ownership     | Foundation Color, Spacing, Typography, Themes, Motion, and 2x Grid where composed in layouts      |
 
 ### 4.6. Markup and attribute contract
@@ -281,11 +281,11 @@ Use this native API and `ui-progress-bar*` classes instead of hand-building bar 
 | `.ui-progress-bar-success`  | State class          | Implemented / required proof | Optional                                              | Use only after successful completion is confirmed.                                  |
 | `.ui-progress-bar-danger`   | State class          | Implemented / required proof | Optional                                              | Use only when the task fails. Error helper text is required.                        |
 | `.ui-progress-bar-small`    | Size modifier        | Implemented / required proof | Optional                                              | Compact progress inside cards, rows, side panels, or dense regions.                 |
-| `.ui-progress-bar-inline`   | Alignment modifier   | Gated                        | Optional                                              | Requires UI Reference proof before production use.                                  |
-| `.ui-progress-bar-indented` | Alignment modifier   | Gated                        | Optional                                              | Requires UI Reference proof before production use.                                  |
+| `.ui-progress-bar-inline`   | Alignment modifier   | Gated                        | Optional                                              | Requires rendered evidence proof before production use.                                  |
+| `.ui-progress-bar-indented` | Alignment modifier   | Gated                        | Optional                                              | Requires rendered evidence proof before production use.                                  |
 | `aria-busy="true"`          | Region state         | Pattern-owned                | Optional                                              | Apply to the region being updated, not the progress bar itself, when useful.        |
 
-Any class, attribute, prop, or behavior not listed here is not public. If a feature needs another option, update the component implementation, this standard, and the UI Reference proof before use.
+Any class, attribute, prop, or behavior not listed here is not public. If a feature needs another option, update the component implementation, this standard, and the rendered evidence proof before use.
 
 ### 4.7. Value contract
 
@@ -313,8 +313,8 @@ Progress values should increase as work progresses. Do not animate fake percenta
 | Visible value                   | Content option | Implemented / required proof          | `.ui-progress-bar-value`                         | Percent, fraction, count, or completed quantity.                                                      |
 | Helper text                     | Content option | Implemented / required proof          | `.ui-progress-bar-helper`                        | Detail, count, error, completion, or pending context.                                                 |
 | Default text alignment          | Layout option  | Implemented                           | Base layout                                      | Label above, bar below, helper close to bar.                                                          |
-| Inline text alignment           | Layout option  | Gated                                 | `.ui-progress-bar-inline` if installed           | Requires UI Reference proof before use.                                                               |
-| Indented text alignment         | Layout option  | Gated                                 | `.ui-progress-bar-indented` if installed         | Requires UI Reference proof before use.                                                               |
+| Inline text alignment           | Layout option  | Gated                                 | `.ui-progress-bar-inline` if installed           | Requires rendered evidence proof before use.                                                               |
+| Indented text alignment         | Layout option  | Gated                                 | `.ui-progress-bar-indented` if installed         | Requires rendered evidence proof before use.                                                               |
 | Indeterminate progress          | Mode           | Gated                                 | `<progress>` without `value` if installed        | Requires helper text, motion, reduced-motion, and accessibility proof.                                |
 | Warning progress                | Semantic state | Not installed / use Notification      | none                                             | Use Notification for warning copy around a progress task unless a future progress status is approved. |
 | Info progress                   | Semantic state | Not installed / use base active state | none                                             | Progress bar itself is not informational status. Use helper text or Notification.                     |
@@ -368,7 +368,7 @@ Progress bar does not expose an icon API. Success/error icons may be shown only 
 | ----------- | ----------------------------------------------------------------------------------------------------------------- |
 | Color       | Track, fill, text, helper text, success state, error state, focus for adjacent controls, and theme contrast.      |
 | Spacing     | Label-to-bar gap, bar-to-helper gap, internal layout, stack gap when delegated by a Pattern, and compact sizing.  |
-| Typography  | Label, value, helper text, numeric value alignment, wrapping, and code-snippet examples on the UI Reference page. |
+| Typography  | Label, value, helper text, numeric value alignment, wrapping, and code-snippet examples on the rendered evidence page. |
 | Themes      | Light/dark token resolution for track, fill, text, helper, success, and error states.                             |
 | Motion      | Fill transition, indeterminate animation when approved, completion transition, and reduced-motion behavior.       |
 | 2x Grid     | Parent layout alignment, max width, responsive grouping, and placement within cards/tables/side panels.           |
@@ -412,7 +412,7 @@ Feature views must not create `progress-*`, Bootstrap `.progress` patterns, raw 
 | `x-ui.loading`                            | Related Component              | Use for full-page or section loading where measurable progress is not available.                    |
 | `x-ui.inline-loading`                     | Related Component              | Use for compact local pending status or inline actions.                                             |
 | `x-ui.progress-indicator`                 | Related Component if installed | Use for multi-step workflow progress, not measurable task completion.                               |
-| `x-ui.notification` / `x-ui.inline-alert` | Related Component              | Use for failure explanation, warning copy, or success messages that need more than progress status. |
+| `x-ui.notification` / `x-ui.notification.inline` | Related Component              | Use for failure explanation, warning copy, or success messages that need more than progress status. |
 | `x-ui.button`                             | Related Component              | Place retry/cancel controls outside the Progress bar in a Pattern-owned composition.                |
 
 ## 8. Composition rules
@@ -529,27 +529,27 @@ Feature views must not create `progress-*`, Bootstrap `.progress` patterns, raw 
 - Do not place Cancel, Retry, View, or Open actions inside the component.
 - Do not use Progress bar for multi-step workflow navigation; use Progress indicator.
 - Do not use Progress bar for field-level validation or general status messages; use field APIs or Notification.
-- Do not render placeholder copy such as `Component-specific API pending correction` or `Allowed variants: None` on the implemented UI Reference page.
+- Do not render placeholder copy such as `Component-specific API pending correction` or `Allowed variants: None` on the implemented rendered evidence page.
 
 ## 13. Deferred or gated capabilities
 
-No deferred capability blocks the installed determinate Progress bar API. Future extensions still require an updated Component standard and UI Reference proof before production use.
+No deferred capability blocks the installed determinate Progress bar API. Future extensions still require an updated Component standard and rendered evidence proof before production use.
 
 | Capability                                    | Status                          | Gate                                                                                                                                          |
 | --------------------------------------------- | ------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------- |
 | Dedicated `x-ui.progress-bar` Blade component | Deferred unless later installed | Requires documented props, slots, native `<progress>` output, accessibility proof, and tests.                                                 |
 | Indeterminate Progress bar                    | Gated                           | Requires helper text, reduced-motion behavior, animation rules, accessibility proof, and a selection boundary against Loading/Inline loading. |
-| Inline text alignment                         | Gated                           | Requires rendered UI Reference proof in table/dense contexts and responsive wrapping tests.                                                   |
-| Indented text alignment                       | Gated                           | Requires rendered UI Reference proof in cards/side panels and responsive wrapping tests.                                                      |
+| Inline text alignment                         | Gated                           | Requires rendered rendered evidence proof in table/dense contexts and responsive wrapping tests.                                                   |
+| Indented text alignment                       | Gated                           | Requires rendered rendered evidence proof in cards/side panels and responsive wrapping tests.                                                      |
 | Warning progress state                        | Not installed / gated           | Requires semantic purpose, token role, content rule, and Notification boundary proof.                                                         |
 | Info progress state                           | Not installed / use base state  | Use helper text or Notification instead. Requires future proof before adding semantic styling.                                                |
 | Icon status inside Progress bar               | Gated                           | Requires Icons Element mapping, screen-reader behavior, theme proof, and success/error state tests.                                           |
 | Cancelable/retryable progress                 | Pattern-owned                   | Requires Button composition outside the component, keyboard behavior, state management, and workflow tests.                                   |
 | Programmatic polling/progress updates         | Pattern-owned                   | Requires server/client data owner, update cadence, error handling, and stale-progress behavior.                                               |
-| Custom track/fill colors                      | Not allowed                     | Requires Color Element standard update and UI Reference proof.                                                                                |
-| Custom animation timing                       | Not allowed                     | Requires Motion Element update and UI Reference proof.                                                                                        |
+| Custom track/fill colors                      | Not allowed                     | Requires Color Element standard update and rendered evidence proof.                                                                                |
+| Custom animation timing                       | Not allowed                     | Requires Motion Element update and rendered evidence proof.                                                                                        |
 
-## 14. Implementation and UI Reference Checklist
+## 14. Implementation and Rendered Evidence Checklist
 ### 14.1. Implementation checklist
 | Requirement                | Standard expectation                                                                                                                               |
 | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -558,9 +558,9 @@ No deferred capability blocks the installed determinate Progress bar API. Future
 | States                     | Default, hover, focus-visible, active/pressed, disabled, loading, validation, selected, empty, or not-applicable states are defined as relevant.   |
 | Accessibility/content      | Keyboard, focus, naming, ARIA, contrast, reduced-motion, label, helper, error, and copy requirements are defined.                                  |
 | Element consumption        | Required Color, Spacing, Typography, Icons, Motion, Themes, and 2x Grid dependencies are named.                                                    |
-| Tests                      | Source/API assertions and UI Reference route assertions block generic fallback content.                                                            |
+| Tests                      | Source/API assertions and Rendered evidence route assertions block generic fallback content.                                                            |
 
-### 14.2. UI Reference proof checklist
+### 14.2. rendered evidence proof checklist
 | Requirement               | Visual proof expectation                                                                              |
 | ------------------------- | ----------------------------------------------------------------------------------------------------- |
 | Live examples             | The page renders production examples through the documented API or explicit native/class contract.    |
@@ -569,9 +569,9 @@ No deferred capability blocks the installed determinate Progress bar API. Future
 | Developer implementation  | Real canonical calls and token-backed code snippets appear instead of placeholder comments.           |
 | Related APIs              | Nearby Components, owning Patterns, consumed Elements, source files, and canonical docs are linked.   |
 | Manual review             | The page provides enough rendered proof for visual review of behavior, layout, and state correctness. |
-## 15. UI Reference requirements
+## 15. Rendered evidence requirements
 
-The UI Reference page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
+The rendered evidence page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
 
 The Progress bar page is a feedback/loading component reference page. It should use determinate examples, state matrices, value/label/helper examples, alignment/size comparison where installed, accessibility proof, reduced-motion proof, and developer implementation examples. It does not need to force every example into the Accordion-style tab model.
 
@@ -597,7 +597,7 @@ The page must not display generic fallback/reference sections or placeholder dev
 
 ## 16. Testing and acceptance criteria
 
-- `/platform/ui-reference/components/progress-bar` returns 200 for authorized users.
+- `not installed` returns 200 for authorized users.
 - The page shows the installed API, states, variants/options, prohibited usage, deferred gates, and Foundation Elements consumed.
 - Implemented APIs render production examples; deferred APIs render trigger conditions instead of fake controls.
 - The Purpose, Use cases, Component contract, Live examples, and Related components and patterns cards render in that top-level order.
@@ -617,7 +617,7 @@ The page must not display generic fallback/reference sections or placeholder dev
 ### 16.1. Suggested automated assertions:
 
 ```php
-$response = $this->actingAs($admin)->get('/platform/ui-reference/components/progress-bar');
+$response = $this->actingAs($admin)->get('not installed');
 
 $response->assertOk();
 $response->assertSee('Progress bar');
@@ -658,23 +658,23 @@ For implementation tests, add page-specific assertions that rendered examples in
 
 | API                           | Route                                                                  |
 | ----------------------------- | ---------------------------------------------------------------------- |
-| Components overview           | `/platform/ui-reference/components`                                    |
-| Loading                       | `/platform/ui-reference/components/loading`                            |
-| Inline loading                | `/platform/ui-reference/components/inline-loading`                     |
-| Progress indicator            | `/platform/ui-reference/components/progress-indicator`                 |
-| Notification                  | `/platform/ui-reference/components/notification`                       |
-| Tag                           | `/platform/ui-reference/components/tag`                                |
-| Button                        | `/platform/ui-reference/components/button`                             |
-| Forms pattern                 | `/platform/ui-reference/patterns/forms`                                |
-| Overlay and feedback patterns | `/platform/ui-reference/patterns/overlays-feedback`                    |
-| Tables Pattern                | `/platform/ui-reference/patterns/tables`                               |
-| Layout Pattern                | `/platform/ui-reference/patterns/layout`                               |
-| Color element                 | `/platform/ui-reference/elements/color`                                |
-| Spacing element               | `/platform/ui-reference/elements/spacing`                              |
-| Typography element            | `/platform/ui-reference/elements/typography`                           |
-| Motion element                | `/platform/ui-reference/elements/motion`                               |
-| Themes element                | `/platform/ui-reference/elements/themes`                               |
-| 2x Grid element               | `/platform/ui-reference/elements/2x-grid`                              |
+| Components overview           | `not installed`                                    |
+| Loading                       | `not installed`                            |
+| Inline loading                | `not installed`                     |
+| Progress indicator            | `not installed`                 |
+| Notification                  | `not installed`                       |
+| Tag                           | `not installed`                                |
+| Button                        | `not installed`                             |
+| Forms pattern                 | `not installed`                                |
+| Overlay and feedback patterns | `not installed`                    |
+| Tables Pattern                | `not installed`                               |
+| Layout Pattern                | `not installed`                               |
+| Color element                 | `not installed`                                |
+| Spacing element               | `not installed`                              |
+| Typography element            | `not installed`                           |
+| Motion element                | `not installed`                               |
+| Themes element                | `not installed`                               |
+| 2x Grid element               | `not installed`                              |
 | Canonical progress bar doc    | `/platform/docs?path=02-standards%2Fui%2Fcomponents%2Fprogress-bar.md` |
 | Carbon progress bar usage     | `https://carbondesignsystem.com/components/progress-bar/usage/`        |
 
@@ -684,4 +684,4 @@ For implementation tests, add page-specific assertions that rendered examples in
 - [Component Implementation Checklist](checklist.md)
 - [Foundation Elements Standards](../elements/index.md)
 - [Pattern Standards Index](../patterns/index.md)
-- Carbon Progress bar usage, style, code, and accessibility guidance inform determinate/indeterminate boundaries, label/helper anatomy, success/error completion states, text placement, size/alignment considerations, ARIA progressbar behavior, affected-region busy state, and reduced-motion expectations. Login App keeps its own native markup contract, app-owned `ui-*` class namespace, Foundation Element token model, route ownership, and UI Reference proof requirements.
+- Carbon Progress bar usage, style, code, and accessibility guidance inform determinate/indeterminate boundaries, label/helper anatomy, success/error completion states, text placement, size/alignment considerations, ARIA progressbar behavior, affected-region busy state, and reduced-motion expectations. Login App keeps its own native markup contract, app-owned `ui-*` class namespace, Foundation Element token model, route ownership, and rendered evidence proof requirements.

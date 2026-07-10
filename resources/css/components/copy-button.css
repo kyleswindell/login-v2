@@ -1,132 +1,316 @@
 /* ==========================================================================
-File: resources/css/components/copy-button.css
-Purpose: Copy Button component styles.
-Carbon reference:
+   File: resources/css/components/copy-button.css
+   Purpose: Copy Button component styles.
 
-* reference/carbon-main/packages/styles/scss/components/copy-button/
-
-Notes:
-
-* Defines Copy Button selectors only.
-* Do not define primitive palette tokens here.
-* Do not define theme role tokens here.
-* Copy Button feedback consumes tooltip, layer, icon, focus, and motion tokens.
-  ========================================================================== */
+   Notes:
+   - Defines Copy Button selectors only.
+   - Do not define primitive palette tokens here.
+   - Do not define theme role tokens here.
+   - Supports base copy button, icon color, feedback tooltip,
+     animating state, fade-in/fade-out states, focus, hover, active,
+     reduced-motion, and forced-colors behavior.
+   ========================================================================== */
 
 @layer components {
     /* ----------------------------------------------------------------------
-   Base copy button
-   ---------------------------------------------------------------------- */
+       Root
+       ---------------------------------------------------------------------- */
 
-    .ui-copy-button {
-        box-sizing: border-box;
+    .ui-copy-btn {
         position: relative;
-        display: inline-flex;
+        display: flex;
+        box-sizing: border-box;
         align-items: center;
         justify-content: center;
-        inline-size: var(--ui-button-size, 3rem);
-        block-size: var(--ui-button-size, 3rem);
         margin: 0;
-        border: 0;
+        border: none;
         padding: 0;
-        background-color: var(--ui-layer-01);
-        color: var(--ui-icon-primary);
+        background-color: var(--ui-layer);
+        color: inherit;
         cursor: pointer;
-        outline: none;
-        transition:
-            background-color var(--ui-duration-fast-01) var(--ui-motion-standard-productive),
-            outline var(--ui-duration-fast-01) var(--ui-motion-standard-productive);
+        font: inherit;
+        outline: 2px solid transparent;
+        outline-offset: -2px;
+        text-align: inherit;
+        vertical-align: baseline;
+        appearance: none;
     }
 
-    .ui-copy-button-xs {
-        --ui-button-size: 1.5rem;
+    .ui-copy-btn:hover {
+        background-color: var(--ui-layer-hover);
     }
 
-    .ui-copy-button-sm {
-        --ui-button-size: 2rem;
+    .ui-copy-btn:active {
+        background-color: var(--ui-layer-active);
     }
 
-    .ui-copy-button-md {
-        --ui-button-size: 2.5rem;
-    }
-
-    .ui-copy-button-lg {
-        --ui-button-size: 3rem;
-    }
-
-    .ui-copy-button:hover {
-        background-color: var(--ui-layer-hover-01);
-    }
-
-    .ui-copy-button:active {
-        background-color: var(--ui-layer-active-01);
-    }
-
-    .ui-copy-button:focus-visible {
+    .ui-copy-btn:focus {
         outline: 2px solid var(--ui-focus);
         outline-offset: -2px;
     }
 
-    .ui-copy-button-icon {
-        inline-size: 1rem;
-        block-size: 1rem;
-        fill: currentColor;
-    }
-
-    .ui-copy-button-label {
-        font-size: 0;
+    .ui-copy-btn svg {
+        fill: var(--ui-icon-primary);
     }
 
     /* ----------------------------------------------------------------------
-   Feedback
-   ---------------------------------------------------------------------- */
+       Feedback caret
+       ---------------------------------------------------------------------- */
 
-    .ui-copy-button::before,
-    .ui-copy-button-feedback {
+    .ui-copy-btn::before {
+        position: absolute;
+        z-index: var(--ui-z-index-tooltip, 9100);
         display: none;
+        inline-size: 0;
+        block-size: 0;
+        border: 0.25rem solid transparent;
+        content: "";
+        pointer-events: none;
     }
 
-    .ui-copy-button::before {
-        content: "";
-        position: absolute;
-        inset-block-start: 0;
+    .ui-copy-btn[data-floating-menu-direction="top"]::before,
+    .ui-copy-btn:not([data-floating-menu-direction])::before {
+        inset-block-start: -0.25rem;
         inset-inline-start: 50%;
-        border: 0.25rem solid transparent;
-        border-block-start-color: var(--ui-background-inverse);
+        border-block-start-color: var(--ui-inverse-background);
         transform: translate(-50%, -100%);
     }
 
-    .ui-copy-button-feedback {
-        position: absolute;
-        inset-block-start: 0;
+    .ui-copy-btn[data-floating-menu-direction="bottom"]::before {
+        inset-block-end: -0.25rem;
         inset-inline-start: 50%;
-        z-index: 1;
+        border-block-end-color: var(--ui-inverse-background);
+        transform: translate(-50%, 100%);
+    }
+
+    .ui-copy-btn[data-floating-menu-direction="left"]::before {
+        inset-block-start: 50%;
+        inset-inline-start: -0.25rem;
+        border-inline-start-color: var(--ui-inverse-background);
+        transform: translate(-100%, -50%);
+    }
+
+    .ui-copy-btn[data-floating-menu-direction="right"]::before {
+        inset-block-start: 50%;
+        inset-inline-end: -0.25rem;
+        border-inline-end-color: var(--ui-inverse-background);
+        transform: translate(100%, -50%);
+    }
+
+    /* ----------------------------------------------------------------------
+       Feedback content
+       ---------------------------------------------------------------------- */
+
+    .ui-copy-btn-feedback,
+    .ui-copy-btn__feedback {
+        position: absolute;
+        z-index: var(--ui-z-index-tooltip, 9100);
+        display: none;
+        overflow: visible;
+        box-sizing: content-box;
+        inline-size: max-content;
         max-inline-size: 13rem;
+        margin: auto;
         padding: var(--ui-spacing-03) var(--ui-spacing-05);
-        background-color: var(--ui-background-inverse);
-        color: var(--ui-text-inverse);
+        background-color: var(--ui-inverse-background);
+        clip: auto;
+        color: var(--ui-inverse-text);
         font-size: var(--ui-type-label-01-font-size);
         font-weight: var(--ui-type-label-01-font-weight);
         line-height: var(--ui-type-label-01-line-height);
         letter-spacing: var(--ui-type-label-01-letter-spacing);
+        pointer-events: none;
+        text-align: center;
         white-space: nowrap;
-        transform: translate(-50%, calc(-100% - 0.25rem));
     }
 
-    .ui-copy-button-animating::before,
-    .ui-copy-button-animating .ui-copy-button-feedback {
+    .ui-copy-btn[data-floating-menu-direction="top"] .ui-copy-btn-feedback,
+    .ui-copy-btn[data-floating-menu-direction="top"] .ui-copy-btn__feedback,
+    .ui-copy-btn:not([data-floating-menu-direction]) .ui-copy-btn-feedback,
+    .ui-copy-btn:not([data-floating-menu-direction]) .ui-copy-btn__feedback {
+        inset-block-start: -0.5rem;
+        inset-inline-start: 50%;
+        transform: translate(-50%, -100%);
+    }
+
+    .ui-copy-btn[data-floating-menu-direction="bottom"] .ui-copy-btn-feedback,
+    .ui-copy-btn[data-floating-menu-direction="bottom"] .ui-copy-btn__feedback {
+        inset-block-end: -0.5rem;
+        inset-inline-start: 50%;
+        transform: translate(-50%, 100%);
+    }
+
+    .ui-copy-btn[data-floating-menu-direction="left"] .ui-copy-btn-feedback,
+    .ui-copy-btn[data-floating-menu-direction="left"] .ui-copy-btn__feedback {
+        inset-block-start: 50%;
+        inset-inline-start: -0.5rem;
+        transform: translate(-100%, -50%);
+    }
+
+    .ui-copy-btn[data-floating-menu-direction="right"] .ui-copy-btn-feedback,
+    .ui-copy-btn[data-floating-menu-direction="right"] .ui-copy-btn__feedback {
+        inset-block-start: 50%;
+        inset-inline-end: -0.5rem;
+        transform: translate(100%, -50%);
+    }
+
+    /* ----------------------------------------------------------------------
+       Animation states
+       ---------------------------------------------------------------------- */
+
+    .ui-copy-btn-animating::before,
+    .ui-copy-btn--animating::before,
+    .ui-copy-btn-animating .ui-copy-btn-feedback,
+    .ui-copy-btn-animating .ui-copy-btn__feedback,
+    .ui-copy-btn--animating .ui-copy-btn-feedback,
+    .ui-copy-btn--animating .ui-copy-btn__feedback {
         display: block;
     }
 
-    .ui-copy-button-fade-in::before,
-    .ui-copy-button-fade-in .ui-copy-button-feedback {
+    .ui-copy-btn-animating::before,
+    .ui-copy-btn--animating::before {
+        border: none;
+    }
+
+    .ui-copy-btn-animating.ui-copy-btn-fade-out::before,
+    .ui-copy-btn-animating.ui-copy-btn--fade-out::before,
+    .ui-copy-btn--animating.ui-copy-btn-fade-out::before,
+    .ui-copy-btn--animating.ui-copy-btn--fade-out::before,
+    .ui-copy-btn-animating.ui-copy-btn-fade-out .ui-copy-btn-feedback,
+    .ui-copy-btn-animating.ui-copy-btn-fade-out .ui-copy-btn__feedback,
+    .ui-copy-btn-animating.ui-copy-btn--fade-out .ui-copy-btn-feedback,
+    .ui-copy-btn-animating.ui-copy-btn--fade-out .ui-copy-btn__feedback,
+    .ui-copy-btn--animating.ui-copy-btn-fade-out .ui-copy-btn-feedback,
+    .ui-copy-btn--animating.ui-copy-btn-fade-out .ui-copy-btn__feedback,
+    .ui-copy-btn--animating.ui-copy-btn--fade-out .ui-copy-btn-feedback,
+    .ui-copy-btn--animating.ui-copy-btn--fade-out .ui-copy-btn__feedback {
+        animation: ui-hide-feedback var(--ui-duration-fast-02)
+            var(--ui-motion-standard-productive);
+    }
+
+    .ui-copy-btn-animating.ui-copy-btn-fade-in::before,
+    .ui-copy-btn-animating.ui-copy-btn--fade-in::before,
+    .ui-copy-btn--animating.ui-copy-btn-fade-in::before,
+    .ui-copy-btn--animating.ui-copy-btn--fade-in::before,
+    .ui-copy-btn-animating.ui-copy-btn-fade-in .ui-copy-btn-feedback,
+    .ui-copy-btn-animating.ui-copy-btn-fade-in .ui-copy-btn__feedback,
+    .ui-copy-btn-animating.ui-copy-btn--fade-in .ui-copy-btn-feedback,
+    .ui-copy-btn-animating.ui-copy-btn--fade-in .ui-copy-btn__feedback,
+    .ui-copy-btn--animating.ui-copy-btn-fade-in .ui-copy-btn-feedback,
+    .ui-copy-btn--animating.ui-copy-btn-fade-in .ui-copy-btn__feedback,
+    .ui-copy-btn--animating.ui-copy-btn--fade-in .ui-copy-btn-feedback,
+    .ui-copy-btn--animating.ui-copy-btn--fade-in .ui-copy-btn__feedback {
         animation: ui-show-feedback var(--ui-duration-fast-02)
             var(--ui-motion-standard-productive);
     }
 
-    .ui-copy-button-fade-out::before,
-    .ui-copy-button-fade-out .ui-copy-button-feedback {
-        animation: ui-hide-feedback var(--ui-duration-fast-02)
-            var(--ui-motion-standard-productive);
+    @keyframes ui-show-feedback {
+        from {
+            opacity: 0;
+        }
+
+        to {
+            opacity: 1;
+        }
+    }
+
+    @keyframes ui-hide-feedback {
+        from {
+            opacity: 1;
+        }
+
+        to {
+            opacity: 0;
+        }
+    }
+
+    /* ----------------------------------------------------------------------
+       Hidden copy text
+       ---------------------------------------------------------------------- */
+
+    .ui-copy {
+        font-size: 0;
+    }
+
+    /* ----------------------------------------------------------------------
+       Reduced motion
+       ---------------------------------------------------------------------- */
+
+    @media screen and (prefers-reduced-motion: reduce) {
+        .ui-copy-btn-animating.ui-copy-btn-fade-out::before,
+        .ui-copy-btn-animating.ui-copy-btn--fade-out::before,
+        .ui-copy-btn--animating.ui-copy-btn-fade-out::before,
+        .ui-copy-btn--animating.ui-copy-btn--fade-out::before,
+        .ui-copy-btn-animating.ui-copy-btn-fade-in::before,
+        .ui-copy-btn-animating.ui-copy-btn--fade-in::before,
+        .ui-copy-btn--animating.ui-copy-btn-fade-in::before,
+        .ui-copy-btn--animating.ui-copy-btn--fade-in::before,
+        .ui-copy-btn-animating.ui-copy-btn-fade-out .ui-copy-btn-feedback,
+        .ui-copy-btn-animating.ui-copy-btn-fade-out .ui-copy-btn__feedback,
+        .ui-copy-btn-animating.ui-copy-btn--fade-out .ui-copy-btn-feedback,
+        .ui-copy-btn-animating.ui-copy-btn--fade-out .ui-copy-btn__feedback,
+        .ui-copy-btn--animating.ui-copy-btn-fade-out .ui-copy-btn-feedback,
+        .ui-copy-btn--animating.ui-copy-btn-fade-out .ui-copy-btn__feedback,
+        .ui-copy-btn--animating.ui-copy-btn--fade-out .ui-copy-btn-feedback,
+        .ui-copy-btn--animating.ui-copy-btn--fade-out .ui-copy-btn__feedback,
+        .ui-copy-btn-animating.ui-copy-btn-fade-in .ui-copy-btn-feedback,
+        .ui-copy-btn-animating.ui-copy-btn-fade-in .ui-copy-btn__feedback,
+        .ui-copy-btn-animating.ui-copy-btn--fade-in .ui-copy-btn-feedback,
+        .ui-copy-btn-animating.ui-copy-btn--fade-in .ui-copy-btn__feedback,
+        .ui-copy-btn--animating.ui-copy-btn-fade-in .ui-copy-btn-feedback,
+        .ui-copy-btn--animating.ui-copy-btn-fade-in .ui-copy-btn__feedback,
+        .ui-copy-btn--animating.ui-copy-btn--fade-in .ui-copy-btn-feedback,
+        .ui-copy-btn--animating.ui-copy-btn--fade-in .ui-copy-btn__feedback {
+            animation: none;
+        }
+    }
+
+    /* ----------------------------------------------------------------------
+       Forced colors
+       ---------------------------------------------------------------------- */
+
+    @media screen and (-ms-high-contrast: active), (forced-colors: active) {
+        .ui-copy-btn {
+            background-color: Canvas;
+            color: CanvasText;
+        }
+
+        .ui-copy-btn:hover,
+        .ui-copy-btn:active {
+            background-color: Highlight;
+            color: HighlightText;
+        }
+
+        .ui-copy-btn:focus {
+            outline-color: Highlight;
+        }
+
+        .ui-copy-btn svg {
+            fill: currentColor;
+        }
+
+        .ui-copy-btn-feedback,
+        .ui-copy-btn__feedback {
+            border: 1px solid CanvasText;
+            background-color: Canvas;
+            color: CanvasText;
+        }
+
+        .ui-copy-btn[data-floating-menu-direction="top"]::before,
+        .ui-copy-btn:not([data-floating-menu-direction])::before {
+            border-block-start-color: CanvasText;
+        }
+
+        .ui-copy-btn[data-floating-menu-direction="bottom"]::before {
+            border-block-end-color: CanvasText;
+        }
+
+        .ui-copy-btn[data-floating-menu-direction="left"]::before {
+            border-inline-start-color: CanvasText;
+        }
+
+        .ui-copy-btn[data-floating-menu-direction="right"]::before {
+            border-inline-end-color: CanvasText;
+        }
     }
 }

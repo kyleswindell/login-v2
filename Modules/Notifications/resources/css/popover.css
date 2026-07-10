@@ -1,0 +1,102 @@
+/* ==========================================================================
+   File: Modules/Notifications/resources/css/notifications/popover.css
+   Purpose: Notification header popover sizing and shell placement constraints.
+
+   Notes:
+   - Generic popover surface, open state, border, shadow, color, and caret
+     behavior are owned by resources/css/components/popover.css.
+   - This file only adapts the Popover component to the app header notification
+     action slot.
+   - The header notification panel positions the .ui-popover wrapper and keeps
+     .ui-popover-content static inside it so the panel remains attached to the
+     bell trigger.
+   ========================================================================== */
+
+@layer components {
+    /* ----------------------------------------------------------------------
+       Header notification popover anchor
+       ---------------------------------------------------------------------- */
+
+    .ui-shell-notifications-popover.ui-popover-container {
+        --ui-popover-offset: 0rem;
+
+        display: inline-flex;
+        align-items: stretch;
+        flex: 0 0 var(--ui-shell-header-action-size);
+        inline-size: var(--ui-shell-header-action-size);
+        block-size: 100%;
+    }
+
+    .ui-shell-notifications-popover.ui-popover-container
+        > [data-ui-popover-trigger] {
+        inline-size: var(--ui-shell-header-action-size);
+        block-size: 100%;
+    }
+
+    /* ----------------------------------------------------------------------
+       Header notification popover placement
+       ---------------------------------------------------------------------- */
+
+    .ui-shell-notifications-popover.ui-popover-container > .ui-popover {
+        position: absolute;
+        z-index: var(--ui-z-index-shell-header-menu-trigger);
+        inset-block-start: 100%;
+        inset-block-end: auto;
+        inset-inline-start: auto;
+        inset-inline-end: 0;
+        inline-size: var(
+            --ui-shell-header-notifications-popover-inline-size,
+            24rem
+        );
+        block-size: auto;
+        margin: 0;
+        transform: none;
+        pointer-events: none;
+    }
+
+    /* ----------------------------------------------------------------------
+       Header notification popover content constraints
+       ---------------------------------------------------------------------- */
+
+    .ui-shell-notifications-popover.ui-popover-container
+        > .ui-popover
+        > .ui-popover-content {
+        position: static;
+        inset: auto;
+        inline-size: 100%;
+        max-inline-size: calc(
+            100vw - var(--ui-shell-header-popover-viewport-gutter, 2rem)
+        );
+        max-block-size: var(
+            --ui-shell-header-notifications-menu-max-block-size,
+            min(34rem, calc(100vh - var(--ui-shell-header-block-size) - 2rem))
+        );
+        margin: 0;
+        padding: 0;
+        transform: none;
+        overflow: hidden;
+    }
+
+    /* ----------------------------------------------------------------------
+       Narrow viewport header placement
+       ---------------------------------------------------------------------- */
+
+    @media (max-width: 30rem) {
+        .ui-shell-notifications-popover.ui-popover-container > .ui-popover {
+            position: fixed;
+            inset-block-start: var(--ui-shell-header-block-size);
+            inset-block-end: auto;
+            inset-inline: var(--ui-spacing-03);
+            inline-size: auto;
+            max-inline-size: none;
+            transform: none;
+        }
+
+        .ui-shell-notifications-popover.ui-popover-container
+            > .ui-popover
+            > .ui-popover-content {
+            inline-size: 100%;
+            max-inline-size: none;
+        }
+    }
+}

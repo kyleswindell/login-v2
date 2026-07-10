@@ -3,11 +3,16 @@
 namespace App\Models;
 
 use Database\Factories\UserFactory;
-use Filament\Models\Contracts\FilamentUser;
-use Filament\Panel;
+use App\Modules\Account\Models\UserContactEmail;
+use App\Modules\Auth\Models\MfaRecoveryCode;
+use App\Modules\Auth\Models\UserMfaMethod;
+use App\Modules\Auth\Models\UserMfaPolicy;
+use App\Modules\Notifications\Models\UserNotificationPreference;
 use Illuminate\Database\Eloquent\Attributes\Fillable;
 use Illuminate\Database\Eloquent\Attributes\Hidden;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Spatie\Permission\Traits\HasRoles;
@@ -36,26 +41,83 @@ use Spatie\Permission\Traits\HasRoles;
     'profile_image_path',
 ])]
 #[Hidden(['password', 'remember_token'])]
-class User extends Authenticatable implements FilamentUser
+class User extends Authenticatable
 {
     /** @use HasFactory<UserFactory> */
     use HasFactory, HasRoles, Notifiable;
 
     protected string $guard_name = 'web';
 
-    public function canAccessPanel(Panel $panel): bool
+    /**
+     * @return HasMany<UserContactEmail, $this>
+     */
+    public function contactEmails(): HasMany
     {
-        if ($panel->getId() !== 'console') {
-            return false;
-        }
+        return $this->hasMany(UserContactEmail::class);
+    }
 
-        return $this->is_active
-            && (
-                $this->hasRole('platform_super_admin')
-                || $this->can('platform.users.manage')
-                || $this->can('platform.audit-logs.view')
-                || $this->can('platform.error-logs.view')
-            );
+    /**
+     * @return HasOne<UserNotificationPreference, $this>
+     */
+    public function notificationPreference(): HasOne
+    {
+        return $this->hasOne(UserNotificationPreference::class);
+    }
+
+    /**
+     * @return HasMany<UserMfaMethod, $this>
+     */
+    public function mfaMethods(): HasMany
+    {
+        return $this->hasMany(UserMfaMethod::class);
+    }
+
+    /**
+     * @return HasOne<UserMfaMethod, $this>
+     */
+    public function totpMfaMethod(): HasOne
+    {
+        return $this->hasOne(UserMfaMethod::class)
+            ->where('type', UserMfaMethod::TYPE_TOTP);
+    }
+
+    /**
+     * @return HasOne<UserMfaPolicy, $this>
+     */
+    public function mfaPolicy(): HasOne
+    {
+        return $this->hasOne(UserMfaPolicy::class);
+    }
+
+    /**
+     * @return HasMany<MfaRecoveryCode, $this>
+     */
+    public function mfaRecoveryCodes(): HasMany
+    {
+        return $this->hasMany(MfaRecoveryCode::class);
+    }
+
+    public function hasConfirmedTotpMfa(): bool
+    {
+        $method = $this->relationLoaded('totpMfaMethod')
+            ? $this->totpMfaMethod
+            : $this->totpMfaMethod()->first();
+
+        return $method?->hasConfirmedSecret() ?? false;
+    }
+
+    public function hasMfaPolicyRequirement(): bool
+    {
+        $policy = $this->relationLoaded('mfaPolicy')
+            ? $this->mfaPolicy
+            : $this->mfaPolicy()->first();
+
+        return (bool) $policy?->mfa_required;
+    }
+
+    public function requiresMfa(): bool
+    {
+        return $this->hasMfaPolicyRequirement() || $this->hasConfirmedTotpMfa();
     }
 
     /**

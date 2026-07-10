@@ -1,0 +1,10 @@
+/* ==========================================================================
+   File: Modules/Notifications/resources/css/notifications.css
+   Purpose: Notifications module CSS entrypoint.
+
+   Notes:
+   - Kept as the stable import target for the ui-shell CSS bridge.
+   - Actual notification styles are split under resources/css/notifications/.
+   ========================================================================== */
+
+@import "index.css";

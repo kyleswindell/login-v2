@@ -1,72 +1,589 @@
 /* ==========================================================================
-File: resources/css/components/file-uploader.css
-Purpose: File Uploader component styles.
-Carbon reference:
+   File: resources/css/components/file-uploader.css
+   Purpose: File Uploader component styles.
 
-* reference/carbon-main/packages/styles/scss/components/file-uploader/
-
-Notes:
-
-* Defines File Uploader selectors only.
-* Do not define primitive palette tokens here.
-* Do not define theme role tokens here.
-* File Uploader consumes form, button, type, spacing, and theme tokens.
-  ========================================================================== */
+   Notes:
+   - Defines File Uploader selectors only.
+   - Do not define primitive palette tokens here.
+   - Do not define theme role tokens here.
+   - Supports hidden file input, browse link/button, drop zone, selected file
+     rows, loading/complete/invalid/close states, disabled states, invalid
+     requirement content, size variants, and drag-over state.
+   ========================================================================== */
 
 @layer components {
-    .ui-file-uploader {
-        display: flex;
-        flex-direction: column;
-        gap: var(--ui-spacing-05);
+    /* ----------------------------------------------------------------------
+       Root
+       ---------------------------------------------------------------------- */
+
+    .ui-file {
         inline-size: 100%;
     }
 
-    .ui-file-uploader-drop-container {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        min-block-size: 6rem;
-        border: 1px dashed var(--ui-border-strong-01);
-        padding: var(--ui-spacing-06);
-        background-color: var(--ui-layer-01);
+    .ui-file-invalid,
+    .ui-file--invalid {
+        margin-inline-end: var(--ui-spacing-03);
+        fill: var(--ui-support-error);
+    }
+
+    /* ----------------------------------------------------------------------
+       Label / description
+       ---------------------------------------------------------------------- */
+
+    .ui-file-label,
+    .ui-file--label {
+        margin: 0;
+        margin-block-end: var(--ui-spacing-03);
+        border: 0;
+        padding: 0;
+        color: var(--ui-text-primary);
+        font-size: var(--ui-type-heading-compact-01-font-size);
+        font-weight: var(--ui-font-weight-semibold);
+        line-height: var(--ui-type-heading-compact-01-line-height);
+        letter-spacing: var(--ui-type-heading-compact-01-letter-spacing);
+    }
+
+    .ui-file-label-disabled,
+    .ui-file--label--disabled {
+        color: var(--ui-text-disabled);
+    }
+
+    .ui-label-description {
+        margin: 0;
+        margin-block-end: var(--ui-spacing-05);
+        border: 0;
+        padding: 0;
         color: var(--ui-text-secondary);
-        text-align: center;
+        font-size: var(--ui-type-body-compact-01-font-size);
+        font-weight: var(--ui-type-body-compact-01-font-weight);
+        line-height: var(--ui-type-body-compact-01-line-height);
+        letter-spacing: var(--ui-type-body-compact-01-letter-spacing);
     }
 
-    .ui-file-uploader-drop-container:hover {
-        background-color: var(--ui-layer-hover-01);
+    .ui-label-description-disabled,
+    .ui-label-description--disabled {
+        color: var(--ui-text-disabled);
     }
 
-    .ui-file-uploader-input {
+    /* ----------------------------------------------------------------------
+       Native input
+       ---------------------------------------------------------------------- */
+
+    .ui-file-input {
         position: absolute;
         overflow: hidden;
-        clip: rect(0 0 0 0);
-        inline-size: 1px;
-        block-size: 1px;
         margin: -1px;
         border: 0;
         padding: 0;
+        inline-size: 1px;
+        block-size: 1px;
+        clip: rect(0, 0, 0, 0);
         white-space: nowrap;
     }
 
-    .ui-file-uploader-item {
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) auto;
-        align-items: center;
-        gap: var(--ui-spacing-05);
-        inline-size: 100%;
-        padding: var(--ui-spacing-03) var(--ui-spacing-05);
-        background-color: var(--ui-layer-01);
-        color: var(--ui-text-primary);
+    /* ----------------------------------------------------------------------
+       Browse controls
+       ---------------------------------------------------------------------- */
+
+    .ui-file-btn {
+        display: inline-flex;
+        margin: 0;
+        padding-inline-end: 4rem;
     }
 
-    .ui-file-uploader-item-invalid {
+    .ui-file-browse-btn {
+        display: inline-block;
+        inline-size: 100%;
+        max-inline-size: 20rem;
+        color: var(--ui-link-primary);
+        cursor: pointer;
+        outline: 2px solid transparent;
+        outline-offset: -2px;
+        transition:
+            color var(--ui-duration-fast-02)
+                var(--ui-motion-standard-productive),
+            outline var(--ui-duration-fast-02)
+                var(--ui-motion-standard-productive);
+    }
+
+    .ui-file-browse-btn:hover,
+    .ui-file-browse-btn:focus,
+    .ui-file-browse-btn:focus-visible {
+        outline-color: var(--ui-focus);
+        text-decoration: underline;
+    }
+
+    .ui-file-browse-btn:active,
+    .ui-file-browse-btn:active:visited {
+        color: var(--ui-text-primary);
+        text-decoration: underline;
+    }
+
+    .ui-file-browse-btn-disabled,
+    .ui-file-browse-btn--disabled {
+        color: var(--ui-text-disabled);
+        cursor: no-drop;
+        text-decoration: none;
+        transition: none;
+    }
+
+    .ui-file-browse-btn-disabled:hover,
+    .ui-file-browse-btn-disabled:focus,
+    .ui-file-browse-btn-disabled:focus-visible,
+    .ui-file-browse-btn--disabled:hover,
+    .ui-file-browse-btn--disabled:focus,
+    .ui-file-browse-btn--disabled:focus-visible {
+        color: var(--ui-text-disabled);
+        outline: none;
+        text-decoration: none;
+    }
+
+    .ui-file-browse-btn-disabled .ui-file-drop-container,
+    .ui-file-browse-btn-disabled .ui-file__drop-container,
+    .ui-file-browse-btn--disabled .ui-file-drop-container,
+    .ui-file-browse-btn--disabled .ui-file__drop-container {
+        border-color: var(
+            --ui-button-disabled,
+            var(--ui-border-disabled, var(--ui-text-disabled))
+        );
+    }
+
+    /* ----------------------------------------------------------------------
+       File container spacing
+       ---------------------------------------------------------------------- */
+
+    .ui-file-container-drop,
+    .ui-file-container--drop {
+        inline-size: 100%;
+    }
+
+    .ui-file-btn ~ .ui-file-container {
+        margin-block-start: var(--ui-spacing-06);
+    }
+
+    .ui-btn ~ .ui-file-container,
+    .ui-button ~ .ui-file-container {
+        margin-block-start: var(--ui-spacing-05);
+    }
+
+    .ui-file .ui-file-container,
+    .ui-file ~ .ui-file-container {
+        margin-block-start: var(--ui-spacing-03);
+    }
+
+    /* ----------------------------------------------------------------------
+       Selected file row
+       ---------------------------------------------------------------------- */
+
+    .ui-file-selected-file,
+    .ui-file__selected-file {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        grid-auto-rows: auto;
+        align-items: center;
+        gap: 0.75rem 0;
+        min-block-size: var(--ui-spacing-09);
+        max-inline-size: 20rem;
+        margin-block-end: var(--ui-spacing-03);
+        background-color: var(--ui-layer);
+        word-break: break-word;
+    }
+
+    .ui-file-selected-file:last-child,
+    .ui-file__selected-file:last-child {
+        margin-block-end: 0;
+    }
+
+    .ui-file-selected-file .ui-form-requirement,
+    .ui-file__selected-file .ui-form-requirement {
+        display: block;
+        grid-column: 1 / -1;
+        max-block-size: none;
+        margin: 0;
+    }
+
+    .ui-file-selected-file .ui-inline-loading-animation .ui-loading,
+    .ui-file-selected-file .ui-inline-loading__animation .ui-loading,
+    .ui-file__selected-file .ui-inline-loading-animation .ui-loading,
+    .ui-file__selected-file .ui-inline-loading__animation .ui-loading {
+        margin-inline-end: 0;
+    }
+
+    .ui-file-selected-file-md,
+    .ui-file__selected-file--md {
+        min-block-size: 2.5rem;
+        gap: var(--ui-spacing-03) 0;
+    }
+
+    .ui-file-selected-file-sm,
+    .ui-file__selected-file--sm {
+        min-block-size: 2rem;
+        gap: var(--ui-spacing-02) 0;
+    }
+
+    .ui-file-selected-file-disabled,
+    .ui-file__selected-file--disabled {
+        color: var(--ui-text-disabled);
+        cursor: not-allowed;
+    }
+
+    /* ----------------------------------------------------------------------
+       Filename
+       ---------------------------------------------------------------------- */
+
+    .ui-file-filename {
+        overflow: hidden;
+        margin-inline-start: var(--ui-spacing-05);
+        color: inherit;
+        font-size: var(--ui-type-body-compact-01-font-size);
+        font-weight: var(--ui-type-body-compact-01-font-weight);
+        line-height: var(--ui-type-body-compact-01-line-height);
+        letter-spacing: var(--ui-type-body-compact-01-letter-spacing);
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .ui-file-filename-container-wrap {
+        max-inline-size: 17.5rem;
+        margin-block-start: 1px;
+        padding-inline-start: var(--ui-spacing-05);
+    }
+
+    @media (max-width: 410px) {
+        .ui-file-filename-container-wrap {
+            max-inline-size: 13.5rem;
+        }
+    }
+
+    .ui-file-filename-container-wrap-invalid {
+        max-inline-size: 15.5rem;
+    }
+
+    .ui-file-filename-tooltip {
+        inline-size: -webkit-fill-available;
+    }
+
+    .ui-file-filename-container-wrap-invalid .ui-file-filename-tooltip {
+        inline-size: -webkit-fill-available;
+        padding-inline-start: var(--ui-spacing-05);
+    }
+
+    @-moz-document url-prefix() {
+        .ui-file-filename-tooltip,
+        .ui-file-filename-container-wrap-invalid .ui-file-filename-tooltip {
+            inline-size: -moz-available;
+        }
+    }
+
+    .ui-file-filename-button {
+        overflow: hidden;
+        inline-size: -webkit-fill-available;
+        border: none;
+        padding: 0;
+        background: none;
+        color: inherit;
+        cursor: pointer;
+        font: inherit;
+        font-size: var(--ui-type-body-compact-01-font-size);
+        font-weight: var(--ui-type-body-compact-01-font-weight);
+        line-height: var(--ui-type-body-compact-01-line-height);
+        letter-spacing: var(--ui-type-body-compact-01-letter-spacing);
+        outline: inherit;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .ui-file-filename-button:focus,
+    .ui-file-filename-button:focus-visible {
+        outline: revert;
+    }
+
+    @-moz-document url-prefix() {
+        .ui-file-filename-button {
+            inline-size: -moz-available;
+        }
+    }
+
+    /* ----------------------------------------------------------------------
+       Invalid selected file
+       ---------------------------------------------------------------------- */
+
+    .ui-file-selected-file-invalid-wrapper,
+    .ui-file__selected-file--invalid__wrapper {
+        max-inline-size: 20rem;
+        margin-block-end: var(--ui-spacing-03);
+        background-color: var(--ui-layer);
+        outline: 1px solid var(--ui-support-error);
+        outline-offset: -1px;
+    }
+
+    .ui-file-selected-file-invalid,
+    .ui-file__selected-file--invalid {
+        padding: 0.75rem 0;
         outline: 2px solid var(--ui-support-error);
         outline-offset: -2px;
     }
 
-    .ui-file-uploader-item-warning {
-        outline: 2px solid var(--ui-support-warning);
+    .ui-file-selected-file-invalid.ui-file-selected-file-sm,
+    .ui-file__selected-file--invalid.ui-file__selected-file--sm {
+        padding: var(--ui-spacing-02) 0;
+    }
+
+    .ui-file-selected-file-invalid.ui-file-selected-file-md,
+    .ui-file__selected-file--invalid.ui-file__selected-file--md {
+        padding: var(--ui-spacing-03) 0;
+    }
+
+    .ui-file-selected-file-invalid .ui-form-requirement,
+    .ui-file__selected-file--invalid .ui-form-requirement {
+        border-block-start: 1px solid var(--ui-border-subtle);
+        padding-block-start: var(--ui-spacing-05);
+    }
+
+    .ui-file-selected-file-invalid.ui-file-selected-file-sm
+        .ui-form-requirement,
+    .ui-file__selected-file--invalid.ui-file__selected-file--sm
+        .ui-form-requirement {
+        padding-block-start: 0.4375rem;
+    }
+
+    .ui-file-selected-file-invalid.ui-file-selected-file-md
+        .ui-form-requirement,
+    .ui-file__selected-file--invalid.ui-file__selected-file--md
+        .ui-form-requirement {
+        padding-block-start: 0.6875rem;
+    }
+
+    .ui-file-selected-file-invalid .ui-form-requirement-title,
+    .ui-file-selected-file-invalid .ui-form-requirement__title,
+    .ui-file-selected-file-invalid .ui-form-requirement-supplement,
+    .ui-file-selected-file-invalid .ui-form-requirement__supplement,
+    .ui-file__selected-file--invalid .ui-form-requirement-title,
+    .ui-file__selected-file--invalid .ui-form-requirement__title,
+    .ui-file__selected-file--invalid .ui-form-requirement-supplement,
+    .ui-file__selected-file--invalid .ui-form-requirement__supplement {
+        padding: 0 var(--ui-spacing-05);
+        font-size: var(--ui-type-helper-text-01-font-size);
+        font-weight: var(--ui-type-helper-text-01-font-weight);
+        line-height: var(--ui-type-helper-text-01-line-height);
+        letter-spacing: var(--ui-type-helper-text-01-letter-spacing);
+    }
+
+    .ui-file-selected-file-invalid .ui-form-requirement-title,
+    .ui-file-selected-file-invalid .ui-form-requirement__title,
+    .ui-file__selected-file--invalid .ui-form-requirement-title,
+    .ui-file__selected-file--invalid .ui-form-requirement__title {
+        color: var(--ui-text-error);
+    }
+
+    .ui-file-selected-file-invalid .ui-form-requirement-supplement,
+    .ui-file-selected-file-invalid .ui-form-requirement__supplement,
+    .ui-file__selected-file--invalid .ui-form-requirement-supplement,
+    .ui-file__selected-file--invalid .ui-form-requirement__supplement {
+        color: var(--ui-text-primary);
+    }
+
+    .ui-file-selected-file-invalid + .ui-form-requirement,
+    .ui-file__selected-file--invalid + .ui-form-requirement {
+        display: block;
+        overflow: visible;
+        max-block-size: 12.5rem;
+        padding: var(--ui-spacing-03) var(--ui-spacing-05);
+        color: var(--ui-text-error);
+        font-size: var(--ui-type-helper-text-01-font-size);
+        font-weight: var(--ui-font-weight-regular);
+        line-height: var(--ui-type-helper-text-01-line-height);
+        letter-spacing: var(--ui-type-helper-text-01-letter-spacing);
+    }
+
+    .ui-file-selected-file-invalid
+        + .ui-form-requirement
+        .ui-form-requirement-supplement,
+    .ui-file-selected-file-invalid
+        + .ui-form-requirement
+        .ui-form-requirement__supplement,
+    .ui-file__selected-file--invalid
+        + .ui-form-requirement
+        .ui-form-requirement-supplement,
+    .ui-file__selected-file--invalid
+        + .ui-form-requirement
+        .ui-form-requirement__supplement {
+        padding-block-end: var(--ui-spacing-03);
+        color: var(--ui-text-primary);
+    }
+
+    /* ----------------------------------------------------------------------
+       State container
+       ---------------------------------------------------------------------- */
+
+    .ui-file-state-container,
+    .ui-file__state-container {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-inline-size: 1.5rem;
+        padding-inline-end: 0.75rem;
+    }
+
+    .ui-file-state-container .ui-loading-svg,
+    .ui-file-state-container .ui-loading__svg,
+    .ui-file__state-container .ui-loading-svg,
+    .ui-file__state-container .ui-loading__svg {
+        stroke: var(--ui-icon-primary);
+    }
+
+    .ui-file-state-container .ui-file-loading,
+    .ui-file__state-container .ui-file-loading {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        inline-size: var(--ui-spacing-06);
+        block-size: var(--ui-spacing-05);
+        border: none;
+        padding: var(--ui-spacing-02);
+        background-color: transparent;
+    }
+
+    .ui-file-state-container .ui-file-complete,
+    .ui-file__state-container .ui-file-complete {
+        inline-size: var(--ui-spacing-06);
+        fill: var(--ui-interactive, var(--ui-border-interactive));
+    }
+
+    .ui-file-state-container .ui-file-complete:focus,
+    .ui-file-state-container .ui-file-complete:focus-visible,
+    .ui-file__state-container .ui-file-complete:focus,
+    .ui-file__state-container .ui-file-complete:focus-visible {
+        outline: 2px solid var(--ui-focus);
         outline-offset: -2px;
+    }
+
+    .ui-file-state-container .ui-file-complete [data-icon-path="inner-path"],
+    .ui-file__state-container .ui-file-complete [data-icon-path="inner-path"] {
+        fill: var(--ui-icon-inverse);
+        opacity: 1;
+    }
+
+    .ui-file-state-container .ui-file-invalid,
+    .ui-file__state-container .ui-file-invalid {
+        inline-size: var(--ui-spacing-05);
+        block-size: var(--ui-spacing-05);
+        fill: var(--ui-support-error);
+    }
+
+    .ui-file-state-container .ui-file-close,
+    .ui-file__state-container .ui-file-close {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        inline-size: var(--ui-spacing-06);
+        block-size: var(--ui-spacing-06);
+        border: none;
+        padding: 0;
+        background-color: transparent;
+        cursor: pointer;
+    }
+
+    .ui-file-state-container .ui-file-close svg,
+    .ui-file__state-container .ui-file-close svg {
+        fill: var(--ui-icon-primary);
+    }
+
+    .ui-file-state-container .ui-file-close[disabled],
+    .ui-file__state-container .ui-file-close[disabled] {
+        cursor: not-allowed;
+    }
+
+    .ui-file-state-container .ui-file-close[disabled] svg,
+    .ui-file__state-container .ui-file-close[disabled] svg {
+        fill: var(--ui-icon-disabled);
+    }
+
+    .ui-file-state-container .ui-file-close:focus,
+    .ui-file-state-container .ui-file-close:focus-visible,
+    .ui-file__state-container .ui-file-close:focus,
+    .ui-file__state-container .ui-file-close:focus-visible {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+    }
+
+    .ui-file-state-container .ui-inline-loading-animation,
+    .ui-file-state-container .ui-inline-loading__animation,
+    .ui-file__state-container .ui-inline-loading-animation,
+    .ui-file__state-container .ui-inline-loading__animation {
+        margin-inline-end: calc(-1 * var(--ui-spacing-03));
+    }
+
+    /* ----------------------------------------------------------------------
+       Drop container
+       ---------------------------------------------------------------------- */
+
+    .ui-file-drop-container,
+    .ui-file__drop-container {
+        display: flex;
+        overflow: hidden;
+        align-items: flex-start;
+        justify-content: space-between;
+        block-size: 6rem;
+        margin: 0;
+        border: 1px dashed var(--ui-border-strong);
+        padding: var(--ui-spacing-05);
+        background: none;
+        color: inherit;
+        cursor: pointer;
+        font-size: var(--ui-type-body-compact-01-font-size);
+        font-weight: var(--ui-type-body-compact-01-font-weight);
+        line-height: var(--ui-type-body-compact-01-line-height);
+        letter-spacing: var(--ui-type-body-compact-01-letter-spacing);
+    }
+
+    .ui-file-drop-container-drag-over,
+    .ui-file__drop-container--drag-over {
+        background: none;
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+    }
+
+    /* ----------------------------------------------------------------------
+       Forced colors
+       ---------------------------------------------------------------------- */
+
+    @media screen and (-ms-high-contrast: active), (forced-colors: active) {
+        .ui-file-selected-file,
+        .ui-file__selected-file {
+            outline: 1px solid CanvasText;
+        }
+
+        .ui-file-selected-file-invalid,
+        .ui-file__selected-file--invalid,
+        .ui-file-selected-file-invalid-wrapper,
+        .ui-file__selected-file--invalid__wrapper {
+            outline-color: Mark;
+        }
+
+        .ui-file-browse-btn:focus,
+        .ui-file-browse-btn:focus-visible,
+        .ui-file-drop-container-drag-over,
+        .ui-file__drop-container--drag-over,
+        .ui-file-state-container .ui-file-close:focus,
+        .ui-file__state-container .ui-file-close:focus,
+        .ui-file-state-container .ui-file-complete:focus,
+        .ui-file__state-container .ui-file-complete:focus {
+            outline-color: Highlight;
+        }
+
+        .ui-file-state-container .ui-file-invalid,
+        .ui-file__state-container .ui-file-invalid {
+            fill: Mark;
+        }
+
+        .ui-file-browse-btn-disabled,
+        .ui-file-browse-btn--disabled,
+        .ui-file-label-disabled,
+        .ui-file--label--disabled,
+        .ui-label-description-disabled,
+        .ui-label-description--disabled {
+            color: GrayText;
+        }
     }
 }

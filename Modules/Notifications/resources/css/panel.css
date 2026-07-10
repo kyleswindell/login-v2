@@ -1,0 +1,283 @@
+/* ==========================================================================
+   File: Modules/Notifications/resources/css/notifications/panel.css
+   Purpose: Notification popover panel layout, filters, groups, empty state, and footer.
+
+   Notes:
+   - x-ui.popover owns the floating surface.
+   - x-ui.content-switcher, x-ui.switch, and x-ui.tag own their component visuals.
+   - This file only applies notification panel composition spacing and layout.
+   ========================================================================== */
+
+@layer components {
+    /* ----------------------------------------------------------------------
+       Panel shell
+       ---------------------------------------------------------------------- */
+
+    .ui-shell-notifications-menu {
+        display: flex;
+        flex-direction: column;
+        inline-size: 100%;
+        max-block-size: var(
+            --ui-shell-header-notifications-menu-max-block-size,
+            min(34rem, calc(100vh - var(--ui-shell-header-block-size) - 2rem))
+        );
+        overflow: hidden;
+        background-color: var(--ui-layer);
+        color: var(--ui-text-primary);
+    }
+
+    /* ----------------------------------------------------------------------
+       Panel header
+       ---------------------------------------------------------------------- */
+
+    .ui-shell-notifications-menu__header {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        align-items: start;
+        gap: var(--ui-spacing-05);
+        flex: 0 0 auto;
+        min-block-size: var(
+            --ui-shell-notifications-header-min-block-size,
+            5rem
+        );
+        padding: var(--ui-spacing-05);
+        border-block-end: var(--ui-shell-header-border-width) solid
+            var(--ui-border-subtle);
+    }
+
+    .ui-shell-notifications-menu__heading {
+        display: grid;
+        gap: var(--ui-spacing-01);
+        min-inline-size: 0;
+    }
+
+    .ui-shell-notifications-menu__title {
+        margin: 0;
+        color: var(--ui-text-primary);
+        font-size: var(--ui-type-heading-compact-01-font-size, 0.875rem);
+        font-weight: var(--ui-font-weight-semibold);
+        line-height: var(--ui-type-heading-compact-01-line-height, 1.125rem);
+    }
+
+    .ui-shell-notifications-menu__summary {
+        margin: 0;
+        color: var(--ui-text-secondary);
+        font-size: var(--ui-type-body-compact-01-font-size, 0.875rem);
+        font-weight: var(--ui-font-weight-regular);
+        line-height: var(--ui-type-body-compact-01-line-height, 1.25rem);
+    }
+
+    .ui-shell-notifications-menu__mark-all-form {
+        margin: 0;
+        padding: 0;
+    }
+
+    .ui-shell-notifications-menu__mark-all {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-block-size: 2rem;
+        border: 0;
+        padding: 0;
+        background: transparent;
+        color: var(--ui-link-primary);
+        font: inherit;
+        font-size: var(--ui-type-body-compact-01-font-size, 0.875rem);
+        line-height: var(--ui-type-body-compact-01-line-height, 1.25rem);
+        text-align: start;
+        cursor: pointer;
+    }
+
+    .ui-shell-notifications-menu__mark-all:hover {
+        color: var(--ui-link-primary-hover, var(--ui-link-primary));
+        text-decoration: underline;
+    }
+
+    .ui-shell-notifications-menu__mark-all:focus-visible {
+        outline: var(--ui-shell-focus-outline-width) solid var(--ui-focus);
+        outline-offset: var(--ui-shell-focus-outline-offset);
+    }
+
+    .ui-shell-notifications-menu__mark-all:disabled {
+        color: var(--ui-text-disabled);
+        cursor: not-allowed;
+        text-decoration: none;
+    }
+
+    /* ----------------------------------------------------------------------
+       Filter switcher composition
+       ---------------------------------------------------------------------- */
+
+    .ui-shell-notifications-menu__filters {
+        position: relative;
+        z-index: 3;
+        flex: 0 0 auto;
+        inline-size: auto;
+        margin-block: var(--ui-spacing-05);
+        margin-inline: var(--ui-spacing-05);
+    }
+
+    .ui-shell-notifications-menu__count-tag.ui-tag {
+        flex: 0 0 auto;
+        pointer-events: none;
+    }
+
+    .ui-shell-notifications-menu__count-tag[data-notification-count-empty="true"] {
+        display: none;
+    }
+
+    /* ----------------------------------------------------------------------
+       Scroll body and panels
+       ---------------------------------------------------------------------- */
+
+    .ui-shell-notifications-menu__body {
+        position: relative;
+        flex: 1 1 auto;
+        min-block-size: 0;
+        max-block-size: none;
+        padding-block-start: 0;
+        overflow-y: auto;
+        overscroll-behavior: contain;
+    }
+
+    .ui-shell-notifications-menu__panel {
+        display: block;
+    }
+
+    .ui-shell-notifications-menu__panel[hidden] {
+        display: none;
+    }
+
+    .ui-shell-notifications-menu__panel:focus {
+        outline: none;
+    }
+
+    /* ----------------------------------------------------------------------
+       Sticky group labels
+       ---------------------------------------------------------------------- */
+
+    .ui-shell-notifications-menu__section {
+        position: relative;
+        overflow: visible;
+        border-block-start: 0;
+    }
+
+    .ui-shell-notifications-menu__section-label {
+        position: sticky;
+        z-index: 2;
+        inset-block-start: 0;
+        display: flex;
+        align-items: center;
+        min-block-size: var(
+            --ui-shell-notifications-section-label-min-block-size,
+            2rem
+        );
+        margin: 0;
+        padding: 0 var(--ui-spacing-05);
+        background-color: var(--ui-layer-accent, var(--ui-layer-hover));
+        color: var(--ui-text-secondary);
+        box-shadow:
+            inset 0 1px 0 var(--ui-border-subtle),
+            inset 0 -1px 0 var(--ui-border-subtle);
+        font-size: var(--ui-type-label-01-font-size);
+        font-weight: var(--ui-font-weight-regular);
+        line-height: var(--ui-type-label-01-line-height);
+        cursor: default;
+    }
+
+    .ui-shell-notifications-menu__section:first-child
+        .ui-shell-notifications-menu__section-label {
+        box-shadow: inset 0 -1px 0 var(--ui-border-subtle);
+    }
+
+    /* ----------------------------------------------------------------------
+       Empty state
+       ---------------------------------------------------------------------- */
+
+    .ui-shell-notifications-menu__empty {
+        padding: var(--ui-spacing-07) var(--ui-spacing-05);
+        color: var(--ui-text-secondary);
+        font-size: var(--ui-type-body-compact-01-font-size);
+        line-height: var(--ui-type-body-compact-01-line-height);
+        text-align: center;
+    }
+
+    /* ----------------------------------------------------------------------
+       Panel footer
+       ---------------------------------------------------------------------- */
+
+    .ui-shell-notifications-menu__footer {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: var(--ui-spacing-05);
+        flex: 0 0 auto;
+        min-block-size: var(--ui-shell-header-block-size);
+        padding: 0 var(--ui-spacing-05);
+        border-block-start: var(--ui-shell-header-border-width) solid
+            var(--ui-border-subtle);
+        background-color: var(--ui-layer);
+    }
+
+    .ui-shell-notifications-menu__view-all {
+        display: inline-flex;
+        align-items: center;
+        min-block-size: var(--ui-shell-header-block-size);
+        color: var(--ui-link-primary);
+        font-size: var(--ui-type-body-compact-01-font-size);
+        line-height: var(--ui-type-body-compact-01-line-height);
+        text-decoration: none;
+    }
+
+    .ui-shell-notifications-menu__view-all:hover {
+        color: var(--ui-link-primary-hover, var(--ui-link-primary));
+        text-decoration: underline;
+    }
+
+    .ui-shell-notifications-menu__view-all:focus-visible {
+        outline: var(--ui-shell-focus-outline-width) solid var(--ui-focus);
+        outline-offset: var(--ui-shell-focus-outline-offset);
+    }
+
+    .ui-shell-notifications-menu__preferences {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        inline-size: var(--ui-shell-header-action-size);
+        block-size: var(--ui-shell-header-block-size);
+        color: var(--ui-icon-secondary);
+        text-decoration: none;
+    }
+
+    .ui-shell-notifications-menu__preferences:hover {
+        background-color: var(--ui-layer-hover);
+        color: var(--ui-icon-primary);
+        text-decoration: none;
+    }
+
+    .ui-shell-notifications-menu__preferences:focus-visible {
+        outline: var(--ui-shell-focus-outline-width) solid var(--ui-focus);
+        outline-offset: var(--ui-shell-focus-outline-offset);
+    }
+
+    .ui-shell-notifications-menu__preferences > svg,
+    .ui-shell-notifications-menu__preferences .ui-icon {
+        inline-size: 1rem;
+        block-size: 1rem;
+        fill: currentColor;
+    }
+
+    /* ----------------------------------------------------------------------
+       Responsive panel layout
+       ---------------------------------------------------------------------- */
+
+    @media (max-width: 30rem) {
+        .ui-shell-notifications-menu__header {
+            grid-template-columns: minmax(0, 1fr);
+        }
+
+        .ui-shell-notifications-menu__mark-all {
+            justify-self: start;
+        }
+    }
+}

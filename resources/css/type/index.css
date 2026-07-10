@@ -1,14 +1,10 @@
 /* ==========================================================================
    File: resources/css/type/index.css
    Purpose: Type package entrypoint.
-   Carbon reference:
-
-   * reference/carbon-main/packages/type/src/index.ts
-
    Notes:
-   - Mirrors Carbon Type package organization in CSS form.
-   - Keeps the app font stack; does not adopt IBM Plex.
-   - Type tokens and type utility classes are loaded before components.
+   - Loads app-owned type foundations, tokens, reset rules, and utilities.
+   - Keeps the app font stack.
+   - Import after base/index.css and before components/index.css.
    ========================================================================== */
 
 @import "./font-family.css";

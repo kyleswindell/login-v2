@@ -1,19 +1,62 @@
 /* ==========================================================================
    File: resources/css/type/styles.css
    Purpose: App type utility classes.
-   Carbon reference:
+   Reference source:
 
    * reference/carbon-main/packages/type/src/styles.ts
+   * reference/carbon-main/packages/type/scss/_classes.scss
 
    Notes:
    - Defines type utility classes only.
    - Classes consume tokens from resources/css/type/tokens.css.
+   - Preserves the app font-family decision from resources/css/type/font-family.css.
+   - Keeps app letter spacing at 0 through type tokens.
    ========================================================================== */
 
 @layer components {
     /* ----------------------------------------------------------------------
-   Type sets
-   ---------------------------------------------------------------------- */
+       Font family utilities
+       ---------------------------------------------------------------------- */
+
+    .ui-type-sans {
+        font-family: var(--ui-font-family-sans);
+    }
+
+    .ui-type-mono {
+        font-family: var(--ui-font-family-mono);
+    }
+
+    .ui-type-serif {
+        font-family: var(--ui-font-family-serif);
+    }
+
+    .ui-type-sans-condensed {
+        font-family: var(--ui-font-family-sans-condensed);
+    }
+
+    /* ----------------------------------------------------------------------
+       Font weight and style utilities
+       ---------------------------------------------------------------------- */
+
+    .ui-type-light {
+        font-weight: var(--ui-font-weight-light);
+    }
+
+    .ui-type-regular {
+        font-weight: var(--ui-font-weight-regular);
+    }
+
+    .ui-type-semibold {
+        font-weight: var(--ui-font-weight-semibold);
+    }
+
+    .ui-type-italic {
+        font-style: italic;
+    }
+
+    /* ----------------------------------------------------------------------
+       Type sets
+       ---------------------------------------------------------------------- */
 
     .ui-type-set-productive,
     .ui-type-set-expressive {
@@ -32,9 +75,24 @@
     }
 
     /* ----------------------------------------------------------------------
-   Small roles
-   ---------------------------------------------------------------------- */
+       Small roles
+       ---------------------------------------------------------------------- */
 
+    .ui-type-caption-01 {
+        font-size: var(--ui-type-caption-01-font-size);
+        font-weight: var(--ui-type-caption-01-font-weight);
+        line-height: var(--ui-type-caption-01-line-height);
+        letter-spacing: var(--ui-type-caption-01-letter-spacing);
+    }
+
+    .ui-type-caption-02 {
+        font-size: var(--ui-type-caption-02-font-size);
+        font-weight: var(--ui-type-caption-02-font-weight);
+        line-height: var(--ui-type-caption-02-line-height);
+        letter-spacing: var(--ui-type-caption-02-letter-spacing);
+    }
+
+    .ui-type-label-01,
     .ui-type-productive-label,
     .ui-type-expressive-label {
         font-size: var(--ui-type-label-01-font-size);
@@ -43,6 +101,14 @@
         letter-spacing: var(--ui-type-label-01-letter-spacing);
     }
 
+    .ui-type-label-02 {
+        font-size: var(--ui-type-label-02-font-size);
+        font-weight: var(--ui-type-label-02-font-weight);
+        line-height: var(--ui-type-label-02-line-height);
+        letter-spacing: var(--ui-type-label-02-letter-spacing);
+    }
+
+    .ui-type-helper-text-01,
     .ui-type-productive-helper,
     .ui-type-expressive-helper {
         font-size: var(--ui-type-helper-text-01-font-size);
@@ -51,6 +117,14 @@
         letter-spacing: var(--ui-type-helper-text-01-letter-spacing);
     }
 
+    .ui-type-helper-text-02 {
+        font-size: var(--ui-type-helper-text-02-font-size);
+        font-weight: var(--ui-type-helper-text-02-font-weight);
+        line-height: var(--ui-type-helper-text-02-line-height);
+        letter-spacing: var(--ui-type-helper-text-02-letter-spacing);
+    }
+
+    .ui-type-legal-01,
     .ui-type-productive-legal,
     .ui-type-expressive-legal {
         font-size: var(--ui-type-legal-01-font-size);
@@ -59,10 +133,19 @@
         letter-spacing: var(--ui-type-legal-01-letter-spacing);
     }
 
-    /* ----------------------------------------------------------------------
-   Body roles
-   ---------------------------------------------------------------------- */
+    .ui-type-legal-02 {
+        font-size: var(--ui-type-legal-02-font-size);
+        font-weight: var(--ui-type-legal-02-font-weight);
+        line-height: var(--ui-type-legal-02-line-height);
+        letter-spacing: var(--ui-type-legal-02-letter-spacing);
+    }
 
+    /* ----------------------------------------------------------------------
+       Body roles
+       ---------------------------------------------------------------------- */
+
+    .ui-type-body-short-01,
+    .ui-type-body-compact-01,
     .ui-type-productive-body-compact {
         font-size: var(--ui-type-body-compact-01-font-size);
         font-weight: var(--ui-type-body-compact-01-font-weight);
@@ -70,13 +153,8 @@
         letter-spacing: var(--ui-type-body-compact-01-letter-spacing);
     }
 
-    .ui-type-productive-body {
-        font-size: var(--ui-type-body-01-font-size);
-        font-weight: var(--ui-type-body-01-font-weight);
-        line-height: var(--ui-type-body-01-line-height);
-        letter-spacing: var(--ui-type-body-01-letter-spacing);
-    }
-
+    .ui-type-body-short-02,
+    .ui-type-body-compact-02,
     .ui-type-expressive-body-compact {
         font-size: var(--ui-type-body-compact-02-font-size);
         font-weight: var(--ui-type-body-compact-02-font-weight);
@@ -84,6 +162,17 @@
         letter-spacing: var(--ui-type-body-compact-02-letter-spacing);
     }
 
+    .ui-type-body-long-01,
+    .ui-type-body-01,
+    .ui-type-productive-body {
+        font-size: var(--ui-type-body-01-font-size);
+        font-weight: var(--ui-type-body-01-font-weight);
+        line-height: var(--ui-type-body-01-line-height);
+        letter-spacing: var(--ui-type-body-01-letter-spacing);
+    }
+
+    .ui-type-body-long-02,
+    .ui-type-body-02,
     .ui-type-expressive-body {
         font-size: var(--ui-type-body-02-font-size);
         font-weight: var(--ui-type-body-02-font-weight);
@@ -92,116 +181,8 @@
     }
 
     /* ----------------------------------------------------------------------
-   Productive headings
-   ---------------------------------------------------------------------- */
-
-    .ui-type-productive-heading-compact,
-    .ui-type-productive-heading-01 {
-        font-size: var(--ui-type-heading-compact-01-font-size);
-        font-weight: var(--ui-type-heading-compact-01-font-weight);
-        line-height: var(--ui-type-heading-compact-01-line-height);
-        letter-spacing: var(--ui-type-heading-compact-01-letter-spacing);
-    }
-
-    .ui-type-productive-heading-02 {
-        font-size: var(--ui-type-heading-compact-02-font-size);
-        font-weight: var(--ui-type-heading-compact-02-font-weight);
-        line-height: var(--ui-type-heading-compact-02-line-height);
-        letter-spacing: var(--ui-type-heading-compact-02-letter-spacing);
-    }
-
-    .ui-type-productive-heading-03 {
-        font-size: var(--ui-type-heading-03-font-size);
-        font-weight: var(--ui-type-heading-03-font-weight);
-        line-height: var(--ui-type-heading-03-line-height);
-        letter-spacing: var(--ui-type-heading-03-letter-spacing);
-    }
-
-    .ui-type-productive-heading-04 {
-        font-size: var(--ui-type-heading-04-font-size);
-        font-weight: var(--ui-type-heading-04-font-weight);
-        line-height: var(--ui-type-heading-04-line-height);
-        letter-spacing: var(--ui-type-heading-04-letter-spacing);
-    }
-
-    .ui-type-productive-heading-05 {
-        font-size: var(--ui-type-heading-05-font-size);
-        font-weight: var(--ui-type-heading-05-font-weight);
-        line-height: var(--ui-type-heading-05-line-height);
-        letter-spacing: var(--ui-type-heading-05-letter-spacing);
-    }
-
-    .ui-type-productive-heading-06 {
-        font-size: var(--ui-type-heading-06-font-size);
-        font-weight: var(--ui-type-heading-06-font-weight);
-        line-height: var(--ui-type-heading-06-line-height);
-        letter-spacing: var(--ui-type-heading-06-letter-spacing);
-    }
-
-    /* ----------------------------------------------------------------------
-   Expressive and fluid headings
-   ---------------------------------------------------------------------- */
-
-    .ui-type-expressive-heading-compact,
-    .ui-type-expressive-heading-01 {
-        font-size: var(--ui-type-heading-compact-02-font-size);
-        font-weight: var(--ui-type-heading-compact-02-font-weight);
-        line-height: var(--ui-type-heading-compact-02-line-height);
-        letter-spacing: var(--ui-type-heading-compact-02-letter-spacing);
-    }
-
-    .ui-type-expressive-heading-02 {
-        font-size: var(--ui-type-scale-04);
-        font-weight: var(--ui-font-weight-semibold);
-        line-height: 1.44444;
-        letter-spacing: 0;
-    }
-
-    .ui-type-expressive-heading-03 {
-        font-size: var(--ui-type-fluid-heading-03-font-size);
-        font-weight: var(--ui-type-fluid-heading-03-font-weight);
-        line-height: var(--ui-type-fluid-heading-03-line-height);
-        letter-spacing: var(--ui-type-fluid-heading-03-letter-spacing);
-    }
-
-    .ui-type-expressive-heading-04 {
-        font-size: var(--ui-type-fluid-heading-04-font-size);
-        font-weight: var(--ui-type-fluid-heading-04-font-weight);
-        line-height: var(--ui-type-fluid-heading-04-line-height);
-        letter-spacing: var(--ui-type-fluid-heading-04-letter-spacing);
-    }
-
-    .ui-type-expressive-heading-05 {
-        font-size: var(--ui-type-fluid-heading-05-font-size);
-        font-weight: var(--ui-type-fluid-heading-05-font-weight);
-        line-height: var(--ui-type-fluid-heading-05-line-height);
-        letter-spacing: var(--ui-type-fluid-heading-05-letter-spacing);
-    }
-
-    .ui-type-expressive-heading-06 {
-        font-size: var(--ui-type-fluid-heading-06-font-size);
-        font-weight: var(--ui-type-fluid-heading-06-font-weight);
-        line-height: var(--ui-type-fluid-heading-06-line-height);
-        letter-spacing: var(--ui-type-fluid-heading-06-letter-spacing);
-    }
-
-    .ui-type-expressive-display-01 {
-        font-size: var(--ui-type-fluid-display-01-font-size);
-        font-weight: var(--ui-type-fluid-display-01-font-weight);
-        line-height: var(--ui-type-fluid-display-01-line-height);
-        letter-spacing: var(--ui-type-fluid-display-01-letter-spacing);
-    }
-
-    .ui-type-expressive-display-02 {
-        font-size: var(--ui-type-fluid-display-02-font-size);
-        font-weight: var(--ui-type-fluid-display-02-font-weight);
-        line-height: var(--ui-type-fluid-display-02-line-height);
-        letter-spacing: var(--ui-type-fluid-display-02-letter-spacing);
-    }
-
-    /* ----------------------------------------------------------------------
-   Code roles
-   ---------------------------------------------------------------------- */
+       Code roles
+       ---------------------------------------------------------------------- */
 
     .ui-type-code-01,
     .ui-type-code-02 {
@@ -218,5 +199,235 @@
     .ui-type-code-02 {
         font-size: var(--ui-type-code-02-font-size);
         line-height: var(--ui-type-code-02-line-height);
+    }
+
+    /* ----------------------------------------------------------------------
+       Fixed heading roles
+       ---------------------------------------------------------------------- */
+
+    .ui-type-heading-01 {
+        font-size: var(--ui-type-heading-01-font-size);
+        font-weight: var(--ui-type-heading-01-font-weight);
+        line-height: var(--ui-type-heading-01-line-height);
+        letter-spacing: var(--ui-type-heading-01-letter-spacing);
+    }
+
+    .ui-type-heading-02 {
+        font-size: var(--ui-type-heading-02-font-size);
+        font-weight: var(--ui-type-heading-02-font-weight);
+        line-height: var(--ui-type-heading-02-line-height);
+        letter-spacing: var(--ui-type-heading-02-letter-spacing);
+    }
+
+    .ui-type-heading-compact-01,
+    .ui-type-productive-heading-compact,
+    .ui-type-productive-heading-01 {
+        font-size: var(--ui-type-heading-compact-01-font-size);
+        font-weight: var(--ui-type-heading-compact-01-font-weight);
+        line-height: var(--ui-type-heading-compact-01-line-height);
+        letter-spacing: var(--ui-type-heading-compact-01-letter-spacing);
+    }
+
+    .ui-type-heading-compact-02,
+    .ui-type-productive-heading-02 {
+        font-size: var(--ui-type-heading-compact-02-font-size);
+        font-weight: var(--ui-type-heading-compact-02-font-weight);
+        line-height: var(--ui-type-heading-compact-02-line-height);
+        letter-spacing: var(--ui-type-heading-compact-02-letter-spacing);
+    }
+
+    .ui-type-heading-03,
+    .ui-type-productive-heading-03 {
+        font-size: var(--ui-type-heading-03-font-size);
+        font-weight: var(--ui-type-heading-03-font-weight);
+        line-height: var(--ui-type-heading-03-line-height);
+        letter-spacing: var(--ui-type-heading-03-letter-spacing);
+    }
+
+    .ui-type-heading-04,
+    .ui-type-productive-heading-04 {
+        font-size: var(--ui-type-heading-04-font-size);
+        font-weight: var(--ui-type-heading-04-font-weight);
+        line-height: var(--ui-type-heading-04-line-height);
+        letter-spacing: var(--ui-type-heading-04-letter-spacing);
+    }
+
+    .ui-type-heading-05,
+    .ui-type-productive-heading-05 {
+        font-size: var(--ui-type-heading-05-font-size);
+        font-weight: var(--ui-type-heading-05-font-weight);
+        line-height: var(--ui-type-heading-05-line-height);
+        letter-spacing: var(--ui-type-heading-05-letter-spacing);
+    }
+
+    .ui-type-heading-06,
+    .ui-type-productive-heading-06 {
+        font-size: var(--ui-type-heading-06-font-size);
+        font-weight: var(--ui-type-heading-06-font-weight);
+        line-height: var(--ui-type-heading-06-line-height);
+        letter-spacing: var(--ui-type-heading-06-letter-spacing);
+    }
+
+    .ui-type-heading-07,
+    .ui-type-productive-heading-07 {
+        font-size: var(--ui-type-heading-07-font-size);
+        font-weight: var(--ui-type-heading-07-font-weight);
+        line-height: var(--ui-type-heading-07-line-height);
+        letter-spacing: var(--ui-type-heading-07-letter-spacing);
+    }
+
+    /* ----------------------------------------------------------------------
+       Expressive heading roles
+       ---------------------------------------------------------------------- */
+
+    .ui-type-expressive-heading-compact,
+    .ui-type-expressive-heading-01 {
+        font-size: var(--ui-type-expressive-heading-01-font-size);
+        font-weight: var(--ui-type-expressive-heading-01-font-weight);
+        line-height: var(--ui-type-expressive-heading-01-line-height);
+        letter-spacing: var(--ui-type-expressive-heading-01-letter-spacing);
+    }
+
+    .ui-type-expressive-heading-02 {
+        font-size: var(--ui-type-expressive-heading-02-font-size);
+        font-weight: var(--ui-type-expressive-heading-02-font-weight);
+        line-height: var(--ui-type-expressive-heading-02-line-height);
+        letter-spacing: var(--ui-type-expressive-heading-02-letter-spacing);
+    }
+
+    .ui-type-expressive-heading-03 {
+        font-size: var(--ui-type-expressive-heading-03-font-size);
+        font-weight: var(--ui-type-expressive-heading-03-font-weight);
+        line-height: var(--ui-type-expressive-heading-03-line-height);
+        letter-spacing: var(--ui-type-expressive-heading-03-letter-spacing);
+    }
+
+    .ui-type-expressive-heading-04 {
+        font-size: var(--ui-type-expressive-heading-04-font-size);
+        font-weight: var(--ui-type-expressive-heading-04-font-weight);
+        line-height: var(--ui-type-expressive-heading-04-line-height);
+        letter-spacing: var(--ui-type-expressive-heading-04-letter-spacing);
+    }
+
+    .ui-type-expressive-heading-05 {
+        font-size: var(--ui-type-expressive-heading-05-font-size);
+        font-weight: var(--ui-type-expressive-heading-05-font-weight);
+        line-height: var(--ui-type-expressive-heading-05-line-height);
+        letter-spacing: var(--ui-type-expressive-heading-05-letter-spacing);
+    }
+
+    .ui-type-expressive-heading-06 {
+        font-size: var(--ui-type-expressive-heading-06-font-size);
+        font-weight: var(--ui-type-expressive-heading-06-font-weight);
+        line-height: var(--ui-type-expressive-heading-06-line-height);
+        letter-spacing: var(--ui-type-expressive-heading-06-letter-spacing);
+    }
+
+    /* ----------------------------------------------------------------------
+       Fluid heading roles
+       ---------------------------------------------------------------------- */
+
+    .ui-type-fluid-heading-03 {
+        font-size: var(--ui-type-fluid-heading-03-font-size);
+        font-weight: var(--ui-type-fluid-heading-03-font-weight);
+        line-height: var(--ui-type-fluid-heading-03-line-height);
+        letter-spacing: var(--ui-type-fluid-heading-03-letter-spacing);
+    }
+
+    .ui-type-fluid-heading-04 {
+        font-size: var(--ui-type-fluid-heading-04-font-size);
+        font-weight: var(--ui-type-fluid-heading-04-font-weight);
+        line-height: var(--ui-type-fluid-heading-04-line-height);
+        letter-spacing: var(--ui-type-fluid-heading-04-letter-spacing);
+    }
+
+    .ui-type-fluid-heading-05 {
+        font-size: var(--ui-type-fluid-heading-05-font-size);
+        font-weight: var(--ui-type-fluid-heading-05-font-weight);
+        line-height: var(--ui-type-fluid-heading-05-line-height);
+        letter-spacing: var(--ui-type-fluid-heading-05-letter-spacing);
+    }
+
+    .ui-type-fluid-heading-06 {
+        font-size: var(--ui-type-fluid-heading-06-font-size);
+        font-weight: var(--ui-type-fluid-heading-06-font-weight);
+        line-height: var(--ui-type-fluid-heading-06-line-height);
+        letter-spacing: var(--ui-type-fluid-heading-06-letter-spacing);
+    }
+
+    /* ----------------------------------------------------------------------
+       Paragraph roles
+       ---------------------------------------------------------------------- */
+
+    .ui-type-expressive-paragraph-01,
+    .ui-type-fluid-paragraph-01 {
+        font-size: var(--ui-type-fluid-paragraph-01-font-size);
+        font-weight: var(--ui-type-fluid-paragraph-01-font-weight);
+        line-height: var(--ui-type-fluid-paragraph-01-line-height);
+        letter-spacing: var(--ui-type-fluid-paragraph-01-letter-spacing);
+    }
+
+    /* ----------------------------------------------------------------------
+       Quotation roles
+       ---------------------------------------------------------------------- */
+
+    .ui-type-quotation-01,
+    .ui-type-expressive-quotation-01,
+    .ui-type-fluid-quotation-01 {
+        font-family: var(--ui-type-fluid-quotation-01-font-family);
+        font-size: var(--ui-type-fluid-quotation-01-font-size);
+        font-weight: var(--ui-type-fluid-quotation-01-font-weight);
+        line-height: var(--ui-type-fluid-quotation-01-line-height);
+        letter-spacing: var(--ui-type-fluid-quotation-01-letter-spacing);
+    }
+
+    .ui-type-quotation-02,
+    .ui-type-expressive-quotation-02,
+    .ui-type-fluid-quotation-02 {
+        font-family: var(--ui-type-fluid-quotation-02-font-family);
+        font-size: var(--ui-type-fluid-quotation-02-font-size);
+        font-weight: var(--ui-type-fluid-quotation-02-font-weight);
+        line-height: var(--ui-type-fluid-quotation-02-line-height);
+        letter-spacing: var(--ui-type-fluid-quotation-02-letter-spacing);
+    }
+
+    /* ----------------------------------------------------------------------
+       Display roles
+       ---------------------------------------------------------------------- */
+
+    .ui-type-display-01,
+    .ui-type-expressive-display-01,
+    .ui-type-fluid-display-01 {
+        font-size: var(--ui-type-fluid-display-01-font-size);
+        font-weight: var(--ui-type-fluid-display-01-font-weight);
+        line-height: var(--ui-type-fluid-display-01-line-height);
+        letter-spacing: var(--ui-type-fluid-display-01-letter-spacing);
+    }
+
+    .ui-type-display-02,
+    .ui-type-expressive-display-02,
+    .ui-type-fluid-display-02 {
+        font-size: var(--ui-type-fluid-display-02-font-size);
+        font-weight: var(--ui-type-fluid-display-02-font-weight);
+        line-height: var(--ui-type-fluid-display-02-line-height);
+        letter-spacing: var(--ui-type-fluid-display-02-letter-spacing);
+    }
+
+    .ui-type-display-03,
+    .ui-type-expressive-display-03,
+    .ui-type-fluid-display-03 {
+        font-size: var(--ui-type-fluid-display-03-font-size);
+        font-weight: var(--ui-type-fluid-display-03-font-weight);
+        line-height: var(--ui-type-fluid-display-03-line-height);
+        letter-spacing: var(--ui-type-fluid-display-03-letter-spacing);
+    }
+
+    .ui-type-display-04,
+    .ui-type-expressive-display-04,
+    .ui-type-fluid-display-04 {
+        font-size: var(--ui-type-fluid-display-04-font-size);
+        font-weight: var(--ui-type-fluid-display-04-font-weight);
+        line-height: var(--ui-type-fluid-display-04-line-height);
+        letter-spacing: var(--ui-type-fluid-display-04-letter-spacing);
     }
 }

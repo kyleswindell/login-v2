@@ -6,9 +6,9 @@ status: implemented-pending-correction
 system_maturity: partial
 category: data-display
 priority: tier-b-common-reusable-component
-ui_reference_route: /platform/ui-reference/components/list
+rendered_evidence_route: null
 canonical_doc: docs/02-standards/ui/components/list.md
-source_owner: /platform/ui-reference/components/list
+source_owner: not installed
 blade_api: []
 native_api:
   - ul
@@ -17,7 +17,7 @@ native_api:
 javascript_api: []
 source_files:
   - resources/css/app.css
-  - route-owned UI Reference view for /platform/ui-reference/components/list
+  - route-owned rendered evidence view for not installed
 foundation_elements:
   - color
   - spacing
@@ -70,10 +70,10 @@ carbon_reference:
 - [11. Content contract](#11-content-contract)
 - [12. Prohibited usage](#12-prohibited-usage)
 - [13. Deferred or gated capabilities](#13-deferred-or-gated-capabilities)
-- [14. Implementation and UI Reference Checklist](#14-implementation-and-ui-reference-checklist)
+- [14. Implementation and Rendered Evidence Checklist](#14-implementation-and-ui-reference-checklist)
   - [14.1. Implementation checklist](#141-implementation-checklist)
-  - [14.2. UI Reference proof checklist](#142-ui-reference-proof-checklist)
-- [15. UI Reference requirements](#15-ui-reference-requirements)
+  - [14.2. rendered evidence proof checklist](#142-ui-reference-proof-checklist)
+- [15. Rendered evidence requirements](#15-ui-reference-requirements)
 - [16. Testing and acceptance criteria](#16-testing-and-acceptance-criteria)
   - [16.1. Suggested automated assertions:](#161-suggested-automated-assertions)
 - [17. Related APIs](#17-related-apis)
@@ -83,7 +83,7 @@ carbon_reference:
 
 List presents ordered or unordered body content as a vertical, scannable group.
 
-Canonical API owner: `/platform/ui-reference/components/list`. Use this Component API instead of creating local markup, styling, density, marker behavior, or body-content list variants for the same UI role.
+Canonical API owner: `not installed`. Use this Component API instead of creating local markup, styling, density, marker behavior, or body-content list variants for the same UI role.
 
 List is the installed Login App 2.0 body-list API. It owns native list semantics, ordered and unordered variants, marker styling, item spacing, compact density, nested hierarchy spacing, long-content wrapping, empty/loading presentation for data-backed lists, current/focus treatment when items contain approved interactive children, and token-backed typography/color behavior. It does not own table structure, sortable data, selection controls, navigation menus, tree navigation, contained row actions, or page-level layout.
 
@@ -98,7 +98,7 @@ List is the installed Login App 2.0 body-list API. It owns native list semantics
 - Support nested lists only for simple hierarchy where two visible levels are enough to understand the content.
 - Keep interactive children owned by their own Component APIs, such as Link, Button, Checkbox, or Toggle.
 - Consume Foundation Element APIs for color, spacing, typography, themes, and 2x Grid where placement is relevant.
-- Prove ordered, unordered, nested, content-only, density, loading, empty, current/focus, overflow, responsive, and developer implementation behavior on the UI Reference page.
+- Prove ordered, unordered, nested, content-only, density, loading, empty, current/focus, overflow, responsive, and developer implementation behavior on the rendered evidence page.
 
 ### 1.2. Non-owned responsibilities:
 
@@ -122,17 +122,17 @@ Carbon alignment note: Carbon treats List as related vertical content with unord
 | Component slug               | `list`                                                                                              |
 | Category                     | Data display                                                                                        |
 | Priority                     | Tier B - Common reusable component                                                                  |
-| UI Reference route           | `/platform/ui-reference/components/list`                                                            |
+| Rendered evidence route           | `not installed`                                                            |
 | Canonical doc                | `docs/02-standards/ui/components/list.md`                                                           |
-| Source owner                 | `/platform/ui-reference/components/list`                                                            |
+| Source owner                 | `not installed`                                                            |
 | Blade API                    | No dedicated `x-ui.list` Blade component is documented as installed                                 |
 | Native API                   | `<ul>`; `<ol>`; `<li>`                                                                              |
 | JavaScript API               | None required for baseline list behavior                                                            |
-| Source files                 | `resources/css/app.css`; route-owned UI Reference view for `/platform/ui-reference/components/list` |
+| Source files                 | `resources/css/app.css`; route-owned rendered evidence view for `not installed` |
 | Foundation Elements consumed | Color, Spacing, Typography, Themes, 2x Grid where list placement is relevant                        |
 | Carbon benchmark             | Carbon List usage, style, code, and accessibility guidance                                          |
 
-`Approved API` means the installed route and examples exist, but the canonical standard, UI Reference proof, and tests must be corrected so List is documented as a native semantic body-content component with explicit variants, density, states, and composition boundaries instead of placeholder API text.
+`Approved API` means the installed route and examples exist, but the canonical standard, rendered evidence proof, and tests must be corrected so List is documented as a native semantic body-content component with explicit variants, density, states, and composition boundaries instead of placeholder API text.
 
 ## 3. Installed standard
 
@@ -253,7 +253,7 @@ Use the native API and `ui-list` classes instead of hand-building marker, spacin
 | JavaScript          | No dedicated JavaScript controller required                                               |
 | Data attributes     | No public data attributes for baseline List behavior                                      |
 | CSS namespace       | App-owned `ui-list*` classes documented by this standard and the component implementation |
-| Source owner        | `/platform/ui-reference/components/list`                                                  |
+| Source owner        | `not installed`                                                  |
 | Token ownership     | Foundation Color, Spacing, Typography, Themes, and 2x Grid where composed in layouts      |
 
 ### 4.3. Markup and class contract
@@ -273,11 +273,11 @@ Use the native API and `ui-list` classes instead of hand-building marker, spacin
 | `.ui-list-current`   | Current state class           | Implemented                  | required proof                 | Optional / Visual companion to `aria-current` on the interactive child.                       |
 | `.ui-list-disabled`  | Disabled state class          | Implemented / required proof | Optional                       | Visual state only. Disabled semantics must come from the child Component API.                 |
 | `start`              | Native ordered-list attribute | Implemented                  | Optional                       | Use only when an ordered sequence continues from a prior sequence.                            |
-| `reversed`           | Native ordered-list attribute | Gated                        | Optional                       | Requires UI Reference proof before production use because number order affects comprehension. |
+| `reversed`           | Native ordered-list attribute | Gated                        | Optional                       | Requires rendered evidence proof before production use because number order affects comprehension. |
 | `type`               | Native ordered-list attribute | Not public                   | No                             | Marker style is owned by the component CSS contract, not feature views.                       |
 | `role`               | ARIA                          | Not needed by default        | No                             | Use native list semantics. Add ARIA only if a documented CSS change removes native semantics. |
 
-Any class, attribute, or behavior not listed here is not public. If a feature needs another option, update the component implementation, this standard, and the UI Reference proof before use.
+Any class, attribute, or behavior not listed here is not public. If a feature needs another option, update the component implementation, this standard, and the rendered evidence proof before use.
 
 ### 4.4. Variant contract
 
@@ -311,7 +311,7 @@ Any class, attribute, or behavior not listed here is not public. If a feature ne
 | Empty state                 | State         | Implemented / required proof  | `.ui-list-empty` visible message                              | Do not render empty list markup as the only state.                        |
 | Loading/skeleton            | State         | Implemented / required proof  | `.ui-list-skeleton` or Loading/Inline loading composition     | Use only while data-backed list content is pending.                       |
 | Two-digit ordered alignment | Modifier      | Implemented / required proof  | Component-owned ordered-list CSS                              | Keeps 10+ item markers readable without feature-local CSS.                |
-| Reversed ordering           | Native option | Gated                         | `reversed`                                                    | Requires specific UI Reference proof before use.                          |
+| Reversed ordering           | Native option | Gated                         | `reversed`                                                    | Requires specific rendered evidence proof before use.                          |
 | Custom marker icons         | Modifier      | Not allowed                   | none                                                          | List does not expose an icon marker API.                                  |
 | Selectable list             | Mode          | Not owned by List             | none                                                          | Use Checkbox, Radio button, Data table, or a Pattern-owned selection API. |
 | Interactive tree            | Mode          | Deferred / separate component | none                                                          | Use Tree view only when its API is accepted and proved.                   |
@@ -388,7 +388,7 @@ Feature views must not create `list-*`, Bootstrap `.list-group` patterns, raw ut
 | Helper/API                | Status                   | Rule                                                                                    |
 | ------------------------- | ------------------------ | --------------------------------------------------------------------------------------- |
 | `x-ui.list`               | Not installed / deferred | Do not call until a future Component standard installs it.                              |
-| `x-ui.code-snippet`       | Related Component        | Use for developer examples on the UI Reference page, not for production list rendering. |
+| `x-ui.code-snippet`       | Related Component        | Use for developer examples on the rendered evidence page, not for production list rendering. |
 | Link Component            | Related Component        | Use for links inside list items. Link owns focus, hover, and visited/external behavior. |
 | Loading or Inline loading | Related Component        | Use when a parent Pattern chooses a loading indicator instead of skeleton rows.         |
 
@@ -492,25 +492,25 @@ Feature views must not create `list-*`, Bootstrap `.list-group` patterns, raw ut
 - Do not use horizontal list items for body-content lists.
 - Do not use icons as custom markers through List.
 - Do not create state-only local CSS for current, disabled, loading, empty, focus, or responsive behavior.
-- Do not render placeholder copy such as `Component-specific API pending correction` or `Allowed variants: None` on the implemented UI Reference page.
+- Do not render placeholder copy such as `Component-specific API pending correction` or `Allowed variants: None` on the implemented rendered evidence page.
 
 ## 13. Deferred or gated capabilities
 
-No deferred capability blocks the installed native/class List API. Future extensions still require an updated Component standard and UI Reference proof before production use.
+No deferred capability blocks the installed native/class List API. Future extensions still require an updated Component standard and rendered evidence proof before production use.
 
 | Capability                                 | Status                          | Gate                                                                                      |
 | ------------------------------------------ | ------------------------------- | ----------------------------------------------------------------------------------------- |
 | Dedicated `x-ui.list` Blade component      | Deferred unless later installed | Requires public props, slots, class mapping, accessibility proof, and tests.              |
 | Dedicated `x-ui.list-item` Blade component | Deferred unless later installed | Requires item slot contract, child Component boundaries, state mapping, and tests.        |
 | Selectable list/listbox behavior           | Not owned by List               | Use Checkbox, Radio button, Multiselect when implemented, or Data table selection.        |
-| Drag-and-drop or reorderable list          | Deferred / Pattern-owned        | Requires keyboard reordering, announcements, persistence model, and UI Reference proof.   |
+| Drag-and-drop or reorderable list          | Deferred / Pattern-owned        | Requires keyboard reordering, announcements, persistence model, and rendered evidence proof.   |
 | Virtualized long list                      | Deferred / Pattern-owned        | Requires performance owner, screen-reader strategy, focus restoration, and loading proof. |
 | Deep expandable hierarchy                  | Deferred / separate component   | Use Tree view only when its approved API exists.                                          |
 | Bordered contained rows                    | Deferred / separate component   | Use Contained list only when its approved API exists.                                     |
 | Custom marker icons                        | Gated                           | Requires Icons Element approval, marker semantics proof, and theme proof.                 |
-| Reversed ordered list                      | Gated                           | Requires UI Reference proof showing comprehension and number alignment.                   |
+| Reversed ordered list                      | Gated                           | Requires rendered evidence proof showing comprehension and number alignment.                   |
 
-## 14. Implementation and UI Reference Checklist
+## 14. Implementation and Rendered Evidence Checklist
 ### 14.1. Implementation checklist
 | Requirement                | Standard expectation                                                                                                                               |
 | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -519,9 +519,9 @@ No deferred capability blocks the installed native/class List API. Future extens
 | States                     | Default, hover, focus-visible, active/pressed, disabled, loading, validation, selected, empty, or not-applicable states are defined as relevant.   |
 | Accessibility/content      | Keyboard, focus, naming, ARIA, contrast, reduced-motion, label, helper, error, and copy requirements are defined.                                  |
 | Element consumption        | Required Color, Spacing, Typography, Icons, Motion, Themes, and 2x Grid dependencies are named.                                                    |
-| Tests                      | Source/API assertions and UI Reference route assertions block generic fallback content.                                                            |
+| Tests                      | Source/API assertions and Rendered evidence route assertions block generic fallback content.                                                            |
 
-### 14.2. UI Reference proof checklist
+### 14.2. rendered evidence proof checklist
 | Requirement               | Visual proof expectation                                                                              |
 | ------------------------- | ----------------------------------------------------------------------------------------------------- |
 | Live examples             | The page renders production examples through the documented API or explicit native/class contract.    |
@@ -530,9 +530,9 @@ No deferred capability blocks the installed native/class List API. Future extens
 | Developer implementation  | Real canonical calls and token-backed code snippets appear instead of placeholder comments.           |
 | Related APIs              | Nearby Components, owning Patterns, consumed Elements, source files, and canonical docs are linked.   |
 | Manual review             | The page provides enough rendered proof for visual review of behavior, layout, and state correctness. |
-## 15. UI Reference requirements
+## 15. Rendered evidence requirements
 
-The UI Reference page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
+The rendered evidence page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
 
 The List page is a data-display component reference page. It should use grouped examples, variant comparison, density comparison, state tables, nested boundary proof, content behavior proof, responsive/grid proof, and developer implementation examples. It does not need to force every example into the Accordion-style tab model.
 
@@ -559,7 +559,7 @@ The page must not display generic fallback/reference sections or placeholder dev
 
 ## 16. Testing and acceptance criteria
 
-- `/platform/ui-reference/components/list` returns 200 for authorized users.
+- `not installed` returns 200 for authorized users.
 - The page shows the installed API, states, variants/options, prohibited usage, deferred gates, and Foundation Elements consumed.
 - Implemented APIs render production examples; deferred APIs render trigger conditions instead of fake controls.
 - The Purpose, Use cases, Component contract, Live examples, and Related components and patterns cards render in that top-level order.
@@ -573,14 +573,14 @@ The page must not display generic fallback/reference sections or placeholder dev
 - Loading examples include skeleton rows or Loading/Inline loading composition with accessible status behavior.
 - Empty examples render visible empty-state copy and do not present an empty root list as complete UI.
 - Developer examples use native `<ul>`, `<ol>`, and `<li>` markup with app-owned `ui-list` classes.
-- The UI Reference page does not present `x-ui.list` as an installed public API unless this standard is updated.
-- The UI Reference page does not present direct Carbon classes, Bootstrap list groups, raw utility clusters, or local marker CSS as approved implementation.
+- The rendered evidence page does not present `x-ui.list` as an installed public API unless this standard is updated.
+- The rendered evidence page does not present direct Carbon classes, Bootstrap list groups, raw utility clusters, or local marker CSS as approved implementation.
 - No generic placeholder content appears.
 
 ### 16.1. Suggested automated assertions:
 
 ```php
-$response = $this->actingAs($admin)->get('/platform/ui-reference/components/list');
+$response = $this->actingAs($admin)->get('not installed');
 
 $response->assertOk();
 $response->assertSee('List');
@@ -624,24 +624,24 @@ For implementation tests, add page-specific assertions that the rendered example
 
 | API                 | Route                                                          |
 | ------------------- | -------------------------------------------------------------- |
-| Components overview | `/platform/ui-reference/components`                            |
-| Link                | `/platform/ui-reference/components/link`                       |
-| Data table          | `/platform/ui-reference/components/data-table`                 |
-| Structured list     | `/platform/ui-reference/components/structured-list`            |
-| Contained list      | `/platform/ui-reference/components/contained-list`             |
-| Tile                | `/platform/ui-reference/components/tile`                       |
-| Code snippet        | `/platform/ui-reference/components/code-snippet`               |
-| Loading             | `/platform/ui-reference/components/loading`                    |
-| Inline loading      | `/platform/ui-reference/components/inline-loading`             |
-| Accordion           | `/platform/ui-reference/components/accordion`                  |
-| Tree view           | `/platform/ui-reference/components/tree-view`                  |
-| Forms pattern       | `/platform/ui-reference/patterns/forms`                        |
-| Layout Pattern      | `/platform/ui-reference/patterns/layout`                       |
-| Color element       | `/platform/ui-reference/elements/color`                        |
-| Spacing element     | `/platform/ui-reference/elements/spacing`                      |
-| Typography element  | `/platform/ui-reference/elements/typography`                   |
-| Themes element      | `/platform/ui-reference/elements/themes`                       |
-| 2x Grid element     | `/platform/ui-reference/elements/2x-grid`                      |
+| Components overview | `not installed`                            |
+| Link                | `not installed`                       |
+| Data table          | `not installed`                 |
+| Structured list     | `not installed`            |
+| Contained list      | `not installed`             |
+| Tile                | `not installed`                       |
+| Code snippet        | `not installed`               |
+| Loading             | `not installed`                    |
+| Inline loading      | `not installed`             |
+| Accordion           | `not installed`                  |
+| Tree view           | `not installed`                  |
+| Forms pattern       | `not installed`                        |
+| Layout Pattern      | `not installed`                       |
+| Color element       | `not installed`                        |
+| Spacing element     | `not installed`                      |
+| Typography element  | `not installed`                   |
+| Themes element      | `not installed`                       |
+| 2x Grid element     | `not installed`                      |
 | Canonical list doc  | `/platform/docs?path=02-standards%2Fui%2Fcomponents%2Flist.md` |
 | Carbon list usage   | `https://carbondesignsystem.com/components/list/usage/`        |
 
@@ -651,4 +651,4 @@ For implementation tests, add page-specific assertions that the rendered example
 - [Component Implementation Checklist](checklist.md)
 - [Foundation Elements Standards](../elements/index.md)
 - [Pattern Standards Index](../patterns/index.md)
-- Carbon List usage, style, code, and accessibility guidance inform unordered/ordered variants, native semantic structure, nested hierarchy, typography, vertical alignment, wrapping, and accessibility boundaries. Login App keeps its own native Blade markup contract, app-owned `ui-*` class namespace, Foundation Element token model, route ownership, and UI Reference proof requirements.
+- Carbon List usage, style, code, and accessibility guidance inform unordered/ordered variants, native semantic structure, nested hierarchy, typography, vertical alignment, wrapping, and accessibility boundaries. Login App keeps its own native Blade markup contract, app-owned `ui-*` class namespace, Foundation Element token model, route ownership, and rendered evidence proof requirements.

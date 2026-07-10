@@ -1,0 +1,141 @@
+/* ==========================================================================
+   File: resources/css/tokens/layout.css
+   Purpose: Layout foundation tokens.
+   Notes:
+   - Defines breakpoint, grid, container, size, and icon-size tokens only.
+   - Component CSS should consume --ui-* aliases.
+   - Use literal breakpoint values in media queries; CSS custom properties are
+     not reliable inside @media conditions.
+   ========================================================================== */
+
+@layer base {
+    :root {
+        /* ------------------------------------------------------------------
+           Breakpoints
+           ------------------------------------------------------------------ */
+
+        --ui-breakpoint-sm: 20rem; /* 320px */
+        --ui-breakpoint-md: 42rem; /* 672px */
+        --ui-breakpoint-lg: 66rem; /* 1056px */
+        --ui-breakpoint-xlg: 82rem; /* 1312px */
+        --ui-breakpoint-max: 99rem; /* 1584px */
+
+        /* ------------------------------------------------------------------
+           Grid margins
+           ------------------------------------------------------------------ */
+
+        --ui-grid-margin-sm: 0;
+        --ui-grid-margin-md: 1rem; /* 16px */
+        --ui-grid-margin-lg: 1rem; /* 16px */
+        --ui-grid-margin-xlg: 1rem; /* 16px */
+        --ui-grid-margin-max: 1.5rem; /* 24px */
+
+        /* ------------------------------------------------------------------
+           Grid gutters
+           ------------------------------------------------------------------ */
+
+        --ui-grid-gutter-base: 2rem; /* 32px */
+        --ui-grid-gutter-condensed: 0.0625rem; /* 1px */
+
+        /* ------------------------------------------------------------------
+           Container heights
+           ------------------------------------------------------------------ */
+
+        --container-01: 1.5rem; /* 24px */
+        --container-02: 2rem; /* 32px */
+        --container-03: 2.5rem; /* 40px */
+        --container-04: 3rem; /* 48px */
+        --container-05: 4rem; /* 64px */
+
+        --ui-container-01: var(--container-01);
+        --ui-container-02: var(--container-02);
+        --ui-container-03: var(--container-03);
+        --ui-container-04: var(--container-04);
+        --ui-container-05: var(--container-05);
+
+        /* ------------------------------------------------------------------
+           Control sizes
+           ------------------------------------------------------------------ */
+
+        --size-x-small: 1.5rem; /* 24px */
+        --size-small: 2rem; /* 32px */
+        --size-medium: 2.5rem; /* 40px */
+        --size-large: 3rem; /* 48px */
+        --size-x-large: 4rem; /* 64px */
+        --size-2x-large: 5rem; /* 80px */
+
+        --ui-size-xs: var(--size-x-small);
+        --ui-size-sm: var(--size-small);
+        --ui-size-md: var(--size-medium);
+        --ui-size-lg: var(--size-large);
+        --ui-size-xl: var(--size-x-large);
+        --ui-size-2xl: var(--size-2x-large);
+
+        /* Source-name compatibility aliases */
+        --ui-size-x-small: var(--ui-size-xs);
+        --ui-size-small: var(--ui-size-sm);
+        --ui-size-medium: var(--ui-size-md);
+        --ui-size-large: var(--ui-size-lg);
+        --ui-size-x-large: var(--ui-size-xl);
+        --ui-size-2x-large: var(--ui-size-2xl);
+
+        /* ------------------------------------------------------------------
+           Icon sizes
+           ------------------------------------------------------------------ */
+
+        --icon-size-01: 1rem; /* 16px */
+        --icon-size-02: 1.25rem; /* 20px */
+
+        --ui-icon-size-01: var(--icon-size-01);
+        --ui-icon-size-02: var(--icon-size-02);
+
+        /* ------------------------------------------------------------------
+            Contextual layout size tokens
+            ------------------------------------------------------------------ */
+
+        --ui-layout-size-height-xs: var(--ui-size-xs);
+        --ui-layout-size-height-sm: var(--ui-size-sm);
+        --ui-layout-size-height-md: var(--ui-size-md);
+        --ui-layout-size-height-lg: var(--ui-size-lg);
+        --ui-layout-size-height-xl: var(--ui-size-xl);
+        --ui-layout-size-height-2xl: var(--ui-size-2xl);
+
+        --ui-layout-size-height-min: 0px;
+        --ui-layout-size-height-max: 999999999px;
+        --ui-layout-size-height-default: var(--ui-layout-size-height-md);
+        --ui-layout-size-height-context: var(--ui-layout-size-height-default);
+        --ui-layout-size-height: var(--ui-layout-size-height-context);
+        --ui-layout-size-height-local: clamp(
+            var(--ui-layout-size-height-min),
+            var(--ui-layout-size-height, var(--ui-layout-size-height-default)),
+            var(--ui-layout-size-height-max)
+        );
+
+        /* ------------------------------------------------------------------
+            Contextual density tokens
+            ------------------------------------------------------------------ */
+
+        --ui-layout-density-padding-inline-condensed: var(--ui-spacing-03);
+        --ui-layout-density-padding-inline-normal: var(--ui-spacing-05);
+
+        --ui-layout-density-padding-inline-min: 0px;
+        --ui-layout-density-padding-inline-max: 999999999px;
+        --ui-layout-density-padding-inline-default: var(
+            --ui-layout-density-padding-inline-normal
+        );
+        --ui-layout-density-padding-inline-context: var(
+            --ui-layout-density-padding-inline-default
+        );
+        --ui-layout-density-padding-inline: var(
+            --ui-layout-density-padding-inline-context
+        );
+        --ui-layout-density-padding-inline-local: clamp(
+            var(--ui-layout-density-padding-inline-min),
+            var(
+                --ui-layout-density-padding-inline,
+                var(--ui-layout-density-padding-inline-default)
+            ),
+            var(--ui-layout-density-padding-inline-max)
+        );
+    }
+}

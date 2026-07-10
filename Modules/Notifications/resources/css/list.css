@@ -1,0 +1,296 @@
+/* ==========================================================================
+   File: Modules/Notifications/resources/css/notifications/list.css
+   Purpose: Notification preview contained-list rows and row actions.
+
+   Notes:
+   - x-ui.contained-list and x-ui.contained-list-item provide the base surface.
+   - This file only adapts split-row behavior: main notification link plus
+     independent dismiss action.
+   - Row hover belongs to the main link only. Dismiss hover has its own state.
+   - Row dismiss motion is owned by the Motion element through
+     data-ui-motion="row-dismiss" and data-ui-motion-state.
+   ========================================================================== */
+
+@layer components {
+    /* ----------------------------------------------------------------------
+       Contained list surface
+       ---------------------------------------------------------------------- */
+
+    .ui-shell-notifications-list.ui-contained-list,
+    .ui-shell-notifications-list.ui-contained-list--disclosed {
+        display: grid;
+        inline-size: 100%;
+        margin: 0;
+        border: 0;
+        padding: 0;
+        list-style: none;
+        background-color: var(--ui-layer);
+    }
+
+    /* ----------------------------------------------------------------------
+       Split notification row
+       ---------------------------------------------------------------------- */
+
+    .ui-shell-notification-row {
+        --ui-shell-notification-row-background: var(--ui-layer);
+        --ui-shell-notification-row-background-hover: var(--ui-layer-hover);
+        --ui-shell-notification-row-action-background-hover: var(
+            --ui-layer-hover
+        );
+        --ui-shell-notification-row-action-background-active: var(
+            --ui-layer-active
+        );
+        --ui-shell-notification-row-action-color-hover: var(--ui-icon-primary);
+
+        position: relative;
+        display: grid;
+        grid-template-columns:
+            minmax(0, 1fr)
+            var(--ui-shell-header-action-size);
+        min-block-size: var(--ui-shell-notification-row-min-block-size);
+        border-block-start: var(--ui-shell-header-border-width) solid
+            var(--ui-border-subtle);
+        background-color: var(--ui-shell-notification-row-background);
+        color: var(--ui-text-primary);
+    }
+
+    .ui-shell-notification-row:first-child {
+        border-block-start: 0;
+    }
+
+    .ui-shell-notification-row--unread {
+        background-color: var(--ui-shell-notification-row-background);
+    }
+
+    /*
+       Cancel generic contained-list hover. The notification row has two
+       separate interactive regions, so the row highlight is driven only by
+       the main notification link.
+    */
+    .ui-shell-notification-row.ui-contained-list-item:hover,
+    .ui-shell-notification-row.ui-contained-list-item:focus-within {
+        background-color: var(--ui-shell-notification-row-background);
+    }
+
+    .ui-shell-notification-row:has(.ui-shell-notification-row__main:hover),
+    .ui-shell-notification-row:has(
+        .ui-shell-notification-row__main:focus-visible
+    ) {
+        background-color: var(--ui-shell-notification-row-background-hover);
+    }
+
+    .ui-shell-notification-row:has(.ui-shell-notification-row__dismiss:hover),
+    .ui-shell-notification-row:has(
+        .ui-shell-notification-row__dismiss:focus-visible
+    ) {
+        background-color: var(--ui-shell-notification-row-background);
+    }
+
+    /* ----------------------------------------------------------------------
+       Main row link/action
+       ---------------------------------------------------------------------- */
+
+    .ui-shell-notification-row__main,
+    .ui-shell-notification-row__main.ui-contained-list-item-content {
+        display: grid;
+        grid-template-columns:
+            var(--ui-shell-notification-status-column-size)
+            minmax(0, 1fr);
+        gap: var(--ui-spacing-04);
+        align-items: start;
+        inline-size: 100%;
+        min-block-size: var(--ui-shell-notification-row-min-block-size);
+        border: 0;
+        padding: var(--ui-spacing-04) 0 var(--ui-spacing-04)
+            var(--ui-spacing-05);
+        background-color: transparent;
+        color: inherit;
+        font: inherit;
+        text-align: start;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
+    .ui-shell-notification-row__main:hover {
+        background-color: transparent;
+        color: inherit;
+        text-decoration: none;
+    }
+
+    .ui-shell-notification-row__main:focus,
+    .ui-shell-notification-row__main:focus-visible {
+        position: relative;
+        z-index: 1;
+        background-color: transparent;
+        outline: var(--ui-shell-focus-outline-width) solid var(--ui-focus);
+        outline-offset: var(--ui-shell-focus-outline-offset);
+    }
+
+    /* ----------------------------------------------------------------------
+       Row content layout
+       ---------------------------------------------------------------------- */
+
+    .ui-shell-notification-row__content,
+    .ui-shell-notification-row__content.ui-contained-list-item-text {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) auto;
+        column-gap: var(--ui-spacing-03);
+        align-content: start;
+        min-inline-size: 0;
+    }
+
+    .ui-shell-notification-row__meta,
+    .ui-shell-notification-row__meta.ui-contained-list-item-meta {
+        grid-column: 2;
+        grid-row: 1;
+        justify-self: end;
+        max-inline-size: 10rem;
+        margin-block-end: var(--ui-spacing-02);
+        overflow: hidden;
+        color: var(--ui-text-secondary);
+        font-size: var(--ui-type-label-01-font-size);
+        font-weight: var(--ui-font-weight-regular);
+        line-height: var(--ui-type-label-01-line-height);
+        text-align: end;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .ui-shell-notification-row__title,
+    .ui-shell-notification-row__title.ui-contained-list-item-title {
+        grid-column: 1 / -1;
+        grid-row: 2;
+        overflow: hidden;
+        color: var(--ui-text-primary);
+        font-size: var(--ui-type-body-compact-01-font-size);
+        font-weight: var(--ui-font-weight-semibold);
+        line-height: var(--ui-type-body-compact-01-line-height);
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    .ui-shell-notification-row__subtitle,
+    .ui-shell-notification-row__subtitle.ui-contained-list-item-description {
+        grid-column: 1 / -1;
+        grid-row: 3;
+        overflow: hidden;
+        margin-block-start: var(--ui-spacing-01);
+        color: var(--ui-text-secondary);
+        font-size: var(--ui-type-body-compact-01-font-size);
+        font-weight: var(--ui-font-weight-regular);
+        line-height: var(--ui-type-body-compact-01-line-height);
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    /* ----------------------------------------------------------------------
+       Unread/status marker
+       ---------------------------------------------------------------------- */
+
+    .ui-shell-notification-row__status {
+        inline-size: var(--ui-shell-notification-status-size);
+        block-size: var(--ui-shell-notification-status-size);
+        margin-block-start: var(
+            --ui-shell-notification-status-margin-block-start
+        );
+        border-radius: 999px;
+        background-color: var(--ui-support-info);
+        opacity: 0;
+    }
+
+    .ui-shell-notification-row__status[data-notification-preview-unread] {
+        opacity: 1;
+    }
+
+    .ui-shell-notification-row--notice .ui-shell-notification-row__status,
+    .ui-shell-notification-row--info .ui-shell-notification-row__status,
+    .ui-shell-notification-row--info-square .ui-shell-notification-row__status,
+    .ui-contained-list-status-info .ui-shell-notification-row__status {
+        background-color: var(--ui-support-info);
+    }
+
+    .ui-shell-notification-row--success .ui-shell-notification-row__status,
+    .ui-contained-list-status-success .ui-shell-notification-row__status {
+        background-color: var(--ui-support-success);
+    }
+
+    .ui-shell-notification-row--warning .ui-shell-notification-row__status,
+    .ui-shell-notification-row--warning-alt .ui-shell-notification-row__status,
+    .ui-contained-list-status-warning .ui-shell-notification-row__status {
+        background-color: var(--ui-support-warning);
+    }
+
+    .ui-shell-notification-row--error .ui-shell-notification-row__status,
+    .ui-shell-notification-row--danger .ui-shell-notification-row__status,
+    .ui-shell-notification-row--urgent .ui-shell-notification-row__status,
+    .ui-contained-list-status-error .ui-shell-notification-row__status {
+        background-color: var(--ui-support-error);
+    }
+
+    /* ----------------------------------------------------------------------
+       Independent dismiss action
+       ---------------------------------------------------------------------- */
+
+    .ui-shell-notification-row__actions,
+    .ui-shell-notification-row__actions.ui-contained-list-item-actions {
+        position: relative;
+        z-index: 2;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        inline-size: var(--ui-shell-header-action-size);
+        min-inline-size: var(--ui-shell-header-action-size);
+        block-size: 100%;
+    }
+
+    .ui-shell-notification-row__dismiss {
+        position: relative;
+        z-index: 2;
+        inline-size: var(--ui-shell-header-action-size);
+        block-size: var(--ui-shell-header-action-size);
+        margin-block-start: var(--ui-spacing-02);
+        color: var(--ui-icon-secondary);
+    }
+
+    button.ui-shell-notification-row__dismiss {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border: 0;
+        padding: 0;
+        background-color: transparent;
+        cursor: pointer;
+        transition:
+            background-color var(--ui-shell-transition-standard),
+            color var(--ui-shell-transition-standard),
+            outline var(--ui-shell-transition-standard);
+    }
+
+    .ui-shell-notification-row__dismiss:hover {
+        background-color: var(
+            --ui-shell-notification-row-action-background-hover
+        );
+        color: var(--ui-shell-notification-row-action-color-hover);
+    }
+
+    .ui-shell-notification-row__dismiss:active {
+        background-color: var(
+            --ui-shell-notification-row-action-background-active
+        );
+        color: var(--ui-icon-primary);
+    }
+
+    .ui-shell-notification-row__dismiss:focus,
+    .ui-shell-notification-row__dismiss:focus-visible {
+        outline: var(--ui-shell-focus-outline-width) solid var(--ui-focus);
+        outline-offset: var(--ui-shell-focus-outline-offset);
+    }
+
+    .ui-shell-notification-row__dismiss > svg,
+    .ui-shell-notification-row__dismiss .ui-icon {
+        display: block;
+        inline-size: 1rem;
+        block-size: 1rem;
+        fill: currentColor;
+    }
+}

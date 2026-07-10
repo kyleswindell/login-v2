@@ -5,9 +5,9 @@ status: implemented-pending-review
 api_layer: Component API
 category: Inputs
 priority: Tier A - Baseline app development
-ui_reference_route: /platform/ui-reference/components/search
+rendered_evidence_route: null
 canonical_doc: docs/02-standards/ui/components/search.md
-source_owner: /platform/ui-reference/components/search
+source_owner: not installed
 related_components:
   - text-input
   - button
@@ -49,10 +49,10 @@ foundation_elements:
 - [11. Content contract](#11-content-contract)
 - [12. Prohibited usage](#12-prohibited-usage)
 - [13. Deferred or gated capabilities](#13-deferred-or-gated-capabilities)
-- [14. Implementation and UI Reference Checklist](#14-implementation-and-ui-reference-checklist)
+- [14. Implementation and Rendered Evidence Checklist](#14-implementation-and-ui-reference-checklist)
   - [14.1. Implementation checklist](#141-implementation-checklist)
-  - [14.2. UI Reference proof checklist](#142-ui-reference-proof-checklist)
-- [15. UI Reference requirements](#15-ui-reference-requirements)
+  - [14.2. rendered evidence proof checklist](#142-ui-reference-proof-checklist)
+- [15. Rendered evidence requirements](#15-ui-reference-requirements)
 - [16. Testing and acceptance criteria](#16-testing-and-acceptance-criteria)
   - [16.1. Suggested automated assertions:](#161-suggested-automated-assertions)
 - [17. Related APIs](#17-related-apis)
@@ -62,7 +62,7 @@ foundation_elements:
 
 Search captures free-entry keywords for page, table, or component scope.
 
-Canonical API owner: `/platform/ui-reference/components/search`. Use this Component API instead of creating local markup, styling, or behavior for the same UI role.
+Canonical API owner: `not installed`. Use this Component API instead of creating local markup, styling, or behavior for the same UI role.
 
 Search owns the input mechanism, icon treatment, clear action, field states, and scoped search semantics. Search does not own global search architecture, result ranking, suggestions, typeahead panels, saved searches, or table filtering logic. Those behaviors belong to Pattern APIs or feature services.
 
@@ -75,9 +75,9 @@ Search owns the input mechanism, icon treatment, clear action, field states, and
 | Component slug     | search                                    |
 | Category           | Inputs                                    |
 | Priority           | Tier A - Baseline app development         |
-| UI Reference route | /platform/ui-reference/components/search  |
+| Rendered evidence route | not installed  |
 | Canonical doc      | docs/02-standards/ui/components/search.md |
-| Source owner       | /platform/ui-reference/components/search  |
+| Source owner       | not installed  |
 
 ## 3. Installed standard
 
@@ -109,7 +109,7 @@ Search must consume approved Foundation Elements and app-owned `ui-*` classes. D
 | Data attributes | `data-ui-search`, `data-ui-search-input`, `data-ui-search-clear`, `data-ui-search-submit`, `data-ui-search-results-region`, `data-ui-search-expandable*` |
 | Props/options   | Use the props documented in this standard                                                                                        |
 | CSS namespace   | `ui-search`, `ui-search-field`, `ui-search-input`, `ui-search-icon`, `ui-search-clear`, `ui-search-expandable`, `ui-search-message` |
-| Source files    | `resources/views/components/ui/search.blade.php`; `resources/js/ui-controls/search.js`; `resources/css/app.css`                 |
+| Source files    | `resources/views/components/ui/search/index.blade.php`; `resources/js/ui-controls/search.js`; `resources/css/app.css`                 |
 
 Example calls:
 
@@ -420,7 +420,7 @@ Components own internal semantics and styling. Parent Patterns own grouping, ext
 | AI-assisted search          | Not implemented          | Requires approved AI feature, explainability, trust, and result-disclosure standard.                        |
 | Voice search                | Not implemented          | Requires input permission, privacy, and accessibility review.                                               |
 
-## 14. Implementation and UI Reference Checklist
+## 14. Implementation and Rendered Evidence Checklist
 ### 14.1. Implementation checklist
 | Requirement                | Standard expectation                                                                                                                               |
 | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -429,9 +429,9 @@ Components own internal semantics and styling. Parent Patterns own grouping, ext
 | States                     | Default, hover, focus-visible, active/pressed, filled, disabled, expandable, and not-applicable states are defined as relevant.                    |
 | Accessibility/content      | Keyboard, focus, naming, ARIA, contrast, reduced-motion, label, helper, and copy requirements are defined.                                         |
 | Element consumption        | Required Color, Spacing, Typography, Icons, Motion, Themes, and 2x Grid dependencies are named.                                                    |
-| Tests                      | Source/API assertions and UI Reference route assertions block generic fallback content.                                                            |
+| Tests                      | Source/API assertions and Rendered evidence route assertions block generic fallback content.                                                            |
 
-### 14.2. UI Reference proof checklist
+### 14.2. rendered evidence proof checklist
 | Requirement               | Visual proof expectation                                                                              |
 | ------------------------- | ----------------------------------------------------------------------------------------------------- |
 | Live examples             | The page renders production examples through the documented API or explicit native/class contract.    |
@@ -440,9 +440,9 @@ Components own internal semantics and styling. Parent Patterns own grouping, ext
 | Developer implementation  | Real canonical calls and token-backed code snippets appear instead of placeholder comments.           |
 | Related APIs              | Nearby Components, owning Patterns, consumed Elements, source files, and canonical docs are linked.   |
 | Manual review             | The page provides enough rendered proof for visual review of behavior, layout, and state correctness. |
-## 15. UI Reference requirements
+## 15. Rendered evidence requirements
 
-The UI Reference page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
+The rendered evidence page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
 
 The Live examples section may use grouped examples, state tables, or matrix sections rather than tabs if that better represents Search. Search examples must render production app markup rather than screenshots or fake controls.
 
@@ -459,7 +459,7 @@ The Live examples section may use grouped examples, state tables, or matrix sect
 
 ## 16. Testing and acceptance criteria
 
-- `/platform/ui-reference/components/search` returns 200 for authorized users.
+- `not installed` returns 200 for authorized users.
 - The page uses the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
 - The page shows the installed API, states, variants/options, prohibited usage, deferred gates, and Foundation Elements consumed.
 - Implemented APIs render production examples; deferred APIs render trigger conditions instead of fake controls.
@@ -508,15 +508,15 @@ $response->assertDontSee('bx--search');
 
 | API                | Route                                        |
 | ------------------ | -------------------------------------------- |
-| Text input         | /platform/ui-reference/components/text-input |
-| Select             | /platform/ui-reference/components/select     |
-| Dropdown           | /platform/ui-reference/components/dropdown   |
-| Data table         | /platform/ui-reference/components/data-table |
-| Button             | /platform/ui-reference/components/button     |
-| Icon               | /platform/ui-reference/elements/icons        |
-| Tables Pattern     | /platform/ui-reference/patterns/tables       |
-| Search pattern     | /platform/ui-reference/patterns/search       |
-| Navigation Pattern | /platform/ui-reference/patterns/navigation   |
+| Text input         | not installed |
+| Select             | not installed     |
+| Dropdown           | not installed   |
+| Data table         | not installed |
+| Button             | not installed     |
+| Icon               | not installed        |
+| Tables Pattern     | not installed       |
+| Search pattern     | not installed       |
+| Navigation Pattern | not installed   |
 
 ## 18. References
 

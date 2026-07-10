@@ -1,14 +1,14 @@
 ---
 title: Component Family Depth Page Standard
 slug: component-family-depth-page-standard
-api_layer: Component UI Reference Standard
+api_layer: Component rendered evidence Standard
 status: implemented-pending-manual-review
 system_maturity: partial-family-rollout
 category: component-reference-pages
 priority: component-family-correction
-ui_reference_owner: /platform/ui-reference/components
+rendered_evidence_owner: null
 canonical_doc: docs/02-standards/ui/components/family-depth-pages.md
-source_owner: /platform/ui-reference/components
+source_owner: not installed
 foundation_elements:
   - color
   - spacing
@@ -41,16 +41,16 @@ related_indexes:
 - [9. Developer implementation](#9-developer-implementation)
 - [10. Review rule](#10-review-rule)
 - [11. Prohibited usage](#11-prohibited-usage)
-- [12. UI Reference requirements](#12-ui-reference-requirements)
+- [12. Rendered evidence requirements](#12-ui-reference-requirements)
 - [13. Testing and acceptance criteria](#13-testing-and-acceptance-criteria)
 - [14. Related APIs](#14-related-apis)
 - [15. References](#15-references)
 
 ## 1. API summary
 
-This standard governs Login App 2.0 Component UI Reference family-depth pages under `/platform/ui-reference/components`.
+This standard governs Login App 2.0 Component rendered evidence family-depth pages under `not installed`.
 
-Use this standard when creating, correcting, or reviewing a Component UI Reference page. It preserves the approved Accordion scaffold while allowing each Component page to choose the live-example structure that best proves the installed API.
+Use this standard when creating, correcting, or reviewing a Component rendered evidence page. It preserves the approved Accordion scaffold while allowing each Component page to choose the live-example structure that best proves the installed API.
 
 Component family-depth pages are rendered proof for Component API standards. They must show app-owned examples, supported variants, states, behavior, implementation details, content guidance, accessibility requirements, deferred gates, and related Pattern links. They must not render abstract design commentary, generic fallback text, speculative complete UI, or disconnected prose-only variant lists.
 
@@ -60,11 +60,11 @@ Component family-depth pages are rendered proof for Component API standards. The
 | ---------------------------- | --------------------------------------------------------------------------------------------------------------------- |
 | Status                       | Implemented - pending manual review                                                                                   |
 | System maturity              | Partial family rollout                                                                                                |
-| API layer                    | Component UI Reference Standard                                                                                       |
+| API layer                    | Component rendered evidence Standard                                                                                       |
 | Standard slug                | `component-family-depth-page-standard`                                                                                |
-| UI Reference owner           | `/platform/ui-reference/components`                                                                                   |
+| rendered evidence owner           | `not installed`                                                                                   |
 | Canonical doc                | `docs/02-standards/ui/components/family-depth-pages.md`                                                               |
-| Applies to                   | All Component family-depth pages under `/platform/ui-reference/components/{slug}`                                     |
+| Applies to                   | All Component family-depth pages under `not installed{slug}`                                     |
 | Source owner                 | Component route owner for each page                                                                                   |
 | Foundation Elements consumed | Color, Spacing, Typography, Icons, Motion, Themes, and 2x Grid where layout is relevant                               |
 | Related standards            | Component Standards Index, Component Implementation Checklist, Foundation Elements Standards, Pattern Standards Index |
@@ -94,7 +94,7 @@ The installed page standard is:
 - Render supported states visually or in a state matrix when the state is meaningful for the component.
 - Name canonical Blade components, app CSS classes, native element contracts, JavaScript initializers, and source routes where they exist.
 - Use token-backed code snippet styling for developer implementation examples.
-- Link to concrete Component, Element, and Pattern UI Reference routes.
+- Link to concrete Component, Element, and Pattern Rendered evidence routes.
 - Consume Foundation Element standards instead of creating local colors, spacing, typography, icon sourcing, motion timing, theme behavior, or grid behavior.
 - Keep broad components out of forced tab-only layouts when matrices, scales, grids, state tables, grouped examples, or full-width demonstrations prove the API more accurately.
 
@@ -175,7 +175,7 @@ Required link types:
 | Related components  | Link nearby Component pages by route.                                        |
 | Related patterns    | Link consuming Pattern pages by route.                                       |
 | Foundation Elements | Link consumed Element pages when the dependency affects implementation.      |
-| Current doc         | Link the canonical Markdown doc when the UI Reference supports docs routing. |
+| Current doc         | Link the canonical Markdown doc when the rendered evidence supports docs routing. |
 
 Do not use vague copy such as `See also` without route-backed links.
 
@@ -247,47 +247,47 @@ Use these route conventions unless an accepted implementation item documents a d
 
 | Component          | Route                                                  |
 | ------------------ | ------------------------------------------------------ |
-| Button             | `/platform/ui-reference/components/button`             |
-| Link               | `/platform/ui-reference/components/link`               |
-| Menu               | `/platform/ui-reference/components/menu`               |
-| Menu buttons       | `/platform/ui-reference/components/menu-buttons`       |
-| Text input         | `/platform/ui-reference/components/text-input`         |
-| Textarea           | `/platform/ui-reference/components/textarea`           |
-| Select             | `/platform/ui-reference/components/select`             |
-| Dropdown           | `/platform/ui-reference/components/dropdown`           |
-| Multiselect        | `/platform/ui-reference/components/multiselect`        |
-| Number input       | `/platform/ui-reference/components/number-input`       |
-| Date picker        | `/platform/ui-reference/components/date-picker`        |
-| File uploader      | `/platform/ui-reference/components/file-uploader`      |
-| Search             | `/platform/ui-reference/components/search`             |
-| Slider             | `/platform/ui-reference/components/slider`             |
-| Checkbox           | `/platform/ui-reference/components/checkbox`           |
-| Radio button       | `/platform/ui-reference/components/radio-button`       |
-| Toggle             | `/platform/ui-reference/components/toggle`             |
-| Content switcher   | `/platform/ui-reference/components/content-switcher`   |
-| Notification       | `/platform/ui-reference/components/notification`       |
-| Tag                | `/platform/ui-reference/components/tag`                |
-| AI label           | `/platform/ui-reference/components/ai-label`           |
-| Inline loading     | `/platform/ui-reference/components/inline-loading`     |
-| Loading            | `/platform/ui-reference/components/loading`            |
-| Progress bar       | `/platform/ui-reference/components/progress-bar`       |
-| Progress indicator | `/platform/ui-reference/components/progress-indicator` |
-| Modal              | `/platform/ui-reference/components/modal`              |
-| Popover            | `/platform/ui-reference/components/popover`            |
-| Tooltip            | `/platform/ui-reference/components/tooltip`            |
-| Toggletip          | `/platform/ui-reference/components/toggletip`          |
-| Accordion          | `/platform/ui-reference/components/accordion`          |
-| Data table         | `/platform/ui-reference/components/data-table`         |
-| Pagination         | `/platform/ui-reference/components/pagination`         |
-| Structured list    | `/platform/ui-reference/components/structured-list`    |
-| List               | `/platform/ui-reference/components/list`               |
-| Contained list     | `/platform/ui-reference/components/contained-list`     |
-| Code snippet       | `/platform/ui-reference/components/code-snippet`       |
-| Tile               | `/platform/ui-reference/components/tile`               |
-| Tree view          | `/platform/ui-reference/components/tree-view`          |
-| Breadcrumb         | `/platform/ui-reference/components/breadcrumb`         |
-| Tabs               | `/platform/ui-reference/components/tabs`               |
-| UI shell           | `/platform/ui-reference/components/ui-shell`           |
+| Button             | `not installed`             |
+| Link               | `not installed`               |
+| Menu               | `not installed`               |
+| Menu buttons       | `not installed`       |
+| Text input         | `not installed`         |
+| Textarea           | `not installed`           |
+| Select             | `not installed`             |
+| Dropdown           | `not installed`           |
+| Multiselect        | `not installed`        |
+| Number input       | `not installed`       |
+| Date picker        | `not installed`        |
+| File uploader      | `not installed`      |
+| Search             | `not installed`             |
+| Slider             | `not installed`             |
+| Checkbox           | `not installed`           |
+| Radio button       | `not installed`       |
+| Toggle             | `not installed`             |
+| Content switcher   | `not installed`   |
+| Notification       | `not installed`       |
+| Tag                | `not installed`                |
+| AI label           | `not installed`           |
+| Inline loading     | `not installed`     |
+| Loading            | `not installed`            |
+| Progress bar       | `not installed`       |
+| Progress indicator | `not installed` |
+| Modal              | `not installed`              |
+| Popover            | `not installed`            |
+| Tooltip            | `not installed`            |
+| Toggletip          | `not installed`          |
+| Accordion          | `not installed`          |
+| Data table         | `not installed`         |
+| Pagination         | `not installed`         |
+| Structured list    | `not installed`    |
+| List               | `not installed`               |
+| Contained list     | `not installed`     |
+| Code snippet       | `not installed`       |
+| Tile               | `not installed`               |
+| Tree view          | `not installed`          |
+| Breadcrumb         | `not installed`         |
+| Tabs               | `not installed`               |
+| UI shell           | `not installed`           |
 
 ## 8. Deferred boundary
 
@@ -304,7 +304,7 @@ Current deferred or gated components include:
 | Contained list   | Deferred or gated | Show List, Structured list, Tile, or Data table alternatives as applicable. Do not render speculative contained-list behavior.                  |
 | AI label         | Deferred or gated | Show trigger conditions, content policy, owner route, and approved labeling alternatives. Do not render speculative AI affordances.             |
 
-A later accepted queue item may promote a deferred component to a canonical implementation. When that happens, update the component source, canonical Component API standard, UI Reference page, tests, and this deferred boundary if needed. Content switcher has been promoted and must render its installed API proof instead of deferred trigger-condition cards.
+A later accepted queue item may promote a deferred component to a canonical implementation. When that happens, update the component source, canonical Component API standard, rendered evidence page, tests, and this deferred boundary if needed. Content switcher has been promoted and must render its installed API proof instead of deferred trigger-condition cards.
 
 Deferred pages must include:
 
@@ -329,7 +329,7 @@ Developer implementation sections must show the installed API directly.
 | No JavaScript required           | State that no dedicated JavaScript API is required for baseline behavior.                                |
 | Deferred component               | State that no production public API is approved and do not show fake calls.                              |
 
-Use token-backed code snippet styling. Do not use unstyled local `<pre>` blocks or one-off code display markup in the rendered UI Reference page.
+Use token-backed code snippet styling. Do not use unstyled local `<pre>` blocks or one-off code display markup in the rendered rendered evidence page.
 
 Example implementation proof shape:
 
@@ -352,7 +352,7 @@ Prohibited placeholder copy includes:
 - `family-depth implementation pending`
 - `Component-specific API pending correction`
 - `Use only documented props/options`
-- `See UI Reference developer implementation section`
+- `See rendered evidence developer implementation section`
 - `Allowed variants: None` when variants, options, modes, sizes, modifiers, or states exist
 - `Live Examples Card` when used as a stale card label instead of approved UI copy
 - `Reference Examples`
@@ -376,9 +376,9 @@ Queued, deferred, do-not-implement, and app-specific exception pages may render 
 - Do not mark deferred or gated APIs as implemented unless a later accepted queue item creates and proves the canonical implementation.
 - Do not use generic family-depth fallback content for implemented components.
 
-## 12. UI Reference requirements
+## 12. Rendered evidence requirements
 
-Every Component UI Reference page must render the five top-level cards and must prove the component according to its status.
+Every Component rendered evidence page must render the five top-level cards and must prove the component according to its status.
 
 | Required proof           | Rendered behavior                                                                                                                  | Variants/options shown                                                                               |
 | ------------------------ | ---------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
@@ -396,7 +396,7 @@ Every Component UI Reference page must render the five top-level cards and must 
 
 For each Component page under this standard:
 
-- `/platform/ui-reference/components/{slug}` returns 200 for authorized users.
+- `not installed{slug}` returns 200 for authorized users.
 - The page is admin-only according to the platform’s existing authorization policy.
 - The page shows installed API, states, variants/options, prohibited usage, deferred gates, and consumed Foundation Elements.
 - Implemented APIs render production examples.
@@ -407,7 +407,7 @@ For each Component page under this standard:
 - Broad component pages can use matrices, scales, comparison grids, grouped examples, full-width demonstrations, and state tables.
 - Scenario-driven pages can use tabs when each tab represents a real usage scenario.
 - Developer implementation examples use token-backed code snippet styling.
-- Related APIs use concrete app UI Reference routes.
+- Related APIs use concrete app Rendered evidence routes.
 - No generic placeholder content appears.
 - No direct Carbon production classes are presented as app implementation classes.
 - No raw hex colors, arbitrary local spacing, feature-local typography, local icon sources, custom focus rings, or one-off JavaScript are presented as approved implementation.
@@ -415,7 +415,7 @@ For each Component page under this standard:
 Regression checks must assert absence of stale or prohibited strings where applicable:
 
 ```php
-$response = $this->actingAs($admin)->get('/platform/ui-reference/components/{slug}');
+$response = $this->actingAs($admin)->get('not installed{slug}');
 
 $response->assertOk();
 $response->assertSee('Purpose');
@@ -448,27 +448,27 @@ For deferred or gated component pages, add assertions that the page shows `Defer
 
 | API                           | Route                                               |
 | ----------------------------- | --------------------------------------------------- |
-| Components overview           | `/platform/ui-reference/components`                 |
-| Button                        | `/platform/ui-reference/components/button`          |
-| Link                          | `/platform/ui-reference/components/link`            |
-| Menu buttons                  | `/platform/ui-reference/components/menu-buttons`    |
-| Accordion                     | `/platform/ui-reference/components/accordion`       |
-| Modal                         | `/platform/ui-reference/components/modal`           |
-| Tooltip                       | `/platform/ui-reference/components/tooltip`         |
-| Data table                    | `/platform/ui-reference/components/data-table`      |
-| Tabs                          | `/platform/ui-reference/components/tabs`            |
-| Code snippet                  | `/platform/ui-reference/components/code-snippet`    |
-| Color element                 | `/platform/ui-reference/elements/color`             |
-| Spacing element               | `/platform/ui-reference/elements/spacing`           |
-| Typography element            | `/platform/ui-reference/elements/typography`        |
-| Icons element                 | `/platform/ui-reference/elements/icons`             |
-| Motion element                | `/platform/ui-reference/elements/motion`            |
-| Themes element                | `/platform/ui-reference/elements/themes`            |
-| 2x Grid element               | `/platform/ui-reference/elements/2x-grid`           |
-| Forms pattern                 | `/platform/ui-reference/patterns/forms`             |
-| Tables Pattern                | `/platform/ui-reference/patterns/tables`            |
-| Overlay and feedback patterns | `/platform/ui-reference/patterns/overlays-feedback` |
-| Layout Pattern                | `/platform/ui-reference/patterns/layout`            |
+| Components overview           | `not installed`                 |
+| Button                        | `not installed`          |
+| Link                          | `not installed`            |
+| Menu buttons                  | `not installed`    |
+| Accordion                     | `not installed`       |
+| Modal                         | `not installed`           |
+| Tooltip                       | `not installed`         |
+| Data table                    | `not installed`      |
+| Tabs                          | `not installed`            |
+| Code snippet                  | `not installed`    |
+| Color element                 | `not installed`             |
+| Spacing element               | `not installed`           |
+| Typography element            | `not installed`        |
+| Icons element                 | `not installed`             |
+| Motion element                | `not installed`            |
+| Themes element                | `not installed`            |
+| 2x Grid element               | `not installed`           |
+| Forms pattern                 | `not installed`             |
+| Tables Pattern                | `not installed`            |
+| Overlay and feedback patterns | `not installed` |
+| Layout Pattern                | `not installed`            |
 
 ## 15. References
 
@@ -476,4 +476,4 @@ For deferred or gated component pages, add assertions that the page shows `Defer
 - [Component Implementation Checklist](checklist.md)
 - [Foundation Elements Standards](../elements/index.md)
 - [Pattern Standards Index](../patterns/index.md)
-- Component-specific Carbon pages may be used as completeness benchmarks when updating an individual Component API standard. Login App keeps its own Blade APIs, app-owned `ui-*` class contracts, token model, Heroicons icon source, route ownership, and UI Reference proof requirements.
+- Component-specific Carbon pages may be used as completeness benchmarks when updating an individual Component API standard. Login App keeps its own Blade APIs, app-owned `ui-*` class contracts, token model, internal icon source, route ownership, and rendered evidence proof requirements.

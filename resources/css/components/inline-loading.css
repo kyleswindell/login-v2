@@ -1,47 +1,116 @@
 /* ==========================================================================
 File: resources/css/components/inline-loading.css
 Purpose: Inline Loading component styles.
-Carbon reference:
 
-* reference/carbon-main/packages/styles/scss/components/inline-loading/
+Carbon references:
+- reference/carbon-main/packages/styles/scss/components/inline-loading/_inline-loading.scss
+- reference/carbon-main/packages/react/src/components/InlineLoading/InlineLoading.tsx
 
 Notes:
-
-* Defines Inline Loading selectors only.
-* Do not define primitive palette tokens here.
-* Do not define theme role tokens here.
-* Depends on loading.css for spinner primitives.
-  ========================================================================== */
+- Defines current app-owned Inline Loading selectors only.
+- Composes the shared Loading component for the active state.
+- Uses filled success and error icons matching the current Carbon React markup.
+- Does not retain deprecated animated-checkmark markup selectors.
+- Does not define primitive palette or theme role tokens.
+========================================================================== */
 
 @layer components {
+    /* ----------------------------------------------------------------------
+    Root
+    ---------------------------------------------------------------------- */
+
     .ui-inline-loading {
-        display: inline-flex;
+        display: flex;
         align-items: center;
+        color: var(--ui-text-secondary);
+        inline-size: 100%;
         min-block-size: 2rem;
-        gap: var(--ui-spacing-03);
-        color: var(--ui-text-primary);
-        font-size: var(--ui-type-body-compact-01-font-size);
-        line-height: var(--ui-type-body-compact-01-line-height);
     }
 
-    .ui-inline-loading-animation {
-        display: inline-flex;
+    /* ----------------------------------------------------------------------
+    Description
+    ---------------------------------------------------------------------- */
+
+    .ui-inline-loading__text {
+        font-size: var(--ui-type-label-02-font-size);
+        font-weight: var(--ui-type-label-02-font-weight);
+        line-height: var(--ui-type-label-02-line-height);
+        letter-spacing: var(--ui-type-label-02-letter-spacing);
+    }
+
+    /* ----------------------------------------------------------------------
+    Status animation container
+    ---------------------------------------------------------------------- */
+
+    .ui-inline-loading__animation {
+        position: relative;
+        display: flex;
         align-items: center;
         justify-content: center;
-        inline-size: 1rem;
-        block-size: 1rem;
         flex: 0 0 auto;
+        margin-inline-end: var(--ui-spacing-03);
     }
 
-    .ui-inline-loading-text {
-        color: var(--ui-text-secondary);
+    .ui-inline-loading__animation[hidden],
+    .ui-inline-loading__animation [hidden] {
+        display: none;
     }
 
-    .ui-inline-loading-success {
-        color: var(--ui-support-success);
+    /* ----------------------------------------------------------------------
+    Status icons
+    ---------------------------------------------------------------------- */
+
+    .ui-inline-loading__status-icon {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        block-size: 1rem;
+        inline-size: 1rem;
     }
 
-    .ui-inline-loading-error {
-        color: var(--ui-support-error);
+    .ui-inline-loading__checkmark-container {
+        display: block;
+        block-size: 1rem;
+        inline-size: 1rem;
+        fill: var(--ui-support-success);
+    }
+
+    .ui-inline-loading__error {
+        display: block;
+        block-size: 1rem;
+        inline-size: 1rem;
+        fill: var(--ui-support-error);
+    }
+
+    /* ----------------------------------------------------------------------
+    Button-contained variant
+    ----------------------------------------------------------------------
+    Apply .ui-inline-loading--btn to the Inline Loading root when it is used
+    inside a button.
+    ---------------------------------------------------------------------- */
+
+    .ui-button .ui-inline-loading--btn,
+    .ui-btn .ui-inline-loading--btn {
+        min-block-size: 0;
+    }
+
+    .ui-button .ui-inline-loading--btn .ui-inline-loading__text,
+    .ui-btn .ui-inline-loading--btn .ui-inline-loading__text {
+        font-size: var(--ui-type-body-01-font-size);
+        font-weight: var(--ui-type-body-01-font-weight);
+        line-height: var(--ui-type-body-01-line-height);
+        letter-spacing: var(--ui-type-body-01-letter-spacing);
+    }
+
+    /* ----------------------------------------------------------------------
+    Forced colors
+    ---------------------------------------------------------------------- */
+
+    @media (forced-colors: active) {
+        .ui-inline-loading__checkmark-container,
+        .ui-inline-loading__error {
+            fill: CanvasText;
+            forced-color-adjust: auto;
+        }
     }
 }

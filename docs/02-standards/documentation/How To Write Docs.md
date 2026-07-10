@@ -1,229 +1,376 @@
+<!--
+DOC-META
+title: How To Write Docs
+doc_type: standard
+status: active
+owner: docs
+canonical: true
+canonical_path: docs/02-standards/documentation/How To Write Docs.md
+parent: docs/02-standards/documentation/index.md
+template: docs/09-reference/templates/docs/_doc.md
+summary: Defines universal documentation writing quality, metadata, lifecycle, author workflow, linking, scope, and synchronization expectations.
+-->
+
 # How To Write Docs
 
-Use this guide before creating or expanding documentation in this vault.
+Parent: [Documentation Standards Index](index.md)
 
-## Authority And Scope
+Use this standard before creating, materially rewriting, splitting, moving, or retiring repository documentation.
 
-Use this note together with the vault structure guide:
+- [1. Authority And Scope](#1-authority-and-scope)
+- [2. Core Rule](#2-core-rule)
+- [3. Author Workflow](#3-author-workflow)
+- [4. Required `DOC-META`](#4-required-doc-meta)
+- [5. Controlled Lifecycle Status](#5-controlled-lifecycle-status)
+- [6. Controlled Owners](#6-controlled-owners)
+- [7. Document Type Versus Writing Mode](#7-document-type-versus-writing-mode)
+- [8. Documentation Principles](#8-documentation-principles)
+- [9. Templates](#9-templates)
+- [10. Portable Links](#10-portable-links)
+- [11. Current Vocabulary](#11-current-vocabulary)
+- [12. Docs Travel With Code](#12-docs-travel-with-code)
+- [13. File Scope And Split Rules](#13-file-scope-and-split-rules)
+- [14. Writing Expectations By Authority](#14-writing-expectations-by-authority)
+  - [Canonical Documents](#canonical-documents)
+  - [Planning Documents](#planning-documents)
+  - [Reference Documents](#reference-documents)
+  - [Agent Working Documents](#agent-working-documents)
+  - [Runbooks](#runbooks)
+- [15. Release Notes And Changelog](#15-release-notes-and-changelog)
+- [16. Completion Criteria](#16-completion-criteria)
+- [17. Related](#17-related)
 
-- [Obsidian Vault Structure Guide](Obsidian%20Vault%20Structure%20Guide.md)
+## 1. Authority And Scope
 
-This note governs:
+This standard applies to documentation under `docs/`.
 
-- documentation content quality
-- documentation types and sections
-- when docs must be updated
+It governs:
 
-The Obsidian vault structure guide governs and overrides this note for:
+- universal writing quality
+- required document metadata
+- lifecycle status
+- canonical versus non-canonical identification
+- author workflow
+- portable links
+- file scope and split rules
+- documentation updates that travel with code
 
-- file naming
-- folder naming
-- note placement
-- parent/child graph structure
-- Obsidian link/reference structure
+Use related standards for specialized questions:
 
-## Principles
+- document-type contract: [Document Type Standards](Document%20Type%20Standards.md)
+- canonical branch ownership: [Doc Governance](Doc%20Governance.md)
+- folder and graph structure: [Obsidian Vault Structure Guide](Obsidian%20Vault%20Structure%20Guide.md)
+- runbook requirements: [Runbook Documentation Standards](Runbook%20Documentation%20Standards.md)
+- review: [Documentation Review Standards](Documentation%20Review%20Standards.md)
+- implementation synchronization: [Implementation Status And Development Sync Standard](Implementation%20Status%20And%20Development%20Sync%20Standard.md)
 
-- Every concept must exist in exactly one place, and everything else links to it.
-- Write for the next developer or future version of yourself.
-- Prefer short, accurate notes over long, stale documentation.
-- Explain why a thing exists, not only where it lives.
-- Link related notes using both Obsidian links and standard Markdown links.
-- Keep implementation details close to feature/module docs, and general rules in `02-standards/`.
-- Treat documentation like code: keep it in version control, review it with changes, and make it searchable.
-- When code changes affect setup, usage, releases, tenant behavior, public website behavior, or developer workflow, update the related docs in the same change.
-- Prefer portable Markdown over Obsidian-only features so notes remain useful in GitHub, IDE previews, and agent context.
+## 2. Core Rule
 
-## Documentation Modes
+Every durable concept must have exactly one canonical owner.
 
-Use a Diataxis-style split so every note has a clear job.
+Related documents may summarize the concept briefly, but they must link to the canonical owner instead of duplicating the full explanation.
 
-- `Tutorial`: teaches a path from zero to success.
-- `How-to`: gives steps to complete a specific task.
-- `Reference`: documents exact interfaces, folders, config, tables, and commands.
-- `Explanation`: explains rationale, tradeoffs, and system behavior.
-- `Decision`: records a specific architecture or product decision.
-- `Runbook`: captures repeatable operational procedures.
+## 3. Author Workflow
 
-## Canonical Ownership
+Before writing:
 
-Before writing a note, decide where the concept canonically lives.
+1. identify the concept
+2. identify whether the content is canonical, planning, reference, working, or historical
+3. select the controlled `doc_type`
+4. identify the canonical branch
+5. identify the parent index
+6. select the template
+7. identify related canonical documents
+8. confirm whether an existing document already owns the concept
 
-- `03-architecture/`: system structure, boundaries, and architecture ownership
-- `04-features/`: canonical feature behavior and contracts
-- `06-database/`: schema and data contracts
-- `10-runbooks/`: repeatable operational procedures
-- `02-standards/`: implementation rules and conventions
-- `09-reference/`: non-canonical support, research, and tracking notes
-- `01-decisions/`: ADRs and decision records
-- `11-ai/`: AI-assistance instructions and lifecycle rules
+During writing:
 
-If the concept already exists somewhere else, update the canonical note and link to it instead of creating a second owner.
+1. add a valid `DOC-META` block
+2. state purpose and scope early
+3. write current truth unless the document type explicitly permits proposed or historical content
+4. link to related owners instead of duplicating them
+5. keep the document focused on one primary responsibility
+6. distinguish confirmed facts from plans, assumptions, and open questions
+7. preserve terminology used by current architecture and standards
 
-## Standard Sections
+Before completion:
 
-Use these sections when they fit. It is okay to omit sections that do not apply.
+1. verify metadata
+2. verify parent and lateral links
+3. update indexes
+4. update related planning or canonical docs
+5. run documentation guardrails when available
+6. review the final diff for unrelated changes
 
-```md
-# Title
+## 4. Required `DOC-META`
 
-## Purpose
+Every new or materially rewritten documentation file must start with an HTML comment block before the H1 heading.
 
-## Implementation Status
+Use:
 
-## Current Implementation
+    <!--
+    DOC-META
+    title: Document Title
+    doc_type: standard
+    status: active
+    owner: docs
+    canonical: true
+    canonical_path: docs/path/to/file.md
+    parent: docs/path/to/index.md
+    template: docs/09-reference/templates/docs/_doc.md
+    summary: One sentence describing what this document owns.
+    -->
 
-## Important Files
+Required fields:
 
-## Data / Tables
+| Field            | Requirement                                                                                |
+| ---------------- | ------------------------------------------------------------------------------------------ |
+| `title`          | Must match the visible document title.                                                     |
+| `doc_type`       | Must use a controlled type from [Document Type Standards](Document%20Type%20Standards.md). |
+| `status`         | Must reflect the document's current lifecycle.                                             |
+| `owner`          | Must identify the smallest accurate ownership area.                                        |
+| `canonical`      | Must accurately state whether the file owns durable source-of-truth content.               |
+| `canonical_path` | Must match the repository-relative path.                                                   |
+| `parent`         | Must point to the correct index or hub.                                                    |
+| `template`       | Must identify the template used.                                                           |
+| `summary`        | Must describe the document's primary ownership in one sentence.                            |
 
-## Permissions / Security
+Metadata does not replace visible navigation links.
 
-## Tenant Considerations
+## 5. Controlled Lifecycle Status
 
-## Logging / Observability
+Use one of:
 
-## Common Workflows
+| Status        | Meaning                                                    |
+| ------------- | ---------------------------------------------------------- |
+| `draft`       | Proposed, incomplete, or awaiting acceptance.              |
+| `active`      | Current accepted document or current working owner.        |
+| `planned`     | Accepted planning direction not yet implemented.           |
+| `implemented` | Reflected in code or established operational practice.     |
+| `superseded`  | Replaced by another document, decision, or implementation. |
+| `archived`    | Historical only and not an active authority.               |
 
-## Open Questions
+A document may be `active` while describing partially implemented behavior. In that case, its implementation-status section must state what exists and what remains incomplete.
 
-## Related
-```
+## 6. Controlled Owners
 
-## Link Format
+Use the smallest accurate owner:
 
-Each important cross-reference should include both styles:
+- `docs`
+- `architecture`
+- `core`
+- `platform`
+- `module`
+- `ui`
+- `security`
+- `data`
+- `ops`
+- `ai`
 
-```md
-[Logging Standards](../logging/Logging%20Standards.md)
-```
+The owner identifies responsibility, not the audience.
 
-Use links intentionally:
+## 7. Document Type Versus Writing Mode
 
-- link upward to the parent/index note
-- link laterally to strong dependencies
-- prefer links over duplicated explanation
-- keep index notes current when adding child notes
+`doc_type` identifies the artifact's role and ownership contract.
 
-## Documentation Types
+Writing mode identifies how the content is presented.
 
-- `03-architecture/`: system-wide design and boundaries.
-- `04-features/`: user-facing and business capabilities.
-- `06-database/`: data structures, contracts, and schema notes.
-- `02-standards/`: global rules and conventions.
-- `10-runbooks/`: repeatable operational steps.
-- `01-decisions/`: architecture and product decisions.
-- `09-reference/`: non-authoritative support material.
-- `11-ai/`: AI-assistance instructions and checklists.
+Useful modes include:
 
-## Decision Record Elevation Rule
+| Mode        | Purpose                                                    |
+| ----------- | ---------------------------------------------------------- |
+| Tutorial    | Teaches a learning path from zero to a working result.     |
+| How-to      | Gives task-oriented steps for a known goal.                |
+| Reference   | Presents exact interfaces, values, commands, or contracts. |
+| Explanation | Describes rationale, relationships, or tradeoffs.          |
 
-Keep a decision in its canonical owner note by default.
+A document may use more than one mode when its `doc_type` allows it, but it must still have one primary artifact responsibility.
 
-Elevate a decision into `01-decisions/` as an ADR when one or more of the following are true:
+A runbook is not merely any how-to. It must satisfy [Runbook Documentation Standards](Runbook%20Documentation%20Standards.md).
 
-- it changes or locks behavior across multiple canonical branches, subsystems, or phases
-- it sets or changes a long-lived architecture, product, governance, or delivery rule
-- it supersedes, deprecates, or replaces an earlier accepted decision
-- future contributors are likely to need durable rationale beyond the current-state description in an owner note
-- the decision needs explicit lifecycle state such as `Proposed`, `Accepted`, `Deprecated`, or `Superseded`
+## 8. Documentation Principles
 
-Keep the decision in the owner note only when all of the following are true:
+- Write for the next developer or operator.
+- Prefer accurate focused documents over long mixed-purpose documents.
+- Explain why a rule or boundary exists when that context affects correct use.
+- Describe current truth unless the document is explicitly planning, draft, decision, release, working, or historical material.
+- Use direct language and stable terminology.
+- Keep general rules in `docs/02-standards/`.
+- Keep canonical behavior with its feature owner.
+- Keep structure with architecture.
+- Keep schema and data contracts with database documentation.
+- Keep sequencing and open questions in planning.
+- Keep operational procedures in runbooks.
+- Keep non-canonical support and templates in reference.
+- Keep agent working documents in `docs/11-ai/`.
+- Prefer links over duplicated explanation.
+- Treat documentation as reviewed repository content.
 
-- it is local to one canonical owner note or one narrowly scoped implementation area
-- it mainly explains current implementation rather than establishing a reusable governing rule
-- changing it later would not create confusion outside that local owner context
+## 9. Templates
 
-Use this split consistently:
+Copyable templates live under:
 
-- canonical owner docs describe current truth
-- ADRs describe durable decision rationale, status, and consequences
+- [Documentation Templates](../../09-reference/templates/docs/_index.md)
 
-## Docs Travel With Code
+Template selection is governed by:
 
-When changing behavior, ask:
+- [Document Type Standards](Document%20Type%20Standards.md)
 
-- Does a user/admin workflow change?
-- Does setup, build, cron, deployment, or release behavior change?
-- Does a tenant-aware rule change?
-- Does a module interface, table, option, or endpoint change?
-- Does an agent/Codex workflow need an updated rule?
-- Does this introduce or change a cross-cutting decision that should be elevated into `01-decisions/`?
+Templates define reusable shape. They do not define policy.
 
-If yes, update or create the relevant documentation note before considering the work complete.
+When no dedicated template exists:
 
-When a planned system becomes implemented or changes materially:
+- use `_doc.md`
+- set the correct controlled `doc_type`
+- follow the type contract
+- do not invent a template solely for one document
 
-- update the canonical system doc in the same work cycle
-- update the linked planning note in the same work cycle
-- make sure both notes link to each other
-- make sure both notes state the current implementation status clearly enough to answer:
-  - is it planned only?
-  - is it implemented in code?
-  - is it migrated or deployed on staging?
-  - is there a UI yet?
+## 10. Portable Links
 
-## Structure Expectations
+Use Markdown links for important cross-references.
 
-For vault organization, obey the Obsidian structure guide first:
+Required link patterns:
 
-- every note must be reachable from `[[00-start-here]]`
-- every concept must have one canonical home
-- parent/index notes must link to children
-- detailed notes should link back to their parent/index note
-- when a planning note drives a system, it should link to the canonical system doc and the canonical system doc should link back to the planning note
-- folder placement alone is not enough; the graph must be built with links
+- detailed documents link upward to a parent or index
+- indexes link downward to children
+- directly dependent documents link laterally
+- planning documents link to affected canonical owners
+- canonical documents link back to active planning while it remains relevant
+- standards link to related templates
+- runbooks link to governing standards and related operational procedures
 
-## File Scope And Split Rules
+Obsidian links may be used as optional graph aids. They must not be the only path to important content.
 
-Keep documentation files narrowly scoped enough that a reader can open the file for one clear purpose.
+## 11. Current Vocabulary
 
-Split a file into indexed child files when one or more of these are true:
+Use current project vocabulary:
 
-- the file owns multiple independently changing topics, component families, phases, or workflow modes
-- the file routinely needs only one section during implementation or review
-- the file grows beyond roughly 2,000 words or 300-400 lines and contains multiple ownership areas
-- new sections would make the file a mixed backlog, research log, standard, and implementation checklist at once
+- Core Capability
+- Platform Surface
+- Business Module
+- Shared UI
+- Planning Document
+- canonical owner
+- implementation slice
+- GitHub issue
+- GitHub Project
+
+Avoid older terminology when it conflicts with the current model.
+
+## 12. Docs Travel With Code
+
+Update documentation in the same work cycle when a change affects:
+
+- setup, build, tests, deployment, release, cron, queues, services, or recovery
+- user, admin, tenant, workspace, or public behavior
+- Core Capability behavior
+- Platform Surface behavior
+- Business Module behavior
+- Shared UI contracts
+- architecture or ownership
+- schema or data contracts
+- authentication, authorization, audit, security, monitoring, secrets, or data movement
+- agent instructions, skills, or documentation governance
+
+Use [Implementation Status And Development Sync Standard](Implementation%20Status%20And%20Development%20Sync%20Standard.md) for the required synchronization path.
+
+## 13. File Scope And Split Rules
+
+Split a document when it:
+
+- owns multiple independently changing responsibilities
+- mixes standards, planning, research, review, and implementation status
+- routinely requires only one section during real work
+- grows beyond roughly 2,000 words or 300–400 lines and contains multiple ownership areas
+- becomes difficult to retrieve or review reliably
+- duplicates content owned by focused child documents
 
 When splitting:
 
-- preserve the original path as a short hub when other docs already link to it
-- create an `index.md` or hub section that lists all child files
-- move only coherent ownership slices into child files
-- keep durable rules in `02-standards/`, behavior in `04-features/`, schema in `06-database/`, planning in `07-planning/`, support/research in `09-reference/`, and operations in `10-runbooks/`
-- update parent indexes in the same change
-- avoid copying the same explanation into each child file; link back to the hub instead
+- preserve a heavily linked old path as a concise hub when practical
+- create or update the parent index
+- move coherent ownership slices only
+- update metadata and links
+- avoid copying the same explanation into every child file
+- supersede or archive replaced files accurately
 
-## Writing Expectations
+Length alone does not require a split when one focused document genuinely needs the full procedure or contract.
 
-Inside the note itself:
+## 14. Writing Expectations By Authority
 
-- state the purpose clearly
-- describe the current implementation rather than an imagined target state unless the note is explicitly a plan or ADR
-- distinguish summary from exact reference material
-- keep explanations close to the feature, module, or reference that owns the concept
-- avoid repeating the same explanation across multiple notes
-- when a note mainly exists to route readers, keep it concise and make the links strong
-- planning notes may repeat a short implementation status summary from the canonical system doc when that helps readers confirm the current state quickly
+### Canonical Documents
 
-## Changelog And Release Notes
+Canonical documents must:
 
-- Keep short curated patch notes in a future `CHANGELOG.md`.
-- Keep longer narrative release notes in `99-changelog/` when that branch is introduced.
-- Use release notes for migration steps, operational cautions, screenshots, rollout notes, and breaking behavior changes.
-- Link release notes to ADRs when a release contains important architectural decisions.
+- describe current accepted truth
+- identify current limitations explicitly
+- avoid unresolved plans unless clearly separated
+- avoid relying on issue comments as durable authority
 
-## Related
+### Planning Documents
 
+Planning documents may contain:
+
+- target state
+- sequencing
+- open questions
+- implementation slices
+- migration or refactor intent
+- decisions awaiting promotion
+
+They must not become the final owner of implemented architecture, behavior, schema, standards, or runbooks.
+
+### Reference Documents
+
+Reference documents are non-canonical by default.
+
+They must preserve source or provenance when relevant and must not silently own durable Login 2.0 rules.
+
+### Agent Working Documents
+
+Documents under `docs/11-ai/` are non-canonical working material unless promoted.
+
+They must identify their intended canonical owner and review or closure path.
+
+### Runbooks
+
+Runbooks must contain executable operational steps, verification, failure handling, and completion criteria.
+
+Use [Runbook Documentation Standards](Runbook%20Documentation%20Standards.md).
+
+## 15. Release Notes And Changelog
+
+Release notes summarize rollout context, migration requirements, cautions, and notable impact. They do not replace canonical docs.
+
+Use the release-note template when needed:
+
+- [Release Note Template](../../09-reference/templates/docs/_release-note.md)
+
+Create a separate release-note standard only when release governance becomes complex enough to require one.
+
+## 16. Completion Criteria
+
+A documentation change is complete when:
+
+- the correct canonical owner contains the durable truth
+- the controlled `doc_type` is correct
+- metadata is valid
+- the selected template is appropriate
+- the parent index is updated
+- important links are portable and current
+- related documents are linked rather than duplicated
+- planning and implementation status are synchronized
+- working or superseded material has a clear disposition
+- no unrelated documentation cleanup is included
+- required review and guardrails are complete
+
+## 17. Related
+
+- [Documentation Standards Index](index.md)
+- [Document Type Standards](Document%20Type%20Standards.md)
+- [Runbook Documentation Standards](Runbook%20Documentation%20Standards.md)
+- [Doc Governance](Doc%20Governance.md)
 - [Obsidian Vault Structure Guide](Obsidian%20Vault%20Structure%20Guide.md)
-- [Documentation Template](Documentation%20Template.md)
-- [Tutorial Template](Templates/Tutorial%20Template.md)
-- [How-To Template](Templates/How-To%20Template.md)
-- [Reference Template](Templates/Reference%20Template.md)
-- [Explanation Template](Templates/Explanation%20Template.md)
-- [Feature Spec Template](Templates/Feature%20Spec%20Template.md)
-- [Runbook Template](Templates/Runbook%20Template.md)
-- [ADR Template](Templates/ADR%20Template.md)
 - [Documentation Review Standards](Documentation%20Review%20Standards.md)
 - [Implementation Status And Development Sync Standard](Implementation%20Status%20And%20Development%20Sync%20Standard.md)
-- [00-start-here](../../00-start-here.md)
+- [Documentation Templates](../../09-reference/templates/docs/_index.md)

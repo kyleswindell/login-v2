@@ -6,13 +6,13 @@ status: implemented-standard
 system_maturity: partial
 category: overlays-feedback
 priority: tier-b-common-reusable-pattern
-ui_reference_route: /platform/ui-reference/patterns/overlays-feedback
+rendered_evidence_route: null
 canonical_doc: docs/02-standards/ui/patterns/overlays-and-actions.md
-source_owner: /platform/ui-reference/patterns/overlays-feedback
+source_owner: not installed
 pattern_api:
   - x-ui.modal
   - x-ui.drawer
-  - x-ui.patterns.dropdown-action-menu
+  - x-patterns.dropdown-action-menu
   - confirmation action group
   - destructive action confirmation composition
 required_components:
@@ -47,6 +47,7 @@ related_components:
   - toggletip
   - inline-loading
 related_patterns:
+  - common-actions
   - forms
   - table-toolbar
   - navigation
@@ -85,7 +86,7 @@ carbon_reference:
 - [15. Content contract](#15-content-contract)
 - [16. Prohibited usage](#16-prohibited-usage)
 - [17. Deferred or gated capabilities](#17-deferred-or-gated-capabilities)
-- [18. UI Reference requirements](#18-ui-reference-requirements)
+- [18. Rendered evidence requirements](#18-ui-reference-requirements)
 - [19. Testing and acceptance criteria](#19-testing-and-acceptance-criteria)
 - [20. Related APIs](#20-related-apis)
 - [21. References](#21-references)
@@ -94,7 +95,7 @@ carbon_reference:
 
 Overlay and action patterns define how blocking decisions, contextual panels, action menus, and recovery controls compose around a user task.
 
-Canonical API owner: `/platform/ui-reference/patterns/overlays-feedback`. Use this Pattern API instead of creating local overlay, floating action, destructive confirmation, or contextual action compositions for the same workflow role.
+Canonical API owner: `not installed`. Use this Pattern API instead of creating local overlay, floating action, destructive confirmation, or contextual action compositions for the same workflow role.
 
 Overlays and actions is the installed Login App 2.0 pattern for modal decisions, drawer-style contextual review, row/card overflow actions, destructive confirmations, pending action feedback, and recovery controls. It composes approved Component and Element APIs. It does not redefine primitive modal, drawer, menu, button, tooltip, toggletip, notification, focus, color, spacing, typography, icon, or motion behavior.
 
@@ -105,7 +106,7 @@ Canonical Pattern responsibilities:
 - Define action hierarchy for confirmation, cancellation, destructive escalation, and recovery.
 - Define focus return, opening context, dismissal rules, and pending action feedback across composed components.
 - Define when overlays should become full-width or use a different pattern at small widths.
-- Define UI Reference proof for modal decisions, detail drawers, overflow action menus, destructive confirmations, and recovery feedback.
+- Define rendered evidence proof for modal decisions, detail drawers, overflow action menus, destructive confirmations, and recovery feedback.
 
 Non-owned responsibilities:
 
@@ -116,24 +117,24 @@ Non-owned responsibilities:
 
 ## 2. Status and ownership
 
-| Field               | Value                                                                                                                                     |
-| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| Status              | Implemented standard                                                                                                                      |
-| System maturity     | Partial                                                                                                                                   |
-| API layer           | Pattern API                                                                                                                               |
-| Pattern slug        | `overlays-and-actions`                                                                                                                    |
-| Category            | Overlays and feedback                                                                                                                     |
-| Priority            | Tier B - Common reusable pattern                                                                                                          |
-| Owner route         | `/platform/ui-reference/patterns/overlays-feedback`                                                                                       |
-| UI Reference proof  | `/platform/ui-reference/patterns/overlays-feedback`                                                                                       |
-| Canonical path      | `docs/02-standards/ui/patterns/overlays-and-actions.md`                                                                                   |
-| Source owner        | `/platform/ui-reference/patterns/overlays-feedback`                                                                                       |
-| Pattern API         | `x-ui.modal`; `x-ui.drawer`; `x-ui.patterns.dropdown-action-menu`; confirmation action group; destructive action confirmation composition |
-| Required Components | Modal, Drawer, Menu, Menu buttons, Button, Notification, Tooltip/Toggletip, Inline loading as applicable                                  |
-| Required Elements   | Color, Spacing, Typography, Themes, Motion, Icons, 2x Grid where layout applies                                                           |
-| Carbon benchmark    | Carbon patterns overview, dialog pattern, modal, overflow menu, menu buttons, common actions, create/edit flows                           |
+| Field               | Value                                                                                                                                  |
+| ------------------- | -------------------------------------------------------------------------------------------------------------------------------------- |
+| Status              | Implemented standard                                                                                                                   |
+| System maturity     | Partial                                                                                                                                |
+| API layer           | Pattern API                                                                                                                            |
+| Pattern slug        | `overlays-and-actions`                                                                                                                 |
+| Category            | Overlays and feedback                                                                                                                  |
+| Priority            | Tier B - Common reusable pattern                                                                                                       |
+| Owner route         | `not installed`                                                                                    |
+| rendered evidence proof  | `not installed`                                                                                    |
+| Canonical path      | `docs/02-standards/ui/patterns/overlays-and-actions.md`                                                                                |
+| Source owner        | `not installed`                                                                                    |
+| Pattern API         | `x-ui.modal`; `x-ui.drawer`; `x-patterns.dropdown-action-menu`; confirmation action group; destructive action confirmation composition |
+| Required Components | Modal, Drawer, Menu, Menu buttons, Button, Notification, Tooltip/Toggletip, Inline loading as applicable                               |
+| Required Elements   | Color, Spacing, Typography, Themes, Motion, Icons, 2x Grid where layout applies                                                        |
+| Carbon benchmark    | Carbon patterns overview, dialog pattern, modal, overflow menu, menu buttons, common actions, create/edit flows                        |
 
-`Implemented standard` means this pattern is approved for production composition. The UI Reference page must prove the installed compositions with app-owned components, tokens, classes, and helper APIs, not generic notes or fake overlay examples.
+`Implemented standard` means this pattern is approved for production composition. The rendered evidence page must prove the installed compositions with app-owned components, tokens, classes, and helper APIs, not generic notes or fake overlay examples.
 
 ## 3. Installed standard
 
@@ -143,8 +144,9 @@ The installed standard is:
 
 - Use `x-ui.modal` for blocking decisions, brief blocking forms, and destructive confirmations.
 - Use `x-ui.drawer` for contextual review or edit surfaces where the source context should remain visually connected.
-- Use `x-ui.patterns.dropdown-action-menu` or approved Menu/Menu button APIs for row, card, toolbar, or object-level overflow actions.
+- Use `x-patterns.dropdown-action-menu` or approved Menu/Menu button APIs for row, card, toolbar, or object-level overflow actions.
 - Use Button semantic variants for action hierarchy and destructive emphasis.
+- Use Common Actions vocabulary for delete/remove, reset/clear, close/cancel, confirmation, and destructive action semantics.
 - Use Notification for post-action feedback, recovery notices, blocking warnings, or action result summaries.
 - Use Tooltip only for short non-interactive hints.
 - Use Toggletip for focusable, dismissible contextual help.
@@ -156,7 +158,7 @@ The installed standard is:
 - Escalate destructive or irreversible actions through explicit destructive copy and a danger action.
 - Do not bypass installed Modal, Drawer, Menu, Button, Notification, Tooltip, or Toggletip APIs with local floating markup.
 
-Carbon alignment note: Carbon defines patterns as reusable combinations that help users achieve goals, documents dialog/modal patterns for focused decisions, uses danger modal treatment for destructive or irreversible actions, uses overflow menus when space is constrained, and places create/edit flows in modals, side panels, tearsheets, or full pages depending on task complexity. Login App maps those principles to its own Blade APIs, app-owned `ui-*` classes, Element tokens, and UI Reference proof rather than adopting Carbon implementation classes.
+Carbon alignment note: Carbon defines patterns as reusable combinations that help users achieve goals, documents dialog/modal patterns for focused decisions, uses danger modal treatment for destructive or irreversible actions, uses overflow menus when space is constrained, and places create/edit flows in modals, side panels, tearsheets, or full pages depending on task complexity. Login App maps those principles to its own Blade APIs, app-owned `ui-*` classes, Element tokens, and rendered evidence proof rather than adopting Carbon implementation classes.
 
 ## 4. Pattern API
 
@@ -166,7 +168,7 @@ Carbon alignment note: Carbon defines patterns as reusable combinations that hel
 | ------------------------------------------- | ------------------------------------------- | ---------------------------------------------------------------------------------------------- |
 | `x-ui.modal`                                | Implemented Component API                   | Blocking decisions, short blocking forms, destructive confirmations, focused recovery choices. |
 | `x-ui.drawer`                               | Implemented or Pattern-approved composition | Contextual review, read-only detail, and side-panel handoff surfaces.                          |
-| `x-ui.patterns.dropdown-action-menu`        | Implemented Pattern API                     | Standardized overflow action menu composition for rows, cards, and object-level actions.       |
+| `x-patterns.dropdown-action-menu`           | Implemented Pattern API                     | Standardized overflow action menu composition for rows, cards, and object-level actions.       |
 | Confirmation action group                   | Implemented Pattern composition             | Primary/secondary/cancel hierarchy for modal and drawer decisions.                             |
 | Destructive action confirmation composition | Implemented Pattern composition             | Warning copy, danger action, safer cancellation focus, and recovery feedback.                  |
 | Validation/recovery action composition      | Implemented Pattern composition             | Notification plus action row for retry, dismiss, or return flows.                              |
@@ -185,7 +187,7 @@ Carbon alignment note: Carbon defines patterns as reusable combinations that hel
         Archived projects are hidden from active dashboards but can be restored later.
     </p>
 
-    <x-ui.patterns.form-actions alignment="end">
+    <x-patterns.form-actions alignment="end">
         <x-ui.button semantic="ghost" type="button" data-ui-modal-close>
             Cancel
         </x-ui.button>
@@ -193,7 +195,7 @@ Carbon alignment note: Carbon defines patterns as reusable combinations that hel
         <x-ui.button semantic="primary" type="submit" form="archive-project-form">
             Archive project
         </x-ui.button>
-    </x-ui.patterns.form-actions>
+    </x-patterns.form-actions>
 </x-ui.modal>
 ```
 
@@ -213,7 +215,7 @@ Carbon alignment note: Carbon defines patterns as reusable combinations that hel
         This permanently removes the user account and cannot be undone.
     </p>
 
-    <x-ui.patterns.form-actions alignment="end">
+    <x-patterns.form-actions alignment="end">
         <x-ui.button semantic="secondary" type="button" data-ui-modal-close>
             Cancel
         </x-ui.button>
@@ -221,7 +223,7 @@ Carbon alignment note: Carbon defines patterns as reusable combinations that hel
         <x-ui.button semantic="danger" type="submit" form="delete-user-form">
             Delete user
         </x-ui.button>
-    </x-ui.patterns.form-actions>
+    </x-patterns.form-actions>
 </x-ui.modal>
 ```
 
@@ -234,11 +236,11 @@ Carbon alignment note: Carbon defines patterns as reusable combinations that hel
     placement="end"
     labelled-by="tenant-detail-title"
 >
-    <x-ui.patterns.read-only-detail-group>
+    <x-patterns.read-only-detail-group>
         {{-- Read-only field rows use approved Forms/Data display composition. --}}
-    </x-ui.patterns.read-only-detail-group>
+    </x-patterns.read-only-detail-group>
 
-    <x-ui.patterns.form-actions alignment="between">
+    <x-patterns.form-actions alignment="between">
         <x-ui.button semantic="ghost" type="button" data-ui-drawer-close>
             Close
         </x-ui.button>
@@ -246,14 +248,14 @@ Carbon alignment note: Carbon defines patterns as reusable combinations that hel
         <x-ui.button semantic="tertiary" href="{{ route('tenants.edit', $tenant) }}">
             Edit tenant
         </x-ui.button>
-    </x-ui.patterns.form-actions>
+    </x-patterns.form-actions>
 </x-ui.drawer>
 ```
 
 ### 4.5. Canonical overflow action menu composition
 
 ```blade
-<x-ui.patterns.dropdown-action-menu
+<x-patterns.dropdown-action-menu
     label="Open actions for {{ $tenant->name }}"
     placement="bottom-end"
     :items="[
@@ -319,14 +321,14 @@ Required Element APIs:
 
 Carbon color composition mapping:
 
-| Pattern need | Carbon benchmark role | Login App owner to compose | Mapping rule |
-| ------------ | --------------------- | -------------------------- | ------------ |
-| Modal/drawer surface and scrim | Modal `$layer`, `$border-subtle`, `$overlay` rows | Modal Component + Overlay Pattern role | Pattern chooses blocking/non-blocking surface; Modal/Color own surface and overlay colors. |
-| Destructive, primary, secondary, cancel, retry actions | Button token families | Button Component | Action hierarchy must consume Button semantic roles consistently across overlays and menus. |
-| Overflow and contextual actions | Menu/Menu button rows plus layer state roles | Menu and Menu buttons Components | Pattern owns grouping; Menu owns item hover/active/focus colors. |
-| Confirmation warnings and recovery messages | Notification, Inline loading, Loading support/status rows | Feedback/Notification/Loading Components | Overlay Pattern places feedback; components own status colors. |
-| Form-in-overlay fields | Field Component rows | Forms Pattern + field Components | Overlay does not redefine form field colors. |
-| AI overlay/modal variants | `$ai-*` modal rows | AI-specific gates | Not adopted unless AI Pattern/Component standards approve. |
+| Pattern need                                           | Carbon benchmark role                                     | Login App owner to compose               | Mapping rule                                                                                |
+| ------------------------------------------------------ | --------------------------------------------------------- | ---------------------------------------- | ------------------------------------------------------------------------------------------- |
+| Modal/drawer surface and scrim                         | Modal `$layer`, `$border-subtle`, `$overlay` rows         | Modal Component + Overlay Pattern role   | Pattern chooses blocking/non-blocking surface; Modal/Color own surface and overlay colors.  |
+| Destructive, primary, secondary, cancel, retry actions | Button token families                                     | Button Component                         | Action hierarchy must consume Button semantic roles consistently across overlays and menus. |
+| Overflow and contextual actions                        | Menu/Menu button rows plus layer state roles              | Menu and Menu buttons Components         | Pattern owns grouping; Menu owns item hover/active/focus colors.                            |
+| Confirmation warnings and recovery messages            | Notification, Inline loading, Loading support/status rows | Feedback/Notification/Loading Components | Overlay Pattern places feedback; components own status colors.                              |
+| Form-in-overlay fields                                 | Field Component rows                                      | Forms Pattern + field Components         | Overlay does not redefine form field colors.                                                |
+| AI overlay/modal variants                              | `$ai-*` modal rows                                        | AI-specific gates                        | Not adopted unless AI Pattern/Component standards approve.                                  |
 
 Pattern examples must consume these Element APIs through installed classes, tokens, and Components. They must not hard-code raw colors, arbitrary spacing, local focus rings, or custom motion values.
 
@@ -492,23 +494,23 @@ Use modal patterns for blocking decisions. Use drawer patterns for contextual de
 
 | Capability                          | Status                 | Gate                                                                                                                                                                  |
 | ----------------------------------- | ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Complex wizard overlays             | Gated                  | Requires feature-backed trigger, Forms Pattern ownership, Progress indicator ownership review, focus and validation model, recovery behavior, and UI Reference proof. |
+| Complex wizard overlays             | Gated                  | Requires feature-backed trigger, Forms Pattern ownership, Progress indicator ownership review, focus and validation model, recovery behavior, and rendered evidence proof. |
 | Multi-step destructive confirmation | Gated                  | Requires specific high-risk feature need, typed confirmation or secondary review requirements, and accessibility proof.                                               |
 | Nested modal/drawer flows           | Gated                  | Requires explicit Pattern exception, focus-containment proof, Escape/back behavior, and recovery plan.                                                                |
-| Persistent pinned panel             | Deferred               | Requires layout API, resize behavior, focus model, persistence rules, responsive behavior, and UI Reference proof.                                                    |
+| Persistent pinned panel             | Deferred               | Requires layout API, resize behavior, focus model, persistence rules, responsive behavior, and rendered evidence proof.                                                    |
 | Drag-resizable drawer               | Deferred               | Requires pointer and keyboard resizing semantics, size constraints, responsive collapse, and tests.                                                                   |
 | Right-click context menu            | Deferred               | Requires Menu Pattern/API support, keyboard equivalent, positioning, and focus recovery.                                                                              |
 | Async overlay body loading          | Gated                  | Requires loading, error, retry, skeleton/inline-loading choice, focus preservation, and announcement behavior.                                                        |
 | Full-screen modal app shell         | Not allowed by default | Use full-page route unless a Pattern exception proves why an overlay is required.                                                                                     |
 | Local overlay component             | Not allowed            | Must update Component or Pattern API first.                                                                                                                           |
 
-Future extensions require an updated Pattern standard and UI Reference proof before production use.
+Future extensions require an updated Pattern standard and rendered evidence proof before production use.
 
-## 18. UI Reference requirements
+## 18. Rendered evidence requirements
 
-The UI Reference page must show rendered examples of the approved pattern compositions, not abstract notes only. The page must link to this canonical standard and to consumed Element and Component standards. Deferred capabilities must appear as explicit gated disposition rows with trigger conditions, not as fake complete examples. Examples must use app-owned tokens, classes, helpers, and Blade components where available.
+The rendered evidence page must show rendered examples of the approved pattern compositions, not abstract notes only. The page must link to this canonical standard and to consumed Element and Component standards. Deferred capabilities must appear as explicit gated disposition rows with trigger conditions, not as fake complete examples. Examples must use app-owned tokens, classes, helpers, and Blade components where available.
 
-The UI Reference page must render the approved five-card scaffold: Purpose, Use cases, Pattern contract, Live examples, and Related components and patterns.
+The rendered evidence page must render the approved five-card scaffold: Purpose, Use cases, Pattern contract, Live examples, and Related components and patterns.
 
 Required Live examples:
 
@@ -527,7 +529,7 @@ Required Live examples:
 
 Implementation proof must include:
 
-- Canonical Blade examples for `x-ui.modal`, `x-ui.drawer`, `x-ui.patterns.dropdown-action-menu`, confirmation action groups, and destructive confirmation composition.
+- Canonical Blade examples for `x-ui.modal`, `x-ui.drawer`, `x-patterns.dropdown-action-menu`, confirmation action groups, and destructive confirmation composition.
 - Links to Modal, Menu, Menu buttons, Button, Notification, Tooltip, Toggletip, Forms Pattern, and relevant Element standards.
 - A selection matrix that chooses modal, drawer, menu, tooltip, toggletip, notification, full page, or wizard review.
 - A state ownership table that separates Pattern, Component, and feature-module responsibilities.
@@ -535,7 +537,7 @@ Implementation proof must include:
 
 ## 19. Testing and acceptance criteria
 
-- `/platform/ui-reference/patterns/overlays-feedback` returns 200 for authorized users.
+- `not installed` returns 200 for authorized users.
 - The page shows installed Pattern APIs, states, variants/options, prohibited usage, deferred gates, and consumed Foundation Elements.
 - Rendered examples include the required composition markers and consumed Component links.
 - Implemented APIs render production examples; deferred APIs render trigger conditions instead of fake controls.
@@ -552,13 +554,13 @@ Implementation proof must include:
 Suggested automated assertions:
 
 ```php
-$response = $this->actingAs($admin)->get('/platform/ui-reference/patterns/overlays-feedback');
+$response = $this->actingAs($admin)->get('not installed');
 
 $response->assertOk();
 $response->assertSee('Overlays and actions');
 $response->assertSee('x-ui.modal');
 $response->assertSee('x-ui.drawer');
-$response->assertSee('x-ui.patterns.dropdown-action-menu');
+$response->assertSee('x-patterns.dropdown-action-menu');
 $response->assertSee('Confirmation modal');
 $response->assertSee('Destructive confirmation');
 $response->assertSee('Read-only detail drawer');
@@ -585,26 +587,27 @@ $response->assertDontSee('bx--');
 
 | API                                | Route                                                                        |
 | ---------------------------------- | ---------------------------------------------------------------------------- |
-| Modal                              | `/platform/ui-reference/components/modal`                                    |
-| Drawer                             | `/platform/ui-reference/components/drawer`                                   |
-| Menu                               | `/platform/ui-reference/components/menu`                                     |
-| Menu buttons                       | `/platform/ui-reference/components/menu-buttons`                             |
-| Button                             | `/platform/ui-reference/components/button`                                   |
-| Notification                       | `/platform/ui-reference/components/notification`                             |
-| Tooltip                            | `/platform/ui-reference/components/tooltip`                                  |
-| Toggletip                          | `/platform/ui-reference/components/toggletip`                                |
-| Inline loading                     | `/platform/ui-reference/components/inline-loading`                           |
-| Progress indicator                 | `/platform/ui-reference/components/progress-indicator`                       |
-| Forms pattern                      | `/platform/ui-reference/patterns/forms`                                      |
-| Table toolbar planned gap          | `/platform/ui-reference/patterns/tables`                                     |
-| Navigation patterns                | `/platform/ui-reference/patterns/navigation`                                 |
-| Color element                      | `/platform/ui-reference/elements/color`                                      |
-| Spacing element                    | `/platform/ui-reference/elements/spacing`                                    |
-| Typography element                 | `/platform/ui-reference/elements/typography`                                 |
-| Themes element                     | `/platform/ui-reference/elements/themes`                                     |
-| Motion element                     | `/platform/ui-reference/elements/motion`                                     |
-| Icons element                      | `/platform/ui-reference/elements/icons`                                      |
-| Pattern overview                   | `/platform/ui-reference/patterns`                                            |
+| Modal                              | `not installed`                                    |
+| Drawer                             | `not installed`                                   |
+| Menu                               | `not installed`                                     |
+| Menu buttons                       | `not installed`                             |
+| Button                             | `not installed`                                   |
+| Notification                       | `not installed`                             |
+| Tooltip                            | `not installed`                                  |
+| Toggletip                          | `not installed`                                |
+| Inline loading                     | `not installed`                           |
+| Progress indicator                 | `not installed`                       |
+| Forms pattern                      | `not installed`                                      |
+| Common Actions patterns            | `docs/02-standards/ui/patterns/common-actions/index.md`                      |
+| Table toolbar planned gap          | `not installed`                                     |
+| Navigation patterns                | `not installed`                                 |
+| Color element                      | `not installed`                                      |
+| Spacing element                    | `not installed`                                    |
+| Typography element                 | `not installed`                                 |
+| Themes element                     | `not installed`                                     |
+| Motion element                     | `not installed`                                     |
+| Icons element                      | `not installed`                                      |
+| Pattern overview                   | `not installed`                                            |
 | Canonical overlays and actions doc | `/platform/docs?path=02-standards%2Fui%2Fpatterns%2Foverlays-and-actions.md` |
 | Carbon patterns overview           | `https://carbondesignsystem.com/patterns/overview/`                          |
 | Carbon dialog pattern              | `https://carbondesignsystem.com/patterns/dialog-pattern/`                    |
@@ -616,4 +619,4 @@ $response->assertDontSee('bx--');
 - [Component Standards](../components/index.md)
 - [Foundation Elements Standards](../elements/index.md)
 - [Component Implementation Checklist](../components/checklist.md)
-- Carbon patterns overview, dialog pattern, modal, overflow menu, menu buttons, common actions, create flows, edit flows, and notification guidance inform overlay selection, destructive escalation, focus behavior, overflow action grouping, recovery feedback, and task-flow placement. Login App keeps its own Pattern APIs, Blade components, app-owned `ui-*` class contract, Element token model, and UI Reference proof.
+- Carbon patterns overview, dialog pattern, modal, overflow menu, menu buttons, common actions, create flows, edit flows, and notification guidance inform overlay selection, destructive escalation, focus behavior, overflow action grouping, recovery feedback, and task-flow placement. Login App keeps its own Pattern APIs, Blade components, app-owned `ui-*` class contract, Element token model, and rendered evidence proof.

@@ -10,7 +10,7 @@ class BroadcastChannelAuthorizationTest extends TestCase
 {
     use RefreshDatabase;
 
-    public function test_platform_super_admin_can_authorize_their_own_notification_channel(): void
+    public function test_super_admin_can_authorize_their_own_notification_channel(): void
     {
         $user = $this->actingAsPlatformSuperAdmin();
 

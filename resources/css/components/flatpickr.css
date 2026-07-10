@@ -1,72 +1,129 @@
 /* ==========================================================================
-File: resources/css/components/flatpickr.css
-Purpose: Flatpickr compatibility target.
-Carbon reference:
+   File: resources/css/components/flatpickr.css
+   Purpose: Flatpickr calendar popup bridge for Date Picker.
 
-* reference/carbon-main/packages/styles/scss/components/date-picker/_flatpickr.scss
+   Notes:
+   - Defines Flatpickr popup/calendar bridge selectors only.
+   - Date Picker input/wrapper selectors belong in date-picker.css.
+   - Do not define primitive palette tokens here.
+   - Do not define theme role tokens here.
+   ========================================================================== */
 
-Notes:
-
-* Flatpickr-specific bridge selectors should be added only when the app migration needs them.
-* Date Picker implementation selectors belong in date-picker.css.
-  ========================================================================== */
-
-@layer base {
-    /* Flatpickr date-picker bridge migrated from app.css after Carbon date-picker ownership audit. */
+@layer components {
     .flatpickr-calendar.ui-date-picker-calendar {
-        color: var(--ui-text-primary);
-        background: var(--ui-layer-01);
-        border: 1px solid var(--ui-border-subtle-01);
+        --ui-flatpickr-layer: var(
+            --ui-layer-01,
+            var(--ui-layer-background-01, var(--ui-layer))
+        );
+        --ui-flatpickr-layer-hover: var(
+            --ui-layer-hover-01,
+            var(--ui-layer-hover)
+        );
+        --ui-flatpickr-layer-selected: var(
+            --ui-layer-selected-01,
+            var(--ui-background-selected, var(--ui-layer-active))
+        );
+        --ui-flatpickr-border: var(
+            --ui-border-subtle-01,
+            var(--ui-border-subtle)
+        );
+        --ui-flatpickr-shadow: var(
+            --ui-shadow-floating,
+            0 1rem 2rem
+                color-mix(in srgb, var(--ui-shadow-color) 24%, transparent)
+        );
+
+        border: 1px solid var(--ui-flatpickr-border);
         border-radius: 0;
-        box-shadow: 0 1rem 2rem
-            color-mix(in srgb, var(--ui-shadow-color) 24%, transparent);
+        background: var(--ui-flatpickr-layer);
+        box-shadow: var(--ui-flatpickr-shadow);
+        color: var(--ui-text-primary);
     }
 
     .flatpickr-calendar.ui-date-picker-calendar .flatpickr-months,
     .flatpickr-calendar.ui-date-picker-calendar .flatpickr-weekdays {
-        background: var(--ui-layer-01);
+        background: var(--ui-flatpickr-layer);
     }
 
     .flatpickr-calendar.ui-date-picker-calendar .flatpickr-current-month,
+    .flatpickr-calendar.ui-date-picker-calendar .flatpickr-monthDropdown-months,
+    .flatpickr-calendar.ui-date-picker-calendar .numInputWrapper,
+    .flatpickr-calendar.ui-date-picker-calendar .cur-year,
     .flatpickr-calendar.ui-date-picker-calendar .flatpickr-weekday,
     .flatpickr-calendar.ui-date-picker-calendar .flatpickr-day {
         color: var(--ui-text-primary);
     }
 
+    .flatpickr-calendar.ui-date-picker-calendar .flatpickr-monthDropdown-months,
+    .flatpickr-calendar.ui-date-picker-calendar .cur-year {
+        background: transparent;
+    }
+
     .flatpickr-calendar.ui-date-picker-calendar .flatpickr-day.prevMonthDay,
     .flatpickr-calendar.ui-date-picker-calendar .flatpickr-day.nextMonthDay,
     .flatpickr-calendar.ui-date-picker-calendar
-        .flatpickr-day.flatpickr-disabled {
+        .flatpickr-day.flatpickr-disabled,
+    .flatpickr-calendar.ui-date-picker-calendar
+        .flatpickr-day.flatpickr-disabled:hover {
+        border-color: transparent;
+        background: transparent;
         color: var(--ui-text-disabled);
+        cursor: not-allowed;
     }
 
     .flatpickr-calendar.ui-date-picker-calendar .flatpickr-day:hover,
     .flatpickr-calendar.ui-date-picker-calendar .flatpickr-day:focus {
+        border-color: var(--ui-flatpickr-layer-hover);
+        background: var(--ui-flatpickr-layer-hover);
         color: var(--ui-text-primary);
-        background: var(--ui-layer-hover-01);
-        border-color: var(--ui-layer-hover-01);
     }
 
     .flatpickr-calendar.ui-date-picker-calendar .flatpickr-day.today {
         border-color: transparent;
+        background: transparent;
+        color: var(--ui-link-primary);
+    }
+
+    .flatpickr-calendar.ui-date-picker-calendar .flatpickr-day.today:hover,
+    .flatpickr-calendar.ui-date-picker-calendar .flatpickr-day.today:focus {
+        border-color: var(--ui-flatpickr-layer-hover);
+        background: var(--ui-flatpickr-layer-hover);
         color: var(--ui-link-primary);
     }
 
     .flatpickr-calendar.ui-date-picker-calendar .flatpickr-day.selected,
+    .flatpickr-calendar.ui-date-picker-calendar .flatpickr-day.selected:hover,
+    .flatpickr-calendar.ui-date-picker-calendar .flatpickr-day.selected:focus,
     .flatpickr-calendar.ui-date-picker-calendar .flatpickr-day.startRange,
-    .flatpickr-calendar.ui-date-picker-calendar .flatpickr-day.endRange {
-        color: var(--ui-text-inverse);
-        background: var(--ui-background-inverse);
+    .flatpickr-calendar.ui-date-picker-calendar .flatpickr-day.startRange:hover,
+    .flatpickr-calendar.ui-date-picker-calendar .flatpickr-day.startRange:focus,
+    .flatpickr-calendar.ui-date-picker-calendar .flatpickr-day.endRange,
+    .flatpickr-calendar.ui-date-picker-calendar .flatpickr-day.endRange:hover,
+    .flatpickr-calendar.ui-date-picker-calendar .flatpickr-day.endRange:focus {
         border-color: var(--ui-background-inverse);
+        background: var(--ui-background-inverse);
+        color: var(--ui-text-inverse);
     }
 
     .flatpickr-calendar.ui-date-picker-calendar .flatpickr-day.inRange {
-        color: var(--ui-text-primary);
-        background: var(--ui-layer-selected-01);
-        border-color: var(--ui-layer-selected-01);
+        border-color: var(--ui-flatpickr-layer-selected);
+        background: var(--ui-flatpickr-layer-selected);
         box-shadow:
-            -5px 0 0 var(--ui-layer-selected-01),
-            5px 0 0 var(--ui-layer-selected-01);
+            -5px 0 0 var(--ui-flatpickr-layer-selected),
+            5px 0 0 var(--ui-flatpickr-layer-selected);
+        color: var(--ui-text-primary);
+    }
+
+    .flatpickr-calendar.ui-date-picker-calendar
+        .flatpickr-day.startRange
+        + .endRange,
+    .flatpickr-calendar.ui-date-picker-calendar
+        .flatpickr-day.startRange
+        + .inRange,
+    .flatpickr-calendar.ui-date-picker-calendar
+        .flatpickr-day.inRange
+        + .endRange {
+        box-shadow: none;
     }
 
     .flatpickr-calendar.ui-date-picker-calendar .flatpickr-prev-month,
@@ -74,13 +131,61 @@ Notes:
         inline-size: 2.5rem;
         block-size: 2.5rem;
         color: var(--ui-icon-primary);
+        fill: currentColor;
+    }
+
+    .flatpickr-calendar.ui-date-picker-calendar .flatpickr-prev-month:hover,
+    .flatpickr-calendar.ui-date-picker-calendar .flatpickr-next-month:hover {
+        color: var(--ui-icon-primary);
+        background: var(--ui-flatpickr-layer-hover);
     }
 
     .flatpickr-calendar.ui-date-picker-calendar .flatpickr-prev-month svg,
     .flatpickr-calendar.ui-date-picker-calendar .flatpickr-next-month svg {
         inline-size: 1rem;
         block-size: 1rem;
+        fill: currentColor;
     }
 
+    .flatpickr-calendar.ui-date-picker-calendar
+        .flatpickr-prev-month.flatpickr-disabled,
+    .flatpickr-calendar.ui-date-picker-calendar
+        .flatpickr-next-month.flatpickr-disabled {
+        color: var(--ui-icon-disabled);
+        cursor: not-allowed;
+    }
 
+    .flatpickr-calendar.ui-date-picker-calendar.arrowTop::before,
+    .flatpickr-calendar.ui-date-picker-calendar.arrowTop::after,
+    .flatpickr-calendar.ui-date-picker-calendar.arrowBottom::before,
+    .flatpickr-calendar.ui-date-picker-calendar.arrowBottom::after {
+        display: none;
+    }
+
+    @media screen and (-ms-high-contrast: active), (forced-colors: active) {
+        .flatpickr-calendar.ui-date-picker-calendar {
+            border-color: CanvasText;
+            background: Canvas;
+            color: CanvasText;
+        }
+
+        .flatpickr-calendar.ui-date-picker-calendar .flatpickr-day.selected,
+        .flatpickr-calendar.ui-date-picker-calendar .flatpickr-day.startRange,
+        .flatpickr-calendar.ui-date-picker-calendar .flatpickr-day.endRange {
+            forced-color-adjust: none;
+            border-color: Highlight;
+            background: Highlight;
+            color: HighlightText;
+        }
+
+        .flatpickr-calendar.ui-date-picker-calendar .flatpickr-day:hover,
+        .flatpickr-calendar.ui-date-picker-calendar .flatpickr-day:focus {
+            border-color: Highlight;
+        }
+
+        .flatpickr-calendar.ui-date-picker-calendar
+            .flatpickr-day.flatpickr-disabled {
+            color: GrayText;
+        }
+    }
 }

@@ -115,10 +115,18 @@
                                 @endif
                             </td>
                             <td class="px-6 py-4">
-                                <x-ui.badge :status="$log->result === 'success' ? 'success' : 'failed'" :show-icon="false" />
+                                <x-ui.tag
+                                    :label="$log->result === 'success' ? 'success' : 'failed'"
+                                    :tone="$log->result === 'success' ? 'success' : 'danger'"
+                                    size="sm"
+                                />
                             </td>
                             <td class="px-6 py-4">
-                                <x-ui.badge :status="$log->severity === 'error' || $log->severity === 'critical' ? 'danger' : $log->severity" :label="$log->severity" :show-icon="false" />
+                                <x-ui.tag
+                                    :label="$log->severity"
+                                    :tone="match ($log->severity) { 'error', 'critical' => 'danger', 'warning' => 'warning', 'info' => 'info', default => 'neutral' }"
+                                    size="sm"
+                                />
                             </td>
                             <td class="px-6 py-4 ui-platform-text-muted">
                                 <p>{{ $log->route ?? 'n/a' }}</p>

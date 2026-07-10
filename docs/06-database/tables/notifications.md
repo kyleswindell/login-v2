@@ -12,6 +12,7 @@ This document defines the canonical scope and intent for notifications.
 - `notifiable_type`
 - `notifiable_id`
 - `module_key`
+- `type_key`
 - `severity`
 - `title`
 - `body`
@@ -24,6 +25,7 @@ This document defines the canonical scope and intent for notifications.
 ## Constraints And Notes
 
 - severity and module keys follow canonical feature contracts
+- `type_key` is nullable for direct-delivery tooling and populated for registry-backed domain notifications
 - read/dismiss states are stored per notification row
 
 ## Related

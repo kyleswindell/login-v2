@@ -1,0 +1,59 @@
+/* ==========================================================================
+   File: {{ path }}
+   Purpose: {{ label }} component styles.
+
+   Notes:
+   - Defines {{ label }} selectors only.
+   - Do not define primitive palette tokens here.
+   - Do not define theme role tokens here.
+   - Use existing --ui-* tokens before introducing component-local values.
+   - Keep selectors aligned with {{ bladePath }} and {{ contractPath }}.
+   ========================================================================== */
+
+@layer components {
+    /* ----------------------------------------------------------------------
+       Root
+       ---------------------------------------------------------------------- */
+
+    /*
+     * Add the root .ui-{{ component }} selector only after its emitted Blade
+     * class contract is defined.
+     */
+
+    /* ----------------------------------------------------------------------
+       Variants and states
+       ---------------------------------------------------------------------- */
+
+    /*
+     * Add only contract-approved variants and states.
+     */
+
+    /* ----------------------------------------------------------------------
+       Responsive behavior
+       ---------------------------------------------------------------------- */
+
+    /*
+     * Add responsive behavior only when required by the component contract.
+     */
+
+    /* ----------------------------------------------------------------------
+       Reduced motion
+       ---------------------------------------------------------------------- */
+
+    @media screen and (prefers-reduced-motion: reduce) {
+        /*
+         * Disable or reduce non-essential component motion here.
+         */
+    }
+
+    /* ----------------------------------------------------------------------
+       Forced colors
+       ---------------------------------------------------------------------- */
+
+    @media screen and (-ms-high-contrast: active), (forced-colors: active) {
+        /*
+         * Add forced-colors overrides only where native system colors do not
+         * already provide a usable result.
+         */
+    }
+}

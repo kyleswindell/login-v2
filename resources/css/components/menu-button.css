@@ -1,30 +1,55 @@
 /* ==========================================================================
-File: resources/css/components/menu-button.css
-Purpose: Menu Button component styles.
-Carbon reference:
+   File: resources/css/components/menu-button.css
+   Purpose: Menu Button component styles.
 
-* reference/carbon-main/packages/styles/scss/components/menu-button/
-
-Notes:
-
-* Defines Menu Button selectors only.
-* Do not define primitive palette tokens here.
-* Do not define theme role tokens here.
-* Menu Button composes Button and Menu behavior.
-  ========================================================================== */
+   Notes:
+   - Defines Menu Button selectors only.
+   - Do not define primitive palette tokens here.
+   - Do not define theme role tokens here.
+   - Supports menu button container, non-ghost trigger sizing,
+     trigger icon transition, open trigger icon rotation, and
+     reduced-motion behavior.
+   ========================================================================== */
 
 @layer components {
-    .ui-menu-button {
-        position: relative;
-        display: inline-flex;
+    /* ----------------------------------------------------------------------
+       Container
+       ---------------------------------------------------------------------- */
+
+    .ui-menu-button-container,
+    .ui-menu-button__container {
+        display: contents;
     }
 
-    .ui-menu-button-trigger .ui-button-icon {
+    /* ----------------------------------------------------------------------
+       Trigger
+       ---------------------------------------------------------------------- */
+
+    .ui-menu-button-trigger:not(.ui-btn-ghost):not(.ui-btn--ghost),
+    .ui-menu-button__trigger:not(.ui-btn-ghost):not(.ui-btn--ghost) {
+        min-inline-size: 12rem;
+    }
+
+    .ui-menu-button-trigger svg,
+    .ui-menu-button__trigger svg {
         transition: transform var(--ui-duration-fast-02)
             var(--ui-motion-standard-productive);
     }
 
-    .ui-menu-button-open .ui-menu-button-trigger .ui-button-icon {
+    .ui-menu-button-trigger-open svg,
+    .ui-menu-button-trigger--open svg,
+    .ui-menu-button__trigger--open svg {
         transform: rotate(180deg);
+    }
+
+    /* ----------------------------------------------------------------------
+       Reduced motion
+       ---------------------------------------------------------------------- */
+
+    @media screen and (prefers-reduced-motion: reduce) {
+        .ui-menu-button-trigger svg,
+        .ui-menu-button__trigger svg {
+            transition: none;
+        }
     }
 }

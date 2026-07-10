@@ -1,53 +1,92 @@
 /* ==========================================================================
-File: resources/css/components/checkbox.css
-Purpose: Checkbox component styles.
-Carbon reference:
+   File: resources/css/components/checkbox.css
+   Purpose: Checkbox component styles.
 
-* reference/carbon-main/packages/styles/scss/components/checkbox/
-
-Notes:
-
-* Defines Checkbox selectors only.
-* Do not define primitive palette tokens here.
-* Do not define theme role tokens here.
-* Checkbox consumes form, type, spacing, focus, and theme tokens.
-  ========================================================================== */
+   Notes:
+   - Defines Checkbox selectors only.
+   - Do not define primitive palette tokens here.
+   - Do not define theme role tokens here.
+   - Supports checkbox groups, wrapper spacing, custom checkbox rendering,
+     checked, indeterminate, focus, disabled, invalid, warning, readonly,
+     skeleton, inline, RTL, decorator/slug, horizontal groups, reduced-motion,
+     and forced-colors behavior.
+   ========================================================================== */
 
 @layer components {
+    /* ----------------------------------------------------------------------
+       Group and wrapper
+       ---------------------------------------------------------------------- */
+
     .ui-checkbox-group {
+        box-sizing: border-box;
         margin: 0;
         border: 0;
         padding: 0;
+        font: inherit;
+        vertical-align: baseline;
     }
 
-    .ui-checkbox-wrapper {
+    .ui-form-item.ui-checkbox-wrapper {
         position: relative;
         margin-block-end: 0.375rem;
     }
 
+    .ui-form-item.ui-checkbox-wrapper:first-of-type {
+        margin-block-start: 0;
+    }
+
+    .ui-label + .ui-form-item.ui-checkbox-wrapper {
+        margin-block-start: calc(var(--ui-spacing-01) * -1);
+    }
+
+    .ui-form-item.ui-checkbox-wrapper:last-of-type {
+        margin-block-end: 0.1875rem;
+    }
+
+    /* ----------------------------------------------------------------------
+       Native input
+       ---------------------------------------------------------------------- */
+
     .ui-checkbox {
         position: absolute;
         overflow: hidden;
-        clip: rect(0 0 0 0);
         inline-size: 1px;
         block-size: 1px;
         margin: -1px;
         border: 0;
         padding: 0;
+        clip: rect(0, 0, 0, 0);
+        inset-block-start: 1.25rem;
+        inset-inline-start: 0.7rem;
         white-space: nowrap;
     }
+
+    .ui-checkbox-inline,
+    .ui-checkbox--inline {
+        position: relative;
+    }
+
+    /* ----------------------------------------------------------------------
+       Label
+       ---------------------------------------------------------------------- */
 
     .ui-checkbox-label {
         position: relative;
         display: flex;
+        box-sizing: border-box;
         min-block-size: 1.25rem;
-        padding-block-start: 1px;
+        margin: 0;
+        border: 0;
+        padding-block-start: 0.0625rem;
         padding-inline-start: 1.25rem;
         color: var(--ui-text-primary);
         cursor: pointer;
         font-size: var(--ui-type-body-compact-01-font-size);
+        font-weight: var(--ui-type-body-compact-01-font-weight);
         line-height: var(--ui-type-body-compact-01-line-height);
+        letter-spacing: var(--ui-type-body-compact-01-letter-spacing);
         user-select: none;
+        vertical-align: baseline;
     }
 
     .ui-checkbox-label-text {
@@ -57,37 +96,53 @@ Notes:
     .ui-checkbox-label::before,
     .ui-checkbox-label::after {
         box-sizing: border-box;
-        content: "";
-        position: absolute;
+    }
+
+    @media print {
+        .ui-checkbox-label::before,
+        .ui-checkbox-label::after {
+            print-color-adjust: exact;
+        }
     }
 
     .ui-checkbox-label::before {
-        inset-block-start: 0.125rem;
-        inset-inline-start: 0;
+        position: absolute;
         inline-size: 1rem;
         block-size: 1rem;
-        margin-block: 1px 2px;
-        margin-inline: 3px 0;
+        margin-block: 0.0625rem 0.125rem;
+        margin-inline: 0.1875rem 0;
         border: 1px solid var(--ui-icon-primary);
         border-radius: 2px;
         background-color: transparent;
+        content: "";
+        inset-block-start: 0.125rem;
+        inset-inline-start: 0;
     }
 
     .ui-checkbox-label::after {
-        inset-block-start: 0.40625rem;
-        inset-inline-start: 0.4375rem;
+        position: absolute;
         inline-size: 0.5625rem;
         block-size: 0.3125rem;
+        margin-block-start: -0.1875rem;
         border-block-end: 1.5px solid var(--ui-icon-inverse);
         border-inline-start: 1.5px solid var(--ui-icon-inverse);
+        background: none;
+        content: "";
+        inset-block-start: 0.40625rem;
+        inset-inline-start: 0.4375rem;
         transform: scale(0) rotate(-45deg);
         transform-origin: bottom right;
     }
 
+    /* ----------------------------------------------------------------------
+       Checked and indeterminate states
+       ---------------------------------------------------------------------- */
+
     .ui-checkbox:checked + .ui-checkbox-label::before,
     .ui-checkbox:indeterminate + .ui-checkbox-label::before,
     .ui-checkbox-label[data-contained-checkbox-state="true"]::before {
-        border: 0;
+        border: none;
+        border-width: 1px;
         background-color: var(--ui-icon-primary);
     }
 
@@ -97,18 +152,31 @@ Notes:
     }
 
     .ui-checkbox:indeterminate + .ui-checkbox-label::after {
-        inset-block-start: 0.6875rem;
         inline-size: 0.5rem;
-        border-block-end-width: 2px;
-        border-inline-start-width: 0;
-        transform: scale(1) rotate(0);
+        border-block-end: 2px solid var(--ui-icon-inverse);
+        border-inline-start: 0 solid var(--ui-icon-inverse);
+        inset-block-start: 0.6875rem;
+        transform: scale(1) rotate(0deg);
     }
 
-    .ui-checkbox:focus-visible + .ui-checkbox-label::before,
-    .ui-checkbox-label-focus::before {
+    /* ----------------------------------------------------------------------
+       Focus state
+       ---------------------------------------------------------------------- */
+
+    .ui-checkbox:focus + .ui-checkbox-label::before,
+    .ui-checkbox-label-focus::before,
+    .ui-checkbox-label__focus::before,
+    .ui-checkbox:checked:focus + .ui-checkbox-label::before,
+    .ui-checkbox-label[data-contained-checkbox-state="true"].ui-checkbox-label-focus::before,
+    .ui-checkbox-label[data-contained-checkbox-state="true"].ui-checkbox-label__focus::before,
+    .ui-checkbox:indeterminate:focus + .ui-checkbox-label::before {
         outline: 2px solid var(--ui-focus);
         outline-offset: 1px;
     }
+
+    /* ----------------------------------------------------------------------
+       Disabled state
+       ---------------------------------------------------------------------- */
 
     .ui-checkbox:disabled + .ui-checkbox-label,
     .ui-checkbox-label[data-contained-checkbox-disabled="true"] {
@@ -122,12 +190,780 @@ Notes:
     }
 
     .ui-checkbox:checked:disabled + .ui-checkbox-label::before,
-    .ui-checkbox:indeterminate:disabled + .ui-checkbox-label::before {
+    .ui-checkbox:indeterminate:disabled + .ui-checkbox-label::before,
+    .ui-checkbox-label[data-contained-checkbox-state="true"][data-contained-checkbox-disabled="true"]::before {
         background-color: var(--ui-icon-disabled);
     }
 
+    /* ----------------------------------------------------------------------
+       Invalid and warning states
+       ---------------------------------------------------------------------- */
+
     .ui-checkbox-group[data-invalid] .ui-checkbox-label::before,
-    .ui-checkbox-wrapper-invalid .ui-checkbox-label::before {
-        border-color: var(--ui-support-error);
+    .ui-checkbox-wrapper-invalid .ui-checkbox-label::before,
+    .ui-checkbox-wrapper--invalid .ui-checkbox-label::before,
+    .ui-checkbox-wrapper-invalid
+        .ui-checkbox:checked
+        + .ui-checkbox-label::before,
+    .ui-checkbox-wrapper--invalid
+        .ui-checkbox:checked
+        + .ui-checkbox-label::before {
+        border: 1px solid var(--ui-support-error);
+    }
+
+    .ui-checkbox-group
+        .ui-checkbox-wrapper-invalid
+        > .ui-checkbox-validation-msg,
+    .ui-checkbox-group
+        .ui-checkbox-wrapper-invalid
+        > .ui-checkbox__validation-msg,
+    .ui-checkbox-group
+        .ui-checkbox-wrapper--invalid
+        > .ui-checkbox-validation-msg,
+    .ui-checkbox-group
+        .ui-checkbox-wrapper--invalid
+        > .ui-checkbox__validation-msg,
+    .ui-checkbox-group
+        .ui-checkbox-wrapper-warning
+        > .ui-checkbox-validation-msg,
+    .ui-checkbox-group
+        .ui-checkbox-wrapper-warning
+        > .ui-checkbox__validation-msg,
+    .ui-checkbox-group
+        .ui-checkbox-wrapper--warning
+        > .ui-checkbox-validation-msg,
+    .ui-checkbox-group
+        .ui-checkbox-wrapper--warning
+        > .ui-checkbox__validation-msg,
+    .ui-checkbox-group .ui-checkbox-wrapper > .ui-form-helper-text,
+    .ui-checkbox-group .ui-checkbox-wrapper > .ui-form__helper-text {
+        display: none;
+    }
+
+    .ui-checkbox-group:not([data-invalid])
+        .ui-checkbox-wrapper-invalid
+        .ui-checkbox-label::before,
+    .ui-checkbox-group:not([data-invalid])
+        .ui-checkbox-wrapper--invalid
+        .ui-checkbox-label::before,
+    .ui-checkbox-group:not([data-invalid])
+        .ui-checkbox-wrapper-invalid
+        .ui-checkbox:checked
+        + .ui-checkbox-label::before,
+    .ui-checkbox-group:not([data-invalid])
+        .ui-checkbox-wrapper--invalid
+        .ui-checkbox:checked
+        + .ui-checkbox-label::before {
+        border: 1px solid var(--ui-icon-primary);
+    }
+
+    .ui-checkbox-group-validation-msg,
+    .ui-checkbox-group__validation-msg,
+    .ui-checkbox-validation-msg,
+    .ui-checkbox__validation-msg {
+        display: none;
+        align-items: flex-start;
+        inline-size: 100%;
+        margin-block-start: var(--ui-spacing-02);
+    }
+
+    .ui-checkbox-invalid-icon,
+    .ui-checkbox__invalid-icon {
+        min-inline-size: 1rem;
+        margin: 0.0625rem 0.0625rem 0 0.1875rem;
+        fill: var(--ui-support-error);
+    }
+
+    .ui-checkbox-invalid-icon-warning,
+    .ui-checkbox-invalid-icon--warning,
+    .ui-checkbox__invalid-icon--warning {
+        fill: var(--ui-support-warning);
+    }
+
+    .ui-checkbox-invalid-icon-warning path:first-of-type,
+    .ui-checkbox-invalid-icon--warning path:first-of-type,
+    .ui-checkbox__invalid-icon--warning path:first-of-type {
+        fill: var(--ui-black-100, #000);
+    }
+
+    .ui-checkbox-group-invalid .ui-checkbox-group-validation-msg,
+    .ui-checkbox-group-invalid .ui-checkbox-group__validation-msg,
+    .ui-checkbox-group--invalid .ui-checkbox-group-validation-msg,
+    .ui-checkbox-group--invalid .ui-checkbox-group__validation-msg,
+    .ui-checkbox-group-warning .ui-checkbox-group-validation-msg,
+    .ui-checkbox-group-warning .ui-checkbox-group__validation-msg,
+    .ui-checkbox-group--warning .ui-checkbox-group-validation-msg,
+    .ui-checkbox-group--warning .ui-checkbox-group__validation-msg,
+    .ui-checkbox-wrapper-invalid > .ui-checkbox-validation-msg,
+    .ui-checkbox-wrapper-invalid > .ui-checkbox__validation-msg,
+    .ui-checkbox-wrapper--invalid > .ui-checkbox-validation-msg,
+    .ui-checkbox-wrapper--invalid > .ui-checkbox__validation-msg,
+    .ui-checkbox-wrapper-warning > .ui-checkbox-validation-msg,
+    .ui-checkbox-wrapper-warning > .ui-checkbox__validation-msg,
+    .ui-checkbox-wrapper--warning > .ui-checkbox-validation-msg,
+    .ui-checkbox-wrapper--warning > .ui-checkbox__validation-msg {
+        display: flex;
+    }
+
+    .ui-checkbox-group-invalid
+        .ui-checkbox-group-validation-msg
+        .ui-form-requirement,
+    .ui-checkbox-group-invalid
+        .ui-checkbox-group__validation-msg
+        .ui-form-requirement,
+    .ui-checkbox-group--invalid
+        .ui-checkbox-group-validation-msg
+        .ui-form-requirement,
+    .ui-checkbox-group--invalid
+        .ui-checkbox-group__validation-msg
+        .ui-form-requirement,
+    .ui-checkbox-group-warning
+        .ui-checkbox-group-validation-msg
+        .ui-form-requirement,
+    .ui-checkbox-group-warning
+        .ui-checkbox-group__validation-msg
+        .ui-form-requirement,
+    .ui-checkbox-group--warning
+        .ui-checkbox-group-validation-msg
+        .ui-form-requirement,
+    .ui-checkbox-group--warning
+        .ui-checkbox-group__validation-msg
+        .ui-form-requirement,
+    .ui-checkbox-wrapper-invalid
+        .ui-checkbox-validation-msg
+        .ui-form-requirement,
+    .ui-checkbox-wrapper-invalid
+        .ui-checkbox__validation-msg
+        .ui-form-requirement,
+    .ui-checkbox-wrapper--invalid
+        .ui-checkbox-validation-msg
+        .ui-form-requirement,
+    .ui-checkbox-wrapper--invalid
+        .ui-checkbox__validation-msg
+        .ui-form-requirement,
+    .ui-checkbox-wrapper-warning
+        .ui-checkbox-validation-msg
+        .ui-form-requirement,
+    .ui-checkbox-wrapper-warning
+        .ui-checkbox__validation-msg
+        .ui-form-requirement,
+    .ui-checkbox-wrapper--warning
+        .ui-checkbox-validation-msg
+        .ui-form-requirement,
+    .ui-checkbox-wrapper--warning
+        .ui-checkbox__validation-msg
+        .ui-form-requirement,
+    .ui-checkbox-group-invalid
+        .ui-checkbox-group-validation-msg
+        .ui-form__requirement,
+    .ui-checkbox-group-invalid
+        .ui-checkbox-group__validation-msg
+        .ui-form__requirement,
+    .ui-checkbox-group--invalid
+        .ui-checkbox-group-validation-msg
+        .ui-form__requirement,
+    .ui-checkbox-group--invalid
+        .ui-checkbox-group__validation-msg
+        .ui-form__requirement,
+    .ui-checkbox-group-warning
+        .ui-checkbox-group-validation-msg
+        .ui-form__requirement,
+    .ui-checkbox-group-warning
+        .ui-checkbox-group__validation-msg
+        .ui-form__requirement,
+    .ui-checkbox-group--warning
+        .ui-checkbox-group-validation-msg
+        .ui-form__requirement,
+    .ui-checkbox-group--warning
+        .ui-checkbox-group__validation-msg
+        .ui-form__requirement,
+    .ui-checkbox-wrapper-invalid
+        .ui-checkbox-validation-msg
+        .ui-form__requirement,
+    .ui-checkbox-wrapper-invalid
+        .ui-checkbox__validation-msg
+        .ui-form__requirement,
+    .ui-checkbox-wrapper--invalid
+        .ui-checkbox-validation-msg
+        .ui-form__requirement,
+    .ui-checkbox-wrapper--invalid
+        .ui-checkbox__validation-msg
+        .ui-form__requirement,
+    .ui-checkbox-wrapper-warning
+        .ui-checkbox-validation-msg
+        .ui-form__requirement,
+    .ui-checkbox-wrapper-warning
+        .ui-checkbox__validation-msg
+        .ui-form__requirement,
+    .ui-checkbox-wrapper--warning
+        .ui-checkbox-validation-msg
+        .ui-form__requirement,
+    .ui-checkbox-wrapper--warning
+        .ui-checkbox__validation-msg
+        .ui-form__requirement {
+        display: block;
+        overflow: visible;
+        max-block-size: 100%;
+        margin-block-start: 0;
+        margin-inline-start: var(--ui-spacing-03);
+    }
+
+    .ui-checkbox-group-invalid
+        .ui-checkbox-group-validation-msg
+        .ui-form-requirement,
+    .ui-checkbox-group-invalid
+        .ui-checkbox-group__validation-msg
+        .ui-form-requirement,
+    .ui-checkbox-group--invalid
+        .ui-checkbox-group-validation-msg
+        .ui-form-requirement,
+    .ui-checkbox-group--invalid
+        .ui-checkbox-group__validation-msg
+        .ui-form-requirement,
+    .ui-checkbox-wrapper-invalid
+        .ui-checkbox-validation-msg
+        .ui-form-requirement,
+    .ui-checkbox-wrapper-invalid
+        .ui-checkbox__validation-msg
+        .ui-form-requirement,
+    .ui-checkbox-wrapper--invalid
+        .ui-checkbox-validation-msg
+        .ui-form-requirement,
+    .ui-checkbox-wrapper--invalid
+        .ui-checkbox__validation-msg
+        .ui-form-requirement,
+    .ui-checkbox-group-invalid
+        .ui-checkbox-group-validation-msg
+        .ui-form__requirement,
+    .ui-checkbox-group-invalid
+        .ui-checkbox-group__validation-msg
+        .ui-form__requirement,
+    .ui-checkbox-group--invalid
+        .ui-checkbox-group-validation-msg
+        .ui-form__requirement,
+    .ui-checkbox-group--invalid
+        .ui-checkbox-group__validation-msg
+        .ui-form__requirement,
+    .ui-checkbox-wrapper-invalid
+        .ui-checkbox-validation-msg
+        .ui-form__requirement,
+    .ui-checkbox-wrapper-invalid
+        .ui-checkbox__validation-msg
+        .ui-form__requirement,
+    .ui-checkbox-wrapper--invalid
+        .ui-checkbox-validation-msg
+        .ui-form__requirement,
+    .ui-checkbox-wrapper--invalid
+        .ui-checkbox__validation-msg
+        .ui-form__requirement {
+        color: var(--ui-text-error);
+    }
+
+    /* ----------------------------------------------------------------------
+       Readonly state
+       ---------------------------------------------------------------------- */
+
+    .ui-checkbox-group-readonly .ui-checkbox-label,
+    .ui-checkbox-group--readonly .ui-checkbox-label,
+    .ui-checkbox-wrapper-readonly .ui-checkbox-label,
+    .ui-checkbox-wrapper--readonly .ui-checkbox-label {
+        cursor: default;
+    }
+
+    .ui-checkbox-group-readonly .ui-checkbox-label-text,
+    .ui-checkbox-group--readonly .ui-checkbox-label-text,
+    .ui-checkbox-wrapper-readonly .ui-checkbox-label-text,
+    .ui-checkbox-wrapper--readonly .ui-checkbox-label-text {
+        cursor: text;
+        user-select: text;
+    }
+
+    .ui-checkbox-group-readonly .ui-checkbox + .ui-checkbox-label::before,
+    .ui-checkbox-group--readonly .ui-checkbox + .ui-checkbox-label::before,
+    .ui-checkbox-wrapper-readonly .ui-checkbox + .ui-checkbox-label::before,
+    .ui-checkbox-wrapper--readonly .ui-checkbox + .ui-checkbox-label::before {
+        border-color: var(--ui-icon-disabled);
+    }
+
+    .ui-checkbox-group-readonly
+        .ui-checkbox:checked
+        + .ui-checkbox-label::before,
+    .ui-checkbox-group--readonly
+        .ui-checkbox:checked
+        + .ui-checkbox-label::before,
+    .ui-checkbox-wrapper-readonly
+        .ui-checkbox:checked
+        + .ui-checkbox-label::before,
+    .ui-checkbox-wrapper--readonly
+        .ui-checkbox:checked
+        + .ui-checkbox-label::before {
+        border: 1px solid var(--ui-icon-disabled);
+        background: transparent;
+    }
+
+    .ui-checkbox-group-readonly
+        .ui-checkbox:checked
+        + .ui-checkbox-label::after,
+    .ui-checkbox-group--readonly
+        .ui-checkbox:checked
+        + .ui-checkbox-label::after,
+    .ui-checkbox-wrapper-readonly
+        .ui-checkbox:checked
+        + .ui-checkbox-label::after,
+    .ui-checkbox-wrapper--readonly
+        .ui-checkbox:checked
+        + .ui-checkbox-label::after {
+        border-color: var(--ui-text-primary);
+    }
+
+    /* ----------------------------------------------------------------------
+       Skeleton
+       ---------------------------------------------------------------------- */
+
+    .ui-checkbox-skeleton .ui-checkbox-label {
+        cursor: default;
+    }
+
+    .ui-checkbox-label-text.ui-skeleton {
+        position: relative;
+        overflow: hidden;
+        inline-size: 6.25rem;
+        block-size: var(--ui-spacing-05);
+        margin-block: 0.0625rem 0;
+        margin-inline: 0.375rem 0;
+        background-color: var(--ui-skeleton-background);
+        color: transparent;
+    }
+
+    .ui-checkbox-label-text.ui-skeleton::before {
+        position: absolute;
+        inset: 0;
+        background: var(--ui-skeleton-element);
+        content: "";
+        animation: ui-checkbox-skeleton-pulse 3000ms ease-in-out infinite;
+    }
+
+    @keyframes ui-checkbox-skeleton-pulse {
+        0% {
+            opacity: 0.3;
+        }
+
+        50% {
+            opacity: 1;
+        }
+
+        100% {
+            opacity: 0.3;
+        }
+    }
+
+    /* ----------------------------------------------------------------------
+       RTL
+       ---------------------------------------------------------------------- */
+
+    [dir="rtl"] .ui-checkbox-label::after {
+        margin-block-start: 0;
+        margin-inline-start: -0.0625rem;
+        transform-origin: center;
+    }
+
+    [dir="rtl"] .ui-checkbox:checked + .ui-checkbox-label::after,
+    [dir="rtl"]
+        .ui-checkbox-label[data-contained-checkbox-state="true"]::after {
+        transform: scale(1.2) rotate3d(0.5, 1, 0, 158deg);
+    }
+
+    /* ----------------------------------------------------------------------
+       Decorator / slug
+       ---------------------------------------------------------------------- */
+
+    .ui-checkbox-group-decorator legend.ui-label,
+    .ui-checkbox-group--decorator legend.ui-label,
+    .ui-checkbox-group-slug legend.ui-label,
+    .ui-checkbox-group--slug legend.ui-label {
+        display: flex;
+        align-items: center;
+    }
+
+    .ui-checkbox-group-decorator
+        legend.ui-label
+        .ui-checkbox-group-inner-decorator,
+    .ui-checkbox-group-decorator
+        legend.ui-label
+        .ui-checkbox-group-inner--decorator,
+    .ui-checkbox-group--decorator
+        legend.ui-label
+        .ui-checkbox-group-inner-decorator,
+    .ui-checkbox-group--decorator
+        legend.ui-label
+        .ui-checkbox-group-inner--decorator {
+        display: inline-flex;
+        align-items: center;
+        margin-inline-start: var(--ui-spacing-03);
+        line-height: inherit;
+        vertical-align: text-bottom;
+    }
+
+    .ui-form-item.ui-checkbox-wrapper.ui-checkbox-wrapper-decorator,
+    .ui-form-item.ui-checkbox-wrapper.ui-checkbox-wrapper--decorator,
+    .ui-form-item.ui-checkbox-wrapper.ui-checkbox-wrapper-slug,
+    .ui-form-item.ui-checkbox-wrapper.ui-checkbox-wrapper--slug {
+        display: grid;
+        grid-template-columns: max-content max-content;
+        align-items: start;
+        justify-content: start;
+        column-gap: var(--ui-spacing-03);
+        row-gap: var(--ui-spacing-02);
+    }
+
+    .ui-form-item.ui-checkbox-wrapper.ui-checkbox-wrapper-decorator
+        > .ui-checkbox-label,
+    .ui-form-item.ui-checkbox-wrapper.ui-checkbox-wrapper--decorator
+        > .ui-checkbox-label,
+    .ui-form-item.ui-checkbox-wrapper.ui-checkbox-wrapper-slug
+        > .ui-checkbox-label,
+    .ui-form-item.ui-checkbox-wrapper.ui-checkbox-wrapper--slug
+        > .ui-checkbox-label {
+        grid-column: 1;
+        inline-size: max-content;
+        max-inline-size: max-content;
+        min-inline-size: 0;
+    }
+
+    .ui-checkbox-wrapper-decorator .ui-checkbox-label-text,
+    .ui-checkbox-wrapper--decorator .ui-checkbox-label-text,
+    .ui-checkbox-wrapper-slug .ui-checkbox-label-text,
+    .ui-checkbox-wrapper--slug .ui-checkbox-label-text {
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .ui-form-item.ui-checkbox-wrapper.ui-checkbox-wrapper-decorator
+        > .ui-checkbox-wrapper-inner-decorator,
+    .ui-form-item.ui-checkbox-wrapper.ui-checkbox-wrapper-decorator
+        > .ui-checkbox-wrapper-inner--decorator,
+    .ui-form-item.ui-checkbox-wrapper.ui-checkbox-wrapper--decorator
+        > .ui-checkbox-wrapper-inner-decorator,
+    .ui-form-item.ui-checkbox-wrapper.ui-checkbox-wrapper--decorator
+        > .ui-checkbox-wrapper-inner--decorator,
+    .ui-form-item.ui-checkbox-wrapper.ui-checkbox-wrapper-slug
+        > .ui-checkbox-wrapper-inner-decorator,
+    .ui-form-item.ui-checkbox-wrapper.ui-checkbox-wrapper-slug
+        > .ui-checkbox-wrapper-inner--decorator,
+    .ui-form-item.ui-checkbox-wrapper.ui-checkbox-wrapper--slug
+        > .ui-checkbox-wrapper-inner-decorator,
+    .ui-form-item.ui-checkbox-wrapper.ui-checkbox-wrapper--slug
+        > .ui-checkbox-wrapper-inner--decorator {
+        grid-column: 2;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-block-size: var(--ui-type-body-compact-01-line-height);
+        margin-inline-start: 0;
+        padding-block-start: 0.125rem;
+        line-height: inherit;
+        vertical-align: text-bottom;
+    }
+
+    .ui-checkbox-wrapper-decorator
+        .ui-checkbox-label-text
+        .ui-checkbox-wrapper-inner-decorator,
+    .ui-checkbox-wrapper-decorator
+        .ui-checkbox-label-text
+        .ui-checkbox-wrapper-inner--decorator,
+    .ui-checkbox-wrapper--decorator
+        .ui-checkbox-label-text
+        .ui-checkbox-wrapper-inner-decorator,
+    .ui-checkbox-wrapper--decorator
+        .ui-checkbox-label-text
+        .ui-checkbox-wrapper-inner--decorator {
+        display: inline-flex;
+        align-items: center;
+        margin-inline-start: var(--ui-spacing-03);
+        line-height: inherit;
+        vertical-align: text-bottom;
+    }
+
+    .ui-checkbox-group-decorator legend.ui-label .ui-ai-label,
+    .ui-checkbox-group--decorator legend.ui-label .ui-ai-label,
+    .ui-checkbox-wrapper-decorator .ui-checkbox-label-text .ui-ai-label,
+    .ui-checkbox-wrapper--decorator .ui-checkbox-label-text .ui-ai-label,
+    .ui-checkbox-group-slug legend.ui-label .ui-ai-label,
+    .ui-checkbox-group--slug legend.ui-label .ui-ai-label,
+    .ui-checkbox-wrapper-slug .ui-checkbox-label-text .ui-ai-label,
+    .ui-checkbox-wrapper--slug .ui-checkbox-label-text .ui-ai-label,
+    .ui-checkbox-group-slug legend.ui-label .ui-slug,
+    .ui-checkbox-group--slug legend.ui-label .ui-slug,
+    .ui-checkbox-wrapper-slug .ui-checkbox-label-text .ui-slug,
+    .ui-checkbox-wrapper--slug .ui-checkbox-label-text .ui-slug {
+        margin-inline-start: var(--ui-spacing-03);
+    }
+
+    .ui-checkbox-wrapper-decorator
+        .ui-checkbox-label-text
+        .ui-ai-label-button-inline,
+    .ui-checkbox-wrapper-decorator
+        .ui-checkbox-label-text
+        .ui-ai-label__button--inline,
+    .ui-checkbox-wrapper--decorator
+        .ui-checkbox-label-text
+        .ui-ai-label-button-inline,
+    .ui-checkbox-wrapper--decorator
+        .ui-checkbox-label-text
+        .ui-ai-label__button--inline,
+    .ui-checkbox-wrapper-slug
+        .ui-checkbox-label-text
+        .ui-ai-label-button-inline,
+    .ui-checkbox-wrapper-slug
+        .ui-checkbox-label-text
+        .ui-ai-label__button--inline,
+    .ui-checkbox-wrapper--slug
+        .ui-checkbox-label-text
+        .ui-ai-label-button-inline,
+    .ui-checkbox-wrapper--slug
+        .ui-checkbox-label-text
+        .ui-ai-label__button--inline,
+    .ui-checkbox-wrapper-slug .ui-checkbox-label-text .ui-slug-button-inline,
+    .ui-checkbox-wrapper-slug .ui-checkbox-label-text .ui-slug__button--inline,
+    .ui-checkbox-wrapper--slug .ui-checkbox-label-text .ui-slug-button-inline,
+    .ui-checkbox-wrapper--slug .ui-checkbox-label-text .ui-slug__button--inline,
+    .ui-checkbox-wrapper-slug
+        > .ui-checkbox-wrapper-inner--decorator
+        .ui-ai-label-button-inline,
+    .ui-checkbox-wrapper--slug
+        > .ui-checkbox-wrapper-inner--decorator
+        .ui-ai-label-button-inline,
+    .ui-checkbox-wrapper-slug
+        > .ui-checkbox-wrapper-inner--decorator
+        .ui-ai-label__button--inline,
+    .ui-checkbox-wrapper--slug
+        > .ui-checkbox-wrapper-inner--decorator
+        .ui-ai-label__button--inline,
+    .ui-checkbox-wrapper-slug
+        > .ui-checkbox-wrapper-inner--decorator
+        .ui-slug-button-inline,
+    .ui-checkbox-wrapper--slug
+        > .ui-checkbox-wrapper-inner--decorator
+        .ui-slug-button-inline,
+    .ui-checkbox-wrapper-slug
+        > .ui-checkbox-wrapper-inner--decorator
+        .ui-slug__button--inline,
+    .ui-checkbox-wrapper--slug
+        > .ui-checkbox-wrapper-inner--decorator
+        .ui-slug__button--inline {
+        margin-block-start: -0.0625rem;
+        line-height: inherit;
+    }
+
+    .ui-checkbox-wrapper-decorator
+        > .ui-checkbox-wrapper-inner--decorator
+        > .ui-toggletip,
+    .ui-checkbox-wrapper--decorator
+        > .ui-checkbox-wrapper-inner--decorator
+        > .ui-toggletip,
+    .ui-checkbox-wrapper-decorator
+        > .ui-checkbox-wrapper-inner-decorator
+        > .ui-toggletip,
+    .ui-checkbox-wrapper--decorator
+        > .ui-checkbox-wrapper-inner-decorator
+        > .ui-toggletip {
+        display: inline-flex;
+        flex: none;
+        vertical-align: text-bottom;
+    }
+
+    .ui-form-item.ui-checkbox-wrapper.ui-checkbox-wrapper-decorator
+        > .ui-checkbox-validation-msg,
+    .ui-form-item.ui-checkbox-wrapper.ui-checkbox-wrapper-decorator
+        > .ui-checkbox__validation-msg,
+    .ui-form-item.ui-checkbox-wrapper.ui-checkbox-wrapper--decorator
+        > .ui-checkbox-validation-msg,
+    .ui-form-item.ui-checkbox-wrapper.ui-checkbox-wrapper--decorator
+        > .ui-checkbox__validation-msg,
+    .ui-form-item.ui-checkbox-wrapper.ui-checkbox-wrapper-slug
+        > .ui-checkbox-validation-msg,
+    .ui-form-item.ui-checkbox-wrapper.ui-checkbox-wrapper-slug
+        > .ui-checkbox__validation-msg,
+    .ui-form-item.ui-checkbox-wrapper.ui-checkbox-wrapper--slug
+        > .ui-checkbox-validation-msg,
+    .ui-form-item.ui-checkbox-wrapper.ui-checkbox-wrapper--slug
+        > .ui-checkbox__validation-msg,
+    .ui-form-item.ui-checkbox-wrapper.ui-checkbox-wrapper-decorator
+        > .ui-form-helper-text,
+    .ui-form-item.ui-checkbox-wrapper.ui-checkbox-wrapper-decorator
+        > .ui-form__helper-text,
+    .ui-form-item.ui-checkbox-wrapper.ui-checkbox-wrapper--decorator
+        > .ui-form-helper-text,
+    .ui-form-item.ui-checkbox-wrapper.ui-checkbox-wrapper--decorator
+        > .ui-form__helper-text,
+    .ui-form-item.ui-checkbox-wrapper.ui-checkbox-wrapper-slug
+        > .ui-form-helper-text,
+    .ui-form-item.ui-checkbox-wrapper.ui-checkbox-wrapper-slug
+        > .ui-form__helper-text,
+    .ui-form-item.ui-checkbox-wrapper.ui-checkbox-wrapper--slug
+        > .ui-form-helper-text,
+    .ui-form-item.ui-checkbox-wrapper.ui-checkbox-wrapper--slug
+        > .ui-form__helper-text {
+        grid-column: 1 / -1;
+        inline-size: 100%;
+        margin-inline-start: 0;
+    }
+
+    /* ----------------------------------------------------------------------
+       Horizontal group
+       ---------------------------------------------------------------------- */
+
+    .ui-checkbox-group-horizontal,
+    .ui-checkbox-group--horizontal {
+        position: relative;
+        display: flex;
+        flex-flow: row wrap;
+        justify-content: flex-start;
+    }
+
+    .ui-checkbox-group-horizontal .ui-form-item,
+    .ui-checkbox-group--horizontal .ui-form-item {
+        flex: none;
+        margin-block-end: 0;
+    }
+
+    .ui-checkbox-group-horizontal .ui-form-item:not(:last-of-type),
+    .ui-checkbox-group--horizontal .ui-form-item:not(:last-of-type) {
+        margin-inline-end: var(--ui-spacing-05);
+    }
+
+    .ui-checkbox-group-horizontal .ui-checkbox-label-text,
+    .ui-checkbox-group--horizontal .ui-checkbox-label-text {
+        padding-inline-start: var(--ui-spacing-03);
+    }
+
+    .ui-checkbox-group-horizontal .ui-label + .ui-form-item.ui-checkbox-wrapper,
+    .ui-checkbox-group--horizontal
+        .ui-label
+        + .ui-form-item.ui-checkbox-wrapper {
+        margin-block-start: 0;
+    }
+
+    /* ----------------------------------------------------------------------
+       Reduced motion
+       ---------------------------------------------------------------------- */
+
+    @media screen and (prefers-reduced-motion: reduce) {
+        .ui-checkbox-label-text.ui-skeleton::before {
+            animation: none;
+        }
+    }
+
+    /* ----------------------------------------------------------------------
+       Forced colors
+       ---------------------------------------------------------------------- */
+
+    @media screen and (-ms-high-contrast: active), (forced-colors: active) {
+        .ui-checkbox-label::before {
+            border: 1px solid ButtonBorder;
+        }
+
+        .ui-checkbox:checked + .ui-checkbox-label::before,
+        .ui-checkbox:indeterminate + .ui-checkbox-label::before,
+        .ui-checkbox-label[data-contained-checkbox-state="true"]::before {
+            border: 1px solid ButtonBorder;
+            background-color: SelectedItem;
+        }
+
+        .ui-checkbox:checked + .ui-checkbox-label::after,
+        .ui-checkbox:indeterminate + .ui-checkbox-label::after,
+        .ui-checkbox-label[data-contained-checkbox-state="true"]::after {
+            border-color: SelectedItemText;
+        }
+
+        .ui-checkbox:focus + .ui-checkbox-label::before,
+        .ui-checkbox-label-focus::before,
+        .ui-checkbox-label__focus::before,
+        .ui-checkbox:checked:focus + .ui-checkbox-label::before,
+        .ui-checkbox-label[data-contained-checkbox-state="true"].ui-checkbox-label-focus::before,
+        .ui-checkbox-label[data-contained-checkbox-state="true"].ui-checkbox-label__focus::before,
+        .ui-checkbox:indeterminate:focus + .ui-checkbox-label::before {
+            outline-color: Highlight;
+        }
+
+        .ui-checkbox:disabled + .ui-checkbox-label,
+        .ui-checkbox-label[data-contained-checkbox-disabled="true"],
+        .ui-checkbox:disabled + .ui-checkbox-label::before,
+        .ui-checkbox-label[data-contained-checkbox-disabled="true"]::before {
+            color: GrayText;
+            border-color: GrayText;
+        }
+
+        .ui-checkbox:checked:disabled + .ui-checkbox-label::before,
+        .ui-checkbox:indeterminate:disabled + .ui-checkbox-label::before,
+        .ui-checkbox-label[data-contained-checkbox-state="true"][data-contained-checkbox-disabled="true"]::before {
+            background-color: GrayText;
+        }
+
+        .ui-checkbox-group[data-invalid] .ui-checkbox-label::before,
+        .ui-checkbox-wrapper-invalid .ui-checkbox-label::before,
+        .ui-checkbox-wrapper--invalid .ui-checkbox-label::before,
+        .ui-checkbox-wrapper-invalid
+            .ui-checkbox:checked
+            + .ui-checkbox-label::before,
+        .ui-checkbox-wrapper--invalid
+            .ui-checkbox:checked
+            + .ui-checkbox-label::before {
+            border-color: Mark;
+        }
+
+        .ui-checkbox-invalid-icon,
+        .ui-checkbox__invalid-icon,
+        .ui-checkbox-group-invalid
+            .ui-checkbox-group-validation-msg
+            .ui-form-requirement,
+        .ui-checkbox-group-invalid
+            .ui-checkbox-group__validation-msg
+            .ui-form-requirement,
+        .ui-checkbox-group--invalid
+            .ui-checkbox-group-validation-msg
+            .ui-form-requirement,
+        .ui-checkbox-group--invalid
+            .ui-checkbox-group__validation-msg
+            .ui-form-requirement,
+        .ui-checkbox-wrapper-invalid
+            .ui-checkbox-validation-msg
+            .ui-form-requirement,
+        .ui-checkbox-wrapper-invalid
+            .ui-checkbox__validation-msg
+            .ui-form-requirement,
+        .ui-checkbox-wrapper--invalid
+            .ui-checkbox-validation-msg
+            .ui-form-requirement,
+        .ui-checkbox-wrapper--invalid
+            .ui-checkbox__validation-msg
+            .ui-form-requirement {
+            color: Mark;
+            fill: Mark;
+        }
+
+        .ui-checkbox-invalid-icon-warning,
+        .ui-checkbox-invalid-icon--warning,
+        .ui-checkbox__invalid-icon--warning,
+        .ui-checkbox-invalid-icon-warning path:first-of-type,
+        .ui-checkbox-invalid-icon--warning path:first-of-type,
+        .ui-checkbox__invalid-icon--warning path:first-of-type {
+            fill: CanvasText;
+        }
+
+        .ui-checkbox-group-readonly
+            .ui-checkbox:checked
+            + .ui-checkbox-label::after,
+        .ui-checkbox-group--readonly
+            .ui-checkbox:checked
+            + .ui-checkbox-label::after,
+        .ui-checkbox-wrapper-readonly
+            .ui-checkbox:checked
+            + .ui-checkbox-label::after,
+        .ui-checkbox-wrapper--readonly
+            .ui-checkbox:checked
+            + .ui-checkbox-label::after {
+            border-color: CanvasText;
+        }
     }
 }

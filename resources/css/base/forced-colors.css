@@ -1,0 +1,62 @@
+/* ==========================================================================
+   File: resources/css/base/forced-colors.css
+   Purpose: Forced-colors / high-contrast utility hooks.
+   Notes:
+   - Defines shared forced-colors behavior only.
+   - Component-specific forced-colors fixes should remain at the end of each
+     component file when needed.
+   ========================================================================== */
+
+@layer base {
+    @media screen and (-ms-high-contrast: active), (forced-colors: active) {
+        /*
+         * Focus treatment.
+         * Equivalent to source high-contrast-mode("focus").
+         */
+        :where(.ui-forced-colors-focus),
+        :where(.ui-high-contrast-focus) {
+            color: Highlight;
+            outline: 1px solid Highlight;
+        }
+
+        /*
+         * Transparent outline treatment.
+         * Equivalent to source high-contrast-mode("outline").
+         */
+        :where(.ui-forced-colors-outline),
+        :where(.ui-high-contrast-outline) {
+            outline: 1px solid transparent;
+        }
+
+        /*
+         * Disabled treatment.
+         * Equivalent to source high-contrast-mode("disabled").
+         */
+        :where(.ui-forced-colors-disabled),
+        :where(.ui-high-contrast-disabled),
+        :where(
+            [disabled],
+            [aria-disabled="true"],
+            [data-disabled="true"],
+            [data-ui-disabled="true"],
+            .is-disabled,
+            .ui-disabled
+        ) {
+            color: GrayText;
+            fill: GrayText;
+        }
+
+        :where(
+            .ui-forced-colors-disabled svg,
+            .ui-high-contrast-disabled svg,
+            [disabled] svg,
+            [aria-disabled="true"] svg,
+            [data-disabled="true"] svg,
+            [data-ui-disabled="true"] svg,
+            .is-disabled svg,
+            .ui-disabled svg
+        ) {
+            fill: GrayText;
+        }
+    }
+}

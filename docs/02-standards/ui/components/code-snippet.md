@@ -6,9 +6,9 @@ status: implemented-pending-review
 system_maturity: implemented
 category: developer-documentation
 priority: tier-b-common-reusable-component
-ui_reference_route: /platform/ui-reference/components/code-snippet
+rendered_evidence_route: null
 canonical_doc: docs/02-standards/ui/components/code-snippet.md
-source_owner: /platform/ui-reference/components/code-snippet
+source_owner: not installed
 blade_api:
   - x-ui.code-snippet
 javascript_api:
@@ -21,14 +21,14 @@ data_attributes:
   - data-ui-code-copy-button
   - data-ui-code-show-more
 source_files:
-  - resources/views/components/ui/code-snippet.blade.php
-  - resources/views/components/ui/copy-button.blade.php
+  - resources/views/components/ui/code-snippet/index.blade.php
+  - resources/views/components/ui/copy-button/index.blade.php
   - resources/js/ui-controls/code-snippets.js
   - resources/js/ui-controls.js
   - resources/js/app.js
   - resources/css/components/code-snippet.css
   - resources/css/components/copy-button.css
-  - resources/views/platform/ui-reference/components/live-examples/code-snippet.blade.php
+  - not installed
 foundation_elements:
   - color
   - spacing
@@ -81,7 +81,7 @@ carbon_reference:
 - [11. Content contract](#11-content-contract)
 - [12. Prohibited usage](#12-prohibited-usage)
 - [13. Deferred or gated capabilities](#13-deferred-or-gated-capabilities)
-- [14. UI Reference requirements](#14-ui-reference-requirements)
+- [14. Rendered evidence requirements](#14-ui-reference-requirements)
   - [14.1. Required Live examples internal sections:](#141-required-live-examples-internal-sections)
 - [15. Testing and acceptance criteria](#15-testing-and-acceptance-criteria)
   - [15.1. Suggested automated assertions:](#151-suggested-automated-assertions)
@@ -92,9 +92,9 @@ carbon_reference:
 
 Code snippet presents exact implementation syntax with app-approved code typography, syntax token color, overflow behavior, and optional copy affordance.
 
-Canonical API owner: `/platform/ui-reference/components/code-snippet`. Use this Component API instead of creating local markup, styling, syntax colors, copy controls, or behavior for the same UI role.
+Canonical API owner: `not installed`. Use this Component API instead of creating local markup, styling, syntax colors, copy controls, or behavior for the same UI role.
 
-Code snippet is the installed Login App 2.0 developer-documentation primitive for canonical implementation examples inside UI Reference pages and internal standards. It owns code container anatomy, inline/single-line/multi-line disposition, language labels, copy affordance behavior, copy-state presentation, show-more/show-less expansion for multi-line snippets, syntax token classes, code typography, horizontal overflow, token-backed focus and copy states, and code-specific content rules. It does not own prose formatting, API contract tables, long tutorials, live code execution, syntax parsing, full source viewers, or feature-specific examples.
+Code snippet is the installed Login App 2.0 developer-documentation primitive for canonical implementation examples inside rendered evidence pages and internal standards. It owns code container anatomy, inline/single-line/multi-line disposition, language labels, copy affordance behavior, copy-state presentation, show-more/show-less expansion for multi-line snippets, syntax token classes, code typography, horizontal overflow, token-backed focus and copy states, and code-specific content rules. It does not own prose formatting, API contract tables, long tutorials, live code execution, syntax parsing, full source viewers, or feature-specific examples.
 
 ### 1.1. Canonical API responsibilities:
 
@@ -111,7 +111,7 @@ Code snippet is the installed Login App 2.0 developer-documentation primitive fo
 - Preserve whitespace, indentation, and line breaks.
 - Keep long code readable with horizontal overflow rather than misleading wraps.
 - Consume Foundation Element APIs for color, spacing, typography, themes, motion, and icons.
-- Prove variants, copy states, syntax tokens, overflow behavior, accessibility, and implementation examples on the UI Reference page.
+- Prove variants, copy states, syntax tokens, overflow behavior, accessibility, and implementation examples on the rendered evidence page.
 
 ### 1.2. Non-owned responsibilities:
 
@@ -124,7 +124,7 @@ Code snippet is the installed Login App 2.0 developer-documentation primitive fo
 - Syntax parsing or automatic highlighting. Use explicit token spans or an approved highlighter gate.
 - Page-level spacing around examples. Parent documentation Patterns own external spacing and grouping.
 
-Carbon alignment note: Carbon documents inline, single-line, and multi-line code snippet variants, copy affordances, show-more behavior for multi-line snippets, token-backed focus/hover/active states, accessible syntax colors, and text updates for copy/show-more controls. Login App installs those baseline behaviors through its own `x-ui.code-snippet`, `ui-*` namespace, `initCodeSnippets` controller, explicit token classes, and UI Reference proof.
+Carbon alignment note: Carbon documents inline, single-line, and multi-line code snippet variants, copy affordances, show-more behavior for multi-line snippets, token-backed focus/hover/active states, accessible syntax colors, and text updates for copy/show-more controls. Login App installs those baseline behaviors through its own `x-ui.code-snippet`, `ui-*` namespace, `initCodeSnippets` controller, explicit token classes, and rendered evidence proof.
 
 ## 2. Status and ownership
 
@@ -136,25 +136,25 @@ Carbon alignment note: Carbon documents inline, single-line, and multi-line code
 | Component slug               | code-snippet                                                                                                                                               |
 | Category                     | Developer documentation                                                                                                                                    |
 | Priority                     | Tier B - Common reusable component                                                                                                                         |
-| UI Reference route           | `/platform/ui-reference/components/code-snippet`                                                                                                           |
+| Rendered evidence route           | `not installed`                                                                                                           |
 | Canonical doc                | `docs/02-standards/ui/components/code-snippet.md`                                                                                                          |
-| Source owner                 | `/platform/ui-reference/components/code-snippet`                                                                                                           |
+| Source owner                 | `not installed`                                                                                                           |
 | Blade API                    | `x-ui.code-snippet`                                                                                                                                        |
 | JavaScript API               | `initCodeSnippets`                                                                                                                                         |
 | Data attributes              | `data-ui-component="code-snippet"`, `data-ui-code-snippet-variant`, `data-ui-code-copy-state`                                                              |
 | Props/options                | `variant`, `language`, `copyable`, `copyState`, `expandable`, `collapsedLines`, `light`, content slot                                                      |
-| Source files                 | `resources/views/components/ui/code-snippet.blade.php`; `resources/views/components/ui/copy-button.blade.php`; `resources/js/ui-controls/code-snippets.js`; `resources/css/components/code-snippet.css`; `resources/css/components/copy-button.css`; `resources/views/platform/ui-reference/components/live-examples/code-snippet.blade.php` |
+| Source files                 | `resources/views/components/ui/code-snippet/index.blade.php`; `resources/views/components/ui/copy-button/index.blade.php`; `resources/js/ui-controls/code-snippets.js`; `resources/css/components/code-snippet.css`; `resources/css/components/copy-button.css`; `not installed` |
 | CSS namespace                | `ui-code-snippet*` and `ui-code-token*`                                                                                                                    |
 | Foundation Elements consumed | Color, Spacing, Typography, Themes, Motion, Icons                                                                                                          |
 | Carbon benchmark             | Carbon Code snippet usage, style, and accessibility guidance                                                                                               |
 
-`Implemented Pending Review` means the component has a concrete Blade API, lifecycle-owned copy/show-more behavior, UI Reference proof, and focused tests, and is waiting for manual visual review.
+`Implemented Pending Review` means the component has a concrete Blade API, lifecycle-owned copy/show-more behavior, rendered evidence proof, and focused tests, and is waiting for manual visual review.
 
 ## 3. Installed standard
 
 The installed standard is the `x-ui.code-snippet` Blade Component API.
 
-Use Code snippet when the user needs to read, compare, or copy exact implementation syntax. Code snippets should appear in UI Reference implementation examples, canonical standards, internal developer documentation, and pattern/component proof pages where exact code matters.
+Use Code snippet when the user needs to read, compare, or copy exact implementation syntax. Code snippets should appear in rendered evidence implementation examples, canonical standards, internal developer documentation, and pattern/component proof pages where exact code matters.
 
 ### 3.1. Installed production rules:
 
@@ -167,8 +167,8 @@ Use Code snippet when the user needs to read, compare, or copy exact implementat
 - Use `copyState="idle"` and `copyState="copied"` for initial copy affordance state; live copying updates the state through `initCodeSnippets`.
 - Preserve whitespace and line breaks in multi-line examples.
 - Use horizontal overflow for long code instead of wrapping into misleading syntax.
-- Use explicit syntax token spans only where the UI Reference needs to prove code-token color roles.
-- Use token-backed syntax spans for UI Reference live examples that demonstrate implementation code, copy feedback, horizontal overflow, or multi-line syntax.
+- Use explicit syntax token spans only where the rendered evidence needs to prove code-token color roles.
+- Use token-backed syntax spans for rendered evidence live examples that demonstrate implementation code, copy feedback, horizontal overflow, or multi-line syntax.
 - Keep code examples real and tied to the current installed API.
 - Block snippet shells consume the standard `.ui-card` surface contract for their outer border, radius, shadow, and layer background. Nested block snippets default to `--ui-layer-02`; the language header, code body, and footer controls share that same layer surface. Do not add a separate header/footer background band or internal header/footer divider by default.
 - Do not show speculative, deferred, or fake API calls as complete production examples.
@@ -184,7 +184,7 @@ Use Code snippet when the user needs to read, compare, or copy exact implementat
 | Multi-line snippet        | Implemented              | Longer example that requires indentation, whitespace, or multiple lines.                              |
 | Language label            | Implemented              | Visible language/context label in the snippet header.                                                 |
 | Copy ready                | Implemented visual state | Copy affordance is rendered in idle state.                                                            |
-| Copied                    | Implemented visual state | Copied state is rendered for UI Reference proof or server-rendered state.                             |
+| Copied                    | Implemented visual state | Copied state is rendered for rendered evidence proof or server-rendered state.                             |
 | Syntax token highlighting | Implemented              | Explicit `ui-code-token-*` spans provide token-backed syntax color roles.                             |
 | Overflow                  | Implemented              | Long examples scroll horizontally without wrapping into incorrect syntax.                             |
 | Show more/show less       | Implemented              | Optional multi-line ghost button expands or collapses the snippet.                                    |
@@ -202,13 +202,13 @@ Use Code snippet when the user needs to read, compare, or copy exact implementat
 
 ```blade
 <x-ui.code-snippet variant="single" language="Blade">
-    &lt;x-ui.badge status="approved" /&gt;
+    &lt;x-ui.tag label="approved" tone="success" /&gt;
 </x-ui.code-snippet>
 ```
 
 ```blade
 <x-ui.code-snippet variant="multi" language="PHP" copyable>
-    $response = $this-&gt;actingAs($admin)-&gt;get('/platform/ui-reference/components/button');
+    $response = $this-&gt;actingAs($admin)-&gt;get('not installed');
 
     $response-&gt;assertOk();
     $response-&gt;assertSee('x-ui.button');
@@ -226,7 +226,7 @@ Use Code snippet when the user needs to read, compare, or copy exact implementat
 </x-ui.code-snippet>
 ```
 
-Use the Blade API instead of hand-building code snippet markup in feature views or UI Reference pages.
+Use the Blade API instead of hand-building code snippet markup in feature views or rendered evidence pages.
 
 ### 4.2. API surfaces
 
@@ -237,7 +237,7 @@ Use the Blade API instead of hand-building code snippet markup in feature views 
 | Root semantic structure | `pre` and `code` for block snippets; inline variant renders inline `code` or copyable button plus `code`                                                   |
 | Data attributes         | `data-ui-component="code-snippet"`, `data-ui-code-snippet`, `data-ui-code-snippet-variant`, `data-ui-code-copy-state`, copy/show-more hooks                |
 | CSS namespace           | `ui-code-snippet*` and `ui-code-token*`                                                                                                                    |
-| Source files            | `resources/views/components/ui/code-snippet.blade.php`; `resources/views/components/ui/copy-button.blade.php`; `resources/js/ui-controls/code-snippets.js`; `resources/css/components/code-snippet.css`; `resources/css/components/copy-button.css`; `resources/views/platform/ui-reference/components/live-examples/code-snippet.blade.php` |
+| Source files            | `resources/views/components/ui/code-snippet/index.blade.php`; `resources/views/components/ui/copy-button/index.blade.php`; `resources/js/ui-controls/code-snippets.js`; `resources/css/components/code-snippet.css`; `resources/css/components/copy-button.css`; `not installed` |
 
 ### 4.3. Props and options
 
@@ -253,7 +253,7 @@ Use the Blade API instead of hand-building code snippet markup in feature views 
 | Default slot | `string` | `HtmlString` | none              | Exact escaped or safe code content                                                                        | Yes                                                                                                                                   | Content must be the canonical code being documented.                                                          |
 | `class`      | `string` | `null`       | `null`            | Layout passthrough if supported                                                                           | No                                                                                                                                    | Parent Patterns may pass layout classes. Do not use for local color, typography, spacing, or state overrides. |
 
-Any prop not listed here is not public. If a feature needs another option, update the component implementation, this standard, UI Reference proof, and tests before production use.
+Any prop not listed here is not public. If a feature needs another option, update the component implementation, this standard, rendered evidence proof, and tests before production use.
 
 ### 4.4. Data attribute contract
 
@@ -261,7 +261,7 @@ Any prop not listed here is not public. If a feature needs another option, updat
 | ------------------------------- | ------------------------ | ----------------- | --------------------------------------------------------------------------- |
 | `data-ui-component`             | Implemented              | `code-snippet`    | Identifies the rendered component for tests and future behavior hooks.      |
 | `data-ui-code-snippet`          | Implemented              | present           | Lifecycle hook for `initCodeSnippets`.                                      |
-| `data-ui-code-snippet-variant`  | Implemented              | `inline`, `single`, `multi` | Mirrors the installed variant for UI Reference proof and tests.      |
+| `data-ui-code-snippet-variant`  | Implemented              | `inline`, `single`, `multi` | Mirrors the installed variant for rendered evidence proof and tests.      |
 | `data-ui-code-copy-state`       | Implemented              | `idle`, `copied`  | Mirrors and updates copy-state presentation.                                |
 | `data-ui-code-copy-source`      | Implemented              | present           | Source text copied to clipboard.                                            |
 | `data-ui-code-copy-button`      | Implemented              | present           | Copy trigger hook.                                                          |
@@ -284,7 +284,7 @@ Use explicit token spans only when the example needs syntax highlighting proof o
 | `ui-code-token-number`      | Syntax token | Implemented / required proof | Numeric literals when useful.                                    |
 | `ui-code-token-function`    | Syntax token | Implemented / required proof | Function, method, helper, or component call names.               |
 
-Do not add feature-local token classes. New token roles require Typography/Color review, this standard update, UI Reference proof, and tests.
+Do not add feature-local token classes. New token roles require Typography/Color review, this standard update, rendered evidence proof, and tests.
 
 ### 4.6. CSS class contract
 
@@ -303,7 +303,7 @@ Do not add feature-local token classes. New token roles require Typography/Color
 | `ui-code-snippet__pre`        | Element  | Implemented                   | `pre` wrapper.               |
 | `ui-code-snippet__code`       | Element  | Implemented                   | `code` element.              |
 
-Feature views must not create additional `code-snippet-*`, `snippet-*`, `highlight-*`, `syntax-*`, or local code token classes. New classes require source implementation, this standard update, UI Reference proof, and tests.
+Feature views must not create additional `code-snippet-*`, `snippet-*`, `highlight-*`, `syntax-*`, or local code token classes. New classes require source implementation, this standard update, rendered evidence proof, and tests.
 
 ## 5. Allowed variants, options, and modifiers
 
@@ -457,7 +457,7 @@ Feature views must not create local syntax classes, hard-coded token colors, arb
 Use Code snippet when:
 
 - A developer needs exact implementation syntax.
-- A UI Reference page needs to show canonical Blade, PHP, JavaScript, CSS, HTML, JSON, route, or test examples.
+- A rendered evidence page needs to show canonical Blade, PHP, JavaScript, CSS, HTML, JSON, route, or test examples.
 - A code value must preserve whitespace, punctuation, casing, or indentation.
 - Copying the exact snippet is useful.
 - Syntax token colors help distinguish code roles in documentation.
@@ -542,17 +542,17 @@ Use Code snippet when:
 
 | Capability                                  | Status                    | Gate                                                                                                                                                                 | Local workaround allowed?                                           |
 | ------------------------------------------- | ------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| Syntax highlighter integration              | Gated                     | Requires dependency approval, performance review, token mapping, accessibility review, no raw theme colors, and UI Reference proof.                                  | Use explicit `ui-code-token-*` spans for proof examples.            |
+| Syntax highlighter integration              | Gated                     | Requires dependency approval, performance review, token mapping, accessibility review, no raw theme colors, and rendered evidence proof.                                  | Use explicit `ui-code-token-*` spans for proof examples.            |
 | Line numbers                                | Gated                     | Requires copy behavior decision, screen-reader handling, overflow proof, and tests.                                                                                  | No local line-number markup.                                        |
 | Diff view                                   | Gated                     | Requires addition/deletion token model, non-color-only meaning, line labels, accessibility proof, and tests.                                                         | Use prose or separate examples.                                     |
-| Terminal/console output variant             | Gated                     | Requires content rules, prompt/output distinction, copy behavior decision, and UI Reference proof.                                                                   | Use normal multi-line snippet with language label if needed.        |
+| Terminal/console output variant             | Gated                     | Requires content rules, prompt/output distinction, copy behavior decision, and rendered evidence proof.                                                                   | Use normal multi-line snippet with language label if needed.        |
 | Full source viewer or playground            | Not owned by Code snippet | Requires separate Component/Pattern standard.                                                                                                                        | Link to source or use documentation prose.                          |
 
-Future extensions require an updated Component standard and UI Reference proof before production use.
+Future extensions require an updated Component standard and rendered evidence proof before production use.
 
-## 14. UI Reference requirements
+## 14. Rendered evidence requirements
 
-The UI Reference page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
+The rendered evidence page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
 
 The Code snippet page is a developer-documentation reference page. The Live examples card should use grouped examples, variant comparison, copy-state examples, syntax token proof, overflow proof, accessibility notes, and developer implementation examples.
 
@@ -579,7 +579,7 @@ The page must not display generic fallback/reference sections or placeholder dev
 
 ## 15. Testing and acceptance criteria
 
-- `/platform/ui-reference/components/code-snippet` returns 200 for authorized users.
+- `not installed` returns 200 for authorized users.
 - The page shows the installed API, states, variants/options, prohibited usage, remaining gated capabilities, and Foundation Elements consumed.
 - Implemented APIs render production examples; remaining deferred APIs render trigger conditions instead of fake controls.
 - The Purpose, Use cases, Component contract, Live examples, and Related components and patterns cards render in that top-level order.
@@ -602,7 +602,7 @@ The page must not display generic fallback/reference sections or placeholder dev
 ### 15.1. Suggested automated assertions:
 
 ```php
-$response = $this->actingAs($admin)->get('/platform/ui-reference/components/code-snippet');
+$response = $this->actingAs($admin)->get('not installed');
 
 $response->assertOk();
 $response->assertSee('Code snippet');
@@ -636,7 +636,7 @@ $response->assertDontSee('Component-specific API pending correction');
 $response->assertDontSee('Live Examples Card');
 $response->assertDontSee('Reference Examples');
 $response->assertDontSee('Legacy Contract Summary');
-$response->assertDontSee('Implementation and UI Reference Checklist');
+$response->assertDontSee('Implementation and Rendered Evidence Checklist');
 $response->assertDontSee('tier-1');
 $response->assertDontSee('tier-2');
 $response->assertDontSee('cds--');
@@ -649,20 +649,20 @@ $response->assertDontSee('text-monospace');
 
 | API                        | Route                                                                  |
 | -------------------------- | ---------------------------------------------------------------------- |
-| Components overview        | `/platform/ui-reference/components`                                    |
-| Button                     | `/platform/ui-reference/components/button`                             |
-| Icon button                | `/platform/ui-reference/components/button`                             |
-| Tooltip                    | `/platform/ui-reference/components/tooltip`                            |
-| Notification               | `/platform/ui-reference/components/notification`                       |
-| Inline loading             | `/platform/ui-reference/components/inline-loading`                     |
-| Typography element         | `/platform/ui-reference/elements/typography`                           |
-| Color element              | `/platform/ui-reference/elements/color`                                |
-| Spacing element            | `/platform/ui-reference/elements/spacing`                              |
-| Themes element             | `/platform/ui-reference/elements/themes`                               |
-| Motion element             | `/platform/ui-reference/elements/motion`                               |
-| Icons element              | `/platform/ui-reference/elements/icons`                                |
-| Documentation pattern      | `/platform/ui-reference/patterns/documentation`                        |
-| Data/content pattern       | `/platform/ui-reference/patterns/data-content`                         |
+| Components overview        | `not installed`                                    |
+| Button                     | `not installed`                             |
+| Icon button                | `not installed`                             |
+| Tooltip                    | `not installed`                            |
+| Notification               | `not installed`                       |
+| Inline loading             | `not installed`                     |
+| Typography element         | `not installed`                           |
+| Color element              | `not installed`                                |
+| Spacing element            | `not installed`                              |
+| Themes element             | `not installed`                               |
+| Motion element             | `not installed`                               |
+| Icons element              | `not installed`                                |
+| Documentation pattern      | `not installed`                        |
+| Data/content pattern       | `not installed`                         |
 | Canonical code snippet doc | `/platform/docs?path=02-standards%2Fui%2Fcomponents%2Fcode-snippet.md` |
 | Carbon code snippet usage  | `https://carbondesignsystem.com/components/code-snippet/usage/`        |
 
@@ -672,4 +672,4 @@ $response->assertDontSee('text-monospace');
 - [Component Implementation Checklist](checklist.md)
 - [Foundation Elements Standards](../elements/index.md)
 - [Pattern Standards Index](../patterns/index.md)
-- Carbon Code snippet usage, style, and accessibility guidance inform inline/single/multi variant boundaries, copy affordance labeling, copied-state text, show-more behavior, token-backed focus/hover/active states, and accessible syntax color expectations. Login App keeps its own `x-ui.code-snippet` API, `ui-*` namespace, explicit token classes, `initCodeSnippets` controller, Foundation Element tokens, and UI Reference proof.
+- Carbon Code snippet usage, style, and accessibility guidance inform inline/single/multi variant boundaries, copy affordance labeling, copied-state text, show-more behavior, token-backed focus/hover/active states, and accessible syntax color expectations. Login App keeps its own `x-ui.code-snippet` API, `ui-*` namespace, explicit token classes, `initCodeSnippets` controller, Foundation Element tokens, and rendered evidence proof.

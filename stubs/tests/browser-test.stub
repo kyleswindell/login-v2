@@ -1,0 +1,11 @@
+import { expect, test } from '@playwright/test';
+import { waitForApp } from './support/waitForApp.js';
+
+test.describe('{{ feature }}', () => {
+    test('{{ behavior }}', async ({ page, request }) => {
+        await waitForApp(request);
+        await page.goto('{{ route }}');
+
+        await expect(page.locator('{{ selector }}')).toBeVisible();
+    });
+});

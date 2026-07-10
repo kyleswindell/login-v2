@@ -6,7 +6,15 @@ This document defines the canonical scope and intent for Feature Roadmap.
 
 Map the App 2.0 feature plan using V1 as a reference source for useful concepts, not as a migration spec.
 
-This note stays product- and architecture-oriented. It is the planning bridge between the V1 feature catalog and App 2.0 implementation order.
+This note stays product- and architecture-oriented. It is the planning bridge between the V1 feature Definitions and App 2.0 implementation order.
+
+## Current Delivery Management
+
+GitHub Projects now owns active development management, implementation sequencing, and planning-board status.
+
+The legacy phase and batch files under `docs/07-planning/phases/`, `docs/07-planning/batches/`, and `docs/08-active/` are deprecated historical references. They must not be used as active scope locks, batch queues, review ledgers, or implementation blockers.
+
+Use [Core Service Build Plan Matrix](core-service-build-plan-matrix.md) as the current quick-review planning index for core service configuration and source-doc routing.
 
 ## Planning Rule
 
@@ -18,14 +26,7 @@ We are not migrating V1 tables or data. We are deciding which capabilities shoul
 
 This roadmap is the high-level phase summary, not the detailed progress ledger.
 
-Use the owning phase index as the source of truth for:
-
-* current phase status
-* active scope lock
-* batch-sequence state
-* deferred and future-phase placeholders
-
-Roadmap phase status should summarize, not override, the owning phase index.
+Do not use this roadmap as a detailed progress ledger. Active implementation state lives in GitHub Projects; canonical behavior, architecture, database, standards, and runbooks remain in their owning docs branches.
 
 ## Planning Anchor
 
@@ -60,7 +61,9 @@ These V1 areas are reference-only and should not automatically become day-one Ap
 * Perfex-native finance/project/support menus
 * module boundaries that only exist because of Perfex
 
-## Proposed App 2.0 Phases
+## Deprecated Historical App 2.0 Phases
+
+The following phase outline is retained only as historical planning context. It does not define the current implementation queue or release gates.
 
 ### Phase 0: Deployment And Environment Setup
 
@@ -120,10 +123,10 @@ Complete introduction of the intended long-term stack and UI architecture so fut
 
 Status:
 
-* active locked development phase
-* Batch 1-6, Batch A, and Batch B are complete; Batch F is active for page archetype starter proofs before Batch E close-out resumes
-* Phase 2 is strictly bounded to UI-system completion and platform-surface convergence
-* feature-specific and non-UI contracts are deferred to future phases unless already declared in the active Phase 2 lock
+* deprecated historical planning outline
+* no Phase 2 batch is active from this document
+* prior Batch F and Batch E sequencing has been retired from docs-managed delivery planning
+* active implementation sequencing now belongs in GitHub Projects
 
 Features:
 
@@ -155,7 +158,7 @@ Status:
 
 * planning draft
 * implementation not started
-* blocked on Phase 2 close-out
+* legacy phase gating is deprecated; use GitHub Projects and current source planning docs for sequencing
 * current Batch 1 scope includes the security substrate required before OAuth and Microsoft Graph rollout
 
 Features:
@@ -197,7 +200,7 @@ Status:
 
 * planning draft
 * implementation not started
-* blocked on Phase 2 close-out and Phase 3 foundation delivery
+* legacy phase gating is deprecated; use GitHub Projects and current source planning docs for sequencing
 
 Features:
 
@@ -300,23 +303,23 @@ Examples:
 
 ## Current Planning Frontier
 
-Current roadmap attention should stay on the active and near-next planning surfaces:
+Current roadmap attention should stay on current source planning and GitHub Projects:
 
-* keep the roadmap synchronized with the owning phase indices instead of treating it as an independent tracker
-* finish Phase 2 Batch F starter-proof implementation before resuming Batch E close-out
-* do not run Phase 2 staging deploy while staging deploy is disabled pending security incident review
-* keep Phase 3 Batch 1 scope synchronized across customer/public, OAuth, Microsoft Graph, and security-substrate planning notes
-* preserve Phase 4 as planning-only until the Phase 2 and Phase 3 handoff conditions are actually met
+* use GitHub Projects for active work items, status, assignment, and sequencing
+* use the core service build-plan matrix as the quick-review index for current implementation planning
+* keep canonical owner docs synchronized when planning becomes architecture, feature behavior, schema, standards, or runbook truth
+* treat all legacy phase, batch, and `08-active` records as deprecated historical context
 
 ## Recommended Navigation
 
 Use these current planning entry points first:
 
-1. `docs/07-planning/phases/phase-2/Phase 2 Index.md`
-2. `docs/07-planning/phases/phase-3/Phase 3 Index.md`
-3. `docs/07-planning/phases/phase-3/Phase 3 - Implementation Batch 1.md`
-4. `docs/07-planning/phases/phase-4/Phase 4 Index.md`
-5. `docs/07-planning/dependency-map.md`
+1. `docs/07-planning/core-service-build-plan-matrix.md`
+2. `docs/07-planning/core-capability-package-migration-planning.md`
+3. `docs/07-planning/access-control-implementation-planning.md`
+4. `docs/07-planning/users-module-implementation-planning.md`
+5. `docs/07-planning/auth-core-implementation-planning.md`
+6. `docs/07-planning/dependency-map.md`
 
 ## Related
 
@@ -331,5 +334,5 @@ Use these current planning entry points first:
 * [Platform And Tenant Application Boundary](../03-architecture/platform-boundary.md)
 * [Final Stack And UI Design Spec](../03-architecture/subsystems/final-stack-and-ui-boundary.md)
 * [App 2.0 Blueprint](../03-architecture/app-2-0-blueprint.md)
-* V1 Feature Catalog
+* V1 Feature Definitions
 * Tenant Provisioning

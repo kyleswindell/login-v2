@@ -1,34 +1,648 @@
 /* ==========================================================================
-File: resources/css/components/overflow-menu.css
-Purpose: Overflow Menu component styles.
-Carbon reference:
+   File: resources/css/components/overflow-menu.css
+   Purpose: Overflow Menu component styles.
 
-* reference/carbon-main/packages/styles/scss/components/overflow-menu/
-
-Notes:
-
-* Defines Overflow Menu selectors only.
-* Do not define primitive palette tokens here.
-* Do not define theme role tokens here.
-* Overflow Menu composes Menu behavior.
-  ========================================================================== */
+   Notes:
+   - Defines Overflow Menu selectors only.
+   - Do not define primitive palette tokens here.
+   - Do not define theme role tokens here.
+   - Supports trigger sizes, open state, light variant, floating menu
+     directions, flip alignment, option sizes, divider, danger option,
+     disabled option, top placement helpers, reduced motion, and
+     forced-colors focus handling.
+   ========================================================================== */
 
 @layer components {
-    .ui-overflow-menu {
+    /* ----------------------------------------------------------------------
+       Root and trigger
+       ---------------------------------------------------------------------- */
+
+    .ui-overflow-menu,
+    .ui-overflow-menu-trigger,
+    .ui-overflow-menu__trigger {
         position: relative;
-        display: inline-flex;
+        display: flex;
+        box-sizing: border-box;
+        align-items: center;
+        justify-content: center;
+        inline-size: var(--ui-spacing-08);
+        block-size: var(--ui-spacing-08);
+        min-block-size: var(--ui-spacing-08);
+        margin: 0;
+        border: 0;
+        padding: 0;
+        background: none;
+        color: inherit;
+        cursor: pointer;
+        font: inherit;
+        outline: 2px solid transparent;
+        outline-offset: -2px;
+        text-align: inherit;
+        vertical-align: baseline;
+        appearance: none;
+        transition:
+            outline var(--ui-duration-fast-02)
+                var(--ui-motion-entrance-productive),
+            background-color var(--ui-duration-fast-02)
+                var(--ui-motion-entrance-productive);
     }
 
-    .ui-overflow-menu .ui-menu-composition {
-        display: inline-flex;
+    .ui-overflow-menu:focus,
+    .ui-overflow-menu-trigger:focus,
+    .ui-overflow-menu__trigger:focus {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
     }
 
-    .ui-overflow-menu-trigger {
-        inline-size: 2.5rem;
-        block-size: 2.5rem;
+    .ui-overflow-menu:hover,
+    .ui-overflow-menu-trigger:hover,
+    .ui-overflow-menu__trigger:hover {
+        background-color: var(--ui-background-hover);
     }
+
+    .ui-overflow-menu > :first-child {
+        margin-block-start: 0;
+    }
+
+    .ui-overflow-menu-xs,
+    .ui-overflow-menu--xs {
+        inline-size: var(--ui-spacing-06);
+        block-size: var(--ui-spacing-06);
+        min-block-size: var(--ui-spacing-06);
+    }
+
+    .ui-overflow-menu-sm,
+    .ui-overflow-menu--sm {
+        inline-size: var(--ui-spacing-07);
+        block-size: var(--ui-spacing-07);
+        min-block-size: var(--ui-spacing-07);
+    }
+
+    .ui-overflow-menu-lg,
+    .ui-overflow-menu--lg {
+        inline-size: var(--ui-spacing-09);
+        block-size: var(--ui-spacing-09);
+    }
+
+    /* ----------------------------------------------------------------------
+       Tooltip trigger override
+       ---------------------------------------------------------------------- */
+
+    .ui-overflow-menu-trigger.ui-tooltip--a11y.ui-tooltip__trigger:focus,
+    .ui-overflow-menu__trigger.ui-tooltip--a11y.ui-tooltip__trigger:focus {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+    }
+
+    .ui-overflow-menu-trigger.ui-tooltip--a11y.ui-tooltip__trigger:focus svg,
+    .ui-overflow-menu__trigger.ui-tooltip--a11y.ui-tooltip__trigger:focus svg {
+        outline: none;
+    }
+
+    /* ----------------------------------------------------------------------
+       Open state
+       ---------------------------------------------------------------------- */
+
+    .ui-overflow-menu.ui-overflow-menu-open,
+    .ui-overflow-menu.ui-overflow-menu--open,
+    .ui-overflow-menu.ui-overflow-menu-open .ui-overflow-menu-trigger,
+    .ui-overflow-menu.ui-overflow-menu-open .ui-overflow-menu__trigger,
+    .ui-overflow-menu.ui-overflow-menu--open .ui-overflow-menu-trigger,
+    .ui-overflow-menu.ui-overflow-menu--open .ui-overflow-menu__trigger {
+        background-color: var(--ui-layer);
+        box-shadow: var(--ui-box-shadow, 0 2px 6px rgb(0 0 0 / 0.3));
+        transition: none;
+    }
+
+    .ui-overflow-menu.ui-overflow-menu-open:hover,
+    .ui-overflow-menu.ui-overflow-menu--open:hover {
+        background-color: var(--ui-layer);
+    }
+
+    .ui-overflow-menu-light.ui-overflow-menu-open,
+    .ui-overflow-menu-light.ui-overflow-menu--open,
+    .ui-overflow-menu--light.ui-overflow-menu-open,
+    .ui-overflow-menu--light.ui-overflow-menu--open,
+    .ui-overflow-menu-light.ui-overflow-menu-open .ui-overflow-menu-trigger,
+    .ui-overflow-menu-light.ui-overflow-menu-open .ui-overflow-menu__trigger,
+    .ui-overflow-menu-light.ui-overflow-menu--open .ui-overflow-menu-trigger,
+    .ui-overflow-menu-light.ui-overflow-menu--open .ui-overflow-menu__trigger,
+    .ui-overflow-menu--light.ui-overflow-menu-open .ui-overflow-menu-trigger,
+    .ui-overflow-menu--light.ui-overflow-menu-open .ui-overflow-menu__trigger,
+    .ui-overflow-menu--light.ui-overflow-menu--open .ui-overflow-menu-trigger,
+    .ui-overflow-menu--light.ui-overflow-menu--open .ui-overflow-menu__trigger {
+        background-color: var(--ui-layer);
+    }
+
+    .ui-overflow-menu.ui-overflow-menu-light.ui-overflow-menu-open:hover,
+    .ui-overflow-menu.ui-overflow-menu-light.ui-overflow-menu--open:hover,
+    .ui-overflow-menu.ui-overflow-menu--light.ui-overflow-menu-open:hover,
+    .ui-overflow-menu.ui-overflow-menu--light.ui-overflow-menu--open:hover {
+        background-color: var(--ui-layer-hover);
+    }
+
+    /* ----------------------------------------------------------------------
+       Icon and wrapper
+       ---------------------------------------------------------------------- */
+
+    .ui-overflow-menu-icon,
+    .ui-overflow-menu__icon {
+        inline-size: var(--ui-spacing-05);
+        block-size: var(--ui-spacing-05);
+        fill: var(--ui-icon-primary);
+    }
+
+    .ui-overflow-menu-wrapper,
+    .ui-overflow-menu__wrapper {
+        line-height: 0;
+    }
+
+    /* ----------------------------------------------------------------------
+       Options container
+       ---------------------------------------------------------------------- */
 
     .ui-overflow-menu-options {
-        min-inline-size: 10rem;
+        position: absolute;
+        z-index: var(--ui-z-index-floating, 6000);
+        display: none;
+        box-sizing: border-box;
+        flex-direction: column;
+        align-items: flex-start;
+        inline-size: var(--ui-spacing-13);
+        margin: 0;
+        border: 0;
+        padding: 0;
+        background-color: var(--ui-layer);
+        font: inherit;
+        inset-block-start: var(--ui-spacing-07);
+        inset-inline-start: 0;
+        list-style: none;
+        vertical-align: baseline;
+        box-shadow: var(--ui-box-shadow, 0 2px 6px rgb(0 0 0 / 0.3));
+    }
+
+    .ui-overflow-menu-options::after {
+        position: absolute;
+        display: block;
+        background-color: var(--ui-layer);
+        content: "";
+        transition: background-color var(--ui-duration-fast-02)
+            var(--ui-motion-entrance-productive);
+    }
+
+    .ui-overflow-menu-options-light,
+    .ui-overflow-menu-options--light {
+        background-color: var(--ui-layer-hover);
+    }
+
+    .ui-overflow-menu-options-light::after,
+    .ui-overflow-menu-options--light::after {
+        background-color: var(--ui-layer);
+    }
+
+    .ui-overflow-menu-options-open,
+    .ui-overflow-menu-options--open {
+        display: flex;
+    }
+
+    .ui-overflow-menu-options-content,
+    .ui-overflow-menu-options__content {
+        inline-size: 100%;
+    }
+
+    /* ----------------------------------------------------------------------
+       Floating menu direction offsets
+       ---------------------------------------------------------------------- */
+
+    .ui-overflow-menu-options[data-floating-menu-direction="bottom"]:not(
+            .ui-breadcrumb-menu-options
+        )::after {
+        inline-size: var(--ui-spacing-08);
+        block-size: 0.1875rem;
+        inset-block-start: -0.1875rem;
+        inset-inline-start: 0;
+    }
+
+    .ui-overflow-menu-options[data-floating-menu-direction="top"]::after {
+        inline-size: var(--ui-spacing-08);
+        block-size: var(--ui-spacing-03);
+        inset-block-end: calc(var(--ui-spacing-03) * -1);
+        inset-inline-start: 0;
+    }
+
+    .ui-overflow-menu-options[data-floating-menu-direction="left"]::after {
+        inline-size: 0.375rem;
+        block-size: var(--ui-spacing-08);
+        inset-block-start: 0;
+        inset-inline-end: -0.375rem;
+    }
+
+    .ui-overflow-menu-options[data-floating-menu-direction="right"]::after {
+        inline-size: 0.375rem;
+        block-size: var(--ui-spacing-08);
+        inset-block-start: 0;
+        inset-inline-start: -0.375rem;
+    }
+
+    .ui-overflow-menu-options-xs.ui-overflow-menu-options[data-floating-menu-direction="bottom"]::after,
+    .ui-overflow-menu-options-xs.ui-overflow-menu-options[data-floating-menu-direction="top"]::after,
+    .ui-overflow-menu-options--xs.ui-overflow-menu-options[data-floating-menu-direction="bottom"]::after,
+    .ui-overflow-menu-options--xs.ui-overflow-menu-options[data-floating-menu-direction="top"]::after {
+        inline-size: var(--ui-spacing-06);
+    }
+
+    .ui-overflow-menu-options-xs.ui-overflow-menu-options[data-floating-menu-direction="left"]::after,
+    .ui-overflow-menu-options-xs.ui-overflow-menu-options[data-floating-menu-direction="right"]::after,
+    .ui-overflow-menu-options--xs.ui-overflow-menu-options[data-floating-menu-direction="left"]::after,
+    .ui-overflow-menu-options--xs.ui-overflow-menu-options[data-floating-menu-direction="right"]::after {
+        block-size: var(--ui-spacing-06);
+    }
+
+    .ui-overflow-menu-options-sm.ui-overflow-menu-options[data-floating-menu-direction="bottom"]::after,
+    .ui-overflow-menu-options-sm.ui-overflow-menu-options[data-floating-menu-direction="top"]::after,
+    .ui-overflow-menu-options--sm.ui-overflow-menu-options[data-floating-menu-direction="bottom"]::after,
+    .ui-overflow-menu-options--sm.ui-overflow-menu-options[data-floating-menu-direction="top"]::after {
+        inline-size: var(--ui-spacing-07);
+    }
+
+    .ui-overflow-menu-options-sm.ui-overflow-menu-options[data-floating-menu-direction="left"]::after,
+    .ui-overflow-menu-options-sm.ui-overflow-menu-options[data-floating-menu-direction="right"]::after,
+    .ui-overflow-menu-options--sm.ui-overflow-menu-options[data-floating-menu-direction="left"]::after,
+    .ui-overflow-menu-options--sm.ui-overflow-menu-options[data-floating-menu-direction="right"]::after {
+        block-size: var(--ui-spacing-07);
+    }
+
+    .ui-overflow-menu-options-lg.ui-overflow-menu-options[data-floating-menu-direction="bottom"]::after,
+    .ui-overflow-menu-options-lg.ui-overflow-menu-options[data-floating-menu-direction="top"]::after,
+    .ui-overflow-menu-options--lg.ui-overflow-menu-options[data-floating-menu-direction="bottom"]::after,
+    .ui-overflow-menu-options--lg.ui-overflow-menu-options[data-floating-menu-direction="top"]::after {
+        inline-size: var(--ui-spacing-09);
+    }
+
+    .ui-overflow-menu-options-lg.ui-overflow-menu-options[data-floating-menu-direction="left"]::after,
+    .ui-overflow-menu-options-lg.ui-overflow-menu-options[data-floating-menu-direction="right"]::after,
+    .ui-overflow-menu-options--lg.ui-overflow-menu-options[data-floating-menu-direction="left"]::after,
+    .ui-overflow-menu-options--lg.ui-overflow-menu-options[data-floating-menu-direction="right"]::after {
+        block-size: var(--ui-spacing-09);
+    }
+
+    .ui-overflow-menu-flip.ui-overflow-menu-options[data-floating-menu-direction="top"]::after,
+    .ui-overflow-menu-flip.ui-overflow-menu-options[data-floating-menu-direction="bottom"]::after,
+    .ui-overflow-menu--flip.ui-overflow-menu-options[data-floating-menu-direction="top"]::after,
+    .ui-overflow-menu--flip.ui-overflow-menu-options[data-floating-menu-direction="bottom"]::after {
+        inset-inline: auto 0;
+    }
+
+    .ui-overflow-menu-flip.ui-overflow-menu-options[data-floating-menu-direction="left"]::after,
+    .ui-overflow-menu-flip.ui-overflow-menu-options[data-floating-menu-direction="right"]::after,
+    .ui-overflow-menu--flip.ui-overflow-menu-options[data-floating-menu-direction="left"]::after,
+    .ui-overflow-menu--flip.ui-overflow-menu-options[data-floating-menu-direction="right"]::after {
+        inset-block: auto 0;
+    }
+
+    /* ----------------------------------------------------------------------
+       Options
+       ---------------------------------------------------------------------- */
+
+    .ui-overflow-menu-options-option,
+    .ui-overflow-menu-options__option {
+        display: flex;
+        box-sizing: border-box;
+        align-items: center;
+        inline-size: 100%;
+        block-size: var(--ui-spacing-08);
+        margin: 0;
+        border: 0;
+        padding: 0;
+        background-color: transparent;
+        font: inherit;
+        vertical-align: baseline;
+        transition: background-color var(--ui-duration-fast-02)
+            var(--ui-motion-entrance-productive);
+    }
+
+    .ui-overflow-menu-options-xs .ui-overflow-menu-options-option,
+    .ui-overflow-menu-options-xs .ui-overflow-menu-options__option,
+    .ui-overflow-menu-options--xs .ui-overflow-menu-options-option,
+    .ui-overflow-menu-options--xs .ui-overflow-menu-options__option {
+        block-size: var(--ui-spacing-06);
+    }
+
+    .ui-overflow-menu-options-sm .ui-overflow-menu-options-option,
+    .ui-overflow-menu-options-sm .ui-overflow-menu-options__option,
+    .ui-overflow-menu-options--sm .ui-overflow-menu-options-option,
+    .ui-overflow-menu-options--sm .ui-overflow-menu-options__option {
+        block-size: var(--ui-spacing-07);
+    }
+
+    .ui-overflow-menu-options-lg .ui-overflow-menu-options-option,
+    .ui-overflow-menu-options-lg .ui-overflow-menu-options__option,
+    .ui-overflow-menu-options--lg .ui-overflow-menu-options-option,
+    .ui-overflow-menu-options--lg .ui-overflow-menu-options__option {
+        block-size: var(--ui-spacing-09);
+    }
+
+    .ui-overflow-menu-options-option:hover,
+    .ui-overflow-menu-options__option:hover {
+        background-color: var(--ui-layer-hover);
+    }
+
+    .ui-overflow-menu-divider,
+    .ui-overflow-menu--divider {
+        border-block-start: 1px solid var(--ui-border-subtle);
+    }
+
+    .ui-overflow-menu-light .ui-overflow-menu-divider,
+    .ui-overflow-menu-light .ui-overflow-menu--divider,
+    .ui-overflow-menu--light .ui-overflow-menu-divider,
+    .ui-overflow-menu--light .ui-overflow-menu--divider {
+        border-block-start: 1px solid var(--ui-border-subtle);
+    }
+
+    /* ----------------------------------------------------------------------
+       Option button
+       ---------------------------------------------------------------------- */
+
+    a.ui-overflow-menu-options-btn::before,
+    a.ui-overflow-menu-options__btn::before {
+        display: inline-block;
+        block-size: 100%;
+        content: "";
+        vertical-align: middle;
+    }
+
+    .ui-overflow-menu-options-btn,
+    .ui-overflow-menu-options__btn {
+        display: inline-flex;
+        box-sizing: border-box;
+        align-items: center;
+        inline-size: 100%;
+        max-inline-size: 11.25rem;
+        block-size: 100%;
+        margin: 0;
+        border: none;
+        padding: 0 var(--ui-spacing-05);
+        background-color: transparent;
+        color: var(--ui-text-secondary);
+        cursor: pointer;
+        font-family: inherit;
+        font-size: var(--ui-type-body-compact-01-font-size);
+        font-weight: 400;
+        line-height: var(--ui-type-body-compact-01-line-height);
+        letter-spacing: var(--ui-type-body-compact-01-letter-spacing);
+        outline: 2px solid transparent;
+        outline-offset: -2px;
+        text-align: start;
+        text-decoration: none;
+        appearance: none;
+        transition:
+            outline var(--ui-duration-fast-02)
+                var(--ui-motion-entrance-productive),
+            background-color var(--ui-duration-fast-02)
+                var(--ui-motion-entrance-productive),
+            color var(--ui-duration-fast-02)
+                var(--ui-motion-entrance-productive);
+    }
+
+    .ui-overflow-menu-options-btn:hover,
+    .ui-overflow-menu-options__btn:hover {
+        color: var(--ui-text-primary);
+    }
+
+    .ui-overflow-menu-options-btn:focus,
+    .ui-overflow-menu-options__btn:focus {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+    }
+
+    .ui-overflow-menu-options-btn::-moz-focus-inner,
+    .ui-overflow-menu-options__btn::-moz-focus-inner {
+        border: none;
+    }
+
+    .ui-overflow-menu-options-btn svg,
+    .ui-overflow-menu-options__btn svg {
+        fill: var(--ui-icon-secondary);
+    }
+
+    .ui-overflow-menu-options-btn:hover svg,
+    .ui-overflow-menu-options__btn:hover svg {
+        fill: var(--ui-icon-primary);
+    }
+
+    .ui-overflow-menu-options-option-content,
+    .ui-overflow-menu-options__option-content {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    /* ----------------------------------------------------------------------
+       Danger option
+       ---------------------------------------------------------------------- */
+
+    .ui-overflow-menu-options-option-danger .ui-overflow-menu-options-btn:hover,
+    .ui-overflow-menu-options-option-danger
+        .ui-overflow-menu-options__btn:hover,
+    .ui-overflow-menu-options-option-danger .ui-overflow-menu-options-btn:focus,
+    .ui-overflow-menu-options-option-danger
+        .ui-overflow-menu-options__btn:focus,
+    .ui-overflow-menu-options__option--danger
+        .ui-overflow-menu-options-btn:hover,
+    .ui-overflow-menu-options__option--danger
+        .ui-overflow-menu-options__btn:hover,
+    .ui-overflow-menu-options__option--danger
+        .ui-overflow-menu-options-btn:focus,
+    .ui-overflow-menu-options__option--danger
+        .ui-overflow-menu-options__btn:focus {
+        background-color: var(--ui-button-danger-primary);
+        color: var(--ui-text-on-color);
+    }
+
+    .ui-overflow-menu-options-option-danger
+        .ui-overflow-menu-options-btn:hover
+        svg,
+    .ui-overflow-menu-options-option-danger
+        .ui-overflow-menu-options__btn:hover
+        svg,
+    .ui-overflow-menu-options-option-danger
+        .ui-overflow-menu-options-btn:focus
+        svg,
+    .ui-overflow-menu-options-option-danger
+        .ui-overflow-menu-options__btn:focus
+        svg,
+    .ui-overflow-menu-options__option--danger
+        .ui-overflow-menu-options-btn:hover
+        svg,
+    .ui-overflow-menu-options__option--danger
+        .ui-overflow-menu-options__btn:hover
+        svg,
+    .ui-overflow-menu-options__option--danger
+        .ui-overflow-menu-options-btn:focus
+        svg,
+    .ui-overflow-menu-options__option--danger
+        .ui-overflow-menu-options__btn:focus
+        svg {
+        fill: currentColor;
+    }
+
+    /* ----------------------------------------------------------------------
+       Disabled option
+       ---------------------------------------------------------------------- */
+
+    .ui-overflow-menu-options-option-disabled:hover,
+    .ui-overflow-menu-options__option--disabled:hover {
+        background-color: var(--ui-layer);
+        cursor: not-allowed;
+    }
+
+    .ui-overflow-menu-options-option-disabled .ui-overflow-menu-options-btn,
+    .ui-overflow-menu-options-option-disabled .ui-overflow-menu-options__btn,
+    .ui-overflow-menu-options__option--disabled .ui-overflow-menu-options-btn,
+    .ui-overflow-menu-options__option--disabled .ui-overflow-menu-options__btn {
+        color: var(--ui-text-disabled);
+        cursor: not-allowed;
+    }
+
+    .ui-overflow-menu-options-option-disabled
+        .ui-overflow-menu-options-btn:hover,
+    .ui-overflow-menu-options-option-disabled
+        .ui-overflow-menu-options__btn:hover,
+    .ui-overflow-menu-options-option-disabled
+        .ui-overflow-menu-options-btn:active,
+    .ui-overflow-menu-options-option-disabled
+        .ui-overflow-menu-options__btn:active,
+    .ui-overflow-menu-options-option-disabled
+        .ui-overflow-menu-options-btn:focus,
+    .ui-overflow-menu-options-option-disabled
+        .ui-overflow-menu-options__btn:focus,
+    .ui-overflow-menu-options__option--disabled
+        .ui-overflow-menu-options-btn:hover,
+    .ui-overflow-menu-options__option--disabled
+        .ui-overflow-menu-options__btn:hover,
+    .ui-overflow-menu-options__option--disabled
+        .ui-overflow-menu-options-btn:active,
+    .ui-overflow-menu-options__option--disabled
+        .ui-overflow-menu-options__btn:active,
+    .ui-overflow-menu-options__option--disabled
+        .ui-overflow-menu-options-btn:focus,
+    .ui-overflow-menu-options__option--disabled
+        .ui-overflow-menu-options__btn:focus {
+        background-color: var(--ui-layer);
+        color: var(--ui-text-disabled);
+        outline: 2px solid transparent;
+        outline-offset: -2px;
+    }
+
+    .ui-overflow-menu-options-option-disabled .ui-overflow-menu-options-btn svg,
+    .ui-overflow-menu-options-option-disabled
+        .ui-overflow-menu-options__btn
+        svg,
+    .ui-overflow-menu-options__option--disabled
+        .ui-overflow-menu-options-btn
+        svg,
+    .ui-overflow-menu-options__option--disabled
+        .ui-overflow-menu-options__btn
+        svg {
+        fill: var(--ui-icon-disabled);
+    }
+
+    /* ----------------------------------------------------------------------
+       Flip and placement helpers
+       ---------------------------------------------------------------------- */
+
+    .ui-overflow-menu-flip,
+    .ui-overflow-menu--flip {
+        inset-inline-start: -8.75rem;
+    }
+
+    .ui-overflow-menu-flip::before,
+    .ui-overflow-menu--flip::before {
+        inset-inline-start: 9.0625rem;
+    }
+
+    .ui-overflow-menu-top-start,
+    .ui-overflow-menu__top-start,
+    .ui-overflow-menu-top-end,
+    .ui-overflow-menu__top-end {
+        transform: translate(0, calc(-100% - var(--ui-popover-offset, 2.5rem)));
+    }
+
+    /* ----------------------------------------------------------------------
+       Reduced motion
+       ---------------------------------------------------------------------- */
+
+    @media screen and (prefers-reduced-motion: reduce) {
+        .ui-overflow-menu,
+        .ui-overflow-menu-trigger,
+        .ui-overflow-menu__trigger,
+        .ui-overflow-menu-options,
+        .ui-overflow-menu-options::after,
+        .ui-overflow-menu-options-option,
+        .ui-overflow-menu-options__option,
+        .ui-overflow-menu-options-btn,
+        .ui-overflow-menu-options__btn {
+            transition: none;
+        }
+    }
+
+    /* ----------------------------------------------------------------------
+       Forced colors
+       ---------------------------------------------------------------------- */
+
+    @media screen and (-ms-high-contrast: active), (forced-colors: active) {
+        .ui-overflow-menu:focus,
+        .ui-overflow-menu-trigger:focus,
+        .ui-overflow-menu__trigger:focus,
+        .ui-overflow-menu-options-btn:focus,
+        .ui-overflow-menu-options__btn:focus {
+            outline: 2px solid Highlight;
+            outline-offset: -2px;
+        }
+
+        .ui-overflow-menu-options-option-disabled .ui-overflow-menu-options-btn,
+        .ui-overflow-menu-options-option-disabled
+            .ui-overflow-menu-options__btn,
+        .ui-overflow-menu-options__option--disabled
+            .ui-overflow-menu-options-btn,
+        .ui-overflow-menu-options__option--disabled
+            .ui-overflow-menu-options__btn {
+            color: GrayText;
+        }
+
+        .ui-overflow-menu-options-option-disabled
+            .ui-overflow-menu-options-btn
+            svg,
+        .ui-overflow-menu-options-option-disabled
+            .ui-overflow-menu-options__btn
+            svg,
+        .ui-overflow-menu-options__option--disabled
+            .ui-overflow-menu-options-btn
+            svg,
+        .ui-overflow-menu-options__option--disabled
+            .ui-overflow-menu-options__btn
+            svg {
+            fill: GrayText;
+        }
+
+        .ui-overflow-menu-options-option-danger
+            .ui-overflow-menu-options-btn:hover,
+        .ui-overflow-menu-options-option-danger
+            .ui-overflow-menu-options__btn:hover,
+        .ui-overflow-menu-options-option-danger
+            .ui-overflow-menu-options-btn:focus,
+        .ui-overflow-menu-options-option-danger
+            .ui-overflow-menu-options__btn:focus,
+        .ui-overflow-menu-options__option--danger
+            .ui-overflow-menu-options-btn:hover,
+        .ui-overflow-menu-options__option--danger
+            .ui-overflow-menu-options__btn:hover,
+        .ui-overflow-menu-options__option--danger
+            .ui-overflow-menu-options-btn:focus,
+        .ui-overflow-menu-options__option--danger
+            .ui-overflow-menu-options__btn:focus {
+            color: HighlightText;
+            background-color: Highlight;
+        }
     }
 }

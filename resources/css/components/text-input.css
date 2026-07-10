@@ -1,162 +1,799 @@
 /* ==========================================================================
-File: resources/css/components/text-input.css
-Purpose: Text Input component styles.
-Carbon reference:
+   File: resources/css/components/text-input.css
+   Purpose: Text Input component styles.
+   Reference source:
 
-* reference/carbon-main/packages/styles/scss/components/text-input/
-* reference/carbon-main/packages/styles/scss/components/fluid-text-input/
+   * reference/carbon-main/packages/styles/scss/components/text-input/_text-input.scss
 
-Notes:
-
-* Defines Text Input selectors only.
-* Do not define primitive palette tokens here.
-* Do not define theme role tokens here.
-* Text Input consumes form, type, spacing, motion, and theme tokens.
-  ========================================================================== */
+   Notes:
+   - Defines Text Input selectors only.
+   - Do not define primitive palette tokens here.
+   - Do not define theme role tokens here.
+   - Supports standard, password, invalid, warning, disabled, readonly,
+     skeleton, inline, and fluid states.
+   - AI label / slug decorator branches are intentionally not implemented here.
+   ========================================================================== */
 
 @layer components {
+    /* ----------------------------------------------------------------------
+       Wrapper
+       ---------------------------------------------------------------------- */
+
     .ui-text-input-wrapper {
+        --ui-text-input-height: var(
+            --ui-layout-size-height-local,
+            var(--ui-size-md)
+        );
+        --ui-text-input-padding-inline: var(
+            --ui-layout-density-padding-inline-local,
+            var(--ui-spacing-05)
+        );
+
+        /*
+         * Component layout context:
+         * Carbon equivalent: layout.use("size", default: "md", min: "xs", max: "lg")
+         */
+        --ui-layout-size-height-min: var(--ui-layout-size-height-xs);
+        --ui-layout-size-height-max: var(--ui-layout-size-height-lg);
+        --ui-layout-size-height: var(
+            --ui-layout-size-height-context,
+            var(--ui-layout-size-height-md)
+        );
+
+        /*
+         * Component density context:
+         * Carbon equivalent: layout.use("density", default: "normal")
+         */
+        --ui-layout-density-padding-inline: var(
+            --ui-layout-density-padding-inline-context,
+            var(--ui-layout-density-padding-inline-normal)
+        );
+
+        inline-size: 100%;
+    }
+
+    .ui-text-input-wrapper svg[hidden] {
+        display: none;
+    }
+
+    .ui-text-input-field-outer-wrapper,
+    .ui-text-input__field-outer-wrapper {
+        display: flex;
+        flex: 1 1 auto;
+        flex-direction: column;
+        align-items: flex-start;
+        inline-size: 100%;
+    }
+
+    .ui-text-input-field-outer-wrapper-inline,
+    .ui-text-input__field-outer-wrapper--inline {
+        flex: 8;
+        flex-direction: column;
+    }
+
+    .ui-text-input-field-wrapper,
+    .ui-text-input__field-wrapper {
         position: relative;
         display: flex;
         inline-size: 100%;
     }
 
-    .ui-text-input {
-        --ui-text-input-size: 2.5rem;
-        --ui-text-input-padding-inline: var(--ui-spacing-05);
+    .ui-text-input-label-wrapper,
+    .ui-text-input__label-wrapper {
+        display: flex;
+        justify-content: space-between;
+        inline-size: 100%;
+    }
 
+    /* ----------------------------------------------------------------------
+       Base input
+       ---------------------------------------------------------------------- */
+
+    .ui-text-input {
         box-sizing: border-box;
         inline-size: 100%;
-        block-size: var(--ui-text-input-size);
+        block-size: var(--ui-text-input-height);
+        margin: 0;
         border: 0;
-        border-block-end: 1px solid var(--ui-border-strong-01);
+        border-block-end: 1px solid var(--ui-border-strong);
         padding: 0 var(--ui-text-input-padding-inline);
-        background-color: var(--ui-field-01);
+        outline: 2px solid transparent;
+        outline-offset: -2px;
+        background-color: var(--ui-field);
         color: var(--ui-text-primary);
-        font: inherit;
+        font-family: inherit;
         font-size: var(--ui-type-body-compact-01-font-size);
         font-weight: var(--ui-type-body-compact-01-font-weight);
         line-height: var(--ui-type-body-compact-01-line-height);
         letter-spacing: var(--ui-type-body-compact-01-letter-spacing);
-        outline: 2px solid transparent;
-        outline-offset: -2px;
+        vertical-align: baseline;
         transition:
-            background-color var(--ui-duration-fast-01) var(--ui-motion-standard-productive),
-            outline var(--ui-duration-fast-01) var(--ui-motion-standard-productive);
+            background-color var(--ui-duration-fast-01)
+                var(--ui-motion-standard-productive),
+            outline var(--ui-duration-fast-01)
+                var(--ui-motion-standard-productive);
     }
 
-    .ui-text-input:hover {
-        background-color: var(--ui-field-hover-01);
+    .ui-text-input *,
+    .ui-text-input *::before,
+    .ui-text-input *::after {
+        box-sizing: inherit;
     }
 
     .ui-text-input:focus,
     .ui-text-input:active {
-        outline-color: var(--ui-focus);
-    }
-
-    .ui-text-input::placeholder {
-        color: var(--ui-text-placeholder);
-        opacity: 1;
-    }
-
-    .ui-text-input-sm {
-        --ui-text-input-size: 2rem;
-    }
-
-    .ui-text-input-md {
-        --ui-text-input-size: 2.5rem;
-    }
-
-    .ui-text-input-lg {
-        --ui-text-input-size: 3rem;
-    }
-
-    .ui-text-input-light,
-    .ui-text-input-layer-02 {
-        background-color: var(--ui-field-02);
-    }
-
-    .ui-text-input-invalid,
-    .ui-text-input-warning {
-        padding-inline-end: var(--ui-spacing-08);
-    }
-
-    .ui-password-input,
-    .ui-text-input-password {
-        padding-inline-end: var(--ui-text-input-size);
-    }
-
-    .ui-text-input-invalid.ui-password-input,
-    .ui-text-input-warning.ui-password-input,
-    .ui-text-input-invalid.ui-text-input-password,
-    .ui-text-input-warning.ui-text-input-password {
-        padding-inline-end: calc(var(--ui-text-input-size) + 1.5rem);
-    }
-
-    .ui-text-input-invalid:not(:focus),
-    .ui-text-input-wrapper[data-invalid] > .ui-text-input:not(:focus) {
-        outline-color: var(--ui-support-error);
-    }
-
-    .ui-text-input-warning:not(:focus),
-    .ui-text-input-wrapper[data-warning] > .ui-text-input:not(:focus) {
-        outline-color: var(--ui-support-warning);
-    }
-
-    .ui-text-input:disabled,
-    .ui-text-input[aria-disabled="true"] {
-        border-block-end-color: transparent;
-        background-color: var(--ui-field-01);
-        color: var(--ui-text-disabled);
-        cursor: not-allowed;
-    }
-
-    .ui-text-input:disabled::placeholder {
-        color: var(--ui-text-disabled);
-    }
-
-    .ui-text-input-invalid-icon,
-    .ui-text-input-warning-icon {
-        position: absolute;
-        inset-block-start: 50%;
-        inset-inline-end: var(--ui-spacing-05);
-        inline-size: 1rem;
-        block-size: 1rem;
-        transform: translateY(-50%);
-    }
-
-    .ui-text-input-invalid-icon {
-        color: var(--ui-support-error);
-        fill: var(--ui-support-error);
-    }
-
-    .ui-text-input-warning-icon {
-        color: var(--ui-support-warning);
-        fill: var(--ui-support-warning);
-    }
-
-    .ui-password-toggle {
-        position: absolute;
-        inset-block: 0;
-        inset-inline-end: 0;
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        inline-size: var(--ui-text-input-size);
-        border: 0;
-        padding: 0;
-        background: transparent;
-        color: var(--ui-icon-primary);
-        cursor: pointer;
-    }
-
-    .ui-password-toggle:focus-visible {
         outline: 2px solid var(--ui-focus);
         outline-offset: -2px;
     }
 
-    .ui-password-toggle:disabled {
-        color: var(--ui-icon-disabled);
+    .ui-text-input::placeholder {
+        color: var(--ui-text-placeholder, var(--ui-text-helper));
+        opacity: 1;
+    }
+
+    .ui-text-input-light,
+    .ui-text-input--light {
+        background-color: var(--ui-field-02);
+    }
+
+    /* ----------------------------------------------------------------------
+       Password input
+       ---------------------------------------------------------------------- */
+
+    .ui-password-input-wrapper {
+        --ui-password-toggle-inline-size: var(--ui-spacing-09, 3rem);
+        --ui-password-toggle-icon-size: 1rem;
+    }
+
+    .ui-password-input {
+        padding-inline-end: var(--ui-password-toggle-inline-size);
+    }
+
+    .ui-password-input-wrapper .ui-text-input__field-wrapper {
+        position: relative;
+    }
+
+    .ui-password-input-wrapper .ui-text-input-invalid-icon,
+    .ui-password-input-wrapper .ui-text-input__invalid-icon {
+        inset-inline-end: var(--ui-password-toggle-inline-size);
+    }
+
+    .ui-form-fluid .ui-password-input-wrapper .ui-password-input,
+    .ui-form--fluid .ui-password-input-wrapper .ui-password-input,
+    .ui-password-input-wrapper.ui-text-input--fluid .ui-password-input {
+        padding-block: 2rem 0.8125rem;
+        padding-inline-start: var(--ui-spacing-05);
+        padding-inline-end: calc(
+            var(--ui-password-toggle-inline-size) + var(--ui-spacing-05)
+        );
+    }
+
+    .ui-form-fluid
+        .ui-password-input-wrapper
+        .ui-text-input-invalid.ui-password-input,
+    .ui-form-fluid
+        .ui-password-input-wrapper
+        .ui-text-input--invalid.ui-password-input,
+    .ui-form-fluid
+        .ui-password-input-wrapper
+        .ui-text-input-warning.ui-password-input,
+    .ui-form-fluid
+        .ui-password-input-wrapper
+        .ui-text-input--warning.ui-password-input,
+    .ui-form--fluid
+        .ui-password-input-wrapper
+        .ui-text-input-invalid.ui-password-input,
+    .ui-form--fluid
+        .ui-password-input-wrapper
+        .ui-text-input--invalid.ui-password-input,
+    .ui-form--fluid
+        .ui-password-input-wrapper
+        .ui-text-input-warning.ui-password-input,
+    .ui-form--fluid
+        .ui-password-input-wrapper
+        .ui-text-input--warning.ui-password-input,
+    .ui-password-input-wrapper.ui-text-input--fluid
+        .ui-text-input-invalid.ui-password-input,
+    .ui-password-input-wrapper.ui-text-input--fluid
+        .ui-text-input--invalid.ui-password-input,
+    .ui-password-input-wrapper.ui-text-input--fluid
+        .ui-text-input-warning.ui-password-input,
+    .ui-password-input-wrapper.ui-text-input--fluid
+        .ui-text-input--warning.ui-password-input {
+        padding-inline-end: calc(
+            var(--ui-password-toggle-inline-size) + var(--ui-spacing-08)
+        );
+    }
+
+    .ui-text-input-password-visibility,
+    .ui-text-input--password__visibility {
+        position: relative;
+        display: inline-flex;
+        align-items: center;
+    }
+
+    .ui-password-input-wrapper .ui-text-input-password-visibility-toggle,
+    .ui-password-input-wrapper .ui-text-input--password__visibility__toggle,
+    .ui-password-input-wrapper
+        .ui-button.ui-text-input-password-visibility-toggle,
+    .ui-password-input-wrapper
+        .ui-button.ui-text-input--password__visibility__toggle,
+    .ui-password-input-wrapper
+        .ui-btn.ui-text-input--password__visibility__toggle {
+        position: absolute;
+        inset-block: 0;
+        inset-inline-end: 0;
+        display: inline-flex;
+        flex: none;
+        align-items: center;
+        justify-content: center;
+        box-sizing: border-box;
+        inline-size: var(--ui-password-toggle-inline-size);
+        min-inline-size: var(--ui-password-toggle-inline-size);
+        max-inline-size: var(--ui-password-toggle-inline-size);
+        block-size: 100%;
+        min-block-size: 0;
+        margin: 0;
+        border: 0;
+        padding: 0;
+        appearance: none;
+        aspect-ratio: auto;
+        background: transparent;
+        color: var(--ui-icon-primary);
+        cursor: pointer;
+        font: inherit;
+        outline: 2px solid transparent;
+        outline-offset: -2px;
+        transition: outline var(--ui-duration-fast-01)
+            var(--ui-motion-standard-productive);
+    }
+
+    .ui-password-input-wrapper
+        .ui-text-input-password-visibility-toggle::-moz-focus-inner,
+    .ui-password-input-wrapper
+        .ui-text-input--password__visibility__toggle::-moz-focus-inner,
+    .ui-password-input-wrapper
+        .ui-button.ui-text-input-password-visibility-toggle::-moz-focus-inner,
+    .ui-password-input-wrapper
+        .ui-button.ui-text-input--password__visibility__toggle::-moz-focus-inner,
+    .ui-password-input-wrapper
+        .ui-btn.ui-text-input--password__visibility__toggle::-moz-focus-inner {
+        border: 0;
+    }
+
+    .ui-password-input-wrapper .ui-text-input-password-visibility-toggle svg,
+    .ui-password-input-wrapper .ui-text-input--password__visibility__toggle svg,
+    .ui-password-input-wrapper
+        .ui-button.ui-text-input-password-visibility-toggle
+        svg,
+    .ui-password-input-wrapper
+        .ui-button.ui-text-input--password__visibility__toggle
+        svg,
+    .ui-password-input-wrapper
+        .ui-btn.ui-text-input--password__visibility__toggle
+        svg,
+    .ui-password-input-wrapper
+        .ui-text-input-password-visibility-toggle
+        .ui-icon,
+    .ui-password-input-wrapper
+        .ui-text-input--password__visibility__toggle
+        .ui-icon,
+    .ui-password-input-wrapper
+        .ui-button.ui-text-input-password-visibility-toggle
+        .ui-icon,
+    .ui-password-input-wrapper
+        .ui-button.ui-text-input--password__visibility__toggle
+        .ui-icon,
+    .ui-password-input-wrapper
+        .ui-btn.ui-text-input--password__visibility__toggle
+        .ui-icon {
+        inline-size: var(--ui-password-toggle-icon-size);
+        block-size: var(--ui-password-toggle-icon-size);
+        flex: 0 0 auto;
+        fill: currentColor;
+    }
+
+    .ui-password-input-wrapper .ui-text-input-password-visibility-toggle:focus,
+    .ui-password-input-wrapper
+        .ui-text-input-password-visibility-toggle:focus-visible,
+    .ui-password-input-wrapper
+        .ui-text-input--password__visibility__toggle:focus,
+    .ui-password-input-wrapper
+        .ui-text-input--password__visibility__toggle:focus-visible,
+    .ui-password-input-wrapper
+        .ui-button.ui-text-input-password-visibility-toggle:focus,
+    .ui-password-input-wrapper
+        .ui-button.ui-text-input-password-visibility-toggle:focus-visible,
+    .ui-password-input-wrapper
+        .ui-button.ui-text-input--password__visibility__toggle:focus,
+    .ui-password-input-wrapper
+        .ui-button.ui-text-input--password__visibility__toggle:focus-visible,
+    .ui-password-input-wrapper
+        .ui-btn.ui-text-input--password__visibility__toggle:focus,
+    .ui-password-input-wrapper
+        .ui-btn.ui-text-input--password__visibility__toggle:focus-visible {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+    }
+
+    .ui-toggle-password-tooltip .ui-popover {
+        gap: var(--ui-spacing-02);
+        inset-inline-start: calc(-1 * var(--ui-password-toggle-inline-size));
+    }
+
+    .ui-toggle-password-tooltip .ui-popover-content {
+        min-inline-size: var(--ui-spacing-08);
+    }
+
+    .ui-text-input:disabled ~ .ui-text-input-password-visibility-toggle,
+    .ui-text-input:disabled ~ .ui-text-input--password__visibility__toggle {
         cursor: not-allowed;
+    }
+
+    .ui-text-input:disabled ~ .ui-text-input-password-visibility-toggle svg,
+    .ui-text-input:disabled ~ .ui-text-input--password__visibility__toggle svg,
+    .ui-text-input-password-visibility-toggle:disabled svg,
+    .ui-text-input--password__visibility__toggle:disabled svg {
+        fill: var(--ui-icon-disabled);
+    }
+
+    .ui-text-input-password-visibility-toggle:disabled,
+    .ui-text-input--password__visibility__toggle:disabled {
+        cursor: default;
+    }
+
+    /* ----------------------------------------------------------------------
+       Password visibility icon state
+       ---------------------------------------------------------------------- */
+
+    .ui-password-input-wrapper
+        .ui-text-input--password__visibility__toggle
+        [data-ui-password-icon="hide"] {
+        display: none;
+    }
+
+    .ui-password-input-wrapper
+        .ui-text-input--password__visibility__toggle[aria-pressed="true"]
+        [data-ui-password-icon="show"] {
+        display: none;
+    }
+
+    .ui-password-input-wrapper
+        .ui-text-input--password__visibility__toggle[aria-pressed="true"]
+        [data-ui-password-icon="hide"] {
+        display: block;
+    }
+
+    /* ----------------------------------------------------------------------
+       Invalid / warning icons
+       ---------------------------------------------------------------------- */
+
+    .ui-text-input-invalid-icon,
+    .ui-text-input__invalid-icon {
+        position: absolute;
+        inset-block-start: 50%;
+        inset-inline-end: var(--ui-spacing-05);
+        color: var(--ui-support-error);
+        fill: currentColor;
+        transform: translateY(-50%);
+    }
+
+    .ui-text-input-invalid-icon-warning,
+    .ui-text-input__invalid-icon--warning {
+        color: var(--ui-support-warning);
+        fill: currentColor;
+    }
+
+    .ui-text-input-invalid-icon-warning path:first-of-type,
+    .ui-text-input__invalid-icon--warning path:first-of-type {
+        fill: var(--ui-black, #000000);
+        opacity: 1;
+    }
+
+    .ui-text-input-invalid,
+    .ui-text-input--invalid,
+    .ui-text-input-warning,
+    .ui-text-input--warning {
+        padding-inline-end: var(--ui-spacing-08);
+    }
+
+    .ui-text-input-invalid.ui-password-input,
+    .ui-text-input--invalid.ui-password-input,
+    .ui-text-input-warning.ui-password-input,
+    .ui-text-input--warning.ui-password-input {
+        padding-inline-end: calc(
+            var(--ui-text-input-height) + var(--ui-spacing-06)
+        );
+    }
+
+    .ui-text-input-invalid,
+    .ui-text-input--invalid {
+        outline: 2px solid var(--ui-support-error);
+        outline-offset: -2px;
+        box-shadow: none;
+    }
+
+    .ui-text-input-counter-alert,
+    .ui-text-input__counter-alert {
+        position: absolute;
+        overflow: hidden;
+        margin: -1px;
+        border: 0;
+        padding: 0;
+        inline-size: 1px;
+        block-size: 1px;
+        clip: rect(0, 0, 0, 0);
+        white-space: nowrap;
+    }
+
+    /* ----------------------------------------------------------------------
+       Disabled
+       ---------------------------------------------------------------------- */
+
+    .ui-text-input:disabled,
+    .ui-text-input[disabled],
+    .ui-text-input[aria-disabled="true"],
+    .ui-text-input[data-disabled="true"],
+    .ui-text-input[data-ui-disabled="true"] {
+        border-block-end: 1px solid transparent;
+        outline: 2px solid transparent;
+        outline-offset: -2px;
+        background-color: var(--ui-field);
+        color: var(--ui-text-disabled);
+        cursor: not-allowed;
+        -webkit-text-fill-color: var(--ui-text-disabled);
+    }
+
+    .ui-text-input-light:disabled,
+    .ui-text-input--light:disabled {
+        background-color: var(--ui-field-02);
+    }
+
+    .ui-text-input:disabled::placeholder,
+    .ui-text-input[disabled]::placeholder,
+    .ui-text-input[aria-disabled="true"]::placeholder,
+    .ui-text-input[data-disabled="true"]::placeholder,
+    .ui-text-input[data-ui-disabled="true"]::placeholder {
+        color: var(--ui-text-disabled);
+        opacity: 1;
+    }
+
+    /* ----------------------------------------------------------------------
+       Skeleton
+       ---------------------------------------------------------------------- */
+
+    .ui-skeleton.ui-text-input,
+    .ui-text-input-skeleton {
+        position: relative;
+        overflow: hidden;
+        border-block-end: 0;
+        background-color: var(--ui-skeleton-element);
+        color: transparent;
+        pointer-events: none;
+    }
+
+    .ui-skeleton.ui-text-input::before,
+    .ui-text-input-skeleton::before {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+            90deg,
+            transparent,
+            var(--ui-skeleton-background, rgb(255 255 255 / 0.18)),
+            transparent
+        );
+        content: "";
+        animation: ui-skeleton-shimmer 1.5s infinite linear;
+    }
+
+    /* ----------------------------------------------------------------------
+       Fluid text input
+       ---------------------------------------------------------------------- */
+
+    .ui-form-fluid .ui-text-input-wrapper,
+    .ui-form--fluid .ui-text-input-wrapper {
+        position: relative;
+        background-color: var(--ui-field);
+        transition:
+            background-color var(--ui-duration-fast-01)
+                var(--ui-motion-standard-productive),
+            outline var(--ui-duration-fast-01)
+                var(--ui-motion-standard-productive);
+    }
+
+    .ui-form-fluid .ui-label,
+    .ui-form--fluid .ui-label {
+        position: absolute;
+        z-index: 1;
+        inset-block-start: 0.8125rem;
+        inset-inline-start: var(--ui-spacing-05);
+        display: flex;
+        align-items: center;
+        block-size: 1rem;
+        margin: 0;
+    }
+
+    .ui-form-fluid .ui-form-helper-text,
+    .ui-form-fluid .ui-form__helper-text,
+    .ui-form--fluid .ui-form-helper-text,
+    .ui-form--fluid .ui-form__helper-text {
+        display: none;
+    }
+
+    .ui-form-fluid .ui-text-input,
+    .ui-form--fluid .ui-text-input {
+        min-block-size: 4rem;
+        padding: 2rem var(--ui-spacing-05) 0.8125rem;
+    }
+
+    .ui-text-input-divider,
+    .ui-text-input__divider,
+    .ui-form-fluid .ui-text-input-divider,
+    .ui-form-fluid .ui-text-input__divider,
+    .ui-form--fluid .ui-text-input-divider,
+    .ui-form--fluid .ui-text-input__divider {
+        display: none;
+    }
+
+    .ui-form-fluid .ui-text-input-invalid,
+    .ui-form-fluid .ui-text-input--invalid,
+    .ui-form-fluid .ui-text-input-warning,
+    .ui-form-fluid .ui-text-input--warning,
+    .ui-form--fluid .ui-text-input-invalid,
+    .ui-form--fluid .ui-text-input--invalid,
+    .ui-form--fluid .ui-text-input-warning,
+    .ui-form--fluid .ui-text-input--warning {
+        border-block-end: none;
+    }
+
+    .ui-form-fluid .ui-text-input-invalid + .ui-text-input-divider,
+    .ui-form-fluid .ui-text-input--invalid + .ui-text-input__divider,
+    .ui-form-fluid .ui-text-input-warning + .ui-text-input-divider,
+    .ui-form-fluid .ui-text-input--warning + .ui-text-input__divider,
+    .ui-form--fluid .ui-text-input-invalid + .ui-text-input-divider,
+    .ui-form--fluid .ui-text-input--invalid + .ui-text-input__divider,
+    .ui-form--fluid .ui-text-input-warning + .ui-text-input-divider,
+    .ui-form--fluid .ui-text-input--warning + .ui-text-input__divider {
+        display: block;
+        margin: 0 var(--ui-spacing-05);
+        border-style: solid;
+        border-color: var(--ui-border-subtle);
+        border-block-end: none;
+    }
+
+    .ui-form-fluid .ui-text-input-invalid-icon,
+    .ui-form-fluid .ui-text-input__invalid-icon,
+    .ui-form--fluid .ui-text-input-invalid-icon,
+    .ui-form--fluid .ui-text-input__invalid-icon {
+        inset-block-start: 5rem;
+    }
+
+    .ui-form-fluid
+        .ui-text-input-field-wrapper[data-invalid]
+        > .ui-text-input-invalid,
+    .ui-form-fluid
+        .ui-text-input__field-wrapper[data-invalid]
+        > .ui-text-input--invalid,
+    .ui-form-fluid
+        .ui-text-input-field-wrapper-warning
+        > .ui-text-input-warning,
+    .ui-form-fluid
+        .ui-text-input__field-wrapper--warning
+        > .ui-text-input--warning,
+    .ui-form--fluid
+        .ui-text-input-field-wrapper[data-invalid]
+        > .ui-text-input-invalid,
+    .ui-form--fluid
+        .ui-text-input__field-wrapper[data-invalid]
+        > .ui-text-input--invalid,
+    .ui-form--fluid
+        .ui-text-input-field-wrapper-warning
+        > .ui-text-input-warning,
+    .ui-form--fluid
+        .ui-text-input__field-wrapper--warning
+        > .ui-text-input--warning {
+        outline: none;
+    }
+
+    .ui-form-fluid .ui-text-input-field-wrapper-warning,
+    .ui-form-fluid .ui-text-input__field-wrapper--warning,
+    .ui-form--fluid .ui-text-input-field-wrapper-warning,
+    .ui-form--fluid .ui-text-input__field-wrapper--warning {
+        border-block-end: 1px solid var(--ui-border-strong);
+    }
+
+    .ui-form-fluid .ui-text-input-field-wrapper[data-invalid]:not(:focus),
+    .ui-form-fluid .ui-text-input__field-wrapper[data-invalid]:not(:focus),
+    .ui-form--fluid .ui-text-input-field-wrapper[data-invalid]:not(:focus),
+    .ui-form--fluid .ui-text-input__field-wrapper[data-invalid]:not(:focus) {
+        outline: 2px solid var(--ui-support-error);
+        outline-offset: -2px;
+    }
+
+    .ui-form-fluid .ui-text-input-field-wrapper[data-invalid]:focus-within,
+    .ui-form-fluid .ui-text-input__field-wrapper[data-invalid]:focus-within,
+    .ui-form-fluid .ui-text-input-field-wrapper-warning:focus-within,
+    .ui-form-fluid .ui-text-input__field-wrapper--warning:focus-within,
+    .ui-form--fluid .ui-text-input-field-wrapper[data-invalid]:focus-within,
+    .ui-form--fluid .ui-text-input__field-wrapper[data-invalid]:focus-within,
+    .ui-form--fluid .ui-text-input-field-wrapper-warning:focus-within,
+    .ui-form--fluid .ui-text-input__field-wrapper--warning:focus-within {
+        outline: 2px solid var(--ui-focus);
+        outline-offset: -2px;
+    }
+
+    .ui-form-fluid
+        .ui-text-input-field-wrapper[data-invalid]
+        > .ui-text-input-invalid:focus,
+    .ui-form-fluid
+        .ui-text-input__field-wrapper[data-invalid]
+        > .ui-text-input--invalid:focus,
+    .ui-form-fluid
+        .ui-text-input-field-wrapper-warning
+        > .ui-text-input-warning:focus,
+    .ui-form-fluid
+        .ui-text-input__field-wrapper--warning
+        > .ui-text-input--warning:focus,
+    .ui-form--fluid
+        .ui-text-input-field-wrapper[data-invalid]
+        > .ui-text-input-invalid:focus,
+    .ui-form--fluid
+        .ui-text-input__field-wrapper[data-invalid]
+        > .ui-text-input--invalid:focus,
+    .ui-form--fluid
+        .ui-text-input-field-wrapper-warning
+        > .ui-text-input-warning:focus,
+    .ui-form--fluid
+        .ui-text-input__field-wrapper--warning
+        > .ui-text-input--warning:focus {
+        outline: none;
+    }
+
+    /* ----------------------------------------------------------------------
+       Inline text input
+       ---------------------------------------------------------------------- */
+
+    .ui-text-input-wrapper-inline,
+    .ui-text-input-wrapper--inline {
+        flex-flow: row nowrap;
+        align-items: center;
+    }
+
+    .ui-text-input-wrapper .ui-label-inline,
+    .ui-text-input-wrapper .ui-label--inline {
+        flex: 0 1 auto;
+        margin: 0;
+        overflow-wrap: break-word;
+        word-break: break-word;
+    }
+
+    .ui-text-input-label-helper-wrapper,
+    .ui-text-input__label-helper-wrapper {
+        flex: 0 1 auto;
+        flex-direction: column;
+        max-inline-size: 8.875rem;
+        overflow-wrap: break-word;
+    }
+
+    .ui-text-input-label-helper-wrapper:first-of-type,
+    .ui-text-input__label-helper-wrapper:first-of-type {
+        margin-inline-end: var(--ui-spacing-03);
+    }
+
+    .ui-text-input-label-helper-wrapper:last-of-type,
+    .ui-text-input__label-helper-wrapper:last-of-type {
+        margin-inline-start: var(--ui-spacing-03);
+    }
+
+    .ui-text-input-wrapper .ui-form-helper-text-inline,
+    .ui-text-input-wrapper .ui-form__helper-text--inline {
+        margin-block-start: 0.125rem;
+    }
+
+    .ui-text-input-wrapper-inline .ui-form-helper-text-inline,
+    .ui-text-input-wrapper-inline .ui-form__helper-text--inline,
+    .ui-text-input-wrapper-inline .ui-form-requirement,
+    .ui-text-input-wrapper--inline .ui-form-helper-text-inline,
+    .ui-text-input-wrapper--inline .ui-form__helper-text--inline,
+    .ui-text-input-wrapper--inline .ui-form-requirement {
+        margin: 0;
+    }
+
+    .ui-text-input-wrapper-inline .ui-form-requirement,
+    .ui-text-input-wrapper--inline .ui-form-requirement {
+        display: block;
+        overflow: visible;
+        max-block-size: 12.5rem;
+        font-weight: var(--ui-font-weight-regular);
+    }
+
+    .ui-text-input-wrapper-inline-invalid .ui-form-requirement,
+    .ui-text-input-wrapper--inline--invalid .ui-form-requirement {
+        color: var(--ui-text-error);
+    }
+
+    /* ----------------------------------------------------------------------
+       Readonly
+       ---------------------------------------------------------------------- */
+
+    .ui-form-fluid .ui-text-input-wrapper-readonly,
+    .ui-form-fluid .ui-text-input-wrapper--readonly,
+    .ui-form--fluid .ui-text-input-wrapper-readonly,
+    .ui-form--fluid .ui-text-input-wrapper--readonly,
+    .ui-text-input-wrapper-readonly .ui-text-input,
+    .ui-text-input-wrapper--readonly .ui-text-input,
+    .ui-text-input[readonly],
+    .ui-text-input[aria-readonly="true"],
+    .ui-text-input[data-readonly="true"],
+    .ui-text-input[data-ui-readonly="true"] {
+        border-block-end-color: var(--ui-border-subtle);
+        background-color: transparent;
+    }
+
+    .ui-text-input[readonly],
+    .ui-text-input[aria-readonly="true"],
+    .ui-text-input[data-readonly="true"],
+    .ui-text-input[data-ui-readonly="true"] {
+        cursor: default;
+    }
+
+    /* ----------------------------------------------------------------------
+       Reduced motion
+       ---------------------------------------------------------------------- */
+
+    @media (prefers-reduced-motion: reduce) {
+        .ui-text-input,
+        .ui-text-input-password-visibility-toggle,
+        .ui-text-input--password__visibility__toggle,
+        .ui-form-fluid .ui-text-input-wrapper,
+        .ui-form--fluid .ui-text-input-wrapper {
+            transition: none;
+        }
+
+        .ui-skeleton.ui-text-input::before,
+        .ui-text-input-skeleton::before {
+            animation: none;
+        }
+    }
+
+    /* ----------------------------------------------------------------------
+       Forced colors
+       ---------------------------------------------------------------------- */
+
+    @media screen and (-ms-high-contrast: active), (forced-colors: active) {
+        .ui-text-input:focus,
+        .ui-text-input:active,
+        .ui-text-input-password-visibility-toggle:focus,
+        .ui-text-input-password-visibility-toggle:focus-visible,
+        .ui-text-input--password__visibility__toggle:focus,
+        .ui-text-input--password__visibility__toggle:focus-visible {
+            outline-color: Highlight;
+        }
+
+        .ui-text-input-invalid,
+        .ui-text-input--invalid {
+            outline-color: Mark;
+        }
+
+        .ui-text-input:disabled,
+        .ui-text-input[disabled],
+        .ui-text-input[aria-disabled="true"],
+        .ui-text-input[data-disabled="true"],
+        .ui-text-input[data-ui-disabled="true"] {
+            color: GrayText;
+            -webkit-text-fill-color: GrayText;
+        }
+
+        .ui-text-input-invalid-icon,
+        .ui-text-input__invalid-icon {
+            color: Mark;
+            fill: Mark;
+        }
+
+        .ui-text-input-invalid-icon-warning,
+        .ui-text-input__invalid-icon--warning {
+            color: CanvasText;
+            fill: CanvasText;
+        }
     }
 }

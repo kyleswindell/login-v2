@@ -1,9 +1,15 @@
 <?php
+/*
+|--------------------------------------------------------------------------
+| File: tests/Feature/Platform/PlatformSetupPagesTest.php
+| Purpose: Verifies Setup module route behavior.
+|--------------------------------------------------------------------------
+*/
 
 namespace Tests\Feature\Platform;
 
 use App\Models\User;
-use App\Platform\Settings\SettingsService;
+use App\Modules\Roles\Services\RoleCatalog;
 use Database\Seeders\PlatformRolesAndPermissionsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
@@ -16,48 +22,47 @@ class PlatformSetupPagesTest extends TestCase
     {
         $this->actingAsPlatformSuperAdmin();
 
-        $this->get('/platform/setup/notifications')->assertOk()->assertSee('Platform Notifications Setup');
-        $this->get('/platform/setup/docs')->assertOk()->assertSee('Documentation Vault Setup');
-        $this->get('/platform/setup/audit-logs')
+        $this->get('/platform/setup')
             ->assertOk()
-            ->assertSee('Audit Logs Setup')
-            ->assertSee('/platform/operations/audit-logs', false)
-            ->assertDontSee('/platform/audit-logs', false);
-        $this->get('/platform/setup/error-logs')
+            ->assertSee('Setup')
+            ->assertSee('Roles &amp; Permissions', false)
+            ->assertSee('Notifications')
+            ->assertSee('data-setup-landing-tile', false)
+            ->assertSee('href="'.url('/platform/setup/notifications').'"', false)
+            ->assertDontSee('Staff Setup');
+
+        $this->get('/platform/setup/notifications')
             ->assertOk()
-            ->assertSee('Error Logs Setup')
-            ->assertSee('/platform/operations/error-logs', false)
-            ->assertDontSee('/platform/error-logs', false);
-        $this->get('/platform/setup/users')->assertOk()->assertSee('Staff Setup');
+            ->assertSee('Notifications Setup');
     }
 
-    public function test_platform_admin_can_open_setup_pages_except_super_admin_docs_scope(): void
+    public function test_admin_can_open_current_setup_pages(): void
     {
         $this->seed(PlatformRolesAndPermissionsSeeder::class);
 
         $user = User::factory()->create();
-        $user->assignRole('platform_admin');
+        $user->assignRole(RoleCatalog::ADMIN);
 
-        app(SettingsService::class)->put('docs', 'access_scope', 'super_admins_only', updatedBy: $user->id);
+        $this->actingAs($user)
+            ->get('/platform/setup')
+            ->assertOk();
 
         $this->actingAs($user)
             ->get('/platform/setup/notifications')
             ->assertOk();
+    }
 
-        $this->actingAs($user)
-            ->get('/platform/setup/docs')
-            ->assertForbidden();
+    public function test_stale_setup_pages_are_not_registered(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
 
-        $this->actingAs($user)
-            ->get('/platform/setup/audit-logs')
-            ->assertOk();
-
-        $this->actingAs($user)
-            ->get('/platform/setup/error-logs')
-            ->assertOk();
-
-        $this->actingAs($user)
-            ->get('/platform/setup/users')
-            ->assertOk();
+        foreach ([
+            '/platform/setup/docs',
+            '/platform/setup/audit-logs',
+            '/platform/setup/error-logs',
+            '/platform/setup/users',
+        ] as $url) {
+            $this->get($url)->assertNotFound();
+        }
     }
 }

@@ -1,0 +1,41 @@
+/**
+ * File: {{ jsPath }}
+ * Purpose: {{ label }} behavior.
+ *
+ * Notes:
+ * - Initialization must be idempotent.
+ * - Keep selectors and behavior aligned with {{ bladePath }} and
+ *   {{ contractPath }}.
+ * - Do not place authorization or business rules in this control.
+ */
+
+const COMPONENT_SELECTOR = "[data-ui-{{ component }}]";
+const BOUND_ATTR = "data-ui-{{ component }}-initialized";
+
+function bindComponent(component) {
+    if (!(component instanceof HTMLElement)) {
+        return;
+    }
+
+    if (component.hasAttribute(BOUND_ATTR)) {
+        return;
+    }
+
+    component.setAttribute(BOUND_ATTR, "true");
+
+    component.addEventListener("click", (event) => {
+        const target = event.target;
+
+        if (!(target instanceof Element)) {
+            return;
+        }
+
+        /*
+         * Resolve approved component-owned interaction targets here.
+         */
+    });
+}
+
+export function {{ initializer }}(root = document) {
+    root.querySelectorAll(COMPONENT_SELECTOR).forEach(bindComponent);
+}

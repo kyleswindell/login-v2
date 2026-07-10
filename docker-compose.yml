@@ -12,6 +12,10 @@ services:
       - composer-vendor:/var/www/html/vendor
     ports:
       - "${APP_PORT:-8000}:8000"
+    networks:
+      default:
+        aliases:
+          - laravel.test
     env_file:
       - .env
     depends_on:
@@ -19,6 +23,12 @@ services:
         condition: service_healthy
       redis:
         condition: service_started
+    healthcheck:
+      test: ["CMD-SHELL", "curl -fsS http://127.0.0.1:8000/up >/dev/null || exit 1"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
     command: sh -lc "composer install && php artisan serve --host=0.0.0.0 --port=8000"
 
   node:
@@ -36,6 +46,26 @@ services:
       VITE_USE_POLLING: "${VITE_USE_POLLING:-true}"
       VITE_POLLING_INTERVAL: "${VITE_POLLING_INTERVAL:-1000}"
     command: sh -lc "npm install && (npm run dev -- --host 0.0.0.0 --port 5173 & vite_pid=$$!; sleep 3; printf '%s' \"$$VITE_DEV_SERVER_URL\" > public/hot; wait $$vite_pid)"
+
+  playwright:
+    image: mcr.microsoft.com/playwright:v1.61.1-noble
+    profiles:
+      - browser-tests
+    working_dir: /var/www/html
+    volumes:
+      - .:/var/www/html
+      - playwright-node-modules:/var/www/html/node_modules
+    environment:
+      PLAYWRIGHT_BASE_URL: "${PLAYWRIGHT_BASE_URL:-http://laravel.test:8000}"
+    depends_on:
+      app:
+        condition: service_healthy
+      queue:
+        condition: service_healthy
+      reverb:
+        condition: service_healthy
+    ipc: host
+    command: tail -f /dev/null
 
   reverb:
     build:
@@ -55,7 +85,41 @@ services:
     depends_on:
       redis:
         condition: service_started
+    healthcheck:
+      test: ["CMD-SHELL", "php -r \"exit(@fsockopen('127.0.0.1', 8080) ? 0 : 1);\""]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
     command: sh -lc "composer install && php artisan reverb:start --host=0.0.0.0 --port=8080"
+
+  queue:
+    build:
+      context: .
+      dockerfile: .docker/php/Dockerfile
+      args:
+        UID: ${DOCKER_UID:-1000}
+        GID: ${DOCKER_GID:-1000}
+    working_dir: /var/www/html
+    volumes:
+      - .:/var/www/html
+      - composer-vendor:/var/www/html/vendor
+    env_file:
+      - .env
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_started
+      reverb:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD-SHELL", "test \"$$(cat /proc/1/comm)\" = php"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 10s
+    command: sh -lc "composer install && exec php artisan queue:work redis --queue=default --sleep=1 --tries=3 --timeout=90"
 
   postgres:
     image: postgres:16-alpine
@@ -96,3 +160,4 @@ volumes:
   redis-data:
   composer-vendor:
   node-modules:
+  playwright-node-modules:

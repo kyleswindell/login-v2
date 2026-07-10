@@ -1,0 +1,28 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use Illuminate\Foundation\Testing\RefreshDatabase;
+use Tests\TestCase;
+
+final class {{ class }} extends TestCase
+{
+    use RefreshDatabase;
+
+    public function test_unauthenticated_actor_is_denied(): void
+    {
+        self::markTestIncomplete('Define the unauthenticated access path.');
+    }
+
+    public function test_actor_without_required_access_is_denied(): void
+    {
+        self::markTestIncomplete('Define the unauthorized actor and protected target.');
+    }
+
+    public function test_actor_with_required_access_is_allowed(): void
+    {
+        self::markTestIncomplete('Define the authorized actor and expected result.');
+    }
+}

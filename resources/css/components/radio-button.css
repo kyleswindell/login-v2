@@ -1,109 +1,585 @@
 /* ==========================================================================
-File: resources/css/components/radio-button.css
-Purpose: Radio Button component styles.
-Carbon reference:
+   File: resources/css/components/radio-button.css
+   Purpose: Radio Button component styles.
 
-* reference/carbon-main/packages/styles/scss/components/radio-button/
-
-Notes:
-
-* Defines Radio Button selectors only.
-* Do not define primitive palette tokens here.
-* Do not define theme role tokens here.
-* Radio Button consumes form, type, spacing, focus, and theme tokens.
-  ========================================================================== */
+   Notes:
+   - Defines Radio Button selectors only.
+   - Do not define primitive palette tokens here.
+   - Do not define theme role tokens here.
+   - Supports horizontal, vertical, label-left, label-right, checked,
+     disabled, readonly, invalid, warning, validation message, skeleton,
+     wrapper, and forced-colors states.
+   - AI label / slug decorator branches are intentionally not implemented here.
+   ========================================================================== */
 
 @layer components {
+    /* ----------------------------------------------------------------------
+       Group
+       ---------------------------------------------------------------------- */
+
     .ui-radio-button-group {
+        box-sizing: border-box;
+        position: relative;
         display: flex;
-        flex-wrap: wrap;
-        gap: var(--ui-spacing-05);
+        align-items: center;
         margin: 0;
         border: 0;
         padding: 0;
     }
 
-    .ui-radio-button-wrapper {
-        position: relative;
-        display: inline-flex;
+    .ui-radio-button-group *,
+    .ui-radio-button-group *::before,
+    .ui-radio-button-group *::after {
+        box-sizing: inherit;
+    }
+
+    .ui-label + .ui-form-item .ui-radio-button-group {
+        margin-block-start: 0;
+    }
+
+    .ui-radio-button-group-vertical,
+    .ui-radio-button-group--vertical {
+        flex-direction: column;
         align-items: flex-start;
     }
+
+    .ui-radio-button-group-vertical.ui-radio-button-group-label-left,
+    .ui-radio-button-group--vertical.ui-radio-button-group--label-left {
+        align-items: flex-end;
+    }
+
+    .ui-radio-button-group-vertical .ui-radio-button-label,
+    .ui-radio-button-group-vertical .ui-radio-button__label,
+    .ui-radio-button-group--vertical .ui-radio-button-label,
+    .ui-radio-button-group--vertical .ui-radio-button__label {
+        margin-inline-end: 0;
+    }
+
+    .ui-radio-button-group-vertical .ui-radio-button-label:not(:last-of-type),
+    .ui-radio-button-group-vertical .ui-radio-button__label:not(:last-of-type),
+    .ui-radio-button-group--vertical .ui-radio-button-label:not(:last-of-type),
+    .ui-radio-button-group--vertical
+        .ui-radio-button__label:not(:last-of-type) {
+        margin-block-end: var(--ui-spacing-03);
+    }
+
+    /* ----------------------------------------------------------------------
+       Native input
+       ---------------------------------------------------------------------- */
 
     .ui-radio-button {
         position: absolute;
         overflow: hidden;
-        clip: rect(0 0 0 0);
-        inline-size: 1px;
-        block-size: 1px;
         margin: -1px;
         border: 0;
         padding: 0;
+        inline-size: 1px;
+        block-size: 1px;
+        clip: rect(0, 0, 0, 0);
+        visibility: inherit;
         white-space: nowrap;
     }
 
-    .ui-radio-button-label {
-        position: relative;
-        display: inline-flex;
-        min-block-size: 1.25rem;
-        padding-inline-start: 1.625rem;
+    /* ----------------------------------------------------------------------
+       Label / appearance
+       ---------------------------------------------------------------------- */
+
+    .ui-radio-button-label,
+    .ui-radio-button__label {
+        display: flex;
+        align-items: center;
+        margin-inline-end: var(--ui-spacing-05);
         color: var(--ui-text-primary);
         cursor: pointer;
+    }
+
+    .ui-radio-button-label-text,
+    .ui-radio-button__label-text {
+        flex: 1;
         font-size: var(--ui-type-body-compact-01-font-size);
+        font-weight: var(--ui-type-body-compact-01-font-weight);
         line-height: var(--ui-type-body-compact-01-line-height);
+        letter-spacing: var(--ui-type-body-compact-01-letter-spacing);
     }
 
-    .ui-radio-button-label::before,
-    .ui-radio-button-label::after {
-        content: "";
-        position: absolute;
+    .ui-radio-button-appearance,
+    .ui-radio-button__appearance {
         box-sizing: border-box;
-        border-radius: 50%;
-    }
-
-    .ui-radio-button-label::before {
-        inset-block-start: 0.125rem;
-        inset-inline-start: 0;
-        inline-size: 1rem;
-        block-size: 1rem;
+        flex-shrink: 0;
+        inline-size: 1.125rem;
+        block-size: 1.125rem;
+        margin-block: 0.0625rem 0.125rem;
+        margin-inline: 0.125rem 0.625rem;
         border: 1px solid var(--ui-icon-primary);
+        border-radius: 50%;
+        padding: 0;
         background-color: transparent;
     }
 
-    .ui-radio-button-label::after {
-        inset-block-start: 0.375rem;
-        inset-inline-start: 0.25rem;
-        inline-size: 0.5rem;
-        block-size: 0.5rem;
-        background-color: var(--ui-icon-inverse);
-        transform: scale(0);
-        transition: transform var(--ui-duration-fast-01)
-            var(--ui-motion-standard-productive);
+    .ui-radio-button-group-vertical .ui-radio-button-appearance,
+    .ui-radio-button-group-vertical .ui-radio-button__appearance,
+    .ui-radio-button-group--vertical .ui-radio-button-appearance,
+    .ui-radio-button-group--vertical .ui-radio-button__appearance {
+        margin-block: 0;
     }
 
-    .ui-radio-button:checked + .ui-radio-button-label::before {
+    /* ----------------------------------------------------------------------
+       Checked state
+       ---------------------------------------------------------------------- */
+
+    .ui-radio-button:checked
+        + .ui-radio-button-label
+        .ui-radio-button-appearance,
+    .ui-radio-button:checked
+        + .ui-radio-button__label
+        .ui-radio-button__appearance {
+        display: flex;
+        align-items: center;
+        justify-content: center;
         border-color: var(--ui-icon-primary);
+    }
+
+    .ui-radio-button:checked
+        + .ui-radio-button-label
+        .ui-radio-button-appearance::before,
+    .ui-radio-button:checked
+        + .ui-radio-button__label
+        .ui-radio-button__appearance::before {
+        position: relative;
+        display: inline-block;
+        inline-size: 100%;
+        block-size: 100%;
+        border-radius: 50%;
         background-color: var(--ui-icon-primary);
+        content: "";
+        transform: scale(0.5);
     }
 
-    .ui-radio-button:checked + .ui-radio-button-label::after {
-        transform: scale(1);
+    @media print {
+        .ui-radio-button:checked
+            + .ui-radio-button-label
+            .ui-radio-button-appearance::before,
+        .ui-radio-button:checked
+            + .ui-radio-button__label
+            .ui-radio-button__appearance::before {
+            print-color-adjust: exact;
+        }
     }
 
-    .ui-radio-button:focus-visible + .ui-radio-button-label::before {
+    /* ----------------------------------------------------------------------
+       Focus state
+       ---------------------------------------------------------------------- */
+
+    .ui-radio-button:focus + .ui-radio-button-label .ui-radio-button-appearance,
+    .ui-radio-button:focus
+        + .ui-radio-button__label
+        .ui-radio-button__appearance,
+    .ui-radio-button:focus-visible
+        + .ui-radio-button-label
+        .ui-radio-button-appearance,
+    .ui-radio-button:focus-visible
+        + .ui-radio-button__label
+        .ui-radio-button__appearance {
         outline: 2px solid var(--ui-focus);
-        outline-offset: 1px;
+        outline-offset: 1.5px;
     }
 
-    .ui-radio-button:disabled + .ui-radio-button-label {
+    /* ----------------------------------------------------------------------
+       Disabled state
+       ---------------------------------------------------------------------- */
+
+    .ui-radio-button:disabled + .ui-radio-button-label,
+    .ui-radio-button:disabled + .ui-radio-button__label,
+    .ui-radio-button[disabled] + .ui-radio-button-label,
+    .ui-radio-button[disabled] + .ui-radio-button__label {
         color: var(--ui-text-disabled);
         cursor: not-allowed;
     }
 
-    .ui-radio-button:disabled + .ui-radio-button-label::before {
+    .ui-radio-button:disabled
+        + .ui-radio-button-label
+        .ui-radio-button-appearance,
+    .ui-radio-button:disabled
+        + .ui-radio-button__label
+        .ui-radio-button__appearance,
+    .ui-radio-button:disabled:checked
+        + .ui-radio-button-label
+        .ui-radio-button-appearance,
+    .ui-radio-button:disabled:checked
+        + .ui-radio-button__label
+        .ui-radio-button__appearance,
+    .ui-radio-button[disabled]
+        + .ui-radio-button-label
+        .ui-radio-button-appearance,
+    .ui-radio-button[disabled]
+        + .ui-radio-button__label
+        .ui-radio-button__appearance {
         border-color: var(--ui-icon-disabled);
     }
 
-    .ui-radio-button:checked:disabled + .ui-radio-button-label::before {
-        background-color: var(--ui-icon-disabled);
+    .ui-radio-button:disabled
+        + .ui-radio-button-label
+        .ui-radio-button-appearance::before,
+    .ui-radio-button:disabled
+        + .ui-radio-button__label
+        .ui-radio-button__appearance::before,
+    .ui-radio-button[disabled]
+        + .ui-radio-button-label
+        .ui-radio-button-appearance::before,
+    .ui-radio-button[disabled]
+        + .ui-radio-button__label
+        .ui-radio-button__appearance::before {
+        background-color: var(--ui-text-disabled);
+    }
+
+    /* ----------------------------------------------------------------------
+       Readonly state
+       ---------------------------------------------------------------------- */
+
+    .ui-radio-button-group-readonly
+        .ui-radio-button
+        + .ui-radio-button-label
+        .ui-radio-button-appearance,
+    .ui-radio-button-group-readonly
+        .ui-radio-button
+        + .ui-radio-button__label
+        .ui-radio-button__appearance,
+    .ui-radio-button-group--readonly
+        .ui-radio-button
+        + .ui-radio-button-label
+        .ui-radio-button-appearance,
+    .ui-radio-button-group--readonly
+        .ui-radio-button
+        + .ui-radio-button__label
+        .ui-radio-button__appearance {
+        border-color: var(--ui-icon-disabled);
+    }
+
+    .ui-radio-button-group-readonly .ui-radio-button-label,
+    .ui-radio-button-group-readonly .ui-radio-button__label,
+    .ui-radio-button-group--readonly .ui-radio-button-label,
+    .ui-radio-button-group--readonly .ui-radio-button__label {
+        cursor: default;
+    }
+
+    .ui-radio-button-group-readonly .ui-radio-button-label-text,
+    .ui-radio-button-group-readonly .ui-radio-button__label-text,
+    .ui-radio-button-group--readonly .ui-radio-button-label-text,
+    .ui-radio-button-group--readonly .ui-radio-button__label-text {
+        cursor: text;
+        user-select: text;
+    }
+
+    /* ----------------------------------------------------------------------
+       Invalid / warning state
+       ---------------------------------------------------------------------- */
+
+    .ui-radio-button-group-invalid
+        .ui-radio-button
+        + .ui-radio-button-label
+        .ui-radio-button-appearance,
+    .ui-radio-button-group-invalid
+        .ui-radio-button
+        + .ui-radio-button__label
+        .ui-radio-button__appearance,
+    .ui-radio-button-group--invalid
+        .ui-radio-button
+        + .ui-radio-button-label
+        .ui-radio-button-appearance,
+    .ui-radio-button-group--invalid
+        .ui-radio-button
+        + .ui-radio-button__label
+        .ui-radio-button__appearance {
+        border-color: var(--ui-support-error);
+    }
+
+    .ui-radio-button-validation-msg,
+    .ui-radio-button__validation-msg {
+        display: none;
+        align-items: flex-end;
+        margin-block-start: 0.375rem;
+    }
+
+    .ui-radio-button-invalid-icon,
+    .ui-radio-button__invalid-icon {
+        margin-inline: 0.1875rem 0.0625rem;
+        color: var(--ui-support-error);
+        fill: currentColor;
+    }
+
+    .ui-radio-button-invalid-icon-warning,
+    .ui-radio-button__invalid-icon--warning {
+        color: var(--ui-support-warning);
+        fill: currentColor;
+    }
+
+    .ui-radio-button-invalid-icon-warning path:first-of-type,
+    .ui-radio-button__invalid-icon--warning path:first-of-type {
+        fill: var(--ui-black, #000000);
+    }
+
+    .ui-radio-button-group-invalid + .ui-radio-button-validation-msg,
+    .ui-radio-button-group-invalid + .ui-radio-button__validation-msg,
+    .ui-radio-button-group--invalid + .ui-radio-button-validation-msg,
+    .ui-radio-button-group--invalid + .ui-radio-button__validation-msg,
+    .ui-radio-button-group-warning + .ui-radio-button-validation-msg,
+    .ui-radio-button-group-warning + .ui-radio-button__validation-msg,
+    .ui-radio-button-group--warning + .ui-radio-button-validation-msg,
+    .ui-radio-button-group--warning + .ui-radio-button__validation-msg {
+        display: flex;
+    }
+
+    .ui-radio-button-group-invalid
+        + .ui-radio-button-validation-msg
+        .ui-form-requirement,
+    .ui-radio-button-group-invalid
+        + .ui-radio-button__validation-msg
+        .ui-form-requirement,
+    .ui-radio-button-group--invalid
+        + .ui-radio-button-validation-msg
+        .ui-form-requirement,
+    .ui-radio-button-group--invalid
+        + .ui-radio-button__validation-msg
+        .ui-form-requirement,
+    .ui-radio-button-group-warning
+        + .ui-radio-button-validation-msg
+        .ui-form-requirement,
+    .ui-radio-button-group-warning
+        + .ui-radio-button__validation-msg
+        .ui-form-requirement,
+    .ui-radio-button-group--warning
+        + .ui-radio-button-validation-msg
+        .ui-form-requirement,
+    .ui-radio-button-group--warning
+        + .ui-radio-button__validation-msg
+        .ui-form-requirement {
+        display: block;
+        overflow: visible;
+        max-block-size: 100%;
+        margin-block-start: 0;
+        margin-inline-start: var(--ui-spacing-03);
+    }
+
+    .ui-radio-button-group-invalid
+        + .ui-radio-button-validation-msg
+        .ui-form-requirement,
+    .ui-radio-button-group-invalid
+        + .ui-radio-button__validation-msg
+        .ui-form-requirement,
+    .ui-radio-button-group--invalid
+        + .ui-radio-button-validation-msg
+        .ui-form-requirement,
+    .ui-radio-button-group--invalid
+        + .ui-radio-button__validation-msg
+        .ui-form-requirement {
+        color: var(--ui-text-error);
+    }
+
+    .ui-radio-button-group ~ .ui-form-helper-text,
+    .ui-radio-button-group ~ .ui-form__helper-text {
+        margin-block-start: 0.375rem;
+    }
+
+    /* ----------------------------------------------------------------------
+       Skeleton state
+       ---------------------------------------------------------------------- */
+
+    .ui-radio-button-label.ui-skeleton,
+    .ui-radio-button__label.ui-skeleton,
+    .ui-radio-button-label-skeleton,
+    .ui-radio-button__label--skeleton {
+        position: relative;
+        overflow: hidden;
+        inline-size: 6.25rem;
+        block-size: 1.125rem;
+        background-color: var(--ui-skeleton-element);
+        color: transparent;
+        pointer-events: none;
+    }
+
+    .ui-radio-button-label.ui-skeleton::before,
+    .ui-radio-button__label.ui-skeleton::before,
+    .ui-radio-button-label-skeleton::before,
+    .ui-radio-button__label--skeleton::before {
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(
+            90deg,
+            transparent,
+            var(--ui-skeleton-background, rgb(255 255 255 / 0.18)),
+            transparent
+        );
+        content: "";
+        animation: ui-skeleton-shimmer 1.5s infinite linear;
+    }
+
+    .ui-radio-button-label.ui-skeleton .ui-radio-button-appearance,
+    .ui-radio-button__label.ui-skeleton .ui-radio-button__appearance,
+    .ui-radio-button-label-skeleton .ui-radio-button-appearance,
+    .ui-radio-button__label--skeleton .ui-radio-button__appearance {
+        display: none;
+    }
+
+    /* ----------------------------------------------------------------------
+       Wrapper layout
+       ---------------------------------------------------------------------- */
+
+    .ui-radio-button-wrapper .ui-radio-button-label,
+    .ui-radio-button-wrapper .ui-radio-button__label {
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        margin: 0;
+    }
+
+    .ui-radio-button-wrapper:not(:last-of-type) {
+        margin-inline-end: var(--ui-spacing-05);
+    }
+
+    .ui-radio-button-group-vertical .ui-radio-button-wrapper,
+    .ui-radio-button-group--vertical .ui-radio-button-wrapper {
+        margin-block-end: 0.375rem;
+        margin-inline-end: 0;
+    }
+
+    .ui-radio-button-group-vertical
+        .ui-radio-button-wrapper
+        .ui-radio-button-label,
+    .ui-radio-button-group-vertical
+        .ui-radio-button-wrapper
+        .ui-radio-button__label,
+    .ui-radio-button-group--vertical
+        .ui-radio-button-wrapper
+        .ui-radio-button-label,
+    .ui-radio-button-group--vertical
+        .ui-radio-button-wrapper
+        .ui-radio-button__label {
+        padding-block-start: 0.125rem;
+    }
+
+    /* ----------------------------------------------------------------------
+       Label position variants
+       ---------------------------------------------------------------------- */
+
+    .ui-radio-button-group-label-right .ui-radio-button-label,
+    .ui-radio-button-group-label-right .ui-radio-button__label,
+    .ui-radio-button-group--label-right .ui-radio-button-label,
+    .ui-radio-button-group--label-right .ui-radio-button__label,
+    .ui-radio-button-wrapper.ui-radio-button-wrapper-label-right
+        .ui-radio-button-label,
+    .ui-radio-button-wrapper.ui-radio-button-wrapper-label-right
+        .ui-radio-button__label,
+    .ui-radio-button-wrapper.ui-radio-button-wrapper--label-right
+        .ui-radio-button-label,
+    .ui-radio-button-wrapper.ui-radio-button-wrapper--label-right
+        .ui-radio-button__label {
+        flex-direction: row;
+    }
+
+    .ui-radio-button-group-label-left .ui-radio-button-label,
+    .ui-radio-button-group-label-left .ui-radio-button__label,
+    .ui-radio-button-group--label-left .ui-radio-button-label,
+    .ui-radio-button-group--label-left .ui-radio-button__label,
+    .ui-radio-button-wrapper.ui-radio-button-wrapper-label-left
+        .ui-radio-button-label,
+    .ui-radio-button-wrapper.ui-radio-button-wrapper-label-left
+        .ui-radio-button__label,
+    .ui-radio-button-wrapper.ui-radio-button-wrapper--label-left
+        .ui-radio-button-label,
+    .ui-radio-button-wrapper.ui-radio-button-wrapper--label-left
+        .ui-radio-button__label {
+        flex-direction: row-reverse;
+    }
+
+    .ui-radio-button-group-label-left .ui-radio-button-appearance,
+    .ui-radio-button-group-label-left .ui-radio-button__appearance,
+    .ui-radio-button-group--label-left .ui-radio-button-appearance,
+    .ui-radio-button-group--label-left .ui-radio-button__appearance,
+    .ui-radio-button-wrapper.ui-radio-button-wrapper-label-left
+        .ui-radio-button-appearance,
+    .ui-radio-button-wrapper.ui-radio-button-wrapper-label-left
+        .ui-radio-button__appearance,
+    .ui-radio-button-wrapper.ui-radio-button-wrapper--label-left
+        .ui-radio-button-appearance,
+    .ui-radio-button-wrapper.ui-radio-button-wrapper--label-left
+        .ui-radio-button__appearance {
+        margin-inline: var(--ui-spacing-03) 0;
+    }
+
+    /* ----------------------------------------------------------------------
+       Reduced motion
+       ---------------------------------------------------------------------- */
+
+    @media (prefers-reduced-motion: reduce) {
+        .ui-radio-button-label.ui-skeleton::before,
+        .ui-radio-button__label.ui-skeleton::before,
+        .ui-radio-button-label-skeleton::before,
+        .ui-radio-button__label--skeleton::before {
+            animation: none;
+        }
+    }
+
+    /* ----------------------------------------------------------------------
+       Forced colors
+       ---------------------------------------------------------------------- */
+
+    @media screen and (-ms-high-contrast: active), (forced-colors: active) {
+        .ui-radio-button:checked
+            + .ui-radio-button-label
+            .ui-radio-button-appearance::before,
+        .ui-radio-button:checked
+            + .ui-radio-button__label
+            .ui-radio-button__appearance::before {
+            background-color: ButtonText;
+        }
+
+        .ui-radio-button:focus
+            + .ui-radio-button-label
+            .ui-radio-button-appearance,
+        .ui-radio-button:focus
+            + .ui-radio-button__label
+            .ui-radio-button__appearance,
+        .ui-radio-button:focus-visible
+            + .ui-radio-button-label
+            .ui-radio-button-appearance,
+        .ui-radio-button:focus-visible
+            + .ui-radio-button__label
+            .ui-radio-button__appearance {
+            outline-color: Highlight;
+        }
+
+        .ui-radio-button:disabled + .ui-radio-button-label,
+        .ui-radio-button:disabled + .ui-radio-button__label,
+        .ui-radio-button[disabled] + .ui-radio-button-label,
+        .ui-radio-button[disabled] + .ui-radio-button__label {
+            color: GrayText;
+        }
+
+        .ui-radio-button:disabled
+            + .ui-radio-button-label
+            .ui-radio-button-appearance,
+        .ui-radio-button:disabled
+            + .ui-radio-button__label
+            .ui-radio-button__appearance,
+        .ui-radio-button[disabled]
+            + .ui-radio-button-label
+            .ui-radio-button-appearance,
+        .ui-radio-button[disabled]
+            + .ui-radio-button__label
+            .ui-radio-button__appearance {
+            border-color: GrayText;
+        }
+
+        .ui-radio-button-invalid-icon,
+        .ui-radio-button__invalid-icon {
+            color: Mark;
+            fill: Mark;
+        }
+
+        .ui-radio-button-invalid-icon-warning,
+        .ui-radio-button__invalid-icon--warning {
+            color: CanvasText;
+            fill: CanvasText;
+        }
     }
 }

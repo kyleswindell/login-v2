@@ -1,18 +1,21 @@
 /* ==========================================================================
    File: resources/css/tokens/index.css
-   Purpose: Token system entrypoint imported by app.css.
+   Purpose: Design token entrypoint.
    Notes:
-   - Primitive palette loads first.
-   - Spacing loads before component CSS consumes spacing aliases.
-   - Motion loads before component CSS consumes duration/easing aliases.
-   - Theme role tokens load before component tokens.
-   - Component tokens load before app semantic aliases.
+   - Loads primitive, foundation, theme, component-token, and semantic-token
+     layers.
+   - Does not import resources/css/type/index.css.
    ========================================================================== */
 
 @import "./palette/index.css";
+
 @import "./spacing.css";
+@import "./layout.css";
 @import "./motion.css";
+@import "./z-index.css";
+
 @import "./themes/index.css";
-@import "./type/index.css";
+@import "./shadow.css";
+
 @import "./components/index.css";
 @import "./semantic/index.css";

@@ -1,46 +1,146 @@
 /* ==========================================================================
-File: resources/css/components/icon-indicator.css
-Purpose: Icon Indicator component styles.
-Carbon reference:
+   File: resources/css/components/icon-indicator.css
+   Purpose: Icon Indicator component styles.
 
-* reference/carbon-main/packages/styles/scss/components/icon-indicator/
-
-Notes:
-
-* Defines Icon Indicator selectors only.
-* Do not define primitive palette tokens here.
-* Do not define theme role tokens here.
-  ========================================================================== */
+   Notes:
+   - Defines Icon Indicator selectors only.
+   - Do not define primitive palette tokens here.
+   - Do not define theme role tokens here.
+   - Uses shared status tokens from tokens/components/status.css.
+   ========================================================================== */
 
 @layer components {
+    /* ----------------------------------------------------------------------
+       Root
+       ---------------------------------------------------------------------- */
+
     .ui-icon-indicator {
-        display: inline-flex;
+        display: flex;
         align-items: center;
-        gap: var(--ui-spacing-03);
         color: var(--ui-text-secondary);
-        font-size: var(--ui-type-label-01-font-size);
-        line-height: var(--ui-type-label-01-line-height);
+        font-size: var(--ui-type-body-compact-01-font-size);
+        font-weight: var(--ui-type-body-compact-01-font-weight);
+        line-height: var(--ui-type-body-compact-01-line-height);
+        letter-spacing: var(--ui-type-body-compact-01-letter-spacing);
     }
 
-    .ui-icon-indicator-icon {
-        inline-size: 1rem;
-        block-size: 1rem;
-        color: currentColor;
+    .ui-icon-indicator svg {
+        align-self: center;
+        margin-inline-end: var(--ui-spacing-03);
+        fill: currentColor;
     }
 
-    .ui-icon-indicator-success {
-        color: var(--ui-support-success);
+    .ui-icon-indicator-20,
+    .ui-icon-indicator--20 {
+        font-size: var(--ui-type-body-compact-02-font-size);
+        font-weight: var(--ui-type-body-compact-02-font-weight);
+        line-height: var(--ui-type-body-compact-02-line-height);
+        letter-spacing: var(--ui-type-body-compact-02-letter-spacing);
     }
 
-    .ui-icon-indicator-warning {
-        color: var(--ui-support-warning);
+    /* ----------------------------------------------------------------------
+       Status colors
+       ---------------------------------------------------------------------- */
+
+    .ui-icon-indicator-failed,
+    .ui-icon-indicator--failed {
+        color: var(--ui-status-red, var(--ui-support-error));
+        fill: currentColor;
     }
 
-    .ui-icon-indicator-error {
-        color: var(--ui-support-error);
+    .ui-icon-indicator-caution-major,
+    .ui-icon-indicator--caution-major {
+        color: var(--ui-status-orange, var(--ui-support-warning));
+        fill: currentColor;
     }
 
-    .ui-icon-indicator-info {
-        color: var(--ui-support-info);
+    .ui-icon-indicator-caution-major path:first-of-type,
+    .ui-icon-indicator--caution-major path:first-of-type {
+        fill: var(--ui-black, #000000);
+    }
+
+    .ui-icon-indicator-caution-minor,
+    .ui-icon-indicator--caution-minor {
+        color: var(--ui-status-yellow, var(--ui-support-warning));
+        fill: currentColor;
+    }
+
+    .ui-icon-indicator-caution-minor path:first-of-type,
+    .ui-icon-indicator--caution-minor path:first-of-type {
+        fill: var(--ui-black, #000000);
+    }
+
+    .ui-icon-indicator-undefined,
+    .ui-icon-indicator--undefined {
+        color: var(--ui-status-purple, var(--ui-support-info));
+        fill: currentColor;
+    }
+
+    .ui-icon-indicator-succeeded,
+    .ui-icon-indicator--succeeded {
+        color: var(--ui-status-green, var(--ui-support-success));
+        fill: currentColor;
+    }
+
+    .ui-icon-indicator-normal,
+    .ui-icon-indicator--normal,
+    .ui-icon-indicator-in-progress,
+    .ui-icon-indicator--in-progress,
+    .ui-icon-indicator-incomplete,
+    .ui-icon-indicator--incomplete,
+    .ui-icon-indicator-informative,
+    .ui-icon-indicator--informative {
+        color: var(--ui-status-blue, var(--ui-support-info));
+        fill: currentColor;
+    }
+
+    .ui-icon-indicator-not-started,
+    .ui-icon-indicator--not-started,
+    .ui-icon-indicator-pending,
+    .ui-icon-indicator--pending,
+    .ui-icon-indicator-unknown,
+    .ui-icon-indicator--unknown {
+        color: var(--ui-status-gray, var(--ui-icon-secondary));
+        fill: currentColor;
+    }
+
+    /* ----------------------------------------------------------------------
+       Forced colors
+       ---------------------------------------------------------------------- */
+
+    @media screen and (-ms-high-contrast: active), (forced-colors: active) {
+        .ui-icon-indicator svg {
+            fill: currentColor;
+        }
+
+        .ui-icon-indicator-failed,
+        .ui-icon-indicator--failed {
+            color: Mark;
+        }
+
+        .ui-icon-indicator-caution-major,
+        .ui-icon-indicator--caution-major,
+        .ui-icon-indicator-caution-minor,
+        .ui-icon-indicator--caution-minor,
+        .ui-icon-indicator-undefined,
+        .ui-icon-indicator--undefined,
+        .ui-icon-indicator-succeeded,
+        .ui-icon-indicator--succeeded,
+        .ui-icon-indicator-normal,
+        .ui-icon-indicator--normal,
+        .ui-icon-indicator-in-progress,
+        .ui-icon-indicator--in-progress,
+        .ui-icon-indicator-incomplete,
+        .ui-icon-indicator--incomplete,
+        .ui-icon-indicator-informative,
+        .ui-icon-indicator--informative,
+        .ui-icon-indicator-not-started,
+        .ui-icon-indicator--not-started,
+        .ui-icon-indicator-pending,
+        .ui-icon-indicator--pending,
+        .ui-icon-indicator-unknown,
+        .ui-icon-indicator--unknown {
+            color: CanvasText;
+        }
     }
 }

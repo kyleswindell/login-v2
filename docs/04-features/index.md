@@ -20,6 +20,7 @@ Feature behavior only. Architecture structure, operational runbooks, and impleme
 - [Platform Workspace And Documentation Vault](workspace/platform-workspace-and-documentation-vault.md)
 - [Dashboard](dashboard/dashboard.md)
 - [Account Management And Settings](account/account-management-and-settings.md)
+- [Security Requirements Checklist](security/security-requirements-checklist.md)
 
 ## Drafted Contracts
 
@@ -38,6 +39,7 @@ Feature behavior only. Architecture structure, operational runbooks, and impleme
 - `dashboard/`
 - `workspace/`
 - `account/`
+- `security/`
 - `calendar/`
 
 ## Related

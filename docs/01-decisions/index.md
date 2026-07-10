@@ -1,41 +1,148 @@
+<!--
+DOC-META
+title: Decisions Index
+doc_type: index
+status: active
+owner: docs
+canonical: true
+canonical_path: docs/01-decisions/index.md
+parent: docs/00-start-here.md
+template: docs/09-reference/templates/docs/_index.md
+summary: Routes proposed, accepted, deprecated, superseded, and rejected elevated decision records and reserves repository-wide ADR identifiers.
+-->
+
 # Decisions Index
 
-Use this branch for canonical architecture and product decision records.
+Parent: [Start Here](../00-start-here.md)
 
-## Purpose
+## 1. Purpose
 
-Canonical hub for ADRs and elevated decision records that need durable rationale, explicit status, and stable linking across the docs system.
+This branch owns elevated decision records that need:
 
-## Scope
+- durable rationale
+- explicit proposal and acceptance status
+- stable identifiers
+- consequences
+- affected-owner links
+- deprecation or supersession history
 
-This branch owns:
+Decision records explain why.
 
-- architecture decision records
-- product decision records that materially affect system behavior, ownership, or delivery direction
-- supersession history for prior accepted decisions
+Canonical standards, architecture, features, flows, database documents, and runbooks explain what is true now.
 
-This branch does not own:
+## 2. Scope
 
-- current implementation details that belong in canonical architecture, feature, database, or flow docs
-- phase sequencing or batch intent that belongs in `07-planning/`
-- operational procedures that belong in `10-runbooks/`
-- support notes or research that belong in `09-reference/`
+Use this branch for decisions that are materially:
 
-## Usage Rules
+- cross-cutting
+- long-lived
+- difficult to reverse
+- superseding
+- security, privacy, or data-governance significant
+- operationally significant
+- important enough to require explicit acceptance history
 
-- Use this branch when a decision needs explicit status, rationale, consequences, and durable cross-linking.
-- Keep decisions in canonical owner notes by default; elevate them here only when they are cross-cutting, durable, superseding, or need explicit ADR lifecycle state.
-- Keep the current-state description in the canonical owner doc, and link to the ADR for the decision rationale.
-- Do not create duplicate decision summaries in multiple branches; link to the decision record instead.
-- Use the standard ADR template for new records:
-  - [ADR Template](../02-standards/documentation/Templates/ADR%20Template.md)
+Do not use this branch for:
 
-## Current Records
+- normal local implementation choices
+- current implementation details
+- planning sequence
+- issue acceptance criteria
+- operator procedures
+- research notes
+- active delivery status
 
-- No active decision records published yet.
+## 3. Governing Standard And Template
 
-## Related
+- [Decision Record Standards](../02-standards/documentation/Decision%20Record%20Standards.md)
+- [Document Type Standards](../02-standards/documentation/Document%20Type%20Standards.md)
+- [Decision Template](../09-reference/templates/docs/_decision.md)
 
-- [00-start-here](../00-start-here.md)
-- [How To Write Docs](../02-standards/documentation/How%20To%20Write%20Docs.md)
-- [Doc Governance](../02-standards/documentation/Doc%20Governance.md)
+The decision template replaces the legacy ADR template formerly stored under `docs/02-standards/documentation/Templates/`.
+
+## 4. Identifier Registry
+
+Use repository-wide four-digit identifiers.
+
+Historical archived records already reserve:
+
+| Identifier | Historical Record |
+| --- | --- |
+| `ADR-0001` | Documentation System |
+| `ADR-0002` | Block Based Website Builder Direction |
+| `ADR-0003` | App 2.0 Platform Foundation |
+| `ADR-0004` | Shared Core Instance And Panel Boundary Direction |
+
+Next available identifier:
+
+- `ADR-0005`
+
+Before assigning it, search active and archived decision paths again to confirm no newer record exists.
+
+Never reuse or renumber a decision identifier.
+
+## 5. Proposed Decisions
+
+No active proposed decision records are currently published.
+
+Add proposed records here while they await authorized review.
+
+## 6. Accepted Decisions
+
+No active accepted decision records are currently published in this branch.
+
+Historical archived records must be reviewed before any are promoted back into the active branch.
+
+## 7. Deprecated Decisions
+
+No active deprecated decision records are currently published.
+
+## 8. Superseded Decisions
+
+No active superseded decision records are currently published.
+
+## 9. Rejected Decisions
+
+No retained rejected decision records are currently published.
+
+Retain rejected records only when their rationale prevents repeated reconsideration or clarifies the accepted direction.
+
+## 10. Decision Workflow
+
+1. Confirm the elevation gate.
+2. Reserve the next unused identifier.
+3. Create the record as Proposed.
+4. Link the owning issue, planning document, and affected canonical owners.
+5. Obtain required human and specialist review.
+6. Record acceptance or rejection authority.
+7. Update canonical current-state documents.
+8. Update planning and implementation issues.
+9. Update this index.
+10. Maintain deprecation and supersession links over time.
+
+Agents may draft Proposed records.
+
+Agents must not mark a record Accepted without explicit authorized approval.
+
+## 11. Historical Decision Review
+
+Archived pre-migration decisions are historical and not automatically active.
+
+Before promoting one:
+
+- review its current relevance
+- review terminology
+- verify the decision still applies
+- update affected canonical owners
+- preserve its identifier
+- record whether it remains accepted, is deprecated, or is superseded
+
+Do not copy an archived decision into the active branch without lifecycle review.
+
+## 12. Related
+
+- [Start Here](../00-start-here.md)
+- [Planning Index](../07-planning/index.md)
+- [Architecture Index](../03-architecture/index.md)
+- [Documentation Standards Index](../02-standards/documentation/index.md)
+- [Decision Record Standards](../02-standards/documentation/Decision%20Record%20Standards.md)

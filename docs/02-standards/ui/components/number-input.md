@@ -6,15 +6,15 @@ status: implemented-pending-correction
 system_maturity: partial
 category: inputs
 priority: tier-b-common-reusable-component
-ui_reference_route: /platform/ui-reference/components/number-input
+rendered_evidence_route: null
 canonical_doc: docs/02-standards/ui/components/number-input.md
-source_owner: /platform/ui-reference/components/number-input
+source_owner: not installed
 blade_api: []
 javascript_api: []
 data_attributes: []
 source_files:
   - resources/css/app.css
-  - resources/views/platform/ui-reference/components/number-input.blade.php
+  - not installed
 foundation_elements:
   - color
   - spacing
@@ -72,10 +72,10 @@ carbon_reference:
 - [11. Content contract](#11-content-contract)
 - [12. Prohibited usage](#12-prohibited-usage)
 - [13. Deferred or gated capabilities](#13-deferred-or-gated-capabilities)
-- [14. Implementation and UI Reference Checklist](#14-implementation-and-ui-reference-checklist)
+- [14. Implementation and Rendered Evidence Checklist](#14-implementation-and-ui-reference-checklist)
   - [14.1. Implementation checklist](#141-implementation-checklist)
-  - [14.2. UI Reference proof checklist](#142-ui-reference-proof-checklist)
-- [15. UI Reference requirements](#15-ui-reference-requirements)
+  - [14.2. rendered evidence proof checklist](#142-ui-reference-proof-checklist)
+- [15. Rendered evidence requirements](#15-ui-reference-requirements)
   - [15.1. Required Live examples internal sections:](#151-required-live-examples-internal-sections)
 - [16. Testing and acceptance criteria](#16-testing-and-acceptance-criteria)
   - [16.1. Suggested automated assertions:](#161-suggested-automated-assertions)
@@ -86,7 +86,7 @@ carbon_reference:
 
 Number input captures bounded numeric values with native numeric entry, validation states, helper text, and optional native step behavior.
 
-Canonical API owner: `/platform/ui-reference/components/number-input`. Use this Component API instead of creating local markup, styling, or behavior for the same UI role.
+Canonical API owner: `not installed`. Use this Component API instead of creating local markup, styling, or behavior for the same UI role.
 
 Number input is the installed Login App 2.0 numeric field API for values such as counts, limits, quantities, ordering weights, percentages, and other small-range numeric settings. It owns numeric field semantics, min/max/step constraints, label/helper/error/warning structure, disabled and read-only states, validation icon treatment, field density, token-backed focus/hover/validation states, and native keyboard increment/decrement behavior. It does not own form layout, validation orchestration, server-side rules, sliders, currency formatting, unit conversion, range selection, table filtering composition, or custom JavaScript steppers.
 
@@ -101,7 +101,7 @@ Number input is the installed Login App 2.0 numeric field API for values such as
 - Use app-owned validation icons where error or warning states are shown.
 - Keep custom increment/decrement button controls gated until a documented JavaScript/controller contract exists.
 - Consume Foundation Element APIs for color, spacing, typography, themes, and icons.
-- Prove constraints, states, sizing/density, validation, accessibility, and implementation behavior on the UI Reference page.
+- Prove constraints, states, sizing/density, validation, accessibility, and implementation behavior on the rendered evidence page.
 
 ### 1.2. Non-owned responsibilities:
 
@@ -114,7 +114,7 @@ Number input is the installed Login App 2.0 numeric field API for values such as
 - Inline submit/save pending behavior. Use Button or Inline loading.
 - Custom visible plus/minus segmented controls. Gate through this Component standard before production use.
 
-Carbon alignment note: Carbon treats number input as a numeric field with add/subtract controls for small adjustments, recommends helper text for min/max/step constraints, distinguishes default and fluid styles, documents small/medium/large sizes, and requires error/warning messages and icons to be conveyed programmatically. Login App maps those principles to native number input semantics, app-owned `ui-*` classes, server-validation handoff, and UI Reference proof rather than adopting Carbon implementation classes directly.
+Carbon alignment note: Carbon treats number input as a numeric field with add/subtract controls for small adjustments, recommends helper text for min/max/step constraints, distinguishes default and fluid styles, documents small/medium/large sizes, and requires error/warning messages and icons to be conveyed programmatically. Login App maps those principles to native number input semantics, app-owned `ui-*` classes, server-validation handoff, and rendered evidence proof rather than adopting Carbon implementation classes directly.
 
 ## 2. Status and ownership
 
@@ -126,19 +126,19 @@ Carbon alignment note: Carbon treats number input as a numeric field with add/su
 | Component slug               | number-input                                                                                       |
 | Category                     | Inputs                                                                                             |
 | Priority                     | Tier B - Common reusable component                                                                 |
-| UI Reference route           | `/platform/ui-reference/components/number-input`                                                   |
+| Rendered evidence route           | `not installed`                                                   |
 | Canonical doc                | `docs/02-standards/ui/components/number-input.md`                                                  |
-| Source owner                 | `/platform/ui-reference/components/number-input`                                                   |
+| Source owner                 | `not installed`                                                   |
 | Blade API                    | No dedicated public Blade wrapper is approved yet                                                  |
 | JavaScript API               | None approved for baseline number input behavior                                                   |
 | Data attributes              | None approved                                                                                      |
 | Props/options                | No Blade props; options are represented by native attributes and documented classes                |
-| Source files                 | `resources/css/app.css`; `resources/views/platform/ui-reference/components/number-input.blade.php` |
+| Source files                 | `resources/css/app.css`; `not installed` |
 | CSS namespace                | App-owned `ui-number-input*` and shared `ui-field*` classes                                        |
 | Foundation Elements consumed | Color, Spacing, Typography, Themes, Icons                                                          |
 | Carbon benchmark             | Carbon Number input usage, style, and accessibility guidance                                       |
 
-`Approved API` means the numeric field treatment and UI Reference route exist, but the canonical documentation, rendered examples, and regression tests must be corrected to replace placeholder guidance with the installed class-and-native-input API.
+`Approved API` means the numeric field treatment and Rendered evidence route exist, but the canonical documentation, rendered examples, and regression tests must be corrected to replace placeholder guidance with the installed class-and-native-input API.
 
 ## 3. Installed standard
 
@@ -174,19 +174,19 @@ Use Number input when the user needs to enter a numeric value and the value can 
 | Bounded number input                 | Implemented                               | Numeric field with `min`, `max`, and helper text that explains the accepted range.                              |
 | Stepped number input                 | Implemented through native input behavior | Numeric field with `step` and native keyboard/browser increment behavior.                                       |
 | Compact number input                 | Implemented / required proof              | Dense field for complex forms, tables, and constrained layouts.                                                 |
-| Fluid number input                   | Approved API / required proof             | Larger contained field treatment when the UI Reference confirms the installed class behavior.                   |
+| Fluid number input                   | Approved API / required proof             | Larger contained field treatment when the rendered evidence confirms the installed class behavior.                   |
 | Error number input                   | Implemented                               | Invalid field with error icon, error text, and `aria-invalid="true"`.                                           |
 | Warning number input                 | Implemented                               | Exception/attention state with warning icon and warning text; not necessarily invalid.                          |
 | Disabled number input                | Implemented                               | Native disabled field unavailable to users and omitted from submission.                                         |
 | Read-only number input               | Implemented                               | Native read-only field visible to users and still submitted with the form.                                      |
 | Loading/skeleton number input        | Not owned by Number input                 | Use Loading when a numeric field value has not loaded.                                                          |
-| Custom plus/minus segmented controls | Gated                                     | Requires documented source implementation, JavaScript behavior, accessibility proof, and UI Reference examples. |
+| Custom plus/minus segmented controls | Gated                                     | Requires documented source implementation, JavaScript behavior, accessibility proof, and rendered evidence examples. |
 
 ## 4. Public API
 
 ### 4.1. API status
 
-The current public API is native HTML plus app-owned CSS classes. A dedicated Blade component such as `x-ui.number-input` is reserved for a future correction pass and must not be used in production until installed, documented, rendered in UI Reference, and tested.
+The current public API is native HTML plus app-owned CSS classes. A dedicated Blade component such as `x-ui.number-input` is reserved for a future correction pass and must not be used in production until installed, documented, rendered in rendered evidence, and tested.
 
 | API surface           | Installed value                                                                                    |
 | --------------------- | -------------------------------------------------------------------------------------------------- |
@@ -196,7 +196,7 @@ The current public API is native HTML plus app-owned CSS classes. A dedicated Bl
 | Props/options         | No Blade props; use native input attributes and documented classes                                 |
 | Root semantic element | Native `<input type="number">` inside an app-owned field wrapper                                   |
 | CSS namespace         | `ui-field*` and `ui-number-input*`                                                                 |
-| Source files          | `resources/css/app.css`; `resources/views/platform/ui-reference/components/number-input.blade.php` |
+| Source files          | `resources/css/app.css`; `not installed` |
 
 Feature views may use canonical number-input markup directly when a Pattern has not wrapped it. Do not create local field partials, custom steppers, or helper classes. If the same numeric field composition is repeated across features, move it into the owning Pattern or install a public Blade wrapper through the gate in this standard.
 
@@ -397,11 +397,11 @@ Use disabled when the value should not be submitted or read as an available fiel
 | `ui-number-input--md`                   | Size                    | Implemented / required proof              | Default field size.                                                             |
 | `ui-number-input--lg`                   | Size                    | Implemented / required proof              | Larger field size for simple forms or standalone fields.                        |
 | `ui-number-input--compact`              | Density modifier        | Implemented / required proof              | Dense layout alias if implemented by the CSS API.                               |
-| `ui-number-input--fluid`                | Style modifier          | Approved API / required proof             | Fluid/contained style if rendered by the UI Reference page.                     |
+| `ui-number-input--fluid`                | Style modifier          | Approved API / required proof             | Fluid/contained style if rendered by the rendered evidence page.                     |
 | `ui-number-input--readonly`             | State modifier          | Implemented                               | Read-only visual state.                                                         |
 | `ui-number-input--disabled`             | State modifier          | Optional class, native attribute required | Visual hook only when native `disabled` is present.                             |
 
-Feature views must not create additional `ui-number-input-*`, `number-input-*`, `input-number-*`, or local field classes. New classes require source implementation, this standard update, UI Reference proof, and tests.
+Feature views must not create additional `ui-number-input-*`, `number-input-*`, `input-number-*`, or local field classes. New classes require source implementation, this standard update, rendered evidence proof, and tests.
 
 ### 4.9. Reserved future Blade contract
 
@@ -409,7 +409,7 @@ The following names are reserved for a future correction pass. They are not prod
 
 | Reserved API              | Current status | Gate                                                                                                                                                     |
 | ------------------------- | -------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `x-ui.number-input`       | Deferred       | Requires source file, props, slots, native attribute passthrough, validation contract, UI Reference examples, and tests.                                 |
+| `x-ui.number-input`       | Deferred       | Requires source file, props, slots, native attribute passthrough, validation contract, rendered evidence examples, and tests.                                 |
 | `x-ui.number-stepper`     | Gated          | Requires custom increment/decrement controls, JavaScript or form-safe behavior, keyboard support, accessible names, min/max/step enforcement, and tests. |
 | `x-ui.number-input-group` | Deferred       | Requires unit prefix/suffix or paired numeric fields, labeling rules, responsive behavior, and Forms Pattern approval.                                   |
 
@@ -420,7 +420,7 @@ Do not create feature-local Blade components with these names.
 | Name                                       | Type               | Status                       | API                                                          | Notes                                                                                      |
 | ------------------------------------------ | ------------------ | ---------------------------- | ------------------------------------------------------------ | ------------------------------------------------------------------------------------------ |
 | Default                                    | Style              | Implemented                  | `ui-number-input`                                            | Label outside/above the numeric field.                                                     |
-| Fluid                                      | Style              | Approved API                 | `ui-number-input--fluid`                                     | Larger contained treatment; use only where UI Reference proves installed behavior.         |
+| Fluid                                      | Style              | Approved API                 | `ui-number-input--fluid`                                     | Larger contained treatment; use only where rendered evidence proves installed behavior.         |
 | Small                                      | Size               | Implemented / required proof | `ui-number-input--sm`                                        | Long, dense, or constrained forms.                                                         |
 | Medium                                     | Size               | Implemented / required proof | `ui-number-input--md`                                        | Default productive size.                                                                   |
 | Large                                      | Size               | Implemented / required proof | `ui-number-input--lg`                                        | Simple forms or standalone numeric fields.                                                 |
@@ -648,18 +648,18 @@ Feature views must not create `form-control`, `form-group`, `input-group`, `numb
 | ---------------------------------------- | ------------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Public `x-ui.number-input` Blade wrapper | Deferred                  | Requires source file, props, slots, validation mapping, native attribute passthrough, examples, migration guidance, and tests.                                  |
 | Custom increment/decrement buttons       | Gated                     | Requires JavaScript/controller or server-safe behavior, accessible button names, keyboard support, min/max disabled behavior, repeat behavior rules, and tests. |
-| Prefix/suffix unit adornments            | Gated                     | Requires field adornment API, label/helper rules, screen-reader behavior, responsive proof, and UI Reference examples.                                          |
+| Prefix/suffix unit adornments            | Gated                     | Requires field adornment API, label/helper rules, screen-reader behavior, responsive proof, and rendered evidence examples.                                          |
 | Currency/number formatting               | Not owned by Number input | Requires dedicated formatted field API with locale, precision, parsing, masking, validation, and server-normalization rules.                                    |
 | AI presence                              | Gated                     | Requires AI label, explainability popover, revert behavior, and accessibility proof before production use.                                                      |
 | Loading/skeleton state                   | Not owned by Number input | Use Loading or parent Pattern; do not add a `loading` prop to Number input without a correction pass.                                                           |
 | Client-side validation controller        | Deferred                  | Requires documented data attributes, server fallback, timing rules, assistive technology behavior, and tests.                                                   |
 | Paired min/max range fields              | Pattern-owned / gated     | Requires Forms Pattern or Filter Pattern ownership, paired-label semantics, validation summary behavior, and responsive proof.                                  |
-| Additional sizes                         | Not allowed               | Requires Spacing, Typography, UI Reference, and regression-test updates.                                                                                        |
-| Custom validation colors/icons           | Not allowed               | Requires Color and Icons Element updates plus UI Reference proof.                                                                                               |
+| Additional sizes                         | Not allowed               | Requires Spacing, Typography, rendered evidence, and regression-test updates.                                                                                        |
+| Custom validation colors/icons           | Not allowed               | Requires Color and Icons Element updates plus rendered evidence proof.                                                                                               |
 
-Future extensions require an updated Component standard and UI Reference proof before production use.
+Future extensions require an updated Component standard and rendered evidence proof before production use.
 
-## 14. Implementation and UI Reference Checklist
+## 14. Implementation and Rendered Evidence Checklist
 ### 14.1. Implementation checklist
 | Requirement                | Standard expectation                                                                                                                               |
 | -------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------- |
@@ -668,9 +668,9 @@ Future extensions require an updated Component standard and UI Reference proof b
 | States                     | Default, hover, focus-visible, active/pressed, disabled, loading, validation, selected, empty, or not-applicable states are defined as relevant.   |
 | Accessibility/content      | Keyboard, focus, naming, ARIA, contrast, reduced-motion, label, helper, error, and copy requirements are defined.                                  |
 | Element consumption        | Required Color, Spacing, Typography, Icons, Motion, Themes, and 2x Grid dependencies are named.                                                    |
-| Tests                      | Source/API assertions and UI Reference route assertions block generic fallback content.                                                            |
+| Tests                      | Source/API assertions and Rendered evidence route assertions block generic fallback content.                                                            |
 
-### 14.2. UI Reference proof checklist
+### 14.2. rendered evidence proof checklist
 | Requirement               | Visual proof expectation                                                                              |
 | ------------------------- | ----------------------------------------------------------------------------------------------------- |
 | Live examples             | The page renders production examples through the documented API or explicit native/class contract.    |
@@ -679,9 +679,9 @@ Future extensions require an updated Component standard and UI Reference proof b
 | Developer implementation  | Real canonical calls and token-backed code snippets appear instead of placeholder comments.           |
 | Related APIs              | Nearby Components, owning Patterns, consumed Elements, source files, and canonical docs are linked.   |
 | Manual review             | The page provides enough rendered proof for visual review of behavior, layout, and state correctness. |
-## 15. UI Reference requirements
+## 15. Rendered evidence requirements
 
-The UI Reference page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
+The rendered evidence page must render the approved five-card scaffold: Purpose, Use cases, Component contract, Live examples, and Related components and patterns.
 
 The Number input page is a field reference page. The Live examples card should use grouped examples, state matrices, constraint demonstrations, and implementation examples rather than a single placeholder tab.
 
@@ -710,7 +710,7 @@ The page must not display generic fallback/reference sections or placeholder dev
 
 ## 16. Testing and acceptance criteria
 
-- `/platform/ui-reference/components/number-input` returns 200 for authorized users.
+- `not installed` returns 200 for authorized users.
 - The page shows the installed API, states, variants/options, prohibited usage, deferred gates, and Foundation Elements consumed.
 - Implemented APIs render production examples; deferred APIs render trigger conditions instead of fake controls.
 - The Purpose, Use cases, Component contract, Live examples, and Related components and patterns cards render in that top-level order.
@@ -731,7 +731,7 @@ The page must not display generic fallback/reference sections or placeholder dev
 ### 16.1. Suggested automated assertions:
 
 ```php
-$response = $this->actingAs($admin)->get('/platform/ui-reference/components/number-input');
+$response = $this->actingAs($admin)->get('not installed');
 
 $response->assertOk();
 $response->assertSee('Number input');
@@ -773,23 +773,23 @@ $response->assertDontSee('input-group');
 
 | API                        | Route                                                                  |
 | -------------------------- | ---------------------------------------------------------------------- |
-| Components overview        | `/platform/ui-reference/components`                                    |
-| Text input                 | `/platform/ui-reference/components/text-input`                         |
-| Select                     | `/platform/ui-reference/components/select`                             |
-| Radio button               | `/platform/ui-reference/components/radio-button`                       |
-| Checkbox                   | `/platform/ui-reference/components/checkbox`                           |
-| Button                     | `/platform/ui-reference/components/button`                             |
-| Inline loading             | `/platform/ui-reference/components/inline-loading`                     |
-| Loading                    | `/platform/ui-reference/components/loading`                            |
-| Notification               | `/platform/ui-reference/components/notification`                       |
-| Slider                     | `/platform/ui-reference/components/slider`                             |
-| Forms pattern              | `/platform/ui-reference/patterns/forms`                                |
-| Tables Pattern             | `/platform/ui-reference/patterns/tables`                               |
-| Color element              | `/platform/ui-reference/elements/color`                                |
-| Spacing element            | `/platform/ui-reference/elements/spacing`                              |
-| Typography element         | `/platform/ui-reference/elements/typography`                           |
-| Themes element             | `/platform/ui-reference/elements/themes`                               |
-| Icons element              | `/platform/ui-reference/elements/icons`                                |
+| Components overview        | `not installed`                                    |
+| Text input                 | `not installed`                         |
+| Select                     | `not installed`                             |
+| Radio button               | `not installed`                       |
+| Checkbox                   | `not installed`                           |
+| Button                     | `not installed`                             |
+| Inline loading             | `not installed`                     |
+| Loading                    | `not installed`                            |
+| Notification               | `not installed`                       |
+| Slider                     | `not installed`                             |
+| Forms pattern              | `not installed`                                |
+| Tables Pattern             | `not installed`                               |
+| Color element              | `not installed`                                |
+| Spacing element            | `not installed`                              |
+| Typography element         | `not installed`                           |
+| Themes element             | `not installed`                               |
+| Icons element              | `not installed`                                |
 | Canonical number input doc | `/platform/docs?path=02-standards%2Fui%2Fcomponents%2Fnumber-input.md` |
 | Carbon number input usage  | `https://carbondesignsystem.com/components/number-input/usage/`        |
 
@@ -799,4 +799,4 @@ $response->assertDontSee('input-group');
 - [Component Implementation Checklist](checklist.md)
 - [Foundation Elements Standards](../elements/index.md)
 - [Pattern Standards Index](../patterns/index.md)
-- Carbon Number input usage, style, and accessibility guidance inform numeric use cases, default/fluid distinction, small/medium/large sizing, min/max/step helper text, keyboard behavior, error/warning icons, and validation accessibility. Login App keeps its own native-input API, `ui-*` namespace, server-validation handoff, Foundation Element tokens, and UI Reference proof.
+- Carbon Number input usage, style, and accessibility guidance inform numeric use cases, default/fluid distinction, small/medium/large sizing, min/max/step helper text, keyboard behavior, error/warning icons, and validation accessibility. Login App keeps its own native-input API, `ui-*` namespace, server-validation handoff, Foundation Element tokens, and rendered evidence proof.

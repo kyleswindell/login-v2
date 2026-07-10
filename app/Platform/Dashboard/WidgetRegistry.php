@@ -1,5 +1,12 @@
 <?php
 
+/*
+|--------------------------------------------------------------------------
+| File: app/Platform/Dashboard/WidgetRegistry.php
+| Purpose: Stores registered dashboard widget classes and default layout slots.
+|--------------------------------------------------------------------------
+*/
+
 namespace App\Platform\Dashboard;
 
 use InvalidArgumentException;
@@ -60,17 +67,10 @@ class WidgetRegistry
      */
     public function defaults(): array
     {
-        return collect([
-            ['widget_key' => 'platform_stats', 'position' => 0],
-            ['widget_key' => 'error_health', 'position' => 1],
-            ['widget_key' => 'audit_activity', 'position' => 2],
-            ['widget_key' => 'notifications_summary', 'position' => 3],
-            ['widget_key' => 'development_tools', 'position' => 4],
-        ])->map(fn (array $slot): array => $this->normalizeSlot(
-            $slot['widget_key'],
-            $slot,
-            $slot['position'],
-        ))->all();
+        return collect($this->knownKeys())
+            ->values()
+            ->map(fn (string $key, int $position): array => $this->normalizeSlot($key, [], $position))
+            ->all();
     }
 
     /**
@@ -136,6 +136,13 @@ class WidgetRegistry
                 'default_visible' => true,
             ],
             'notifications_summary' => [
+                'column_span' => 'full',
+                'row_span' => 1,
+                'allowed_column_spans' => ['full', 6],
+                'allowed_row_spans' => [1, 2],
+                'default_visible' => true,
+            ],
+            'security_readiness' => [
                 'column_span' => 'full',
                 'row_span' => 1,
                 'allowed_column_spans' => ['full', 6],

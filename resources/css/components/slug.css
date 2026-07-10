@@ -1,0 +1,948 @@
+/* ==========================================================================
+   File: resources/css/components/slug.css
+   Purpose: Slug / AI label component styles.
+
+   Notes:
+   - Defines Slug and AI label selectors only.
+   - Do not define primitive palette tokens here.
+   - Do not define theme role tokens here.
+   - This component depends on Popover and Toggletip behavior.
+   - Keep integrations with Tile, Text Input, Text Area, and other components
+     separate until those decorator states are intentionally enabled.
+   ========================================================================== */
+
+@layer components {
+    /* ----------------------------------------------------------------------
+       Root
+       ---------------------------------------------------------------------- */
+
+    .ui-ai-label,
+    .ui-slug {
+        display: flex;
+    }
+
+    .ui-ai-label:has(> .ui-popover-open),
+    .ui-ai-label:has(> .ui-popover--open),
+    .ui-slug:has(> .ui-popover-open),
+    .ui-slug:has(> .ui-popover--open) {
+        z-index: 2;
+    }
+
+    /* ----------------------------------------------------------------------
+       Button base
+       ---------------------------------------------------------------------- */
+
+    .ui-ai-label-button,
+    .ui-ai-label__button,
+    .ui-slug-button,
+    .ui-slug__button {
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid var(--ui-border-inverse);
+        background: transparent;
+        color: var(--ui-text-primary);
+        font-weight: var(--ui-font-weight-semibold);
+        outline: none;
+        transition:
+            color var(--ui-duration-fast-01)
+                var(--ui-motion-entrance-productive),
+            border-color var(--ui-duration-fast-01)
+                var(--ui-motion-entrance-productive),
+            box-shadow var(--ui-duration-fast-01)
+                var(--ui-motion-entrance-productive),
+            background var(--ui-duration-fast-01)
+                var(--ui-motion-entrance-productive);
+    }
+
+    .ui-ai-label .ui-ai-label-button:focus,
+    .ui-ai-label .ui-ai-label__button:focus,
+    .ui-slug .ui-slug-button:focus,
+    .ui-slug .ui-slug__button:focus {
+        border-color: var(--ui-focus);
+        box-shadow: inset 0 0 0 1px var(--ui-focus);
+    }
+
+    .ui-ai-label .ui-ai-label-button:hover,
+    .ui-ai-label .ui-ai-label__button:hover,
+    .ui-slug .ui-slug-button:hover,
+    .ui-slug .ui-slug__button:hover {
+        background: var(--ui-border-inverse);
+        color: var(--ui-text-inverse);
+    }
+
+    .ui-ai-label .ui-ai-label-button:hover:active,
+    .ui-ai-label .ui-ai-label__button:hover:active,
+    .ui-slug .ui-slug-button:hover:active,
+    .ui-slug .ui-slug__button:hover:active {
+        background: var(--ui-border-inverse);
+        color: var(--ui-text-inverse);
+        box-shadow:
+            inset 0 0 0 1px var(--ui-focus),
+            inset 0 0 0 2px var(--ui-focus-inset);
+    }
+
+    .ui-ai-label-text,
+    .ui-ai-label__text,
+    .ui-slug-text,
+    .ui-slug__text {
+        position: relative;
+    }
+
+    /* ----------------------------------------------------------------------
+       Size variants
+       ---------------------------------------------------------------------- */
+
+    .ui-ai-label-button-mini,
+    .ui-ai-label__button--mini,
+    .ui-slug-button-mini,
+    .ui-slug__button--mini {
+        inline-size: 1rem;
+        block-size: 1rem;
+        font-size: 0.5625rem;
+        line-height: 0.75rem;
+    }
+
+    .ui-ai-label-button-2xs,
+    .ui-ai-label__button--2xs,
+    .ui-slug-button-2xs,
+    .ui-slug__button--2xs {
+        inline-size: 1.25rem;
+        block-size: 1.25rem;
+        font-size: 0.75rem;
+        line-height: 1rem;
+    }
+
+    .ui-ai-label-button-xs,
+    .ui-ai-label__button--xs,
+    .ui-slug-button-xs,
+    .ui-slug__button--xs {
+        inline-size: 1.5rem;
+        block-size: 1.5rem;
+        font-size: 0.75rem;
+        line-height: 1rem;
+    }
+
+    .ui-ai-label-button-sm,
+    .ui-ai-label__button--sm,
+    .ui-slug-button-sm,
+    .ui-slug__button--sm {
+        inline-size: 2rem;
+        block-size: 2rem;
+        font-size: 1rem;
+        line-height: 1.3125rem;
+    }
+
+    .ui-ai-label-button-md,
+    .ui-ai-label__button--md,
+    .ui-slug-button-md,
+    .ui-slug__button--md {
+        inline-size: 2.5rem;
+        block-size: 2.5rem;
+        font-size: 1rem;
+        line-height: 1.3125rem;
+    }
+
+    .ui-ai-label-button-lg,
+    .ui-ai-label__button--lg,
+    .ui-slug-button-lg,
+    .ui-slug__button--lg {
+        inline-size: 3rem;
+        block-size: 3rem;
+        font-size: 1rem;
+        line-height: 1.3125rem;
+    }
+
+    .ui-ai-label-button-xl,
+    .ui-ai-label__button--xl,
+    .ui-slug-button-xl,
+    .ui-slug__button--xl {
+        inline-size: 4rem;
+        block-size: 4rem;
+        font-size: 1.25rem;
+        line-height: 1.625rem;
+    }
+
+    .ui-ai-label-button-mini::after,
+    .ui-ai-label__button--mini::after,
+    .ui-ai-label-button-2xs::after,
+    .ui-ai-label__button--2xs::after,
+    .ui-slug-button-mini::after,
+    .ui-slug__button--mini::after,
+    .ui-slug-button-2xs::after,
+    .ui-slug__button--2xs::after {
+        position: absolute;
+        display: block;
+        inline-size: 1.5rem;
+        block-size: 1.5rem;
+        content: "";
+    }
+
+    .ui-ai-label .ui-ai-label-button-mini:hover:active,
+    .ui-ai-label .ui-ai-label__button--mini:hover:active,
+    .ui-ai-label .ui-ai-label-button-2xs:hover:active,
+    .ui-ai-label .ui-ai-label__button--2xs:hover:active,
+    .ui-slug .ui-slug-button-mini:hover:active,
+    .ui-slug .ui-slug__button--mini:hover:active,
+    .ui-slug .ui-slug-button-2xs:hover:active,
+    .ui-slug .ui-slug__button--2xs:hover:active {
+        box-shadow: inset 0 0 0 1px var(--ui-focus-inset);
+    }
+
+    /* ----------------------------------------------------------------------
+       Inline variant
+       ---------------------------------------------------------------------- */
+
+    .ui-ai-label .ui-ai-label-button-inline,
+    .ui-ai-label .ui-ai-label__button--inline,
+    .ui-slug .ui-slug-button-inline,
+    .ui-slug .ui-slug__button--inline {
+        inline-size: initial;
+        block-size: initial;
+        border: 1px solid transparent;
+        border-radius: 0.0625rem;
+        padding-inline: 0.25rem;
+        background: transparent;
+        color: var(--ui-text-primary);
+        font-size: 0.875rem;
+        line-height: initial;
+    }
+
+    .ui-ai-label-button-inline::before,
+    .ui-ai-label__button--inline::before,
+    .ui-slug-button-inline::before,
+    .ui-slug__button--inline::before {
+        display: none;
+    }
+
+    .ui-ai-label .ui-ai-label-button-inline:focus,
+    .ui-ai-label .ui-ai-label__button--inline:focus,
+    .ui-slug .ui-slug-button-inline:focus,
+    .ui-slug .ui-slug__button--inline:focus {
+        border-color: var(--ui-focus);
+        box-shadow: none;
+    }
+
+    .ui-ai-label .ui-ai-label-button-inline:hover,
+    .ui-ai-label .ui-ai-label-button-inline:hover:active,
+    .ui-ai-label .ui-ai-label__button--inline:hover,
+    .ui-ai-label .ui-ai-label__button--inline:hover:active,
+    .ui-slug .ui-slug-button-inline:hover,
+    .ui-slug .ui-slug-button-inline:hover:active,
+    .ui-slug .ui-slug__button--inline:hover,
+    .ui-slug .ui-slug__button--inline:hover:active {
+        border-color: var(--ui-icon-secondary);
+        background: transparent;
+        box-shadow: none;
+        color: var(--ui-text-secondary);
+    }
+
+    .ui-ai-label .ui-ai-label-button-inline:focus:hover,
+    .ui-ai-label .ui-ai-label__button--inline:focus:hover,
+    .ui-slug .ui-slug-button-inline:focus:hover,
+    .ui-slug .ui-slug__button--inline:focus:hover {
+        border-color: var(--ui-focus);
+    }
+
+    .ui-ai-label-button-inline .ui-ai-label-text,
+    .ui-ai-label__button--inline .ui-ai-label__text,
+    .ui-slug-button-inline .ui-slug-text,
+    .ui-slug__button--inline .ui-slug__text {
+        padding-inline-start: 0.5rem;
+    }
+
+    .ui-ai-label-button-inline.ui-ai-label-button-lg .ui-ai-label-text,
+    .ui-ai-label__button--inline.ui-ai-label__button--lg .ui-ai-label__text,
+    .ui-ai-label-button-inline.ui-ai-label-button-xl .ui-ai-label-text,
+    .ui-ai-label__button--inline.ui-ai-label__button--xl .ui-ai-label__text,
+    .ui-slug-button-inline.ui-slug-button-lg .ui-slug-text,
+    .ui-slug__button--inline.ui-slug__button--lg .ui-slug__text,
+    .ui-slug-button-inline.ui-slug-button-xl .ui-slug-text,
+    .ui-slug__button--inline.ui-slug__button--xl .ui-slug__text {
+        padding-inline-start: 0.75rem;
+    }
+
+    .ui-ai-label-button-inline .ui-ai-label-text::before,
+    .ui-ai-label__button--inline .ui-ai-label__text::before,
+    .ui-slug-button-inline .ui-slug-text::before,
+    .ui-slug__button--inline .ui-slug__text::before {
+        position: absolute;
+        inset-block-start: 50%;
+        inset-inline-start: 0;
+        display: inline-block;
+        inline-size: 0.25rem;
+        block-size: 0.25rem;
+        background: var(--ui-icon-primary);
+        content: "";
+        opacity: 1;
+        transform: translateY(-50%);
+        transition:
+            background var(--ui-duration-fast-01)
+                var(--ui-motion-entrance-productive),
+            box-shadow var(--ui-duration-fast-01)
+                var(--ui-motion-entrance-productive);
+    }
+
+    .ui-ai-label-button-lg .ui-ai-label-text::before,
+    .ui-ai-label__button--lg .ui-ai-label__text::before,
+    .ui-ai-label-button-xl .ui-ai-label-text::before,
+    .ui-ai-label__button--xl .ui-ai-label__text::before,
+    .ui-slug-button-lg .ui-slug-text::before,
+    .ui-slug__button--lg .ui-slug__text::before,
+    .ui-slug-button-xl .ui-slug-text::before,
+    .ui-slug__button--xl .ui-slug__text::before {
+        inline-size: 0.5rem;
+        block-size: 0.5rem;
+    }
+
+    .ui-ai-label .ui-ai-label-button-inline:hover .ui-ai-label-text::before,
+    .ui-ai-label .ui-ai-label__button--inline:hover .ui-ai-label__text::before,
+    .ui-slug .ui-slug-button-inline:hover .ui-slug-text::before,
+    .ui-slug .ui-slug__button--inline:hover .ui-slug__text::before {
+        background: var(--ui-icon-secondary);
+    }
+
+    .ui-ai-label-button-inline.ui-ai-label-button-mini,
+    .ui-ai-label__button--inline.ui-ai-label__button--mini,
+    .ui-ai-label-button-inline.ui-ai-label-button-2xs,
+    .ui-ai-label__button--inline.ui-ai-label__button--2xs,
+    .ui-ai-label-button-inline.ui-ai-label-button-xs,
+    .ui-ai-label__button--inline.ui-ai-label__button--xs,
+    .ui-ai-label-button-inline.ui-ai-label-button-sm,
+    .ui-ai-label__button--inline.ui-ai-label__button--sm,
+    .ui-slug-button-inline.ui-slug-button-mini,
+    .ui-slug__button--inline.ui-slug__button--mini,
+    .ui-slug-button-inline.ui-slug-button-2xs,
+    .ui-slug__button--inline.ui-slug__button--2xs,
+    .ui-slug-button-inline.ui-slug-button-xs,
+    .ui-slug__button--inline.ui-slug__button--xs,
+    .ui-slug-button-inline.ui-slug-button-sm,
+    .ui-slug__button--inline.ui-slug__button--sm,
+    .ui-ai-label-button-inline.ui-ai-label-button-mini
+        .ui-ai-label-additional-text,
+    .ui-ai-label__button--inline.ui-ai-label__button--mini
+        .ui-ai-label__additional-text,
+    .ui-ai-label-button-inline.ui-ai-label-button-2xs
+        .ui-ai-label-additional-text,
+    .ui-ai-label__button--inline.ui-ai-label__button--2xs
+        .ui-ai-label__additional-text,
+    .ui-ai-label-button-inline.ui-ai-label-button-xs
+        .ui-ai-label-additional-text,
+    .ui-ai-label__button--inline.ui-ai-label__button--xs
+        .ui-ai-label__additional-text,
+    .ui-ai-label-button-inline.ui-ai-label-button-sm
+        .ui-ai-label-additional-text,
+    .ui-ai-label__button--inline.ui-ai-label__button--sm
+        .ui-ai-label__additional-text,
+    .ui-slug-button-inline.ui-slug-button-mini .ui-slug-additional-text,
+    .ui-slug__button--inline.ui-slug__button--mini .ui-slug__additional-text,
+    .ui-slug-button-inline.ui-slug-button-2xs .ui-slug-additional-text,
+    .ui-slug__button--inline.ui-slug__button--2xs .ui-slug__additional-text,
+    .ui-slug-button-inline.ui-slug-button-xs .ui-slug-additional-text,
+    .ui-slug__button--inline.ui-slug__button--xs .ui-slug__additional-text,
+    .ui-slug-button-inline.ui-slug-button-sm .ui-slug-additional-text,
+    .ui-slug__button--inline.ui-slug__button--sm .ui-slug__additional-text {
+        font-size: 0.75rem;
+    }
+
+    .ui-ai-label-button-inline.ui-ai-label-button-lg,
+    .ui-ai-label__button--inline.ui-ai-label__button--lg,
+    .ui-ai-label-button-inline.ui-ai-label-button-xl,
+    .ui-ai-label__button--inline.ui-ai-label__button--xl,
+    .ui-slug-button-inline.ui-slug-button-lg,
+    .ui-slug__button--inline.ui-slug__button--lg,
+    .ui-slug-button-inline.ui-slug-button-xl,
+    .ui-slug__button--inline.ui-slug__button--xl {
+        font-size: 1rem;
+    }
+
+    /* ----------------------------------------------------------------------
+       Inline with content
+       ---------------------------------------------------------------------- */
+
+    .ui-ai-label .ui-ai-label-button-inline-with-content,
+    .ui-ai-label .ui-ai-label__button--inline-with-content,
+    .ui-slug .ui-slug-button-inline-with-content,
+    .ui-slug .ui-slug__button--inline-with-content {
+        border: 1px solid var(--ui-border-inverse);
+        padding-block: 0.125rem;
+        padding-inline: 0.5rem;
+    }
+
+    .ui-ai-label-button-inline-with-content .ui-ai-label-additional-text,
+    .ui-ai-label__button--inline-with-content .ui-ai-label__additional-text,
+    .ui-slug-button-inline-with-content .ui-slug-additional-text,
+    .ui-slug__button--inline-with-content .ui-slug__additional-text {
+        padding-inline-start: 0.25rem;
+        font-size: var(--ui-type-body-compact-02-font-size);
+        font-weight: var(--ui-type-body-compact-02-font-weight);
+        line-height: var(--ui-type-body-compact-02-line-height);
+        letter-spacing: var(--ui-type-body-compact-02-letter-spacing);
+    }
+
+    .ui-ai-label-button-inline.ui-ai-label-button-md
+        .ui-ai-label-additional-text,
+    .ui-ai-label__button--inline.ui-ai-label__button--md
+        .ui-ai-label__additional-text,
+    .ui-slug-button-inline.ui-slug-button-md .ui-slug-additional-text,
+    .ui-slug__button--inline.ui-slug__button--md .ui-slug__additional-text {
+        font-size: 0.875rem;
+    }
+
+    .ui-ai-label .ui-ai-label-button-inline-with-content:focus,
+    .ui-ai-label .ui-ai-label-button-inline-with-content:hover:focus,
+    .ui-ai-label .ui-ai-label__button--inline-with-content:focus,
+    .ui-ai-label .ui-ai-label__button--inline-with-content:hover:focus,
+    .ui-slug .ui-slug-button-inline-with-content:focus,
+    .ui-slug .ui-slug-button-inline-with-content:hover:focus,
+    .ui-slug .ui-slug__button--inline-with-content:focus,
+    .ui-slug .ui-slug__button--inline-with-content:hover:focus {
+        box-shadow: inset 0 0 0 1px var(--ui-focus);
+    }
+
+    /* ----------------------------------------------------------------------
+       Callout content
+       ---------------------------------------------------------------------- */
+
+    .ui-ai-label .ui-ai-label-content,
+    .ui-slug .ui-slug-content {
+        --ui-slug-inner-shadow: rgb(0 0 0 / 0.1);
+        --ui-slug-popover-shadow-outer-01: rgb(0 0 0 / 0.12);
+        --ui-slug-popover-shadow-outer-02: rgb(0 0 0 / 0.08);
+
+        min-inline-size: 17.5rem;
+        border: 1px solid transparent;
+        border-radius: 0.5rem;
+        background: linear-gradient(
+            135deg,
+            color-mix(in srgb, var(--ui-layer) 92%, var(--ui-background)),
+            var(--ui-layer)
+        );
+        box-shadow:
+            inset 0 -80px 70px -65px var(--ui-slug-inner-shadow),
+            -40px 44px 60px -24px var(--ui-slug-popover-shadow-outer-01),
+            -56px 64px 64px -24px var(--ui-slug-popover-shadow-outer-02);
+        color: var(--ui-text-primary);
+    }
+
+    .ui-ai-label .ui-toggletip-content,
+    .ui-slug .ui-toggletip-content {
+        --ui-button-focus-color: initial;
+        --ui-link-text-color: initial;
+        --ui-link-hover-text-color: initial;
+        --ui-link-visited-text-color: initial;
+        --ui-link-focus-text-color: initial;
+
+        padding-block: 1.5rem 5rem;
+        padding-inline: 1.5rem;
+    }
+
+    .ui-ai-label .ui-ai-label-content .ui-toggletip-content,
+    .ui-slug .ui-slug-content .ui-toggletip-content {
+        max-inline-size: 20rem;
+    }
+
+    .ui-ai-label .ui-ai-label-actions,
+    .ui-slug .ui-slug-actions {
+        position: absolute;
+        inset-block-end: 0;
+        inset-inline-end: 0;
+        display: flex;
+        justify-content: flex-end;
+        inline-size: 100%;
+        border-end-end-radius: 0.5rem;
+        border-end-start-radius: 0.5rem;
+        column-gap: 0;
+        background: rgb(0 0 0 / 0.01);
+        backdrop-filter: blur(85px);
+    }
+
+    .ui-ai-label .ui-ai-label-actions .ui-button:focus,
+    .ui-ai-label .ui-ai-label-actions .ui-btn:focus,
+    .ui-slug .ui-slug-actions .ui-button:focus,
+    .ui-slug .ui-slug-actions .ui-btn:focus {
+        border-color: var(--ui-focus);
+        box-shadow:
+            inset 0 0 0 1px var(--ui-focus),
+            inset 0 0 0 2px var(--ui-background);
+    }
+
+    .ui-ai-label .ui-ai-label-actions .ui-button-primary,
+    .ui-ai-label .ui-ai-label-actions .ui-btn-primary,
+    .ui-ai-label .ui-ai-label-actions .ui-btn--primary,
+    .ui-slug .ui-slug-actions .ui-button-primary,
+    .ui-slug .ui-slug-actions .ui-btn-primary,
+    .ui-slug .ui-slug-actions .ui-btn--primary {
+        order: 1;
+        border-end-end-radius: 0.4375rem;
+    }
+
+    /* ----------------------------------------------------------------------
+       Caret integration
+       ---------------------------------------------------------------------- */
+
+    .ui-ai-label > .ui-toggletip > .ui-popover > .ui-popover-caret,
+    .ui-ai-label
+        > .ui-toggletip.ui-popover-auto-align
+        > .ui-popover
+        > .ui-popover-content
+        > .ui-popover-caret,
+    .ui-ai-label
+        > .ui-toggletip.ui-popover--auto-align
+        > .ui-popover
+        > .ui-popover-content
+        > .ui-popover-caret,
+    .ui-slug > .ui-toggletip > .ui-popover > .ui-popover-caret,
+    .ui-slug
+        > .ui-toggletip.ui-popover-auto-align
+        > .ui-popover
+        > .ui-popover-content
+        > .ui-popover-caret,
+    .ui-slug
+        > .ui-toggletip.ui-popover--auto-align
+        > .ui-popover
+        > .ui-popover-content
+        > .ui-popover-caret {
+        background: transparent;
+        clip-path: none;
+    }
+
+    .ui-ai-label > .ui-toggletip > .ui-popover > .ui-popover-caret::before,
+    .ui-ai-label
+        > .ui-toggletip.ui-popover-auto-align
+        > .ui-popover
+        > .ui-popover-content
+        > .ui-popover-caret::before,
+    .ui-ai-label
+        > .ui-toggletip.ui-popover--auto-align
+        > .ui-popover
+        > .ui-popover-content
+        > .ui-popover-caret::before,
+    .ui-slug > .ui-toggletip > .ui-popover > .ui-popover-caret::before,
+    .ui-slug
+        > .ui-toggletip.ui-popover-auto-align
+        > .ui-popover
+        > .ui-popover-content
+        > .ui-popover-caret::before,
+    .ui-slug
+        > .ui-toggletip.ui-popover--auto-align
+        > .ui-popover
+        > .ui-popover-content
+        > .ui-popover-caret::before {
+        position: absolute;
+        display: block;
+        inline-size: 0.75rem;
+        block-size: 0.75rem;
+        border: 1px solid var(--ui-border-subtle);
+        background: var(--ui-background);
+        clip-path: polygon(98% 0, 0 0, -52% 150%) border-box;
+        content: "";
+        transform: rotate(45deg);
+    }
+
+    .ui-ai-label > .ui-toggletip > .ui-popover > .ui-popover-caret::after,
+    .ui-ai-label
+        > .ui-toggletip.ui-popover-auto-align
+        > .ui-popover
+        > .ui-popover-content
+        > .ui-popover-caret::after,
+    .ui-ai-label
+        > .ui-toggletip.ui-popover--auto-align
+        > .ui-popover
+        > .ui-popover-content
+        > .ui-popover-caret::after,
+    .ui-slug > .ui-toggletip > .ui-popover > .ui-popover-caret::after,
+    .ui-slug
+        > .ui-toggletip.ui-popover-auto-align
+        > .ui-popover
+        > .ui-popover-content
+        > .ui-popover-caret::after,
+    .ui-slug
+        > .ui-toggletip.ui-popover--auto-align
+        > .ui-popover
+        > .ui-popover-content
+        > .ui-popover-caret::after {
+        position: absolute;
+        display: block;
+        inline-size: 0.125rem;
+        block-size: 0.875rem;
+        background: var(--ui-background);
+        content: "";
+    }
+
+    /* Top placements */
+    .ui-ai-label
+        > .ui-toggletip:is(
+            .ui-popover-top,
+            .ui-popover--top,
+            .ui-popover-top-right,
+            .ui-popover--top-right,
+            .ui-popover-top-left,
+            .ui-popover--top-left,
+            .ui-popover-top-end,
+            .ui-popover--top-end,
+            .ui-popover-top-start,
+            .ui-popover--top-start
+        )
+        > .ui-popover
+        > .ui-popover-caret::before,
+    .ui-slug
+        > .ui-toggletip:is(
+            .ui-popover-top,
+            .ui-popover--top,
+            .ui-popover-top-right,
+            .ui-popover--top-right,
+            .ui-popover-top-left,
+            .ui-popover--top-left,
+            .ui-popover-top-end,
+            .ui-popover--top-end,
+            .ui-popover-top-start,
+            .ui-popover--top-start
+        )
+        > .ui-popover
+        > .ui-popover-caret::before {
+        inset-block-end: 0.0625rem;
+        transform: rotate(-135deg);
+    }
+
+    .ui-ai-label
+        > .ui-toggletip:is(
+            .ui-popover-top,
+            .ui-popover--top,
+            .ui-popover-top-right,
+            .ui-popover--top-right,
+            .ui-popover-top-left,
+            .ui-popover--top-left,
+            .ui-popover-top-end,
+            .ui-popover--top-end,
+            .ui-popover-top-start,
+            .ui-popover--top-start
+        )
+        > .ui-popover
+        > .ui-popover-caret::after,
+    .ui-slug
+        > .ui-toggletip:is(
+            .ui-popover-top,
+            .ui-popover--top,
+            .ui-popover-top-right,
+            .ui-popover--top-right,
+            .ui-popover-top-left,
+            .ui-popover--top-left,
+            .ui-popover-top-end,
+            .ui-popover--top-end,
+            .ui-popover-top-start,
+            .ui-popover--top-start
+        )
+        > .ui-popover
+        > .ui-popover-caret::after {
+        inset-block-start: -0.125rem;
+        inset-inline-start: -0.0625rem;
+        inline-size: 0.875rem;
+        block-size: 0.125rem;
+        border-end-end-radius: 50%;
+        border-end-start-radius: 50%;
+        background: var(--ui-background);
+    }
+
+    /* Right placements */
+    .ui-ai-label
+        > .ui-toggletip:is(
+            .ui-popover-right,
+            .ui-popover--right,
+            .ui-popover-right-bottom,
+            .ui-popover--right-bottom,
+            .ui-popover-right-top,
+            .ui-popover--right-top,
+            .ui-popover-right-start,
+            .ui-popover--right-start,
+            .ui-popover-right-end,
+            .ui-popover--right-end
+        )
+        > .ui-popover
+        > .ui-popover-caret::before,
+    .ui-slug
+        > .ui-toggletip:is(
+            .ui-popover-right,
+            .ui-popover--right,
+            .ui-popover-right-bottom,
+            .ui-popover--right-bottom,
+            .ui-popover-right-top,
+            .ui-popover--right-top,
+            .ui-popover-right-start,
+            .ui-popover--right-start,
+            .ui-popover-right-end,
+            .ui-popover--right-end
+        )
+        > .ui-popover
+        > .ui-popover-caret::before {
+        inset-inline-start: 0.0625rem;
+        transform: rotate(-45deg);
+    }
+
+    .ui-ai-label
+        > .ui-toggletip:is(
+            .ui-popover-right,
+            .ui-popover--right,
+            .ui-popover-right-bottom,
+            .ui-popover--right-bottom,
+            .ui-popover-right-top,
+            .ui-popover--right-top,
+            .ui-popover-right-start,
+            .ui-popover--right-start,
+            .ui-popover-right-end,
+            .ui-popover--right-end
+        )
+        > .ui-popover
+        > .ui-popover-caret::after,
+    .ui-slug
+        > .ui-toggletip:is(
+            .ui-popover-right,
+            .ui-popover--right,
+            .ui-popover-right-bottom,
+            .ui-popover--right-bottom,
+            .ui-popover-right-top,
+            .ui-popover--right-top,
+            .ui-popover-right-start,
+            .ui-popover--right-start,
+            .ui-popover-right-end,
+            .ui-popover--right-end
+        )
+        > .ui-popover
+        > .ui-popover-caret::after {
+        inset-block-start: -0.0625rem;
+        inset-inline-start: 0.375rem;
+        border-end-start-radius: 50%;
+        border-start-start-radius: 50%;
+    }
+
+    /* Bottom placements */
+    .ui-ai-label
+        > .ui-toggletip:is(
+            .ui-popover-bottom,
+            .ui-popover--bottom,
+            .ui-popover-bottom-left,
+            .ui-popover--bottom-left,
+            .ui-popover-bottom-right,
+            .ui-popover--bottom-right,
+            .ui-popover-bottom-start,
+            .ui-popover--bottom-start,
+            .ui-popover-bottom-end,
+            .ui-popover--bottom-end
+        )
+        > .ui-popover
+        > .ui-popover-caret::before,
+    .ui-slug
+        > .ui-toggletip:is(
+            .ui-popover-bottom,
+            .ui-popover--bottom,
+            .ui-popover-bottom-left,
+            .ui-popover--bottom-left,
+            .ui-popover-bottom-right,
+            .ui-popover--bottom-right,
+            .ui-popover-bottom-start,
+            .ui-popover--bottom-start,
+            .ui-popover-bottom-end,
+            .ui-popover--bottom-end
+        )
+        > .ui-popover
+        > .ui-popover-caret::before {
+        inset-block-start: 0.0625rem;
+        transform: rotate(45deg);
+    }
+
+    .ui-ai-label
+        > .ui-toggletip:is(
+            .ui-popover-bottom,
+            .ui-popover--bottom,
+            .ui-popover-bottom-left,
+            .ui-popover--bottom-left,
+            .ui-popover-bottom-right,
+            .ui-popover--bottom-right,
+            .ui-popover-bottom-start,
+            .ui-popover--bottom-start,
+            .ui-popover-bottom-end,
+            .ui-popover--bottom-end
+        )
+        > .ui-popover
+        > .ui-popover-caret::after,
+    .ui-slug
+        > .ui-toggletip:is(
+            .ui-popover-bottom,
+            .ui-popover--bottom,
+            .ui-popover-bottom-left,
+            .ui-popover--bottom-left,
+            .ui-popover-bottom-right,
+            .ui-popover--bottom-right,
+            .ui-popover-bottom-start,
+            .ui-popover--bottom-start,
+            .ui-popover-bottom-end,
+            .ui-popover--bottom-end
+        )
+        > .ui-popover
+        > .ui-popover-caret::after {
+        inset-block-end: -0.15625rem;
+        inset-inline-start: -0.0625rem;
+        inline-size: 0.875rem;
+        block-size: 0.125rem;
+        border-start-end-radius: 50%;
+        border-start-start-radius: 50%;
+    }
+
+    /* Left placements */
+    .ui-ai-label
+        > .ui-toggletip:is(
+            .ui-popover-left,
+            .ui-popover--left,
+            .ui-popover-left-bottom,
+            .ui-popover--left-bottom,
+            .ui-popover-left-top,
+            .ui-popover--left-top,
+            .ui-popover-left-start,
+            .ui-popover--left-start,
+            .ui-popover-left-end,
+            .ui-popover--left-end
+        )
+        > .ui-popover
+        > .ui-popover-caret::before,
+    .ui-slug
+        > .ui-toggletip:is(
+            .ui-popover-left,
+            .ui-popover--left,
+            .ui-popover-left-bottom,
+            .ui-popover--left-bottom,
+            .ui-popover-left-top,
+            .ui-popover--left-top,
+            .ui-popover-left-start,
+            .ui-popover--left-start,
+            .ui-popover-left-end,
+            .ui-popover--left-end
+        )
+        > .ui-popover
+        > .ui-popover-caret::before {
+        inset-inline-end: 0.0625rem;
+        transform: rotate(135deg);
+    }
+
+    .ui-ai-label
+        > .ui-toggletip:is(
+            .ui-popover-left,
+            .ui-popover--left,
+            .ui-popover-left-bottom,
+            .ui-popover--left-bottom,
+            .ui-popover-left-top,
+            .ui-popover--left-top,
+            .ui-popover-left-start,
+            .ui-popover--left-start,
+            .ui-popover-left-end,
+            .ui-popover--left-end
+        )
+        > .ui-popover
+        > .ui-popover-caret::after,
+    .ui-slug
+        > .ui-toggletip:is(
+            .ui-popover-left,
+            .ui-popover--left,
+            .ui-popover-left-bottom,
+            .ui-popover--left-bottom,
+            .ui-popover-left-top,
+            .ui-popover--left-top,
+            .ui-popover-left-start,
+            .ui-popover--left-start,
+            .ui-popover-left-end,
+            .ui-popover--left-end
+        )
+        > .ui-popover
+        > .ui-popover-caret::after {
+        inset-block-start: -0.0625rem;
+        inset-inline-start: -0.125rem;
+        border-end-end-radius: 50%;
+        border-start-end-radius: 50%;
+    }
+
+    /* ----------------------------------------------------------------------
+       Revert variant
+       ---------------------------------------------------------------------- */
+
+    .ui-ai-label-revert,
+    .ui-ai-label--revert,
+    .ui-slug-revert,
+    .ui-slug--revert {
+        transform: translate(var(--ui-spacing-03), -50%);
+    }
+
+    .ui-ai-label-revert .ui-button-icon-only,
+    .ui-ai-label-revert .ui-btn-icon-only,
+    .ui-ai-label-revert .ui-btn--icon-only,
+    .ui-ai-label--revert .ui-button-icon-only,
+    .ui-ai-label--revert .ui-btn-icon-only,
+    .ui-ai-label--revert .ui-btn--icon-only,
+    .ui-slug-revert .ui-button-icon-only,
+    .ui-slug-revert .ui-btn-icon-only,
+    .ui-slug-revert .ui-btn--icon-only,
+    .ui-slug--revert .ui-button-icon-only,
+    .ui-slug--revert .ui-btn-icon-only,
+    .ui-slug--revert .ui-btn--icon-only {
+        align-items: center;
+        padding-block-start: 0;
+    }
+
+    .ui-ai-label-revert .ui-button-icon-only svg,
+    .ui-ai-label-revert .ui-btn-icon-only svg,
+    .ui-ai-label-revert .ui-btn--icon-only svg,
+    .ui-ai-label--revert .ui-button-icon-only svg,
+    .ui-ai-label--revert .ui-btn-icon-only svg,
+    .ui-ai-label--revert .ui-btn--icon-only svg,
+    .ui-slug-revert .ui-button-icon-only svg,
+    .ui-slug-revert .ui-btn-icon-only svg,
+    .ui-slug-revert .ui-btn--icon-only svg,
+    .ui-slug--revert .ui-button-icon-only svg,
+    .ui-slug--revert .ui-btn-icon-only svg,
+    .ui-slug--revert .ui-btn--icon-only svg {
+        margin: 0;
+    }
+
+    /* ----------------------------------------------------------------------
+       Reduced motion
+       ---------------------------------------------------------------------- */
+
+    @media (prefers-reduced-motion: reduce) {
+        .ui-ai-label-button,
+        .ui-ai-label__button,
+        .ui-slug-button,
+        .ui-slug__button,
+        .ui-ai-label-button-inline .ui-ai-label-text::before,
+        .ui-ai-label__button--inline .ui-ai-label__text::before,
+        .ui-slug-button-inline .ui-slug-text::before,
+        .ui-slug__button--inline .ui-slug__text::before {
+            transition: none;
+        }
+    }
+
+    /* ----------------------------------------------------------------------
+       Forced colors
+       ---------------------------------------------------------------------- */
+
+    @media screen and (-ms-high-contrast: active), (forced-colors: active) {
+        .ui-ai-label .ui-ai-label-button:focus,
+        .ui-ai-label .ui-ai-label__button:focus,
+        .ui-slug .ui-slug-button:focus,
+        .ui-slug .ui-slug__button:focus {
+            border-color: Highlight;
+            box-shadow: inset 0 0 0 1px Highlight;
+        }
+
+        .ui-ai-label .ui-ai-label-button:hover,
+        .ui-ai-label .ui-ai-label__button:hover,
+        .ui-slug .ui-slug-button:hover,
+        .ui-slug .ui-slug__button:hover {
+            background: Highlight;
+            color: HighlightText;
+        }
+
+        .ui-ai-label-content,
+        .ui-slug-content {
+            border-color: CanvasText;
+        }
+    }
+}

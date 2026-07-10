@@ -29,11 +29,6 @@ echo "==> Resetting ${TARGET_BRANCH} to origin/${TARGET_BRANCH}"
 echo "==> Installing Composer dependencies"
 "${COMPOSER_BIN}" install --no-interaction --prefer-dist --optimize-autoloader
 
-if "${PHP_BIN}" artisan list --raw | grep -q '^filament:assets[[:space:]]'; then
-    echo "==> Publishing Filament assets"
-    "${PHP_BIN}" artisan filament:assets
-fi
-
 echo "==> Installing Node dependencies"
 if [[ -f package-lock.json ]]; then
     "${NPM_BIN}" ci

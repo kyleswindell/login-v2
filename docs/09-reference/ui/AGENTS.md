@@ -7,7 +7,7 @@ UI support material: audits, matrices, inventories, external references, and imp
 ## Read Order
 
 1. Read `index.md`.
-2. For current UI Reference route questions, open the route disposition or starter catalog matrix named by the task.
+2. For retired rendered-evidence route questions, open the route disposition or starter catalog matrix named by the task.
 3. For audit evidence, search within the audit file for the specific component, gap ID, or queue ID.
 
 ## Avoid

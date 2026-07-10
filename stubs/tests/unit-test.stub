@@ -1,0 +1,15 @@
+<?php
+
+declare(strict_types=1);
+
+namespace {{ namespace }};
+
+use PHPUnit\Framework\TestCase;
+
+final class {{ class }} extends TestCase
+{
+    public function test_expected_behavior(): void
+    {
+        self::markTestIncomplete('Define the isolated behavior and expected result.');
+    }
+}

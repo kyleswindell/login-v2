@@ -36,7 +36,7 @@ Accepted
 - Parent goal: [#17 — M0 Goal 01: Canonical vocabulary and ownership](https://github.com/kyleswindell/login-v2/issues/17)
 - Planning document: [M0 Repository Convergence Planning](../07-planning/00-overview/m0-repository-convergence-planning.md)
 - Planning matrix: [Core Service Build Plan Matrix](../07-planning/core-service-build-plan-matrix.md)
-- Pull request: pending
+- Pull request: [#36 — Accept Tenant, Instance, principal, Actor, and invocation vocabulary](https://github.com/kyleswindell/login-v2/pull/36)
 - Prior decisions:
   - [ADR-0005: Core, Modules, And UI Ownership Taxonomy](adr-0005-core-modules-ui-ownership-taxonomy.md)
 - Affected canonical owners:

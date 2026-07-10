@@ -90,7 +90,7 @@ For implementation work, start from the GitHub issue or the user-provided task.
 Before editing files:
 
 - Identify the issue number or task scope.
-- Identify the intended owner area: Core, Platform, Module, Docs, Ops, UI, or Tests.
+- Identify the intended owner area: Core, Module, UI, Docs, Ops, or Tests.
 - Identify the canonical docs that govern the change.
 - Identify the expected files or folders in scope.
 - Identify likely tests or verification commands.
@@ -104,70 +104,67 @@ Do not create broad “future work” issues unless requested. If a related issu
 
 ## Architecture Boundaries
 
-Use these ownership rules unless a canonical decision record changes them.
+Use [ADR-0005: Core, Modules, And UI Ownership Taxonomy](docs/01-decisions/adr-0005-core-modules-ui-ownership-taxonomy.md).
 
-### Core Capabilities
+### Core
 
-`app/Core/*` owns required platform, security, identity, authorization, data, audit, monitoring, notification, settings, and system capabilities.
+Core owns required base-application behavior, state, coordination, infrastructure, and contracts that must operate without optional Modules.
 
-Examples:
+Examples include:
 
-- `Auth`
-- `Identity`
-- `Access`
-- `DataGovernance`
-- `DataProtection`
-- `Security`
-- `Audit`
-- `Monitoring`
-- `Notifications`
-- `Settings`
-- `Preferences`
-- `Support`
-
-Core capabilities may expose routes, services, policies, events, migrations, tests, and admin/account surfaces when they own the underlying system responsibility.
-
-### Platform Surfaces
-
-`app/Platform/*` owns presentation and aggregation surfaces.
-
-Examples:
-
+- Auth
+- Identity
+- Access
+- DataGovernance
+- DataProtection
+- Security
+- Audit
+- Monitoring
+- Notifications
+- Settings
+- Preferences
 - Shell
 - Navigation
 - Dashboard
 - Setup
-- Docs
-- Surface/rendering aggregation
+- registries, Module lifecycle, and contribution discovery
 
-Platform code must not own business rules, authorization policy truth, audit truth, data protection truth, or module domain logic.
+Core may expose routes, services, policies, events, migrations, tests, account/admin surfaces, and presentation adapters when it owns the underlying responsibility.
 
-### Business Modules
+Current `app/Platform/*` paths are transitional physical locations, not a separate source-of-truth owner. Do not perform broad moves until Goal 03 accepts target topology and Goal 09 defines migration.
 
-`Modules/*` owns tenant/workspace business work areas.
+### Modules
 
-Examples:
+Modules own optional, cohesive feature sets that may be installed, enabled, assigned, updated, disabled, or omitted without breaking Core.
 
-- Customers
-- Inventory
-- Orders
-- Shipments
-- Reports
-- Projects
-- Support
-- Websites
+Every Module must be an independently versioned, installable, and distributable Composer package with a formal Module definition.
 
-Business modules must consume Core capabilities instead of redefining authentication, authorization, audit, notifications, settings, data protection, or security rules.
+Modules may require and extend other Modules only through explicit version constraints, declared dependencies, and public contracts. Modules must consume Core capabilities instead of redefining authentication, authorization, audit, notifications, settings, data protection, security, or other required base behavior.
 
-### Shared UI
+### UI
 
-- `resources/views/components/ui/*` owns UI primitives and baseline components.
-- `resources/views/components/patterns/*` owns reusable composition patterns.
-- `resources/views/components/shell/*` and layout components own frame/shell structure.
-- URL views should remain thin and compose ViewModels, page data, patterns, and UI primitives.
-- Registry-driven renderers belong under the owning Platform/Core surface, not inside generic UI primitives.
+UI owns the reusable interface system:
 
----
+- Elements
+- Components
+- Patterns
+- Layouts
+- design tokens and icons
+- reusable CSS and JavaScript controls
+- UI contracts, tests, references, and review evidence
+
+UI must not own route behavior, authorization decisions, database access, domain queries or mutations, Core policy, Module behavior, or Module discovery.
+
+A file under `resources/` is not automatically UI-owned. URL views remain owned by the Core area or Module whose behavior they present.
+
+### Dependency Direction
+
+- Core must operate without optional Modules.
+- Modules may depend on Core and UI.
+- Core presentation may depend on UI; Core business and system logic may not.
+- UI may not depend on Core or Module domain implementation.
+- Module-to-Module dependencies must be explicit, versioned, declared, and contract-based.
+- Every distinct responsibility has one primary owner.
 
 ## Implementation Rules
 

@@ -1,41 +1,93 @@
+<!--
+DOC-META
+title: Tenancy
+doc_type: architecture
+status: active
+owner: architecture
+canonical: true
+canonical_path: docs/03-architecture/tenancy.md
+parent: docs/03-architecture/index.md
+template: docs/09-reference/templates/docs/_doc.md
+summary: Defines exclusive one-to-one Tenant and Instance ownership and the logical isolation contract for Tenant-owned state.
+-->
+
 # Tenancy
 
-This document defines the canonical scope and intent for Tenancy.
+Parent: [Architecture Index](index.md)
 
-Status: Planned (not implemented)
+## 1. Model
 
-## Model
+Login 2.0 uses exclusive one-to-one Tenant and Instance ownership:
 
-The planned tenancy model uses a central platform database plus one isolated tenant database per tenant.
+```text
+One Tenant -> One Instance
+One Instance -> One Tenant
+```
 
-## Isolation Contract
+There is no multi-Tenant Instance in the current target model.
 
-- one tenant database per client
-- one PostgreSQL role per tenant
-- tenant runtime context booted from resolved tenant identity
-- tenant-owned application data kept in tenant-local databases
+## 2. Isolation Contract
 
-## Central Ownership
+Each Instance must isolate:
 
-The central platform database is intended to own platform control-plane metadata such as tenant identity, domains, provisioning state, and platform operations visibility.
+- User Accounts and User Identity records
+- authentication and MFA state
+- roles, permissions, memberships, and assignments
+- Module installation and activation state
+- configuration and setup state
+- business data
+- notifications
+- audit and operational history
+- queued, scheduled, webhook, API, and integration activity
 
-## Tenant Ownership
+Shared application code, deployment infrastructure, or database infrastructure must not create shared Tenant authority or mutable Tenant state.
 
-Each tenant database is intended to own tenant-local application data and tenant-local operational history.
+The final physical storage topology remains a later database and deployment decision. The logical isolation contract is mandatory regardless of topology.
 
-## Tenant Resolution Direction
+## 3. Tenant Resolution
 
-Tenant admin requests are expected to resolve by domain match in the platform registry, then initialize tenant database context before tenant routes execute.
+Tenant and Instance resolution must occur before Tenant-owned authentication, data access, Module evaluation, or Workspace assembly.
 
-Unknown or inactive tenant domains should fail closed.
+A resolver may use domain, hostname, registry metadata, or another accepted mechanism. Resolver values identify the Tenant and Instance but are not themselves the Tenant or Instance.
 
-Future tenant registry records must provide the `tenant_workspace` identity used by runtime context resolution. That workspace identity is the boundary for tenant-local users, roles, settings, module state, notifications, audit history, and business records.
+Unknown, inactive, suspended, or deactivated Tenant and Instance state must fail closed.
 
-The Parasolutions `internal_workspace` identity is not a tenant registry record.
+## 4. Workspace
 
-## Related
+Workspace is resolved for one authenticated User Account after Tenant and Instance resolution.
 
+Workspace is not a persistent Tenant scope, database boundary, or registry record.
+
+## 5. Internal Tenant
+
+The Internal Tenant follows the same isolation contract as client Tenants.
+
+Authorized Internal Tenant User Accounts may use a Global Administration Surface. That Surface does not collapse Internal Tenant data with client Tenant data.
+
+## 6. Cross-Instance Administration
+
+Global Administration or support operations must preserve:
+
+- Internal Tenant Actor Principal
+- Actor Machine and Network assurance when available
+- Actor Instance scope
+- target Tenant and Instance
+- explicit authorization
+- reason or support context when required
+- Action, Target, Result, and audit evidence
+- step-up authentication when required
+
+No cross-Instance operation may rely on implicit shared session state or unscoped queries.
+
+## 7. Lifecycle
+
+Tenant deactivation deactivates its Instance and Accounts and blocks ordinary runtime activity.
+
+Retention, legal hold, archival, export, erasure, and physical deletion are separate Data Governance and Data Protection decisions.
+
+## 8. Related
+
+- [ADR-0006](../01-decisions/adr-0006-tenant-instance-workspace-principal-and-invocation-vocabulary.md)
 - [System Overview](system-overview.md)
-- [Platform Boundary](platform-boundary.md)
-- [Workspace Identity Model](workspace-identity-model.md)
+- [Tenant, Instance, User Account, And Workspace Model](workspace-identity-model.md)
 - [Auth Architecture](auth.md)

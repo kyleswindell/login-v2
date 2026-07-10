@@ -75,7 +75,7 @@ Historical archived records already reserve:
 
 Next available identifier:
 
-- `ADR-0006`
+- `ADR-0007`
 
 Before assigning it, search active and archived decision paths again to confirm no newer record exists.
 
@@ -90,6 +90,8 @@ Add proposed records here while they await authorized review.
 ## 6. Accepted Decisions
 
 - [ADR-0005: Core, Modules, And UI Ownership Taxonomy](adr-0005-core-modules-ui-ownership-taxonomy.md) — Establishes Core, Modules, and UI as the three canonical source-of-truth ownership areas.
+- [ADR-0006: Tenant, Instance, Workspace, Principal, Actor, And Invocation Vocabulary](adr-0006-tenant-instance-workspace-principal-and-invocation-vocabulary.md) — Establishes Tenant and Instance isolation, User Account-specific Workspaces, Principal and assurance identity, Actor attribution, and Invocation Channel vocabulary.
+
 
 Historical archived records must be reviewed before any are promoted back into the active branch.
 

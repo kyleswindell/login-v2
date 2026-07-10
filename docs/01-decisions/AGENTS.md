@@ -66,9 +66,7 @@ Before assigning an ID:
 4. assign the next unused number
 5. serialize assignment when another writer may create a decision concurrently
 
-Historical identifiers `ADR-0001` through `ADR-0004` are already used in the archived pre-migration decision set.
-
-The next available identifier is therefore `ADR-0005` unless another decision is added first.
+Historical and active identifiers are reserved repository-wide. Read `index.md`, search active and archived decision paths, and assign the next unused identifier shown by the current registry.
 
 Never reuse or renumber an identifier.
 

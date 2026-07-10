@@ -8,102 +8,191 @@ canonical: true
 canonical_path: docs/02-standards/security/Tenant And Scope Isolation Standards.md
 parent: docs/02-standards/security/index.md
 template: docs/09-reference/templates/docs/_doc.md
-summary: Defines app-instance, tenant, workspace, customer, resource, queue, export, notification, and support-access isolation requirements.
+summary: Defines Tenant and Instance isolation, User Account scope, Workspace resolution, asynchronous execution, and Global Administration access requirements.
 -->
 
 # Tenant And Scope Isolation Standards
 
 Parent: [Security Standards Index](index.md)
 
-- [1. Purpose](#1-purpose)
-- [2. Explicit Context](#2-explicit-context)
-- [3. Object-Level Authorization](#3-object-level-authorization)
-- [4. Query Isolation](#4-query-isolation)
-- [5. Route Model Binding](#5-route-model-binding)
-- [6. Jobs, Events, And Commands](#6-jobs-events-and-commands)
-- [7. Exports And Downloads](#7-exports-and-downloads)
-- [8. Notifications And Action Links](#8-notifications-and-action-links)
-- [9. Support And Administrative Access](#9-support-and-administrative-access)
-- [10. Data Movement](#10-data-movement)
-- [11. Tests](#11-tests)
-- [12. Prohibited Practices](#12-prohibited-practices)
-- [13. Related](#13-related)
-
 ## 1. Purpose
 
-Prevent cross-instance, cross-tenant, cross-workspace, cross-customer, and wrong-resource access.
+Prevent cross-Tenant, cross-Instance, wrong-Account, wrong-customer, and wrong-resource access.
 
-These rules apply even while Login 2.0 operates as one configured app instance.
+These rules apply regardless of whether Instances share code, infrastructure, or database infrastructure.
 
-## 2. Explicit Context
+## 2. Canonical Context
 
-Security-sensitive operations must resolve an explicit context appropriate to the current architecture:
+Security-sensitive operations must resolve:
 
-- app instance
-- workspace
-- tenant or customer scope
-- module or capability
+- Tenant
+- Instance
+- Principal
+- applicable User Account or NHI
 - target resource
+- target Tenant and Instance when different
+- Module or capability
+- Invocation Channel
+- applicable Machine Identity, Network Identity, and Network Context
 - environment
 
-Do not infer security scope only from a URL prefix, route name, UI area, hostname label, or model class name.
+One Tenant owns one Instance. One User Account belongs to one Tenant Instance.
+
+Workspace is the User Account-specific resolved runtime scope. It is not a persistent security or database boundary.
+
+Do not infer security scope only from a URL prefix, route name, UI area, hostname label, model class, navigation entry, or client-provided identifier.
 
 ## 3. Object-Level Authorization
 
-Every protected resource action must verify actor ability, target identity, target scope, context relationship, and action-specific constraints.
+Every protected Action must verify:
 
-A valid permission without a valid target scope must deny.
+- Principal authority
+- User Account or NHI lifecycle state
+- target identity
+- target Tenant and Instance
+- target resource scope
+- Action-specific constraints
+- applicable authentication assurance
+- applicable Invocation Channel restrictions
+
+A valid permission without a valid Tenant Instance and Target scope must deny.
 
 ## 4. Query Isolation
 
-Queries must begin from the resolved scope where applicable, apply scope before pagination and aggregates, prevent IDs from bypassing context, and test wrong-scope IDs.
+Queries must begin from the resolved Instance or an explicitly authorized Global Administration target.
+
+Apply scope before pagination, aggregates, sorting, search, export, and mutation.
+
+Do not fetch broad cross-Instance data and filter it later in memory.
+
+Direct IDs must not bypass Tenant Instance resolution.
 
 ## 5. Route Model Binding
 
-Binding must not expose a target outside the current scope.
+Binding must not expose a Target outside the authorized Instance or explicitly selected Global Administration target.
 
-Use scoped binding, explicit query resolution, or policy denial appropriate to the route.
+Use scoped binding, explicit query resolution, or policy denial.
 
-A 404 may be preferable when revealing existence would leak information.
+Return 404 when revealing existence would leak information.
 
-## 6. Jobs, Events, And Commands
+## 6. Jobs, Events, Commands, And Schedules
 
-Queued and background work must carry sufficient scope identity.
+Queued, event-driven, command, and scheduled execution must carry enough context to re-resolve:
 
-Workers must re-resolve and revalidate scope before mutation.
+- Principal
+- Tenant
+- Instance
+- Target
+- Invocation Channel
+- correlation and initiating-Principal evidence when applicable
 
-Do not trust serialized model identity alone when scope may change.
+Workers must revalidate current lifecycle, authorization, and scope before mutation.
 
-## 7. Exports And Downloads
+Do not trust serialized model identity, stale permissions, or stale Tenant state.
 
-Export and download operations must capture intended scope, reauthorize at creation and download, prevent cross-scope filters, use private storage, avoid predictable identifiers, expire and revoke access, and audit sensitive movement.
+A job, event, command, or scheduler is not the Principal.
 
-## 8. Notifications And Action Links
+## 7. APIs And Webhooks
+
+API and webhook processing must resolve an attributable NHI and the permitted Tenant Instance scope.
+
+A valid token, signature, or certificate without valid target scope must deny.
+
+Webhook retries and API idempotency must not cross Instance boundaries.
+
+## 8. Exports And Downloads
+
+Export and download operations must:
+
+- capture intended Tenant Instance and Target scope
+- authorize at creation and download
+- prevent cross-scope filters
+- use private storage
+- avoid predictable identifiers
+- expire and revoke access
+- audit sensitive movement
+
+## 9. Notifications And Action Links
 
 Notification payloads must contain safe identifiers and minimal summaries.
 
 Action links must reauthorize when opened.
 
-Receiving a notification does not grant access to its target.
+Receiving a notification does not grant access to its Target.
 
-## 9. Support And Administrative Access
+## 10. Global Administration
 
-Cross-instance or cross-scope support access requires explicit purpose, permission, target selection, recent authentication or MFA when high risk, audit evidence, time-bounded access where applicable, and no silent global fallback.
+Global Administration is an authorized Surface within the Internal Tenant Instance.
 
-## 10. Data Movement
+Every cross-Instance Action requires:
 
-Data Protection rules apply before sensitive data leaves its scope through export, download, API, webhook, email, realtime payload, backup, or support evidence.
+- authorized Internal Tenant User Account or NHI
+- explicit target Tenant and Instance
+- purpose, reason, or support context where required
+- recent authentication or MFA step-up when high risk
+- separate Actor and target scope
+- audit evidence
+- time-bounded access when applicable
+- no silent global fallback
 
-## 11. Tests
+Global Administration must not use unscoped model queries or implicit shared session state.
 
-Required tests include wrong-resource denial, wrong-customer denial, wrong-workspace denial when implemented, cross-scope export denial, notification-action reauthorization, queued-job scope revalidation, support-access denial, aggregate isolation, and no IDOR through direct identifiers.
+## 11. Tenant Lifecycle
 
-## 12. Prohibited Practices
+Inactive, suspended, or deactivated Tenant and Instance state must fail closed for:
 
-Do not hardcode tenant domains or database names, assume an admin area removes object authorization, treat navigation filtering as isolation, share cache keys without scope, trust client-provided scope identifiers, or expose raw cross-instance logs or evidence by default.
+- login
+- API
+- webhook
+- queued jobs
+- event consumers
+- schedules
+- commands
+- notifications
+- integrations
 
-## 13. Related
+Retention and deletion remain separate governance decisions.
 
+## 12. Data Movement
+
+Data Protection rules apply before sensitive data leaves its Instance through export, download, API, webhook, email, realtime payload, backup, support evidence, or Global Administration.
+
+## 13. Tests
+
+Required tests include:
+
+- wrong-Instance denial
+- wrong-Account denial
+- wrong-resource denial
+- wrong-customer denial
+- cross-Instance export denial
+- notification-action reauthorization
+- queue and schedule scope revalidation
+- inactive-Tenant denial
+- Global Administration target-scope denial
+- aggregate isolation
+- direct-ID isolation
+- NHI target-scope restrictions
+
+## 14. Prohibited Practices
+
+Do not:
+
+- use multi-Tenant Instance assumptions
+- treat Workspace as persistent scope
+- hardcode Tenant domains or database names as authority
+- assume an admin Surface removes object authorization
+- treat navigation filtering as isolation
+- share cache keys without Instance scope
+- trust client-provided scope
+- expose raw cross-Instance logs or evidence
+- infer identity from source IP
+- treat jobs or commands as Principals
+
+## 15. Related
+
+- [ADR-0006](../../01-decisions/adr-0006-tenant-instance-workspace-principal-and-invocation-vocabulary.md)
 - [Access Control And Authorization Standards](Access%20Control%20And%20Authorization%20Standards.md)
 - [Data Protection And Data Loss Prevention Standards](Data%20Protection%20And%20Data%20Loss%20Prevention%20Standards.md)
-- [Workspace Identity Implementation Planning](../../07-planning/01-architecture-boundaries/workspace-identity-implementation-planning.md)
+- [Database Tenant Workspace Isolation Standards](../database/Database%20Tenant%20Workspace%20Isolation%20Standards.md)
+- [Tenancy](../../03-architecture/tenancy.md)

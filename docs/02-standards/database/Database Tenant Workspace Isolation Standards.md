@@ -8,308 +8,278 @@ canonical: true
 canonical_path: docs/02-standards/database/Database Tenant Workspace Isolation Standards.md
 parent: docs/02-standards/database/index.md
 template: docs/09-reference/templates/docs/_doc.md
-summary: Defines database rules for tenant, workspace, account, customer, module, and scope isolation across Core, Platform, and Business Module data.
+summary: Defines database rules for one-to-one Tenant and Instance isolation, Account and resource scope, Module data, Global Administration, and audit evidence.
 -->
 
 # Database Tenant Workspace Isolation Standards
 
-This document defines database isolation standards for tenant, workspace, account, customer, module, and scoped business data in Login App 2.0.
+Parent: [Database Standards Index](index.md)
 
-- [1. Purpose](#1-purpose)
-- [2. Scope](#2-scope)
-- [3. Core Rule](#3-core-rule)
-- [4. Scope Types](#4-scope-types)
-- [5. Scope Column Rules](#5-scope-column-rules)
-- [6. Scoped Uniqueness](#6-scoped-uniqueness)
-- [7. Foreign Key Scope Consistency](#7-foreign-key-scope-consistency)
-- [8. Cross-Scope Query Rules](#8-cross-scope-query-rules)
-- [9. Core Data Versus Business Data](#9-core-data-versus-business-data)
-- [10. Platform Metadata Versus Business Records](#10-platform-metadata-versus-business-records)
-- [11. Module Data Isolation](#11-module-data-isolation)
-- [12. Access Control Target Scope](#12-access-control-target-scope)
-- [13. Audit Scope](#13-audit-scope)
-- [14. Testing Expectations](#14-testing-expectations)
-- [15. Documentation Expectations](#15-documentation-expectations)
-- [16. Stop Conditions](#16-stop-conditions)
-- [17. Related](#17-related)
-
----
+> Compatibility note: the existing filename is retained temporarily. Workspace is not a persistent database scope.
 
 ## 1. Purpose
 
-Prevent cross-scope data leakage, ambiguous ownership, and unsafe query patterns.
+Prevent cross-Tenant and cross-Instance data leakage, ambiguous ownership, and unsafe query patterns.
 
-Database schema must make scope visible, enforceable, and testable.
+Database design must make Instance, Account, resource, and cross-Instance administrative scope enforceable and testable.
 
----
+## 2. Core Model
 
-## 2. Scope
+```text
+Tenant 1 -- 1 Instance
+Instance 1 -- many User Accounts
+User Account 1 -- 1 User Identity
+```
 
-This standard applies to:
+One Instance must not contain mutable state owned by multiple Tenants.
 
-- tenant-scoped tables
-- workspace-scoped tables
-- account-scoped tables
-- customer-scoped tables
-- module-scoped tables
-- user-owned records
-- Core capability records with scoped targets
-- Platform registry or contribution tables
-- Business Module tables
-- access-control assignments
-- audit and monitoring records tied to scoped resources
+Workspace is resolved at runtime and must not be modeled as a general persistent ownership container.
 
----
+## 3. Scoped Table Contract
 
-## 3. Core Rule
+A scoped table must identify:
 
-Every scoped table must make scope explicit.
-
-A table that stores scoped data must identify:
-
-- the scope type
-- the scope column or relationship
-- scoped uniqueness rules
+- owning capability
+- Tenant and Instance relationship
+- direct or inherited scope path
+- Account or NHI relationship when applicable
+- Target resource scope
+- scoped uniqueness
 - query patterns
-- access-control implications
+- authorization implications
 - audit implications
-- tests or verification for cross-scope denial
+- cross-scope denial tests
 
-If the scope is unclear, do not create or modify the table yet.
+If scope is unclear, do not create or modify the table.
 
----
+## 4. Canonical Scope Types
 
-## 4. Scope Types
+Common persistent scope types include:
 
-Common scope types include:
+| Scope | Meaning |
+| --- | --- |
+| `global` | Truly application-wide reference or infrastructure data that is not Tenant-owned. |
+| `tenant_instance` | Owned by exactly one Tenant and its one Instance. |
+| `user_account` | Owned by or associated with one User Account in one Instance. |
+| `nhi` | Owned by or associated with one Non-Human Identity in one Instance. |
+| `customer` | Owned by one customer business record inside one Instance. |
+| `resource` | Owned by a specific capability resource inside one Instance. |
+| `module` | Owned by a Module while still scoped to the applicable Instance. |
+| `integration` | Owned by an integration relationship or NHI inside one Instance. |
+| `global_administration` | Cross-Instance administrative metadata with explicit Actor and target Instance scope. |
 
-| Scope       | Meaning                                               |
-| ----------- | ----------------------------------------------------- |
-| global      | System-wide and not tenant/workspace-specific.        |
-| platform    | Platform-control-plane owned.                         |
-| tenant      | Owned by or isolated to one tenant.                   |
-| workspace   | Owned by or isolated to one workspace.                |
-| account     | Owned by or isolated to one account/customer account. |
-| customer    | Owned by or isolated to one customer record.          |
-| user        | Owned by one user.                                    |
-| module      | Owned by one Business Module or module instance.      |
-| integration | Owned by an integration or service account.           |
+Do not use `workspace` as a generic persistent scope type.
 
-Use the smallest accurate scope.
+Do not use bare `account` when `user_account`, customer account, or billing account could be confused.
 
-Do not use global tables for scoped business data unless the table explicitly models scoped targets.
+## 5. Scope Columns And Relationships
 
----
-
-## 5. Scope Column Rules
-
-Scoped tables should include explicit scope columns or stable relationships to scoped owners.
-
-Examples:
+Use explicit columns or stable relationships such as:
 
 - `tenant_id`
-- `workspace_id`
-- `account_id`
+- `instance_id`
+- `user_account_id`
+- `non_human_identity_id`
 - `customer_id`
+- `resource_id`
 - `module_key`
-- `user_id`
 
-If scope is inherited through a parent relationship, document the inheritance path in the table contract.
+The final schema may infer Tenant from a one-to-one Instance relationship, but contracts must still state both conceptual owners.
 
-Do not rely on route parameters, session state, or UI context alone to determine record scope.
+If scope is inherited, document the complete path.
 
----
+Do not rely on route parameters, session state, Workspace state, or UI context alone.
 
-## 6. Scoped Uniqueness
+## 6. User Account And User Identity
 
-Unique constraints for scoped data should include scope.
+User Accounts and User Identity records belong to one Instance.
+
+A human with access to multiple Tenants has separate Account and User Identity records.
+
+Database design must not create a canonical global person row that automatically links Tenant Accounts.
+
+Matching email, phone, name, or external directory value must not create cross-Tenant joins or authorization.
+
+Global uniqueness for human profile fields requires a separate explicit decision and must not imply shared identity.
+
+## 7. Non-Human Identity
+
+NHI records must state their permitted Instance scope.
+
+Service Account, Workload Identity, and Application Principal persistence may differ, but none may silently authorize another Instance.
+
+Machine Identity is independent assurance context and must not be forced into the NHI owner hierarchy.
+
+## 8. Scoped Uniqueness
+
+Unique constraints for Tenant-owned data must include or inherit Instance scope.
 
 Examples:
 
-- user email uniqueness may be global or scoped depending on identity model
-- module setting keys may be unique per scope
-- customer part numbers may be unique per customer or workspace
+- User Account login identifiers may be unique within one Instance
+- Module setting keys may be unique per Instance
+- business identifiers may be unique per Instance, customer, or resource
+- NHI keys may be unique per Instance
 - registry entries may be unique by owner and key
 
-Do not create global uniqueness constraints for scoped business facts unless global uniqueness is truly required.
+Do not create global uniqueness solely to infer shared human identity.
 
----
+## 9. Foreign-Key Scope Consistency
 
-## 7. Foreign Key Scope Consistency
+When one scoped record references another:
 
-Foreign keys should preserve scope consistency.
+- verify both belong to the same Instance unless the relationship is explicitly cross-Instance
+- enforce consistency through schema where practical
+- enforce remaining consistency through policies, services, and validation
+- document inherited scope
+- audit allowed cross-Instance relationships
 
-When a table references another scoped table:
+Avoid relationships that permit accidental cross-Instance references.
 
-- verify both records belong to the same tenant/workspace/account/customer scope
-- enforce scope consistency through schema design where practical
-- enforce remaining scope consistency in policies, services, or validation
-- document scope inheritance in table docs
+## 10. Query Isolation
 
-Avoid relationships that allow a child record to point across scopes unless explicitly allowed and audited.
-
----
-
-## 8. Cross-Scope Query Rules
-
-Queries against scoped tables must include the required scope unless the operation is explicitly global and authorized.
+Queries against Tenant-owned data must begin from the resolved Instance.
 
 High-risk queries include:
 
-- admin list views
+- administration lists
 - search
 - exports
 - reports
-- background jobs
 - dashboards
-- API endpoints
-- webhook processing
-- audit/evidence lookups
+- background jobs
+- event consumers
+- scheduled tasks
+- APIs
+- webhooks
+- audit and evidence lookups
 - bulk operations
 
-Do not implement broad queries first and filter scope later in memory.
+Do not query broadly and filter later in memory.
 
----
+## 11. Global Administration Data
 
-## 9. Core Data Versus Business Data
+Global Administration may store central registry, provisioning, lifecycle, support, compliance, or operations metadata.
 
-Core tables may be global, scoped, or mixed depending on the capability.
+It must not become the hidden owner of Tenant business records.
 
-Examples:
+Cross-Instance records must identify:
 
-- Auth tables may be global to identity.
-- Access assignments may target scoped resources.
-- Audit events may be central but include scoped targets.
-- Notifications may be user-scoped while type registry is global.
-- Data governance records may classify scoped business data.
+- Actor Tenant and Instance
+- target Tenant and Instance
+- Action or operation type
+- purpose or support context
+- read, write, copy, projection, or reference behavior
+- audit requirements
+- retention and data-classification requirements
 
-Business Module tables must not redefine Core-level tenant/workspace identity, auth, access, audit, or notification infrastructure.
+Raw Tenant data must not be copied centrally by default.
 
----
+## 12. Core And Module Data
 
-## 10. Platform Metadata Versus Business Records
+Core and Module tables may be Tenant-Instance-scoped, Account-scoped, NHI-scoped, or resource-scoped.
 
-Platform tables may aggregate or render contributions from Core and Business Modules.
+Modules must not redefine Tenant, Instance, User Account, User Identity, Auth, Access, Audit, Notification, or NHI infrastructure.
 
-Platform tables should not become hidden owners of business records.
+Each Module table must document:
 
-If a Platform table references module-owned data, document:
-
-- source owner
-- target owner
-- scope
-- read/write behavior
-- whether Platform stores a copy, reference, projection, or registry entry
-
----
-
-## 11. Module Data Isolation
-
-Business Module data must declare its isolation model before schema is implemented.
-
-A module table should identify:
-
-- module owner
-- scope owner
-- tenant/workspace/account/customer relationship
-- whether records are visible across modules
-- whether records can be exported
-- whether records are included in audit/data governance processes
-
-Module migrations must not create ambiguous global tables for scoped business data.
-
----
-
-## 12. Access Control Target Scope
-
-Access-control data must identify the target scope of an assignment.
-
-Assignments should be able to answer:
-
-- who or what is the subject
-- what target is being accessed
-- which role or action applies
-- which scope limits the assignment
-- whether the assignment expires
-- why the assignment exists
-- whether the assignment is direct or group-derived
-
-Do not store access-control assignments without enough scope to compute effective access safely.
-
----
-
-## 13. Audit Scope
-
-Audit and evidence records should include enough scope to reconstruct what happened.
-
-Audit events should include:
-
-- actor
-- action
-- target
-- result
-- target scope when applicable
-- request/session/correlation identifiers when applicable
-- redacted metadata
-
-Central audit tables may store events for many scopes, but the scoped target must be explicit.
-
----
-
-## 14. Testing Expectations
-
-Scoped data changes should verify:
-
-- allowed access within scope
-- denied access outside scope
-- scoped uniqueness
-- scoped search/listing
-- scoped exports when applicable
-- background jobs do not cross scopes
-- module-owned data does not bypass Core access rules
-
-Do not test only successful admin paths.
-
----
-
-## 15. Documentation Expectations
-
-Scoped tables must document:
-
-- scope type
-- scope columns
-- inherited scope path when applicable
-- scoped uniqueness
-- cross-scope risks
-- access-control expectations
-- data classification
+- Module owner
+- Instance scope
+- Account or NHI associations
+- resource ownership
+- visibility to other Modules
+- export and governance requirements
 - audit expectations
 
-Update table docs and feature/database contracts when scope changes.
+## 13. Access-Control Data
 
----
+Access assignments must answer:
 
-## 16. Stop Conditions
+- which Principal is the subject
+- which Action or permission applies
+- which target resource is affected
+- which Tenant and Instance limit the assignment
+- whether the assignment expires
+- why it exists
+- whether it is direct or derived
 
-Stop before implementing scoped data when:
+Do not store assignments without enough scope to compute effective access safely.
 
-- the tenant/workspace/account model is unclear
-- scope is inherited but not documented
-- a table could accidentally mix tenant/workspace data
-- a report/export/search would need cross-scope access
-- scoped uniqueness is unclear
-- access-control target scope is unclear
-- audit target scope is unclear
-- tests for denied cross-scope access cannot be identified
+## 14. Audit And Evidence Data
 
----
+Audit records must include enough information to reconstruct:
 
-## 17. Related
+- Principal
+- Machine Identity reference when available
+- Network Identity reference when available
+- Network Context when applicable
+- Invocation Channel
+- Action
+- Target
+- Result
+- Actor Tenant and Instance
+- target Tenant and Instance when different
+- correlation identifiers
+- redacted metadata
 
+Workspace may be recorded as runtime context but is not the ownership boundary.
+
+## 15. Lifecycle
+
+Tenant and Instance deactivation must block ordinary mutation and authentication paths.
+
+Database retention, archival, legal hold, erasure, and deletion must be explicit and must not be inferred from deactivation alone.
+
+## 16. Tests
+
+Scoped data changes must verify:
+
+- allowed access within one Instance
+- denied access to another Instance
+- User Account isolation
+- NHI isolation
+- scoped uniqueness
+- search, aggregate, export, and report isolation
+- queue, event, and schedule revalidation
+- Global Administration target scope
+- Module data cannot bypass Core isolation
+- Workspace is not used as persistent authorization scope
+
+## 17. Documentation
+
+Table contracts must document:
+
+- Tenant and Instance owner
+- scope columns or inherited path
+- Account, NHI, customer, resource, and Module associations
+- uniqueness
+- cross-Instance risk
+- authorization
+- data classification
+- audit
+- lifecycle
+- compatibility names
+
+## 18. Stop Conditions
+
+Stop when:
+
+- Tenant and Instance ownership is unclear
+- a design permits multiple Tenants in one Instance
+- User Account or User Identity could cross Instance boundaries
+- Workspace is treated as persistent ownership
+- scope inheritance is undocumented
+- reports or exports require unbounded cross-Instance access
+- uniqueness would create implicit global identity
+- Global Administration target scope is missing
+- denied cross-scope tests cannot be identified
+
+## 19. Related
+
+- [ADR-0006](../../01-decisions/adr-0006-tenant-instance-workspace-principal-and-invocation-vocabulary.md)
 - [Schema Design Standards](Schema%20Design%20Standards.md)
 - [Database Table Contract Standards](Database%20Table%20Contract%20Standards.md)
 - [Database Access Control Data Model Standards](Database%20Access%20Control%20Data%20Model%20Standards.md)
 - [Database Audit And Evidence Standards](Database%20Audit%20And%20Evidence%20Standards.md)
-- [Platform Boundary](../../03-architecture/platform-boundary.md)
-- [Database Index](../../06-database/index.md)
-- [Standards Index](../index.md)
+- [Tenant And Scope Isolation Standards](../security/Tenant%20And%20Scope%20Isolation%20Standards.md)
+- [Tenancy](../../03-architecture/tenancy.md)

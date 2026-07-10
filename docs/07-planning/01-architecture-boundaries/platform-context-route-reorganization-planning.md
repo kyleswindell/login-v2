@@ -1,6 +1,10 @@
 # Platform Context Route Reorganization Planning
 
-Status: Planning
+Status: Superseded
+
+## Supersession Notice
+
+ADR-0006 supersedes the `control_plane`, `internal_workspace`, and `tenant_workspace` runtime-context model. Global Administration is an authorized Surface within Internal Tenant Workspaces. Route migration remains deferred and must be replanned from the accepted vocabulary.
 
 ## Purpose
 

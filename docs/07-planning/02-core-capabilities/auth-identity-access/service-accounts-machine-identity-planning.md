@@ -1,229 +1,287 @@
-# Service Accounts And Machine Identity Planning
+<!--
+DOC-META
+title: Service Accounts, Non-Human Identity, And Machine Assurance Planning
+doc_type: planning
+status: planning
+owner: identity
+canonical: true
+canonical_path: docs/07-planning/02-core-capabilities/auth-identity-access/service-accounts-machine-identity-planning.md
+parent: docs/07-planning/index.md
+template: docs/09-reference/templates/docs/_planning.md
+summary: Plans Service Accounts and other NHI forms while keeping Machine Identity, Network Identity, and Network Context independent assurance layers.
+-->
 
-Status: Planning
+# Service Accounts, Non-Human Identity, And Machine Assurance Planning
 
-## Purpose
+Parent: [Planning Index](../../index.md)
 
-Plan service accounts, machine identity, API tokens, integration actors, and non-human access before API/integration authentication is implemented.
+## 1. Purpose
 
-This capability is not a business module. It is a cross-cutting Auth, Identity, Access, Secrets, Audit, Monitoring, and Vulnerability Management concern.
+Plan Service Accounts and other Non-Human Identity forms before API, webhook, integration, workload, and automation authentication is implemented.
 
-## Ownership Boundary
+This document follows [ADR-0006](../../../01-decisions/adr-0006-tenant-instance-workspace-principal-and-invocation-vocabulary.md).
+
+## 2. Canonical Identity Model
+
+```text
+Principal Identity
+├── Human Principal
+│   └── User Account
+│       └── User Identity
+└── Non-Human Principal
+    └── Non-Human Identity
+        ├── Service Account
+        ├── Workload Identity
+        └── Application Principal
+
+Request Assurance Context
+├── Machine Identity
+├── Network Identity
+└── Network Context
+```
+
+`Service Identity` is not the canonical umbrella.
+
+Machine Identity is independent from NHI and may accompany either human or non-human Principals.
+
+## 3. Ownership Boundary
 
 | Owner | Responsibility |
 | --- | --- |
-| `Core/Auth` | service authentication mechanisms, token verification, credential rotation mechanics |
-| `Core/Identity` | service account identity record, owner, lifecycle state, contact/escalation metadata |
-| `Core/Access` | scoped permissions, policies, roles, groups, resource boundaries, least privilege |
-| `Core/Security/Secrets` | credential storage rules, token hash/prefix handling, secret inventory, rotation policy |
-| `Core/Audit` | service actor events and accountable use history |
-| `Core/Monitoring` | anomalous service use, failed authentication spikes, stale/unused service identities |
-| `Core/Notifications` | required alerts for credential expiry, rotation failure, abnormal use, or disabled service accounts |
-| `Core/VulnerabilityManagement` | exposed token findings, weak rotation findings, stale service account risk |
+| Core/Identity | NHI record, stable key, type, owner, purpose, lifecycle state, Instance scope |
+| Core/Auth | authentication mechanism, credential verification, token and assertion validation |
+| Core/Access | permissions, policies, resource boundaries, least privilege |
+| Core/Security/Secrets | credential handling, storage rules, references, rotation, redaction |
+| Core/Audit | Actor attribution and NHI lifecycle/use history |
+| Core/Monitoring | failed authentication, unexpected use, stale NHI, anomalous volume |
+| Core/Notifications | expiry, rotation, disabled-use, and abnormal-use alerts |
+| Core/VulnerabilityManagement | exposed credentials, stale access, weak rotation, excessive privilege |
 
-Do not model machine identity as a normal human user without an explicit lifecycle and audit decision.
+Do not model an NHI as a Human User Account.
 
-## Initial Service Account Model
+## 4. NHI Types
 
-Each service or machine identity should eventually have:
+### Service Account
+
+Persistent lifecycle-managed NHI account for a service, integration, automation process, synchronization process, application, or managed machine use case.
+
+### Workload Identity
+
+NHI assigned to an executing workload or workload class. It may be short-lived, federated, certificate-backed, attested, or managed by infrastructure.
+
+### Application Principal
+
+Authorized representation of an application, API client, external SaaS product, or connector.
+
+Not every NHI requires a Service Account.
+
+## 5. Instance Scope
+
+Each locally managed NHI must state its permitted Tenant and Instance scope.
+
+No NHI may silently authorize another Instance.
+
+Global Administration NHI access requires explicit target Tenant and Instance scope and the same audit and step-up rules applicable to cross-Instance administration.
+
+## 6. Initial NHI Attributes
+
+Applicable NHI records should eventually support:
 
 - stable key
+- type
 - display name
-- description/purpose
-- owner user or owner group
+- purpose and description
+- human or organizational owner
+- Tenant and Instance scope
 - environment
-- status
-- credential type
-- allowed scopes/actions
+- lifecycle status
+- credential type or credential reference
+- allowed Actions
 - resource constraints
 - expiry or review date
 - rotation policy
-- last used timestamp
-- created by
-- disabled/revoked timestamp
+- last-used timestamp
+- created-by evidence
+- disabled or revoked timestamp
 
-Open schema decision:
+## 7. Machine And Network Assurance
+
+Machine Identity may accompany an NHI but is not owned by it.
+
+Applicable evidence includes:
+
+- machine identity ID
+- device or node ID
+- certificate or public-key fingerprint
+- key ID
+- attestation result
+- compliance state
+- management state
+
+Network Identity may represent a verified ZTNA session, VPN session, gateway, proxy, mTLS peer, service-mesh peer, or appliance.
+
+Network Context may include source IP, proxy chain, ASN, geolocation, protocol, TLS properties, and risk signals.
+
+Do not infer Machine or Network Identity from IP address alone.
+
+## 8. Invocation Channels
+
+NHI Actions may execute through:
+
+- `api_request`
+- `webhook_request`
+- `console_command`
+- `queued_job`
+- `event_consumer`
+- `scheduled_task`
+- `internal_system`
+
+The channel is execution metadata, not the NHI.
+
+Example:
+
+```text
+Principal: QuickBooks Workload Identity
+Machine Identity: Sync Worker VM
+Invocation Channel: queued_job
+Action: customer.imported
+```
+
+## 9. Credential Handling
+
+Potential credential mechanisms include:
+
+- generated API token
+- client secret
+- OAuth client credential
+- signed assertion
+- federated token
+- certificate or key proof
+- webhook signing secret
+- managed identity
+- workload attestation
+
+Rules:
+
+- show generated tokens once when applicable
+- store prefix plus hash when only verification is needed
+- encrypt reusable credentials or store vault references
+- keep infrastructure secrets in approved host or vault storage
+- never log raw credentials
+- keep credentials separate from Principal identity
+
+Auth owns verification. Secrets owns handling rules.
+
+## 10. Access Model
+
+NHI access defaults to least privilege:
+
+- explicit Tenant and Instance scope
+- explicit Actions and resources
+- no broad inherited human role
+- no interactive web login unless explicitly approved
+- no MFA bypass by pretending to be human
+- no ownerless NHI
+- no cross-Instance authority by default
+- no object-level authorization bypass
+
+Sensitive use requires explicit permission, owner, audit, rotation or expiry policy, and review cadence.
+
+## 11. Actor, Audit, And Monitoring
+
+NHI audit events should include:
+
+- Principal type and ID
+- NHI type and stable key
+- owner
+- Machine Identity when available
+- Network Identity when available
+- Network Context when applicable
+- Invocation Channel
+- Action
+- Target
+- Result
+- Tenant and Instance
+- credential fingerprint when safe
+- correlation identifiers
+
+Monitoring should detect failed authentication spikes, unexpected source or Machine Identity, stale NHI, disabled-use attempts, expiry, rotation failure, abnormal volume, and unauthorized channel use.
+
+## 12. Storage Decision
+
+Open decision:
 
 ```text
 users.type = service
 ```
 
-or
+or:
 
 ```text
 service_accounts
 ```
 
-Do not decide this through implementation drift. Resolve it through Auth, Identity, Access, Audit, and database planning before code.
+or another explicit NHI model.
 
-## Credential Handling
+This document does not resolve storage. Issue #7 owns the Service Account storage decision.
 
-Credential types may include:
+## 13. Implementation Sequence
 
-- generated API token
-- personal access token equivalent, if approved
-- service account client secret
-- OAuth client credential
-- webhook signing secret
-- integration refresh token
-- future certificate/private key material
+1. accept NHI vocabulary and Actor shape
+2. decide Service Account storage
+3. define minimal NHI lifecycle contract
+4. define credential and verification contract
+5. define Access scope and review rules
+6. define audit, monitoring, and notification coverage
+7. implement one bounded authentication method
+8. add API, webhook, queue, event, command, and schedule integrations incrementally
 
-Storage rules:
+## 14. Tests
 
-- generated tokens should be shown once and stored as prefix plus hash when only verification is needed
-- credentials the app must use later should be encrypted or stored as vault references
-- infrastructure-only secrets should stay in environment/vault/host secret store
-- raw credentials must not enter Audit, Monitoring, Notifications, support views, docs, tests, seeders, factories, or screenshots
+Future tests should prove:
 
-Secrets Management owns the handling rules. Auth owns verification and authentication flow.
+- NHI cannot use normal human interactive login unless approved
+- disabled or revoked NHI fails
+- NHI cannot access another Instance
+- generated tokens are not stored raw
+- credentials do not enter logs or exports
+- audit records the NHI Principal and Invocation Channel
+- Machine Identity remains separate from NHI
+- source IP is not accepted as authoritative identity
+- privileged NHI access requires explicit scope and review
 
-## Access Model
+## 15. Transition Rules
 
-Service accounts should default to least privilege:
+- do not use `Service Identity` as the umbrella
+- do not model jobs, commands, schedules, or webhooks as NHI records
+- do not create ownerless NHI
+- do not store raw secrets
+- do not grant global or cross-Instance access implicitly
+- do not place Machine Identity under NHI
+- do not implement storage through drift
 
-- no broad inherited human role by default
-- explicit scope/resource boundaries
-- no interactive login unless explicitly approved
-- no MFA bypass by pretending to be a human user
-- no Super Admin service account without a separate decision
-- no shared ownerless service account
+## 16. Open Decisions
 
-Sensitive operations require:
+- Service Account storage model
+- first NHI authentication method
+- first rotation and expiry policy
+- approval requirements for privileged NHI
+- persistent notification types
+- first access-review integration
+- provider-specific machine and network assurance
 
-- explicit service account permission
-- owner/reason metadata
-- audit event
-- rotation or expiry policy
-- review cadence
+## 17. Out Of Scope
 
-## Audit And Monitoring
+- implementing NHI
+- creating migrations
+- implementing OAuth, OIDC, SPIFFE, or federation
+- selecting provider integrations
+- changing current runtime behavior
 
-Audit must support non-human actors.
+## 18. Related
 
-Service account audit events should include:
-
-- actor type: service
-- service account key or ID
-- owner
-- action
-- target
-- result
-- credential ID or fingerprint where safe
-- request/source context where safe
-
-Monitoring should detect:
-
-- failed service authentication spikes
-- service account used from unexpected source
-- stale service account
-- token nearing expiry
-- token rotation failure
-- disabled account usage attempt
-- abnormal volume or route use
-
-## Notification Intent
-
-Future persistent notification types may include:
-
-```text
-security.service_account.created
-security.service_account.disabled
-security.service_account.credential_expiring
-security.service_account.rotation_failed
-security.service_account.unusual_use_detected
-security.service_account.stale_review_due
-```
-
-These are required system/security notifications and should not be user-disableable in the inbox.
-
-## API And Webhook Review Dependency
-
-Broader API, webhook, and integration security direction is tracked in [API, Webhook, And Service Account Security Planning](api-webhook-service-account-security-planning.md).
-
-Do not implement API tokens, webhook receivers, webhook senders, or external integration credentials only from this service-account plan. The API/webhook/service-account security plan defines request authentication, signing, replay protection, rate limits, retries, payload redaction, failure handling, token storage, and event/audit expectations before those surfaces deepen.
-
-Zero Trust direction is tracked in [Zero Trust Security Planning](zero-trust-security-planning.md). Service and machine identities should use scoped permissions, explicit actors, credential rotation, no implicit internal trust, and audit-visible activity.
-
-## Implementation Sequence
-
-### 1. Planning Decision
-
-- Decide whether service accounts use `users.type = service` or a dedicated table.
-- Define service actor audit shape before API token implementation.
-- Define token storage and rotation rules through Secrets Management.
-
-### 2. Minimal Identity Contract
-
-- Add service account lifecycle states.
-- Add owner/contact metadata.
-- Add disabled/revoked behavior.
-
-### 3. Auth Credential Contract
-
-- Define token/client credential verification.
-- Store generated credentials safely.
-- Add rotation and expiry metadata.
-- Align API token and webhook security with [API, Webhook, And Service Account Security Planning](api-webhook-service-account-security-planning.md).
-
-### 4. Access Contract
-
-- Define scoped permissions and resource constraints.
-- Prevent broad human-role inheritance unless explicitly approved.
-- Add review requirements for privileged service accounts.
-
-### 5. Audit, Monitoring, And Notifications
-
-- Add service actor audit events.
-- Add monitoring signals for stale, failed, expired, or abnormal service usage.
-- Add required notification types for owners/security admins.
-
-## Test Planning
-
-Future implementation tests should prove:
-
-- service accounts cannot use normal interactive login unless explicitly approved
-- generated tokens are shown once and stored as prefix plus hash
-- disabled service account credentials fail
-- service account actions audit actor type `service`
-- service accounts cannot receive broad admin access by default
-- service account credentials are not logged or exported
-- stale/expiring credentials can create Monitoring signals and required notifications
-
-## Transition Rules
-
-- Do not create `Modules/ServiceAccounts`.
-- Do not implement service/API tokens before Auth, Identity, Access, Audit, and Secrets boundaries are agreed.
-- Do not share human user assumptions silently with service accounts.
-- Do not store raw API tokens or client secrets.
-- Do not create ownerless service accounts.
-- Do not allow service accounts to bypass object-level authorization.
-
-## Open Decisions
-
-- Should service accounts be represented by `users.type = service` or a dedicated `service_accounts` table?
-- Which service authentication method comes first?
-- Which service account actions require owner approval or elevated access?
-- What is the first rotation/expiry policy?
-- Which service account events require persistent notifications?
-- Should service account access reviews be part of the first Access Reviews implementation?
-
-## Out Of Scope
-
-- implementing service accounts in this pass
-- implementing API tokens in this pass
-- choosing final database schema in this planning file
-- creating OAuth/OIDC client credential flows in this pass
-- editing `/docs/08-active/`
-
-## Related
-
-- [Core Service Build Plan Matrix](core-service-build-plan-matrix.md)
-- [Cybersecurity Review Backlog Planning](cybersecurity-review-backlog-planning.md)
+- [ADR-0006](../../../01-decisions/adr-0006-tenant-instance-workspace-principal-and-invocation-vocabulary.md)
+- [Core Service Build Plan Matrix](../../core-service-build-plan-matrix.md)
 - [API, Webhook, And Service Account Security Planning](api-webhook-service-account-security-planning.md)
-- [Zero Trust Security Planning](zero-trust-security-planning.md)
 - [Auth Core Implementation Planning](auth-core-implementation-planning.md)
-- [Identity And Users Core Capability Implementation Planning](users-module-implementation-planning.md)
 - [Access Control Implementation Planning](access-control-implementation-planning.md)
-- [Secrets Management Core Planning](secrets-management-core-planning.md)
-- [Audit And Monitoring Core Planning](audit-monitoring-core-planning.md)
-- [Vulnerability Management Core Planning](vulnerability-management-core-planning.md)

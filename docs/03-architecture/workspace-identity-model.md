@@ -1,77 +1,135 @@
-# Workspace Identity Model
+<!--
+DOC-META
+title: Tenant, Instance, User Account, And Workspace Model
+doc_type: architecture
+status: active
+owner: architecture
+canonical: true
+canonical_path: docs/03-architecture/workspace-identity-model.md
+parent: docs/03-architecture/index.md
+template: docs/09-reference/templates/docs/_doc.md
+summary: Defines one-to-one Tenant and Instance ownership, Tenant-owned User Accounts and User Identity records, and User Account-specific runtime Workspaces.
+-->
 
-This document defines the canonical architecture contract for workspace identity.
+# Tenant, Instance, User Account, And Workspace Model
 
-## Purpose
+Parent: [Architecture Index](index.md)
 
-Define the runtime identity used by workspace-scoped capabilities before route aliases, context-aware navigation, tenant registry, tenant database switching, or shared business modules are implemented.
+> Compatibility note: the existing filename is retained temporarily to avoid broad link migration. Workspace is not an identity or persistent container.
 
-## Workspace Identity
+## 1. Canonical Structure
 
-`workspace_identity` is the active identity for workspace-scoped runtime capabilities.
+```text
+Tenant
+└── exclusively owns one Instance
+    └── owns User Accounts
+        └── each User Account contains one User Identity
+            └── each authenticated Account receives a resolved Workspace
+```
 
-Workspace-scoped capabilities include workspace users, roles, settings, enabled modules, notifications, audit history, dashboards, and future business modules such as customers, projects, tasks, and tracking.
+Cardinality:
 
-The `control_plane` context does not have a workspace runtime identity. It may access workspace data only through explicit Direct Control workflows.
+```text
+Tenant 1 -- 1 Instance
+Instance 1 -- many User Accounts
+User Account 1 -- 1 User Identity
+User Account 1 -- 1 resolved Workspace per active authenticated runtime
+```
 
-## Workspace Types
+There is no multi-Tenant Instance in the current target model.
 
-| Type | Owner | Purpose |
-| --- | --- | --- |
-| `internal_workspace` | Parasolutions | Parasolutions' own operational workspace for shared business modules and workspace-local operations |
-| `tenant_workspace` | Client tenant | Client-owned workspace runtime for shared business modules with tenant-local data boundaries |
+## 2. Tenant
 
-The default Parasolutions internal workspace identity is:
+Tenant is the organization or group that exclusively owns one Instance and its Tenant-specific application state.
 
-| Attribute | Value |
-| --- | --- |
-| key | `parasolutions` |
-| type | `internal_workspace` |
-| display name | `Parasolutions` |
-| status | `active` |
+A Tenant is not a Workspace, User Account, domain, database connection, role, group, or ordinary customer business record.
 
-This default identity remains an architecture target. It is not implemented as runtime schema or seeded database data.
+## 3. Instance
 
-The current runtime proof is intentionally smaller: the app resolves the current request to a generic Parasolutions runtime context with key `parasolutions`, name `Parasolutions`, and the current request or app URL. It does not claim workspace identity, tenant identity, tenant isolation, or database switching.
+Instance is the logical isolation boundary containing Tenant-specific application state:
 
-## Required Identity Attributes
+- Module installation and activation state
+- configuration and setup state
+- User Accounts and access assignments
+- business data
+- notifications
+- audit records
+- operational records
 
-A workspace identity must define:
+An Instance may use shared application code or infrastructure while preserving isolated state.
 
-- key
-- type
-- display name
-- owner
-- lifecycle status
-- database boundary
-- module-state scope
-- settings scope
-- user/RBAC scope
-- notification scope
-- audit scope
+Deactivating a Tenant deactivates its Instance and associated User Accounts. Ordinary authentication and runtime operations must fail closed.
 
-These attributes are architecture concepts. This document does not define database columns or migrations.
+## 4. User Account And User Identity
 
-## Boundary Rules
+A User Account is the Tenant-owned, Instance-specific human Principal and participation record.
 
-Workspace-local users, roles, settings, module state, notifications, audit history, dashboards, and business records must resolve through the active workspace identity once runtime context resolution exists.
+A User Identity is the identifying and profile subset of that one Account.
 
-`internal_workspace` and `tenant_workspace` should use the same shared workspace module model. Platform-management modules remain excluded from workspace runtime by default.
+A person participating in multiple Tenants has separate Accounts and separate User Identity records. Similar profile data does not establish a cross-Tenant identity relationship.
 
-The control plane must not silently use the internal workspace identity. Control-plane access into workspace data must preserve both the control-plane actor and the target workspace identity.
+## 5. Workspace Resolution
 
-## Current Runtime State
+A Workspace is resolved for one authenticated User Account from:
 
-Workspace identity runtime resolution is not implemented yet.
+1. Tenant and Instance resolution
+2. Instance configuration
+3. active Modules and setup state
+4. User Account lifecycle and authentication assurance
+5. roles, permissions, memberships, assignments, and resource restrictions
+6. settings, preferences, and presentation state
 
-The current installed app URL resolves only to a generic Parasolutions runtime context. That proof exists to keep request-context naming generic while the app remains a single configured workspace backed by the current database.
+The resolved Workspace determines available Surfaces, navigation, Actions, resources, data, and presentation.
 
-Current `/dashboard`, `/account/*`, and `/platform/*` routes remain stable. No visible `control_plane` route layer exists yet. Route aliases, context-aware navigation, tenant registry, and tenant database switching remain future work.
+Workspace is not:
 
-## Related
+- a database boundary
+- a stored Tenant container
+- a persistent organization record
+- a Principal
+- an authorization grant
 
-- [Platform Context Model](platform-context-model.md)
-- [Platform Boundary](platform-boundary.md)
+## 6. Internal Tenant And Global Administration
+
+The Internal Tenant follows the same model.
+
+```text
+Internal Tenant Instance
+└── User Account
+    └── resolved Workspace
+        ├── ordinary Tenant Surfaces
+        └── Global Administration Surface when authorized
+```
+
+Global Administration preserves the Internal Tenant Actor scope and the target Tenant and Instance scope independently.
+
+## 7. Resolution Order
+
+Target runtime order:
+
+1. resolve Tenant and Instance from the accepted resolver
+2. reject unknown or inactive Tenant/Instance state
+3. authenticate the User Account or Non-Human Identity against the resolved Instance
+4. resolve Account lifecycle and authorization state
+5. load Instance configuration and active Modules
+6. assemble the User Account-specific Workspace
+7. render or execute only authorized Surfaces and Actions
+
+## 8. Deferred Implementation
+
+This architecture does not select:
+
+- Tenant or Instance table design
+- database-per-Instance versus another enforceable storage topology
+- domain resolver implementation
+- User Account and User Identity table shape
+- Global Administration packaging
+- route migration
+- cross-Tenant federation
+
+## 9. Related
+
+- [ADR-0006](../01-decisions/adr-0006-tenant-instance-workspace-principal-and-invocation-vocabulary.md)
+- [System Overview](system-overview.md)
 - [Tenancy](tenancy.md)
-- [Platform Context Route Reorganization Planning](../07-planning/platform-context-route-reorganization-planning.md)
-- [Workspace Identity Implementation Planning](../07-planning/workspace-identity-implementation-planning.md)
+- [Auth Architecture](auth.md)

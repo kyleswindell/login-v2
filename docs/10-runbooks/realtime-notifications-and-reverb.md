@@ -124,6 +124,12 @@ Run:
     docker compose up -d reverb queue
     docker compose exec app php artisan local:ready
 
+When Vite development mode is active, notification websocket clients connect
+through Vite's `/app` websocket proxy. This keeps local browser delivery on the
+same browser-reachable host and port as Vite while the proxy forwards to Reverb
+on port `8080`. Built and deployed assets use the configured direct Reverb
+endpoint instead.
+
 For LAN review:
 
     docker compose exec app php artisan local:ready --app-url=http://192.168.50.10:8000 --vite-url=http://192.168.50.10:5173

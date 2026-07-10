@@ -109,6 +109,10 @@ final class NotificationToastContractTest extends TestCase
         $this->assertStringContainsString('currentApplyNotification', $runtimeSource);
         $this->assertStringContainsString('currentCreateToast', $runtimeSource);
         $this->assertStringContainsString('realtimeConnectionSignature', $runtimeSource);
+        $this->assertStringContainsString('notificationRealtimeState', $runtimeSource);
+        $this->assertStringContainsString('"state_change"', $runtimeSource);
+        $this->assertStringContainsString('.subscribed(() =>', $runtimeSource);
+        $this->assertStringContainsString('.error(() =>', $runtimeSource);
         $this->assertStringContainsString('disconnectRealtime()', $runtimeSource);
         $this->assertStringContainsString('MARK_ALL_BOUND_ATTR', $runtimeSource);
         $this->assertStringContainsString('return existing;', $runtimeSource);

@@ -86,6 +86,12 @@ The Playwright container opens the application through
 `http://laravel.test:8000`. Vite must allow that origin for module scripts even
 when `public/hot` points to a host or LAN Vite URL.
 
+In Vite development mode, browser websocket traffic uses the Vite `/app`
+websocket proxy and Vite forwards it to Reverb. Host Vite defaults the proxy
+target to `http://127.0.0.1:8080`; the Docker Vite service uses
+`http://reverb:8080`. Production builds continue to use the configured direct
+Reverb host and port.
+
 ## Realtime Review
 
 Verify:
@@ -130,6 +136,10 @@ If Reverb fails:
     docker compose logs reverb --tail=200
     docker compose restart reverb
     docker compose exec app php artisan local:ready
+
+If the runtime remains in `connecting` while Reverb is healthy, restart Vite so
+it reloads the websocket proxy configuration, then inspect
+`data-notification-realtime-state` on the realtime runtime marker.
 
 If the login route fails:
 

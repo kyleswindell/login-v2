@@ -76,6 +76,7 @@ Historical archived records already reserve:
 Next available identifier:
 
 - `ADR-0007`
+
 Before assigning it, search active and archived decision paths again to confirm no newer record exists.
 
 Never reuse or renumber a decision identifier.

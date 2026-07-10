@@ -1,6 +1,7 @@
 # Registry, App Instance, Workspace, And Module Vocabulary Planning
 
 Status: Superseded
+
 ## Supersession Notice
 
 ADR-0006 supersedes this document's Tenant, Instance, Workspace, Account, Identity, Actor, and runtime-context direction. Retain this file as historical planning evidence only. Frame, Area, and other unrelated sections require separate review before reuse.

@@ -1,6 +1,7 @@
 # Workspace Identity Implementation Planning
 
 Status: Superseded
+
 ## Supersession Notice
 
 ADR-0006 supersedes the persistent workspace-identity and three-context assumptions in this plan. Workspace is now a User Account-specific runtime resolution, not a stored identity or data boundary. Any future runtime implementation must be replanned from ADR-0006.

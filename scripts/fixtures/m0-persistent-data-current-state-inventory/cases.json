@@ -1,0 +1,161 @@
+{
+    "schema_version": 1,
+    "fixtures": [
+        {
+            "id": "multiple-migrations-one-table",
+            "sources": [
+                {
+                    "path": "database/migrations/2026_01_01_000001_create_widgets.php",
+                    "source": "<?php return new class { public function up(): void { Schema::create('widgets', function (Blueprint $table): void { $table->id(); }); } public function down(): void { Schema::dropIfExists('widgets'); } };"
+                },
+                {
+                    "path": "database/migrations/2026_01_02_000001_alter_widgets.php",
+                    "source": "<?php return new class { public function up(): void { Schema::table('widgets', function (Blueprint $table): void { $table->string('label'); }); } public function down(): void { Schema::table('widgets', function (Blueprint $table): void { $table->dropColumn('label'); }); } };"
+                }
+            ]
+        },
+        {
+            "id": "create-alter-drop-chain",
+            "sources": [
+                {
+                    "path": "database/migrations/2026_01_01_000002_create_chain.php",
+                    "source": "<?php return new class { public function up(): void { Schema::create('chain_records', function (Blueprint $table): void { $table->id(); }); Schema::table('chain_records', function (Blueprint $table): void { $table->string('state'); }); } public function down(): void { Schema::dropIfExists('chain_records'); } };"
+                }
+            ]
+        },
+        {
+            "id": "dynamic-table-identifiers",
+            "dynamic_tables": {
+                "permissions": "permissions"
+            },
+            "sources": [
+                {
+                    "path": "database/migrations/2026_01_01_000003_dynamic.php",
+                    "source": "<?php return new class { public function up(): void { Schema::create($tableNames['permissions'], function (Blueprint $table): void { $table->id(); }); } public function down(): void { Schema::dropIfExists($tableNames['permissions']); } };"
+                }
+            ]
+        },
+        {
+            "id": "compound-indexes-and-unique-constraints",
+            "sources": [
+                {
+                    "path": "database/migrations/2026_01_01_000004_indexes.php",
+                    "source": "<?php return new class { public function up(): void { Schema::create('indexed_records', function (Blueprint $table): void { $table->id(); $table->string('owner'); $table->string('key'); $table->index(['owner', 'key'], 'owner_key_index'); $table->unique(['owner', 'key'], 'owner_key_unique'); }); } public function down(): void { Schema::dropIfExists('indexed_records'); } };"
+                }
+            ]
+        },
+        {
+            "id": "foreign-keys-and-delete-behavior",
+            "sources": [
+                {
+                    "path": "database/migrations/2026_01_01_000005_foreign.php",
+                    "source": "<?php return new class { public function up(): void { Schema::create('child_records', function (Blueprint $table): void { $table->id(); $table->foreignId('user_id')->constrained('users')->cascadeOnDelete(); }); } public function down(): void { Schema::dropIfExists('child_records'); } };"
+                }
+            ]
+        },
+        {
+            "id": "material-pivot-table",
+            "sources": [
+                {
+                    "path": "database/migrations/2026_01_01_000006_pivot.php",
+                    "source": "<?php return new class { public function up(): void { Schema::create('role_user', function (Blueprint $table): void { $table->unsignedBigInteger('role_id'); $table->unsignedBigInteger('user_id'); $table->primary(['role_id', 'user_id']); }); } public function down(): void { Schema::dropIfExists('role_user'); } };"
+                }
+            ]
+        },
+        {
+            "id": "duplicate-migration-names",
+            "sources": [
+                {
+                    "path": "database/migrations/2026_01_01_000007_duplicate.php",
+                    "source": "<?php return new class { public function up(): void { Schema::create('first_duplicate', function (Blueprint $table): void { $table->id(); }); } public function down(): void { Schema::dropIfExists('first_duplicate'); } };"
+                },
+                {
+                    "path": "Modules/Example/database/migrations/2026_01_01_000007_duplicate.php",
+                    "source": "<?php return new class { public function up(): void { Schema::create('second_duplicate', function (Blueprint $table): void { $table->id(); }); } public function down(): void { Schema::dropIfExists('second_duplicate'); } };"
+                }
+            ]
+        },
+        {
+            "id": "present-unregistered-migration-root",
+            "registered_roots": ["database/migrations"],
+            "sources": [
+                {
+                    "path": "orphan/migrations/2026_01_01_000008_orphan.php",
+                    "source": "<?php return new class { public function up(): void { Schema::create('orphan_records', function (Blueprint $table): void { $table->id(); }); } public function down(): void { Schema::dropIfExists('orphan_records'); } };"
+                }
+            ]
+        },
+        {
+            "id": "unsupported-migration-operation",
+            "sources": [
+                {
+                    "path": "database/migrations/2026_01_01_000009_unsupported.php",
+                    "source": "<?php return new class { public function up(): void { Schema::create('unsupported_records', function (Blueprint $table): void { $table->id(); $table->vector('embedding', 128); }); } public function down(): void { Schema::dropIfExists('unsupported_records'); } };"
+                }
+            ]
+        },
+        {
+            "id": "planned-implemented-overlap",
+            "implemented_identifier": "users",
+            "planned_subject": "users",
+            "implemented_record_id": "table.users",
+            "planned_record_id": "concept.user_account_identity_split",
+            "sources": []
+        },
+        {
+            "id": "reviewed-field-preservation",
+            "seed": {
+                "_record_id": "table.fixture_records",
+                "_reviewed": false,
+                "_review_required": true,
+                "disposition": "retain"
+            },
+            "sources": []
+        },
+        {
+            "id": "runtime-discovery-failure-preservation",
+            "baseline": "fixture-baseline",
+            "existing_raw": {
+                "baseline": {
+                    "sha": "fixture-baseline"
+                },
+                "runtime_discovery": {
+                    "mode": "attempted",
+                    "commands": [
+                        {
+                            "command": "php artisan migrate:status --no-interaction --no-ansi",
+                            "attempted": true,
+                            "exit_code": 1,
+                            "timed_out": false,
+                            "stdout_summary": "",
+                            "stderr_summary": "synthetic safe failure",
+                            "failure_reason": "synthetic failure"
+                        }
+                    ]
+                }
+            },
+            "sources": []
+        },
+        {
+            "id": "same-basename-different-paths",
+            "sources": [
+                {
+                    "path": "database/migrations/2026_01_01_000010_same.php",
+                    "source": "<?php return new class { public function up(): void { Schema::create('same_a', function (Blueprint $table): void { $table->id(); }); } public function down(): void { Schema::dropIfExists('same_a'); } };"
+                },
+                {
+                    "path": "Modules/Example/database/migrations/2026_01_01_000010_same.php",
+                    "source": "<?php return new class { public function up(): void { Schema::create('same_b', function (Blueprint $table): void { $table->id(); }); } public function down(): void { Schema::dropIfExists('same_b'); } };"
+                }
+            ]
+        },
+        {
+            "id": "windows-and-posix-path-normalization",
+            "paths": [
+                "database\\migrations\\fixture.php",
+                "database/migrations/fixture.php"
+            ],
+            "sources": []
+        }
+    ]
+}

@@ -90,6 +90,8 @@ The charter remains `draft` until its parent-goal issue structure and initial ex
 
 [M0 Repository Current-State Inventory](00-overview/m0-repository-current-state-inventory.md) is the canonical issue #29 inventory of repository structure, non-UI runtime surfaces, current ownership evidence, authority state, registration state, compatibility, contradictions, and unresolved target questions for the pinned Goal 02 baseline.
 
+[M0 Persistent Data Current-State Inventory](00-overview/m0-persistent-data-current-state-inventory.md) is the canonical issue #31 inventory of source-controlled migrations, implemented tables, persistent boundaries, ownership and scope evidence, active planned persistent concepts, contradictions, and unresolved target questions for the pinned Goal 02 baseline.
+
 ### 4.2 Core Planning Matrix
 
 [Core Service Build Plan Matrix](core-service-build-plan-matrix.md) owns the cross-capability build matrix, target ownership snapshots, physical folder direction, configuration, data and migration planning, testing direction, implementation sequence, owner keys, and open decisions.

@@ -9,6 +9,8 @@
         "dev:host": "vite --host 0.0.0.0",
         "dev:lan": "vite --host 192.168.50.10 --port 5173",
         "lint:docs:guardrails": "node scripts/check-docs-guardrails.mjs",
+        "inventory:m0:repository": "node scripts/generate-m0-repository-current-state-inventory.mjs",
+        "lint:m0:repository-inventory": "node scripts/check-m0-repository-current-state-inventory.mjs",
         "local:ready": "php artisan local:ready",
         "test:browser": "playwright test"
     },

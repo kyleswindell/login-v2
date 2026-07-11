@@ -75,6 +75,8 @@ Planning documents do not replace issues, Projects, decision records, or canonic
 
 [M0 Repository Convergence Planning](00-overview/m0-repository-convergence-planning.md) is the milestone charter for converting the accepted pre-M0 repository baseline into one coherent implementation authority.
 
+[M0 Repository Current-State Inventory](00-overview/m0-repository-current-state-inventory.md) is the canonical issue #29 inventory of repository structure, non-UI runtime surfaces, current ownership evidence, authority state, registration state, compatibility, contradictions, and unresolved target questions for the pinned Goal 02 baseline.
+
 It owns:
 
 - the ten M0 goal workstreams

@@ -48,7 +48,7 @@ Ensure files are built in the correct layer, with the correct responsibility, an
 
 Before creating or moving a file, identify:
 
-1. the owner layer
+1. the ownership area
 2. the file type
 3. the canonical responsibility
 4. the public contract

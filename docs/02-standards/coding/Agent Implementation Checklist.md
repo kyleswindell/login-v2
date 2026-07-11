@@ -114,7 +114,7 @@ Confirm:
 
 - GitHub issue number or explicit user-authorized task
 - issue title or task name
-- primary owner layer
+- primary ownership area
 - specific capability, surface, module, component family, or tooling owner
 - intended execution mode
 - expected delivery state
@@ -276,7 +276,7 @@ Confirm:
 - acceptance criteria
 - in-scope behavior
 - out-of-scope behavior
-- owner layer
+- ownership area
 - implementation dependencies
 - execution mode
 - expected status or delivery state
@@ -1054,7 +1054,7 @@ The final work report must include:
 
 - issue or task handled
 - execution mode
-- owner layer and specific owner
+- ownership area and specific owner
 - acceptance criteria addressed
 - files created
 - files modified
@@ -1095,7 +1095,7 @@ Stop and ask when:
 - the Definition of Ready is not satisfied
 - task scope is ambiguous
 - acceptance criteria are not observable
-- owner layer is unclear
+- ownership area is unclear
 - file archetype is unclear
 - standards conflict
 - canonical docs conflict with implementation

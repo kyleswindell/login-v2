@@ -620,26 +620,24 @@ Exact permission names are an implementation decision, but DataGovernance should
 Working permission areas:
 
 ```text
-data-governance.view
-data-governance.domains.view
-data-governance.domains.update
-data-governance.assets.view
-data-governance.assets.update
-data-governance.privacy-requests.view
-data-governance.privacy-requests.create
-data-governance.privacy-requests.update
-data-governance.privacy-requests.complete
-data-governance.consent.view
-data-governance.consent.update
-data-governance.quality.view
-data-governance.quality.update
-data-governance.retention.review
-data-governance.manage
+data_governance.view
+data_governance.domains.view
+data_governance.domains.update
+data_governance.assets.view
+data_governance.assets.update
+data_governance.privacy_requests.view
+data_governance.privacy_requests.create
+data_governance.privacy_requests.update
+data_governance.privacy_requests.complete
+data_governance.consent.view
+data_governance.consent.update
+data_governance.quality.view
+data_governance.quality.update
+data_governance.retention.review
+data_governance.manage
 ```
 
-`data-governance.manage` should be the elevated umbrella permission if this namespace is accepted.
-
-Open decision: confirm whether multiword permission namespaces should use hyphenated owner keys such as `data-governance.*` or dotted area keys such as `data.governance.*` before implementation.
+`data_governance.manage` is the planned elevated umbrella permission. ADR-0007 resolves multiword internal segments to snake case; runtime permission implementation remains deferred.
 
 ## Implementation Sequence
 

@@ -47,7 +47,7 @@ This standard applies to registry schema, seeders, keys, lifecycle states, docum
 
 ## Core Rule
 
-Every registry entry must have a stable key, owner, purpose, lifecycle state, and documentation owner.
+Every registry entry must have a stable identity, `ownership_area`, `owner_key`, purpose, lifecycle state, and documentation owner.
 
 If a registry entry cannot identify its owner or purpose, it should not be stored.
 
@@ -74,9 +74,11 @@ Do not store user-editable values in registry tables unless the registry explici
 
 Registry entries should generally define:
 
-- stable key
-- owner layer
-- owner capability, surface, or module
+- `registry_key`
+- `contribution_key`
+- `ownership_area`
+- `owner_key`
+- `capability_key` or `module_key` when applicable
 - display label
 - description
 - lifecycle status
@@ -95,25 +97,36 @@ Use `jsonb` metadata only for extension data, not core registry fields that must
 
 ## Stable Key Rules
 
-Registry keys are durable contracts after release.
+Registry keys and contribution keys are durable contracts after release.
 
 Keys must be:
 
 - stable
 - descriptive
-- namespaced by owner when appropriate
+- correctly identified as a registry or owner-prefixed contribution
 - safe to reference from code, docs, seeders, and tests
 - migrated intentionally if renamed
 
 Examples:
 
-- `notifications.security.mfa_changed`
-- `setup.security`
-- `settings.mail.from_address`
-- `module.customers`
-- `navigation.platform.security`
+- `registry_key: notification.types`
+- `registry_key: setup.steps`
+- `registry_key: settings.pages`
+- `registry_key: ui.navigation`
+- `contribution_key: notifications.security_mfa_changed`
+- `contribution_key: security.setup_overview`
+- `contribution_key: identity.user_defaults`
+- `contribution_key: projects.index`
 
-Renaming registry keys requires explicit migration planning.
+The canonical identity of a contribution is the pair:
+
+```text
+(registry_key, contribution_key)
+```
+
+Registry keys are globally unique within the registry-key family. Contribution keys are unique within their registry. Storage and sync implementations must reject duplicate canonical pairs rather than silently replacing an existing contribution.
+
+Renaming either part of a released contribution identity requires explicit migration planning and a one-way compatibility alias that follows [Identifier And Key Standards](../coding/Identifier%20And%20Key%20Standards.md). Arbitrary invalid keys must not be silently normalized.
 
 ---
 
@@ -121,18 +134,16 @@ Renaming registry keys requires explicit migration planning.
 
 Every registry entry must identify its owner.
 
-Possible owners:
+Every entry must store or resolve these fields separately:
 
-- Core Capability
-- Platform Surface
-- Business Module
-- Shared UI
-- Ops
-- Integration
+```text
+ownership_area: core | module | ui
+owner_key: <globally unique owner key>
+```
 
-The registry may aggregate contributions, but ownership remains with the contributing capability, platform surface, or module.
+Use `capability_key` for stable functional identity and `module_key` for an optional Module when applicable. Do not collapse these fields even when their values currently match.
 
-Platform registry tables should not become hidden owners of Core or Business Module behavior.
+The registry may aggregate contributions, but ownership remains with the contributing Core capability, Module, or UI owner. Registry infrastructure must not become the hidden owner of contributed behavior.
 
 ---
 
@@ -197,9 +208,9 @@ Registry seeders must be deterministic and safe to rerun.
 
 Seeder rules:
 
-- use stable keys
-- update existing rows by key
-- do not duplicate entries
+- use canonical registry and contribution keys
+- update existing rows by the complete canonical pair
+- reject duplicate canonical pairs
 - do not delete entries without explicit cleanup plan
 - do not seed real secrets
 - keep sort order stable
@@ -213,11 +224,14 @@ Registry seeders should be reviewed as contract changes, not disposable setup sc
 
 Business Modules may contribute registry entries.
 
-A module contribution should identify:
+A Module contribution should identify:
 
-- module key
+- `ownership_area: module`
+- `owner_key`
+- `module_key`
 - contribution type
-- target registry
+- `registry_key`
+- owner-prefixed `contribution_key`
 - route/action/handler
 - permission requirement
 - lifecycle state
@@ -305,6 +319,8 @@ Stop before adding or changing registry data when:
 
 ## Related
 
+- [ADR-0007: Owner, Registry, And Identifier Key Conventions](../../01-decisions/adr-0007-owner-registry-and-identifier-key-conventions.md)
+- [Identifier And Key Standards](../coding/Identifier%20And%20Key%20Standards.md)
 - [Settings Data Governance Standards](Settings%20Data%20Governance%20Standards.md)
 - [Database Table Contract Standards](Database%20Table%20Contract%20Standards.md)
 - [Schema Design Standards](Schema%20Design%20Standards.md)

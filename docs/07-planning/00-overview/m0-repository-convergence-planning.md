@@ -1740,7 +1740,7 @@ No implementation milestone may be required to infer architecture, policy, data 
 A post-M0 implementation issue must be able to identify:
 
 - accepted target behavior
-- primary owner layer
+- primary ownership area
 - target folder and namespace
 - applicable contracts
 - affected database objects

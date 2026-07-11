@@ -335,7 +335,7 @@ Test both successful and denied paths for auth/access-sensitive behavior.
 Before implementation starts, confirm:
 
 - issue scope is clear
-- owner layer is identified
+- ownership area is identified
 - canonical docs are identified
 - affected data/security boundaries are understood
 - verification is known

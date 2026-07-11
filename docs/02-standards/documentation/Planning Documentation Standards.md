@@ -377,7 +377,7 @@ Each slice should be bounded enough to become one issue or a tightly coordinated
 A slice should identify:
 
 - outcome
-- owner layer and specific owner
+- ownership area and specific owner
 - scope
 - non-goals
 - dependencies

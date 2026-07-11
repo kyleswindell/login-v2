@@ -339,14 +339,16 @@ Target language:
 | module repository | package catalog or package repository |
 | module registry entry | package registry entry |
 | module contribution | package contribution |
-| module key | owner key or package key, depending on context |
+| module key | retain as `module_key` only for Module identity; use `owner_key` or `capability_key` for those distinct meanings |
 | module type/category | package classification |
 
 Important distinction:
 
-- `package_key` identifies the package that owns code and declarations.
-- `owner_type` identifies whether the owner is `core`, `business_module`, `internal_tool`, or `integration`.
-- `module_key` should eventually be reserved for business module ownership only.
+- `ownership_area` identifies `core`, `module`, or `ui` source-of-truth ownership.
+- `owner_key` identifies the precise behavior and contract owner.
+- `capability_key` identifies stable functional behavior independent of physical ownership.
+- `module_key` is reserved for optional Module identity independently from its Composer package.
+- A future `package_key` is valid only if packaging becomes a materially distinct application identity; it must not duplicate `module_key`.
 
 During transition, existing `module_key` columns can remain compatibility storage. New docs and future schema should avoid expanding that name into core capability contexts.
 
@@ -367,18 +369,19 @@ Target direction:
 
 - Replace or alias `module_registry_entries` as `package_registry_entries` in a future schema contract.
 - Add owner classification to package/contribution projections before broad business module rollout.
-- Rename contribution ownership language from `module_key` to `owner_key` or `package_key` where feasible.
+- Rename contribution ownership language from `module_key` to `owner_key` where the field identifies ownership; retain `module_key` where it identifies an optional Module.
 - Preserve compatibility readers while old rows and tests still expect `module_key`.
 - Do not let DB rows define executable routes, views, handlers, permissions, notification types, or package behavior.
 
 Recommended eventual projection fields:
 
 ```text
-package_key
 package_name
 package_classification
-owner_type
+ownership_area
 owner_key
+capability_key
+module_key
 is_core
 is_business_module
 is_internal_tool
@@ -954,7 +957,7 @@ Additional tests once physical migration begins:
 - Should the code namespace stay `App\Core\Modules` with improved category names, or migrate to `App\Core\Packages`?
 - Should current package loader compatibility be preserved through adapters while core capabilities move to `app/Core`?
 - Should `module_registry_entries` be renamed to `package_registry_entries`, or should a new table be introduced with a compatibility view/reader?
-- Should `module_key` in `settings`, `notifications`, registry tables, and permission registry become `owner_key`, `package_key`, or stay as compatibility naming?
+- Which existing `module_key` columns identify ownership versus actual Module identity, and what compatibility migration is required before introducing the accepted separate fields?
 - Should Preferences remain a standalone package or be absorbed under Account after the account suite stabilizes?
 - Should Dashboard be classified as a core surface package or workspace capability package?
 - What exact classification names should replace `Category::Core`, `Category::Shared`, and `Category::PlatformManagement`?

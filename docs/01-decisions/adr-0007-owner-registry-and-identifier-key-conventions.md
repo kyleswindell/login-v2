@@ -86,7 +86,9 @@ Canonical internal keys must not use:
 - leading or trailing periods
 - physical folder or namespace prefixes unless the identifier family explicitly requires them
 
-Framework-specific identifiers may retain their native syntax when they are not canonical internal keys. Examples include Composer package names, PHP namespaces, Blade aliases, and URLs.
+Do not derive canonical keys from physical folders, PHP namespaces, PHP classes, controller names, URLs, route paths, display labels, or Composer package names.
+
+Framework-specific identifiers may retain their native syntax when they are stored separately rather than used as canonical internal keys. Examples include Composer package names, PHP namespaces, Blade aliases, URLs, and environment variables.
 
 ### 7.2 Ownership Fields
 
@@ -123,6 +125,9 @@ security
 audit
 notifications
 data_governance
+data_protection
+supply_chain
+offensive_testing
 projects
 ui
 ```
@@ -221,7 +226,7 @@ component_key: component.modal
 blade_alias: x-ui.modal
 ```
 
-`platform_surface_key` is retired. Use the precise family such as `surface_key`, `ui_entry_key`, or `contract_key`.
+`platform_surface_key` is retired. Use the precise family: `surface_key`, `ui_entry_key`, `contract_key`, `component_key`, `pattern_key`, or `layout_key`.
 
 ### 7.9 Permission Keys
 
@@ -333,7 +338,7 @@ audit.record_project_archival
 search.index_customer_created
 ```
 
-A stable listener key is required only when registration, configuration, observability, ordering, retry policy, or compatibility requires one.
+A stable listener key is required only when registration, configuration, observability, ordering, retry policy, compatibility, or lifecycle management requires one.
 
 ### 7.17 Queue Keys
 
@@ -369,6 +374,8 @@ Aliases:
 - must not be treated as equally canonical
 - must not create ambiguous reverse lookup
 - must fail explicitly when the target key no longer exists
+
+Arbitrary invalid keys must be rejected. They must not be silently normalized into accepted keys.
 
 ### 7.19 Collision And Uniqueness
 

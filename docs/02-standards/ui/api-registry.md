@@ -29,6 +29,10 @@ Active implementation progress is tracked in `docs/08-active/`, not here.
 - When an API disposition changes, update this registry, the owning standard, the Rendered evidence route, and tests in the same pass.
 - Treat current installed Component Blade folders under `resources/views/components/ui/{component}/index.blade.php` as source truth. Deleted flat paths such as `resources/views/components/ui/{component}.blade.php` are stale references unless the file exists.
 - Treat Pattern helpers under `resources/views/components/patterns/*.blade.php` as the current Pattern helper source root.
+- Keep canonical UI API identity separate from framework aliases and physical source paths. Use the accepted families `component_key`, `pattern_key`, `layout_key`, `surface_key`, `ui_entry_key`, and `contract_key`, with values such as `component.modal`, `pattern.auth.challenge_form`, and `contract.data_table`.
+- Store a Blade alias such as `x-ui.modal` separately from its canonical `component.modal` key. A source path is implementation evidence, not API identity.
+- Retire `platform_surface_key`. Existing uses require an explicit compatibility disposition; do not use it for new registry entries.
+- UI-key compatibility aliases are one-way mappings governed by [Identifier And Key Standards](../coding/Identifier%20And%20Key%20Standards.md).
 
 ## 3. Disposition Vocabulary
 
@@ -191,3 +195,5 @@ Update this registry when:
 - a Carbon component or pattern is intentionally excluded from Login App coverage
 
 Do not use this registry as a substitute for the owning API standard or the active implementation sync. The registry indexes ownership and durable disposition; the owning Element, Component, or Pattern standard defines rules; `docs/08-active/` tracks current work progress.
+
+Identifier grammar, collision behavior, and aliases are governed by [ADR-0007](../../01-decisions/adr-0007-owner-registry-and-identifier-key-conventions.md) and [Identifier And Key Standards](../coding/Identifier%20And%20Key%20Standards.md).

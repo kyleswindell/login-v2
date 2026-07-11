@@ -37,7 +37,7 @@ segment.segment_name.action
 
 Canonical internal keys must not use uppercase characters, spaces, hyphens, slashes, repeated periods, leading periods, or trailing periods.
 
-Do not derive canonical keys from physical folders, PHP namespaces, classes, URLs, display labels, or package names.
+Do not derive canonical keys from physical folders, PHP namespaces, PHP classes, controller names, URLs, route paths, display labels, or Composer package names.
 
 Framework-native identifiers may retain their own syntax when stored separately, including Composer packages, PHP namespaces, Blade aliases, URLs, and environment variables.
 
@@ -73,6 +73,9 @@ security
 audit
 notifications
 data_governance
+data_protection
+supply_chain
+offensive_testing
 projects
 ui
 ```
@@ -156,6 +159,8 @@ The canonical contribution identity is:
 
 Contribution keys are unique within their registry.
 
+Registries must reject duplicate canonical contribution identities. They must not silently replace an existing contribution.
+
 ## 8. UI Keys
 
 Canonical UI machine keys use explicit family prefixes:
@@ -175,7 +180,7 @@ component_key: component.modal
 blade_alias: x-ui.modal
 ```
 
-Retire `platform_surface_key`. Use `surface_key`, `ui_entry_key`, or `contract_key` according to the actual family.
+Retire `platform_surface_key`. Use `surface_key`, `ui_entry_key`, `contract_key`, `component_key`, `pattern_key`, or `layout_key` according to the actual family.
 
 ## 9. Permission Keys
 
@@ -291,7 +296,7 @@ audit.record_project_archival
 search.index_customer_created
 ```
 
-A stable listener key is required only when registration, configuration, observability, ordering, retry policy, or compatibility requires one.
+A stable listener key is required only when registration, configuration, observability, ordering, retry policy, compatibility, or lifecycle management requires one.
 
 Logical queue keys identify broad operational lanes:
 
@@ -349,6 +354,8 @@ Aliases must not be reused, chained, presented as equally canonical, or create a
 
 An alias must fail explicitly when its canonical target no longer exists.
 
+Reject arbitrary invalid keys. Do not silently normalize them into accepted keys.
+
 ## 17. Validation
 
 New or changed key definitions must verify:
@@ -400,6 +407,23 @@ registry_key: ui.navigation
 contribution_key: projects.index
 ```
 
+### Invalid Examples
+
+| Invalid value | Reason |
+| --- | --- |
+| `Platform.Roles` | Uppercase characters and a retired generic Platform root. |
+| `data-governance.export` | Hyphenated internal segment. |
+| `core.identity` | Ownership-area prefix embedded in an owner key. |
+| `module.projects` | Ownership-area prefix embedded in a Module key. |
+| `projects..archive` | Repeated period. |
+| `.users.view` | Leading period. |
+| `users.view.` | Trailing period. |
+| `projects/archive` | Slash used inside a canonical internal key. |
+| `parasolutions/login-projects` | Composer package identity used as a Module key. |
+| `platform_surface_key` | Retired ambiguous UI-key family. |
+
+Framework-native values such as `x-ui.modal`, `/platform/roles`, `App\\Core\\Identity`, and `PARASOLUTIONS_API_KEY` remain valid only in their separate alias, path, namespace, or environment-variable fields. They are not canonical internal keys.
+
 ## 20. Prohibited Practices
 
 Do not:
@@ -410,6 +434,7 @@ Do not:
 - derive keys from classes, paths, URLs, or labels
 - use aliases as competing canonical identities
 - silently accept duplicate registry contributions
+- silently normalize arbitrary invalid keys
 - use hyphenated internal key segments
 - rename keys without compatibility and propagation review
 

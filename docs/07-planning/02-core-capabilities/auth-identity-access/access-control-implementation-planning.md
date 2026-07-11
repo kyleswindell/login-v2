@@ -287,7 +287,7 @@ Initial scope:
 
 - Access Control overview route and blank/summary view.
 - Package metadata and navigation contribution.
-- Canonical permissions such as `access-control.view` and `access-control.manage`, or a reviewed shorter vocabulary before implementation.
+- Canonical capability-first permissions such as `access.view` and `access.manage` under ADR-0007.
 - Links to existing Users, Roles, Permissions, and future Groups/Policies sections.
 
 This step should not change existing role assignment behavior.
@@ -444,24 +444,22 @@ Final permission vocabulary must be reviewed before implementation.
 
 Potential Access Control permissions:
 
-- `access-control.view`
-- `access-control.groups.view`
-- `access-control.groups.create`
-- `access-control.groups.update`
-- `access-control.groups.delete`
-- `access-control.policies.view`
-- `access-control.policies.create`
-- `access-control.policies.update`
-- `access-control.policies.delete`
-- `access-control.elevated.view`
-- `access-control.elevated.activate`
-- `access-control.reviews.view`
-- `access-control.reviews.manage`
-- `access-control.manage`
+- `access.view`
+- `access.groups.view`
+- `access.groups.create`
+- `access.groups.update`
+- `access.groups.delete`
+- `access.policies.view`
+- `access.policies.create`
+- `access.policies.update`
+- `access.policies.delete`
+- `access.elevated.view`
+- `access.elevated.activate`
+- `access.reviews.view`
+- `access.reviews.manage`
+- `access.manage`
 
-Open naming question:
-
-Use `access-control.*` for readability, or choose a shorter owner key such as `access.*`. The decision should be made once and then used consistently.
+ADR-0007 resolves the namespace as `access.*`. Runtime permission migration remains a separate implementation issue.
 
 ## Test Planning
 

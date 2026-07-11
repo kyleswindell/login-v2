@@ -94,6 +94,8 @@ The charter remains `draft` until its parent-goal issue structure and initial ex
 
 M0 must reconcile the matrix against accepted vocabulary, ownership, database, integration, and migration decisions.
 
+[Identifier Key Convention Propagation Planning](01-architecture-boundaries/identifier-key-convention-propagation-planning.md) inventories documentation alignment completed by issue #28 and routes deferred runtime, schema, route, package, and compatibility migrations to their future owners.
+
 ### 4.3 Cybersecurity Promotion Backlog
 
 [Cybersecurity Review Backlog Planning](00-overview/cybersecurity-review-backlog-planning.md) routes remaining cybersecurity promotion work into standards, runbooks, architecture, schema, feature contracts, implementation planning, and deferred future topics.

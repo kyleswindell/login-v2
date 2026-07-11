@@ -170,7 +170,7 @@ Prefer names that identify:
 - actor
 - action
 - target
-- owner layer
+- ownership area
 - capability or module
 - lifecycle state
 

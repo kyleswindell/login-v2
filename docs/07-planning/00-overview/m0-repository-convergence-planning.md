@@ -324,98 +324,118 @@ The parent requires an acceptance review confirming that resulting artifacts:
 
 ### 8.1 Objective
 
-Settle the language and ownership model used throughout code, documentation, configuration, registries, database contracts, tests, and issues.
+Settle the canonical terminology, ownership model, Principal and assurance vocabulary, identifier formats, compatibility rules, and responsibility boundaries used throughout code, documentation, configuration, registries, database contracts, tests, and issues.
 
 ### 8.2 Accepted Ownership Baseline
 
-[ADR-0005: Core, Modules, And UI Ownership Taxonomy](../../01-decisions/adr-0005-core-modules-ui-ownership-taxonomy.md) establishes three source-of-truth ownership areas:
+[ADR-0005: Core, Modules, And UI Ownership Taxonomy](../../01-decisions/adr-0005-core-modules-ui-ownership-taxonomy.md) establishes three application source-of-truth ownership areas:
 
 - **Core** — required base-application behavior, state, coordination, infrastructure, and contracts
 - **Modules** — optional, cohesive, independently versioned Composer feature packages
 - **UI** — reusable Elements, Components, Patterns, Layouts, CSS, JavaScript, icons, contracts, tests, and review evidence
 
-`Platform` is not a peer owner. Existing Platform responsibilities must be classified under Core or UI. Physical `app/Platform` paths remain transitional evidence until Goals 03 and 09 define and execute migration.
+`Platform` is not a peer application owner. Existing Platform responsibilities must be classified under Core or UI. Physical `app/Platform` paths remain transitional evidence until Goals 03 and 09 define and execute migration.
 
 A Core Capability is a distinct capability within Core. A business-oriented feature may be a Module, but business purpose is not required for Module classification.
 
-### 8.3 Remaining Required Outcomes
+Repository work ownership such as Docs, Ops, or Tests is workflow-routing vocabulary. It must not be confused with the ADR-0005 application `ownership_area` values `core`, `module`, and `ui`.
 
-M0 must still define and distinguish:
+### 8.3 Accepted Principal, Scope, And Execution Vocabulary
 
-- registry
-- contribution
-- owner key
-- Module key
-- dependency and extension relationships
-- instance
-- workspace
-- tenant
-- account
-- user
-- identity
-- service identity
-- actor
-- UI Element
-- UI Component
-- UI Pattern
-- UI Layout
-- surface
-- renderer
-- ViewModel or PageData
-- configuration owner
-- route owner
-- permission owner
-- notification owner
-- audit-event owner
-- database owner
+[ADR-0006: Tenant, Instance, Workspace, Principal, Actor, And Invocation Vocabulary](../../01-decisions/adr-0006-tenant-instance-workspace-principal-and-invocation-vocabulary.md) establishes:
 
-For each material term, define:
+- one Tenant exclusively owns one Instance
+- Instance is the logical isolation boundary
+- Workspace is resolved per authenticated User Account and is not a persistent container
+- User Accounts and their User Identity records belong to one Tenant Instance
+- there is no canonical global or cross-Tenant User Identity
+- a human Principal is represented by a User Account
+- a non-human Principal is represented by a Non-Human Identity
+- Service Account, Workload Identity, and Application Principal are NHI forms
+- Machine Identity is independent from NHI
+- Network Identity is distinct from Network Context
+- Actor preserves the Principal and applicable assurance context
+- jobs, commands, APIs, webhooks, events, and schedules are invocation mechanisms rather than Actor types
+- canonical Invocation Channels are `interactive_web`, `api_request`, `webhook_request`, `console_command`, `queued_job`, `event_consumer`, `scheduled_task`, and `internal_system`
+- Global Administration is an authorized Surface within Internal Tenant Workspaces rather than a separate control-plane workspace
 
-- canonical name
-- meaning
-- allowed scope
-- owner
-- forbidden or deprecated synonyms
-- current code or documentation mismatches
-- propagation requirements
+### 8.4 Accepted Identifier And Registry Vocabulary
 
-### 8.4 Required Artifacts
+[ADR-0007: Owner, Registry, And Identifier Key Conventions](../../01-decisions/adr-0007-owner-registry-and-identifier-key-conventions.md) and the [Identifier And Key Standards](../../02-standards/coding/Identifier%20And%20Key%20Standards.md) establish:
+
+- lowercase ASCII snake-case key segments
+- periods for hierarchical key segments
+- separation of `ownership_area`, `owner_key`, `capability_key`, and `module_key`
+- globally unique owner, capability, Module, registry, and applicable identifier families
+- separate `registry_key` and `contribution_key` identities
+- capability-first permission and route keys
+- domain-first notification and Audit event keys
+- imperative job keys
+- completed-event domain-event keys
+- provider-independent logical queue keys
+- precise UI key families
+- one-way, non-chainable compatibility aliases
+- explicit collision and duplicate-rejection rules
+- prohibition of generic `platform.*` ownership and configuration roots
+
+Module dependency and extension relationships remain governed by ADR-0005. ADR-0007 does not establish separate `dependency_key` or `extension_key` families.
+
+### 8.5 Required Artifacts
 
 - [x] [ADR-0005: Core, Modules, And UI Ownership Taxonomy](../../01-decisions/adr-0005-core-modules-ui-ownership-taxonomy.md)
-- [x] accepted ownership vocabulary and compatibility map in the Core Service Build Plan Matrix
-- [ ] instance/workspace/tenant/account glossary
-- [ ] owner, Module, registry, dependency, and extension-key conventions
-- [ ] complete terminology mismatch inventory and propagation report
+- [x] accepted ownership vocabulary and compatibility map in the [Core Service Build Plan Matrix](../core-service-build-plan-matrix.md)
+- [x] [ADR-0006: Tenant, Instance, Workspace, Principal, Actor, And Invocation Vocabulary](../../01-decisions/adr-0006-tenant-instance-workspace-principal-and-invocation-vocabulary.md)
+- [x] synchronized Tenant, Instance, Workspace, Principal, assurance, Actor, and Invocation Channel architecture and standards
+- [x] [ADR-0007: Owner, Registry, And Identifier Key Conventions](../../01-decisions/adr-0007-owner-registry-and-identifier-key-conventions.md)
+- [x] [Identifier And Key Standards](../../02-standards/coding/Identifier%20And%20Key%20Standards.md)
+- [x] identifier-key propagation and deferred-runtime-migration inventory
+- [x] synchronized owner, capability, Module, registry, contribution, collision, and compatibility vocabulary
 
-### 8.5 Child Issues
+### 8.6 Child Issues
 
 - [x] #1 — Confirm Core, Modules, and UI ownership taxonomy.
-- [ ] #27 — Confirm instance, workspace, tenant, account, user, identity, service identity, and actor vocabulary.
-- [ ] #28 — Define owner, Module, registry, dependency, and extension-key formats and complete terminology propagation review.
+- [x] #27 — Confirm Tenant, Instance, Workspace, Principal, assurance, Actor, and Invocation Channel vocabulary.
+- [x] #28 — Define owner, capability, Module, registry, contribution, identifier, collision, and compatibility conventions.
 
-### 8.6 Dependencies
+### 8.7 Dependencies And Downstream Use
 
-- Goal 02 provides current mismatch evidence.
-- All later goals depend on the accepted ownership baseline.
-- Scope-sensitive key conventions remain dependent on issue #27.
+- Goal 02 may identify additional current-state mismatches, but inventory findings do not reopen ADR-0005, ADR-0006, or ADR-0007.
+- All later goals use the accepted ownership, Principal, scope, assurance, Actor, Invocation Channel, registry, and identifier vocabulary.
+- Runtime renaming, schema changes, physical movement, compatibility implementation, and route migration remain owned by their later goals and bounded issues.
 
-### 8.7 Exit Criteria
+### 8.8 Exit Criteria
 
-- [x] Core, Modules, and UI ownership boundaries are accepted.
-- [x] Platform and related deprecated ownership terminology are mapped.
-- [x] Module package, dependency, and extension direction is accepted.
-- [ ] each remaining material term has one canonical definition
-- [ ] each remaining material concept has one primary owner
-- [ ] owner-key and registry-key formats are accepted
-- [ ] planning matrices use the complete canonical vocabulary
-- [ ] remaining terminology questions are explicit blockers
+- [x] each material Goal 01 term has one canonical definition
+- [x] each material Goal 01 concept has one primary owner or an explicitly separated identifier family
+- [x] Core, Modules, and UI ownership boundaries are accepted
+- [x] Platform and related deprecated ownership terminology are mapped
+- [x] Module package, dependency, and extension relationships are accepted
+- [x] Tenant, Instance, Workspace, User Account, User Identity, Principal, NHI, Machine Identity, Network Identity, Network Context, Actor, and Invocation Channel vocabulary is accepted
+- [x] owner-key, registry-key, contribution-key, identifier grammar, collision, and compatibility rules are accepted
+- [x] planning matrices use the accepted Goal 01 vocabulary
+- [x] remaining implementation and migration questions are explicit and assigned to later goals
+- [x] resulting artifacts agree, are indexed, and do not duplicate another canonical owner
 
-### 8.8 Non-Goals
+### 8.9 Acceptance Result
+
+Goal 01 is accepted when this charter synchronization is merged and parent issue #17 records the final review.
+
+Accepted authorities:
+
+- ADR-0005 for application ownership
+- ADR-0006 for Tenant, Instance, Workspace, Principal, assurance, Actor, and Invocation Channel vocabulary
+- ADR-0007 for owner, capability, Module, registry, contribution, identifier, collision, and compatibility conventions
+- Core Service Build Plan Matrix for planning application and compatibility mapping
+- Identifier Key Convention Propagation Planning for deferred runtime migration ownership
+
+### 8.10 Non-Goals
 
 - moving every file into its target owner
-- renaming every class during this goal
+- renaming every class, route, key, configuration entry, or package
 - implementing the Module lifecycle or package manager
 - implementing every registry
+- implementing compatibility adapters
+- reopening ADR-0005, ADR-0006, or ADR-0007 through current-state inventory
 
 ## 9. Goal 02 — Current-State Inventory And Disposition
 
@@ -1503,10 +1523,10 @@ The exact canonical paths may be adjusted during Goal 01 and Goal 03, but one ca
 | Current-state disposition matrix      | `docs/07-planning/00-overview/`                              | Goal 02             | Repository-wide inventory and disposition                 |
 | Target repository tree                | Architecture-boundary planning                               | Goal 03             | Include dependency direction                              |
 | Folder and namespace migration matrix | Migration planning                                           | Goal 03 and Goal 09 | Current-to-target map                                     |
-| View Surface and Renderer Matrix      | Platform-surface planning                                    | Goal 04             | Includes ViewModel/PageData and renderer ownership        |
+| View Surface and Renderer Matrix      | Core surface and composition planning                       | Goal 04             | Includes ViewModel/PageData and renderer ownership        |
 | Shared UI contract export             | Repository tooling backed by canonical contracts             | Goal 04             | Generated output is non-canonical                         |
-| UI readiness matrix                   | Shared UI planning                                           | Goal 05             | Includes manual review and Carbon provenance              |
-| Manual pattern work queue             | Shared UI planning plus GitHub issues                        | Goal 05             | GitHub owns active status                                 |
+| UI readiness matrix                   | UI planning                                                  | Goal 05             | Includes manual review and Carbon provenance              |
+| Manual pattern work queue             | UI planning plus GitHub issues                               | Goal 05             | GitHub owns active status                                 |
 | Current-versus-target data matrix     | Database planning and table contracts                        | Goal 06             | Include scope and migration direction                     |
 | Capability dependency matrix          | Core planning                                                | Goal 07             | Producer, consumer, authorization, evidence, notification |
 | Planning-to-standard promotion matrix | M0 overview or standards index                               | Goal 08             | Track retain, promote, supersede, or delete               |
@@ -1520,8 +1540,6 @@ The exact canonical paths may be adjusted during Goal 01 and Goal 03, but one ca
 | Item                                                            | Type                    | Primary Goal | Required By          | Resolution Or Next Action                    |
 | --------------------------------------------------------------- | ----------------------- | ------------ | -------------------- | -------------------------------------------- |
 
-| Instance, workspace, tenant, account, and user vocabulary       | Decision                | Goal 01      | Goals 03, 06, and 07 | Create bounded decision issue                |
-| Owner-key and registry-key format                               | Decision                | Goal 01      | Goals 03, 04, and 07 | Create bounded decision issue                |
 | Future administrative URL prefix                                | Decision                | Goal 03      | Goal 09              | Resolve through issue #5                     |
 | UI contract export command and format                           | Decision                | Goal 04      | Goal 05 and Goal 10  | Define deterministic schema and command      |
 | Local-development UI contract viewer/API                        | Decision                | Goal 04      | Optional M0 tooling  | Accept, defer, or reject explicitly          |
@@ -1531,6 +1549,14 @@ The exact canonical paths may be adjusted during Goal 01 and Goal 03, but one ca
 | Service-account model                                           | Decision                | Goal 06      | Goals 07, 08, and 09 | Resolve through issue #7                     |
 | Required green suites before M1                                 | Decision                | Goal 10      | M0 completion        | Define after test reconciliation             |
 | Exact M0 baseline commit                                        | Administrative decision | Goal 10      | M0 acceptance        | Record when this charter is merged           |
+
+### Resolved Goal 01 Decisions
+
+| Decision | Authority | Downstream Use |
+| --- | --- | --- |
+| Core, Modules, and UI source-of-truth ownership | ADR-0005 | Goals 02–10 |
+| Tenant, Instance, Workspace, Principal, assurance, Actor, and Invocation Channel vocabulary | ADR-0006 | Goals 02, 03, 06, 07, and 09 |
+| Owner, capability, Module, registry, contribution, identifier, collision, and compatibility conventions | ADR-0007 and Identifier And Key Standards | Goals 02, 03, 04, 06, 07, and 09 |
 
 Promote durable accepted decisions according to Decision Record Standards.
 

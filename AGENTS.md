@@ -90,7 +90,8 @@ For implementation work, start from the GitHub issue or the user-provided task.
 Before editing files:
 
 - Identify the issue number or task scope.
-- Identify the intended owner area: Core, Module, UI, Docs, Ops, or Tests.
+- Identify the intended repository work owner area: Core, Module, UI, Docs, Ops, or Tests.
+- When recording application architecture ownership, use ADR-0005 `ownership_area` values `core`, `module`, or `ui`; Docs, Ops, and Tests are repository workflow owners rather than application ownership areas.
 - Identify the canonical docs that govern the change.
 - Identify the expected files or folders in scope.
 - Identify likely tests or verification commands.

@@ -39,7 +39,7 @@ Accepted
   - [ADR-0006: Tenant, Instance, Workspace, Principal, Actor, And Invocation Vocabulary](adr-0006-tenant-instance-workspace-principal-and-invocation-vocabulary.md)
 - Canonical standard: [Identifier And Key Standards](../02-standards/coding/Identifier%20And%20Key%20Standards.md)
 - Planning matrix: [Core Service Build Plan Matrix](../07-planning/core-service-build-plan-matrix.md)
-- Pull request: pending
+- Pull request: [#37 — Define canonical owner, registry, and identifier key conventions](https://github.com/kyleswindell/login-v2/pull/37)
 
 ## 5. Context
 

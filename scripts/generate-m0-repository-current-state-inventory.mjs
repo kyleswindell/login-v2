@@ -169,6 +169,13 @@ const RUNTIME_DIRECTORY_PATTERNS = [
 ];
 
 const args = parseArguments(process.argv.slice(2));
+const generatorCommand = [
+  'node',
+  'scripts/generate-m0-repository-current-state-inventory.mjs',
+  ...process.argv.slice(2),
+]
+  .map(formatCommandArgument)
+  .join(' ');
 let repositoryRoot = process.cwd();
 repositoryRoot = resolve(
   runRequired('git', ['rev-parse', '--show-toplevel']).stdout.trim(),
@@ -289,7 +296,7 @@ const rawEvidence = {
   },
   generator: {
     path: 'scripts/generate-m0-repository-current-state-inventory.mjs',
-    command: `node scripts/generate-m0-repository-current-state-inventory.mjs --baseline ${baseline}`,
+    command: generatorCommand,
     generated_at: new Date().toISOString(),
     static_only: Boolean(args.staticOnly),
   },
@@ -361,6 +368,14 @@ console.log(
     `Document: ${INVENTORY_DOCUMENT}`,
   ].join('\n'),
 );
+
+function formatCommandArgument(value) {
+  const text = String(value);
+
+  return /^[A-Za-z0-9_./:@-]+$/.test(text)
+    ? text
+    : JSON.stringify(text);
+}
 
 function parseArguments(values) {
   const parsed = {

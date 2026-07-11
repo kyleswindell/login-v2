@@ -19,8 +19,8 @@
     "disposition",
     "target_question"
   ],
-  "reviewed_at": "2026-07-11T13:13:28.897Z",
-  "reviewer": "Login 2.0 repository inventory review",
+  "reviewed_at": "2026-07-11T14:35:17.004Z",
+  "reviewer": "Login 2.0 repository inventory review; local-disk dynamic evidence follow-up",
   "items": [
     {
       "path_or_identifier": ".agents/AGENTS.md",
@@ -9026,6 +9026,473 @@
       "_review_note": "Reviewed bootstrap/app.php global middleware registration for EnsureRequestId."
     },
     {
+      "path_or_identifier": "module:account",
+      "surface_type": "module",
+      "ownership_area": "core",
+      "owner_key": "account",
+      "capability_key": "account",
+      "module_key": "account",
+      "ownership_status": "owned",
+      "current_responsibility": "Registered module manifest account (core); default_state=enabled, disableable=false, tenant_eligible=true, dependencies=auth, users, roles.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Account/Definition.php",
+        "app/Core/Modules/Definitions.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan platform:modules:list --json",
+        "module-key:account",
+        "path:app/Core/Modules/Definitions.php",
+        "runtime-module-default-state:enabled",
+        "runtime-module-type:core"
+      ],
+      "known_contradictions": [],
+      "disposition": "retain",
+      "target_question": null,
+      "_reviewed": true,
+      "_review_note": "Reviewed dynamic module registry evidence for account: type=core, default_state=enabled, dependencies=auth, users, roles."
+    },
+    {
+      "path_or_identifier": "module:auth",
+      "surface_type": "module",
+      "ownership_area": "core",
+      "owner_key": "auth",
+      "capability_key": "auth",
+      "module_key": "auth",
+      "ownership_status": "owned",
+      "current_responsibility": "Registered module manifest auth (core); default_state=enabled, disableable=false, tenant_eligible=true, dependencies=none.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Auth/Definition.php",
+        "app/Core/Modules/Definitions.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan platform:modules:list --json",
+        "module-key:auth",
+        "path:app/Core/Modules/Definitions.php",
+        "runtime-module-default-state:enabled",
+        "runtime-module-type:core"
+      ],
+      "known_contradictions": [],
+      "disposition": "retain",
+      "target_question": null,
+      "_reviewed": true,
+      "_review_note": "Reviewed dynamic module registry evidence for auth: type=core, default_state=enabled, dependencies=none."
+    },
+    {
+      "path_or_identifier": "module:dashboard",
+      "surface_type": "module",
+      "ownership_area": "core",
+      "owner_key": "dashboard",
+      "capability_key": "dashboard",
+      "module_key": "dashboard",
+      "ownership_status": "owned",
+      "current_responsibility": "Registered module manifest dashboard (core); default_state=enabled, disableable=false, tenant_eligible=true, dependencies=auth, users, roles.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Dashboard/Definition.php",
+        "app/Core/Modules/Definitions.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan platform:modules:list --json",
+        "module-key:dashboard",
+        "path:app/Core/Modules/Definitions.php",
+        "runtime-module-default-state:enabled",
+        "runtime-module-type:core"
+      ],
+      "known_contradictions": [],
+      "disposition": "retain",
+      "target_question": null,
+      "_reviewed": true,
+      "_review_note": "Reviewed dynamic module registry evidence for dashboard: type=core, default_state=enabled, dependencies=auth, users, roles."
+    },
+    {
+      "path_or_identifier": "module:development-tools",
+      "surface_type": "module",
+      "ownership_area": "not_applicable",
+      "owner_key": "development-tools",
+      "capability_key": "development-tools",
+      "module_key": "development-tools",
+      "ownership_status": "ambiguous",
+      "current_responsibility": "Registered module manifest development-tools (platform_management); default_state=enabled, disableable=true, tenant_eligible=false, dependencies=dashboard, notifications.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "app/Core/Modules/Definitions.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan platform:modules:list --json",
+        "module-key:development-tools",
+        "path:app/Core/Modules/Definitions.php",
+        "runtime-module-default-state:enabled",
+        "runtime-module-type:platform_management"
+      ],
+      "known_contradictions": [
+        "Registered module manifest uses the retired platform_management category, so canonical Core or optional Module ownership is unresolved."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 03 Core or optional Module owner and path replaces the registered platform_management manifest development-tools?",
+      "_reviewed": true,
+      "_review_note": "Reviewed dynamic module registry evidence for development-tools: type=platform_management, default_state=enabled, dependencies=dashboard, notifications."
+    },
+    {
+      "path_or_identifier": "module:docs-viewer",
+      "surface_type": "module",
+      "ownership_area": "not_applicable",
+      "owner_key": "docs-viewer",
+      "capability_key": "docs-viewer",
+      "module_key": "docs-viewer",
+      "ownership_status": "ambiguous",
+      "current_responsibility": "Registered module manifest docs-viewer (platform_management); default_state=enabled, disableable=true, tenant_eligible=false, dependencies=auth, settings.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "app/Core/Modules/Definitions.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan platform:modules:list --json",
+        "module-key:docs-viewer",
+        "path:app/Core/Modules/Definitions.php",
+        "runtime-module-default-state:enabled",
+        "runtime-module-type:platform_management"
+      ],
+      "known_contradictions": [
+        "Registered module manifest uses the retired platform_management category, so canonical Core or optional Module ownership is unresolved."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 03 Core or optional Module owner and path replaces the registered platform_management manifest docs-viewer?",
+      "_reviewed": true,
+      "_review_note": "Reviewed dynamic module registry evidence for docs-viewer: type=platform_management, default_state=enabled, dependencies=auth, settings."
+    },
+    {
+      "path_or_identifier": "module:logging",
+      "surface_type": "module",
+      "ownership_area": "core",
+      "owner_key": "logging",
+      "capability_key": "logging",
+      "module_key": "logging",
+      "ownership_status": "owned",
+      "current_responsibility": "Registered module manifest logging (core); default_state=enabled, disableable=false, tenant_eligible=true, dependencies=auth, users, roles.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "app/Core/Modules/Definitions.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan platform:modules:list --json",
+        "module-key:logging",
+        "path:app/Core/Modules/Definitions.php",
+        "runtime-module-default-state:enabled",
+        "runtime-module-type:core"
+      ],
+      "known_contradictions": [],
+      "disposition": "retain",
+      "target_question": null,
+      "_reviewed": true,
+      "_review_note": "Reviewed dynamic module registry evidence for logging: type=core, default_state=enabled, dependencies=auth, users, roles."
+    },
+    {
+      "path_or_identifier": "module:notifications",
+      "surface_type": "module",
+      "ownership_area": "core",
+      "owner_key": "notifications",
+      "capability_key": "notifications",
+      "module_key": "notifications",
+      "ownership_status": "owned",
+      "current_responsibility": "Registered module manifest notifications (core); default_state=enabled, disableable=false, tenant_eligible=true, dependencies=auth, users, roles, dashboard, settings, setup.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Notifications/Definition.php",
+        "app/Core/Modules/Definitions.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan platform:modules:list --json",
+        "module-key:notifications",
+        "path:app/Core/Modules/Definitions.php",
+        "runtime-module-default-state:enabled",
+        "runtime-module-type:core"
+      ],
+      "known_contradictions": [],
+      "disposition": "retain",
+      "target_question": null,
+      "_reviewed": true,
+      "_review_note": "Reviewed dynamic module registry evidence for notifications: type=core, default_state=enabled, dependencies=auth, users, roles, dashboard, settings, setup."
+    },
+    {
+      "path_or_identifier": "module:preferences",
+      "surface_type": "module",
+      "ownership_area": "core",
+      "owner_key": "preferences",
+      "capability_key": "preferences",
+      "module_key": "preferences",
+      "ownership_status": "owned",
+      "current_responsibility": "Registered module manifest preferences (core); default_state=enabled, disableable=false, tenant_eligible=true, dependencies=auth, account.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Preferences/Definition.php",
+        "app/Core/Modules/Definitions.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan platform:modules:list --json",
+        "module-key:preferences",
+        "path:app/Core/Modules/Definitions.php",
+        "runtime-module-default-state:enabled",
+        "runtime-module-type:core"
+      ],
+      "known_contradictions": [],
+      "disposition": "retain",
+      "target_question": null,
+      "_reviewed": true,
+      "_review_note": "Reviewed dynamic module registry evidence for preferences: type=core, default_state=enabled, dependencies=auth, account."
+    },
+    {
+      "path_or_identifier": "module:roles",
+      "surface_type": "module",
+      "ownership_area": "core",
+      "owner_key": "roles",
+      "capability_key": "roles",
+      "module_key": "roles",
+      "ownership_status": "owned",
+      "current_responsibility": "Registered module manifest roles (core); default_state=enabled, disableable=false, tenant_eligible=true, dependencies=auth.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Roles/Definition.php",
+        "app/Core/Modules/Definitions.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan platform:modules:list --json",
+        "module-key:roles",
+        "path:app/Core/Modules/Definitions.php",
+        "runtime-module-default-state:enabled",
+        "runtime-module-type:core"
+      ],
+      "known_contradictions": [],
+      "disposition": "retain",
+      "target_question": null,
+      "_reviewed": true,
+      "_review_note": "Reviewed dynamic module registry evidence for roles: type=core, default_state=enabled, dependencies=auth."
+    },
+    {
+      "path_or_identifier": "module:runtime-readiness",
+      "surface_type": "module",
+      "ownership_area": "not_applicable",
+      "owner_key": "runtime-readiness",
+      "capability_key": "runtime-readiness",
+      "module_key": "runtime-readiness",
+      "ownership_status": "ambiguous",
+      "current_responsibility": "Registered module manifest runtime-readiness (platform_management); default_state=enabled, disableable=true, tenant_eligible=false, dependencies=runtime-security.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "app/Core/Modules/Definitions.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan platform:modules:list --json",
+        "module-key:runtime-readiness",
+        "path:app/Core/Modules/Definitions.php",
+        "runtime-module-default-state:enabled",
+        "runtime-module-type:platform_management"
+      ],
+      "known_contradictions": [
+        "Registered module manifest uses the retired platform_management category, so canonical Core or optional Module ownership is unresolved."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 03 Core or optional Module owner and path replaces the registered platform_management manifest runtime-readiness?",
+      "_reviewed": true,
+      "_review_note": "Reviewed dynamic module registry evidence for runtime-readiness: type=platform_management, default_state=enabled, dependencies=runtime-security."
+    },
+    {
+      "path_or_identifier": "module:runtime-security",
+      "surface_type": "module",
+      "ownership_area": "core",
+      "owner_key": "runtime-security",
+      "capability_key": "runtime-security",
+      "module_key": "runtime-security",
+      "ownership_status": "owned",
+      "current_responsibility": "Registered module manifest runtime-security (core); default_state=enabled, disableable=false, tenant_eligible=true, dependencies=none.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "app/Core/Modules/Definitions.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan platform:modules:list --json",
+        "module-key:runtime-security",
+        "path:app/Core/Modules/Definitions.php",
+        "runtime-module-default-state:enabled",
+        "runtime-module-type:core"
+      ],
+      "known_contradictions": [],
+      "disposition": "retain",
+      "target_question": null,
+      "_reviewed": true,
+      "_review_note": "Reviewed dynamic module registry evidence for runtime-security: type=core, default_state=enabled, dependencies=none."
+    },
+    {
+      "path_or_identifier": "module:security-checklist",
+      "surface_type": "module",
+      "ownership_area": "not_applicable",
+      "owner_key": "security-checklist",
+      "capability_key": "security-checklist",
+      "module_key": "security-checklist",
+      "ownership_status": "ambiguous",
+      "current_responsibility": "Registered module manifest security-checklist (platform_management); default_state=enabled, disableable=true, tenant_eligible=false, dependencies=auth, users, roles, dashboard.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "app/Core/Modules/Definitions.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan platform:modules:list --json",
+        "module-key:security-checklist",
+        "path:app/Core/Modules/Definitions.php",
+        "runtime-module-default-state:enabled",
+        "runtime-module-type:platform_management"
+      ],
+      "known_contradictions": [
+        "Registered module manifest uses the retired platform_management category, so canonical Core or optional Module ownership is unresolved."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 03 Core or optional Module owner and path replaces the registered platform_management manifest security-checklist?",
+      "_reviewed": true,
+      "_review_note": "Reviewed dynamic module registry evidence for security-checklist: type=platform_management, default_state=enabled, dependencies=auth, users, roles, dashboard."
+    },
+    {
+      "path_or_identifier": "module:settings",
+      "surface_type": "module",
+      "ownership_area": "core",
+      "owner_key": "settings",
+      "capability_key": "settings",
+      "module_key": "settings",
+      "ownership_status": "owned",
+      "current_responsibility": "Registered module manifest settings (core); default_state=enabled, disableable=false, tenant_eligible=true, dependencies=auth, users, roles.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Settings/Definition.php",
+        "app/Core/Modules/Definitions.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan platform:modules:list --json",
+        "module-key:settings",
+        "path:app/Core/Modules/Definitions.php",
+        "runtime-module-default-state:enabled",
+        "runtime-module-type:core"
+      ],
+      "known_contradictions": [],
+      "disposition": "retain",
+      "target_question": null,
+      "_reviewed": true,
+      "_review_note": "Reviewed dynamic module registry evidence for settings: type=core, default_state=enabled, dependencies=auth, users, roles."
+    },
+    {
+      "path_or_identifier": "module:setup",
+      "surface_type": "module",
+      "ownership_area": "core",
+      "owner_key": "setup",
+      "capability_key": "setup",
+      "module_key": "setup",
+      "ownership_status": "owned",
+      "current_responsibility": "Registered module manifest setup (core); default_state=enabled, disableable=false, tenant_eligible=true, dependencies=auth, roles.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Setup/Definition.php",
+        "app/Core/Modules/Definitions.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan platform:modules:list --json",
+        "module-key:setup",
+        "path:app/Core/Modules/Definitions.php",
+        "runtime-module-default-state:enabled",
+        "runtime-module-type:core"
+      ],
+      "known_contradictions": [],
+      "disposition": "retain",
+      "target_question": null,
+      "_reviewed": true,
+      "_review_note": "Reviewed dynamic module registry evidence for setup: type=core, default_state=enabled, dependencies=auth, roles."
+    },
+    {
+      "path_or_identifier": "module:ui-system",
+      "surface_type": "module",
+      "ownership_area": "ui",
+      "owner_key": "ui",
+      "capability_key": "ui-system",
+      "module_key": "ui-system",
+      "ownership_status": "ambiguous",
+      "current_responsibility": "Registered module manifest ui-system (core); default_state=enabled, disableable=false, tenant_eligible=true, dependencies=none.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "app/Core/Modules/Definitions.php",
+        "docs/01-decisions/adr-0005-core-modules-ui-ownership-taxonomy.md"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan platform:modules:list --json",
+        "module-key:ui-system",
+        "path:app/Core/Modules/Definitions.php",
+        "runtime-module-default-state:enabled",
+        "runtime-module-type:core"
+      ],
+      "known_contradictions": [
+        "Registered module manifest categorizes ui-system as Core while ADR-0005 assigns reusable UI-system ownership to UI."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 03 and Goal 04 registry model resolves the Core-classified ui-system manifest while preserving UI ownership?",
+      "_reviewed": true,
+      "_review_note": "Reviewed dynamic module registry evidence for ui-system: type=core, default_state=enabled, dependencies=none."
+    },
+    {
+      "path_or_identifier": "module:users",
+      "surface_type": "module",
+      "ownership_area": "core",
+      "owner_key": "users",
+      "capability_key": "users",
+      "module_key": "users",
+      "ownership_status": "owned",
+      "current_responsibility": "Registered module manifest users (core); default_state=enabled, disableable=false, tenant_eligible=true, dependencies=auth, roles.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "app/Core/Modules/Definitions.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan platform:modules:list --json",
+        "module-key:users",
+        "path:app/Core/Modules/Definitions.php",
+        "runtime-module-default-state:enabled",
+        "runtime-module-type:core"
+      ],
+      "known_contradictions": [],
+      "disposition": "retain",
+      "target_question": null,
+      "_reviewed": true,
+      "_review_note": "Reviewed dynamic module registry evidence for users: type=core, default_state=enabled, dependencies=auth, roles."
+    },
+    {
       "path_or_identifier": "Modules/Account/Definition.php",
       "surface_type": "registry_contribution",
       "ownership_area": "core",
@@ -11330,6 +11797,3462 @@
       "target_question": null,
       "_reviewed": true,
       "_review_note": "Reviewed git:b573474536dd5413f622c0c0980e0776f1eb6ff1 for resources/views/components/ui/AGENTS.md; verified surface, ownership, authority, registration, responsibility, and routing fields."
+    },
+    {
+      "path_or_identifier": "route:dashboard",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "dashboard",
+      "capability_key": "dashboard",
+      "module_key": "dashboard",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD dashboard -> App\\Modules\\Dashboard\\Http\\Controllers\\ShowDashboardController.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Dashboard/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Dashboard/Routes/web.php",
+        "route-action:App\\Modules\\Dashboard\\Http\\Controllers\\ShowDashboardController",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:dashboard",
+        "route-uri:dashboard"
+      ],
+      "known_contradictions": [],
+      "disposition": "retain",
+      "target_question": null,
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route dashboard (GET|HEAD dashboard) against action App\\Modules\\Dashboard\\Http\\Controllers\\ShowDashboardController, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Dashboard/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:dashboard.test-notification",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "dashboard",
+      "capability_key": "dashboard",
+      "module_key": "dashboard",
+      "ownership_status": "owned",
+      "current_responsibility": "POST dashboard/test-notification -> App\\Modules\\Dashboard\\Http\\Controllers\\TestNotificationController.",
+      "authority_state": "temporary",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Dashboard/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Dashboard/Routes/web.php",
+        "route-action:App\\Modules\\Dashboard\\Http\\Controllers\\TestNotificationController",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:dashboard.test-notification",
+        "route-uri:dashboard/test-notification"
+      ],
+      "known_contradictions": [
+        "Temporary dashboard test-notification endpoint is registered in the current application runtime."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 cleanup or bounded implementation issue removes or explicitly retains the temporary dashboard test-notification endpoint?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route dashboard.test-notification (POST dashboard/test-notification) against action App\\Modules\\Dashboard\\Http\\Controllers\\TestNotificationController, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Dashboard/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:default-livewire.update",
+      "surface_type": "route",
+      "ownership_area": "not_applicable",
+      "owner_key": "not_applicable",
+      "capability_key": "not_applicable",
+      "module_key": "not_applicable",
+      "ownership_status": "owned",
+      "current_responsibility": "POST livewire-55761fde/update -> Livewire\\Mechanisms\\HandleRequests\\HandleRequests@handleUpdate.",
+      "authority_state": "vendor",
+      "registration_state": "registered",
+      "related_contracts": [],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-action:Livewire\\Mechanisms\\HandleRequests\\HandleRequests@handleUpdate",
+        "route-middleware:Livewire\\Mechanisms\\HandleRequests\\RequireLivewireHeaders",
+        "route-middleware:web",
+        "route-name:default-livewire.update",
+        "route-uri:livewire-55761fde/update"
+      ],
+      "known_contradictions": [],
+      "disposition": "retain",
+      "target_question": null,
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route default-livewire.update (POST livewire-55761fde/update) against action Livewire\\Mechanisms\\HandleRequests\\HandleRequests@handleUpdate, middleware Livewire\\Mechanisms\\HandleRequests\\RequireLivewireHeaders, web, and vendor/framework runtime registration."
+    },
+    {
+      "path_or_identifier": "route:filament.exports.download",
+      "surface_type": "route",
+      "ownership_area": "not_applicable",
+      "owner_key": "not_applicable",
+      "capability_key": "not_applicable",
+      "module_key": "not_applicable",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD filament/exports/{export}/download -> Filament\\Actions\\Exports\\Http\\Controllers\\DownloadExport.",
+      "authority_state": "vendor",
+      "registration_state": "registered",
+      "related_contracts": [],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-action:Filament\\Actions\\Exports\\Http\\Controllers\\DownloadExport",
+        "route-middleware:filament.actions",
+        "route-name:filament.exports.download",
+        "route-uri:filament/exports/{export}/download"
+      ],
+      "known_contradictions": [],
+      "disposition": "retain",
+      "target_question": null,
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route filament.exports.download (GET|HEAD filament/exports/{export}/download) against action Filament\\Actions\\Exports\\Http\\Controllers\\DownloadExport, middleware filament.actions, and vendor/framework runtime registration."
+    },
+    {
+      "path_or_identifier": "route:filament.imports.failed-rows.download",
+      "surface_type": "route",
+      "ownership_area": "not_applicable",
+      "owner_key": "not_applicable",
+      "capability_key": "not_applicable",
+      "module_key": "not_applicable",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD filament/imports/{import}/failed-rows/download -> Filament\\Actions\\Imports\\Http\\Controllers\\DownloadImportFailureCsv.",
+      "authority_state": "vendor",
+      "registration_state": "registered",
+      "related_contracts": [],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-action:Filament\\Actions\\Imports\\Http\\Controllers\\DownloadImportFailureCsv",
+        "route-middleware:filament.actions",
+        "route-name:filament.imports.failed-rows.download",
+        "route-uri:filament/imports/{import}/failed-rows/download"
+      ],
+      "known_contradictions": [],
+      "disposition": "retain",
+      "target_question": null,
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route filament.imports.failed-rows.download (GET|HEAD filament/imports/{import}/failed-rows/download) against action Filament\\Actions\\Imports\\Http\\Controllers\\DownloadImportFailureCsv, middleware filament.actions, and vendor/framework runtime registration."
+    },
+    {
+      "path_or_identifier": "route:GET|HEAD /",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "navigation",
+      "capability_key": "application_entry",
+      "module_key": "not_applicable",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD / -> Closure.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:routes/web.php",
+        "route-action:Closure",
+        "route-middleware:web",
+        "route-name:[unnamed]",
+        "route-uri:/"
+      ],
+      "known_contradictions": [],
+      "disposition": "retain",
+      "target_question": null,
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route GET|HEAD / (GET|HEAD /) against action Closure, middleware web, and routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:GET|HEAD livewire-55761fde/css/{component}.css",
+      "surface_type": "route",
+      "ownership_area": "not_applicable",
+      "owner_key": "not_applicable",
+      "capability_key": "not_applicable",
+      "module_key": "not_applicable",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD livewire-55761fde/css/{component}.css -> Closure.",
+      "authority_state": "vendor",
+      "registration_state": "registered",
+      "related_contracts": [],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-action:Closure",
+        "route-name:[unnamed]",
+        "route-uri:livewire-55761fde/css/{component}.css"
+      ],
+      "known_contradictions": [],
+      "disposition": "retain",
+      "target_question": null,
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route GET|HEAD livewire-55761fde/css/{component}.css (GET|HEAD livewire-55761fde/css/{component}.css) against action Closure, middleware none, and vendor/framework runtime registration."
+    },
+    {
+      "path_or_identifier": "route:GET|HEAD livewire-55761fde/css/{component}.global.css",
+      "surface_type": "route",
+      "ownership_area": "not_applicable",
+      "owner_key": "not_applicable",
+      "capability_key": "not_applicable",
+      "module_key": "not_applicable",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD livewire-55761fde/css/{component}.global.css -> Closure.",
+      "authority_state": "vendor",
+      "registration_state": "registered",
+      "related_contracts": [],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-action:Closure",
+        "route-name:[unnamed]",
+        "route-uri:livewire-55761fde/css/{component}.global.css"
+      ],
+      "known_contradictions": [],
+      "disposition": "retain",
+      "target_question": null,
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route GET|HEAD livewire-55761fde/css/{component}.global.css (GET|HEAD livewire-55761fde/css/{component}.global.css) against action Closure, middleware none, and vendor/framework runtime registration."
+    },
+    {
+      "path_or_identifier": "route:GET|HEAD livewire-55761fde/js/{component}.js",
+      "surface_type": "route",
+      "ownership_area": "not_applicable",
+      "owner_key": "not_applicable",
+      "capability_key": "not_applicable",
+      "module_key": "not_applicable",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD livewire-55761fde/js/{component}.js -> Closure.",
+      "authority_state": "vendor",
+      "registration_state": "registered",
+      "related_contracts": [],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-action:Closure",
+        "route-name:[unnamed]",
+        "route-uri:livewire-55761fde/js/{component}.js"
+      ],
+      "known_contradictions": [],
+      "disposition": "retain",
+      "target_question": null,
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route GET|HEAD livewire-55761fde/js/{component}.js (GET|HEAD livewire-55761fde/js/{component}.js) against action Closure, middleware none, and vendor/framework runtime registration."
+    },
+    {
+      "path_or_identifier": "route:GET|HEAD livewire-55761fde/livewire.csp.min.js.map",
+      "surface_type": "route",
+      "ownership_area": "not_applicable",
+      "owner_key": "not_applicable",
+      "capability_key": "not_applicable",
+      "module_key": "not_applicable",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD livewire-55761fde/livewire.csp.min.js.map -> Livewire\\Mechanisms\\FrontendAssets\\FrontendAssets@cspMaps.",
+      "authority_state": "vendor",
+      "registration_state": "registered",
+      "related_contracts": [],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-action:Livewire\\Mechanisms\\FrontendAssets\\FrontendAssets@cspMaps",
+        "route-name:[unnamed]",
+        "route-uri:livewire-55761fde/livewire.csp.min.js.map"
+      ],
+      "known_contradictions": [],
+      "disposition": "retain",
+      "target_question": null,
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route GET|HEAD livewire-55761fde/livewire.csp.min.js.map (GET|HEAD livewire-55761fde/livewire.csp.min.js.map) against action Livewire\\Mechanisms\\FrontendAssets\\FrontendAssets@cspMaps, middleware none, and vendor/framework runtime registration."
+    },
+    {
+      "path_or_identifier": "route:GET|HEAD livewire-55761fde/livewire.js",
+      "surface_type": "route",
+      "ownership_area": "not_applicable",
+      "owner_key": "not_applicable",
+      "capability_key": "not_applicable",
+      "module_key": "not_applicable",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD livewire-55761fde/livewire.js -> Livewire\\Mechanisms\\FrontendAssets\\FrontendAssets@returnJavaScriptAsFile.",
+      "authority_state": "vendor",
+      "registration_state": "registered",
+      "related_contracts": [],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-action:Livewire\\Mechanisms\\FrontendAssets\\FrontendAssets@returnJavaScriptAsFile",
+        "route-name:[unnamed]",
+        "route-uri:livewire-55761fde/livewire.js"
+      ],
+      "known_contradictions": [],
+      "disposition": "retain",
+      "target_question": null,
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route GET|HEAD livewire-55761fde/livewire.js (GET|HEAD livewire-55761fde/livewire.js) against action Livewire\\Mechanisms\\FrontendAssets\\FrontendAssets@returnJavaScriptAsFile, middleware none, and vendor/framework runtime registration."
+    },
+    {
+      "path_or_identifier": "route:GET|HEAD livewire-55761fde/livewire.min.js.map",
+      "surface_type": "route",
+      "ownership_area": "not_applicable",
+      "owner_key": "not_applicable",
+      "capability_key": "not_applicable",
+      "module_key": "not_applicable",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD livewire-55761fde/livewire.min.js.map -> Livewire\\Mechanisms\\FrontendAssets\\FrontendAssets@maps.",
+      "authority_state": "vendor",
+      "registration_state": "registered",
+      "related_contracts": [],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-action:Livewire\\Mechanisms\\FrontendAssets\\FrontendAssets@maps",
+        "route-name:[unnamed]",
+        "route-uri:livewire-55761fde/livewire.min.js.map"
+      ],
+      "known_contradictions": [],
+      "disposition": "retain",
+      "target_question": null,
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route GET|HEAD livewire-55761fde/livewire.min.js.map (GET|HEAD livewire-55761fde/livewire.min.js.map) against action Livewire\\Mechanisms\\FrontendAssets\\FrontendAssets@maps, middleware none, and vendor/framework runtime registration."
+    },
+    {
+      "path_or_identifier": "route:GET|HEAD up",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "runtime",
+      "capability_key": "runtime_readiness",
+      "module_key": "not_applicable",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD up -> Closure.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "bootstrap/app.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:bootstrap/app.php",
+        "route-action:Closure",
+        "route-name:[unnamed]",
+        "route-uri:up"
+      ],
+      "known_contradictions": [],
+      "disposition": "retain",
+      "target_question": null,
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route GET|HEAD up (GET|HEAD up) against action Closure, middleware none, and bootstrap/app.php."
+    },
+    {
+      "path_or_identifier": "route:GET|HEAD|POST broadcasting/auth",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "notifications",
+      "capability_key": "realtime_broadcasting",
+      "module_key": "notifications",
+      "ownership_status": "shared",
+      "current_responsibility": "GET|HEAD|POST broadcasting/auth -> Illuminate\\Broadcasting\\BroadcastController@authenticate.",
+      "authority_state": "vendor",
+      "registration_state": "registered",
+      "related_contracts": [
+        "bootstrap/app.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:bootstrap/app.php",
+        "route-action:Illuminate\\Broadcasting\\BroadcastController@authenticate",
+        "route-middleware:web",
+        "route-name:[unnamed]",
+        "route-uri:broadcasting/auth"
+      ],
+      "known_contradictions": [],
+      "disposition": "retain",
+      "target_question": null,
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route GET|HEAD|POST broadcasting/auth (GET|HEAD|POST broadcasting/auth) against action Illuminate\\Broadcasting\\BroadcastController@authenticate, middleware web, and bootstrap/app.php."
+    },
+    {
+      "path_or_identifier": "route:livewire.preview-file",
+      "surface_type": "route",
+      "ownership_area": "not_applicable",
+      "owner_key": "not_applicable",
+      "capability_key": "not_applicable",
+      "module_key": "not_applicable",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD livewire-55761fde/preview-file/{filename} -> Livewire\\Features\\SupportFileUploads\\FilePreviewController@handle.",
+      "authority_state": "vendor",
+      "registration_state": "registered",
+      "related_contracts": [],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-action:Livewire\\Features\\SupportFileUploads\\FilePreviewController@handle",
+        "route-middleware:web",
+        "route-name:livewire.preview-file",
+        "route-uri:livewire-55761fde/preview-file/{filename}"
+      ],
+      "known_contradictions": [],
+      "disposition": "retain",
+      "target_question": null,
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route livewire.preview-file (GET|HEAD livewire-55761fde/preview-file/{filename}) against action Livewire\\Features\\SupportFileUploads\\FilePreviewController@handle, middleware web, and vendor/framework runtime registration."
+    },
+    {
+      "path_or_identifier": "route:livewire.upload-file",
+      "surface_type": "route",
+      "ownership_area": "not_applicable",
+      "owner_key": "not_applicable",
+      "capability_key": "not_applicable",
+      "module_key": "not_applicable",
+      "ownership_status": "owned",
+      "current_responsibility": "POST livewire-55761fde/upload-file -> Livewire\\Features\\SupportFileUploads\\FileUploadController@handle.",
+      "authority_state": "vendor",
+      "registration_state": "registered",
+      "related_contracts": [],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-action:Livewire\\Features\\SupportFileUploads\\FileUploadController@handle",
+        "route-middleware:Illuminate\\Routing\\Middleware\\ThrottleRequests:60,1",
+        "route-middleware:web",
+        "route-name:livewire.upload-file",
+        "route-uri:livewire-55761fde/upload-file"
+      ],
+      "known_contradictions": [],
+      "disposition": "retain",
+      "target_question": null,
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route livewire.upload-file (POST livewire-55761fde/upload-file) against action Livewire\\Features\\SupportFileUploads\\FileUploadController@handle, middleware Illuminate\\Routing\\Middleware\\ThrottleRequests:60,1, web, and vendor/framework runtime registration."
+    },
+    {
+      "path_or_identifier": "route:login",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "auth",
+      "capability_key": "auth",
+      "module_key": "auth",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD login -> App\\Modules\\Auth\\Http\\Controllers\\LoginController@create.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Auth/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Auth/Routes/web.php",
+        "route-action:App\\Modules\\Auth\\Http\\Controllers\\LoginController@create",
+        "route-middleware:Illuminate\\Auth\\Middleware\\RedirectIfAuthenticated",
+        "route-middleware:web",
+        "route-name:login",
+        "route-uri:login"
+      ],
+      "known_contradictions": [],
+      "disposition": "retain",
+      "target_question": null,
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route login (GET|HEAD login) against action App\\Modules\\Auth\\Http\\Controllers\\LoginController@create, middleware Illuminate\\Auth\\Middleware\\RedirectIfAuthenticated, web, and Modules/Auth/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:login.identify",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "auth",
+      "capability_key": "auth",
+      "module_key": "auth",
+      "ownership_status": "owned",
+      "current_responsibility": "POST login/identify -> App\\Modules\\Auth\\Http\\Controllers\\LoginController@identify.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Auth/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Auth/Routes/web.php",
+        "route-action:App\\Modules\\Auth\\Http\\Controllers\\LoginController@identify",
+        "route-middleware:Illuminate\\Auth\\Middleware\\RedirectIfAuthenticated",
+        "route-middleware:web",
+        "route-name:login.identify",
+        "route-uri:login/identify"
+      ],
+      "known_contradictions": [],
+      "disposition": "retain",
+      "target_question": null,
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route login.identify (POST login/identify) against action App\\Modules\\Auth\\Http\\Controllers\\LoginController@identify, middleware Illuminate\\Auth\\Middleware\\RedirectIfAuthenticated, web, and Modules/Auth/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:login.password",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "auth",
+      "capability_key": "auth",
+      "module_key": "auth",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD login/password -> App\\Modules\\Auth\\Http\\Controllers\\LoginController@password.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Auth/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Auth/Routes/web.php",
+        "route-action:App\\Modules\\Auth\\Http\\Controllers\\LoginController@password",
+        "route-middleware:Illuminate\\Auth\\Middleware\\RedirectIfAuthenticated",
+        "route-middleware:web",
+        "route-name:login.password",
+        "route-uri:login/password"
+      ],
+      "known_contradictions": [],
+      "disposition": "retain",
+      "target_question": null,
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route login.password (GET|HEAD login/password) against action App\\Modules\\Auth\\Http\\Controllers\\LoginController@password, middleware Illuminate\\Auth\\Middleware\\RedirectIfAuthenticated, web, and Modules/Auth/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:login.password.store",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "auth",
+      "capability_key": "auth",
+      "module_key": "auth",
+      "ownership_status": "owned",
+      "current_responsibility": "POST login/password -> App\\Modules\\Auth\\Http\\Controllers\\LoginController@authenticate.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Auth/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Auth/Routes/web.php",
+        "route-action:App\\Modules\\Auth\\Http\\Controllers\\LoginController@authenticate",
+        "route-middleware:Illuminate\\Auth\\Middleware\\RedirectIfAuthenticated",
+        "route-middleware:web",
+        "route-name:login.password.store",
+        "route-uri:login/password"
+      ],
+      "known_contradictions": [],
+      "disposition": "retain",
+      "target_question": null,
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route login.password.store (POST login/password) against action App\\Modules\\Auth\\Http\\Controllers\\LoginController@authenticate, middleware Illuminate\\Auth\\Middleware\\RedirectIfAuthenticated, web, and Modules/Auth/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:login.store",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "auth",
+      "capability_key": "auth",
+      "module_key": "auth",
+      "ownership_status": "owned",
+      "current_responsibility": "POST login -> App\\Modules\\Auth\\Http\\Controllers\\LoginController@store.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Auth/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Auth/Routes/web.php",
+        "route-action:App\\Modules\\Auth\\Http\\Controllers\\LoginController@store",
+        "route-middleware:Illuminate\\Auth\\Middleware\\RedirectIfAuthenticated",
+        "route-middleware:web",
+        "route-name:login.store",
+        "route-uri:login"
+      ],
+      "known_contradictions": [],
+      "disposition": "retain",
+      "target_question": null,
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route login.store (POST login) against action App\\Modules\\Auth\\Http\\Controllers\\LoginController@store, middleware Illuminate\\Auth\\Middleware\\RedirectIfAuthenticated, web, and Modules/Auth/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:logout",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "auth",
+      "capability_key": "auth",
+      "module_key": "auth",
+      "ownership_status": "owned",
+      "current_responsibility": "POST logout -> App\\Modules\\Auth\\Http\\Controllers\\LoginController@destroy.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Auth/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Auth/Routes/web.php",
+        "route-action:App\\Modules\\Auth\\Http\\Controllers\\LoginController@destroy",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:logout",
+        "route-uri:logout"
+      ],
+      "known_contradictions": [],
+      "disposition": "retain",
+      "target_question": null,
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route logout (POST logout) against action App\\Modules\\Auth\\Http\\Controllers\\LoginController@destroy, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Auth/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:mfa.challenge",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "auth",
+      "capability_key": "auth",
+      "module_key": "auth",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD mfa/challenge -> App\\Modules\\Auth\\Http\\Controllers\\MfaChallengeController@show.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Auth/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Auth/Routes/web.php",
+        "route-action:App\\Modules\\Auth\\Http\\Controllers\\MfaChallengeController@show",
+        "route-middleware:Illuminate\\Auth\\Middleware\\RedirectIfAuthenticated",
+        "route-middleware:web",
+        "route-name:mfa.challenge",
+        "route-uri:mfa/challenge"
+      ],
+      "known_contradictions": [],
+      "disposition": "retain",
+      "target_question": null,
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route mfa.challenge (GET|HEAD mfa/challenge) against action App\\Modules\\Auth\\Http\\Controllers\\MfaChallengeController@show, middleware Illuminate\\Auth\\Middleware\\RedirectIfAuthenticated, web, and Modules/Auth/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:mfa.challenge.verify",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "auth",
+      "capability_key": "auth",
+      "module_key": "auth",
+      "ownership_status": "owned",
+      "current_responsibility": "POST mfa/challenge -> App\\Modules\\Auth\\Http\\Controllers\\MfaChallengeController@verify.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Auth/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Auth/Routes/web.php",
+        "route-action:App\\Modules\\Auth\\Http\\Controllers\\MfaChallengeController@verify",
+        "route-middleware:Illuminate\\Auth\\Middleware\\RedirectIfAuthenticated",
+        "route-middleware:web",
+        "route-name:mfa.challenge.verify",
+        "route-uri:mfa/challenge"
+      ],
+      "known_contradictions": [],
+      "disposition": "retain",
+      "target_question": null,
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route mfa.challenge.verify (POST mfa/challenge) against action App\\Modules\\Auth\\Http\\Controllers\\MfaChallengeController@verify, middleware Illuminate\\Auth\\Middleware\\RedirectIfAuthenticated, web, and Modules/Auth/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:mfa.enroll",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "auth",
+      "capability_key": "auth",
+      "module_key": "auth",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD mfa/enroll -> App\\Modules\\Auth\\Http\\Controllers\\MfaEnrollmentController@show.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Auth/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Auth/Routes/web.php",
+        "route-action:App\\Modules\\Auth\\Http\\Controllers\\MfaEnrollmentController@show",
+        "route-middleware:Illuminate\\Auth\\Middleware\\RedirectIfAuthenticated",
+        "route-middleware:web",
+        "route-name:mfa.enroll",
+        "route-uri:mfa/enroll"
+      ],
+      "known_contradictions": [],
+      "disposition": "retain",
+      "target_question": null,
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route mfa.enroll (GET|HEAD mfa/enroll) against action App\\Modules\\Auth\\Http\\Controllers\\MfaEnrollmentController@show, middleware Illuminate\\Auth\\Middleware\\RedirectIfAuthenticated, web, and Modules/Auth/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:mfa.enroll.confirm",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "auth",
+      "capability_key": "auth",
+      "module_key": "auth",
+      "ownership_status": "owned",
+      "current_responsibility": "POST mfa/enroll -> App\\Modules\\Auth\\Http\\Controllers\\MfaEnrollmentController@confirm.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Auth/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Auth/Routes/web.php",
+        "route-action:App\\Modules\\Auth\\Http\\Controllers\\MfaEnrollmentController@confirm",
+        "route-middleware:Illuminate\\Auth\\Middleware\\RedirectIfAuthenticated",
+        "route-middleware:web",
+        "route-name:mfa.enroll.confirm",
+        "route-uri:mfa/enroll"
+      ],
+      "known_contradictions": [],
+      "disposition": "retain",
+      "target_question": null,
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route mfa.enroll.confirm (POST mfa/enroll) against action App\\Modules\\Auth\\Http\\Controllers\\MfaEnrollmentController@confirm, middleware Illuminate\\Auth\\Middleware\\RedirectIfAuthenticated, web, and Modules/Auth/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:mfa.step-up",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "auth",
+      "capability_key": "auth",
+      "module_key": "auth",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD mfa/step-up -> App\\Modules\\Auth\\Http\\Controllers\\MfaStepUpController@show.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Auth/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Auth/Routes/web.php",
+        "route-action:App\\Modules\\Auth\\Http\\Controllers\\MfaStepUpController@show",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:mfa.step-up",
+        "route-uri:mfa/step-up"
+      ],
+      "known_contradictions": [],
+      "disposition": "retain",
+      "target_question": null,
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route mfa.step-up (GET|HEAD mfa/step-up) against action App\\Modules\\Auth\\Http\\Controllers\\MfaStepUpController@show, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Auth/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:mfa.step-up.verify",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "auth",
+      "capability_key": "auth",
+      "module_key": "auth",
+      "ownership_status": "owned",
+      "current_responsibility": "POST mfa/step-up -> App\\Modules\\Auth\\Http\\Controllers\\MfaStepUpController@verify.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Auth/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Auth/Routes/web.php",
+        "route-action:App\\Modules\\Auth\\Http\\Controllers\\MfaStepUpController@verify",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:mfa.step-up.verify",
+        "route-uri:mfa/step-up"
+      ],
+      "known_contradictions": [],
+      "disposition": "retain",
+      "target_question": null,
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route mfa.step-up.verify (POST mfa/step-up) against action App\\Modules\\Auth\\Http\\Controllers\\MfaStepUpController@verify, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Auth/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:notifications.dismiss",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "notifications",
+      "capability_key": "notifications",
+      "module_key": "notifications",
+      "ownership_status": "owned",
+      "current_responsibility": "POST notifications/{notification}/dismiss -> App\\Modules\\Notifications\\Http\\Controllers\\InboxController@dismiss.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Notifications/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Notifications/Routes/web.php",
+        "route-action:App\\Modules\\Notifications\\Http\\Controllers\\InboxController@dismiss",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:notifications.dismiss",
+        "route-uri:notifications/{notification}/dismiss"
+      ],
+      "known_contradictions": [],
+      "disposition": "retain",
+      "target_question": null,
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route notifications.dismiss (POST notifications/{notification}/dismiss) against action App\\Modules\\Notifications\\Http\\Controllers\\InboxController@dismiss, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Notifications/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:notifications.index",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "notifications",
+      "capability_key": "notifications",
+      "module_key": "notifications",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD notifications -> App\\Modules\\Notifications\\Http\\Controllers\\InboxController@index.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Notifications/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Notifications/Routes/web.php",
+        "route-action:App\\Modules\\Notifications\\Http\\Controllers\\InboxController@index",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:notifications.index",
+        "route-uri:notifications"
+      ],
+      "known_contradictions": [],
+      "disposition": "retain",
+      "target_question": null,
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route notifications.index (GET|HEAD notifications) against action App\\Modules\\Notifications\\Http\\Controllers\\InboxController@index, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Notifications/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:notifications.mark-all-read",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "notifications",
+      "capability_key": "notifications",
+      "module_key": "notifications",
+      "ownership_status": "owned",
+      "current_responsibility": "POST notifications/mark-all-read -> App\\Modules\\Notifications\\Http\\Controllers\\InboxController@markAllRead.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Notifications/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Notifications/Routes/web.php",
+        "route-action:App\\Modules\\Notifications\\Http\\Controllers\\InboxController@markAllRead",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:notifications.mark-all-read",
+        "route-uri:notifications/mark-all-read"
+      ],
+      "known_contradictions": [],
+      "disposition": "retain",
+      "target_question": null,
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route notifications.mark-all-read (POST notifications/mark-all-read) against action App\\Modules\\Notifications\\Http\\Controllers\\InboxController@markAllRead, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Notifications/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:notifications.mark-read",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "notifications",
+      "capability_key": "notifications",
+      "module_key": "notifications",
+      "ownership_status": "owned",
+      "current_responsibility": "POST notifications/{notification}/read -> App\\Modules\\Notifications\\Http\\Controllers\\InboxController@markRead.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Notifications/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Notifications/Routes/web.php",
+        "route-action:App\\Modules\\Notifications\\Http\\Controllers\\InboxController@markRead",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:notifications.mark-read",
+        "route-uri:notifications/{notification}/read"
+      ],
+      "known_contradictions": [],
+      "disposition": "retain",
+      "target_question": null,
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route notifications.mark-read (POST notifications/{notification}/read) against action App\\Modules\\Notifications\\Http\\Controllers\\InboxController@markRead, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Notifications/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:notifications.realtime.auth",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "notifications",
+      "capability_key": "notifications",
+      "module_key": "notifications",
+      "ownership_status": "owned",
+      "current_responsibility": "POST notifications/realtime/auth -> App\\Modules\\Notifications\\Http\\Controllers\\RealtimeAuthController.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Notifications/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Notifications/Routes/web.php",
+        "route-action:App\\Modules\\Notifications\\Http\\Controllers\\RealtimeAuthController",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:notifications.realtime.auth",
+        "route-uri:notifications/realtime/auth"
+      ],
+      "known_contradictions": [],
+      "disposition": "retain",
+      "target_question": null,
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route notifications.realtime.auth (POST notifications/realtime/auth) against action App\\Modules\\Notifications\\Http\\Controllers\\RealtimeAuthController, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Notifications/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.account.contact-emails.destroy",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "account",
+      "capability_key": "account",
+      "module_key": "account",
+      "ownership_status": "owned",
+      "current_responsibility": "DELETE account/contact-emails/{contactEmail} -> App\\Modules\\Account\\Http\\Controllers\\AccountController@destroyContactEmail.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Account/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Account/Routes/web.php",
+        "route-action:App\\Modules\\Account\\Http\\Controllers\\AccountController@destroyContactEmail",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.account.contact-emails.destroy",
+        "route-uri:account/contact-emails/{contactEmail}"
+      ],
+      "known_contradictions": [
+        "Registered route name uses transitional platform.* naming."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.account.contact-emails.destroy (DELETE account/contact-emails/{contactEmail}) against action App\\Modules\\Account\\Http\\Controllers\\AccountController@destroyContactEmail, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Account/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.account.contact-emails.store",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "account",
+      "capability_key": "account",
+      "module_key": "account",
+      "ownership_status": "owned",
+      "current_responsibility": "POST account/contact-emails -> App\\Modules\\Account\\Http\\Controllers\\AccountController@storeContactEmail.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Account/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Account/Routes/web.php",
+        "route-action:App\\Modules\\Account\\Http\\Controllers\\AccountController@storeContactEmail",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.account.contact-emails.store",
+        "route-uri:account/contact-emails"
+      ],
+      "known_contradictions": [
+        "Registered route name uses transitional platform.* naming."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.account.contact-emails.store (POST account/contact-emails) against action App\\Modules\\Account\\Http\\Controllers\\AccountController@storeContactEmail, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Account/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.account.details.update",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "account",
+      "capability_key": "account",
+      "module_key": "account",
+      "ownership_status": "owned",
+      "current_responsibility": "PATCH account/details -> App\\Modules\\Account\\Http\\Controllers\\AccountController@updateDetails.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Account/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Account/Routes/web.php",
+        "route-action:App\\Modules\\Account\\Http\\Controllers\\AccountController@updateDetails",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.account.details.update",
+        "route-uri:account/details"
+      ],
+      "known_contradictions": [
+        "Registered route name uses transitional platform.* naming."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.account.details.update (PATCH account/details) against action App\\Modules\\Account\\Http\\Controllers\\AccountController@updateDetails, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Account/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.account.index",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "account",
+      "capability_key": "account",
+      "module_key": "account",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD account -> App\\Modules\\Account\\Http\\Controllers\\AccountController@index.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Account/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Account/Routes/web.php",
+        "route-action:App\\Modules\\Account\\Http\\Controllers\\AccountController@index",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.account.index",
+        "route-uri:account"
+      ],
+      "known_contradictions": [
+        "Registered route name uses transitional platform.* naming."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.account.index (GET|HEAD account) against action App\\Modules\\Account\\Http\\Controllers\\AccountController@index, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Account/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.account.mfa.confirm",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "auth",
+      "capability_key": "auth",
+      "module_key": "auth",
+      "ownership_status": "owned",
+      "current_responsibility": "POST account/mfa/enroll -> App\\Modules\\Auth\\Http\\Controllers\\AccountMfaController@confirm.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Auth/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Auth/Routes/web.php",
+        "route-action:App\\Modules\\Auth\\Http\\Controllers\\AccountMfaController@confirm",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.account.mfa.confirm",
+        "route-uri:account/mfa/enroll"
+      ],
+      "known_contradictions": [
+        "Registered route name uses transitional platform.* naming."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.account.mfa.confirm (POST account/mfa/enroll) against action App\\Modules\\Auth\\Http\\Controllers\\AccountMfaController@confirm, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Auth/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.account.mfa.enroll",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "auth",
+      "capability_key": "auth",
+      "module_key": "auth",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD account/mfa/enroll -> App\\Modules\\Auth\\Http\\Controllers\\AccountMfaController@show.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Auth/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Auth/Routes/web.php",
+        "route-action:App\\Modules\\Auth\\Http\\Controllers\\AccountMfaController@show",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.account.mfa.enroll",
+        "route-uri:account/mfa/enroll"
+      ],
+      "known_contradictions": [
+        "Registered route name uses transitional platform.* naming."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.account.mfa.enroll (GET|HEAD account/mfa/enroll) against action App\\Modules\\Auth\\Http\\Controllers\\AccountMfaController@show, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Auth/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.account.mfa.recovery-codes",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "auth",
+      "capability_key": "auth",
+      "module_key": "auth",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD account/mfa/recovery-codes -> App\\Modules\\Auth\\Http\\Controllers\\AccountMfaController@recoveryCodes.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Auth/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Auth/Routes/web.php",
+        "route-action:App\\Modules\\Auth\\Http\\Controllers\\AccountMfaController@recoveryCodes",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.account.mfa.recovery-codes",
+        "route-uri:account/mfa/recovery-codes"
+      ],
+      "known_contradictions": [
+        "Registered route name uses transitional platform.* naming."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.account.mfa.recovery-codes (GET|HEAD account/mfa/recovery-codes) against action App\\Modules\\Auth\\Http\\Controllers\\AccountMfaController@recoveryCodes, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Auth/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.account.notifications",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "notifications",
+      "capability_key": "notifications",
+      "module_key": "notifications",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD account/notifications -> App\\Modules\\Notifications\\Http\\Controllers\\PersonalPreferencesController@edit.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Notifications/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Notifications/Routes/web.php",
+        "route-action:App\\Modules\\Notifications\\Http\\Controllers\\PersonalPreferencesController@edit",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.account.notifications",
+        "route-uri:account/notifications"
+      ],
+      "known_contradictions": [
+        "Registered route name uses transitional platform.* naming."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.account.notifications (GET|HEAD account/notifications) against action App\\Modules\\Notifications\\Http\\Controllers\\PersonalPreferencesController@edit, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Notifications/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.account.notifications.update",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "notifications",
+      "capability_key": "notifications",
+      "module_key": "notifications",
+      "ownership_status": "owned",
+      "current_responsibility": "POST account/notifications -> App\\Modules\\Notifications\\Http\\Controllers\\PersonalPreferencesController@update.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Notifications/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Notifications/Routes/web.php",
+        "route-action:App\\Modules\\Notifications\\Http\\Controllers\\PersonalPreferencesController@update",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.account.notifications.update",
+        "route-uri:account/notifications"
+      ],
+      "known_contradictions": [
+        "Registered route name uses transitional platform.* naming."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.account.notifications.update (POST account/notifications) against action App\\Modules\\Notifications\\Http\\Controllers\\PersonalPreferencesController@update, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Notifications/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.account.password.update",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "account",
+      "capability_key": "account",
+      "module_key": "account",
+      "ownership_status": "owned",
+      "current_responsibility": "POST account/password -> App\\Modules\\Account\\Http\\Controllers\\AccountController@updatePassword.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Account/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Account/Routes/web.php",
+        "route-action:App\\Modules\\Account\\Http\\Controllers\\AccountController@updatePassword",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.account.password.update",
+        "route-uri:account/password"
+      ],
+      "known_contradictions": [
+        "Registered route name uses transitional platform.* naming."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.account.password.update (POST account/password) against action App\\Modules\\Account\\Http\\Controllers\\AccountController@updatePassword, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Account/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.account.preferences",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "preferences",
+      "capability_key": "preferences",
+      "module_key": "preferences",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD account/preferences -> App\\Modules\\Preferences\\Http\\Controllers\\PersonalDefaultsController@edit.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Preferences/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Preferences/Routes/web.php",
+        "route-action:App\\Modules\\Preferences\\Http\\Controllers\\PersonalDefaultsController@edit",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.account.preferences",
+        "route-uri:account/preferences"
+      ],
+      "known_contradictions": [
+        "Registered route name uses transitional platform.* naming."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.account.preferences (GET|HEAD account/preferences) against action App\\Modules\\Preferences\\Http\\Controllers\\PersonalDefaultsController@edit, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Preferences/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.account.preferences.update",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "preferences",
+      "capability_key": "preferences",
+      "module_key": "preferences",
+      "ownership_status": "owned",
+      "current_responsibility": "POST account/preferences -> App\\Modules\\Preferences\\Http\\Controllers\\PersonalDefaultsController@update.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Preferences/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Preferences/Routes/web.php",
+        "route-action:App\\Modules\\Preferences\\Http\\Controllers\\PersonalDefaultsController@update",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.account.preferences.update",
+        "route-uri:account/preferences"
+      ],
+      "known_contradictions": [
+        "Registered route name uses transitional platform.* naming."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.account.preferences.update (POST account/preferences) against action App\\Modules\\Preferences\\Http\\Controllers\\PersonalDefaultsController@update, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Preferences/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.account.profile-photo.destroy",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "account",
+      "capability_key": "account",
+      "module_key": "account",
+      "ownership_status": "owned",
+      "current_responsibility": "DELETE account/profile-photo -> App\\Modules\\Account\\Http\\Controllers\\AccountController@removeProfilePhoto.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Account/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Account/Routes/web.php",
+        "route-action:App\\Modules\\Account\\Http\\Controllers\\AccountController@removeProfilePhoto",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.account.profile-photo.destroy",
+        "route-uri:account/profile-photo"
+      ],
+      "known_contradictions": [
+        "Registered route name uses transitional platform.* naming."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.account.profile-photo.destroy (DELETE account/profile-photo) against action App\\Modules\\Account\\Http\\Controllers\\AccountController@removeProfilePhoto, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Account/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.account.profile-photo.update",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "account",
+      "capability_key": "account",
+      "module_key": "account",
+      "ownership_status": "owned",
+      "current_responsibility": "PATCH account/profile-photo -> App\\Modules\\Account\\Http\\Controllers\\AccountController@updateProfilePhoto.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Account/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Account/Routes/web.php",
+        "route-action:App\\Modules\\Account\\Http\\Controllers\\AccountController@updateProfilePhoto",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.account.profile-photo.update",
+        "route-uri:account/profile-photo"
+      ],
+      "known_contradictions": [
+        "Registered route name uses transitional platform.* naming."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.account.profile-photo.update (PATCH account/profile-photo) against action App\\Modules\\Account\\Http\\Controllers\\AccountController@updateProfilePhoto, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Account/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.account.security",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "account",
+      "capability_key": "account",
+      "module_key": "account",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD account/security -> App\\Modules\\Account\\Http\\Controllers\\AccountController@security.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Account/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Account/Routes/web.php",
+        "route-action:App\\Modules\\Account\\Http\\Controllers\\AccountController@security",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.account.security",
+        "route-uri:account/security"
+      ],
+      "known_contradictions": [
+        "Registered route name uses transitional platform.* naming."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.account.security (GET|HEAD account/security) against action App\\Modules\\Account\\Http\\Controllers\\AccountController@security, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Account/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.account.settings",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "account",
+      "capability_key": "account",
+      "module_key": "account",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD account/settings -> App\\Modules\\Account\\Http\\Controllers\\AccountController@settings.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Account/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Account/Routes/web.php",
+        "route-action:App\\Modules\\Account\\Http\\Controllers\\AccountController@settings",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.account.settings",
+        "route-uri:account/settings"
+      ],
+      "known_contradictions": [
+        "Registered route name uses transitional platform.* naming."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.account.settings (GET|HEAD account/settings) against action App\\Modules\\Account\\Http\\Controllers\\AccountController@settings, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Account/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.account.settings.update",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "account",
+      "capability_key": "account",
+      "module_key": "account",
+      "ownership_status": "owned",
+      "current_responsibility": "POST account/settings -> App\\Modules\\Account\\Http\\Controllers\\AccountController@updateSettings.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Account/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Account/Routes/web.php",
+        "route-action:App\\Modules\\Account\\Http\\Controllers\\AccountController@updateSettings",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.account.settings.update",
+        "route-uri:account/settings"
+      ],
+      "known_contradictions": [
+        "Registered route name uses transitional platform.* naming."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.account.settings.update (POST account/settings) against action App\\Modules\\Account\\Http\\Controllers\\AccountController@updateSettings, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Account/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.administration.notifications.index",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "notifications",
+      "capability_key": "notifications",
+      "module_key": "notifications",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD platform/administration/notifications -> Closure.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Notifications/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Notifications/Routes/web.php",
+        "route-action:Closure",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.administration.notifications.index",
+        "route-uri:platform/administration/notifications"
+      ],
+      "known_contradictions": [
+        "Registered URI retains the transitional /platform prefix.",
+        "Registered route name uses transitional platform.* naming."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.administration.notifications.index (GET|HEAD platform/administration/notifications) against action Closure, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Notifications/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.administration.settings.index",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "settings",
+      "capability_key": "settings",
+      "module_key": "settings",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD platform/administration/settings -> Closure.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Settings/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Settings/Routes/web.php",
+        "route-action:Closure",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.administration.settings.index",
+        "route-uri:platform/administration/settings"
+      ],
+      "known_contradictions": [
+        "Registered URI retains the transitional /platform prefix.",
+        "Registered route name uses transitional platform.* naming."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.administration.settings.index (GET|HEAD platform/administration/settings) against action Closure, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Settings/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.administration.users.index",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "users",
+      "capability_key": "users",
+      "module_key": "users",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD platform/administration/users -> Closure.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:routes/web.php",
+        "route-action:Closure",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.administration.users.index",
+        "route-uri:platform/administration/users"
+      ],
+      "known_contradictions": [
+        "Registered URI retains the transitional /platform prefix.",
+        "Registered route name uses transitional platform.* naming."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.administration.users.index (GET|HEAD platform/administration/users) against action Closure, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.audit-logs.index",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "logging",
+      "capability_key": "logging",
+      "module_key": "logging",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD platform/audit-logs -> App\\Http\\Controllers\\Platform\\AuditLogController@index.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:routes/web.php",
+        "route-action:App\\Http\\Controllers\\Platform\\AuditLogController@index",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.audit-logs.index",
+        "route-uri:platform/audit-logs"
+      ],
+      "known_contradictions": [
+        "Registered URI retains the transitional /platform prefix.",
+        "Registered route name uses transitional platform.* naming.",
+        "Route action uses the transitional App\\Http\\Controllers\\Platform namespace."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.audit-logs.index (GET|HEAD platform/audit-logs) against action App\\Http\\Controllers\\Platform\\AuditLogController@index, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.audit-logs.show",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "logging",
+      "capability_key": "logging",
+      "module_key": "logging",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD platform/audit-logs/{log} -> App\\Http\\Controllers\\Platform\\AuditLogController@show.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:routes/web.php",
+        "route-action:App\\Http\\Controllers\\Platform\\AuditLogController@show",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.audit-logs.show",
+        "route-uri:platform/audit-logs/{log}"
+      ],
+      "known_contradictions": [
+        "Registered URI retains the transitional /platform prefix.",
+        "Registered route name uses transitional platform.* naming.",
+        "Route action uses the transitional App\\Http\\Controllers\\Platform namespace."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.audit-logs.show (GET|HEAD platform/audit-logs/{log}) against action App\\Http\\Controllers\\Platform\\AuditLogController@show, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.docs.index",
+      "surface_type": "route",
+      "ownership_area": "not_applicable",
+      "owner_key": "docs-viewer",
+      "capability_key": "docs-viewer",
+      "module_key": "docs-viewer",
+      "ownership_status": "ambiguous",
+      "current_responsibility": "GET|HEAD platform/docs -> App\\Http\\Controllers\\Platform\\DocsController.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:routes/web.php",
+        "route-action:App\\Http\\Controllers\\Platform\\DocsController",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.docs.index",
+        "route-uri:platform/docs"
+      ],
+      "known_contradictions": [
+        "Current route owner is represented by the retired platform_management manifest docs-viewer.",
+        "Registered URI retains the transitional /platform prefix.",
+        "Registered route name uses transitional platform.* naming.",
+        "Route action uses the transitional App\\Http\\Controllers\\Platform namespace."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 03 accepted Core or optional Module owner and Goal 09 route compatibility mapping replace the current docs-viewer platform_management surface?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.docs.index (GET|HEAD platform/docs) against action App\\Http\\Controllers\\Platform\\DocsController, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.error-logs.index",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "logging",
+      "capability_key": "logging",
+      "module_key": "logging",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD platform/error-logs -> App\\Http\\Controllers\\Platform\\ErrorLogController@index.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:routes/web.php",
+        "route-action:App\\Http\\Controllers\\Platform\\ErrorLogController@index",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.error-logs.index",
+        "route-uri:platform/error-logs"
+      ],
+      "known_contradictions": [
+        "Registered URI retains the transitional /platform prefix.",
+        "Registered route name uses transitional platform.* naming.",
+        "Route action uses the transitional App\\Http\\Controllers\\Platform namespace."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.error-logs.index (GET|HEAD platform/error-logs) against action App\\Http\\Controllers\\Platform\\ErrorLogController@index, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.error-logs.show",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "logging",
+      "capability_key": "logging",
+      "module_key": "logging",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD platform/error-logs/{log} -> App\\Http\\Controllers\\Platform\\ErrorLogController@show.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:routes/web.php",
+        "route-action:App\\Http\\Controllers\\Platform\\ErrorLogController@show",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.error-logs.show",
+        "route-uri:platform/error-logs/{log}"
+      ],
+      "known_contradictions": [
+        "Registered URI retains the transitional /platform prefix.",
+        "Registered route name uses transitional platform.* naming.",
+        "Route action uses the transitional App\\Http\\Controllers\\Platform namespace."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.error-logs.show (GET|HEAD platform/error-logs/{log}) against action App\\Http\\Controllers\\Platform\\ErrorLogController@show, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.notifications.dismiss",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "notifications",
+      "capability_key": "notifications",
+      "module_key": "notifications",
+      "ownership_status": "owned",
+      "current_responsibility": "POST platform/notifications/{notification}/dismiss -> App\\Modules\\Notifications\\Http\\Controllers\\InboxController@dismiss.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Notifications/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Notifications/Routes/web.php",
+        "route-action:App\\Modules\\Notifications\\Http\\Controllers\\InboxController@dismiss",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.notifications.dismiss",
+        "route-uri:platform/notifications/{notification}/dismiss"
+      ],
+      "known_contradictions": [
+        "Registered URI retains the transitional /platform prefix.",
+        "Registered route name uses transitional platform.* naming."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.notifications.dismiss (POST platform/notifications/{notification}/dismiss) against action App\\Modules\\Notifications\\Http\\Controllers\\InboxController@dismiss, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Notifications/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.notifications.index",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "notifications",
+      "capability_key": "notifications",
+      "module_key": "notifications",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD platform/notifications -> App\\Modules\\Notifications\\Http\\Controllers\\InboxController@index.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Notifications/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Notifications/Routes/web.php",
+        "route-action:App\\Modules\\Notifications\\Http\\Controllers\\InboxController@index",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.notifications.index",
+        "route-uri:platform/notifications"
+      ],
+      "known_contradictions": [
+        "Registered URI retains the transitional /platform prefix.",
+        "Registered route name uses transitional platform.* naming."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.notifications.index (GET|HEAD platform/notifications) against action App\\Modules\\Notifications\\Http\\Controllers\\InboxController@index, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Notifications/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.notifications.mark-all-read",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "notifications",
+      "capability_key": "notifications",
+      "module_key": "notifications",
+      "ownership_status": "owned",
+      "current_responsibility": "POST platform/notifications/mark-all-read -> App\\Modules\\Notifications\\Http\\Controllers\\InboxController@markAllRead.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Notifications/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Notifications/Routes/web.php",
+        "route-action:App\\Modules\\Notifications\\Http\\Controllers\\InboxController@markAllRead",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.notifications.mark-all-read",
+        "route-uri:platform/notifications/mark-all-read"
+      ],
+      "known_contradictions": [
+        "Registered URI retains the transitional /platform prefix.",
+        "Registered route name uses transitional platform.* naming."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.notifications.mark-all-read (POST platform/notifications/mark-all-read) against action App\\Modules\\Notifications\\Http\\Controllers\\InboxController@markAllRead, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Notifications/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.notifications.mark-read",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "notifications",
+      "capability_key": "notifications",
+      "module_key": "notifications",
+      "ownership_status": "owned",
+      "current_responsibility": "POST platform/notifications/{notification}/read -> App\\Modules\\Notifications\\Http\\Controllers\\InboxController@markRead.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Notifications/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Notifications/Routes/web.php",
+        "route-action:App\\Modules\\Notifications\\Http\\Controllers\\InboxController@markRead",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.notifications.mark-read",
+        "route-uri:platform/notifications/{notification}/read"
+      ],
+      "known_contradictions": [
+        "Registered URI retains the transitional /platform prefix.",
+        "Registered route name uses transitional platform.* naming."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.notifications.mark-read (POST platform/notifications/{notification}/read) against action App\\Modules\\Notifications\\Http\\Controllers\\InboxController@markRead, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Notifications/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.operations.audit-logs.index",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "logging",
+      "capability_key": "logging",
+      "module_key": "logging",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD platform/operations/audit-logs -> Closure.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:routes/web.php",
+        "route-action:Closure",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.operations.audit-logs.index",
+        "route-uri:platform/operations/audit-logs"
+      ],
+      "known_contradictions": [
+        "Registered URI retains the transitional /platform prefix.",
+        "Registered route name uses transitional platform.* naming."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.operations.audit-logs.index (GET|HEAD platform/operations/audit-logs) against action Closure, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.operations.error-logs.index",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "logging",
+      "capability_key": "logging",
+      "module_key": "logging",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD platform/operations/error-logs -> Closure.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:routes/web.php",
+        "route-action:Closure",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.operations.error-logs.index",
+        "route-uri:platform/operations/error-logs"
+      ],
+      "known_contradictions": [
+        "Registered URI retains the transitional /platform prefix.",
+        "Registered route name uses transitional platform.* naming."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.operations.error-logs.index (GET|HEAD platform/operations/error-logs) against action Closure, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.realtime.auth",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "notifications",
+      "capability_key": "notifications",
+      "module_key": "notifications",
+      "ownership_status": "owned",
+      "current_responsibility": "POST platform/realtime/auth -> App\\Modules\\Notifications\\Http\\Controllers\\RealtimeAuthController.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Notifications/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Notifications/Routes/web.php",
+        "route-action:App\\Modules\\Notifications\\Http\\Controllers\\RealtimeAuthController",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.realtime.auth",
+        "route-uri:platform/realtime/auth"
+      ],
+      "known_contradictions": [
+        "Registered URI retains the transitional /platform prefix.",
+        "Registered route name uses transitional platform.* naming."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.realtime.auth (POST platform/realtime/auth) against action App\\Modules\\Notifications\\Http\\Controllers\\RealtimeAuthController, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Notifications/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.security.index",
+      "surface_type": "route",
+      "ownership_area": "not_applicable",
+      "owner_key": "security-checklist",
+      "capability_key": "security-checklist",
+      "module_key": "security-checklist",
+      "ownership_status": "ambiguous",
+      "current_responsibility": "GET|HEAD platform/security -> App\\Http\\Controllers\\Platform\\SecurityChecklistController@index.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:routes/web.php",
+        "route-action:App\\Http\\Controllers\\Platform\\SecurityChecklistController@index",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.security.index",
+        "route-uri:platform/security"
+      ],
+      "known_contradictions": [
+        "Current route owner is represented by the retired platform_management manifest security-checklist.",
+        "Registered URI retains the transitional /platform prefix.",
+        "Registered route name uses transitional platform.* naming.",
+        "Route action uses the transitional App\\Http\\Controllers\\Platform namespace."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 03 accepted Core or optional Module owner and Goal 09 route compatibility mapping replace the current security-checklist platform_management surface?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.security.index (GET|HEAD platform/security) against action App\\Http\\Controllers\\Platform\\SecurityChecklistController@index, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.security.show",
+      "surface_type": "route",
+      "ownership_area": "not_applicable",
+      "owner_key": "security-checklist",
+      "capability_key": "security-checklist",
+      "module_key": "security-checklist",
+      "ownership_status": "ambiguous",
+      "current_responsibility": "GET|HEAD platform/security/{requirement:slug} -> App\\Http\\Controllers\\Platform\\SecurityChecklistController@show.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:routes/web.php",
+        "route-action:App\\Http\\Controllers\\Platform\\SecurityChecklistController@show",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.security.show",
+        "route-uri:platform/security/{requirement:slug}"
+      ],
+      "known_contradictions": [
+        "Current route owner is represented by the retired platform_management manifest security-checklist.",
+        "Registered URI retains the transitional /platform prefix.",
+        "Registered route name uses transitional platform.* naming.",
+        "Route action uses the transitional App\\Http\\Controllers\\Platform namespace."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 03 accepted Core or optional Module owner and Goal 09 route compatibility mapping replace the current security-checklist platform_management surface?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.security.show (GET|HEAD platform/security/{requirement:slug}) against action App\\Http\\Controllers\\Platform\\SecurityChecklistController@show, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.security.update",
+      "surface_type": "route",
+      "ownership_area": "not_applicable",
+      "owner_key": "security-checklist",
+      "capability_key": "security-checklist",
+      "module_key": "security-checklist",
+      "ownership_status": "ambiguous",
+      "current_responsibility": "PATCH platform/security/{requirement:slug} -> App\\Http\\Controllers\\Platform\\SecurityChecklistController@update.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:routes/web.php",
+        "route-action:App\\Http\\Controllers\\Platform\\SecurityChecklistController@update",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.security.update",
+        "route-uri:platform/security/{requirement:slug}"
+      ],
+      "known_contradictions": [
+        "Current route owner is represented by the retired platform_management manifest security-checklist.",
+        "Registered URI retains the transitional /platform prefix.",
+        "Registered route name uses transitional platform.* naming.",
+        "Route action uses the transitional App\\Http\\Controllers\\Platform namespace."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 03 accepted Core or optional Module owner and Goal 09 route compatibility mapping replace the current security-checklist platform_management surface?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.security.update (PATCH platform/security/{requirement:slug}) against action App\\Http\\Controllers\\Platform\\SecurityChecklistController@update, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.settings.audit-logs",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "settings",
+      "capability_key": "settings",
+      "module_key": "settings",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD platform/settings/audit-logs -> App\\Modules\\Settings\\Http\\Controllers\\PageController@auditLogs.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Settings/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Settings/Routes/web.php",
+        "route-action:App\\Modules\\Settings\\Http\\Controllers\\PageController@auditLogs",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.settings.audit-logs",
+        "route-uri:platform/settings/audit-logs"
+      ],
+      "known_contradictions": [
+        "Registered URI retains the transitional /platform prefix.",
+        "Registered route name uses transitional platform.* naming."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.settings.audit-logs (GET|HEAD platform/settings/audit-logs) against action App\\Modules\\Settings\\Http\\Controllers\\PageController@auditLogs, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Settings/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.settings.audit-logs.update",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "settings",
+      "capability_key": "settings",
+      "module_key": "settings",
+      "ownership_status": "owned",
+      "current_responsibility": "POST platform/settings/audit-logs -> App\\Modules\\Settings\\Http\\Controllers\\PageController@updateAuditLogs.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Settings/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Settings/Routes/web.php",
+        "route-action:App\\Modules\\Settings\\Http\\Controllers\\PageController@updateAuditLogs",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.settings.audit-logs.update",
+        "route-uri:platform/settings/audit-logs"
+      ],
+      "known_contradictions": [
+        "Registered URI retains the transitional /platform prefix.",
+        "Registered route name uses transitional platform.* naming."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.settings.audit-logs.update (POST platform/settings/audit-logs) against action App\\Modules\\Settings\\Http\\Controllers\\PageController@updateAuditLogs, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Settings/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.settings.docs",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "settings",
+      "capability_key": "settings",
+      "module_key": "settings",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD platform/settings/docs -> App\\Modules\\Settings\\Http\\Controllers\\PageController@docs.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Settings/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Settings/Routes/web.php",
+        "route-action:App\\Modules\\Settings\\Http\\Controllers\\PageController@docs",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.settings.docs",
+        "route-uri:platform/settings/docs"
+      ],
+      "known_contradictions": [
+        "Registered URI retains the transitional /platform prefix.",
+        "Registered route name uses transitional platform.* naming."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.settings.docs (GET|HEAD platform/settings/docs) against action App\\Modules\\Settings\\Http\\Controllers\\PageController@docs, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Settings/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.settings.docs.update",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "settings",
+      "capability_key": "settings",
+      "module_key": "settings",
+      "ownership_status": "owned",
+      "current_responsibility": "POST platform/settings/docs -> App\\Modules\\Settings\\Http\\Controllers\\PageController@updateDocs.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Settings/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Settings/Routes/web.php",
+        "route-action:App\\Modules\\Settings\\Http\\Controllers\\PageController@updateDocs",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.settings.docs.update",
+        "route-uri:platform/settings/docs"
+      ],
+      "known_contradictions": [
+        "Registered URI retains the transitional /platform prefix.",
+        "Registered route name uses transitional platform.* naming."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.settings.docs.update (POST platform/settings/docs) against action App\\Modules\\Settings\\Http\\Controllers\\PageController@updateDocs, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Settings/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.settings.general",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "settings",
+      "capability_key": "settings",
+      "module_key": "settings",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD platform/settings/general -> Closure.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Settings/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Settings/Routes/web.php",
+        "route-action:Closure",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.settings.general",
+        "route-uri:platform/settings/general"
+      ],
+      "known_contradictions": [
+        "Registered URI retains the transitional /platform prefix.",
+        "Registered route name uses transitional platform.* naming."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.settings.general (GET|HEAD platform/settings/general) against action Closure, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Settings/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.settings.general.company-information",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "settings",
+      "capability_key": "settings",
+      "module_key": "settings",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD platform/settings/general/company-information -> Closure.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Settings/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Settings/Routes/web.php",
+        "route-action:Closure",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.settings.general.company-information",
+        "route-uri:platform/settings/general/company-information"
+      ],
+      "known_contradictions": [
+        "Registered URI retains the transitional /platform prefix.",
+        "Registered route name uses transitional platform.* naming."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.settings.general.company-information (GET|HEAD platform/settings/general/company-information) against action Closure, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Settings/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.settings.general.company-information.update",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "settings",
+      "capability_key": "settings",
+      "module_key": "settings",
+      "ownership_status": "owned",
+      "current_responsibility": "POST platform/settings/general/company-information -> App\\Modules\\Settings\\Http\\Controllers\\PageController@updateGeneralCompanyInformation.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Settings/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Settings/Routes/web.php",
+        "route-action:App\\Modules\\Settings\\Http\\Controllers\\PageController@updateGeneralCompanyInformation",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.settings.general.company-information.update",
+        "route-uri:platform/settings/general/company-information"
+      ],
+      "known_contradictions": [
+        "Registered URI retains the transitional /platform prefix.",
+        "Registered route name uses transitional platform.* naming."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.settings.general.company-information.update (POST platform/settings/general/company-information) against action App\\Modules\\Settings\\Http\\Controllers\\PageController@updateGeneralCompanyInformation, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Settings/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.settings.general.email",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "settings",
+      "capability_key": "settings",
+      "module_key": "settings",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD platform/settings/general/email -> Closure.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Settings/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Settings/Routes/web.php",
+        "route-action:Closure",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.settings.general.email",
+        "route-uri:platform/settings/general/email"
+      ],
+      "known_contradictions": [
+        "Registered URI retains the transitional /platform prefix.",
+        "Registered route name uses transitional platform.* naming."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.settings.general.email (GET|HEAD platform/settings/general/email) against action Closure, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Settings/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.settings.general.email.update",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "settings",
+      "capability_key": "settings",
+      "module_key": "settings",
+      "ownership_status": "owned",
+      "current_responsibility": "POST platform/settings/general/email -> App\\Modules\\Settings\\Http\\Controllers\\PageController@updateGeneralEmail.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Settings/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Settings/Routes/web.php",
+        "route-action:App\\Modules\\Settings\\Http\\Controllers\\PageController@updateGeneralEmail",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.settings.general.email.update",
+        "route-uri:platform/settings/general/email"
+      ],
+      "known_contradictions": [
+        "Registered URI retains the transitional /platform prefix.",
+        "Registered route name uses transitional platform.* naming."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.settings.general.email.update (POST platform/settings/general/email) against action App\\Modules\\Settings\\Http\\Controllers\\PageController@updateGeneralEmail, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Settings/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.settings.general.localization",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "settings",
+      "capability_key": "settings",
+      "module_key": "settings",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD platform/settings/general/localization -> Closure.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Settings/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Settings/Routes/web.php",
+        "route-action:Closure",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.settings.general.localization",
+        "route-uri:platform/settings/general/localization"
+      ],
+      "known_contradictions": [
+        "Registered URI retains the transitional /platform prefix.",
+        "Registered route name uses transitional platform.* naming."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.settings.general.localization (GET|HEAD platform/settings/general/localization) against action Closure, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Settings/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.settings.general.localization.update",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "settings",
+      "capability_key": "settings",
+      "module_key": "settings",
+      "ownership_status": "owned",
+      "current_responsibility": "POST platform/settings/general/localization -> App\\Modules\\Settings\\Http\\Controllers\\PageController@updateGeneralLocalization.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Settings/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Settings/Routes/web.php",
+        "route-action:App\\Modules\\Settings\\Http\\Controllers\\PageController@updateGeneralLocalization",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.settings.general.localization.update",
+        "route-uri:platform/settings/general/localization"
+      ],
+      "known_contradictions": [
+        "Registered URI retains the transitional /platform prefix.",
+        "Registered route name uses transitional platform.* naming."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.settings.general.localization.update (POST platform/settings/general/localization) against action App\\Modules\\Settings\\Http\\Controllers\\PageController@updateGeneralLocalization, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Settings/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.settings.general.system-server-info",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "settings",
+      "capability_key": "settings",
+      "module_key": "settings",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD platform/settings/general/system-server-info -> Closure.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Settings/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Settings/Routes/web.php",
+        "route-action:Closure",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.settings.general.system-server-info",
+        "route-uri:platform/settings/general/system-server-info"
+      ],
+      "known_contradictions": [
+        "Registered URI retains the transitional /platform prefix.",
+        "Registered route name uses transitional platform.* naming."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.settings.general.system-server-info (GET|HEAD platform/settings/general/system-server-info) against action Closure, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Settings/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.settings.general.system-update",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "settings",
+      "capability_key": "settings",
+      "module_key": "settings",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD platform/settings/general/system-update -> Closure.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Settings/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Settings/Routes/web.php",
+        "route-action:Closure",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.settings.general.system-update",
+        "route-uri:platform/settings/general/system-update"
+      ],
+      "known_contradictions": [
+        "Registered URI retains the transitional /platform prefix.",
+        "Registered route name uses transitional platform.* naming."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.settings.general.system-update (GET|HEAD platform/settings/general/system-update) against action Closure, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Settings/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.settings.general.system-update.update",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "settings",
+      "capability_key": "settings",
+      "module_key": "settings",
+      "ownership_status": "owned",
+      "current_responsibility": "POST platform/settings/general/system-update -> App\\Modules\\Settings\\Http\\Controllers\\PageController@updateGeneralSystemUpdate.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Settings/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Settings/Routes/web.php",
+        "route-action:App\\Modules\\Settings\\Http\\Controllers\\PageController@updateGeneralSystemUpdate",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.settings.general.system-update.update",
+        "route-uri:platform/settings/general/system-update"
+      ],
+      "known_contradictions": [
+        "Registered URI retains the transitional /platform prefix.",
+        "Registered route name uses transitional platform.* naming."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.settings.general.system-update.update (POST platform/settings/general/system-update) against action App\\Modules\\Settings\\Http\\Controllers\\PageController@updateGeneralSystemUpdate, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Settings/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.settings.general.update",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "settings",
+      "capability_key": "settings",
+      "module_key": "settings",
+      "ownership_status": "owned",
+      "current_responsibility": "POST platform/settings/general -> App\\Modules\\Settings\\Http\\Controllers\\PageController@updateGeneral.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Settings/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Settings/Routes/web.php",
+        "route-action:App\\Modules\\Settings\\Http\\Controllers\\PageController@updateGeneral",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.settings.general.update",
+        "route-uri:platform/settings/general"
+      ],
+      "known_contradictions": [
+        "Registered URI retains the transitional /platform prefix.",
+        "Registered route name uses transitional platform.* naming."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.settings.general.update (POST platform/settings/general) against action App\\Modules\\Settings\\Http\\Controllers\\PageController@updateGeneral, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Settings/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.settings.index",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "settings",
+      "capability_key": "settings",
+      "module_key": "settings",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD platform/settings -> App\\Modules\\Settings\\Http\\Controllers\\PageController@index.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Settings/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Settings/Routes/web.php",
+        "route-action:App\\Modules\\Settings\\Http\\Controllers\\PageController@index",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.settings.index",
+        "route-uri:platform/settings"
+      ],
+      "known_contradictions": [
+        "Registered URI retains the transitional /platform prefix.",
+        "Registered route name uses transitional platform.* naming."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.settings.index (GET|HEAD platform/settings) against action App\\Modules\\Settings\\Http\\Controllers\\PageController@index, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Settings/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.settings.notifications",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "notifications",
+      "capability_key": "notifications",
+      "module_key": "notifications",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD platform/settings/notifications -> App\\Modules\\Notifications\\Http\\Controllers\\SettingsDefaultsController@edit.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Notifications/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Notifications/Routes/web.php",
+        "route-action:App\\Modules\\Notifications\\Http\\Controllers\\SettingsDefaultsController@edit",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.settings.notifications",
+        "route-uri:platform/settings/notifications"
+      ],
+      "known_contradictions": [
+        "Registered URI retains the transitional /platform prefix.",
+        "Registered route name uses transitional platform.* naming."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.settings.notifications (GET|HEAD platform/settings/notifications) against action App\\Modules\\Notifications\\Http\\Controllers\\SettingsDefaultsController@edit, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Notifications/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.settings.notifications.update",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "notifications",
+      "capability_key": "notifications",
+      "module_key": "notifications",
+      "ownership_status": "owned",
+      "current_responsibility": "POST platform/settings/notifications -> App\\Modules\\Notifications\\Http\\Controllers\\SettingsDefaultsController@update.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Notifications/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Notifications/Routes/web.php",
+        "route-action:App\\Modules\\Notifications\\Http\\Controllers\\SettingsDefaultsController@update",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.settings.notifications.update",
+        "route-uri:platform/settings/notifications"
+      ],
+      "known_contradictions": [
+        "Registered URI retains the transitional /platform prefix.",
+        "Registered route name uses transitional platform.* naming."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.settings.notifications.update (POST platform/settings/notifications) against action App\\Modules\\Notifications\\Http\\Controllers\\SettingsDefaultsController@update, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Notifications/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.settings.users",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "settings",
+      "capability_key": "settings",
+      "module_key": "settings",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD platform/settings/users -> App\\Modules\\Settings\\Http\\Controllers\\PageController@users.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Settings/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Settings/Routes/web.php",
+        "route-action:App\\Modules\\Settings\\Http\\Controllers\\PageController@users",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.settings.users",
+        "route-uri:platform/settings/users"
+      ],
+      "known_contradictions": [
+        "Registered URI retains the transitional /platform prefix.",
+        "Registered route name uses transitional platform.* naming."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.settings.users (GET|HEAD platform/settings/users) against action App\\Modules\\Settings\\Http\\Controllers\\PageController@users, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Settings/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.settings.users.update",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "settings",
+      "capability_key": "settings",
+      "module_key": "settings",
+      "ownership_status": "owned",
+      "current_responsibility": "POST platform/settings/users -> App\\Modules\\Settings\\Http\\Controllers\\PageController@updateUsers.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Settings/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Settings/Routes/web.php",
+        "route-action:App\\Modules\\Settings\\Http\\Controllers\\PageController@updateUsers",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.settings.users.update",
+        "route-uri:platform/settings/users"
+      ],
+      "known_contradictions": [
+        "Registered URI retains the transitional /platform prefix.",
+        "Registered route name uses transitional platform.* naming."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.settings.users.update (POST platform/settings/users) against action App\\Modules\\Settings\\Http\\Controllers\\PageController@updateUsers, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Settings/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.setup.index",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "setup",
+      "capability_key": "setup",
+      "module_key": "setup",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD platform/setup -> App\\Modules\\Setup\\Http\\Controllers\\ScreenController@index.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Setup/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Setup/Routes/web.php",
+        "route-action:App\\Modules\\Setup\\Http\\Controllers\\ScreenController@index",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.setup.index",
+        "route-uri:platform/setup"
+      ],
+      "known_contradictions": [
+        "Registered URI retains the transitional /platform prefix.",
+        "Registered route name uses transitional platform.* naming."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.setup.index (GET|HEAD platform/setup) against action App\\Modules\\Setup\\Http\\Controllers\\ScreenController@index, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Setup/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.setup.notifications",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "notifications",
+      "capability_key": "notifications",
+      "module_key": "notifications",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD platform/setup/notifications -> App\\Modules\\Notifications\\Http\\Controllers\\SetupController@index.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Notifications/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Notifications/Routes/web.php",
+        "route-action:App\\Modules\\Notifications\\Http\\Controllers\\SetupController@index",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.setup.notifications",
+        "route-uri:platform/setup/notifications"
+      ],
+      "known_contradictions": [
+        "Registered URI retains the transitional /platform prefix.",
+        "Registered route name uses transitional platform.* naming."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.setup.notifications (GET|HEAD platform/setup/notifications) against action App\\Modules\\Notifications\\Http\\Controllers\\SetupController@index, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Notifications/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.users.create",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "users",
+      "capability_key": "users",
+      "module_key": "users",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD platform/users/create -> App\\Http\\Controllers\\Platform\\PlatformUserController@create.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:routes/web.php",
+        "route-action:App\\Http\\Controllers\\Platform\\PlatformUserController@create",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.users.create",
+        "route-uri:platform/users/create"
+      ],
+      "known_contradictions": [
+        "Registered URI retains the transitional /platform prefix.",
+        "Registered route name uses transitional platform.* naming.",
+        "Route action uses the transitional App\\Http\\Controllers\\Platform namespace."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.users.create (GET|HEAD platform/users/create) against action App\\Http\\Controllers\\Platform\\PlatformUserController@create, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.users.edit",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "users",
+      "capability_key": "users",
+      "module_key": "users",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD platform/users/{user}/edit -> App\\Http\\Controllers\\Platform\\PlatformUserController@edit.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:routes/web.php",
+        "route-action:App\\Http\\Controllers\\Platform\\PlatformUserController@edit",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.users.edit",
+        "route-uri:platform/users/{user}/edit"
+      ],
+      "known_contradictions": [
+        "Registered URI retains the transitional /platform prefix.",
+        "Registered route name uses transitional platform.* naming.",
+        "Route action uses the transitional App\\Http\\Controllers\\Platform namespace."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.users.edit (GET|HEAD platform/users/{user}/edit) against action App\\Http\\Controllers\\Platform\\PlatformUserController@edit, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.users.index",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "users",
+      "capability_key": "users",
+      "module_key": "users",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD platform/users -> App\\Http\\Controllers\\Platform\\PlatformUserController@index.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:routes/web.php",
+        "route-action:App\\Http\\Controllers\\Platform\\PlatformUserController@index",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.users.index",
+        "route-uri:platform/users"
+      ],
+      "known_contradictions": [
+        "Registered URI retains the transitional /platform prefix.",
+        "Registered route name uses transitional platform.* naming.",
+        "Route action uses the transitional App\\Http\\Controllers\\Platform namespace."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.users.index (GET|HEAD platform/users) against action App\\Http\\Controllers\\Platform\\PlatformUserController@index, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.users.mfa-requirement",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "users",
+      "capability_key": "users",
+      "module_key": "users",
+      "ownership_status": "owned",
+      "current_responsibility": "POST platform/users/{user}/mfa-requirement -> App\\Http\\Controllers\\Platform\\PlatformUserMfaController@updateRequirement.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:routes/web.php",
+        "route-action:App\\Http\\Controllers\\Platform\\PlatformUserMfaController@updateRequirement",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.users.mfa-requirement",
+        "route-uri:platform/users/{user}/mfa-requirement"
+      ],
+      "known_contradictions": [
+        "Registered URI retains the transitional /platform prefix.",
+        "Registered route name uses transitional platform.* naming.",
+        "Route action uses the transitional App\\Http\\Controllers\\Platform namespace."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.users.mfa-requirement (POST platform/users/{user}/mfa-requirement) against action App\\Http\\Controllers\\Platform\\PlatformUserMfaController@updateRequirement, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.users.mfa-reset",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "users",
+      "capability_key": "users",
+      "module_key": "users",
+      "ownership_status": "owned",
+      "current_responsibility": "POST platform/users/{user}/mfa-reset -> App\\Http\\Controllers\\Platform\\PlatformUserMfaController@reset.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:routes/web.php",
+        "route-action:App\\Http\\Controllers\\Platform\\PlatformUserMfaController@reset",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.users.mfa-reset",
+        "route-uri:platform/users/{user}/mfa-reset"
+      ],
+      "known_contradictions": [
+        "Registered URI retains the transitional /platform prefix.",
+        "Registered route name uses transitional platform.* naming.",
+        "Route action uses the transitional App\\Http\\Controllers\\Platform namespace."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.users.mfa-reset (POST platform/users/{user}/mfa-reset) against action App\\Http\\Controllers\\Platform\\PlatformUserMfaController@reset, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.users.store",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "users",
+      "capability_key": "users",
+      "module_key": "users",
+      "ownership_status": "owned",
+      "current_responsibility": "POST platform/users -> App\\Http\\Controllers\\Platform\\PlatformUserController@store.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:routes/web.php",
+        "route-action:App\\Http\\Controllers\\Platform\\PlatformUserController@store",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.users.store",
+        "route-uri:platform/users"
+      ],
+      "known_contradictions": [
+        "Registered URI retains the transitional /platform prefix.",
+        "Registered route name uses transitional platform.* naming.",
+        "Route action uses the transitional App\\Http\\Controllers\\Platform namespace."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.users.store (POST platform/users) against action App\\Http\\Controllers\\Platform\\PlatformUserController@store, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.users.toggle-active",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "users",
+      "capability_key": "users",
+      "module_key": "users",
+      "ownership_status": "owned",
+      "current_responsibility": "POST platform/users/{user}/toggle-active -> App\\Http\\Controllers\\Platform\\PlatformUserController@toggleActive.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:routes/web.php",
+        "route-action:App\\Http\\Controllers\\Platform\\PlatformUserController@toggleActive",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.users.toggle-active",
+        "route-uri:platform/users/{user}/toggle-active"
+      ],
+      "known_contradictions": [
+        "Registered URI retains the transitional /platform prefix.",
+        "Registered route name uses transitional platform.* naming.",
+        "Route action uses the transitional App\\Http\\Controllers\\Platform namespace."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.users.toggle-active (POST platform/users/{user}/toggle-active) against action App\\Http\\Controllers\\Platform\\PlatformUserController@toggleActive, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:platform.users.update",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "users",
+      "capability_key": "users",
+      "module_key": "users",
+      "ownership_status": "owned",
+      "current_responsibility": "PATCH|PUT platform/users/{user} -> App\\Http\\Controllers\\Platform\\PlatformUserController@update.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:routes/web.php",
+        "route-action:App\\Http\\Controllers\\Platform\\PlatformUserController@update",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:platform.users.update",
+        "route-uri:platform/users/{user}"
+      ],
+      "known_contradictions": [
+        "Registered URI retains the transitional /platform prefix.",
+        "Registered route name uses transitional platform.* naming.",
+        "Route action uses the transitional App\\Http\\Controllers\\Platform namespace."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route platform.users.update (PATCH|PUT platform/users/{user}) against action App\\Http\\Controllers\\Platform\\PlatformUserController@update, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:roles.create",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "roles",
+      "capability_key": "roles",
+      "module_key": "roles",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD platform/roles/create -> App\\Modules\\Roles\\Http\\Controllers\\CreateController.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Roles/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Roles/Routes/web.php",
+        "route-action:App\\Modules\\Roles\\Http\\Controllers\\CreateController",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:roles.create",
+        "route-uri:platform/roles/create"
+      ],
+      "known_contradictions": [
+        "Registered URI retains the transitional /platform prefix."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route roles.create (GET|HEAD platform/roles/create) against action App\\Modules\\Roles\\Http\\Controllers\\CreateController, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Roles/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:roles.delete",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "roles",
+      "capability_key": "roles",
+      "module_key": "roles",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD platform/roles/{role}/delete -> App\\Modules\\Roles\\Http\\Controllers\\DeleteController.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Roles/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Roles/Routes/web.php",
+        "route-action:App\\Modules\\Roles\\Http\\Controllers\\DeleteController",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:roles.delete",
+        "route-uri:platform/roles/{role}/delete"
+      ],
+      "known_contradictions": [
+        "Registered URI retains the transitional /platform prefix."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route roles.delete (GET|HEAD platform/roles/{role}/delete) against action App\\Modules\\Roles\\Http\\Controllers\\DeleteController, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Roles/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:roles.destroy",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "roles",
+      "capability_key": "roles",
+      "module_key": "roles",
+      "ownership_status": "owned",
+      "current_responsibility": "DELETE platform/roles/{role} -> App\\Modules\\Roles\\Http\\Controllers\\DestroyController.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Roles/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Roles/Routes/web.php",
+        "route-action:App\\Modules\\Roles\\Http\\Controllers\\DestroyController",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:roles.destroy",
+        "route-uri:platform/roles/{role}"
+      ],
+      "known_contradictions": [
+        "Registered URI retains the transitional /platform prefix."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route roles.destroy (DELETE platform/roles/{role}) against action App\\Modules\\Roles\\Http\\Controllers\\DestroyController, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Roles/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:roles.edit",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "roles",
+      "capability_key": "roles",
+      "module_key": "roles",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD platform/roles/{role}/edit -> App\\Modules\\Roles\\Http\\Controllers\\EditController.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Roles/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Roles/Routes/web.php",
+        "route-action:App\\Modules\\Roles\\Http\\Controllers\\EditController",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:roles.edit",
+        "route-uri:platform/roles/{role}/edit"
+      ],
+      "known_contradictions": [
+        "Registered URI retains the transitional /platform prefix."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route roles.edit (GET|HEAD platform/roles/{role}/edit) against action App\\Modules\\Roles\\Http\\Controllers\\EditController, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Roles/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:roles.index",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "roles",
+      "capability_key": "roles",
+      "module_key": "roles",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD platform/roles -> App\\Modules\\Roles\\Http\\Controllers\\IndexController.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Roles/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Roles/Routes/web.php",
+        "route-action:App\\Modules\\Roles\\Http\\Controllers\\IndexController",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:roles.index",
+        "route-uri:platform/roles"
+      ],
+      "known_contradictions": [
+        "Registered URI retains the transitional /platform prefix."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route roles.index (GET|HEAD platform/roles) against action App\\Modules\\Roles\\Http\\Controllers\\IndexController, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Roles/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:roles.permissions.index",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "roles",
+      "capability_key": "roles",
+      "module_key": "roles",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD platform/roles/permissions -> App\\Modules\\Roles\\Http\\Controllers\\PermissionsIndexController.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Roles/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Roles/Routes/web.php",
+        "route-action:App\\Modules\\Roles\\Http\\Controllers\\PermissionsIndexController",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:roles.permissions.index",
+        "route-uri:platform/roles/permissions"
+      ],
+      "known_contradictions": [
+        "Registered URI retains the transitional /platform prefix."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route roles.permissions.index (GET|HEAD platform/roles/permissions) against action App\\Modules\\Roles\\Http\\Controllers\\PermissionsIndexController, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Roles/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:roles.show",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "roles",
+      "capability_key": "roles",
+      "module_key": "roles",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD platform/roles/{role} -> App\\Modules\\Roles\\Http\\Controllers\\ShowController.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Roles/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Roles/Routes/web.php",
+        "route-action:App\\Modules\\Roles\\Http\\Controllers\\ShowController",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:roles.show",
+        "route-uri:platform/roles/{role}"
+      ],
+      "known_contradictions": [
+        "Registered URI retains the transitional /platform prefix."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route roles.show (GET|HEAD platform/roles/{role}) against action App\\Modules\\Roles\\Http\\Controllers\\ShowController, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Roles/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:roles.store",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "roles",
+      "capability_key": "roles",
+      "module_key": "roles",
+      "ownership_status": "owned",
+      "current_responsibility": "POST platform/roles -> App\\Modules\\Roles\\Http\\Controllers\\StoreController.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Roles/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Roles/Routes/web.php",
+        "route-action:App\\Modules\\Roles\\Http\\Controllers\\StoreController",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:roles.store",
+        "route-uri:platform/roles"
+      ],
+      "known_contradictions": [
+        "Registered URI retains the transitional /platform prefix."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route roles.store (POST platform/roles) against action App\\Modules\\Roles\\Http\\Controllers\\StoreController, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Roles/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:roles.update",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "roles",
+      "capability_key": "roles",
+      "module_key": "roles",
+      "ownership_status": "owned",
+      "current_responsibility": "PATCH platform/roles/{role} -> App\\Modules\\Roles\\Http\\Controllers\\UpdateController.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Roles/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Roles/Routes/web.php",
+        "route-action:App\\Modules\\Roles\\Http\\Controllers\\UpdateController",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:roles.update",
+        "route-uri:platform/roles/{role}"
+      ],
+      "known_contradictions": [
+        "Registered URI retains the transitional /platform prefix."
+      ],
+      "disposition": "compatibility",
+      "target_question": "Which Goal 09 route-name and URL compatibility mapping replaces or formally preserves this transitional registered route?",
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route roles.update (PATCH platform/roles/{role}) against action App\\Modules\\Roles\\Http\\Controllers\\UpdateController, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Roles/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:settings.index",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "settings",
+      "capability_key": "settings",
+      "module_key": "settings",
+      "ownership_status": "owned",
+      "current_responsibility": "GET|HEAD settings -> App\\Modules\\Settings\\Http\\Controllers\\PageController@index.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "related_contracts": [
+        "Modules/Settings/Routes/web.php"
+      ],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "path:Modules/Settings/Routes/web.php",
+        "route-action:App\\Modules\\Settings\\Http\\Controllers\\PageController@index",
+        "route-middleware:Illuminate\\Auth\\Middleware\\Authenticate",
+        "route-middleware:web",
+        "route-name:settings.index",
+        "route-uri:settings"
+      ],
+      "known_contradictions": [],
+      "disposition": "retain",
+      "target_question": null,
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route settings.index (GET|HEAD settings) against action App\\Modules\\Settings\\Http\\Controllers\\PageController@index, middleware Illuminate\\Auth\\Middleware\\Authenticate, web, and Modules/Settings/Routes/web.php."
+    },
+    {
+      "path_or_identifier": "route:storage.local",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "runtime",
+      "capability_key": "storage",
+      "module_key": "not_applicable",
+      "ownership_status": "shared",
+      "current_responsibility": "GET|HEAD storage/{path} -> Closure.",
+      "authority_state": "vendor",
+      "registration_state": "registered",
+      "related_contracts": [],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-action:Closure",
+        "route-name:storage.local",
+        "route-uri:storage/{path}"
+      ],
+      "known_contradictions": [],
+      "disposition": "retain",
+      "target_question": null,
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route storage.local (GET|HEAD storage/{path}) against action Closure, middleware none, and vendor/framework runtime registration."
+    },
+    {
+      "path_or_identifier": "route:storage.local.upload",
+      "surface_type": "route",
+      "ownership_area": "core",
+      "owner_key": "runtime",
+      "capability_key": "storage",
+      "module_key": "not_applicable",
+      "ownership_status": "shared",
+      "current_responsibility": "PUT storage/{path} -> Closure.",
+      "authority_state": "vendor",
+      "registration_state": "registered",
+      "related_contracts": [],
+      "related_tests": [],
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-action:Closure",
+        "route-name:storage.local.upload",
+        "route-uri:storage/{path}"
+      ],
+      "known_contradictions": [],
+      "disposition": "retain",
+      "target_question": null,
+      "_reviewed": true,
+      "_review_note": "Reviewed registered route storage.local.upload (PUT storage/{path}) against action Closure, middleware none, and vendor/framework runtime registration."
     },
     {
       "path_or_identifier": "routes/AGENTS.md",

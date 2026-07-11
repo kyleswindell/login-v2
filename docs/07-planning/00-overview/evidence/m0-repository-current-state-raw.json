@@ -5,13 +5,13 @@
     "committed_at": "2026-07-10T22:27:59-04:00",
     "ref": "main",
     "charter_baseline_sha": "f906e0520e12b5f9eb93b9d35934407c2bbba366",
-    "current_head_at_generation": "1d103f5fa47aab8c8adfba8ea134dd29540426fe",
+    "current_head_at_generation": "c02b96dfb26924386fc8e4f383ca63d4b7f34edc",
     "runtime_equivalence": "Repository changes between the charter baseline and inventory baseline are governance/documentation changes; runtime source is unchanged."
   },
   "generator": {
     "path": "scripts/generate-m0-repository-current-state-inventory.mjs",
-    "command": "node scripts/generate-m0-repository-current-state-inventory.mjs --baseline 1d103f5fa47aab8c8adfba8ea134dd29540426fe",
-    "generated_at": "2026-07-11T13:23:06.976Z",
+    "command": "node scripts/generate-m0-repository-current-state-inventory.mjs --baseline 1d103f5fa47aab8c8adfba8ea134dd29540426fe --static-only",
+    "generated_at": "2026-07-11T14:49:38.694Z",
     "static_only": true
   },
   "repository": {
@@ -39667,22 +39667,22 @@
   },
   "dynamic_runtime_evidence": {
     "route_list": {
-      "status": "failed",
-      "exit_code": 1,
+      "status": "passed",
+      "exit_code": 0,
       "command": "php artisan route:list --json",
-      "stderr": "'\\\\DESKTOP-4JRC198\\WorkFiles\\8. Login V2'\r\nCMD.EXE was started with the above path as the current directory.\r\nUNC paths are not supported.  Defaulting to Windows directory.\r\n"
+      "stderr": ""
     },
     "artisan_list": {
-      "status": "failed",
-      "exit_code": 1,
+      "status": "passed",
+      "exit_code": 0,
       "command": "php artisan list --format=json",
-      "stderr": "'\\\\DESKTOP-4JRC198\\WorkFiles\\8. Login V2'\r\nCMD.EXE was started with the above path as the current directory.\r\nUNC paths are not supported.  Defaulting to Windows directory.\r\n"
+      "stderr": ""
     },
     "module_list": {
-      "status": "failed",
-      "exit_code": 1,
+      "status": "passed",
+      "exit_code": 0,
       "command": "php artisan platform:modules:list --json",
-      "stderr": "'\\\\DESKTOP-4JRC198\\WorkFiles\\8. Login V2'\r\nCMD.EXE was started with the above path as the current directory.\r\nUNC paths are not supported.  Defaulting to Windows directory.\r\n"
+      "stderr": ""
     }
   },
   "material_items": [
@@ -41678,15 +41678,16 @@
     },
     {
       "path_or_identifier": "command:active-batch-review:sync-manifest",
-      "source_kind": "runtime_command_static",
+      "source_kind": "runtime_command_dynamic",
       "surface_type": "command",
       "namespace": null,
-      "safe_purpose": "Artisan closure command declared in routes/console.php: active-batch-review:sync-manifest.",
+      "safe_purpose": "Synchronize the active-batch review manifest from docs/08-active/change-queue.md",
       "authority_state": "compatibility",
-      "registration_state": "present",
+      "registration_state": "registered",
       "evidence_source": [
-        "path:routes/console.php",
-        "command-signature:active-batch-review:sync-manifest"
+        "command-signature:active-batch-review:sync-manifest",
+        "command:php artisan list --format=json",
+        "path:routes/console.php"
       ],
       "known_contradictions": [
         "Historical active-batch workflow surface remains present."
@@ -41695,75 +41696,80 @@
     },
     {
       "path_or_identifier": "command:inspire",
-      "source_kind": "runtime_command_static",
+      "source_kind": "runtime_command_dynamic",
       "surface_type": "command",
       "namespace": null,
-      "safe_purpose": "Artisan closure command declared in routes/console.php: inspire.",
+      "safe_purpose": "Display an inspiring quote",
       "authority_state": "active",
-      "registration_state": "present",
+      "registration_state": "registered",
       "evidence_source": [
-        "path:routes/console.php",
-        "command-signature:inspire"
+        "command-signature:inspire",
+        "command:php artisan list --format=json",
+        "path:routes/console.php"
       ],
       "known_contradictions": [],
       "suggested_target_question": null
     },
     {
       "path_or_identifier": "command:local:ready",
-      "source_kind": "runtime_command_static",
+      "source_kind": "runtime_command_dynamic",
       "surface_type": "command",
       "namespace": null,
-      "safe_purpose": "Artisan closure command declared in routes/console.php: local:ready.",
+      "safe_purpose": "Prepare the local browser-review environment, Vite hot asset target, and review user.",
       "authority_state": "active",
-      "registration_state": "present",
+      "registration_state": "registered",
       "evidence_source": [
-        "path:routes/console.php",
-        "command-signature:local:ready"
+        "command-signature:local:ready",
+        "command:php artisan list --format=json",
+        "path:routes/console.php"
       ],
       "known_contradictions": [],
       "suggested_target_question": null
     },
     {
       "path_or_identifier": "command:modules:sync-registries",
-      "source_kind": "runtime_command_static",
+      "source_kind": "runtime_command_dynamic",
       "surface_type": "command",
       "namespace": null,
-      "safe_purpose": "Artisan closure command declared in routes/console.php: modules:sync-registries.",
+      "safe_purpose": "Sync module-declared contribution metadata into registry projection tables.",
       "authority_state": "active",
-      "registration_state": "present",
+      "registration_state": "registered",
       "evidence_source": [
-        "path:routes/console.php",
-        "command-signature:modules:sync-registries"
+        "command-signature:modules:sync-registries",
+        "command:php artisan list --format=json",
+        "path:routes/console.php"
       ],
       "known_contradictions": [],
       "suggested_target_question": null
     },
     {
       "path_or_identifier": "command:platform:modules:list",
-      "source_kind": "runtime_command_static",
+      "source_kind": "runtime_command_dynamic",
       "surface_type": "command",
       "namespace": null,
-      "safe_purpose": "Artisan closure command declared in routes/console.php: platform:modules:list.",
+      "safe_purpose": "List registered module definitions and ownership metadata.",
       "authority_state": "active",
-      "registration_state": "present",
+      "registration_state": "registered",
       "evidence_source": [
-        "path:routes/console.php",
-        "command-signature:platform:modules:list"
+        "command-signature:platform:modules:list",
+        "command:php artisan list --format=json",
+        "path:routes/console.php"
       ],
       "known_contradictions": [],
       "suggested_target_question": null
     },
     {
       "path_or_identifier": "command:platform:security-runtime-check",
-      "source_kind": "runtime_command_static",
+      "source_kind": "runtime_command_dynamic",
       "surface_type": "command",
       "namespace": null,
-      "safe_purpose": "Artisan closure command declared in routes/console.php: platform:security-runtime-check.",
+      "safe_purpose": "Verify runtime hardening posture for local, staging, or production environments.",
       "authority_state": "active",
-      "registration_state": "present",
+      "registration_state": "registered",
       "evidence_source": [
-        "path:routes/console.php",
-        "command-signature:platform:security-runtime-check"
+        "command-signature:platform:security-runtime-check",
+        "command:php artisan list --format=json",
+        "path:routes/console.php"
       ],
       "known_contradictions": [],
       "suggested_target_question": null
@@ -45511,6 +45517,717 @@
       "suggested_target_question": null
     },
     {
+      "path_or_identifier": "module:account",
+      "source_kind": "runtime_module_dynamic",
+      "surface_type": "module",
+      "namespace": null,
+      "safe_purpose": "Registered module manifest account (core).",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan platform:modules:list --json",
+        "module-key:account"
+      ],
+      "known_contradictions": [],
+      "suggested_target_question": null,
+      "runtime_metadata": {
+        "key": "account",
+        "name": "Account",
+        "type": "core",
+        "default_state": "enabled",
+        "installed_by_default": true,
+        "default_enabled": true,
+        "disableable": false,
+        "tenant_eligible": true,
+        "dependencies": [
+          "auth",
+          "users",
+          "roles"
+        ],
+        "ownership_counts": {
+          "route_patterns": 10,
+          "permissions": 0,
+          "notification_types": 0,
+          "navigation_routes": 3,
+          "dashboard_widgets": 0,
+          "settings_groups": 0,
+          "owned_tables": 0,
+          "platform_view_paths": 1,
+          "module_view_paths": 1,
+          "ui_entries": 7,
+          "setup_routes": 0,
+          "audit_events": 1,
+          "commands": 0
+        }
+      }
+    },
+    {
+      "path_or_identifier": "module:auth",
+      "source_kind": "runtime_module_dynamic",
+      "surface_type": "module",
+      "namespace": null,
+      "safe_purpose": "Registered module manifest auth (core).",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan platform:modules:list --json",
+        "module-key:auth"
+      ],
+      "known_contradictions": [],
+      "suggested_target_question": null,
+      "runtime_metadata": {
+        "key": "auth",
+        "name": "Auth",
+        "type": "core",
+        "default_state": "enabled",
+        "installed_by_default": true,
+        "default_enabled": true,
+        "disableable": false,
+        "tenant_eligible": true,
+        "dependencies": [],
+        "ownership_counts": {
+          "route_patterns": 5,
+          "permissions": 0,
+          "notification_types": 4,
+          "navigation_routes": 0,
+          "dashboard_widgets": 0,
+          "settings_groups": 0,
+          "owned_tables": 5,
+          "platform_view_paths": 0,
+          "module_view_paths": 1,
+          "ui_entries": 0,
+          "setup_routes": 0,
+          "audit_events": 1,
+          "commands": 0
+        }
+      }
+    },
+    {
+      "path_or_identifier": "module:dashboard",
+      "source_kind": "runtime_module_dynamic",
+      "surface_type": "module",
+      "namespace": null,
+      "safe_purpose": "Registered module manifest dashboard (core).",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan platform:modules:list --json",
+        "module-key:dashboard"
+      ],
+      "known_contradictions": [],
+      "suggested_target_question": null,
+      "runtime_metadata": {
+        "key": "dashboard",
+        "name": "Dashboard",
+        "type": "core",
+        "default_state": "enabled",
+        "installed_by_default": true,
+        "default_enabled": true,
+        "disableable": false,
+        "tenant_eligible": true,
+        "dependencies": [
+          "auth",
+          "users",
+          "roles"
+        ],
+        "ownership_counts": {
+          "route_patterns": 2,
+          "permissions": 0,
+          "notification_types": 0,
+          "navigation_routes": 1,
+          "dashboard_widgets": 0,
+          "settings_groups": 0,
+          "owned_tables": 1,
+          "platform_view_paths": 0,
+          "module_view_paths": 1,
+          "ui_entries": 2,
+          "setup_routes": 0,
+          "audit_events": 0,
+          "commands": 0
+        }
+      }
+    },
+    {
+      "path_or_identifier": "module:development-tools",
+      "source_kind": "runtime_module_dynamic",
+      "surface_type": "module",
+      "namespace": null,
+      "safe_purpose": "Registered module manifest development-tools (platform_management).",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan platform:modules:list --json",
+        "module-key:development-tools"
+      ],
+      "known_contradictions": [
+        "Current module registry uses the retired platform_management category."
+      ],
+      "suggested_target_question": "Which accepted Core or Module classification replaces the current platform_management category?",
+      "runtime_metadata": {
+        "key": "development-tools",
+        "name": "Development Tools",
+        "type": "platform_management",
+        "default_state": "enabled",
+        "installed_by_default": true,
+        "default_enabled": true,
+        "disableable": true,
+        "tenant_eligible": false,
+        "dependencies": [
+          "dashboard",
+          "notifications"
+        ],
+        "ownership_counts": {
+          "route_patterns": 0,
+          "permissions": 0,
+          "notification_types": 0,
+          "navigation_routes": 0,
+          "dashboard_widgets": 0,
+          "settings_groups": 0,
+          "owned_tables": 0,
+          "platform_view_paths": 0,
+          "module_view_paths": 0,
+          "ui_entries": 0,
+          "setup_routes": 0,
+          "audit_events": 0,
+          "commands": 0
+        }
+      }
+    },
+    {
+      "path_or_identifier": "module:docs-viewer",
+      "source_kind": "runtime_module_dynamic",
+      "surface_type": "module",
+      "namespace": null,
+      "safe_purpose": "Registered module manifest docs-viewer (platform_management).",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan platform:modules:list --json",
+        "module-key:docs-viewer"
+      ],
+      "known_contradictions": [
+        "Current module registry uses the retired platform_management category."
+      ],
+      "suggested_target_question": "Which accepted Core or Module classification replaces the current platform_management category?",
+      "runtime_metadata": {
+        "key": "docs-viewer",
+        "name": "Docs Viewer",
+        "type": "platform_management",
+        "default_state": "enabled",
+        "installed_by_default": true,
+        "default_enabled": true,
+        "disableable": true,
+        "tenant_eligible": false,
+        "dependencies": [
+          "auth",
+          "settings"
+        ],
+        "ownership_counts": {
+          "route_patterns": 3,
+          "permissions": 1,
+          "notification_types": 0,
+          "navigation_routes": 1,
+          "dashboard_widgets": 0,
+          "settings_groups": 1,
+          "owned_tables": 0,
+          "platform_view_paths": 1,
+          "module_view_paths": 0,
+          "ui_entries": 2,
+          "setup_routes": 0,
+          "audit_events": 0,
+          "commands": 0
+        }
+      }
+    },
+    {
+      "path_or_identifier": "module:logging",
+      "source_kind": "runtime_module_dynamic",
+      "surface_type": "module",
+      "namespace": null,
+      "safe_purpose": "Registered module manifest logging (core).",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan platform:modules:list --json",
+        "module-key:logging"
+      ],
+      "known_contradictions": [],
+      "suggested_target_question": null,
+      "runtime_metadata": {
+        "key": "logging",
+        "name": "Logging",
+        "type": "core",
+        "default_state": "enabled",
+        "installed_by_default": true,
+        "default_enabled": true,
+        "disableable": false,
+        "tenant_eligible": true,
+        "dependencies": [
+          "auth",
+          "users",
+          "roles"
+        ],
+        "ownership_counts": {
+          "route_patterns": 6,
+          "permissions": 2,
+          "notification_types": 0,
+          "navigation_routes": 2,
+          "dashboard_widgets": 0,
+          "settings_groups": 1,
+          "owned_tables": 2,
+          "platform_view_paths": 2,
+          "module_view_paths": 0,
+          "ui_entries": 4,
+          "setup_routes": 0,
+          "audit_events": 0,
+          "commands": 0
+        }
+      }
+    },
+    {
+      "path_or_identifier": "module:notifications",
+      "source_kind": "runtime_module_dynamic",
+      "surface_type": "module",
+      "namespace": null,
+      "safe_purpose": "Registered module manifest notifications (core).",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan platform:modules:list --json",
+        "module-key:notifications"
+      ],
+      "known_contradictions": [],
+      "suggested_target_question": null,
+      "runtime_metadata": {
+        "key": "notifications",
+        "name": "Notifications",
+        "type": "core",
+        "default_state": "enabled",
+        "installed_by_default": true,
+        "default_enabled": true,
+        "disableable": false,
+        "tenant_eligible": true,
+        "dependencies": [
+          "auth",
+          "users",
+          "roles",
+          "dashboard",
+          "settings",
+          "setup"
+        ],
+        "ownership_counts": {
+          "route_patterns": 8,
+          "permissions": 4,
+          "notification_types": 0,
+          "navigation_routes": 3,
+          "dashboard_widgets": 0,
+          "settings_groups": 1,
+          "owned_tables": 2,
+          "platform_view_paths": 0,
+          "module_view_paths": 1,
+          "ui_entries": 7,
+          "setup_routes": 1,
+          "audit_events": 2,
+          "commands": 0
+        }
+      }
+    },
+    {
+      "path_or_identifier": "module:preferences",
+      "source_kind": "runtime_module_dynamic",
+      "surface_type": "module",
+      "namespace": null,
+      "safe_purpose": "Registered module manifest preferences (core).",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan platform:modules:list --json",
+        "module-key:preferences"
+      ],
+      "known_contradictions": [],
+      "suggested_target_question": null,
+      "runtime_metadata": {
+        "key": "preferences",
+        "name": "Preferences",
+        "type": "core",
+        "default_state": "enabled",
+        "installed_by_default": true,
+        "default_enabled": true,
+        "disableable": false,
+        "tenant_eligible": true,
+        "dependencies": [
+          "auth",
+          "account"
+        ],
+        "ownership_counts": {
+          "route_patterns": 2,
+          "permissions": 0,
+          "notification_types": 0,
+          "navigation_routes": 0,
+          "dashboard_widgets": 0,
+          "settings_groups": 0,
+          "owned_tables": 0,
+          "platform_view_paths": 0,
+          "module_view_paths": 1,
+          "ui_entries": 1,
+          "setup_routes": 0,
+          "audit_events": 0,
+          "commands": 0
+        }
+      }
+    },
+    {
+      "path_or_identifier": "module:roles",
+      "source_kind": "runtime_module_dynamic",
+      "surface_type": "module",
+      "namespace": null,
+      "safe_purpose": "Registered module manifest roles (core).",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan platform:modules:list --json",
+        "module-key:roles"
+      ],
+      "known_contradictions": [],
+      "suggested_target_question": null,
+      "runtime_metadata": {
+        "key": "roles",
+        "name": "Roles",
+        "type": "core",
+        "default_state": "enabled",
+        "installed_by_default": true,
+        "default_enabled": true,
+        "disableable": false,
+        "tenant_eligible": true,
+        "dependencies": [
+          "auth"
+        ],
+        "ownership_counts": {
+          "route_patterns": 1,
+          "permissions": 6,
+          "notification_types": 2,
+          "navigation_routes": 0,
+          "dashboard_widgets": 0,
+          "settings_groups": 0,
+          "owned_tables": 7,
+          "platform_view_paths": 0,
+          "module_view_paths": 1,
+          "ui_entries": 7,
+          "setup_routes": 0,
+          "audit_events": 0,
+          "commands": 0
+        }
+      }
+    },
+    {
+      "path_or_identifier": "module:runtime-readiness",
+      "source_kind": "runtime_module_dynamic",
+      "surface_type": "module",
+      "namespace": null,
+      "safe_purpose": "Registered module manifest runtime-readiness (platform_management).",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan platform:modules:list --json",
+        "module-key:runtime-readiness"
+      ],
+      "known_contradictions": [
+        "Current module registry uses the retired platform_management category."
+      ],
+      "suggested_target_question": "Which accepted Core or Module classification replaces the current platform_management category?",
+      "runtime_metadata": {
+        "key": "runtime-readiness",
+        "name": "Runtime Readiness",
+        "type": "platform_management",
+        "default_state": "enabled",
+        "installed_by_default": true,
+        "default_enabled": true,
+        "disableable": true,
+        "tenant_eligible": false,
+        "dependencies": [
+          "runtime-security"
+        ],
+        "ownership_counts": {
+          "route_patterns": 0,
+          "permissions": 0,
+          "notification_types": 0,
+          "navigation_routes": 0,
+          "dashboard_widgets": 0,
+          "settings_groups": 0,
+          "owned_tables": 0,
+          "platform_view_paths": 0,
+          "module_view_paths": 0,
+          "ui_entries": 0,
+          "setup_routes": 0,
+          "audit_events": 0,
+          "commands": 1
+        }
+      }
+    },
+    {
+      "path_or_identifier": "module:runtime-security",
+      "source_kind": "runtime_module_dynamic",
+      "surface_type": "module",
+      "namespace": null,
+      "safe_purpose": "Registered module manifest runtime-security (core).",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan platform:modules:list --json",
+        "module-key:runtime-security"
+      ],
+      "known_contradictions": [],
+      "suggested_target_question": null,
+      "runtime_metadata": {
+        "key": "runtime-security",
+        "name": "Runtime Security",
+        "type": "core",
+        "default_state": "enabled",
+        "installed_by_default": true,
+        "default_enabled": true,
+        "disableable": false,
+        "tenant_eligible": true,
+        "dependencies": [],
+        "ownership_counts": {
+          "route_patterns": 0,
+          "permissions": 0,
+          "notification_types": 0,
+          "navigation_routes": 0,
+          "dashboard_widgets": 0,
+          "settings_groups": 0,
+          "owned_tables": 0,
+          "platform_view_paths": 0,
+          "module_view_paths": 0,
+          "ui_entries": 0,
+          "setup_routes": 0,
+          "audit_events": 0,
+          "commands": 0
+        }
+      }
+    },
+    {
+      "path_or_identifier": "module:security-checklist",
+      "source_kind": "runtime_module_dynamic",
+      "surface_type": "module",
+      "namespace": null,
+      "safe_purpose": "Registered module manifest security-checklist (platform_management).",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan platform:modules:list --json",
+        "module-key:security-checklist"
+      ],
+      "known_contradictions": [
+        "Current module registry uses the retired platform_management category."
+      ],
+      "suggested_target_question": "Which accepted Core or Module classification replaces the current platform_management category?",
+      "runtime_metadata": {
+        "key": "security-checklist",
+        "name": "Security Checklist",
+        "type": "platform_management",
+        "default_state": "enabled",
+        "installed_by_default": true,
+        "default_enabled": true,
+        "disableable": true,
+        "tenant_eligible": false,
+        "dependencies": [
+          "auth",
+          "users",
+          "roles",
+          "dashboard"
+        ],
+        "ownership_counts": {
+          "route_patterns": 1,
+          "permissions": 2,
+          "notification_types": 0,
+          "navigation_routes": 1,
+          "dashboard_widgets": 0,
+          "settings_groups": 0,
+          "owned_tables": 2,
+          "platform_view_paths": 1,
+          "module_view_paths": 0,
+          "ui_entries": 2,
+          "setup_routes": 0,
+          "audit_events": 1,
+          "commands": 0
+        }
+      }
+    },
+    {
+      "path_or_identifier": "module:settings",
+      "source_kind": "runtime_module_dynamic",
+      "surface_type": "module",
+      "namespace": null,
+      "safe_purpose": "Registered module manifest settings (core).",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan platform:modules:list --json",
+        "module-key:settings"
+      ],
+      "known_contradictions": [],
+      "suggested_target_question": null,
+      "runtime_metadata": {
+        "key": "settings",
+        "name": "Settings",
+        "type": "core",
+        "default_state": "enabled",
+        "installed_by_default": true,
+        "default_enabled": true,
+        "disableable": false,
+        "tenant_eligible": true,
+        "dependencies": [
+          "auth",
+          "users",
+          "roles"
+        ],
+        "ownership_counts": {
+          "route_patterns": 14,
+          "permissions": 3,
+          "notification_types": 0,
+          "navigation_routes": 3,
+          "dashboard_widgets": 0,
+          "settings_groups": 0,
+          "owned_tables": 1,
+          "platform_view_paths": 1,
+          "module_view_paths": 1,
+          "ui_entries": 4,
+          "setup_routes": 0,
+          "audit_events": 1,
+          "commands": 0
+        }
+      }
+    },
+    {
+      "path_or_identifier": "module:setup",
+      "source_kind": "runtime_module_dynamic",
+      "surface_type": "module",
+      "namespace": null,
+      "safe_purpose": "Registered module manifest setup (core).",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan platform:modules:list --json",
+        "module-key:setup"
+      ],
+      "known_contradictions": [],
+      "suggested_target_question": null,
+      "runtime_metadata": {
+        "key": "setup",
+        "name": "Setup",
+        "type": "core",
+        "default_state": "enabled",
+        "installed_by_default": true,
+        "default_enabled": true,
+        "disableable": false,
+        "tenant_eligible": true,
+        "dependencies": [
+          "auth",
+          "roles"
+        ],
+        "ownership_counts": {
+          "route_patterns": 1,
+          "permissions": 1,
+          "notification_types": 0,
+          "navigation_routes": 1,
+          "dashboard_widgets": 0,
+          "settings_groups": 0,
+          "owned_tables": 0,
+          "platform_view_paths": 0,
+          "module_view_paths": 1,
+          "ui_entries": 3,
+          "setup_routes": 1,
+          "audit_events": 0,
+          "commands": 0
+        }
+      }
+    },
+    {
+      "path_or_identifier": "module:ui-system",
+      "source_kind": "runtime_module_dynamic",
+      "surface_type": "module",
+      "namespace": null,
+      "safe_purpose": "Registered module manifest ui-system (core).",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan platform:modules:list --json",
+        "module-key:ui-system"
+      ],
+      "known_contradictions": [],
+      "suggested_target_question": null,
+      "runtime_metadata": {
+        "key": "ui-system",
+        "name": "UI System",
+        "type": "core",
+        "default_state": "enabled",
+        "installed_by_default": true,
+        "default_enabled": true,
+        "disableable": false,
+        "tenant_eligible": true,
+        "dependencies": [],
+        "ownership_counts": {
+          "route_patterns": 0,
+          "permissions": 0,
+          "notification_types": 0,
+          "navigation_routes": 0,
+          "dashboard_widgets": 0,
+          "settings_groups": 0,
+          "owned_tables": 0,
+          "platform_view_paths": 0,
+          "module_view_paths": 0,
+          "ui_entries": 0,
+          "setup_routes": 0,
+          "audit_events": 0,
+          "commands": 0
+        }
+      }
+    },
+    {
+      "path_or_identifier": "module:users",
+      "source_kind": "runtime_module_dynamic",
+      "surface_type": "module",
+      "namespace": null,
+      "safe_purpose": "Registered module manifest users (core).",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan platform:modules:list --json",
+        "module-key:users"
+      ],
+      "known_contradictions": [],
+      "suggested_target_question": null,
+      "runtime_metadata": {
+        "key": "users",
+        "name": "Users",
+        "type": "core",
+        "default_state": "enabled",
+        "installed_by_default": true,
+        "default_enabled": true,
+        "disableable": false,
+        "tenant_eligible": true,
+        "dependencies": [
+          "auth",
+          "roles"
+        ],
+        "ownership_counts": {
+          "route_patterns": 4,
+          "permissions": 2,
+          "notification_types": 0,
+          "navigation_routes": 1,
+          "dashboard_widgets": 0,
+          "settings_groups": 1,
+          "owned_tables": 1,
+          "platform_view_paths": 1,
+          "module_view_paths": 0,
+          "ui_entries": 1,
+          "setup_routes": 0,
+          "audit_events": 2,
+          "commands": 0
+        }
+      }
+    },
+    {
       "path_or_identifier": "Modules/Account/Definition.php",
       "source_kind": "path",
       "surface_type": "registry_contribution",
@@ -46715,6 +47432,3249 @@
       ],
       "known_contradictions": [],
       "suggested_target_question": null
+    },
+    {
+      "path_or_identifier": "route:dashboard",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Dashboard\\Http\\Controllers",
+      "safe_purpose": "GET|HEAD dashboard -> App\\Modules\\Dashboard\\Http\\Controllers\\ShowDashboardController.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:dashboard",
+        "route-uri:dashboard"
+      ],
+      "known_contradictions": [],
+      "suggested_target_question": null,
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "dashboard",
+        "name": "dashboard",
+        "action": "App\\Modules\\Dashboard\\Http\\Controllers\\ShowDashboardController",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:dashboard.test-notification",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Dashboard\\Http\\Controllers",
+      "safe_purpose": "POST dashboard/test-notification -> App\\Modules\\Dashboard\\Http\\Controllers\\TestNotificationController.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:dashboard.test-notification",
+        "route-uri:dashboard/test-notification"
+      ],
+      "known_contradictions": [],
+      "suggested_target_question": null,
+      "runtime_metadata": {
+        "methods": [
+          "POST"
+        ],
+        "uri": "dashboard/test-notification",
+        "name": "dashboard.test-notification",
+        "action": "App\\Modules\\Dashboard\\Http\\Controllers\\TestNotificationController",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:default-livewire.update",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "Livewire\\Mechanisms\\HandleRequests",
+      "safe_purpose": "POST livewire-55761fde/update -> Livewire\\Mechanisms\\HandleRequests\\HandleRequests@handleUpdate.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:default-livewire.update",
+        "route-uri:livewire-55761fde/update"
+      ],
+      "known_contradictions": [],
+      "suggested_target_question": null,
+      "runtime_metadata": {
+        "methods": [
+          "POST"
+        ],
+        "uri": "livewire-55761fde/update",
+        "name": "default-livewire.update",
+        "action": "Livewire\\Mechanisms\\HandleRequests\\HandleRequests@handleUpdate",
+        "middleware": [
+          "Livewire\\Mechanisms\\HandleRequests\\RequireLivewireHeaders",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:filament.exports.download",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "Filament\\Actions\\Exports\\Http\\Controllers",
+      "safe_purpose": "GET|HEAD filament/exports/{export}/download -> Filament\\Actions\\Exports\\Http\\Controllers\\DownloadExport.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:filament.exports.download",
+        "route-uri:filament/exports/{export}/download"
+      ],
+      "known_contradictions": [],
+      "suggested_target_question": null,
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "filament/exports/{export}/download",
+        "name": "filament.exports.download",
+        "action": "Filament\\Actions\\Exports\\Http\\Controllers\\DownloadExport",
+        "middleware": [
+          "filament.actions"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:filament.imports.failed-rows.download",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "Filament\\Actions\\Imports\\Http\\Controllers",
+      "safe_purpose": "GET|HEAD filament/imports/{import}/failed-rows/download -> Filament\\Actions\\Imports\\Http\\Controllers\\DownloadImportFailureCsv.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:filament.imports.failed-rows.download",
+        "route-uri:filament/imports/{import}/failed-rows/download"
+      ],
+      "known_contradictions": [],
+      "suggested_target_question": null,
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "filament/imports/{import}/failed-rows/download",
+        "name": "filament.imports.failed-rows.download",
+        "action": "Filament\\Actions\\Imports\\Http\\Controllers\\DownloadImportFailureCsv",
+        "middleware": [
+          "filament.actions"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:GET|HEAD /",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": null,
+      "safe_purpose": "GET|HEAD / -> Closure.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:[unnamed]",
+        "route-uri:/"
+      ],
+      "known_contradictions": [],
+      "suggested_target_question": null,
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "/",
+        "name": null,
+        "action": "Closure",
+        "middleware": [
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:GET|HEAD livewire-55761fde/css/{component}.css",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": null,
+      "safe_purpose": "GET|HEAD livewire-55761fde/css/{component}.css -> Closure.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:[unnamed]",
+        "route-uri:livewire-55761fde/css/{component}.css"
+      ],
+      "known_contradictions": [],
+      "suggested_target_question": null,
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "livewire-55761fde/css/{component}.css",
+        "name": null,
+        "action": "Closure",
+        "middleware": []
+      }
+    },
+    {
+      "path_or_identifier": "route:GET|HEAD livewire-55761fde/css/{component}.global.css",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": null,
+      "safe_purpose": "GET|HEAD livewire-55761fde/css/{component}.global.css -> Closure.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:[unnamed]",
+        "route-uri:livewire-55761fde/css/{component}.global.css"
+      ],
+      "known_contradictions": [],
+      "suggested_target_question": null,
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "livewire-55761fde/css/{component}.global.css",
+        "name": null,
+        "action": "Closure",
+        "middleware": []
+      }
+    },
+    {
+      "path_or_identifier": "route:GET|HEAD livewire-55761fde/js/{component}.js",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": null,
+      "safe_purpose": "GET|HEAD livewire-55761fde/js/{component}.js -> Closure.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:[unnamed]",
+        "route-uri:livewire-55761fde/js/{component}.js"
+      ],
+      "known_contradictions": [],
+      "suggested_target_question": null,
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "livewire-55761fde/js/{component}.js",
+        "name": null,
+        "action": "Closure",
+        "middleware": []
+      }
+    },
+    {
+      "path_or_identifier": "route:GET|HEAD livewire-55761fde/livewire.csp.min.js.map",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "Livewire\\Mechanisms\\FrontendAssets",
+      "safe_purpose": "GET|HEAD livewire-55761fde/livewire.csp.min.js.map -> Livewire\\Mechanisms\\FrontendAssets\\FrontendAssets@cspMaps.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:[unnamed]",
+        "route-uri:livewire-55761fde/livewire.csp.min.js.map"
+      ],
+      "known_contradictions": [],
+      "suggested_target_question": null,
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "livewire-55761fde/livewire.csp.min.js.map",
+        "name": null,
+        "action": "Livewire\\Mechanisms\\FrontendAssets\\FrontendAssets@cspMaps",
+        "middleware": []
+      }
+    },
+    {
+      "path_or_identifier": "route:GET|HEAD livewire-55761fde/livewire.js",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "Livewire\\Mechanisms\\FrontendAssets",
+      "safe_purpose": "GET|HEAD livewire-55761fde/livewire.js -> Livewire\\Mechanisms\\FrontendAssets\\FrontendAssets@returnJavaScriptAsFile.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:[unnamed]",
+        "route-uri:livewire-55761fde/livewire.js"
+      ],
+      "known_contradictions": [],
+      "suggested_target_question": null,
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "livewire-55761fde/livewire.js",
+        "name": null,
+        "action": "Livewire\\Mechanisms\\FrontendAssets\\FrontendAssets@returnJavaScriptAsFile",
+        "middleware": []
+      }
+    },
+    {
+      "path_or_identifier": "route:GET|HEAD livewire-55761fde/livewire.min.js.map",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "Livewire\\Mechanisms\\FrontendAssets",
+      "safe_purpose": "GET|HEAD livewire-55761fde/livewire.min.js.map -> Livewire\\Mechanisms\\FrontendAssets\\FrontendAssets@maps.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:[unnamed]",
+        "route-uri:livewire-55761fde/livewire.min.js.map"
+      ],
+      "known_contradictions": [],
+      "suggested_target_question": null,
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "livewire-55761fde/livewire.min.js.map",
+        "name": null,
+        "action": "Livewire\\Mechanisms\\FrontendAssets\\FrontendAssets@maps",
+        "middleware": []
+      }
+    },
+    {
+      "path_or_identifier": "route:GET|HEAD up",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": null,
+      "safe_purpose": "GET|HEAD up -> Closure.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:[unnamed]",
+        "route-uri:up"
+      ],
+      "known_contradictions": [],
+      "suggested_target_question": null,
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "up",
+        "name": null,
+        "action": "Closure",
+        "middleware": []
+      }
+    },
+    {
+      "path_or_identifier": "route:GET|HEAD|POST broadcasting/auth",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "Illuminate\\Broadcasting",
+      "safe_purpose": "GET|HEAD|POST broadcasting/auth -> Illuminate\\Broadcasting\\BroadcastController@authenticate.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:[unnamed]",
+        "route-uri:broadcasting/auth"
+      ],
+      "known_contradictions": [],
+      "suggested_target_question": null,
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD",
+          "POST"
+        ],
+        "uri": "broadcasting/auth",
+        "name": null,
+        "action": "Illuminate\\Broadcasting\\BroadcastController@authenticate",
+        "middleware": [
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:livewire.preview-file",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "Livewire\\Features\\SupportFileUploads",
+      "safe_purpose": "GET|HEAD livewire-55761fde/preview-file/{filename} -> Livewire\\Features\\SupportFileUploads\\FilePreviewController@handle.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:livewire.preview-file",
+        "route-uri:livewire-55761fde/preview-file/{filename}"
+      ],
+      "known_contradictions": [],
+      "suggested_target_question": null,
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "livewire-55761fde/preview-file/{filename}",
+        "name": "livewire.preview-file",
+        "action": "Livewire\\Features\\SupportFileUploads\\FilePreviewController@handle",
+        "middleware": [
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:livewire.upload-file",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "Livewire\\Features\\SupportFileUploads",
+      "safe_purpose": "POST livewire-55761fde/upload-file -> Livewire\\Features\\SupportFileUploads\\FileUploadController@handle.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:livewire.upload-file",
+        "route-uri:livewire-55761fde/upload-file"
+      ],
+      "known_contradictions": [],
+      "suggested_target_question": null,
+      "runtime_metadata": {
+        "methods": [
+          "POST"
+        ],
+        "uri": "livewire-55761fde/upload-file",
+        "name": "livewire.upload-file",
+        "action": "Livewire\\Features\\SupportFileUploads\\FileUploadController@handle",
+        "middleware": [
+          "Illuminate\\Routing\\Middleware\\ThrottleRequests:60,1",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:login",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Auth\\Http\\Controllers",
+      "safe_purpose": "GET|HEAD login -> App\\Modules\\Auth\\Http\\Controllers\\LoginController@create.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:login",
+        "route-uri:login"
+      ],
+      "known_contradictions": [],
+      "suggested_target_question": null,
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "login",
+        "name": "login",
+        "action": "App\\Modules\\Auth\\Http\\Controllers\\LoginController@create",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\RedirectIfAuthenticated",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:login.identify",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Auth\\Http\\Controllers",
+      "safe_purpose": "POST login/identify -> App\\Modules\\Auth\\Http\\Controllers\\LoginController@identify.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:login.identify",
+        "route-uri:login/identify"
+      ],
+      "known_contradictions": [],
+      "suggested_target_question": null,
+      "runtime_metadata": {
+        "methods": [
+          "POST"
+        ],
+        "uri": "login/identify",
+        "name": "login.identify",
+        "action": "App\\Modules\\Auth\\Http\\Controllers\\LoginController@identify",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\RedirectIfAuthenticated",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:login.password",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Auth\\Http\\Controllers",
+      "safe_purpose": "GET|HEAD login/password -> App\\Modules\\Auth\\Http\\Controllers\\LoginController@password.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:login.password",
+        "route-uri:login/password"
+      ],
+      "known_contradictions": [],
+      "suggested_target_question": null,
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "login/password",
+        "name": "login.password",
+        "action": "App\\Modules\\Auth\\Http\\Controllers\\LoginController@password",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\RedirectIfAuthenticated",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:login.password.store",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Auth\\Http\\Controllers",
+      "safe_purpose": "POST login/password -> App\\Modules\\Auth\\Http\\Controllers\\LoginController@authenticate.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:login.password.store",
+        "route-uri:login/password"
+      ],
+      "known_contradictions": [],
+      "suggested_target_question": null,
+      "runtime_metadata": {
+        "methods": [
+          "POST"
+        ],
+        "uri": "login/password",
+        "name": "login.password.store",
+        "action": "App\\Modules\\Auth\\Http\\Controllers\\LoginController@authenticate",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\RedirectIfAuthenticated",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:login.store",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Auth\\Http\\Controllers",
+      "safe_purpose": "POST login -> App\\Modules\\Auth\\Http\\Controllers\\LoginController@store.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:login.store",
+        "route-uri:login"
+      ],
+      "known_contradictions": [],
+      "suggested_target_question": null,
+      "runtime_metadata": {
+        "methods": [
+          "POST"
+        ],
+        "uri": "login",
+        "name": "login.store",
+        "action": "App\\Modules\\Auth\\Http\\Controllers\\LoginController@store",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\RedirectIfAuthenticated",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:logout",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Auth\\Http\\Controllers",
+      "safe_purpose": "POST logout -> App\\Modules\\Auth\\Http\\Controllers\\LoginController@destroy.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:logout",
+        "route-uri:logout"
+      ],
+      "known_contradictions": [],
+      "suggested_target_question": null,
+      "runtime_metadata": {
+        "methods": [
+          "POST"
+        ],
+        "uri": "logout",
+        "name": "logout",
+        "action": "App\\Modules\\Auth\\Http\\Controllers\\LoginController@destroy",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:mfa.challenge",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Auth\\Http\\Controllers",
+      "safe_purpose": "GET|HEAD mfa/challenge -> App\\Modules\\Auth\\Http\\Controllers\\MfaChallengeController@show.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:mfa.challenge",
+        "route-uri:mfa/challenge"
+      ],
+      "known_contradictions": [],
+      "suggested_target_question": null,
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "mfa/challenge",
+        "name": "mfa.challenge",
+        "action": "App\\Modules\\Auth\\Http\\Controllers\\MfaChallengeController@show",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\RedirectIfAuthenticated",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:mfa.challenge.verify",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Auth\\Http\\Controllers",
+      "safe_purpose": "POST mfa/challenge -> App\\Modules\\Auth\\Http\\Controllers\\MfaChallengeController@verify.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:mfa.challenge.verify",
+        "route-uri:mfa/challenge"
+      ],
+      "known_contradictions": [],
+      "suggested_target_question": null,
+      "runtime_metadata": {
+        "methods": [
+          "POST"
+        ],
+        "uri": "mfa/challenge",
+        "name": "mfa.challenge.verify",
+        "action": "App\\Modules\\Auth\\Http\\Controllers\\MfaChallengeController@verify",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\RedirectIfAuthenticated",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:mfa.enroll",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Auth\\Http\\Controllers",
+      "safe_purpose": "GET|HEAD mfa/enroll -> App\\Modules\\Auth\\Http\\Controllers\\MfaEnrollmentController@show.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:mfa.enroll",
+        "route-uri:mfa/enroll"
+      ],
+      "known_contradictions": [],
+      "suggested_target_question": null,
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "mfa/enroll",
+        "name": "mfa.enroll",
+        "action": "App\\Modules\\Auth\\Http\\Controllers\\MfaEnrollmentController@show",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\RedirectIfAuthenticated",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:mfa.enroll.confirm",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Auth\\Http\\Controllers",
+      "safe_purpose": "POST mfa/enroll -> App\\Modules\\Auth\\Http\\Controllers\\MfaEnrollmentController@confirm.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:mfa.enroll.confirm",
+        "route-uri:mfa/enroll"
+      ],
+      "known_contradictions": [],
+      "suggested_target_question": null,
+      "runtime_metadata": {
+        "methods": [
+          "POST"
+        ],
+        "uri": "mfa/enroll",
+        "name": "mfa.enroll.confirm",
+        "action": "App\\Modules\\Auth\\Http\\Controllers\\MfaEnrollmentController@confirm",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\RedirectIfAuthenticated",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:mfa.step-up",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Auth\\Http\\Controllers",
+      "safe_purpose": "GET|HEAD mfa/step-up -> App\\Modules\\Auth\\Http\\Controllers\\MfaStepUpController@show.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:mfa.step-up",
+        "route-uri:mfa/step-up"
+      ],
+      "known_contradictions": [],
+      "suggested_target_question": null,
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "mfa/step-up",
+        "name": "mfa.step-up",
+        "action": "App\\Modules\\Auth\\Http\\Controllers\\MfaStepUpController@show",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:mfa.step-up.verify",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Auth\\Http\\Controllers",
+      "safe_purpose": "POST mfa/step-up -> App\\Modules\\Auth\\Http\\Controllers\\MfaStepUpController@verify.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:mfa.step-up.verify",
+        "route-uri:mfa/step-up"
+      ],
+      "known_contradictions": [],
+      "suggested_target_question": null,
+      "runtime_metadata": {
+        "methods": [
+          "POST"
+        ],
+        "uri": "mfa/step-up",
+        "name": "mfa.step-up.verify",
+        "action": "App\\Modules\\Auth\\Http\\Controllers\\MfaStepUpController@verify",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:notifications.dismiss",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Notifications\\Http\\Controllers",
+      "safe_purpose": "POST notifications/{notification}/dismiss -> App\\Modules\\Notifications\\Http\\Controllers\\InboxController@dismiss.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:notifications.dismiss",
+        "route-uri:notifications/{notification}/dismiss"
+      ],
+      "known_contradictions": [],
+      "suggested_target_question": null,
+      "runtime_metadata": {
+        "methods": [
+          "POST"
+        ],
+        "uri": "notifications/{notification}/dismiss",
+        "name": "notifications.dismiss",
+        "action": "App\\Modules\\Notifications\\Http\\Controllers\\InboxController@dismiss",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:notifications.index",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Notifications\\Http\\Controllers",
+      "safe_purpose": "GET|HEAD notifications -> App\\Modules\\Notifications\\Http\\Controllers\\InboxController@index.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:notifications.index",
+        "route-uri:notifications"
+      ],
+      "known_contradictions": [],
+      "suggested_target_question": null,
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "notifications",
+        "name": "notifications.index",
+        "action": "App\\Modules\\Notifications\\Http\\Controllers\\InboxController@index",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:notifications.mark-all-read",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Notifications\\Http\\Controllers",
+      "safe_purpose": "POST notifications/mark-all-read -> App\\Modules\\Notifications\\Http\\Controllers\\InboxController@markAllRead.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:notifications.mark-all-read",
+        "route-uri:notifications/mark-all-read"
+      ],
+      "known_contradictions": [],
+      "suggested_target_question": null,
+      "runtime_metadata": {
+        "methods": [
+          "POST"
+        ],
+        "uri": "notifications/mark-all-read",
+        "name": "notifications.mark-all-read",
+        "action": "App\\Modules\\Notifications\\Http\\Controllers\\InboxController@markAllRead",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:notifications.mark-read",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Notifications\\Http\\Controllers",
+      "safe_purpose": "POST notifications/{notification}/read -> App\\Modules\\Notifications\\Http\\Controllers\\InboxController@markRead.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:notifications.mark-read",
+        "route-uri:notifications/{notification}/read"
+      ],
+      "known_contradictions": [],
+      "suggested_target_question": null,
+      "runtime_metadata": {
+        "methods": [
+          "POST"
+        ],
+        "uri": "notifications/{notification}/read",
+        "name": "notifications.mark-read",
+        "action": "App\\Modules\\Notifications\\Http\\Controllers\\InboxController@markRead",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:notifications.realtime.auth",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Notifications\\Http\\Controllers",
+      "safe_purpose": "POST notifications/realtime/auth -> App\\Modules\\Notifications\\Http\\Controllers\\RealtimeAuthController.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:notifications.realtime.auth",
+        "route-uri:notifications/realtime/auth"
+      ],
+      "known_contradictions": [],
+      "suggested_target_question": null,
+      "runtime_metadata": {
+        "methods": [
+          "POST"
+        ],
+        "uri": "notifications/realtime/auth",
+        "name": "notifications.realtime.auth",
+        "action": "App\\Modules\\Notifications\\Http\\Controllers\\RealtimeAuthController",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.account.contact-emails.destroy",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Account\\Http\\Controllers",
+      "safe_purpose": "DELETE account/contact-emails/{contactEmail} -> App\\Modules\\Account\\Http\\Controllers\\AccountController@destroyContactEmail.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.account.contact-emails.destroy",
+        "route-uri:account/contact-emails/{contactEmail}"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "DELETE"
+        ],
+        "uri": "account/contact-emails/{contactEmail}",
+        "name": "platform.account.contact-emails.destroy",
+        "action": "App\\Modules\\Account\\Http\\Controllers\\AccountController@destroyContactEmail",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.account.contact-emails.store",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Account\\Http\\Controllers",
+      "safe_purpose": "POST account/contact-emails -> App\\Modules\\Account\\Http\\Controllers\\AccountController@storeContactEmail.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.account.contact-emails.store",
+        "route-uri:account/contact-emails"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "POST"
+        ],
+        "uri": "account/contact-emails",
+        "name": "platform.account.contact-emails.store",
+        "action": "App\\Modules\\Account\\Http\\Controllers\\AccountController@storeContactEmail",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.account.details.update",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Account\\Http\\Controllers",
+      "safe_purpose": "PATCH account/details -> App\\Modules\\Account\\Http\\Controllers\\AccountController@updateDetails.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.account.details.update",
+        "route-uri:account/details"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "PATCH"
+        ],
+        "uri": "account/details",
+        "name": "platform.account.details.update",
+        "action": "App\\Modules\\Account\\Http\\Controllers\\AccountController@updateDetails",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.account.index",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Account\\Http\\Controllers",
+      "safe_purpose": "GET|HEAD account -> App\\Modules\\Account\\Http\\Controllers\\AccountController@index.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.account.index",
+        "route-uri:account"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "account",
+        "name": "platform.account.index",
+        "action": "App\\Modules\\Account\\Http\\Controllers\\AccountController@index",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.account.mfa.confirm",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Auth\\Http\\Controllers",
+      "safe_purpose": "POST account/mfa/enroll -> App\\Modules\\Auth\\Http\\Controllers\\AccountMfaController@confirm.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.account.mfa.confirm",
+        "route-uri:account/mfa/enroll"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "POST"
+        ],
+        "uri": "account/mfa/enroll",
+        "name": "platform.account.mfa.confirm",
+        "action": "App\\Modules\\Auth\\Http\\Controllers\\AccountMfaController@confirm",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.account.mfa.enroll",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Auth\\Http\\Controllers",
+      "safe_purpose": "GET|HEAD account/mfa/enroll -> App\\Modules\\Auth\\Http\\Controllers\\AccountMfaController@show.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.account.mfa.enroll",
+        "route-uri:account/mfa/enroll"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "account/mfa/enroll",
+        "name": "platform.account.mfa.enroll",
+        "action": "App\\Modules\\Auth\\Http\\Controllers\\AccountMfaController@show",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.account.mfa.recovery-codes",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Auth\\Http\\Controllers",
+      "safe_purpose": "GET|HEAD account/mfa/recovery-codes -> App\\Modules\\Auth\\Http\\Controllers\\AccountMfaController@recoveryCodes.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.account.mfa.recovery-codes",
+        "route-uri:account/mfa/recovery-codes"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "account/mfa/recovery-codes",
+        "name": "platform.account.mfa.recovery-codes",
+        "action": "App\\Modules\\Auth\\Http\\Controllers\\AccountMfaController@recoveryCodes",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.account.notifications",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Notifications\\Http\\Controllers",
+      "safe_purpose": "GET|HEAD account/notifications -> App\\Modules\\Notifications\\Http\\Controllers\\PersonalPreferencesController@edit.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.account.notifications",
+        "route-uri:account/notifications"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "account/notifications",
+        "name": "platform.account.notifications",
+        "action": "App\\Modules\\Notifications\\Http\\Controllers\\PersonalPreferencesController@edit",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.account.notifications.update",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Notifications\\Http\\Controllers",
+      "safe_purpose": "POST account/notifications -> App\\Modules\\Notifications\\Http\\Controllers\\PersonalPreferencesController@update.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.account.notifications.update",
+        "route-uri:account/notifications"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "POST"
+        ],
+        "uri": "account/notifications",
+        "name": "platform.account.notifications.update",
+        "action": "App\\Modules\\Notifications\\Http\\Controllers\\PersonalPreferencesController@update",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.account.password.update",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Account\\Http\\Controllers",
+      "safe_purpose": "POST account/password -> App\\Modules\\Account\\Http\\Controllers\\AccountController@updatePassword.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.account.password.update",
+        "route-uri:account/password"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "POST"
+        ],
+        "uri": "account/password",
+        "name": "platform.account.password.update",
+        "action": "App\\Modules\\Account\\Http\\Controllers\\AccountController@updatePassword",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.account.preferences",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Preferences\\Http\\Controllers",
+      "safe_purpose": "GET|HEAD account/preferences -> App\\Modules\\Preferences\\Http\\Controllers\\PersonalDefaultsController@edit.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.account.preferences",
+        "route-uri:account/preferences"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "account/preferences",
+        "name": "platform.account.preferences",
+        "action": "App\\Modules\\Preferences\\Http\\Controllers\\PersonalDefaultsController@edit",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.account.preferences.update",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Preferences\\Http\\Controllers",
+      "safe_purpose": "POST account/preferences -> App\\Modules\\Preferences\\Http\\Controllers\\PersonalDefaultsController@update.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.account.preferences.update",
+        "route-uri:account/preferences"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "POST"
+        ],
+        "uri": "account/preferences",
+        "name": "platform.account.preferences.update",
+        "action": "App\\Modules\\Preferences\\Http\\Controllers\\PersonalDefaultsController@update",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.account.profile-photo.destroy",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Account\\Http\\Controllers",
+      "safe_purpose": "DELETE account/profile-photo -> App\\Modules\\Account\\Http\\Controllers\\AccountController@removeProfilePhoto.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.account.profile-photo.destroy",
+        "route-uri:account/profile-photo"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "DELETE"
+        ],
+        "uri": "account/profile-photo",
+        "name": "platform.account.profile-photo.destroy",
+        "action": "App\\Modules\\Account\\Http\\Controllers\\AccountController@removeProfilePhoto",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.account.profile-photo.update",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Account\\Http\\Controllers",
+      "safe_purpose": "PATCH account/profile-photo -> App\\Modules\\Account\\Http\\Controllers\\AccountController@updateProfilePhoto.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.account.profile-photo.update",
+        "route-uri:account/profile-photo"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "PATCH"
+        ],
+        "uri": "account/profile-photo",
+        "name": "platform.account.profile-photo.update",
+        "action": "App\\Modules\\Account\\Http\\Controllers\\AccountController@updateProfilePhoto",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.account.security",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Account\\Http\\Controllers",
+      "safe_purpose": "GET|HEAD account/security -> App\\Modules\\Account\\Http\\Controllers\\AccountController@security.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.account.security",
+        "route-uri:account/security"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "account/security",
+        "name": "platform.account.security",
+        "action": "App\\Modules\\Account\\Http\\Controllers\\AccountController@security",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.account.settings",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Account\\Http\\Controllers",
+      "safe_purpose": "GET|HEAD account/settings -> App\\Modules\\Account\\Http\\Controllers\\AccountController@settings.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.account.settings",
+        "route-uri:account/settings"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "account/settings",
+        "name": "platform.account.settings",
+        "action": "App\\Modules\\Account\\Http\\Controllers\\AccountController@settings",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.account.settings.update",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Account\\Http\\Controllers",
+      "safe_purpose": "POST account/settings -> App\\Modules\\Account\\Http\\Controllers\\AccountController@updateSettings.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.account.settings.update",
+        "route-uri:account/settings"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "POST"
+        ],
+        "uri": "account/settings",
+        "name": "platform.account.settings.update",
+        "action": "App\\Modules\\Account\\Http\\Controllers\\AccountController@updateSettings",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.administration.notifications.index",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": null,
+      "safe_purpose": "GET|HEAD platform/administration/notifications -> Closure.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.administration.notifications.index",
+        "route-uri:platform/administration/notifications"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "platform/administration/notifications",
+        "name": "platform.administration.notifications.index",
+        "action": "Closure",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.administration.settings.index",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": null,
+      "safe_purpose": "GET|HEAD platform/administration/settings -> Closure.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.administration.settings.index",
+        "route-uri:platform/administration/settings"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "platform/administration/settings",
+        "name": "platform.administration.settings.index",
+        "action": "Closure",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.administration.users.index",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": null,
+      "safe_purpose": "GET|HEAD platform/administration/users -> Closure.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.administration.users.index",
+        "route-uri:platform/administration/users"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "platform/administration/users",
+        "name": "platform.administration.users.index",
+        "action": "Closure",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.audit-logs.index",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Http\\Controllers\\Platform",
+      "safe_purpose": "GET|HEAD platform/audit-logs -> App\\Http\\Controllers\\Platform\\AuditLogController@index.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.audit-logs.index",
+        "route-uri:platform/audit-logs"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "platform/audit-logs",
+        "name": "platform.audit-logs.index",
+        "action": "App\\Http\\Controllers\\Platform\\AuditLogController@index",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.audit-logs.show",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Http\\Controllers\\Platform",
+      "safe_purpose": "GET|HEAD platform/audit-logs/{log} -> App\\Http\\Controllers\\Platform\\AuditLogController@show.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.audit-logs.show",
+        "route-uri:platform/audit-logs/{log}"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "platform/audit-logs/{log}",
+        "name": "platform.audit-logs.show",
+        "action": "App\\Http\\Controllers\\Platform\\AuditLogController@show",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.docs.index",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Http\\Controllers\\Platform",
+      "safe_purpose": "GET|HEAD platform/docs -> App\\Http\\Controllers\\Platform\\DocsController.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.docs.index",
+        "route-uri:platform/docs"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "platform/docs",
+        "name": "platform.docs.index",
+        "action": "App\\Http\\Controllers\\Platform\\DocsController",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.error-logs.index",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Http\\Controllers\\Platform",
+      "safe_purpose": "GET|HEAD platform/error-logs -> App\\Http\\Controllers\\Platform\\ErrorLogController@index.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.error-logs.index",
+        "route-uri:platform/error-logs"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "platform/error-logs",
+        "name": "platform.error-logs.index",
+        "action": "App\\Http\\Controllers\\Platform\\ErrorLogController@index",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.error-logs.show",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Http\\Controllers\\Platform",
+      "safe_purpose": "GET|HEAD platform/error-logs/{log} -> App\\Http\\Controllers\\Platform\\ErrorLogController@show.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.error-logs.show",
+        "route-uri:platform/error-logs/{log}"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "platform/error-logs/{log}",
+        "name": "platform.error-logs.show",
+        "action": "App\\Http\\Controllers\\Platform\\ErrorLogController@show",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.notifications.dismiss",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Notifications\\Http\\Controllers",
+      "safe_purpose": "POST platform/notifications/{notification}/dismiss -> App\\Modules\\Notifications\\Http\\Controllers\\InboxController@dismiss.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.notifications.dismiss",
+        "route-uri:platform/notifications/{notification}/dismiss"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "POST"
+        ],
+        "uri": "platform/notifications/{notification}/dismiss",
+        "name": "platform.notifications.dismiss",
+        "action": "App\\Modules\\Notifications\\Http\\Controllers\\InboxController@dismiss",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.notifications.index",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Notifications\\Http\\Controllers",
+      "safe_purpose": "GET|HEAD platform/notifications -> App\\Modules\\Notifications\\Http\\Controllers\\InboxController@index.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.notifications.index",
+        "route-uri:platform/notifications"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "platform/notifications",
+        "name": "platform.notifications.index",
+        "action": "App\\Modules\\Notifications\\Http\\Controllers\\InboxController@index",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.notifications.mark-all-read",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Notifications\\Http\\Controllers",
+      "safe_purpose": "POST platform/notifications/mark-all-read -> App\\Modules\\Notifications\\Http\\Controllers\\InboxController@markAllRead.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.notifications.mark-all-read",
+        "route-uri:platform/notifications/mark-all-read"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "POST"
+        ],
+        "uri": "platform/notifications/mark-all-read",
+        "name": "platform.notifications.mark-all-read",
+        "action": "App\\Modules\\Notifications\\Http\\Controllers\\InboxController@markAllRead",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.notifications.mark-read",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Notifications\\Http\\Controllers",
+      "safe_purpose": "POST platform/notifications/{notification}/read -> App\\Modules\\Notifications\\Http\\Controllers\\InboxController@markRead.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.notifications.mark-read",
+        "route-uri:platform/notifications/{notification}/read"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "POST"
+        ],
+        "uri": "platform/notifications/{notification}/read",
+        "name": "platform.notifications.mark-read",
+        "action": "App\\Modules\\Notifications\\Http\\Controllers\\InboxController@markRead",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.operations.audit-logs.index",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": null,
+      "safe_purpose": "GET|HEAD platform/operations/audit-logs -> Closure.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.operations.audit-logs.index",
+        "route-uri:platform/operations/audit-logs"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "platform/operations/audit-logs",
+        "name": "platform.operations.audit-logs.index",
+        "action": "Closure",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.operations.error-logs.index",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": null,
+      "safe_purpose": "GET|HEAD platform/operations/error-logs -> Closure.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.operations.error-logs.index",
+        "route-uri:platform/operations/error-logs"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "platform/operations/error-logs",
+        "name": "platform.operations.error-logs.index",
+        "action": "Closure",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.realtime.auth",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Notifications\\Http\\Controllers",
+      "safe_purpose": "POST platform/realtime/auth -> App\\Modules\\Notifications\\Http\\Controllers\\RealtimeAuthController.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.realtime.auth",
+        "route-uri:platform/realtime/auth"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "POST"
+        ],
+        "uri": "platform/realtime/auth",
+        "name": "platform.realtime.auth",
+        "action": "App\\Modules\\Notifications\\Http\\Controllers\\RealtimeAuthController",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.security.index",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Http\\Controllers\\Platform",
+      "safe_purpose": "GET|HEAD platform/security -> App\\Http\\Controllers\\Platform\\SecurityChecklistController@index.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.security.index",
+        "route-uri:platform/security"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "platform/security",
+        "name": "platform.security.index",
+        "action": "App\\Http\\Controllers\\Platform\\SecurityChecklistController@index",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.security.show",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Http\\Controllers\\Platform",
+      "safe_purpose": "GET|HEAD platform/security/{requirement:slug} -> App\\Http\\Controllers\\Platform\\SecurityChecklistController@show.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.security.show",
+        "route-uri:platform/security/{requirement:slug}"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "platform/security/{requirement:slug}",
+        "name": "platform.security.show",
+        "action": "App\\Http\\Controllers\\Platform\\SecurityChecklistController@show",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.security.update",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Http\\Controllers\\Platform",
+      "safe_purpose": "PATCH platform/security/{requirement:slug} -> App\\Http\\Controllers\\Platform\\SecurityChecklistController@update.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.security.update",
+        "route-uri:platform/security/{requirement:slug}"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "PATCH"
+        ],
+        "uri": "platform/security/{requirement:slug}",
+        "name": "platform.security.update",
+        "action": "App\\Http\\Controllers\\Platform\\SecurityChecklistController@update",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.settings.audit-logs",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Settings\\Http\\Controllers",
+      "safe_purpose": "GET|HEAD platform/settings/audit-logs -> App\\Modules\\Settings\\Http\\Controllers\\PageController@auditLogs.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.settings.audit-logs",
+        "route-uri:platform/settings/audit-logs"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "platform/settings/audit-logs",
+        "name": "platform.settings.audit-logs",
+        "action": "App\\Modules\\Settings\\Http\\Controllers\\PageController@auditLogs",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.settings.audit-logs.update",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Settings\\Http\\Controllers",
+      "safe_purpose": "POST platform/settings/audit-logs -> App\\Modules\\Settings\\Http\\Controllers\\PageController@updateAuditLogs.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.settings.audit-logs.update",
+        "route-uri:platform/settings/audit-logs"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "POST"
+        ],
+        "uri": "platform/settings/audit-logs",
+        "name": "platform.settings.audit-logs.update",
+        "action": "App\\Modules\\Settings\\Http\\Controllers\\PageController@updateAuditLogs",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.settings.docs",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Settings\\Http\\Controllers",
+      "safe_purpose": "GET|HEAD platform/settings/docs -> App\\Modules\\Settings\\Http\\Controllers\\PageController@docs.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.settings.docs",
+        "route-uri:platform/settings/docs"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "platform/settings/docs",
+        "name": "platform.settings.docs",
+        "action": "App\\Modules\\Settings\\Http\\Controllers\\PageController@docs",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.settings.docs.update",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Settings\\Http\\Controllers",
+      "safe_purpose": "POST platform/settings/docs -> App\\Modules\\Settings\\Http\\Controllers\\PageController@updateDocs.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.settings.docs.update",
+        "route-uri:platform/settings/docs"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "POST"
+        ],
+        "uri": "platform/settings/docs",
+        "name": "platform.settings.docs.update",
+        "action": "App\\Modules\\Settings\\Http\\Controllers\\PageController@updateDocs",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.settings.general",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": null,
+      "safe_purpose": "GET|HEAD platform/settings/general -> Closure.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.settings.general",
+        "route-uri:platform/settings/general"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "platform/settings/general",
+        "name": "platform.settings.general",
+        "action": "Closure",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.settings.general.company-information",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": null,
+      "safe_purpose": "GET|HEAD platform/settings/general/company-information -> Closure.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.settings.general.company-information",
+        "route-uri:platform/settings/general/company-information"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "platform/settings/general/company-information",
+        "name": "platform.settings.general.company-information",
+        "action": "Closure",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.settings.general.company-information.update",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Settings\\Http\\Controllers",
+      "safe_purpose": "POST platform/settings/general/company-information -> App\\Modules\\Settings\\Http\\Controllers\\PageController@updateGeneralCompanyInformation.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.settings.general.company-information.update",
+        "route-uri:platform/settings/general/company-information"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "POST"
+        ],
+        "uri": "platform/settings/general/company-information",
+        "name": "platform.settings.general.company-information.update",
+        "action": "App\\Modules\\Settings\\Http\\Controllers\\PageController@updateGeneralCompanyInformation",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.settings.general.email",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": null,
+      "safe_purpose": "GET|HEAD platform/settings/general/email -> Closure.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.settings.general.email",
+        "route-uri:platform/settings/general/email"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "platform/settings/general/email",
+        "name": "platform.settings.general.email",
+        "action": "Closure",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.settings.general.email.update",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Settings\\Http\\Controllers",
+      "safe_purpose": "POST platform/settings/general/email -> App\\Modules\\Settings\\Http\\Controllers\\PageController@updateGeneralEmail.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.settings.general.email.update",
+        "route-uri:platform/settings/general/email"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "POST"
+        ],
+        "uri": "platform/settings/general/email",
+        "name": "platform.settings.general.email.update",
+        "action": "App\\Modules\\Settings\\Http\\Controllers\\PageController@updateGeneralEmail",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.settings.general.localization",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": null,
+      "safe_purpose": "GET|HEAD platform/settings/general/localization -> Closure.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.settings.general.localization",
+        "route-uri:platform/settings/general/localization"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "platform/settings/general/localization",
+        "name": "platform.settings.general.localization",
+        "action": "Closure",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.settings.general.localization.update",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Settings\\Http\\Controllers",
+      "safe_purpose": "POST platform/settings/general/localization -> App\\Modules\\Settings\\Http\\Controllers\\PageController@updateGeneralLocalization.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.settings.general.localization.update",
+        "route-uri:platform/settings/general/localization"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "POST"
+        ],
+        "uri": "platform/settings/general/localization",
+        "name": "platform.settings.general.localization.update",
+        "action": "App\\Modules\\Settings\\Http\\Controllers\\PageController@updateGeneralLocalization",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.settings.general.system-server-info",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": null,
+      "safe_purpose": "GET|HEAD platform/settings/general/system-server-info -> Closure.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.settings.general.system-server-info",
+        "route-uri:platform/settings/general/system-server-info"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "platform/settings/general/system-server-info",
+        "name": "platform.settings.general.system-server-info",
+        "action": "Closure",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.settings.general.system-update",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": null,
+      "safe_purpose": "GET|HEAD platform/settings/general/system-update -> Closure.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.settings.general.system-update",
+        "route-uri:platform/settings/general/system-update"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "platform/settings/general/system-update",
+        "name": "platform.settings.general.system-update",
+        "action": "Closure",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.settings.general.system-update.update",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Settings\\Http\\Controllers",
+      "safe_purpose": "POST platform/settings/general/system-update -> App\\Modules\\Settings\\Http\\Controllers\\PageController@updateGeneralSystemUpdate.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.settings.general.system-update.update",
+        "route-uri:platform/settings/general/system-update"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "POST"
+        ],
+        "uri": "platform/settings/general/system-update",
+        "name": "platform.settings.general.system-update.update",
+        "action": "App\\Modules\\Settings\\Http\\Controllers\\PageController@updateGeneralSystemUpdate",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.settings.general.update",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Settings\\Http\\Controllers",
+      "safe_purpose": "POST platform/settings/general -> App\\Modules\\Settings\\Http\\Controllers\\PageController@updateGeneral.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.settings.general.update",
+        "route-uri:platform/settings/general"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "POST"
+        ],
+        "uri": "platform/settings/general",
+        "name": "platform.settings.general.update",
+        "action": "App\\Modules\\Settings\\Http\\Controllers\\PageController@updateGeneral",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.settings.index",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Settings\\Http\\Controllers",
+      "safe_purpose": "GET|HEAD platform/settings -> App\\Modules\\Settings\\Http\\Controllers\\PageController@index.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.settings.index",
+        "route-uri:platform/settings"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "platform/settings",
+        "name": "platform.settings.index",
+        "action": "App\\Modules\\Settings\\Http\\Controllers\\PageController@index",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.settings.notifications",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Notifications\\Http\\Controllers",
+      "safe_purpose": "GET|HEAD platform/settings/notifications -> App\\Modules\\Notifications\\Http\\Controllers\\SettingsDefaultsController@edit.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.settings.notifications",
+        "route-uri:platform/settings/notifications"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "platform/settings/notifications",
+        "name": "platform.settings.notifications",
+        "action": "App\\Modules\\Notifications\\Http\\Controllers\\SettingsDefaultsController@edit",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.settings.notifications.update",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Notifications\\Http\\Controllers",
+      "safe_purpose": "POST platform/settings/notifications -> App\\Modules\\Notifications\\Http\\Controllers\\SettingsDefaultsController@update.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.settings.notifications.update",
+        "route-uri:platform/settings/notifications"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "POST"
+        ],
+        "uri": "platform/settings/notifications",
+        "name": "platform.settings.notifications.update",
+        "action": "App\\Modules\\Notifications\\Http\\Controllers\\SettingsDefaultsController@update",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.settings.users",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Settings\\Http\\Controllers",
+      "safe_purpose": "GET|HEAD platform/settings/users -> App\\Modules\\Settings\\Http\\Controllers\\PageController@users.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.settings.users",
+        "route-uri:platform/settings/users"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "platform/settings/users",
+        "name": "platform.settings.users",
+        "action": "App\\Modules\\Settings\\Http\\Controllers\\PageController@users",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.settings.users.update",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Settings\\Http\\Controllers",
+      "safe_purpose": "POST platform/settings/users -> App\\Modules\\Settings\\Http\\Controllers\\PageController@updateUsers.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.settings.users.update",
+        "route-uri:platform/settings/users"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "POST"
+        ],
+        "uri": "platform/settings/users",
+        "name": "platform.settings.users.update",
+        "action": "App\\Modules\\Settings\\Http\\Controllers\\PageController@updateUsers",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.setup.index",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Setup\\Http\\Controllers",
+      "safe_purpose": "GET|HEAD platform/setup -> App\\Modules\\Setup\\Http\\Controllers\\ScreenController@index.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.setup.index",
+        "route-uri:platform/setup"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "platform/setup",
+        "name": "platform.setup.index",
+        "action": "App\\Modules\\Setup\\Http\\Controllers\\ScreenController@index",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.setup.notifications",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Notifications\\Http\\Controllers",
+      "safe_purpose": "GET|HEAD platform/setup/notifications -> App\\Modules\\Notifications\\Http\\Controllers\\SetupController@index.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.setup.notifications",
+        "route-uri:platform/setup/notifications"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "platform/setup/notifications",
+        "name": "platform.setup.notifications",
+        "action": "App\\Modules\\Notifications\\Http\\Controllers\\SetupController@index",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.users.create",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Http\\Controllers\\Platform",
+      "safe_purpose": "GET|HEAD platform/users/create -> App\\Http\\Controllers\\Platform\\PlatformUserController@create.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.users.create",
+        "route-uri:platform/users/create"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "platform/users/create",
+        "name": "platform.users.create",
+        "action": "App\\Http\\Controllers\\Platform\\PlatformUserController@create",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.users.edit",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Http\\Controllers\\Platform",
+      "safe_purpose": "GET|HEAD platform/users/{user}/edit -> App\\Http\\Controllers\\Platform\\PlatformUserController@edit.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.users.edit",
+        "route-uri:platform/users/{user}/edit"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "platform/users/{user}/edit",
+        "name": "platform.users.edit",
+        "action": "App\\Http\\Controllers\\Platform\\PlatformUserController@edit",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.users.index",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Http\\Controllers\\Platform",
+      "safe_purpose": "GET|HEAD platform/users -> App\\Http\\Controllers\\Platform\\PlatformUserController@index.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.users.index",
+        "route-uri:platform/users"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "platform/users",
+        "name": "platform.users.index",
+        "action": "App\\Http\\Controllers\\Platform\\PlatformUserController@index",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.users.mfa-requirement",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Http\\Controllers\\Platform",
+      "safe_purpose": "POST platform/users/{user}/mfa-requirement -> App\\Http\\Controllers\\Platform\\PlatformUserMfaController@updateRequirement.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.users.mfa-requirement",
+        "route-uri:platform/users/{user}/mfa-requirement"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "POST"
+        ],
+        "uri": "platform/users/{user}/mfa-requirement",
+        "name": "platform.users.mfa-requirement",
+        "action": "App\\Http\\Controllers\\Platform\\PlatformUserMfaController@updateRequirement",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.users.mfa-reset",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Http\\Controllers\\Platform",
+      "safe_purpose": "POST platform/users/{user}/mfa-reset -> App\\Http\\Controllers\\Platform\\PlatformUserMfaController@reset.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.users.mfa-reset",
+        "route-uri:platform/users/{user}/mfa-reset"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "POST"
+        ],
+        "uri": "platform/users/{user}/mfa-reset",
+        "name": "platform.users.mfa-reset",
+        "action": "App\\Http\\Controllers\\Platform\\PlatformUserMfaController@reset",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.users.store",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Http\\Controllers\\Platform",
+      "safe_purpose": "POST platform/users -> App\\Http\\Controllers\\Platform\\PlatformUserController@store.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.users.store",
+        "route-uri:platform/users"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "POST"
+        ],
+        "uri": "platform/users",
+        "name": "platform.users.store",
+        "action": "App\\Http\\Controllers\\Platform\\PlatformUserController@store",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.users.toggle-active",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Http\\Controllers\\Platform",
+      "safe_purpose": "POST platform/users/{user}/toggle-active -> App\\Http\\Controllers\\Platform\\PlatformUserController@toggleActive.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.users.toggle-active",
+        "route-uri:platform/users/{user}/toggle-active"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "POST"
+        ],
+        "uri": "platform/users/{user}/toggle-active",
+        "name": "platform.users.toggle-active",
+        "action": "App\\Http\\Controllers\\Platform\\PlatformUserController@toggleActive",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:platform.users.update",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Http\\Controllers\\Platform",
+      "safe_purpose": "PATCH|PUT platform/users/{user} -> App\\Http\\Controllers\\Platform\\PlatformUserController@update.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:platform.users.update",
+        "route-uri:platform/users/{user}"
+      ],
+      "known_contradictions": [
+        "Current runtime or planning key uses transitional platform.* naming."
+      ],
+      "suggested_target_question": "Which capability-first key and Goal 09 compatibility mapping replaces this transitional platform.* identifier?",
+      "runtime_metadata": {
+        "methods": [
+          "PATCH",
+          "PUT"
+        ],
+        "uri": "platform/users/{user}",
+        "name": "platform.users.update",
+        "action": "App\\Http\\Controllers\\Platform\\PlatformUserController@update",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:roles.create",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Roles\\Http\\Controllers",
+      "safe_purpose": "GET|HEAD platform/roles/create -> App\\Modules\\Roles\\Http\\Controllers\\CreateController.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:roles.create",
+        "route-uri:platform/roles/create"
+      ],
+      "known_contradictions": [],
+      "suggested_target_question": null,
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "platform/roles/create",
+        "name": "roles.create",
+        "action": "App\\Modules\\Roles\\Http\\Controllers\\CreateController",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:roles.delete",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Roles\\Http\\Controllers",
+      "safe_purpose": "GET|HEAD platform/roles/{role}/delete -> App\\Modules\\Roles\\Http\\Controllers\\DeleteController.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:roles.delete",
+        "route-uri:platform/roles/{role}/delete"
+      ],
+      "known_contradictions": [],
+      "suggested_target_question": null,
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "platform/roles/{role}/delete",
+        "name": "roles.delete",
+        "action": "App\\Modules\\Roles\\Http\\Controllers\\DeleteController",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:roles.destroy",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Roles\\Http\\Controllers",
+      "safe_purpose": "DELETE platform/roles/{role} -> App\\Modules\\Roles\\Http\\Controllers\\DestroyController.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:roles.destroy",
+        "route-uri:platform/roles/{role}"
+      ],
+      "known_contradictions": [],
+      "suggested_target_question": null,
+      "runtime_metadata": {
+        "methods": [
+          "DELETE"
+        ],
+        "uri": "platform/roles/{role}",
+        "name": "roles.destroy",
+        "action": "App\\Modules\\Roles\\Http\\Controllers\\DestroyController",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:roles.edit",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Roles\\Http\\Controllers",
+      "safe_purpose": "GET|HEAD platform/roles/{role}/edit -> App\\Modules\\Roles\\Http\\Controllers\\EditController.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:roles.edit",
+        "route-uri:platform/roles/{role}/edit"
+      ],
+      "known_contradictions": [],
+      "suggested_target_question": null,
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "platform/roles/{role}/edit",
+        "name": "roles.edit",
+        "action": "App\\Modules\\Roles\\Http\\Controllers\\EditController",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:roles.index",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Roles\\Http\\Controllers",
+      "safe_purpose": "GET|HEAD platform/roles -> App\\Modules\\Roles\\Http\\Controllers\\IndexController.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:roles.index",
+        "route-uri:platform/roles"
+      ],
+      "known_contradictions": [],
+      "suggested_target_question": null,
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "platform/roles",
+        "name": "roles.index",
+        "action": "App\\Modules\\Roles\\Http\\Controllers\\IndexController",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:roles.permissions.index",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Roles\\Http\\Controllers",
+      "safe_purpose": "GET|HEAD platform/roles/permissions -> App\\Modules\\Roles\\Http\\Controllers\\PermissionsIndexController.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:roles.permissions.index",
+        "route-uri:platform/roles/permissions"
+      ],
+      "known_contradictions": [],
+      "suggested_target_question": null,
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "platform/roles/permissions",
+        "name": "roles.permissions.index",
+        "action": "App\\Modules\\Roles\\Http\\Controllers\\PermissionsIndexController",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:roles.show",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Roles\\Http\\Controllers",
+      "safe_purpose": "GET|HEAD platform/roles/{role} -> App\\Modules\\Roles\\Http\\Controllers\\ShowController.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:roles.show",
+        "route-uri:platform/roles/{role}"
+      ],
+      "known_contradictions": [],
+      "suggested_target_question": null,
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "platform/roles/{role}",
+        "name": "roles.show",
+        "action": "App\\Modules\\Roles\\Http\\Controllers\\ShowController",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:roles.store",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Roles\\Http\\Controllers",
+      "safe_purpose": "POST platform/roles -> App\\Modules\\Roles\\Http\\Controllers\\StoreController.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:roles.store",
+        "route-uri:platform/roles"
+      ],
+      "known_contradictions": [],
+      "suggested_target_question": null,
+      "runtime_metadata": {
+        "methods": [
+          "POST"
+        ],
+        "uri": "platform/roles",
+        "name": "roles.store",
+        "action": "App\\Modules\\Roles\\Http\\Controllers\\StoreController",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:roles.update",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Roles\\Http\\Controllers",
+      "safe_purpose": "PATCH platform/roles/{role} -> App\\Modules\\Roles\\Http\\Controllers\\UpdateController.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:roles.update",
+        "route-uri:platform/roles/{role}"
+      ],
+      "known_contradictions": [],
+      "suggested_target_question": null,
+      "runtime_metadata": {
+        "methods": [
+          "PATCH"
+        ],
+        "uri": "platform/roles/{role}",
+        "name": "roles.update",
+        "action": "App\\Modules\\Roles\\Http\\Controllers\\UpdateController",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:settings.index",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": "App\\Modules\\Settings\\Http\\Controllers",
+      "safe_purpose": "GET|HEAD settings -> App\\Modules\\Settings\\Http\\Controllers\\PageController@index.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:settings.index",
+        "route-uri:settings"
+      ],
+      "known_contradictions": [],
+      "suggested_target_question": null,
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "settings",
+        "name": "settings.index",
+        "action": "App\\Modules\\Settings\\Http\\Controllers\\PageController@index",
+        "middleware": [
+          "Illuminate\\Auth\\Middleware\\Authenticate",
+          "web"
+        ]
+      }
+    },
+    {
+      "path_or_identifier": "route:storage.local",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": null,
+      "safe_purpose": "GET|HEAD storage/{path} -> Closure.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:storage.local",
+        "route-uri:storage/{path}"
+      ],
+      "known_contradictions": [],
+      "suggested_target_question": null,
+      "runtime_metadata": {
+        "methods": [
+          "GET",
+          "HEAD"
+        ],
+        "uri": "storage/{path}",
+        "name": "storage.local",
+        "action": "Closure",
+        "middleware": []
+      }
+    },
+    {
+      "path_or_identifier": "route:storage.local.upload",
+      "source_kind": "runtime_route_dynamic",
+      "surface_type": "route",
+      "namespace": null,
+      "safe_purpose": "PUT storage/{path} -> Closure.",
+      "authority_state": "active",
+      "registration_state": "registered",
+      "evidence_source": [
+        "command:php artisan route:list --json",
+        "route-name:storage.local.upload",
+        "route-uri:storage/{path}"
+      ],
+      "known_contradictions": [],
+      "suggested_target_question": null,
+      "runtime_metadata": {
+        "methods": [
+          "PUT"
+        ],
+        "uri": "storage/{path}",
+        "name": "storage.local.upload",
+        "action": "Closure",
+        "middleware": []
+      }
     },
     {
       "path_or_identifier": "routes/AGENTS.md",

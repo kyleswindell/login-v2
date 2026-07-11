@@ -8,7 +8,7 @@ canonical: true
 canonical_path: docs/02-standards/coding/index.md
 parent: docs/02-standards/index.md
 template: docs/09-reference/templates/docs/_index.md
-summary: Indexes coding, file-building, PHP, application-layer, reliability, testing, query, generator, Git, and agent implementation standards.
+summary: Indexes coding, file-building, PHP, application-layer, reliability, testing, query, identifier, generator, Git, and agent implementation standards.
 -->
 
 # Coding Standards Index
@@ -29,6 +29,7 @@ Parent: [Standards Index](../index.md)
 | [Error And Exception Handling Standards](Error%20And%20Exception%20Handling%20Standards.md) | Error translation, exception, and failure rules. |
 | [Transaction Concurrency And Idempotency Standards](Transaction%20Concurrency%20And%20Idempotency%20Standards.md) | Mutation, locking, retry, and idempotency rules. |
 | [Events Jobs And Queue Standards](Events%20Jobs%20And%20Queue%20Standards.md) | Event, listener, job, and queue rules. |
+| [Identifier And Key Standards](Identifier%20And%20Key%20Standards.md) | Canonical owner, capability, Module, registry, permission, route, notification, audit, configuration, job, event, listener, queue, UI, and compatibility-key rules. |
 | [Query And Performance Standards](Query%20And%20Performance%20Standards.md) | Query scope, performance, and bounded-data rules. |
 | [Testing Standards](Testing%20Standards.md) | Automated and manual verification rules. |
 | [Code Template And Generator Standards](Code%20Template%20And%20Generator%20Standards.md) | Stub, source-template, and generator rules. |

@@ -18,6 +18,16 @@ The completed implementation must add fixture inputs and expected outputs coveri
 12. `runtime-discovery-failure-preservation`
 13. `same-basename-different-paths`
 14. `windows-and-posix-path-normalization`
+15. `implicit-id-primary-key`
+16. `custom-id-primary-key`
+17. `create-add-drop-final-state`
+18. `drop-index-unique-foreign-primary`
+19. `rename-column-rewrites-references`
+20. `conditional-has-column-operation`
+21. `permission-dynamic-column-identifiers`
+22. `canonical-key-grammar`
+23. `generated-fingerprint-invalidates-review`
+24. `final-state-evidence-deduplication`
 
 Fixture rules:
 

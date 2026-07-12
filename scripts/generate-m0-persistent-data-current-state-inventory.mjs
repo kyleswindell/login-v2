@@ -29,6 +29,19 @@ const GENERATOR_PATH =
     "scripts/generate-m0-persistent-data-current-state-inventory.mjs";
 const FIXTURE_CATALOG =
     "scripts/fixtures/m0-persistent-data-current-state-inventory/cases.json";
+const GENERATOR_SCHEMA_VERSION = 2;
+const CANONICAL_KEY_PATTERN = /^[a-z][a-z0-9_]*$/;
+
+const DECLARATION_OWNER_COMPATIBILITY = {
+    auth: ["auth"],
+    roles: ["access"],
+    logging: ["audit", "monitoring"],
+    notifications: ["notifications"],
+    settings: ["settings"],
+    dashboard: ["dashboard"],
+    users: ["identity"],
+    security_checklist: ["security"],
+};
 
 const ALLOWED_PATHS = [
     DOCUMENT_PATH,
@@ -894,7 +907,7 @@ function collect(options) {
     const runtime = options.withRuntimeDiscovery
         ? collectRuntimeDiscovery()
         : preserveRuntimeDiscovery(baseline, options.staticOnly);
-    const dynamicTables = resolvePermissionTables(runtime);
+    const dynamicIdentifiers = resolvePermissionIdentifiers(runtime);
     const migrationRoots = collectMigrationRoots(tree, blobs);
     const ledger = collectMigrationLedger({
         baseline,
@@ -903,7 +916,7 @@ function collect(options) {
         tree,
         blobs,
         migrationRoots,
-        dynamicTables,
+        dynamicIdentifiers,
         generatedAt,
     });
     const raw = collectRawEvidence({
@@ -924,6 +937,9 @@ function collect(options) {
         existing: options.resetClassifications
             ? null
             : readJsonIfExists(CLASSIFICATIONS_PATH),
+        historicalReviewed: options.resetClassifications
+            ? null
+            : readJsonFromHead(CLASSIFICATIONS_PATH),
     });
 
     mkdirSync(resolve(EVIDENCE_DIRECTORY), { recursive: true });
@@ -1189,7 +1205,7 @@ function collectMigrationLedger(context) {
         const parsed = parseMigration(
             blob.content,
             entry.path,
-            context.dynamicTables,
+            context.dynamicIdentifiers,
         );
         return {
             migration_path: entry.path,
@@ -1278,22 +1294,35 @@ function collectMigrationLedger(context) {
     };
 }
 
-function parseMigration(content, path, dynamicTables = {}) {
+function parseMigration(content, path, dynamicIdentifiers = {}) {
     const upBody = extractMethodBody(content, "up");
     const downBody = extractMethodBody(content, "down");
     const notes = [];
     if (!upBody) notes.push("Unable to locate an up() method body.");
     if (!downBody) notes.push("Unable to locate a down() method body.");
     const up = upBody
-        ? parseSchemaOperations(content, upBody, path, dynamicTables)
+        ? parseSchemaOperations(content, upBody, path, dynamicIdentifiers)
         : [];
     const down = downBody
-        ? parseSchemaOperations(content, downBody, path, dynamicTables)
+        ? parseSchemaOperations(content, downBody, path, dynamicIdentifiers)
         : [];
     const all = [...up, ...down];
+    for (const operation of all) {
+        operation.conditions = dedupeBy(
+            operation.conditions,
+            (condition) =>
+                `${condition.expression}|${condition.expected ?? ""}|${condition.source_location.line_start}`,
+        );
+    }
     let status = "complete";
     if (!upBody || !downBody) status = "failed";
-    else if (all.some((operation) => !operation.storage_identifier)) {
+    else if (
+        all.some(
+            (operation) =>
+                !operation.storage_identifier ||
+                operationHasUnresolvedIdentifiers(operation),
+        )
+    ) {
         status = "unresolved_dynamic_identifier";
         notes.push(
             "At least one dynamic storage identifier could not be resolved from pinned or bounded runtime configuration.",
@@ -1304,6 +1333,17 @@ function parseMigration(content, path, dynamicTables = {}) {
         status = "unsupported_operation";
         notes.push(
             "At least one Blueprint operation was retained as unsupported.",
+        );
+    } else if (
+        all.some((operation) =>
+            operation.conditions.some(
+                (condition) => condition.resolution === "unresolved",
+            ),
+        )
+    ) {
+        status = "partial";
+        notes.push(
+            "At least one schema-affecting condition could not be resolved safely.",
         );
     }
     if (all.length === 0 && (upBody || downBody)) {
@@ -1325,7 +1365,7 @@ function extractMethodBody(content, name) {
     return { text: content.slice(open + 1, close), offset: open + 1 };
 }
 
-function parseSchemaOperations(fullContent, body, path, dynamicTables) {
+function parseSchemaOperations(fullContent, body, path, dynamicIdentifiers) {
     const operations = [];
     let cursor = 0;
     while (cursor < body.text.length) {
@@ -1349,7 +1389,10 @@ function parseSchemaOperations(fullContent, body, path, dynamicTables) {
         const argsText = body.text.slice(open + 1, close);
         const args = splitTopLevel(argsText, ",");
         const identifierExpression = (args[0] ?? "").trim();
-        const resolved = resolveIdentifier(identifierExpression, dynamicTables);
+        const resolved = resolveIdentifier(
+            identifierExpression,
+            dynamicIdentifiers,
+        );
         const line = lineAt(fullContent, body.offset + found.index);
         const operation = emptyOperation({
             sequence: operations.length + 1,
@@ -1360,10 +1403,27 @@ function parseSchemaOperations(fullContent, body, path, dynamicTables) {
             line,
             raw: summarizeExpression(body.text.slice(found.index, close + 1)),
         });
+        operation.conditions.push(
+            ...precedingSchemaGuards(
+                body.text,
+                found.index,
+                path,
+                body.offset,
+                fullContent,
+                dynamicIdentifiers,
+            ).map((condition) => ({ ...condition, scope: "operation" })),
+            ...configurationGuards(
+                body.text,
+                path,
+                body.offset,
+                fullContent,
+                dynamicIdentifiers,
+            ).map((condition) => ({ ...condition, scope: "operation" })),
+        );
         if (found[1] === "rename") {
             operation.rename_to = resolveIdentifier(
                 (args[1] ?? "").trim(),
-                dynamicTables,
+                dynamicIdentifiers,
             ).value;
             operation.destructive_behavior =
                 "Renames a table and changes its storage identifier.";
@@ -1384,6 +1444,7 @@ function parseSchemaOperations(fullContent, body, path, dynamicTables) {
                     closure.text,
                     closure.offset,
                     fullContent,
+                    dynamicIdentifiers,
                 );
             else
                 operation.unsupported_statements.push(
@@ -1394,6 +1455,182 @@ function parseSchemaOperations(fullContent, body, path, dynamicTables) {
         cursor = close + 1;
     }
     return operations;
+}
+
+function operationHasUnresolvedIdentifiers(operation) {
+    const values = [
+        ...operation.columns.map((column) => column.name),
+        ...operation.primary_keys.flatMap((entry) => entry.columns),
+        ...operation.indexes.flatMap((entry) => entry.columns),
+        ...operation.unique_constraints.flatMap((entry) => entry.columns),
+        ...operation.foreign_keys.flatMap((entry) => [
+            ...entry.columns,
+            entry.on,
+            entry.references,
+        ]),
+        ...operation.dropped_columns.map((entry) => entry.name),
+        ...operation.renamed_columns.flatMap((entry) => [entry.from, entry.to]),
+    ];
+    return values.some(
+        (value) =>
+            value === null ||
+            value === "" ||
+            /^\$|\bconfig\s*\(/.test(String(value)),
+    );
+}
+
+function enclosingConditions(
+    content,
+    position,
+    path,
+    absoluteOffset,
+    fullContent,
+    dynamicIdentifiers,
+) {
+    const conditions = [];
+    const pattern = /\bif\s*\(/g;
+    for (const match of content.matchAll(pattern)) {
+        if (match.index >= position) break;
+        const openParen = content.indexOf("(", match.index);
+        const closeParen = matchingDelimiter(content, openParen, "(", ")");
+        if (closeParen < 0) continue;
+        const openBrace = content.indexOf("{", closeParen);
+        if (openBrace < 0) continue;
+        const closeBrace = matchingDelimiter(content, openBrace, "{", "}");
+        if (position <= openBrace || position >= closeBrace) continue;
+        const expression = content.slice(openParen + 1, closeParen).trim();
+        conditions.push(
+            schemaCondition(
+                expression,
+                true,
+                path,
+                lineAt(fullContent, absoluteOffset + match.index),
+                dynamicIdentifiers,
+            ),
+        );
+    }
+    return conditions;
+}
+
+function precedingSchemaGuards(
+    content,
+    position,
+    path,
+    absoluteOffset,
+    fullContent,
+    dynamicIdentifiers,
+) {
+    const guards = [];
+    const pattern = /\bif\s*\(/g;
+    for (const match of content.matchAll(pattern)) {
+        if (match.index >= position) break;
+        const openParen = content.indexOf("(", match.index);
+        const closeParen = matchingDelimiter(content, openParen, "(", ")");
+        const openBrace = content.indexOf("{", closeParen);
+        const closeBrace =
+            openBrace >= 0
+                ? matchingDelimiter(content, openBrace, "{", "}")
+                : -1;
+        if (closeBrace < 0 || closeBrace >= position) continue;
+        const block = content.slice(openBrace + 1, closeBrace);
+        const between = content.slice(closeBrace + 1, position);
+        if (!/\breturn\s*;/.test(block) || /Schema::/.test(between)) continue;
+        const expression = content.slice(openParen + 1, closeParen).trim();
+        if (!/Schema::hasColumn\s*\(/.test(expression)) continue;
+        guards.push(
+            schemaCondition(
+                expression.replace(/^!\s*/, ""),
+                /^!\s*/.test(expression),
+                path,
+                lineAt(fullContent, absoluteOffset + match.index),
+                dynamicIdentifiers,
+            ),
+        );
+    }
+    return guards.slice(-1);
+}
+
+function configurationGuards(
+    content,
+    path,
+    absoluteOffset,
+    fullContent,
+    dynamicIdentifiers,
+) {
+    const identifiers = normalizeDynamicIdentifiers(dynamicIdentifiers);
+    const guards = [];
+    for (const match of content.matchAll(/\bthrow_if\s*\(/g)) {
+        const open = content.indexOf("(", match.index);
+        const close = matchingDelimiter(content, open, "(", ")");
+        if (close < 0) continue;
+        const expression = splitArguments(content.slice(open + 1, close))[0];
+        let resolution = "unresolved";
+        if (/empty\(\$tableNames\)/.test(expression)) {
+            resolution =
+                Object.keys(identifiers.tables).length > 0
+                    ? "true"
+                    : "unresolved";
+        } else if (/\$teams\s*&&\s*empty\(\$columnNames/.test(expression)) {
+            if (identifiers.conditions.teams === false) resolution = "true";
+            else if (identifiers.columns.team_foreign_key) resolution = "true";
+        }
+        guards.push({
+            kind: "configuration_guard",
+            expression: summarizeExpression(expression),
+            expected: false,
+            resolution,
+            source_location: {
+                path,
+                line_start: lineAt(fullContent, absoluteOffset + match.index),
+                line_end: lineAt(fullContent, absoluteOffset + close),
+            },
+        });
+    }
+    return guards;
+}
+
+function schemaCondition(expression, expected, path, line, dynamicIdentifiers) {
+    const normalized = summarizeExpression(expression);
+    const hasColumn =
+        /Schema::hasColumn\s*\(\s*(['"])([^'"]+)\1\s*,\s*(['"])([^'"]+)\3\s*\)/.exec(
+            normalized,
+        );
+    if (hasColumn) {
+        return {
+            kind: "has_column",
+            expression: normalized,
+            table: hasColumn[2],
+            column: hasColumn[4],
+            expected,
+            resolution: "deferred_final_state",
+            source_location: { path, line_start: line, line_end: line },
+        };
+    }
+    const identifiers = normalizeDynamicIdentifiers(dynamicIdentifiers);
+    let value;
+    if (/^\$teams$/.test(normalized)) value = identifiers.conditions.teams;
+    else if (
+        /^\$teams\s*\|\|\s*config\(['"]permission\.testing['"]\)$/.test(
+            normalized,
+        )
+    ) {
+        const teams = identifiers.conditions.teams;
+        const testing = identifiers.conditions.testing;
+        if (typeof teams === "boolean" && typeof testing === "boolean")
+            value = teams || testing;
+    }
+    return {
+        kind: "branch",
+        expression: normalized,
+        expected,
+        resolution:
+            typeof value === "boolean"
+                ? value === expected
+                    ? "true"
+                    : "false"
+                : "unresolved",
+        source_location: { path, line_start: line, line_end: line },
+    };
 }
 
 function extractClosure(argsText, absoluteOffset, fullContent) {
@@ -1417,6 +1654,7 @@ function parseBlueprintStatements(
     closure,
     closureOffset,
     fullContent,
+    dynamicIdentifiers,
 ) {
     let cursor = 0;
     while (cursor < closure.length) {
@@ -1434,8 +1672,24 @@ function parseBlueprintStatements(
         const statement = closure.slice(index, end + 1);
         const methods = parseMethodChain(statement);
         const sourceLine = lineAt(fullContent, closureOffset + index);
+        const statementConditions = enclosingConditions(
+            closure,
+            index,
+            operation.source_location.path,
+            closureOffset,
+            fullContent,
+            dynamicIdentifiers,
+        ).map((condition) => ({ ...condition, scope: "statement" }));
+        operation.conditions.push(...statementConditions);
         if (
-            !applyBlueprintStatement(operation, methods, statement, sourceLine)
+            !applyBlueprintStatement(
+                operation,
+                methods,
+                statement,
+                sourceLine,
+                dynamicIdentifiers,
+                statementConditions,
+            )
         ) {
             operation.unsupported_statements.push(
                 summarizeExpression(statement),
@@ -1467,10 +1721,17 @@ function parseMethodChain(statement) {
     return methods;
 }
 
-function applyBlueprintStatement(operation, methods, statement, sourceLine) {
+function applyBlueprintStatement(
+    operation,
+    methods,
+    statement,
+    sourceLine,
+    dynamicIdentifiers,
+    conditions = [],
+) {
     if (methods.length === 0) return false;
     const first = methods[0];
-    const args = splitTopLevel(first.args, ",").map((value) => value.trim());
+    const args = splitArguments(first.args);
     const modifiers = methods.slice(1).map((method) => method.name);
     const location = {
         ...operation.source_location,
@@ -1479,14 +1740,17 @@ function applyBlueprintStatement(operation, methods, statement, sourceLine) {
     };
 
     if (COLUMN_METHODS.has(first.name)) {
+        const implicitId = ["id", "increments", "bigIncrements"].includes(
+            first.name,
+        );
+        const resolvedName = resolveIdentifier(
+            args[0] ?? "",
+            dynamicIdentifiers,
+        );
         const name =
-            first.name === "id" && args.length === 0
-                ? "id"
-                : parseLiteral(args[0]);
+            implicitId && args.length === 0 ? "id" : resolvedName.value;
         const expression =
-            first.name === "id" && args.length === 0
-                ? "'id'"
-                : (args[0] ?? null);
+            implicitId && args.length === 0 ? "'id'" : (args[0] ?? null);
         const column = {
             name,
             expression,
@@ -1494,6 +1758,7 @@ function applyBlueprintStatement(operation, methods, statement, sourceLine) {
             nullable: modifiers.includes("nullable"),
             modifiers,
             source_location: location,
+            conditions,
         };
         operation.columns.push(column);
         if (
@@ -1505,6 +1770,7 @@ function applyBlueprintStatement(operation, methods, statement, sourceLine) {
                 columns: [name ?? expression],
                 name: null,
                 source_location: location,
+                conditions,
             });
         }
         if (modifiers.includes("primary")) {
@@ -1512,6 +1778,7 @@ function applyBlueprintStatement(operation, methods, statement, sourceLine) {
                 columns: [name ?? expression],
                 name: null,
                 source_location: location,
+                conditions,
             });
         }
         if (modifiers.includes("unique")) {
@@ -1519,6 +1786,7 @@ function applyBlueprintStatement(operation, methods, statement, sourceLine) {
                 columns: [name ?? expression],
                 name: methodArgument(methods, "unique"),
                 source_location: location,
+                conditions,
             });
         }
         if (modifiers.includes("index")) {
@@ -1526,6 +1794,7 @@ function applyBlueprintStatement(operation, methods, statement, sourceLine) {
                 columns: [name ?? expression],
                 name: methodArgument(methods, "index"),
                 source_location: location,
+                conditions,
             });
         }
         if (first.name === "foreignId" && modifiers.includes("constrained")) {
@@ -1533,7 +1802,7 @@ function applyBlueprintStatement(operation, methods, statement, sourceLine) {
                 (method) => method.name === "constrained",
             );
             const target =
-                parseLiteral(splitTopLevel(constrained.args, ",")[0]) ??
+                parseLiteral(splitArguments(constrained.args)[0]) ??
                 inferConstrainedTable(name);
             const deletion = deleteBehavior(methods);
             operation.foreign_keys.push({
@@ -1542,6 +1811,7 @@ function applyBlueprintStatement(operation, methods, statement, sourceLine) {
                 on: target,
                 deletion_behavior: deletion,
                 source_location: location,
+                conditions,
             });
             if (deletion) operation.deletion_behavior.push(deletion);
         }
@@ -1549,7 +1819,7 @@ function applyBlueprintStatement(operation, methods, statement, sourceLine) {
     }
 
     if (TABLE_MACROS.has(first.name)) {
-        const name = parseLiteral(args[0]);
+        const name = resolveIdentifier(args[0] ?? "", dynamicIdentifiers).value;
         const macroColumns = macroColumnNames(first.name, name);
         operation.columns.push(
             ...macroColumns.map((columnName) => ({
@@ -1561,6 +1831,7 @@ function applyBlueprintStatement(operation, methods, statement, sourceLine) {
                     first.name.startsWith("softDeletes"),
                 modifiers,
                 source_location: location,
+                conditions,
             })),
         );
         if (first.name.toLowerCase().includes("morphs")) {
@@ -1568,17 +1839,19 @@ function applyBlueprintStatement(operation, methods, statement, sourceLine) {
                 columns: macroColumns,
                 name: null,
                 source_location: location,
+                conditions,
             });
         }
         return true;
     }
 
     if (["primary", "index", "unique", "fullText"].includes(first.name)) {
-        const columns = parseColumnList(args[0]);
+        const columns = parseColumnList(args[0], dynamicIdentifiers);
         const entry = {
             columns,
             name: parseLiteral(args[1]),
             source_location: location,
+            conditions,
         };
         if (first.name === "primary") operation.primary_keys.push(entry);
         else if (first.name === "unique")
@@ -1594,17 +1867,21 @@ function applyBlueprintStatement(operation, methods, statement, sourceLine) {
         const on = methods.find((method) => method.name === "on");
         const deletion = deleteBehavior(methods);
         operation.foreign_keys.push({
-            columns: parseColumnList(args[0]),
+            columns: parseColumnList(args[0], dynamicIdentifiers),
             references:
-                parseLiteral(splitTopLevel(references?.args ?? "", ",")[0]) ??
+                parseLiteral(splitArguments(references?.args ?? "")[0]) ??
                 references?.args ??
                 null,
             on:
-                parseLiteral(splitTopLevel(on?.args ?? "", ",")[0]) ??
+                resolveIdentifier(
+                    splitArguments(on?.args ?? "")[0] ?? "",
+                    dynamicIdentifiers,
+                ).value ??
                 on?.args ??
                 null,
             deletion_behavior: deletion,
             source_location: location,
+            conditions,
         });
         if (deletion) operation.deletion_behavior.push(deletion);
         return true;
@@ -1613,16 +1890,71 @@ function applyBlueprintStatement(operation, methods, statement, sourceLine) {
     if (first.name.startsWith("drop") || first.name === "renameColumn") {
         operation.destructive_behavior = `${first.name}(${summarizeExpression(first.args)})`;
         if (first.name === "dropColumn") {
-            operation.columns.push(
-                ...parseColumnList(args[0]).map((name) => ({
+            operation.dropped_columns.push(
+                ...parseColumnList(args[0], dynamicIdentifiers).map((name) => ({
                     name,
-                    expression: first.args,
-                    type: "dropColumn",
-                    nullable: null,
-                    modifiers: [],
                     source_location: location,
+                    conditions,
                 })),
             );
+        } else if (first.name === "renameColumn") {
+            operation.renamed_columns.push({
+                from: resolveIdentifier(args[0] ?? "", dynamicIdentifiers)
+                    .value,
+                to: resolveIdentifier(args[1] ?? "", dynamicIdentifiers).value,
+                source_location: location,
+                conditions,
+            });
+        } else if (first.name === "dropPrimary") {
+            operation.dropped_primary_keys.push(
+                dropReference(
+                    args[0],
+                    location,
+                    conditions,
+                    dynamicIdentifiers,
+                ),
+            );
+        } else if (first.name === "dropIndex") {
+            operation.dropped_indexes.push(
+                dropReference(
+                    args[0],
+                    location,
+                    conditions,
+                    dynamicIdentifiers,
+                ),
+            );
+        } else if (first.name === "dropUnique") {
+            operation.dropped_unique_constraints.push(
+                dropReference(
+                    args[0],
+                    location,
+                    conditions,
+                    dynamicIdentifiers,
+                ),
+            );
+        } else if (
+            first.name === "dropForeign" ||
+            first.name === "dropConstrainedForeignId"
+        ) {
+            operation.dropped_foreign_keys.push(
+                dropReference(
+                    args[0],
+                    location,
+                    conditions,
+                    dynamicIdentifiers,
+                ),
+            );
+            if (first.name === "dropConstrainedForeignId") {
+                const name = resolveIdentifier(
+                    args[0] ?? "",
+                    dynamicIdentifiers,
+                ).value;
+                operation.dropped_columns.push({
+                    name,
+                    source_location: location,
+                    conditions,
+                });
+            }
         }
         return true;
     }
@@ -1653,6 +1985,13 @@ function emptyOperation({
         indexes: [],
         unique_constraints: [],
         foreign_keys: [],
+        dropped_columns: [],
+        dropped_primary_keys: [],
+        dropped_indexes: [],
+        dropped_unique_constraints: [],
+        dropped_foreign_keys: [],
+        renamed_columns: [],
+        conditions: [],
         deletion_behavior: [],
         destructive_behavior: null,
         raw_expression_summary: summarizeExpression(raw),
@@ -1684,17 +2023,44 @@ function schemaOperationType(method) {
     }[method];
 }
 
-function resolveIdentifier(expression, dynamicTables) {
+function resolveIdentifier(expression, dynamicIdentifiers = {}) {
     const literal = parseLiteral(expression);
     if (literal !== null) return { value: literal, evidence: "literal" };
-    const dynamic = /^\$tableNames\[['"]([^'"]+)['"]\]$/.exec(expression);
-    if (dynamic && dynamicTables[dynamic[1]]) {
+    const identifiers = normalizeDynamicIdentifiers(dynamicIdentifiers);
+    const table = /^\$tableNames\[['"]([^'"]+)['"]\]$/.exec(expression);
+    if (table && identifiers.tables[table[1]]) {
         return {
-            value: dynamicTables[dynamic[1]],
+            value: identifiers.tables[table[1]],
             evidence: "bounded_runtime_configuration",
         };
     }
+    const column = /^\$columnNames\[['"]([^'"]+)['"]\]$/.exec(expression);
+    if (column && identifiers.columns[column[1]]) {
+        return {
+            value: identifiers.columns[column[1]],
+            evidence: "bounded_runtime_configuration",
+        };
+    }
+    const binding = /^\$(pivotRole|pivotPermission)$/.exec(expression);
+    if (binding && identifiers.bindings[binding[1]]) {
+        return {
+            value: identifiers.bindings[binding[1]],
+            evidence: "bounded_local_binding",
+        };
+    }
     return { value: null, evidence: "unresolved" };
+}
+
+function normalizeDynamicIdentifiers(value = {}) {
+    if (value.tables || value.columns || value.bindings) {
+        return {
+            tables: value.tables ?? {},
+            columns: value.columns ?? {},
+            bindings: value.bindings ?? {},
+            conditions: value.conditions ?? {},
+        };
+    }
+    return { tables: value, columns: {}, bindings: {}, conditions: {} };
 }
 
 function parseLiteral(value) {
@@ -1703,16 +2069,22 @@ function parseLiteral(value) {
     return match ? match[2] : null;
 }
 
-function parseColumnList(value) {
+function parseColumnList(value, dynamicIdentifiers = {}) {
     const literal = parseLiteral(value);
     if (literal !== null) return [literal];
     const trimmed = String(value ?? "").trim();
     if (trimmed.startsWith("[") && trimmed.endsWith("]")) {
-        return splitTopLevel(trimmed.slice(1, -1), ",").map(
-            (entry) => parseLiteral(entry.trim()) ?? summarizeExpression(entry),
-        );
+        return splitTopLevel(trimmed.slice(1, -1), ",")
+            .map((entry) => entry.trim())
+            .filter(Boolean)
+            .map(
+                (entry) =>
+                    resolveIdentifier(entry, dynamicIdentifiers).value ??
+                    summarizeExpression(entry),
+            );
     }
-    return trimmed ? [summarizeExpression(trimmed)] : [];
+    const resolved = resolveIdentifier(trimmed, dynamicIdentifiers).value;
+    return trimmed ? [resolved ?? summarizeExpression(trimmed)] : [];
 }
 
 function macroColumnNames(method, name) {
@@ -1730,7 +2102,27 @@ function macroColumnNames(method, name) {
 function methodArgument(methods, name) {
     const method = methods.find((candidate) => candidate.name === name);
     if (!method) return null;
-    return parseLiteral(splitTopLevel(method.args, ",")[0]) ?? null;
+    return parseLiteral(splitArguments(method.args)[0]) ?? null;
+}
+
+function splitArguments(value) {
+    return String(value ?? "").trim() === ""
+        ? []
+        : splitTopLevel(value, ",").map((entry) => entry.trim());
+}
+
+function dropReference(value, sourceLocation, conditions, dynamicIdentifiers) {
+    const trimmed = String(value ?? "").trim();
+    const arrayColumns =
+        trimmed.startsWith("[") && trimmed.endsWith("]")
+            ? parseColumnList(trimmed, dynamicIdentifiers)
+            : [];
+    return {
+        columns: arrayColumns,
+        name: arrayColumns.length === 0 ? parseLiteral(trimmed) : null,
+        source_location: sourceLocation,
+        conditions,
+    };
 }
 
 function deleteBehavior(methods) {
@@ -1797,8 +2189,8 @@ function collectRawEvidence(context) {
                 context.blobs.get(path)?.content ?? "",
                 key,
             ),
-            owner_key: ownerKey,
-            capability_key: capabilityKey,
+            owner_key: canonicalKey(ownerKey),
+            capability_key: canonicalKey(capabilityKey),
             claim,
         }),
     );
@@ -1812,8 +2204,8 @@ function collectRawEvidence(context) {
                 context.blobs.get(path)?.content ?? "",
                 key,
             ),
-            owner_key: ownerKey,
-            capability_key: capabilityKey,
+            owner_key: canonicalKey(ownerKey),
+            capability_key: canonicalKey(capabilityKey),
             claim,
         }),
     );
@@ -1834,13 +2226,42 @@ function collectRawEvidence(context) {
     const boundarySeeds = frameworkBoundaries.map((boundary) =>
         seedBoundaryRecord(boundary, context.blobs),
     );
-    const materialSeeds = [
-        ...tableSeeds,
-        ...plannedSeeds,
-        ...boundarySeeds,
-    ].sort((left, right) =>
-        left.storage_identifier.localeCompare(right.storage_identifier),
-    );
+    const materialSeeds = [...tableSeeds, ...plannedSeeds, ...boundarySeeds]
+        .map((seed) =>
+            withGeneratedFingerprint(
+                seed,
+                migrationChains.get(seed.storage_identifier)?.final_state ??
+                    null,
+            ),
+        )
+        .sort((left, right) =>
+            left.storage_identifier.localeCompare(right.storage_identifier),
+        );
+    const ownerDeclarationComparisons = ownershipDeclarations
+        .map((declaration) => {
+            const seed = materialSeeds.find(
+                (item) =>
+                    item.storage_identifier === declaration.storage_identifier,
+            );
+            const allowedOwnerKeys =
+                DECLARATION_OWNER_COMPATIBILITY[declaration.manifest_key] ?? [];
+            return {
+                storage_identifier: declaration.storage_identifier,
+                manifest_key: declaration.manifest_key,
+                reviewed_owner_key: seed?.owner_key ?? "unknown",
+                allowed_owner_keys: allowedOwnerKeys,
+                compatible: allowedOwnerKeys.includes(
+                    seed?.owner_key ?? "unknown",
+                ),
+                declaration_path: declaration.path,
+                declaration_line: declaration.line_start,
+            };
+        })
+        .sort((left, right) =>
+            `${left.storage_identifier}|${left.manifest_key}`.localeCompare(
+                `${right.storage_identifier}|${right.manifest_key}`,
+            ),
+        );
 
     return {
         schema_version: 1,
@@ -1857,6 +2278,7 @@ function collectRawEvidence(context) {
         contracts,
         feature_contracts: featureContracts,
         ownership_declarations: ownershipDeclarations,
+        ownership_declaration_comparisons: ownerDeclarationComparisons,
         database_configuration: collectConfiguration(context.blobs),
         framework_boundaries: frameworkBoundaries,
         file_and_export_boundaries: frameworkBoundaries.filter((item) =>
@@ -1884,13 +2306,15 @@ function collectRawEvidence(context) {
             context.ledger,
             contracts,
             ownershipDeclarations,
+            ownerDeclarationComparisons,
             paths,
         ),
     };
 }
 
 function buildMigrationChains(ledger) {
-    const chains = new Map();
+    const histories = new Map();
+    const states = new Map();
     for (const migration of ledger.migrations) {
         for (const [direction, operations] of [
             ["up", migration.up_operations],
@@ -1898,69 +2322,408 @@ function buildMigrationChains(ledger) {
         ]) {
             for (const operation of operations) {
                 if (!operation.storage_identifier) continue;
-                const chain = chains.get(operation.storage_identifier) ?? {
-                    storage_identifier: operation.storage_identifier,
-                    created: false,
+                const history = histories.get(operation.storage_identifier) ?? {
                     migration_paths: [],
                     operations: [],
-                    columns: [],
-                    primary_keys: [],
-                    indexes: [],
-                    unique_constraints: [],
-                    foreign_keys: [],
-                    deletion_behavior: [],
-                    destructive_behavior: [],
                 };
                 if (
-                    direction === "up" &&
-                    operation.operation_type === "create_table"
-                )
-                    chain.created = true;
-                if (!chain.migration_paths.includes(migration.migration_path)) {
-                    chain.migration_paths.push(migration.migration_path);
+                    !history.migration_paths.includes(migration.migration_path)
+                ) {
+                    history.migration_paths.push(migration.migration_path);
                 }
-                chain.operations.push({
+                history.operations.push({
                     migration_path: migration.migration_path,
                     direction,
                     sequence: operation.sequence,
                     operation_type: operation.operation_type,
                     source_location: operation.source_location,
+                    conditions: operation.conditions,
                 });
-                if (direction === "up") {
-                    chain.columns.push(...operation.columns);
-                    chain.primary_keys.push(...operation.primary_keys);
-                    chain.indexes.push(...operation.indexes);
-                    chain.unique_constraints.push(
-                        ...operation.unique_constraints,
-                    );
-                    chain.foreign_keys.push(...operation.foreign_keys);
-                    chain.deletion_behavior.push(
-                        ...operation.deletion_behavior,
-                    );
-                    if (operation.destructive_behavior)
-                        chain.destructive_behavior.push(
-                            operation.destructive_behavior,
-                        );
-                }
-                chains.set(operation.storage_identifier, chain);
+                histories.set(operation.storage_identifier, history);
+                if (direction === "up")
+                    reduceTableOperation(states, operation, migration);
             }
         }
     }
-    for (const chain of chains.values()) {
-        chain.migration_paths.sort();
-        chain.columns = dedupeBy(
-            chain.columns,
-            (item) =>
-                `${item.name}|${item.type}|${item.source_location.path}|${item.source_location.line_start}`,
-        );
-        chain.primary_keys = dedupeJson(chain.primary_keys);
-        chain.indexes = dedupeJson(chain.indexes);
-        chain.unique_constraints = dedupeJson(chain.unique_constraints);
-        chain.foreign_keys = dedupeJson(chain.foreign_keys);
-        chain.deletion_behavior = [...new Set(chain.deletion_behavior)];
-        chain.destructive_behavior = [...new Set(chain.destructive_behavior)];
+    resolveDeferredConditions(ledger, states);
+
+    const chains = new Map();
+    for (const identifier of new Set([...histories.keys(), ...states.keys()])) {
+        const history = histories.get(identifier) ?? {
+            migration_paths: [],
+            operations: [],
+        };
+        const state = states.get(identifier) ?? emptyTableState(identifier);
+        const finalState = serializeTableState(state);
+        chains.set(identifier, {
+            storage_identifier: identifier,
+            created: finalState.exists,
+            migration_paths: [...history.migration_paths].sort(),
+            operations: history.operations,
+            final_state: finalState,
+            final_state_complete: finalState.complete,
+            columns: finalState.columns,
+            primary_keys: finalState.primary_keys,
+            indexes: finalState.indexes,
+            unique_constraints: finalState.unique_constraints,
+            foreign_keys: finalState.foreign_keys,
+            deletion_behavior: finalState.deletion_behavior,
+            destructive_behavior: finalState.destructive_behavior,
+        });
     }
     return chains;
+}
+
+function emptyTableState(identifier) {
+    return {
+        storage_identifier: identifier,
+        exists: false,
+        complete: true,
+        columns: new Map(),
+        primary_keys: [],
+        indexes: [],
+        unique_constraints: [],
+        foreign_keys: [],
+        deletion_behavior: [],
+        destructive_behavior: [],
+        unresolved_operations: [],
+        compatibility_identifiers: [],
+        contradictions: [],
+    };
+}
+
+function reduceTableOperation(states, operation, migration) {
+    let state =
+        states.get(operation.storage_identifier) ??
+        emptyTableState(operation.storage_identifier);
+    const operationDecision = conditionDecision(
+        operation.conditions.filter(
+            (condition) => condition.scope === "operation",
+        ),
+        states,
+    );
+    if (operationDecision === "unresolved") {
+        state.complete = false;
+        state.unresolved_operations.push(
+            operationReference(operation, migration),
+        );
+        states.set(operation.storage_identifier, state);
+        return;
+    }
+    if (operationDecision === "skip") {
+        states.set(operation.storage_identifier, state);
+        return;
+    }
+
+    if (operation.operation_type === "rename_table") {
+        if (!operation.rename_to) {
+            state.complete = false;
+            state.unresolved_operations.push(
+                operationReference(operation, migration),
+            );
+            states.set(operation.storage_identifier, state);
+            return;
+        }
+        states.delete(operation.storage_identifier);
+        state.compatibility_identifiers.push(operation.storage_identifier);
+        state.storage_identifier = operation.rename_to;
+        states.set(operation.rename_to, state);
+        return;
+    }
+    if (
+        ["drop_table", "drop_table_if_exists"].includes(
+            operation.operation_type,
+        )
+    ) {
+        state.exists = false;
+        if (operation.destructive_behavior)
+            state.destructive_behavior.push(operation.destructive_behavior);
+        states.set(operation.storage_identifier, state);
+        return;
+    }
+    if (operation.operation_type === "create_table") {
+        if (state.exists) state.contradictions.push("duplicate_table_creation");
+        const priorContradictions = state.contradictions;
+        state = emptyTableState(operation.storage_identifier);
+        state.contradictions = priorContradictions;
+        state.exists = true;
+    } else if (!state.exists) {
+        state.complete = false;
+        state.unresolved_operations.push(
+            operationReference(operation, migration),
+        );
+    }
+
+    applyEntries(
+        state,
+        "columns",
+        operation.columns,
+        states,
+        (entry) => entry.name,
+    );
+    applyEntries(state, "primary_keys", operation.primary_keys, states);
+    applyEntries(state, "indexes", operation.indexes, states);
+    applyEntries(
+        state,
+        "unique_constraints",
+        operation.unique_constraints,
+        states,
+    );
+    applyEntries(state, "foreign_keys", operation.foreign_keys, states);
+
+    for (const rename of operation.renamed_columns) {
+        const decision = conditionDecision(rename.conditions, states);
+        if (decision === "skip") continue;
+        if (decision === "unresolved" || !rename.from || !rename.to) {
+            state.complete = false;
+            state.unresolved_operations.push(
+                operationReference(operation, migration),
+            );
+            continue;
+        }
+        const column = state.columns.get(rename.from);
+        if (!column) {
+            state.complete = false;
+            state.unresolved_operations.push(
+                operationReference(operation, migration),
+            );
+            continue;
+        }
+        state.columns.delete(rename.from);
+        state.columns.set(rename.to, { ...column, name: rename.to });
+        rewriteColumnReferences(state, rename.from, rename.to);
+    }
+    for (const dropped of operation.dropped_columns) {
+        const decision = conditionDecision(dropped.conditions, states);
+        if (decision === "skip") continue;
+        if (decision === "unresolved" || !dropped.name) {
+            state.complete = false;
+            state.unresolved_operations.push(
+                operationReference(operation, migration),
+            );
+            continue;
+        }
+        state.columns.delete(dropped.name);
+        removeColumnReferences(state, dropped.name);
+    }
+    applyDrops(state, "primary_keys", operation.dropped_primary_keys, states);
+    applyDrops(state, "indexes", operation.dropped_indexes, states);
+    applyDrops(
+        state,
+        "unique_constraints",
+        operation.dropped_unique_constraints,
+        states,
+    );
+    applyDrops(state, "foreign_keys", operation.dropped_foreign_keys, states);
+    state.deletion_behavior.push(...operation.deletion_behavior);
+    if (operation.destructive_behavior)
+        state.destructive_behavior.push(operation.destructive_behavior);
+    states.set(operation.storage_identifier, state);
+}
+
+function applyEntries(
+    state,
+    field,
+    entries,
+    states,
+    key = stableConstraintIdentity,
+) {
+    for (const entry of entries) {
+        const decision = conditionDecision(entry.conditions, states);
+        if (decision === "skip") continue;
+        if (decision === "unresolved" || !key(entry)) {
+            state.complete = false;
+            state.unresolved_operations.push({
+                operation_type: `add_${field}`,
+                source_location: entry.source_location,
+            });
+            continue;
+        }
+        if (field === "columns") state.columns.set(key(entry), entry);
+        else {
+            const identity = key(entry);
+            state[field] = state[field].filter(
+                (existing) => key(existing) !== identity,
+            );
+            state[field].push(entry);
+        }
+    }
+}
+
+function applyDrops(state, field, drops, states) {
+    for (const drop of drops) {
+        const decision = conditionDecision(drop.conditions, states);
+        if (decision === "skip") continue;
+        if (decision === "unresolved") {
+            state.complete = false;
+            state.unresolved_operations.push({
+                operation_type: `drop_${field}`,
+                source_location: drop.source_location,
+            });
+            continue;
+        }
+        state[field] = state[field].filter(
+            (entry) => !dropMatches(entry, drop),
+        );
+    }
+}
+
+function dropMatches(entry, drop) {
+    if (drop.name && entry.name === drop.name) return true;
+    if ((drop.columns ?? []).length === 0) return false;
+    return (
+        stableStringify(entry.columns ?? []) === stableStringify(drop.columns)
+    );
+}
+
+function stableConstraintIdentity(entry) {
+    return entry.name || stableStringify(entry.columns ?? []);
+}
+
+function conditionDecision(conditions = [], states) {
+    let unresolved = false;
+    for (const condition of conditions) {
+        resolveCondition(condition, states);
+        if (condition.resolution === "false") return "skip";
+        if (
+            ["unresolved", "deferred_final_state"].includes(
+                condition.resolution,
+            )
+        )
+            unresolved = true;
+    }
+    return unresolved ? "unresolved" : "apply";
+}
+
+function resolveCondition(condition, states) {
+    if (condition.kind !== "has_column") return condition.resolution;
+    const state = states.get(condition.table);
+    if (!state || !state.exists) {
+        condition.resolution = "unresolved";
+        return condition.resolution;
+    }
+    const present = state.columns.has(condition.column);
+    condition.resolution = present === condition.expected ? "true" : "false";
+    return condition.resolution;
+}
+
+function resolveDeferredConditions(ledger, states) {
+    for (const migration of ledger.migrations) {
+        const operations = [
+            ...migration.up_operations,
+            ...migration.down_operations,
+        ];
+        for (const operation of operations) {
+            for (const condition of operation.conditions)
+                resolveCondition(condition, states);
+            for (const entry of [
+                ...operation.columns,
+                ...operation.primary_keys,
+                ...operation.indexes,
+                ...operation.unique_constraints,
+                ...operation.foreign_keys,
+                ...operation.dropped_columns,
+                ...operation.dropped_primary_keys,
+                ...operation.dropped_indexes,
+                ...operation.dropped_unique_constraints,
+                ...operation.dropped_foreign_keys,
+                ...operation.renamed_columns,
+            ]) {
+                for (const condition of entry.conditions ?? [])
+                    resolveCondition(condition, states);
+            }
+        }
+        if (
+            operations.some(
+                (operation) =>
+                    !operation.storage_identifier ||
+                    operationHasUnresolvedIdentifiers(operation),
+            )
+        )
+            migration.parse_status = "unresolved_dynamic_identifier";
+        else if (
+            operations.some(
+                (operation) => operation.unsupported_statements.length > 0,
+            )
+        )
+            migration.parse_status = "unsupported_operation";
+        else if (
+            operations.some((operation) =>
+                operation.conditions.some((condition) =>
+                    ["unresolved", "deferred_final_state"].includes(
+                        condition.resolution,
+                    ),
+                ),
+            )
+        )
+            migration.parse_status = "partial";
+        else migration.parse_status = "complete";
+    }
+    ledger.summary.fully_parsed_count = ledger.migrations.filter(
+        (migration) => migration.parse_status === "complete",
+    ).length;
+    ledger.summary.partial_or_dynamic_count =
+        ledger.migrations.length - ledger.summary.fully_parsed_count;
+}
+
+function operationReference(operation, migration) {
+    return {
+        migration_path: migration.migration_path,
+        sequence: operation.sequence,
+        operation_type: operation.operation_type,
+        source_location: operation.source_location,
+    };
+}
+
+function rewriteColumnReferences(state, from, to) {
+    for (const field of [
+        "primary_keys",
+        "indexes",
+        "unique_constraints",
+        "foreign_keys",
+    ]) {
+        state[field] = state[field].map((entry) => ({
+            ...entry,
+            columns: (entry.columns ?? []).map((column) =>
+                column === from ? to : column,
+            ),
+        }));
+    }
+}
+
+function removeColumnReferences(state, column) {
+    for (const field of [
+        "primary_keys",
+        "indexes",
+        "unique_constraints",
+        "foreign_keys",
+    ]) {
+        state[field] = state[field].filter(
+            (entry) => !(entry.columns ?? []).includes(column),
+        );
+    }
+}
+
+function serializeTableState(state) {
+    return {
+        storage_identifier: state.storage_identifier,
+        exists: state.exists,
+        complete: state.complete,
+        columns: [...state.columns.values()].sort((left, right) =>
+            left.name.localeCompare(right.name),
+        ),
+        primary_keys: dedupeJson(state.primary_keys),
+        indexes: dedupeJson(state.indexes),
+        unique_constraints: dedupeJson(state.unique_constraints),
+        foreign_keys: dedupeJson(state.foreign_keys),
+        deletion_behavior: [...new Set(state.deletion_behavior)].sort(),
+        destructive_behavior: [...new Set(state.destructive_behavior)].sort(),
+        unresolved_operations: dedupeJson(state.unresolved_operations),
+        compatibility_identifiers: [
+            ...new Set(state.compatibility_identifiers),
+        ].sort(),
+        contradictions: [...new Set(state.contradictions)].sort(),
+    };
 }
 
 function collectPhpEvidence(blobs, pattern, kind) {
@@ -2184,7 +2947,7 @@ function seedImplementedRecord(
             path,
             line_start: operation?.source_location.line_start ?? 1,
             line_end: operation?.source_location.line_end ?? 1,
-            claim: `Migration chain operation for ${table}.`,
+            claim: `${basename(path)} contributes a ${operation?.operation_type ?? "migration"} operation to the ${table} history.`,
             source_sha256: migration.source_sha256,
         };
     });
@@ -2242,6 +3005,31 @@ function seedImplementedRecord(
                 "implemented_table_unclaimed",
                 `${table} is created by a registered migration but is absent from ownedTables declarations.`,
                 migrationSources[0],
+            ),
+        );
+    }
+    const incompatibleDeclarations = declarations.filter((declaration) => {
+        const allowed =
+            DECLARATION_OWNER_COMPATIBILITY[declaration.manifest_key] ?? [];
+        return !allowed.includes(canonicalKey(ownerKey));
+    });
+    for (const declaration of incompatibleDeclarations) {
+        contradictions.push(
+            contradiction(
+                "owned_table_owner_mismatch",
+                `${table} is declared by manifest key ${declaration.manifest_key}, which is incompatible with reviewed owner ${canonicalKey(ownerKey)}.`,
+                declarationEvidence.find(
+                    (entry) => entry.path === declaration.path,
+                ) ?? migrationSources[0],
+            ),
+        );
+    }
+    if (!chain.final_state_complete) {
+        contradictions.push(
+            contradiction(
+                "migration_parse_partial",
+                `The deterministic final state for ${table} retains unresolved schema-affecting operations.`,
+                migrationSources.at(-1),
             ),
         );
     }
@@ -2363,8 +3151,8 @@ function seedImplementedRecord(
             : ownerKey === "unknown"
               ? "unknown"
               : "core",
-        owner_key: ownerKey,
-        capability_key: capabilityKey,
+        owner_key: canonicalKey(ownerKey),
+        capability_key: canonicalKey(capabilityKey),
         module_key: "not_applicable",
         tenant_scope: scope(
             tenantState,
@@ -2398,46 +3186,43 @@ function seedImplementedRecord(
             directEvidence,
             "Target Tenant or Instance evidence from the migration chain.",
         ),
-        key_and_relationship_evidence: directEvidence.map((source) => ({
-            ...source,
-            claim: `${table} columns: ${[...columnNames].join(", ") || "none resolved"}. Database foreign keys: ${chain.foreign_keys.map((foreign) => `${foreign.columns.join("+")} -> ${foreign.on ?? "unresolved"}.${foreign.references ?? "unresolved"}${foreign.deletion_behavior ? ` (${foreign.deletion_behavior})` : ""}`).join("; ") || "none"}.`,
-        })),
-        uniqueness_and_index_evidence: directEvidence.map((source) => ({
-            ...source,
-            claim: `Primary keys: ${chain.primary_keys.map((key) => key.columns.join("+")).join("; ") || "none recorded"}. Unique constraints: ${chain.unique_constraints.map((constraint) => constraint.columns.join("+")).join("; ") || "none recorded"}. Indexes: ${chain.indexes.map((index) => index.columns.join("+")).join("; ") || "none recorded"}.`,
-        })),
-        lifecycle_and_deletion_evidence: directEvidence.map((source) => ({
-            ...source,
-            claim:
-                chain.deletion_behavior.length > 0 ||
+        key_and_relationship_evidence: currentStateEvidence(
+            directEvidence,
+            `${table} final-state columns: ${[...columnNames].join(", ") || "none resolved"}. Database foreign keys: ${chain.foreign_keys.map((foreign) => `${foreign.columns.join("+")} -> ${foreign.on ?? "unresolved"}.${foreign.references ?? "unresolved"}${foreign.deletion_behavior ? ` (${foreign.deletion_behavior})` : ""}`).join("; ") || "none"}.`,
+        ),
+        uniqueness_and_index_evidence: currentStateEvidence(
+            directEvidence,
+            `Final-state primary keys: ${chain.primary_keys.map((key) => key.columns.join("+")).join("; ") || "none recorded"}. Unique constraints: ${chain.unique_constraints.map((constraint) => constraint.columns.join("+")).join("; ") || "none recorded"}. Indexes: ${chain.indexes.map((index) => index.columns.join("+")).join("; ") || "none recorded"}.`,
+        ),
+        lifecycle_and_deletion_evidence: currentStateEvidence(
+            directEvidence,
+            chain.deletion_behavior.length > 0 ||
                 chain.destructive_behavior.length > 0
-                    ? `Deletion behavior: ${[...chain.deletion_behavior, ...chain.destructive_behavior].join(", ")}.`
-                    : "No explicit retention lifecycle is established by the migration chain.",
-        })),
-        classification_evidence: directEvidence.map((source) => ({
-            ...source,
-            claim: sensitive
+                ? `Deletion behavior: ${[...chain.deletion_behavior, ...chain.destructive_behavior].join(", ")}.`
+                : "No explicit retention lifecycle is established by the migration chain.",
+        ),
+        classification_evidence: currentStateEvidence(
+            directEvidence,
+            sensitive
                 ? "Sensitive or credential/session-material field names are present; no values were collected."
                 : "No canonical per-table data classification is established by migration source.",
-        })),
-        retention_and_erasure_evidence: directEvidence.map((source) => ({
-            ...source,
-            claim:
-                chain.deletion_behavior.length > 0
-                    ? `Foreign-key deletion behavior includes ${chain.deletion_behavior.join(", ")}; retention and legal hold remain undocumented.`
-                    : "Retention, erasure, and legal-hold behavior are not established by migration source.",
-        })),
-        audit_evidence: directEvidence.map((source) => ({
-            ...source,
-            claim:
-                table === "platform_audit_logs"
-                    ? "This table is the current Audit event store."
-                    : actorState === "explicit"
-                      ? "Actor-related columns provide partial accountable-change evidence."
-                      : "No table-specific Audit requirement is established by migration source.",
-        })),
+        ),
+        retention_and_erasure_evidence: currentStateEvidence(
+            directEvidence,
+            chain.deletion_behavior.length > 0
+                ? `Foreign-key deletion behavior includes ${chain.deletion_behavior.join(", ")}; retention and legal hold remain undocumented.`
+                : "Retention, erasure, and legal-hold behavior are not established by migration source.",
+        ),
+        audit_evidence: currentStateEvidence(
+            directEvidence,
+            table === "platform_audit_logs"
+                ? "This table is the current Audit event store."
+                : actorState === "explicit"
+                  ? "Actor-related columns provide partial accountable-change evidence."
+                  : "No table-specific Audit requirement is established by migration source.",
+        ),
         contract_path: tableContract ? [tableContract.path] : "missing",
-        compatibility_evidence: [
+        compatibility_evidence: dedupeEvidenceClaims([
             ...(compatibility
                 ? directEvidence.map((source) => ({
                       ...source,
@@ -2448,7 +3233,7 @@ function seedImplementedRecord(
             ...declarationEvidence.filter((source) =>
                 source.path.startsWith("Modules/"),
             ),
-        ],
+        ]),
         known_contradictions: contradictions,
         disposition: compatibility
             ? "compatibility"
@@ -2762,7 +3547,12 @@ function seedBoundaryRecord(boundary, blobs) {
     };
 }
 
-function mergeClassifications({ baseline, raw, existing }) {
+function mergeClassifications({
+    baseline,
+    raw,
+    existing,
+    historicalReviewed = null,
+}) {
     if (existing && existing.baseline?.sha !== baseline) {
         throw new Error(
             `Existing classifications target ${existing.baseline?.sha}; expected ${baseline}.`,
@@ -2770,6 +3560,12 @@ function mergeClassifications({ baseline, raw, existing }) {
     }
     const existingById = new Map(
         (existing?.items ?? []).map((item) => [item._record_id, item]),
+    );
+    const historicalById = new Map(
+        (historicalReviewed?.items ?? []).map((item) => [
+            item._record_id,
+            item,
+        ]),
     );
     const seedIds = new Set(
         raw.material_record_seeds.map((item) => item._record_id),
@@ -2787,27 +3583,28 @@ function mergeClassifications({ baseline, raw, existing }) {
             treatment: "requires_explicit_review",
         }));
     const items = raw.material_record_seeds.map((seed) => {
-        const previous = existingById.get(seed._record_id);
+        let previous = existingById.get(seed._record_id);
         if (!previous) return stripInternalMaterialKind(seed);
+        const historical = historicalById.get(seed._record_id);
         if (
             previous._reviewed !== true &&
-            String(previous._review_note ?? "").startsWith("Generated")
+            historical?._reviewed === true &&
+            !historical._generated_fingerprint
         ) {
-            return stripInternalMaterialKind(seed);
+            previous = historical;
         }
-        const hashesChanged =
-            stableStringify(previous._source_hashes) !==
-            stableStringify(seed._source_hashes);
+        const fingerprintChanged =
+            previous._generated_fingerprint !== seed._generated_fingerprint;
         const preserved = { ...seed };
         for (const field of REQUIRED_FIELDS) preserved[field] = previous[field];
-        preserved._reviewed = hashesChanged
+        preserved._reviewed = fingerprintChanged
             ? false
             : previous._reviewed === true;
-        preserved._review_required = hashesChanged
+        preserved._review_required = fingerprintChanged
             ? true
             : previous._review_required === true;
-        preserved._review_note = hashesChanged
-            ? "Source hashes changed during recollection; reviewed values were preserved but require renewed review."
+        preserved._review_note = fingerprintChanged
+            ? "Generated semantic evidence changed during recollection; reviewed field values were preserved for comparison and require renewed review."
             : previous._review_note;
         return stripInternalMaterialKind(preserved);
     });
@@ -2821,13 +3618,53 @@ function mergeClassifications({ baseline, raw, existing }) {
     };
 }
 
+function withGeneratedFingerprint(item, finalState) {
+    const generatedRequiredFields = Object.fromEntries(
+        REQUIRED_FIELDS.map((field) => [field, item[field]]),
+    );
+    const fingerprintInput = {
+        generator_schema_version: GENERATOR_SCHEMA_VERSION,
+        generated_required_fields: generatedRequiredFields,
+        source_hashes: item._source_hashes,
+        final_state: finalState,
+        contradiction_seeds: item.known_contradictions,
+        ownership_and_scope: {
+            ownership_area: item.ownership_area,
+            owner_key: item.owner_key,
+            capability_key: item.capability_key,
+            module_key: item.module_key,
+            tenant_scope: item.tenant_scope,
+            instance_scope: item.instance_scope,
+            principal_scope: item.principal_scope,
+            resource_scope: item.resource_scope,
+            actor_scope: item.actor_scope,
+            target_tenant_or_instance_scope:
+                item.target_tenant_or_instance_scope,
+        },
+    };
+    return {
+        ...item,
+        _generator_schema_version: GENERATOR_SCHEMA_VERSION,
+        _generated_fingerprint: sha256(
+            Buffer.from(stableStringify(fingerprintInput), "utf8"),
+        ),
+    };
+}
+
 function stripInternalMaterialKind(item) {
     const copy = { ...item };
     delete copy._material_kind;
     return copy;
 }
 
-function summarizeRaw(items, ledger, contracts, declarations, paths) {
+function summarizeRaw(
+    items,
+    ledger,
+    contracts,
+    declarations,
+    ownerDeclarationComparisons,
+    paths,
+) {
     const kinds = countBy(items, (item) => materialKind(item));
     const declarationTables = new Set(
         declarations.map((item) => item.storage_identifier),
@@ -2864,6 +3701,8 @@ function summarizeRaw(items, ledger, contracts, declarations, paths) {
                 (entry) => entry.code === "owned_table_owner_mismatch",
             ),
         ).length,
+        owner_declaration_comparison_status: "explicitly_compared",
+        owner_declaration_comparison_count: ownerDeclarationComparisons.length,
         implemented_unclaimed_count: implemented.filter(
             (item) =>
                 !declarationTables.has(item.storage_identifier) &&
@@ -2970,13 +3809,14 @@ function safeFailure(value) {
     return String(value).replace(/\r?\n/g, " ").slice(0, 500);
 }
 
-function resolvePermissionTables(runtime) {
+function resolvePermissionIdentifiers(runtime) {
     const command = runtime.commands?.find((item) =>
         item.command.includes("config:show permission"),
     );
-    if (!command || command.exit_code !== 0) return {};
+    if (!command || command.exit_code !== 0)
+        return { tables: {}, columns: {}, bindings: {}, conditions: {} };
     const output = command.stdout_summary;
-    const resolved = {};
+    const tables = {};
     for (const key of [
         "permissions",
         "roles",
@@ -2997,12 +3837,44 @@ function resolvePermissionTables(runtime) {
         for (const pattern of patterns) {
             const match = pattern.exec(output);
             if (match) {
-                resolved[key] = match[1];
+                tables[key] = match[1];
                 break;
             }
         }
     }
-    return resolved;
+    const columns = {};
+    for (const key of [
+        "role_pivot_key",
+        "permission_pivot_key",
+        "model_morph_key",
+        "team_foreign_key",
+    ]) {
+        const match = new RegExp(
+            `^\\s*column_names\\s+⇁\\s+${escapeRegex(key)}\\s+\\.+\\s+([^\\s]+)\\s*$`,
+            "im",
+        ).exec(output);
+        if (match && match[1] !== "null") columns[key] = match[1];
+    }
+    const booleanValue = (key) => {
+        const match = new RegExp(
+            `^\\s*${escapeRegex(key)}\\s+\\.+\\s+(true|false)\\s*$`,
+            "im",
+        ).exec(output);
+        return match ? match[1] === "true" : undefined;
+    };
+    const teams = booleanValue("teams");
+    return {
+        tables,
+        columns,
+        bindings: {
+            pivotRole: columns.role_pivot_key ?? "role_id",
+            pivotPermission: columns.permission_pivot_key ?? "permission_id",
+        },
+        conditions: {
+            teams,
+            testing: false,
+        },
+    };
 }
 
 function renderArtifacts(ledger, raw, classifications) {
@@ -3066,6 +3938,31 @@ function renderArtifacts(ledger, raw, classifications) {
         document = replaceMarker(document, marker, replacement);
     }
     writeFileSync(DOCUMENT_PATH, normalizeNewlines(document), "utf8");
+    formatRenderedDocument();
+}
+
+function formatRenderedDocument() {
+    const prettier = resolve("node_modules/prettier/bin/prettier.cjs");
+    if (!existsSync(prettier)) {
+        throw new Error(
+            "Unable to format rendered inventory: Prettier is unavailable.",
+        );
+    }
+    const result = spawnSync(
+        process.execPath,
+        [prettier, "--write", DOCUMENT_PATH],
+        {
+            cwd: process.cwd(),
+            encoding: "utf8",
+            windowsHide: true,
+            timeout: 30_000,
+        },
+    );
+    if (result.error || result.status !== 0) {
+        throw new Error(
+            `Unable to format rendered inventory: ${result.error?.message ?? result.stderr.trim()}`,
+        );
+    }
 }
 
 function renderMethod(raw) {
@@ -3143,6 +4040,10 @@ function renderSummary(ledger, raw, classifications) {
             ).length,
         ],
         ["Missing table contracts", raw.summary.missing_contract_count],
+        [
+            "Owner declarations explicitly compared",
+            raw.summary.owner_declaration_comparison_count,
+        ],
         ["Owner mismatches", raw.summary.owner_mismatch_count],
     ];
     return renderKeyValueTable(rows);
@@ -3356,7 +4257,7 @@ async function runFixtureMode(fixtureRoot) {
                 parsed: parseMigration(
                     normalizeNewlines(source.source),
                     normalizePath(source.path),
-                    fixture.dynamic_tables ?? {},
+                    fixture.dynamic_identifiers ?? fixture.dynamic_tables ?? {},
                 ),
                 sha256: sha256(Buffer.from(normalizeNewlines(source.source))),
             }));
@@ -3408,6 +4309,18 @@ function evaluateFixture(fixture, parsedSources) {
     const upOperations = operations.filter(
         (operation) => operation.direction === "up",
     );
+    const fixtureLedger = {
+        migrations: parsedSources.map((source) => ({
+            migration_path: source.path,
+            migration_name: basename(source.path, ".php"),
+            up_operations: source.parsed.up,
+            down_operations: source.parsed.down,
+            parse_status: source.parsed.status,
+            parse_notes: source.parsed.notes,
+        })),
+        summary: {},
+    };
+    const fixtureChains = buildMigrationChains(fixtureLedger);
 
     switch (fixture.id) {
         case "multiple-migrations-one-table":
@@ -3565,6 +4478,126 @@ function evaluateFixture(fixture, parsedSources) {
                 "Windows and POSIX spellings normalize identically",
             );
             break;
+        case "implicit-id-primary-key": {
+            const state = fixtureChains.get("implicit_ids")?.final_state;
+            assert(
+                state?.columns.some((column) => column.name === "id") &&
+                    state.primary_keys.some(
+                        (key) =>
+                            key.columns.length === 1 && key.columns[0] === "id",
+                    ),
+                "implicit id resolves to a non-empty id primary key",
+            );
+            break;
+        }
+        case "custom-id-primary-key": {
+            const state = fixtureChains.get("custom_ids")?.final_state;
+            assert(
+                state?.columns.some((column) => column.name === "record_id") &&
+                    state.primary_keys.some((key) =>
+                        key.columns.includes("record_id"),
+                    ),
+                "custom id name is preserved in the primary key",
+            );
+            break;
+        }
+        case "create-add-drop-final-state": {
+            const chain = fixtureChains.get("reduced_records");
+            assert(
+                chain?.operations.length >= 3 &&
+                    !chain.final_state.columns.some(
+                        (column) => column.name === "temporary_value",
+                    ),
+                "history retains create/add/drop while final state omits the dropped column",
+            );
+            break;
+        }
+        case "drop-index-unique-foreign-primary": {
+            const state = fixtureChains.get("constraint_records")?.final_state;
+            assert(
+                state &&
+                    state.primary_keys.length === 0 &&
+                    state.indexes.length === 0 &&
+                    state.unique_constraints.length === 0 &&
+                    state.foreign_keys.length === 0,
+                "explicit drops remove keys, indexes, unique constraints, and foreign keys",
+            );
+            break;
+        }
+        case "rename-column-rewrites-references": {
+            const state = fixtureChains.get("rename_records")?.final_state;
+            assert(
+                state?.columns.some((column) => column.name === "account_id") &&
+                    !state.columns.some(
+                        (column) => column.name === "user_id",
+                    ) &&
+                    [...state.indexes, ...state.foreign_keys].every(
+                        (entry) => !entry.columns.includes("user_id"),
+                    ),
+                "column rename rewrites final-state references",
+            );
+            break;
+        }
+        case "conditional-has-column-operation": {
+            const chain = fixtureChains.get("conditional_records");
+            assert(
+                chain?.final_state.complete === true &&
+                    !chain.final_state.columns.some(
+                        (column) => column.name === "legacy_value",
+                    ) &&
+                    fixtureLedger.migrations.every(
+                        (migration) => migration.parse_status === "complete",
+                    ),
+                "hasColumn guard resolves from ordered final-state reduction",
+            );
+            break;
+        }
+        case "permission-dynamic-column-identifiers": {
+            const state = fixtureChains.get(
+                "model_has_permissions",
+            )?.final_state;
+            assert(
+                state?.columns.some(
+                    (column) => column.name === "permission_id",
+                ) &&
+                    state.columns.some(
+                        (column) => column.name === "model_id",
+                    ) &&
+                    state.primary_keys.some((key) =>
+                        ["permission_id", "model_id", "model_type"].every(
+                            (column) => key.columns.includes(column),
+                        ),
+                    ),
+                "permission table, column, and local pivot bindings resolve",
+            );
+            break;
+        }
+        case "canonical-key-grammar":
+            assert(
+                fixture.keys
+                    .map(canonicalKey)
+                    .every((key) => CANONICAL_KEY_PATTERN.test(key)),
+                "owner, capability, and module keys normalize to ADR-0007 grammar",
+            );
+            break;
+        case "generated-fingerprint-invalidates-review": {
+            const previous = fixture.previous;
+            const seed = fixture.seed;
+            const changed =
+                previous._generated_fingerprint !== seed._generated_fingerprint;
+            assert(
+                changed && previous._reviewed === true,
+                "changed generated fingerprint is detectable for review invalidation",
+            );
+            break;
+        }
+        case "final-state-evidence-deduplication":
+            assert(
+                currentStateEvidence(fixture.sources_for_claim, "same claim")
+                    .length === 1,
+                "one synthesized final-state evidence claim is emitted",
+            );
+            break;
         default:
             assert(false, `unknown fixture family ${fixture.id}`);
     }
@@ -3595,7 +4628,7 @@ function baselineMetadata(context) {
 function generatorMetadata(generatedAt) {
     return {
         path: GENERATOR_PATH,
-        schema_version: 1,
+        schema_version: GENERATOR_SCHEMA_VERSION,
         node_version: process.version,
         generated_at: generatedAt,
         deterministic_ordering:
@@ -3627,8 +4660,27 @@ function evidenceType(path) {
 function scope(state, sources, claim) {
     return {
         state,
-        evidence: sources.slice(0, 4).map((source) => ({ ...source, claim })),
+        evidence: sources.slice(0, 1).map((source) => ({ ...source, claim })),
     };
+}
+
+function currentStateEvidence(sources, claim) {
+    const source = sources.at(-1) ?? sources[0];
+    return source ? [{ ...source, claim }] : [];
+}
+
+function dedupeEvidenceClaims(values) {
+    return dedupeBy(values, (value) => value.claim);
+}
+
+function canonicalKey(value) {
+    if (["unknown", "not_applicable"].includes(value)) return value;
+    const normalized = String(value ?? "unknown")
+        .replace(/([a-z0-9])([A-Z])/g, "$1_$2")
+        .replace(/[^A-Za-z0-9]+/g, "_")
+        .replace(/^_+|_+$/g, "")
+        .toLowerCase();
+    return CANONICAL_KEY_PATTERN.test(normalized) ? normalized : "unknown";
 }
 
 function contradiction(code, explanation, source) {
@@ -3924,6 +4976,17 @@ function readJson(path) {
 
 function readJsonIfExists(path) {
     return existsSync(path) ? readJson(path) : null;
+}
+
+function readJsonFromHead(path) {
+    const result = spawnSync("git", ["show", `HEAD:${normalizePath(path)}`], {
+        cwd: process.cwd(),
+        encoding: "utf8",
+        windowsHide: true,
+        maxBuffer: 32 * 1024 * 1024,
+    });
+    if (result.error || result.status !== 0) return null;
+    return JSON.parse(result.stdout);
 }
 
 function writeJson(path, value) {

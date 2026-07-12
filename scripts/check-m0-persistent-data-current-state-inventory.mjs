@@ -3,8 +3,9 @@
  */
 
 import { createHash } from "node:crypto";
-import { existsSync, readFileSync } from "node:fs";
-import { basename, resolve } from "node:path";
+import { cpSync, existsSync, mkdtempSync, readFileSync, rmSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { basename, join, resolve } from "node:path";
 import { spawnSync } from "node:child_process";
 
 const DEFAULT_BASELINE = "1d103f5fa47aab8c8adfba8ea134dd29540426fe";
@@ -33,6 +34,13 @@ const REQUIRED_OPERATION_FIELDS = [
     "indexes",
     "unique_constraints",
     "foreign_keys",
+    "dropped_columns",
+    "dropped_primary_keys",
+    "dropped_indexes",
+    "dropped_unique_constraints",
+    "dropped_foreign_keys",
+    "renamed_columns",
+    "conditions",
     "deletion_behavior",
     "destructive_behavior",
     "raw_expression_summary",
@@ -54,6 +62,19 @@ const EVIDENCE_FIELDS = [
     "retention_and_erasure_evidence",
     "audit_evidence",
     "compatibility_evidence",
+];
+const CANONICAL_KEY_PATTERN = /^[a-z][a-z0-9_]*$/;
+const CORRECTIVE_FIXTURES = [
+    "implicit-id-primary-key",
+    "custom-id-primary-key",
+    "create-add-drop-final-state",
+    "drop-index-unique-foreign-primary",
+    "rename-column-rewrites-references",
+    "conditional-has-column-operation",
+    "permission-dynamic-column-identifiers",
+    "canonical-key-grammar",
+    "generated-fingerprint-invalidates-review",
+    "final-state-evidence-deduplication",
 ];
 
 const args = parseArguments(process.argv.slice(2));
@@ -88,7 +109,10 @@ validateRendering();
 validateRuntimePreservation();
 validateSecurityBoundaries();
 
-if (args.fixtures) validateFixtures();
+if (args.fixtures) {
+    validateFixtures();
+    validateSourceArtifactCoherence();
+}
 
 finish();
 
@@ -253,6 +277,51 @@ function validateLedger() {
                     `${migration.migration_path} omits unsupported-operation status.`,
                 );
             }
+            for (const column of operation.columns ?? []) {
+                if (
+                    ["id", "increments", "bigIncrements"].includes(
+                        column.type,
+                    ) &&
+                    (!column.name || String(column.name).trim() === "")
+                ) {
+                    failures.push(
+                        `${migration.migration_path} has an empty implicit primary-key column.`,
+                    );
+                }
+            }
+            for (const key of operation.primary_keys ?? []) {
+                if (
+                    !Array.isArray(key.columns) ||
+                    key.columns.some(
+                        (column) =>
+                            column === null || String(column).trim() === "",
+                    )
+                ) {
+                    failures.push(
+                        `${migration.migration_path} has an empty primary-key column.`,
+                    );
+                }
+            }
+            if (
+                migration.parse_status === "complete" &&
+                operation.conditions.some((condition) =>
+                    ["unresolved", "deferred_final_state"].includes(
+                        condition.resolution,
+                    ),
+                )
+            ) {
+                failures.push(
+                    `${migration.migration_path} is complete with an unresolved condition.`,
+                );
+            }
+            if (
+                migration.parse_status === "complete" &&
+                operationContainsUnresolvedIdentifier(operation)
+            ) {
+                failures.push(
+                    `${migration.migration_path} is complete with an unresolved identifier expression.`,
+                );
+            }
         }
         const entry = treeByPath.get(migration.migration_path);
         if (!entry) continue;
@@ -292,6 +361,97 @@ function validateLedger() {
         failures.push("Up-operation summary mismatch.");
     if (summaryDown !== ledger.summary.down_operation_count)
         failures.push("Down-operation summary mismatch.");
+
+    validateFinalStates();
+}
+
+function operationContainsUnresolvedIdentifier(operation) {
+    const values = [
+        operation.storage_identifier,
+        ...(operation.columns ?? []).map((entry) => entry.name),
+        ...(operation.primary_keys ?? []).flatMap((entry) => entry.columns),
+        ...(operation.indexes ?? []).flatMap((entry) => entry.columns),
+        ...(operation.unique_constraints ?? []).flatMap(
+            (entry) => entry.columns,
+        ),
+        ...(operation.foreign_keys ?? []).flatMap((entry) => [
+            ...entry.columns,
+            entry.on,
+            entry.references,
+        ]),
+    ];
+    return values.some(
+        (value) =>
+            value === null ||
+            value === "" ||
+            /^\$|\bconfig\s*\(/.test(String(value)),
+    );
+}
+
+function validateFinalStates() {
+    for (const chain of raw.migration_chains ?? []) {
+        const state = chain.final_state;
+        if (!state || typeof state !== "object") {
+            failures.push(`${chain.storage_identifier} lacks final_state.`);
+            continue;
+        }
+        const columnNames = new Set(
+            (state.columns ?? []).map((column) => column.name),
+        );
+        if (
+            (state.columns ?? []).some((column) => column.type === "dropColumn")
+        )
+            failures.push(
+                `${chain.storage_identifier} retains dropColumn as a final-state type.`,
+            );
+        const lastColumnEvent = new Map();
+        let eventSequence = 0;
+        for (const migration of ledger.migrations) {
+            for (const operation of migration.up_operations) {
+                if (operation.storage_identifier !== chain.storage_identifier)
+                    continue;
+                for (const column of operation.columns ?? [])
+                    lastColumnEvent.set(column.name, {
+                        type: "add",
+                        sequence: eventSequence++,
+                    });
+                for (const rename of operation.renamed_columns ?? []) {
+                    lastColumnEvent.set(rename.from, {
+                        type: "drop",
+                        sequence: eventSequence++,
+                    });
+                    lastColumnEvent.set(rename.to, {
+                        type: "add",
+                        sequence: eventSequence++,
+                    });
+                }
+                for (const dropped of operation.dropped_columns ?? [])
+                    lastColumnEvent.set(dropped.name, {
+                        type: "drop",
+                        sequence: eventSequence++,
+                    });
+            }
+        }
+        for (const [column, event] of lastColumnEvent)
+            if (event.type === "drop" && columnNames.has(column))
+                failures.push(
+                    `${chain.storage_identifier} retains later-dropped column ${column}.`,
+                );
+        for (const [kind, entries] of [
+            ["primary key", state.primary_keys ?? []],
+            ["index", state.indexes ?? []],
+            ["unique constraint", state.unique_constraints ?? []],
+            ["foreign key", state.foreign_keys ?? []],
+        ]) {
+            for (const entry of entries) {
+                for (const column of entry.columns ?? [])
+                    if (!columnNames.has(column))
+                        failures.push(
+                            `${chain.storage_identifier} final-state ${kind} references missing column ${column}.`,
+                        );
+            }
+        }
+    }
 }
 
 function validateMaterialRecords() {
@@ -299,6 +459,36 @@ function validateMaterialRecords() {
         failures.push("Missing required_fields schema.");
     if (!Array.isArray(classifications.items))
         failures.push("Missing classification items.");
+    if (
+        raw.summary?.owner_declaration_comparison_status !==
+        "explicitly_compared"
+    ) {
+        failures.push("Ownership declarations were not explicitly compared.");
+    }
+    if (
+        raw.summary?.owner_declaration_comparison_count !==
+        (raw.ownership_declaration_comparisons ?? []).length
+    ) {
+        failures.push(
+            "Ownership-declaration comparison count is inconsistent.",
+        );
+    }
+    const reportedMismatches = classifications.items.filter((item) =>
+        item.known_contradictions.some(
+            (entry) => entry.code === "owned_table_owner_mismatch",
+        ),
+    ).length;
+    const comparedMismatches = (
+        raw.ownership_declaration_comparisons ?? []
+    ).filter((entry) => entry.compatible === false).length;
+    if (
+        reportedMismatches !== comparedMismatches ||
+        raw.summary?.owner_mismatch_count !== reportedMismatches
+    ) {
+        failures.push(
+            "Ownership-declaration mismatch reporting is inconsistent.",
+        );
+    }
     const storageIdentifiers = classifications.items.map(
         (item) => item.storage_identifier,
     );
@@ -315,6 +505,9 @@ function validateMaterialRecords() {
         );
     const seedIds = new Set(
         raw.material_record_seeds.map((item) => item._record_id),
+    );
+    const seedsById = new Map(
+        raw.material_record_seeds.map((item) => [item._record_id, item]),
     );
     for (const recordId of recordIds)
         if (!seedIds.has(recordId))
@@ -370,6 +563,29 @@ function validateMaterialRecords() {
 
     const evidencePaths = new Set();
     for (const item of classifications.items) {
+        for (const field of ["owner_key", "capability_key", "module_key"]) {
+            if (!CANONICAL_KEY_PATTERN.test(String(item[field] ?? "")))
+                failures.push(
+                    `${item._record_id} has non-canonical ${field}: ${item[field]}.`,
+                );
+        }
+        const seed = seedsById.get(item._record_id);
+        if (
+            !item._generated_fingerprint ||
+            item._generator_schema_version !== raw.generator?.schema_version
+        ) {
+            failures.push(
+                `${item._record_id} lacks current generated-fingerprint metadata.`,
+            );
+        }
+        if (
+            seed?._generated_fingerprint !== item._generated_fingerprint &&
+            item._reviewed === true
+        ) {
+            failures.push(
+                `${item._record_id} is reviewed with a stale generated fingerprint.`,
+            );
+        }
         for (const path of Object.keys(item._source_hashes ?? {}))
             evidencePaths.add(path);
         for (const field of classifications.required_fields) {
@@ -409,8 +625,16 @@ function validateMaterialRecords() {
                 evidencePaths,
             );
         }
-        for (const field of EVIDENCE_FIELDS)
+        for (const field of EVIDENCE_FIELDS) {
             collectEvidence(item[field], item, field, evidencePaths);
+            const claims = (item[field] ?? [])
+                .map((entry) => entry?.claim)
+                .filter(Boolean);
+            if (new Set(claims).size !== claims.length)
+                failures.push(
+                    `${item._record_id} repeats identical evidence claims in ${field}.`,
+                );
+        }
         if (!Array.isArray(item.known_contradictions)) {
             failures.push(
                 `${item._record_id} known_contradictions is not an array.`,
@@ -610,6 +834,7 @@ function validateFixtures() {
         "runtime-discovery-failure-preservation",
         "same-basename-different-paths",
         "windows-and-posix-path-normalization",
+        ...CORRECTIVE_FIXTURES,
     ];
     compareLists(
         expectedFamilies,
@@ -630,11 +855,86 @@ function validateFixtures() {
         failures.push(
             `Fixture execution failed: ${result.error?.message ?? result.stderr.trim()}`,
         );
-    } else if (!result.stdout.includes("Fixture families passed: 14/14")) {
+    } else if (!result.stdout.includes("Fixture families passed: 24/24")) {
         failures.push(
             `Fixture execution returned an unexpected summary: ${result.stdout.trim()}`,
         );
     }
+}
+
+function validateSourceArtifactCoherence() {
+    const temp = mkdtempSync(join(tmpdir(), "login-v2-inventory-coherence-"));
+    try {
+        const clone = join(temp, "repo");
+        const cloneResult = spawnSync(
+            "git",
+            ["clone", "--shared", "--quiet", root, clone],
+            { encoding: "utf8", windowsHide: true, timeout: 60_000 },
+        );
+        if (cloneResult.error || cloneResult.status !== 0) {
+            failures.push(
+                `Source-artifact coherence clone failed: ${cloneResult.error?.message ?? cloneResult.stderr.trim()}`,
+            );
+            return;
+        }
+        for (const path of [
+            GENERATOR_PATH,
+            LEDGER_PATH,
+            RAW_PATH,
+            CLASSIFICATIONS_PATH,
+        ]) {
+            cpSync(resolve(root, path), resolve(clone, path));
+        }
+        const result = spawnSync(
+            process.execPath,
+            [
+                GENERATOR_PATH,
+                "--baseline",
+                baseline,
+                "--collect-only",
+                "--static-only",
+            ],
+            {
+                cwd: clone,
+                encoding: "utf8",
+                windowsHide: true,
+                timeout: 120_000,
+                maxBuffer: 16 * 1024 * 1024,
+            },
+        );
+        if (result.error || result.status !== 0) {
+            failures.push(
+                `Source-artifact coherence collection failed: ${result.error?.message ?? result.stderr.trim()}`,
+            );
+            return;
+        }
+        for (const path of [LEDGER_PATH, RAW_PATH, CLASSIFICATIONS_PATH]) {
+            const expected = semanticHash(readJson(resolve(root, path)));
+            const regenerated = semanticHash(readJson(resolve(clone, path)));
+            if (expected !== regenerated)
+                failures.push(
+                    `Source-artifact coherence mismatch for ${path}.`,
+                );
+        }
+    } finally {
+        rmSync(temp, { recursive: true, force: true });
+    }
+}
+
+function semanticHash(value) {
+    const normalize = (input) => {
+        if (Array.isArray(input)) return input.map(normalize);
+        if (!input || typeof input !== "object") return input;
+        return Object.fromEntries(
+            Object.entries(input)
+                .filter(([key]) => key !== "generated_at")
+                .sort(([left], [right]) => left.localeCompare(right))
+                .map(([key, child]) => [key, normalize(child)]),
+        );
+    };
+    return createHash("sha256")
+        .update(JSON.stringify(normalize(value)))
+        .digest("hex");
 }
 
 function readTree(commit) {
@@ -753,5 +1053,5 @@ function finish() {
     console.log(
         `Reviewed records: ${classifications.items.filter((item) => item._reviewed).length}`,
     );
-    if (args.fixtures) console.log("Fixture families: 14/14");
+    if (args.fixtures) console.log("Fixture families: 24/24");
 }

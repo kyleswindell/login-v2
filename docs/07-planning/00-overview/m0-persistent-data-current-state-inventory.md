@@ -29,7 +29,7 @@ It does not select the Goal 06 target data model, change schema, execute migrati
 
 - Inventory evidence baseline: `1d103f5fa47aab8c8adfba8ea134dd29540426fe`
 - Baseline committed at: 2026-07-10T22:27:59-04:00
-- Implementation branch base: `0ead8c7b1e0e6ba447a5da6376ff27884daabcc7`
+- Implementation branch base: `c002cf1f862f3e232623792e55e360a8378edeb8`
 - Accepted main at package preparation: `bb76558adfe1bc9927bd2b34057dd82ee9a4d253`
 - Generated at: 2026-07-11T18:21:48.746Z
 - Evidence records source-controlled implementation at the pinned baseline; they do not assert deployed migration state.
@@ -57,7 +57,7 @@ Current implementation evidence is interpreted in migration/source, registration
 - Render-only mode reads the ledger, raw evidence, and reviewed classifications without Git, PHP, Laravel, or source scans.
 - Issue #29 evidence is baseline-checked and used only as supporting context.
 
-- `php artisan migrate:status --no-interaction --no-ansi`: spawnSync php ETIMEDOUT (timed out)
+- `php artisan migrate:status --no-interaction --no-ansi`: Command exited with status 1.
 - `php artisan config:show permission --no-ansi`: succeeded
 
 <!-- PERSISTENT-DATA-INVENTORY:METHOD:END -->
@@ -79,28 +79,29 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 <!-- PERSISTENT-DATA-INVENTORY:SUMMARY:START -->
 
-| Measure                       | Count |
-| ----------------------------- | ----: |
-| Migration roots               |     9 |
-| Registered roots present      |     1 |
-| Registered roots missing      |     8 |
-| Migrations                    |    22 |
-| Fully parsed migrations       |    22 |
-| Partial or dynamic migrations |     0 |
-| Up operations                 |    39 |
-| Down operations               |    39 |
-| Implemented tables            |    27 |
-| Compatibility tables          |     5 |
-| Material pivots               |     3 |
-| Planned concepts              |    55 |
-| Boundaries                    |    16 |
-| Material records              |   103 |
-| Reviewed records              |   103 |
-| Pending review                |     0 |
-| Contradiction-bearing records |    88 |
-| Investigate records           |    83 |
-| Missing table contracts       |    75 |
-| Owner mismatches              |     0 |
+| Measure                                | Count |
+| -------------------------------------- | ----: |
+| Migration roots                        |     9 |
+| Registered roots present               |     1 |
+| Registered roots missing               |     8 |
+| Migrations                             |    22 |
+| Fully parsed migrations                |    22 |
+| Partial or dynamic migrations          |     0 |
+| Up operations                          |    39 |
+| Down operations                        |    39 |
+| Implemented tables                     |    27 |
+| Compatibility tables                   |     5 |
+| Material pivots                        |     3 |
+| Planned concepts                       |    55 |
+| Boundaries                             |    16 |
+| Material records                       |   103 |
+| Reviewed records                       |   103 |
+| Pending review                         |     0 |
+| Contradiction-bearing records          |    88 |
+| Investigate records                    |    83 |
+| Missing table contracts                |    75 |
+| Owner declarations explicitly compared |    21 |
+| Owner mismatches                       |     0 |
 
 <!-- PERSISTENT-DATA-INVENTORY:SUMMARY:END -->
 
@@ -159,11 +160,11 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `implemented` / `investigate`
-- Ownership: `not_applicable`; owner `infrastructure`; capability `Infrastructure`; Module `not_applicable`
+- Ownership: `not_applicable`; owner `infrastructure`; capability `infrastructure`; Module `not_applicable`
 - Scope: Tenant `not_applicable`; Instance `not_applicable`; Principal `not_applicable`; resource `not_applicable`; Actor `not_applicable`; target Tenant/Instance `not_applicable`
 - Sources: `database/migrations/0001_01_01_000001_create_cache_table.php:11`
-- Keys and relationships: cache columns: key, value, expiration. Database foreign keys: none.
-- Uniqueness and indexes: Primary keys: key. Unique constraints: none recorded. Indexes: expiration.
+- Keys and relationships: cache final-state columns: expiration, key, value. Database foreign keys: none.
+- Uniqueness and indexes: Final-state primary keys: key. Unique constraints: none recorded. Indexes: expiration.
 - Lifecycle and deletion: No explicit retention lifecycle is established by the migration chain.
 - Classification: No canonical per-table data classification is established by migration source.
 - Retention and erasure: Retention, erasure, and legal-hold behavior are not established by migration source.
@@ -177,11 +178,11 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `implemented` / `investigate`
-- Ownership: `not_applicable`; owner `infrastructure`; capability `Infrastructure`; Module `not_applicable`
+- Ownership: `not_applicable`; owner `infrastructure`; capability `infrastructure`; Module `not_applicable`
 - Scope: Tenant `not_applicable`; Instance `not_applicable`; Principal `not_applicable`; resource `not_applicable`; Actor `not_applicable`; target Tenant/Instance `not_applicable`
 - Sources: `database/migrations/0001_01_01_000001_create_cache_table.php:17`
-- Keys and relationships: cache_locks columns: key, owner, expiration. Database foreign keys: none.
-- Uniqueness and indexes: Primary keys: key. Unique constraints: none recorded. Indexes: expiration.
+- Keys and relationships: cache_locks final-state columns: expiration, key, owner. Database foreign keys: none.
+- Uniqueness and indexes: Final-state primary keys: key. Unique constraints: none recorded. Indexes: expiration.
 - Lifecycle and deletion: No explicit retention lifecycle is established by the migration chain.
 - Classification: No canonical per-table data classification is established by migration source.
 - Retention and erasure: Retention, erasure, and legal-hold behavior are not established by migration source.
@@ -195,11 +196,11 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `implemented` / `retain`
-- Ownership: `core`; owner `monitoring`; capability `Monitoring`; Module `not_applicable`
+- Ownership: `core`; owner `monitoring`; capability `monitoring`; Module `not_applicable`
 - Scope: Tenant `explicit`; Instance `absent`; Principal `explicit`; resource `absent`; Actor `absent`; target Tenant/Instance `absent`
 - Sources: `database/migrations/2026_04_08_000002_create_central_error_logs_table.php:11`
-- Keys and relationships: central_error_logs columns: tenant_key, occurred_at, environment, service_name, severity, request_id, trace_id, span_id, route, method, status_code, message, exception_class, error_code, file_path, line_number, stack_trace, context, fingerprint, handled, release_version, hostname, user_id, ip_address, user_agent, created_at, updated_at. Database foreign keys: user_id -> users.id (set_null).
-- Uniqueness and indexes: Primary keys: none recorded. Unique constraints: none recorded. Indexes: tenant_key; occurred_at; environment; service_name; severity; request_id; trace_id; span_id; route; status_code; exception_class; error_code; fingerprint; handled; release_version; hostname.
+- Keys and relationships: central_error_logs final-state columns: context, created_at, environment, error_code, exception_class, file_path, fingerprint, handled, hostname, id, ip_address, line_number, message, method, occurred_at, release_version, request_id, route, service_name, severity, span_id, stack_trace, status_code, tenant_key, trace_id, updated_at, user_agent, user_id. Database foreign keys: user_id -> users.id (set_null).
+- Uniqueness and indexes: Final-state primary keys: id. Unique constraints: none recorded. Indexes: tenant_key; occurred_at; environment; service_name; severity; request_id; trace_id; span_id; route; status_code; exception_class; error_code; fingerprint; handled; release_version; hostname.
 - Lifecycle and deletion: Deletion behavior: set_null.
 - Classification: No canonical per-table data classification is established by migration source.
 - Retention and erasure: Foreign-key deletion behavior includes set_null; retention and legal hold remain undocumented.
@@ -213,11 +214,11 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `implemented` / `investigate`
-- Ownership: `not_applicable`; owner `infrastructure`; capability `Infrastructure`; Module `not_applicable`
+- Ownership: `not_applicable`; owner `infrastructure`; capability `infrastructure`; Module `not_applicable`
 - Scope: Tenant `not_applicable`; Instance `not_applicable`; Principal `not_applicable`; resource `not_applicable`; Actor `not_applicable`; target Tenant/Instance `not_applicable`
 - Sources: `database/migrations/0001_01_01_000002_create_jobs_table.php:34`
-- Keys and relationships: failed_jobs columns: uuid, connection, queue, payload, exception, failed_at. Database foreign keys: none.
-- Uniqueness and indexes: Primary keys: none recorded. Unique constraints: uuid. Indexes: none recorded.
+- Keys and relationships: failed_jobs final-state columns: connection, exception, failed_at, id, payload, queue, uuid. Database foreign keys: none.
+- Uniqueness and indexes: Final-state primary keys: id. Unique constraints: uuid. Indexes: none recorded.
 - Lifecycle and deletion: No explicit retention lifecycle is established by the migration chain.
 - Classification: Sensitive or credential/session-material field names are present; no values were collected.
 - Retention and erasure: Retention, erasure, and legal-hold behavior are not established by migration source.
@@ -231,11 +232,11 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `implemented` / `investigate`
-- Ownership: `not_applicable`; owner `infrastructure`; capability `Infrastructure`; Module `not_applicable`
+- Ownership: `not_applicable`; owner `infrastructure`; capability `infrastructure`; Module `not_applicable`
 - Scope: Tenant `not_applicable`; Instance `not_applicable`; Principal `not_applicable`; resource `not_applicable`; Actor `not_applicable`; target Tenant/Instance `not_applicable`
 - Sources: `database/migrations/0001_01_01_000002_create_jobs_table.php:21`
-- Keys and relationships: job_batches columns: id, name, total_jobs, pending_jobs, failed_jobs, failed_job_ids, options, cancelled_at, created_at, finished_at. Database foreign keys: none.
-- Uniqueness and indexes: Primary keys: id. Unique constraints: none recorded. Indexes: none recorded.
+- Keys and relationships: job_batches final-state columns: cancelled_at, created_at, failed_job_ids, failed_jobs, finished_at, id, name, options, pending_jobs, total_jobs. Database foreign keys: none.
+- Uniqueness and indexes: Final-state primary keys: id. Unique constraints: none recorded. Indexes: none recorded.
 - Lifecycle and deletion: No explicit retention lifecycle is established by the migration chain.
 - Classification: No canonical per-table data classification is established by migration source.
 - Retention and erasure: Retention, erasure, and legal-hold behavior are not established by migration source.
@@ -249,11 +250,11 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `implemented` / `investigate`
-- Ownership: `not_applicable`; owner `infrastructure`; capability `Infrastructure`; Module `not_applicable`
+- Ownership: `not_applicable`; owner `infrastructure`; capability `infrastructure`; Module `not_applicable`
 - Scope: Tenant `not_applicable`; Instance `not_applicable`; Principal `not_applicable`; resource `not_applicable`; Actor `not_applicable`; target Tenant/Instance `not_applicable`
 - Sources: `database/migrations/0001_01_01_000002_create_jobs_table.php:11`
-- Keys and relationships: jobs columns: queue, payload, attempts, reserved_at, available_at, created_at. Database foreign keys: none.
-- Uniqueness and indexes: Primary keys: none recorded. Unique constraints: none recorded. Indexes: queue.
+- Keys and relationships: jobs final-state columns: attempts, available_at, created_at, id, payload, queue, reserved_at. Database foreign keys: none.
+- Uniqueness and indexes: Final-state primary keys: id. Unique constraints: none recorded. Indexes: queue.
 - Lifecycle and deletion: No explicit retention lifecycle is established by the migration chain.
 - Classification: Sensitive or credential/session-material field names are present; no values were collected.
 - Retention and erasure: Retention, erasure, and legal-hold behavior are not established by migration source.
@@ -267,11 +268,11 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `implemented` / `investigate`
-- Ownership: `core`; owner `auth`; capability `Auth`; Module `not_applicable`
+- Ownership: `core`; owner `auth`; capability `auth`; Module `not_applicable`
 - Scope: Tenant `absent`; Instance `absent`; Principal `explicit`; resource `absent`; Actor `absent`; target Tenant/Instance `absent`
 - Sources: `database/migrations/2026_07_01_000001_create_mfa_tables.php:41`
-- Keys and relationships: mfa_recovery_codes columns: user_id, code_hash, used_at, created_at, updated_at. Database foreign keys: user_id -> users.id (cascade).
-- Uniqueness and indexes: Primary keys: none recorded. Unique constraints: none recorded. Indexes: user_id+used_at.
+- Keys and relationships: mfa_recovery_codes final-state columns: code_hash, created_at, id, updated_at, used_at, user_id. Database foreign keys: user_id -> users.id (cascade).
+- Uniqueness and indexes: Final-state primary keys: id. Unique constraints: none recorded. Indexes: user_id+used_at.
 - Lifecycle and deletion: Deletion behavior: cascade.
 - Classification: No canonical per-table data classification is established by migration source.
 - Retention and erasure: Foreign-key deletion behavior includes cascade; retention and legal hold remain undocumented.
@@ -285,11 +286,11 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `compatibility` / `compatibility`
-- Ownership: `core`; owner `access`; capability `Access`; Module `not_applicable`
+- Ownership: `core`; owner `access`; capability `access`; Module `not_applicable`
 - Scope: Tenant `absent`; Instance `absent`; Principal `absent`; resource `explicit`; Actor `absent`; target Tenant/Instance `absent`
 - Sources: `database/migrations/2026_04_09_000001_create_permission_tables.php:50`
-- Keys and relationships: model_has_permissions columns: model_type. Database foreign keys: $pivotPermission -> $tableNames['permissions'].id (cascade).
-- Uniqueness and indexes: Primary keys: $columnNames['team_foreign_key']+$pivotPermission+$columnNames['model_morph_key']+model_type; $pivotPermission+$columnNames['model_morph_key']+model_type. Unique constraints: none recorded. Indexes: $columnNames['model_morph_key']+model_type; $columnNames['team_foreign_key'].
+- Keys and relationships: model_has_permissions final-state columns: model_id, model_type, permission_id. Database foreign keys: permission_id -> permissions.id (cascade).
+- Uniqueness and indexes: Final-state primary keys: permission_id+model_id+model_type. Unique constraints: none recorded. Indexes: model_id+model_type.
 - Lifecycle and deletion: Deletion behavior: cascade.
 - Classification: No canonical per-table data classification is established by migration source.
 - Retention and erasure: Foreign-key deletion behavior includes cascade; retention and legal hold remain undocumented.
@@ -303,11 +304,11 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `compatibility` / `compatibility`
-- Ownership: `core`; owner `access`; capability `Access`; Module `not_applicable`
+- Ownership: `core`; owner `access`; capability `access`; Module `not_applicable`
 - Scope: Tenant `absent`; Instance `absent`; Principal `absent`; resource `explicit`; Actor `absent`; target Tenant/Instance `absent`
 - Sources: `database/migrations/2026_04_09_000001_create_permission_tables.php:79`
-- Keys and relationships: model_has_roles columns: model_type. Database foreign keys: $pivotRole -> $tableNames['roles'].id (cascade).
-- Uniqueness and indexes: Primary keys: $columnNames['team_foreign_key']+$pivotRole+$columnNames['model_morph_key']+model_type; $pivotRole+$columnNames['model_morph_key']+model_type. Unique constraints: none recorded. Indexes: $columnNames['model_morph_key']+model_type; $columnNames['team_foreign_key'].
+- Keys and relationships: model_has_roles final-state columns: model_id, model_type, role_id. Database foreign keys: role_id -> roles.id (cascade).
+- Uniqueness and indexes: Final-state primary keys: role_id+model_id+model_type. Unique constraints: none recorded. Indexes: model_id+model_type.
 - Lifecycle and deletion: Deletion behavior: cascade.
 - Classification: No canonical per-table data classification is established by migration source.
 - Retention and erasure: Foreign-key deletion behavior includes cascade; retention and legal hold remain undocumented.
@@ -321,11 +322,11 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `implemented` / `investigate`
-- Ownership: `core`; owner `modules`; capability `Modules`; Module `not_applicable`
+- Ownership: `core`; owner `modules`; capability `modules`; Module `not_applicable`
 - Scope: Tenant `absent`; Instance `absent`; Principal `absent`; resource `absent`; Actor `absent`; target Tenant/Instance `absent`
 - Sources: `database/migrations/2026_07_08_000003_create_module_contribution_registry_tables.php:11`
-- Keys and relationships: module_registry_entries columns: key, name, category, default_state, installed_by_default, default_enabled, disableable, tenant_eligible, dependencies_json, is_active, is_stale, source_hash, synced_at, created_at, updated_at. Database foreign keys: none.
-- Uniqueness and indexes: Primary keys: none recorded. Unique constraints: key. Indexes: category; default_state; installed_by_default; default_enabled; disableable; tenant_eligible; is_active; is_stale; synced_at.
+- Keys and relationships: module_registry_entries final-state columns: category, created_at, default_enabled, default_state, dependencies_json, disableable, id, installed_by_default, is_active, is_stale, key, name, source_hash, synced_at, tenant_eligible, updated_at. Database foreign keys: none.
+- Uniqueness and indexes: Final-state primary keys: id. Unique constraints: key. Indexes: category; default_state; installed_by_default; default_enabled; disableable; tenant_eligible; is_active; is_stale; synced_at.
 - Lifecycle and deletion: No explicit retention lifecycle is established by the migration chain.
 - Classification: No canonical per-table data classification is established by migration source.
 - Retention and erasure: Retention, erasure, and legal-hold behavior are not established by migration source.
@@ -339,17 +340,17 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `implemented` / `investigate`
-- Ownership: `core`; owner `notifications`; capability `Notifications`; Module `not_applicable`
+- Ownership: `core`; owner `notifications`; capability `notifications`; Module `not_applicable`
 - Scope: Tenant `absent`; Instance `absent`; Principal `absent`; resource `absent`; Actor `absent`; target Tenant/Instance `absent`
 - Sources: `database/migrations/2026_07_08_000003_create_module_contribution_registry_tables.php:29`
-- Keys and relationships: notification_registry_entries columns: key, module_key, label, description, category, default_severity, audience, action_route, database_enabled, email_eligible, digest_eligible, grouping_key, dedupe_window_seconds, is_active, is_stale, source_hash, synced_at, created_at, updated_at. Database foreign keys: none.
-- Uniqueness and indexes: Primary keys: none recorded. Unique constraints: key. Indexes: module_key; category; default_severity; audience; database_enabled; email_eligible; digest_eligible; grouping_key; is_active; is_stale; synced_at.
+- Keys and relationships: notification_registry_entries final-state columns: action_route, audience, category, created_at, database_enabled, dedupe_window_seconds, default_severity, description, digest_eligible, email_eligible, grouping_key, id, is_active, is_stale, key, label, module_key, source_hash, synced_at, updated_at. Database foreign keys: none.
+- Uniqueness and indexes: Final-state primary keys: id. Unique constraints: key. Indexes: module_key; category; default_severity; audience; database_enabled; email_eligible; digest_eligible; grouping_key; is_active; is_stale; synced_at.
 - Lifecycle and deletion: No explicit retention lifecycle is established by the migration chain.
 - Classification: No canonical per-table data classification is established by migration source.
 - Retention and erasure: Retention, erasure, and legal-hold behavior are not established by migration source.
 - Audit: No table-specific Audit requirement is established by migration source.
 - Contract: `docs/06-database/tables/notification_registry_entries.md`
-- Compatibility: Feature contract references notification_registry_entries. Feature contract references notification_registry_entries.
+- Compatibility: Feature contract references notification_registry_entries.
 - Contradictions: `implemented_table_unclaimed` — notification_registry_entries is created by a registered migration but is absent from ownedTables declarations.
 - Target question: Which Goal 06 owner, scope, contract, lifecycle, and compatibility decisions resolve the recorded notification_registry_entries evidence gaps?
 
@@ -357,15 +358,15 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `implemented` / `retain`
-- Ownership: `core`; owner `notifications`; capability `Notifications`; Module `not_applicable`
+- Ownership: `core`; owner `notifications`; capability `notifications`; Module `not_applicable`
 - Scope: Tenant `absent`; Instance `absent`; Principal `absent`; resource `explicit`; Actor `absent`; target Tenant/Instance `absent`
 - Sources: `database/migrations/2026_04_09_000004_create_notifications_table.php:11`, `database/migrations/2026_07_08_000002_add_type_key_to_notifications_table.php:11`
-- Keys and relationships: notifications columns: uuid, notifiable_type, notifiable_id, module_key, severity, title, body, action_url, read_at, dismissed_at, delivery_channels, metadata, created_at, updated_at, type_key. Database foreign keys: none. notifications columns: uuid, notifiable_type, notifiable_id, module_key, severity, title, body, action_url, read_at, dismissed_at, delivery_channels, metadata, created_at, updated_at, type_key. Database foreign keys: none.
-- Uniqueness and indexes: Primary keys: none recorded. Unique constraints: uuid. Indexes: notifiable_type+notifiable_id; module_key; severity; read_at; dismissed_at; type_key. Primary keys: none recorded. Unique constraints: uuid. Indexes: notifiable_type+notifiable_id; module_key; severity; read_at; dismissed_at; type_key.
-- Lifecycle and deletion: No explicit retention lifecycle is established by the migration chain. No explicit retention lifecycle is established by the migration chain.
-- Classification: No canonical per-table data classification is established by migration source. No canonical per-table data classification is established by migration source.
-- Retention and erasure: Retention, erasure, and legal-hold behavior are not established by migration source. Retention, erasure, and legal-hold behavior are not established by migration source.
-- Audit: No table-specific Audit requirement is established by migration source. No table-specific Audit requirement is established by migration source.
+- Keys and relationships: notifications final-state columns: action_url, body, created_at, delivery_channels, dismissed_at, id, metadata, module_key, notifiable_id, notifiable_type, read_at, severity, title, type_key, updated_at, uuid. Database foreign keys: none.
+- Uniqueness and indexes: Final-state primary keys: id. Unique constraints: uuid. Indexes: notifiable_type+notifiable_id; module_key; severity; read_at; dismissed_at; type_key.
+- Lifecycle and deletion: No explicit retention lifecycle is established by the migration chain.
+- Classification: No canonical per-table data classification is established by migration source.
+- Retention and erasure: Retention, erasure, and legal-hold behavior are not established by migration source.
+- Audit: No table-specific Audit requirement is established by migration source.
 - Contract: `docs/06-database/tables/notifications.md`
 - Compatibility: Feature contract references notifications. notifications is declared by the Core package key notifications; a Modules path is transitional physical placement, not Module ownership.
 - Contradictions: None recorded.
@@ -375,11 +376,11 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `implemented` / `investigate`
-- Ownership: `core`; owner `auth`; capability `Auth`; Module `not_applicable`
+- Ownership: `core`; owner `auth`; capability `auth`; Module `not_applicable`
 - Scope: Tenant `not_applicable`; Instance `not_applicable`; Principal `not_applicable`; resource `not_applicable`; Actor `not_applicable`; target Tenant/Instance `not_applicable`
 - Sources: `database/migrations/0001_01_01_000000_create_users_table.php:21`
-- Keys and relationships: password_reset_tokens columns: email, token, created_at. Database foreign keys: none.
-- Uniqueness and indexes: Primary keys: email. Unique constraints: none recorded. Indexes: none recorded.
+- Keys and relationships: password_reset_tokens final-state columns: created_at, email, token. Database foreign keys: none.
+- Uniqueness and indexes: Final-state primary keys: email. Unique constraints: none recorded. Indexes: none recorded.
 - Lifecycle and deletion: No explicit retention lifecycle is established by the migration chain.
 - Classification: Sensitive or credential/session-material field names are present; no values were collected.
 - Retention and erasure: Retention, erasure, and legal-hold behavior are not established by migration source.
@@ -393,17 +394,17 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `implemented` / `investigate`
-- Ownership: `core`; owner `access`; capability `Access`; Module `not_applicable`
+- Ownership: `core`; owner `access`; capability `access`; Module `not_applicable`
 - Scope: Tenant `absent`; Instance `absent`; Principal `absent`; resource `absent`; Actor `absent`; target Tenant/Instance `absent`
 - Sources: `database/migrations/2026_07_07_000001_create_roles_registry_metadata_tables.php:11`
-- Keys and relationships: permission_registry_entries columns: key, permission_id, module_key, group_key, group_label, action, label, description, is_elevated, is_destructive, is_active, is_stale, source_hash, synced_at, created_at, updated_at. Database foreign keys: permission_id -> permissions.id (set_null).
-- Uniqueness and indexes: Primary keys: none recorded. Unique constraints: key. Indexes: module_key; group_key; action; is_elevated; is_destructive; is_active; is_stale; synced_at.
+- Keys and relationships: permission_registry_entries final-state columns: action, created_at, description, group_key, group_label, id, is_active, is_destructive, is_elevated, is_stale, key, label, module_key, permission_id, source_hash, synced_at, updated_at. Database foreign keys: permission_id -> permissions.id (set_null).
+- Uniqueness and indexes: Final-state primary keys: id. Unique constraints: key. Indexes: module_key; group_key; action; is_elevated; is_destructive; is_active; is_stale; synced_at.
 - Lifecycle and deletion: Deletion behavior: set_null.
 - Classification: No canonical per-table data classification is established by migration source.
 - Retention and erasure: Foreign-key deletion behavior includes set_null; retention and legal hold remain undocumented.
 - Audit: No table-specific Audit requirement is established by migration source.
 - Contract: `missing`
-- Compatibility: Feature contract references permission_registry_entries. Feature contract references permission_registry_entries. permission_registry_entries is declared by the Core package key roles; a Modules path is transitional physical placement, not Module ownership.
+- Compatibility: Feature contract references permission_registry_entries. permission_registry_entries is declared by the Core package key roles; a Modules path is transitional physical placement, not Module ownership.
 - Contradictions: `contract_missing` — No per-table contract exists for permission_registry_entries.
 - Target question: Which Goal 06 owner, scope, contract, lifecycle, and compatibility decisions resolve the recorded permission_registry_entries evidence gaps?
 
@@ -411,11 +412,11 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `compatibility` / `compatibility`
-- Ownership: `core`; owner `access`; capability `Access`; Module `not_applicable`
+- Ownership: `core`; owner `access`; capability `access`; Module `not_applicable`
 - Scope: Tenant `absent`; Instance `absent`; Principal `absent`; resource `absent`; Actor `absent`; target Tenant/Instance `absent`
 - Sources: `database/migrations/2026_04_09_000001_create_permission_tables.php:22`
-- Keys and relationships: permissions columns: name, guard_name, created_at, updated_at. Database foreign keys: none.
-- Uniqueness and indexes: Primary keys: none recorded. Unique constraints: name+guard_name. Indexes: none recorded.
+- Keys and relationships: permissions final-state columns: created_at, guard_name, id, name, updated_at. Database foreign keys: none.
+- Uniqueness and indexes: Final-state primary keys: id. Unique constraints: name+guard_name. Indexes: none recorded.
 - Lifecycle and deletion: No explicit retention lifecycle is established by the migration chain.
 - Classification: No canonical per-table data classification is established by migration source.
 - Retention and erasure: Retention, erasure, and legal-hold behavior are not established by migration source.
@@ -429,11 +430,11 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `implemented` / `investigate`
-- Ownership: `core`; owner `audit`; capability `Audit`; Module `not_applicable`
+- Ownership: `core`; owner `audit`; capability `audit`; Module `not_applicable`
 - Scope: Tenant `absent`; Instance `absent`; Principal `explicit`; resource `explicit`; Actor `explicit`; target Tenant/Instance `absent`
 - Sources: `database/migrations/2026_04_08_000001_create_platform_audit_logs_table.php:11`
-- Keys and relationships: platform_audit_logs columns: occurred_at, event_type, action, actor_user_id, actor_type, actor_id, subject_type, subject_id, result, severity, request_id, trace_id, ip_address, user_agent, route, method, metadata, is_system_event, is_security_event, created_at, updated_at. Database foreign keys: actor_user_id -> users.id (set_null).
-- Uniqueness and indexes: Primary keys: none recorded. Unique constraints: none recorded. Indexes: occurred_at; event_type; action; actor_type; actor_id; subject_type; subject_id; result; severity; request_id; trace_id; route; is_system_event; is_security_event.
+- Keys and relationships: platform_audit_logs final-state columns: action, actor_id, actor_type, actor_user_id, created_at, event_type, id, ip_address, is_security_event, is_system_event, metadata, method, occurred_at, request_id, result, route, severity, subject_id, subject_type, trace_id, updated_at, user_agent. Database foreign keys: actor_user_id -> users.id (set_null).
+- Uniqueness and indexes: Final-state primary keys: id. Unique constraints: none recorded. Indexes: occurred_at; event_type; action; actor_type; actor_id; subject_type; subject_id; result; severity; request_id; trace_id; route; is_system_event; is_security_event.
 - Lifecycle and deletion: Deletion behavior: set_null.
 - Classification: No canonical per-table data classification is established by migration source.
 - Retention and erasure: Foreign-key deletion behavior includes set_null; retention and legal hold remain undocumented.
@@ -447,11 +448,11 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `implemented` / `investigate`
-- Ownership: `core`; owner `preferences`; capability `Preferences`; Module `not_applicable`
+- Ownership: `core`; owner `preferences`; capability `preferences`; Module `not_applicable`
 - Scope: Tenant `absent`; Instance `absent`; Principal `absent`; resource `absent`; Actor `absent`; target Tenant/Instance `absent`
 - Sources: `database/migrations/2026_07_08_000003_create_module_contribution_registry_tables.php:99`
-- Keys and relationships: preference_registry_entries columns: key, module_key, group_key, group_label, label, description, route_name, view_path, icon, access_mode, access_value, active_route_patterns_json, group_sort_order, sort_order, tenant_eligible, storage_scope, storage_table, is_active, is_stale, source_hash, synced_at, created_at, updated_at. Database foreign keys: none.
-- Uniqueness and indexes: Primary keys: none recorded. Unique constraints: key. Indexes: module_key; group_key; route_name; access_mode; access_value; group_sort_order; sort_order; tenant_eligible; storage_scope; storage_table; is_active; is_stale; synced_at.
+- Keys and relationships: preference_registry_entries final-state columns: access_mode, access_value, active_route_patterns_json, created_at, description, group_key, group_label, group_sort_order, icon, id, is_active, is_stale, key, label, module_key, route_name, sort_order, source_hash, storage_scope, storage_table, synced_at, tenant_eligible, updated_at, view_path. Database foreign keys: none.
+- Uniqueness and indexes: Final-state primary keys: id. Unique constraints: key. Indexes: module_key; group_key; route_name; access_mode; access_value; group_sort_order; sort_order; tenant_eligible; storage_scope; storage_table; is_active; is_stale; synced_at.
 - Lifecycle and deletion: No explicit retention lifecycle is established by the migration chain.
 - Classification: No canonical per-table data classification is established by migration source.
 - Retention and erasure: Retention, erasure, and legal-hold behavior are not established by migration source.
@@ -465,11 +466,11 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `compatibility` / `compatibility`
-- Ownership: `core`; owner `access`; capability `Access`; Module `not_applicable`
+- Ownership: `core`; owner `access`; capability `access`; Module `not_applicable`
 - Scope: Tenant `absent`; Instance `absent`; Principal `absent`; resource `absent`; Actor `absent`; target Tenant/Instance `absent`
 - Sources: `database/migrations/2026_04_09_000001_create_permission_tables.php:108`
-- Keys and relationships: role_has_permissions columns: none resolved. Database foreign keys: $pivotPermission -> $tableNames['permissions'].id (cascade); $pivotRole -> $tableNames['roles'].id (cascade).
-- Uniqueness and indexes: Primary keys: $pivotPermission+$pivotRole. Unique constraints: none recorded. Indexes: none recorded.
+- Keys and relationships: role_has_permissions final-state columns: permission_id, role_id. Database foreign keys: permission_id -> permissions.id (cascade); role_id -> roles.id (cascade).
+- Uniqueness and indexes: Final-state primary keys: permission_id+role_id. Unique constraints: none recorded. Indexes: none recorded.
 - Lifecycle and deletion: Deletion behavior: cascade.
 - Classification: No canonical per-table data classification is established by migration source.
 - Retention and erasure: Foreign-key deletion behavior includes cascade; retention and legal hold remain undocumented.
@@ -483,11 +484,11 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `implemented` / `investigate`
-- Ownership: `core`; owner `access`; capability `Access`; Module `not_applicable`
+- Ownership: `core`; owner `access`; capability `access`; Module `not_applicable`
 - Scope: Tenant `absent`; Instance `absent`; Principal `explicit`; resource `absent`; Actor `explicit`; target Tenant/Instance `absent`
 - Sources: `database/migrations/2026_07_07_000001_create_roles_registry_metadata_tables.php:30`
-- Keys and relationships: role_metadata columns: role_id, label, description, is_system, is_default, is_protected, is_deletable, is_assignable, created_by_user_id, updated_by_user_id, created_at, updated_at. Database foreign keys: role_id -> roles.id (cascade); created_by_user_id -> users.id (set_null); updated_by_user_id -> users.id (set_null).
-- Uniqueness and indexes: Primary keys: none recorded. Unique constraints: role_id. Indexes: is_system; is_default; is_protected; is_deletable; is_assignable.
+- Keys and relationships: role_metadata final-state columns: created_at, created_by_user_id, description, id, is_assignable, is_default, is_deletable, is_protected, is_system, label, role_id, updated_at, updated_by_user_id. Database foreign keys: role_id -> roles.id (cascade); created_by_user_id -> users.id (set_null); updated_by_user_id -> users.id (set_null).
+- Uniqueness and indexes: Final-state primary keys: id. Unique constraints: role_id. Indexes: is_system; is_default; is_protected; is_deletable; is_assignable.
 - Lifecycle and deletion: Deletion behavior: cascade, set_null.
 - Classification: No canonical per-table data classification is established by migration source.
 - Retention and erasure: Foreign-key deletion behavior includes cascade, set_null; retention and legal hold remain undocumented.
@@ -501,11 +502,11 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `compatibility` / `compatibility`
-- Ownership: `core`; owner `access`; capability `Access`; Module `not_applicable`
+- Ownership: `core`; owner `access`; capability `access`; Module `not_applicable`
 - Scope: Tenant `absent`; Instance `absent`; Principal `absent`; resource `absent`; Actor `absent`; target Tenant/Instance `absent`
 - Sources: `database/migrations/2026_04_09_000001_create_permission_tables.php:31`
-- Keys and relationships: roles columns: name, guard_name, created_at, updated_at. Database foreign keys: none.
-- Uniqueness and indexes: Primary keys: none recorded. Unique constraints: $columnNames['team_foreign_key']+name+guard_name; name+guard_name. Indexes: $columnNames['team_foreign_key'].
+- Keys and relationships: roles final-state columns: created_at, guard_name, id, name, updated_at. Database foreign keys: none.
+- Uniqueness and indexes: Final-state primary keys: id. Unique constraints: name+guard_name. Indexes: none recorded.
 - Lifecycle and deletion: No explicit retention lifecycle is established by the migration chain.
 - Classification: No canonical per-table data classification is established by migration source.
 - Retention and erasure: Retention, erasure, and legal-hold behavior are not established by migration source.
@@ -519,11 +520,11 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `implemented` / `investigate`
-- Ownership: `core`; owner `security`; capability `Security`; Module `not_applicable`
+- Ownership: `core`; owner `security`; capability `security`; Module `not_applicable`
 - Scope: Tenant `absent`; Instance `absent`; Principal `absent`; resource `absent`; Actor `absent`; target Tenant/Instance `absent`
 - Sources: `database/migrations/2026_07_01_000003_create_security_requirements_tables.php:11`
-- Keys and relationships: security_requirement_groups columns: slug, title, summary, asvs_family, risk_level, sort_order, created_at, updated_at. Database foreign keys: none.
-- Uniqueness and indexes: Primary keys: none recorded. Unique constraints: slug. Indexes: asvs_family; risk_level; sort_order.
+- Keys and relationships: security_requirement_groups final-state columns: asvs_family, created_at, id, risk_level, slug, sort_order, summary, title, updated_at. Database foreign keys: none.
+- Uniqueness and indexes: Final-state primary keys: id. Unique constraints: slug. Indexes: asvs_family; risk_level; sort_order.
 - Lifecycle and deletion: No explicit retention lifecycle is established by the migration chain.
 - Classification: No canonical per-table data classification is established by migration source.
 - Retention and erasure: Retention, erasure, and legal-hold behavior are not established by migration source.
@@ -537,11 +538,11 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `implemented` / `investigate`
-- Ownership: `core`; owner `security`; capability `Security`; Module `not_applicable`
+- Ownership: `core`; owner `security`; capability `security`; Module `not_applicable`
 - Scope: Tenant `absent`; Instance `absent`; Principal `explicit`; resource `absent`; Actor `explicit`; target Tenant/Instance `absent`
 - Sources: `database/migrations/2026_07_01_000003_create_security_requirements_tables.php:22`
-- Keys and relationships: security_requirements columns: group_id, slug, title, summary, asvs_refs, canonical_docs, alignment_status, work_status, priority, owner_user_id, target_phase, evidence_links, notes, last_reviewed_at, last_reviewed_by, created_at, updated_at. Database foreign keys: group_id -> security_requirement_groups.id (cascade); owner_user_id -> users.id (set_null); last_reviewed_by -> users.id (set_null).
-- Uniqueness and indexes: Primary keys: none recorded. Unique constraints: slug. Indexes: alignment_status; work_status; priority; target_phase; group_id+alignment_status; group_id+work_status.
+- Keys and relationships: security_requirements final-state columns: alignment_status, asvs_refs, canonical_docs, created_at, evidence_links, group_id, id, last_reviewed_at, last_reviewed_by, notes, owner_user_id, priority, slug, summary, target_phase, title, updated_at, work_status. Database foreign keys: group_id -> security_requirement_groups.id (cascade); owner_user_id -> users.id (set_null); last_reviewed_by -> users.id (set_null).
+- Uniqueness and indexes: Final-state primary keys: id. Unique constraints: slug. Indexes: alignment_status; work_status; priority; target_phase; group_id+alignment_status; group_id+work_status.
 - Lifecycle and deletion: Deletion behavior: cascade, set_null.
 - Classification: No canonical per-table data classification is established by migration source.
 - Retention and erasure: Foreign-key deletion behavior includes cascade, set_null; retention and legal hold remain undocumented.
@@ -555,11 +556,11 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `implemented` / `investigate`
-- Ownership: `core`; owner `auth`; capability `Auth`; Module `not_applicable`
+- Ownership: `core`; owner `auth`; capability `auth`; Module `not_applicable`
 - Scope: Tenant `absent`; Instance `absent`; Principal `explicit`; resource `absent`; Actor `absent`; target Tenant/Instance `absent`
 - Sources: `database/migrations/0001_01_01_000000_create_users_table.php:27`
-- Keys and relationships: sessions columns: id, user_id, ip_address, user_agent, payload, last_activity. Database foreign keys: none.
-- Uniqueness and indexes: Primary keys: id. Unique constraints: none recorded. Indexes: user_id; last_activity.
+- Keys and relationships: sessions final-state columns: id, ip_address, last_activity, payload, user_agent, user_id. Database foreign keys: none.
+- Uniqueness and indexes: Final-state primary keys: id. Unique constraints: none recorded. Indexes: user_id; last_activity.
 - Lifecycle and deletion: No explicit retention lifecycle is established by the migration chain.
 - Classification: Sensitive or credential/session-material field names are present; no values were collected.
 - Retention and erasure: Retention, erasure, and legal-hold behavior are not established by migration source.
@@ -573,17 +574,17 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `implemented` / `retain`
-- Ownership: `core`; owner `settings`; capability `Settings`; Module `not_applicable`
+- Ownership: `core`; owner `settings`; capability `settings`; Module `not_applicable`
 - Scope: Tenant `absent`; Instance `absent`; Principal `absent`; resource `absent`; Actor `explicit`; target Tenant/Instance `absent`
 - Sources: `database/migrations/2026_04_09_000003_create_settings_table.php:11`
-- Keys and relationships: settings columns: scope_type, scope_id, module_key, group_key, key, value_jsonb, data_type, is_encrypted, is_public, updated_by, created_at, updated_at. Database foreign keys: updated_by -> users.id (set_null).
-- Uniqueness and indexes: Primary keys: none recorded. Unique constraints: scope_type+scope_id+module_key+group_key+key. Indexes: scope_type; scope_id; module_key; group_key; data_type; is_encrypted; is_public.
+- Keys and relationships: settings final-state columns: created_at, data_type, group_key, id, is_encrypted, is_public, key, module_key, scope_id, scope_type, updated_at, updated_by, value_jsonb. Database foreign keys: updated_by -> users.id (set_null).
+- Uniqueness and indexes: Final-state primary keys: id. Unique constraints: scope_type+scope_id+module_key+group_key+key. Indexes: scope_type; scope_id; module_key; group_key; data_type; is_encrypted; is_public.
 - Lifecycle and deletion: Deletion behavior: set_null.
 - Classification: No canonical per-table data classification is established by migration source.
 - Retention and erasure: Foreign-key deletion behavior includes set_null; retention and legal hold remain undocumented.
 - Audit: Actor-related columns provide partial accountable-change evidence.
 - Contract: `docs/06-database/tables/settings.md`
-- Compatibility: Feature contract references settings. Feature contract references settings. settings is declared by the Core package key settings; a Modules path is transitional physical placement, not Module ownership.
+- Compatibility: Feature contract references settings. settings is declared by the Core package key settings; a Modules path is transitional physical placement, not Module ownership.
 - Contradictions: None recorded.
 - Target question: No target change is selected by this inventory.
 
@@ -591,17 +592,17 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `implemented` / `investigate`
-- Ownership: `core`; owner `settings`; capability `Settings`; Module `not_applicable`
+- Ownership: `core`; owner `settings`; capability `settings`; Module `not_applicable`
 - Scope: Tenant `absent`; Instance `absent`; Principal `absent`; resource `absent`; Actor `absent`; target Tenant/Instance `absent`
 - Sources: `database/migrations/2026_07_08_000003_create_module_contribution_registry_tables.php:51`
-- Keys and relationships: settings_registry_entries columns: key, module_key, group_key, group_label, label, description, route_name, view_path, icon, access_mode, access_value, active_route_patterns_json, group_sort_order, sort_order, tenant_eligible, is_active, is_stale, source_hash, synced_at, created_at, updated_at. Database foreign keys: none.
-- Uniqueness and indexes: Primary keys: none recorded. Unique constraints: key. Indexes: module_key; group_key; route_name; access_mode; access_value; group_sort_order; sort_order; tenant_eligible; is_active; is_stale; synced_at.
+- Keys and relationships: settings_registry_entries final-state columns: access_mode, access_value, active_route_patterns_json, created_at, description, group_key, group_label, group_sort_order, icon, id, is_active, is_stale, key, label, module_key, route_name, sort_order, source_hash, synced_at, tenant_eligible, updated_at, view_path. Database foreign keys: none.
+- Uniqueness and indexes: Final-state primary keys: id. Unique constraints: key. Indexes: module_key; group_key; route_name; access_mode; access_value; group_sort_order; sort_order; tenant_eligible; is_active; is_stale; synced_at.
 - Lifecycle and deletion: No explicit retention lifecycle is established by the migration chain.
 - Classification: No canonical per-table data classification is established by migration source.
 - Retention and erasure: Retention, erasure, and legal-hold behavior are not established by migration source.
 - Audit: No table-specific Audit requirement is established by migration source.
 - Contract: `docs/06-database/tables/settings_registry_entries.md`
-- Compatibility: Feature contract references settings_registry_entries. Feature contract references settings_registry_entries.
+- Compatibility: Feature contract references settings_registry_entries.
 - Contradictions: `implemented_table_unclaimed` — settings_registry_entries is created by a registered migration but is absent from ownedTables declarations.
 - Target question: Which Goal 06 owner, scope, contract, lifecycle, and compatibility decisions resolve the recorded settings_registry_entries evidence gaps?
 
@@ -609,11 +610,11 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `implemented` / `investigate`
-- Ownership: `core`; owner `setup`; capability `Setup`; Module `not_applicable`
+- Ownership: `core`; owner `setup`; capability `setup`; Module `not_applicable`
 - Scope: Tenant `absent`; Instance `absent`; Principal `absent`; resource `absent`; Actor `absent`; target Tenant/Instance `absent`
 - Sources: `database/migrations/2026_07_08_000003_create_module_contribution_registry_tables.php:75`
-- Keys and relationships: setup_registry_entries columns: key, module_key, label, description, route_name, view_path, icon, access_mode, access_value, active_route_patterns_json, sort_order, tenant_eligible, is_required, is_blocking, completion_key, is_active, is_stale, source_hash, synced_at, created_at, updated_at. Database foreign keys: none.
-- Uniqueness and indexes: Primary keys: none recorded. Unique constraints: key. Indexes: module_key; route_name; access_mode; access_value; sort_order; tenant_eligible; is_required; is_blocking; completion_key; is_active; is_stale; synced_at.
+- Keys and relationships: setup_registry_entries final-state columns: access_mode, access_value, active_route_patterns_json, completion_key, created_at, description, icon, id, is_active, is_blocking, is_required, is_stale, key, label, module_key, route_name, sort_order, source_hash, synced_at, tenant_eligible, updated_at, view_path. Database foreign keys: none.
+- Uniqueness and indexes: Final-state primary keys: id. Unique constraints: key. Indexes: module_key; route_name; access_mode; access_value; sort_order; tenant_eligible; is_required; is_blocking; completion_key; is_active; is_stale; synced_at.
 - Lifecycle and deletion: No explicit retention lifecycle is established by the migration chain.
 - Classification: No canonical per-table data classification is established by migration source.
 - Retention and erasure: Retention, erasure, and legal-hold behavior are not established by migration source.
@@ -627,11 +628,11 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `implemented` / `investigate`
-- Ownership: `core`; owner `identity`; capability `Identity`; Module `not_applicable`
+- Ownership: `core`; owner `identity`; capability `identity`; Module `not_applicable`
 - Scope: Tenant `absent`; Instance `absent`; Principal `explicit`; resource `absent`; Actor `absent`; target Tenant/Instance `absent`
 - Sources: `database/migrations/2026_07_07_000002_create_user_contact_emails_table.php:11`
-- Keys and relationships: user_contact_emails columns: user_id, email, normalized_email, label, verified_at, created_at, updated_at. Database foreign keys: user_id -> users.id (cascade).
-- Uniqueness and indexes: Primary keys: none recorded. Unique constraints: normalized_email. Indexes: user_id+verified_at.
+- Keys and relationships: user_contact_emails final-state columns: created_at, email, id, label, normalized_email, updated_at, user_id, verified_at. Database foreign keys: user_id -> users.id (cascade).
+- Uniqueness and indexes: Final-state primary keys: id. Unique constraints: normalized_email. Indexes: user_id+verified_at.
 - Lifecycle and deletion: Deletion behavior: cascade.
 - Classification: No canonical per-table data classification is established by migration source.
 - Retention and erasure: Foreign-key deletion behavior includes cascade; retention and legal hold remain undocumented.
@@ -645,11 +646,11 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `implemented` / `retain`
-- Ownership: `core`; owner `dashboard`; capability `Dashboard`; Module `not_applicable`
+- Ownership: `core`; owner `dashboard`; capability `dashboard`; Module `not_applicable`
 - Scope: Tenant `absent`; Instance `absent`; Principal `explicit`; resource `absent`; Actor `absent`; target Tenant/Instance `absent`
 - Sources: `database/migrations/2026_04_13_000001_create_user_dashboard_layouts_table.php:11`
-- Keys and relationships: user_dashboard_layouts columns: user_id, layout, is_locked, created_at, updated_at. Database foreign keys: user_id -> users.id (cascade).
-- Uniqueness and indexes: Primary keys: none recorded. Unique constraints: user_id. Indexes: none recorded.
+- Keys and relationships: user_dashboard_layouts final-state columns: created_at, id, is_locked, layout, updated_at, user_id. Database foreign keys: user_id -> users.id (cascade).
+- Uniqueness and indexes: Final-state primary keys: id. Unique constraints: user_id. Indexes: none recorded.
 - Lifecycle and deletion: Deletion behavior: cascade.
 - Classification: No canonical per-table data classification is established by migration source.
 - Retention and erasure: Foreign-key deletion behavior includes cascade; retention and legal hold remain undocumented.
@@ -663,15 +664,15 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `implemented` / `investigate`
-- Ownership: `core`; owner `auth`; capability `Auth`; Module `not_applicable`
+- Ownership: `core`; owner `auth`; capability `auth`; Module `not_applicable`
 - Scope: Tenant `absent`; Instance `absent`; Principal `explicit`; resource `absent`; Actor `absent`; target Tenant/Instance `absent`
 - Sources: `database/migrations/2026_07_01_000001_create_mfa_tables.php:11`, `database/migrations/2026_07_01_000002_add_pending_secret_expiry_to_user_mfa_methods.php:11`
-- Keys and relationships: user_mfa_methods columns: user_id, type, secret, pending_secret, confirmed_at, reset_at, reset_by_user_id, last_challenged_at, last_satisfied_at, created_at, updated_at, pending_secret_expires_at. Database foreign keys: user_id -> users.id (cascade); reset_by_user_id -> users.id (set_null). user_mfa_methods columns: user_id, type, secret, pending_secret, confirmed_at, reset_at, reset_by_user_id, last_challenged_at, last_satisfied_at, created_at, updated_at, pending_secret_expires_at. Database foreign keys: user_id -> users.id (cascade); reset_by_user_id -> users.id (set_null).
-- Uniqueness and indexes: Primary keys: none recorded. Unique constraints: user_id+type. Indexes: type+confirmed_at. Primary keys: none recorded. Unique constraints: user_id+type. Indexes: type+confirmed_at.
-- Lifecycle and deletion: Deletion behavior: cascade, set_null. Deletion behavior: cascade, set_null.
-- Classification: Sensitive or credential/session-material field names are present; no values were collected. Sensitive or credential/session-material field names are present; no values were collected.
-- Retention and erasure: Foreign-key deletion behavior includes cascade, set_null; retention and legal hold remain undocumented. Foreign-key deletion behavior includes cascade, set_null; retention and legal hold remain undocumented.
-- Audit: No table-specific Audit requirement is established by migration source. No table-specific Audit requirement is established by migration source.
+- Keys and relationships: user_mfa_methods final-state columns: confirmed_at, created_at, id, last_challenged_at, last_satisfied_at, pending_secret, pending_secret_expires_at, reset_at, reset_by_user_id, secret, type, updated_at, user_id. Database foreign keys: user_id -> users.id (cascade); reset_by_user_id -> users.id (set_null).
+- Uniqueness and indexes: Final-state primary keys: id. Unique constraints: user_id+type. Indexes: type+confirmed_at.
+- Lifecycle and deletion: Deletion behavior: cascade, set_null.
+- Classification: Sensitive or credential/session-material field names are present; no values were collected.
+- Retention and erasure: Foreign-key deletion behavior includes cascade, set_null; retention and legal hold remain undocumented.
+- Audit: No table-specific Audit requirement is established by migration source.
 - Contract: `missing`
 - Compatibility: Feature contract references user_mfa_methods. user_mfa_methods is declared by the Core package key auth; a Modules path is transitional physical placement, not Module ownership.
 - Contradictions: `contract_missing` — No per-table contract exists for user_mfa_methods.
@@ -681,11 +682,11 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `implemented` / `investigate`
-- Ownership: `core`; owner `auth`; capability `Auth`; Module `not_applicable`
+- Ownership: `core`; owner `auth`; capability `auth`; Module `not_applicable`
 - Scope: Tenant `absent`; Instance `absent`; Principal `explicit`; resource `absent`; Actor `explicit`; target Tenant/Instance `absent`
 - Sources: `database/migrations/2026_07_01_000001_create_mfa_tables.php:28`
-- Keys and relationships: user_mfa_policies columns: user_id, mfa_required, required_at, required_by_user_id, updated_by_user_id, created_at, updated_at. Database foreign keys: user_id -> users.id (cascade); required_by_user_id -> users.id (set_null); updated_by_user_id -> users.id (set_null).
-- Uniqueness and indexes: Primary keys: none recorded. Unique constraints: user_id. Indexes: mfa_required.
+- Keys and relationships: user_mfa_policies final-state columns: created_at, id, mfa_required, required_at, required_by_user_id, updated_at, updated_by_user_id, user_id. Database foreign keys: user_id -> users.id (cascade); required_by_user_id -> users.id (set_null); updated_by_user_id -> users.id (set_null).
+- Uniqueness and indexes: Final-state primary keys: id. Unique constraints: user_id. Indexes: mfa_required.
 - Lifecycle and deletion: Deletion behavior: cascade, set_null.
 - Classification: No canonical per-table data classification is established by migration source.
 - Retention and erasure: Foreign-key deletion behavior includes cascade, set_null; retention and legal hold remain undocumented.
@@ -699,17 +700,17 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `implemented` / `retain`
-- Ownership: `core`; owner `notifications`; capability `Notifications`; Module `not_applicable`
+- Ownership: `core`; owner `notifications`; capability `notifications`; Module `not_applicable`
 - Scope: Tenant `absent`; Instance `absent`; Principal `explicit`; resource `absent`; Actor `absent`; target Tenant/Instance `absent`
 - Sources: `database/migrations/2026_07_07_000003_create_user_notification_preferences_table.php:11`, `database/migrations/2026_07_08_000001_drop_in_app_enabled_from_user_notification_preferences_table.php:15`
-- Keys and relationships: user_notification_preferences columns: user_id, in_app_enabled, email_enabled, digest_frequency, created_at, updated_at. Database foreign keys: user_id -> users.id (cascade). user_notification_preferences columns: user_id, in_app_enabled, email_enabled, digest_frequency, created_at, updated_at. Database foreign keys: user_id -> users.id (cascade).
-- Uniqueness and indexes: Primary keys: none recorded. Unique constraints: user_id. Indexes: none recorded. Primary keys: none recorded. Unique constraints: user_id. Indexes: none recorded.
-- Lifecycle and deletion: Deletion behavior: cascade, dropColumn('in_app_enabled'). Deletion behavior: cascade, dropColumn('in_app_enabled').
-- Classification: No canonical per-table data classification is established by migration source. No canonical per-table data classification is established by migration source.
-- Retention and erasure: Foreign-key deletion behavior includes cascade; retention and legal hold remain undocumented. Foreign-key deletion behavior includes cascade; retention and legal hold remain undocumented.
-- Audit: No table-specific Audit requirement is established by migration source. No table-specific Audit requirement is established by migration source.
+- Keys and relationships: user_notification_preferences final-state columns: created_at, digest_frequency, email_enabled, id, updated_at, user_id. Database foreign keys: user_id -> users.id (cascade).
+- Uniqueness and indexes: Final-state primary keys: id. Unique constraints: user_id. Indexes: none recorded.
+- Lifecycle and deletion: Deletion behavior: cascade, dropColumn('in_app_enabled').
+- Classification: No canonical per-table data classification is established by migration source.
+- Retention and erasure: Foreign-key deletion behavior includes cascade; retention and legal hold remain undocumented.
+- Audit: No table-specific Audit requirement is established by migration source.
 - Contract: `docs/06-database/tables/user_notification_preferences.md`
-- Compatibility: Feature contract references user_notification_preferences. Feature contract references user_notification_preferences. user_notification_preferences is declared by the Core package key notifications; a Modules path is transitional physical placement, not Module ownership.
+- Compatibility: Feature contract references user_notification_preferences. user_notification_preferences is declared by the Core package key notifications; a Modules path is transitional physical placement, not Module ownership.
 - Contradictions: None recorded.
 - Target question: No target change is selected by this inventory.
 
@@ -717,15 +718,15 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `implemented` / `investigate`
-- Ownership: `core`; owner `identity`; capability `Identity`; Module `not_applicable`
+- Ownership: `core`; owner `identity`; capability `identity`; Module `not_applicable`
 - Scope: Tenant `absent`; Instance `absent`; Principal `indirect`; resource `absent`; Actor `absent`; target Tenant/Instance `absent`
 - Sources: `database/migrations/0001_01_01_000000_create_users_table.php:11`, `database/migrations/2026_04_09_000002_add_phase_one_lifecycle_columns_to_users_table.php:11`, `database/migrations/2026_04_09_000005_add_timezone_to_users_table.php:11`, `database/migrations/2026_04_10_000001_add_staff_profile_fields_to_users_table.php:11`, `database/migrations/2026_04_12_220000_add_theme_preference_to_users_table.php:11`
-- Keys and relationships: users columns: name, email, email_verified_at, password, remember_token, created_at, updated_at, is_active, last_login_at, timezone, first_name, last_name, hourly_rate, phone, facebook, linkedin, skype, default_language, email_signature, direction, send_welcome_email, is_administrator, is_staff_member, profile_image_path, theme_preference. Database foreign keys: none. users columns: name, email, email_verified_at, password, remember_token, created_at, updated_at, is_active, last_login_at, timezone, first_name, last_name, hourly_rate, phone, facebook, linkedin, skype, default_language, email_signature, direction, send_welcome_email, is_administrator, is_staff_member, profile_image_path, theme_preference. Database foreign keys: none. users columns: name, email, email_verified_at, password, remember_token, created_at, updated_at, is_active, last_login_at, timezone, first_name, last_name, hourly_rate, phone, facebook, linkedin, skype, default_language, email_signature, direction, send_welcome_email, is_administrator, is_staff_member, profile_image_path, theme_preference. Database foreign keys: none. users columns: name, email, email_verified_at, password, remember_token, created_at, updated_at, is_active, last_login_at, timezone, first_name, last_name, hourly_rate, phone, facebook, linkedin, skype, default_language, email_signature, direction, send_welcome_email, is_administrator, is_staff_member, profile_image_path, theme_preference. Database foreign keys: none. users columns: name, email, email_verified_at, password, remember_token, created_at, updated_at, is_active, last_login_at, timezone, first_name, last_name, hourly_rate, phone, facebook, linkedin, skype, default_language, email_signature, direction, send_welcome_email, is_administrator, is_staff_member, profile_image_path, theme_preference. Database foreign keys: none.
-- Uniqueness and indexes: Primary keys: none recorded. Unique constraints: email. Indexes: is_active. Primary keys: none recorded. Unique constraints: email. Indexes: is_active. Primary keys: none recorded. Unique constraints: email. Indexes: is_active. Primary keys: none recorded. Unique constraints: email. Indexes: is_active. Primary keys: none recorded. Unique constraints: email. Indexes: is_active.
-- Lifecycle and deletion: No explicit retention lifecycle is established by the migration chain. No explicit retention lifecycle is established by the migration chain. No explicit retention lifecycle is established by the migration chain. No explicit retention lifecycle is established by the migration chain. No explicit retention lifecycle is established by the migration chain.
-- Classification: Sensitive or credential/session-material field names are present; no values were collected. Sensitive or credential/session-material field names are present; no values were collected. Sensitive or credential/session-material field names are present; no values were collected. Sensitive or credential/session-material field names are present; no values were collected. Sensitive or credential/session-material field names are present; no values were collected.
-- Retention and erasure: Retention, erasure, and legal-hold behavior are not established by migration source. Retention, erasure, and legal-hold behavior are not established by migration source. Retention, erasure, and legal-hold behavior are not established by migration source. Retention, erasure, and legal-hold behavior are not established by migration source. Retention, erasure, and legal-hold behavior are not established by migration source.
-- Audit: No table-specific Audit requirement is established by migration source. No table-specific Audit requirement is established by migration source. No table-specific Audit requirement is established by migration source. No table-specific Audit requirement is established by migration source. No table-specific Audit requirement is established by migration source.
+- Keys and relationships: users final-state columns: created_at, default_language, direction, email, email_signature, email_verified_at, facebook, first_name, hourly_rate, id, is_active, is_administrator, is_staff_member, last_login_at, last_name, linkedin, name, password, phone, profile_image_path, remember_token, send_welcome_email, skype, theme_preference, timezone, updated_at. Database foreign keys: none.
+- Uniqueness and indexes: Final-state primary keys: id. Unique constraints: email. Indexes: is_active.
+- Lifecycle and deletion: No explicit retention lifecycle is established by the migration chain.
+- Classification: Sensitive or credential/session-material field names are present; no values were collected.
+- Retention and erasure: Retention, erasure, and legal-hold behavior are not established by migration source.
+- Audit: No table-specific Audit requirement is established by migration source.
 - Contract: `missing`
 - Compatibility: Feature contract references users.
 - Contradictions: `contract_missing` — No per-table contract exists for users.; `scope_missing` — The User Account row has no explicit Tenant or Instance key.; `planning_implementation_overlap` — Account, identity, profile, staff, and preference concerns are currently combined while active planning evaluates separation.
@@ -741,7 +742,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `access`; capability `Access`; Module `not_applicable`
+- Ownership: `core`; owner `access`; capability `access`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `explicit`; resource `unknown`; Actor `unknown`; target Tenant/Instance `not_applicable`
 - Sources: `docs/07-planning/02-core-capabilities/auth-identity-access/access-control-implementation-planning.md:188`
 - Keys and relationships: Access groups are an explicit candidate data surface.
@@ -759,7 +760,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `access`; capability `Access`; Module `not_applicable`
+- Ownership: `core`; owner `access`; capability `access`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `explicit`; resource `unknown`; Actor `unknown`; target Tenant/Instance `not_applicable`
 - Sources: `docs/07-planning/02-core-capabilities/auth-identity-access/access-control-implementation-planning.md:189`
 - Keys and relationships: Access group membership is an explicit candidate association surface.
@@ -777,7 +778,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `access`; capability `Access`; Module `not_applicable`
+- Ownership: `core`; owner `access`; capability `access`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `explicit`; resource `unknown`; Actor `unknown`; target Tenant/Instance `not_applicable`
 - Sources: `docs/07-planning/02-core-capabilities/auth-identity-access/access-control-implementation-planning.md:190`
 - Keys and relationships: Access policies are an explicit candidate governance and scope surface.
@@ -795,7 +796,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `access`; capability `Access`; Module `not_applicable`
+- Ownership: `core`; owner `access`; capability `access`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `explicit`; resource `unknown`; Actor `explicit`; target Tenant/Instance `not_applicable`
 - Sources: `docs/07-planning/02-core-capabilities/auth-identity-access/access-control-implementation-planning.md:192`
 - Keys and relationships: Access policy approvals are an explicit candidate accountable-decision surface.
@@ -813,7 +814,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `access`; capability `Access`; Module `not_applicable`
+- Ownership: `core`; owner `access`; capability `access`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `explicit`; resource `unknown`; Actor `unknown`; target Tenant/Instance `not_applicable`
 - Sources: `docs/07-planning/02-core-capabilities/auth-identity-access/access-control-implementation-planning.md:191`
 - Keys and relationships: Access policy constraints are an explicit candidate data surface.
@@ -831,7 +832,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `access`; capability `Access`; Module `not_applicable`
+- Ownership: `core`; owner `access`; capability `access`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `explicit`; resource `unknown`; Actor `explicit`; target Tenant/Instance `not_applicable`
 - Sources: `docs/07-planning/02-core-capabilities/auth-identity-access/access-control-implementation-planning.md:194`
 - Keys and relationships: Access review campaigns are an explicit candidate review-lifecycle surface.
@@ -849,7 +850,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `access`; capability `Access`; Module `not_applicable`
+- Ownership: `core`; owner `access`; capability `access`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `explicit`; resource `unknown`; Actor `explicit`; target Tenant/Instance `not_applicable`
 - Sources: `docs/07-planning/02-core-capabilities/auth-identity-access/access-control-implementation-planning.md:196`
 - Keys and relationships: Access review decisions are an explicit candidate accountable-evidence surface.
@@ -867,7 +868,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `access`; capability `Access`; Module `not_applicable`
+- Ownership: `core`; owner `access`; capability `access`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `explicit`; resource `unknown`; Actor `explicit`; target Tenant/Instance `not_applicable`
 - Sources: `docs/07-planning/02-core-capabilities/auth-identity-access/access-control-implementation-planning.md:195`
 - Keys and relationships: Access review items are an explicit candidate association surface.
@@ -885,7 +886,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `audit`; capability `Audit`; Module `not_applicable`
+- Ownership: `core`; owner `audit`; capability `audit`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `explicit`; resource `unknown`; Actor `explicit`; target Tenant/Instance `not_applicable`
 - Sources: `docs/07-planning/02-core-capabilities/audit-monitoring-response/audit-monitoring-core-planning.md:22`
 - Keys and relationships: Audit Actor attribution must distinguish Principal, acting Instance, channel, action, target, and result.
@@ -903,7 +904,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `auth`; capability `Auth`; Module `not_applicable`
+- Ownership: `core`; owner `auth`; capability `auth`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `explicit`; resource `unknown`; Actor `unknown`; target Tenant/Instance `not_applicable`
 - Sources: `docs/07-planning/02-core-capabilities/auth-identity-access/api-webhook-service-account-security-planning.md:138`
 - Keys and relationships: API token metadata, prefix/hash, scope, expiry, rotation, and revocation require lifecycle persistence.
@@ -921,7 +922,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `monitoring`; capability `Monitoring`; Module `not_applicable`
+- Ownership: `core`; owner `monitoring`; capability `monitoring`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `explicit`; resource `unknown`; Actor `explicit`; target Tenant/Instance `not_applicable`
 - Sources: `docs/07-planning/02-core-capabilities/auth-identity-access/api-webhook-service-account-security-planning.md:161`
 - Keys and relationships: A dedicated high-volume API token event table is an explicit optional alternative to Audit.
@@ -939,7 +940,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `identity`; capability `Identity`; Module `not_applicable`
+- Ownership: `core`; owner `identity`; capability `identity`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `explicit`; resource `unknown`; Actor `unknown`; target Tenant/Instance `not_applicable`
 - Sources: `docs/07-planning/02-core-capabilities/auth-identity-access/service-accounts-machine-identity-planning.md:72`
 - Keys and relationships: Application Principal references require a persistent mapping boundary.
@@ -957,7 +958,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `security`; capability `Security`; Module `not_applicable`
+- Ownership: `core`; owner `security`; capability `security`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `explicit`; resource `unknown`; Actor `explicit`; target Tenant/Instance `not_applicable`
 - Sources: `docs/07-planning/02-core-capabilities/auth-identity-access/service-accounts-machine-identity-planning.md:37`
 - Keys and relationships: Assurance and attestation evidence requires its own lifecycle and classification.
@@ -975,7 +976,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `audit`; capability `Audit`; Module `not_applicable`
+- Ownership: `core`; owner `audit`; capability `audit`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `unknown`; resource `unknown`; Actor `explicit`; target Tenant/Instance `unknown`
 - Sources: `docs/07-planning/02-core-capabilities/audit-monitoring-response/audit-monitoring-core-planning.md:423`
 - Keys and relationships: A target audit_events surface remains planned and undecided.
@@ -993,7 +994,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `audit`; capability `Audit`; Module `not_applicable`
+- Ownership: `core`; owner `audit`; capability `audit`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `unknown`; resource `unknown`; Actor `explicit`; target Tenant/Instance `unknown`
 - Sources: `docs/07-planning/02-core-capabilities/audit-monitoring-response/audit-monitoring-core-planning.md:424`
 - Keys and relationships: Audit change-set rows are a distinct planned association surface.
@@ -1011,7 +1012,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `monitoring`; capability `Monitoring`; Module `not_applicable`
+- Ownership: `core`; owner `monitoring`; capability `monitoring`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `unknown`; resource `unknown`; Actor `unknown`; target Tenant/Instance `not_applicable`
 - Sources: `docs/07-planning/02-core-capabilities/audit-monitoring-response/backup-recovery-planning.md:140`
 - Keys and relationships: Backup health, freshness, verification, and restore evidence may require durable monitoring records.
@@ -1029,7 +1030,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `data_governance`; capability `DataGovernance`; Module `not_applicable`
+- Ownership: `core`; owner `data_governance`; capability `data_governance`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `unknown`; resource `unknown`; Actor `unknown`; target Tenant/Instance `not_applicable`
 - Sources: `docs/07-planning/02-core-capabilities/data-governance-protection/privacy-data-governance-planning.md:303`
 - Keys and relationships: Consent records are an explicit candidate lifecycle surface for optional processing.
@@ -1047,7 +1048,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `security`; capability `Security`; Module `not_applicable`
+- Ownership: `core`; owner `security`; capability `security`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `explicit`; resource `unknown`; Actor `unknown`; target Tenant/Instance `not_applicable`
 - Sources: `docs/07-planning/02-core-capabilities/security/secrets-management-core-planning.md:78`
 - Keys and relationships: Reusable credential material requires an approved protected storage boundary.
@@ -1065,7 +1066,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `security`; capability `Security`; Module `not_applicable`
+- Ownership: `core`; owner `security`; capability `security`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `explicit`; resource `unknown`; Actor `unknown`; target Tenant/Instance `not_applicable`
 - Sources: `docs/07-planning/02-core-capabilities/auth-identity-access/service-accounts-machine-identity-planning.md:98`
 - Keys and relationships: Credential metadata lifecycle must remain separate from reusable credential material.
@@ -1083,7 +1084,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `security`; capability `Security`; Module `not_applicable`
+- Ownership: `core`; owner `security`; capability `security`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `explicit`; resource `unknown`; Actor `unknown`; target Tenant/Instance `not_applicable`
 - Sources: `docs/07-planning/02-core-capabilities/security/secrets-management-core-planning.md:167`
 - Keys and relationships: Application persistence may store safe references to externally protected credential material.
@@ -1101,7 +1102,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `data_governance`; capability `DataGovernance`; Module `not_applicable`
+- Ownership: `core`; owner `data_governance`; capability `data_governance`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `unknown`; resource `unknown`; Actor `unknown`; target Tenant/Instance `not_applicable`
 - Sources: `docs/07-planning/02-core-capabilities/data-governance-protection/privacy-data-governance-planning.md:231`
 - Keys and relationships: Candidate data-asset governance records persist ownership, purpose, classification, and review metadata.
@@ -1119,7 +1120,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `data_governance`; capability `DataGovernance`; Module `not_applicable`
+- Ownership: `core`; owner `data_governance`; capability `data_governance`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `unknown`; resource `unknown`; Actor `unknown`; target Tenant/Instance `not_applicable`
 - Sources: `docs/07-planning/02-core-capabilities/data-governance-protection/privacy-data-governance-planning.md:193`
 - Keys and relationships: A candidate data-domain registry would persist ownership and governance metadata.
@@ -1137,7 +1138,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `data_governance`; capability `DataGovernance`; Module `not_applicable`
+- Ownership: `core`; owner `data_governance`; capability `data_governance`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `unknown`; resource `unknown`; Actor `explicit`; target Tenant/Instance `not_applicable`
 - Sources: `docs/07-planning/02-core-capabilities/data-governance-protection/privacy-data-governance-planning.md:411`
 - Keys and relationships: Data quality issues are an explicit candidate remediation lifecycle surface.
@@ -1155,7 +1156,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `data_governance`; capability `DataGovernance`; Module `not_applicable`
+- Ownership: `core`; owner `data_governance`; capability `data_governance`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `unknown`; resource `unknown`; Actor `unknown`; target Tenant/Instance `not_applicable`
 - Sources: `docs/07-planning/02-core-capabilities/data-governance-protection/privacy-data-governance-planning.md:457`
 - Keys and relationships: A consolidated data-subject table is a conditional storage alternative.
@@ -1173,7 +1174,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `data_governance`; capability `DataGovernance`; Module `not_applicable`
+- Ownership: `core`; owner `data_governance`; capability `data_governance`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `unknown`; resource `unknown`; Actor `explicit`; target Tenant/Instance `not_applicable`
 - Sources: `docs/07-planning/02-core-capabilities/data-governance-protection/privacy-data-governance-planning.md:33`
 - Keys and relationships: Deletion and erasure decisions require accountable evidence without retaining erased content.
@@ -1191,7 +1192,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `access`; capability `Access`; Module `not_applicable`
+- Ownership: `core`; owner `access`; capability `access`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `explicit`; resource `unknown`; Actor `unknown`; target Tenant/Instance `not_applicable`
 - Sources: `docs/07-planning/02-core-capabilities/auth-identity-access/access-control-implementation-planning.md:193`
 - Keys and relationships: Elevated access sessions are an explicit candidate lifecycle surface.
@@ -1209,7 +1210,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `audit`; capability `Audit`; Module `not_applicable`
+- Ownership: `core`; owner `audit`; capability `audit`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `unknown`; resource `unknown`; Actor `explicit`; target Tenant/Instance `not_applicable`
 - Sources: `docs/07-planning/02-core-capabilities/audit-monitoring-response/digital-forensics-readiness-planning.md:297`
 - Keys and relationships: Chain-of-custody entries are a distinct candidate accountable lifecycle surface.
@@ -1227,7 +1228,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `audit`; capability `Audit`; Module `not_applicable`
+- Ownership: `core`; owner `audit`; capability `audit`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `unknown`; resource `unknown`; Actor `explicit`; target Tenant/Instance `not_applicable`
 - Sources: `docs/07-planning/02-core-capabilities/audit-monitoring-response/digital-forensics-readiness-planning.md:256`
 - Keys and relationships: Evidence packages are an explicit candidate protected investigation surface.
@@ -1245,7 +1246,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `audit`; capability `Audit`; Module `not_applicable`
+- Ownership: `core`; owner `audit`; capability `audit`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `unknown`; resource `unknown`; Actor `explicit`; target Tenant/Instance `not_applicable`
 - Sources: `docs/07-planning/02-core-capabilities/audit-monitoring-response/digital-forensics-readiness-planning.md:279`
 - Keys and relationships: Evidence package items are a distinct candidate association and integrity surface.
@@ -1263,7 +1264,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `data_protection`; capability `DataProtection`; Module `not_applicable`
+- Ownership: `core`; owner `data_protection`; capability `data_protection`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `unknown`; resource `unknown`; Actor `unknown`; target Tenant/Instance `unknown`
 - Sources: `docs/07-planning/02-core-capabilities/data-governance-protection/data-protection-core-planning.md:383`
 - Keys and relationships: Generated export artifact references and expiry metadata require protected persistence.
@@ -1281,7 +1282,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `data_protection`; capability `DataProtection`; Module `not_applicable`
+- Ownership: `core`; owner `data_protection`; capability `data_protection`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `unknown`; resource `unknown`; Actor `explicit`; target Tenant/Instance `unknown`
 - Sources: `docs/07-planning/02-core-capabilities/data-governance-protection/data-protection-core-planning.md:91`
 - Keys and relationships: Sensitive export request, approval, status, and audit metadata require lifecycle persistence.
@@ -1299,7 +1300,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `monitoring`; capability `Monitoring`; Module `not_applicable`
+- Ownership: `core`; owner `monitoring`; capability `monitoring`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `unknown`; resource `unknown`; Actor `unknown`; target Tenant/Instance `not_applicable`
 - Sources: `docs/07-planning/02-core-capabilities/audit-monitoring-response/audit-monitoring-core-planning.md:475`
 - Keys and relationships: Health check results are an explicit planned Monitoring persistence surface.
@@ -1317,7 +1318,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `security`; capability `Security`; Module `not_applicable`
+- Ownership: `core`; owner `security`; capability `security`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `unknown`; resource `unknown`; Actor `explicit`; target Tenant/Instance `unknown`
 - Sources: `docs/07-planning/02-core-capabilities/audit-monitoring-response/incident-response-planning.md:183`
 - Keys and relationships: Incident case lifecycle and accountable decisions are planned persistent evidence.
@@ -1335,7 +1336,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `data_governance`; capability `DataGovernance`; Module `not_applicable`
+- Ownership: `core`; owner `data_governance`; capability `data_governance`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `unknown`; resource `unknown`; Actor `unknown`; target Tenant/Instance `not_applicable`
 - Sources: `docs/07-planning/02-core-capabilities/data-governance-protection/data-protection-core-planning.md:383`
 - Keys and relationships: Legal-hold state must be represented separately from ordinary retention.
@@ -1353,7 +1354,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `security`; capability `Security`; Module `not_applicable`
+- Ownership: `core`; owner `security`; capability `security`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `explicit`; resource `unknown`; Actor `unknown`; target Tenant/Instance `not_applicable`
 - Sources: `docs/07-planning/02-core-capabilities/auth-identity-access/service-accounts-machine-identity-planning.md:45`
 - Keys and relationships: Machine Identity evidence is independent from NHI Principal identity.
@@ -1371,7 +1372,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `security`; capability `Security`; Module `not_applicable`
+- Ownership: `core`; owner `security`; capability `security`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `unknown`; resource `unknown`; Actor `unknown`; target Tenant/Instance `not_applicable`
 - Sources: `docs/07-planning/02-core-capabilities/auth-identity-access/service-accounts-machine-identity-planning.md:123`
 - Keys and relationships: Network Context evidence is planned separately from durable Principal identity.
@@ -1389,7 +1390,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `security`; capability `Security`; Module `not_applicable`
+- Ownership: `core`; owner `security`; capability `security`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `explicit`; resource `unknown`; Actor `unknown`; target Tenant/Instance `not_applicable`
 - Sources: `docs/07-planning/02-core-capabilities/auth-identity-access/service-accounts-machine-identity-planning.md:121`
 - Keys and relationships: Network Identity evidence may accompany a human or non-human Principal.
@@ -1407,7 +1408,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `identity`; capability `Identity`; Module `not_applicable`
+- Ownership: `core`; owner `identity`; capability `identity`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `explicit`; resource `unknown`; Actor `unknown`; target Tenant/Instance `not_applicable`
 - Sources: `docs/07-planning/02-core-capabilities/auth-identity-access/service-accounts-machine-identity-planning.md:45`
 - Keys and relationships: Non-Human Identity Principal persistence is planned separately from Machine Identity.
@@ -1425,7 +1426,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `data_governance`; capability `DataGovernance`; Module `not_applicable`
+- Ownership: `core`; owner `data_governance`; capability `data_governance`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `unknown`; resource `unknown`; Actor `explicit`; target Tenant/Instance `unknown`
 - Sources: `docs/07-planning/02-core-capabilities/data-governance-protection/privacy-data-governance-planning.md:344`
 - Keys and relationships: Privacy request lifecycle persistence is planned.
@@ -1443,7 +1444,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `data_governance`; capability `DataGovernance`; Module `not_applicable`
+- Ownership: `core`; owner `data_governance`; capability `data_governance`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `unknown`; resource `unknown`; Actor `explicit`; target Tenant/Instance `unknown`
 - Sources: `docs/07-planning/02-core-capabilities/data-governance-protection/privacy-data-governance-planning.md:361`
 - Keys and relationships: Privacy request items associate one request with governed assets and fulfillment outcomes.
@@ -1461,7 +1462,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `data_governance`; capability `DataGovernance`; Module `not_applicable`
+- Ownership: `core`; owner `data_governance`; capability `data_governance`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `unknown`; resource `unknown`; Actor `unknown`; target Tenant/Instance `not_applicable`
 - Sources: `docs/07-planning/02-core-capabilities/data-governance-protection/privacy-data-governance-planning.md:263`
 - Keys and relationships: Processing purposes are an explicit candidate registry surface.
@@ -1479,7 +1480,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `data_governance`; capability `DataGovernance`; Module `not_applicable`
+- Ownership: `core`; owner `data_governance`; capability `data_governance`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `unknown`; resource `unknown`; Actor `unknown`; target Tenant/Instance `not_applicable`
 - Sources: `docs/07-planning/02-core-capabilities/data-governance-protection/privacy-data-governance-planning.md:50`
 - Keys and relationships: Retention policy registry metadata and enforcement evidence require persistent ownership.
@@ -1497,7 +1498,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `security`; capability `Security`; Module `not_applicable`
+- Ownership: `core`; owner `security`; capability `security`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `unknown`; resource `unknown`; Actor `explicit`; target Tenant/Instance `not_applicable`
 - Sources: `docs/07-planning/02-core-capabilities/security/vulnerability-management-core-planning.md:294`
 - Keys and relationships: Risk acceptance requires accountable expiry and approval evidence.
@@ -1515,7 +1516,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `security`; capability `Security`; Module `not_applicable`
+- Ownership: `core`; owner `security`; capability `security`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `unknown`; resource `unknown`; Actor `unknown`; target Tenant/Instance `not_applicable`
 - Sources: `docs/07-planning/02-core-capabilities/security/secrets-management-core-planning.md:21`
 - Keys and relationships: Secret metadata must be persisted without storing revealable values in ordinary application records.
@@ -1533,7 +1534,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `security`; capability `Security`; Module `not_applicable`
+- Ownership: `core`; owner `security`; capability `security`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `unknown`; resource `unknown`; Actor `explicit`; target Tenant/Instance `not_applicable`
 - Sources: `docs/07-planning/02-core-capabilities/security/secrets-management-core-planning.md:543`
 - Keys and relationships: Secret rotation events are an explicit candidate lifecycle surface.
@@ -1551,7 +1552,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `access`; capability `Access`; Module `not_applicable`
+- Ownership: `core`; owner `access`; capability `access`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `explicit`; resource `unknown`; Actor `unknown`; target Tenant/Instance `not_applicable`
 - Sources: `docs/07-planning/02-core-capabilities/auth-identity-access/api-webhook-service-account-security-planning.md:116`
 - Keys and relationships: A dedicated service_accounts table remains the recommended but unaccepted storage alternative.
@@ -1569,7 +1570,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `access`; capability `Access`; Module `not_applicable`
+- Ownership: `core`; owner `access`; capability `access`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `explicit`; resource `unknown`; Actor `unknown`; target Tenant/Instance `not_applicable`
 - Sources: `docs/07-planning/02-core-capabilities/auth-identity-access/api-webhook-service-account-security-planning.md:99`
 - Keys and relationships: Extending users with a service type remains an open Service Account storage alternative.
@@ -1587,7 +1588,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `access`; capability `Access`; Module `not_applicable`
+- Ownership: `core`; owner `access`; capability `access`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `unknown`; resource `unknown`; Actor `unknown`; target Tenant/Instance `unknown`
 - Sources: `docs/07-planning/02-core-capabilities/auth-identity-access/service-accounts-machine-identity-planning.md:84`
 - Keys and relationships: Affected Tenant and Instance scope must remain separate from Actor scope.
@@ -1605,7 +1606,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `identity`; capability `Identity`; Module `not_applicable`
+- Ownership: `core`; owner `identity`; capability `identity`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `unknown`; resource `unknown`; Actor `unknown`; target Tenant/Instance `not_applicable`
 - Sources: `docs/07-planning/02-core-capabilities/auth-identity-access/users-module-implementation-planning.md:291`
 - Keys and relationships: A separate user lifecycle metadata table is an active conditional persistence option.
@@ -1623,7 +1624,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `security`; capability `Security`; Module `not_applicable`
+- Ownership: `core`; owner `security`; capability `security`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `unknown`; resource `unknown`; Actor `unknown`; target Tenant/Instance `not_applicable`
 - Sources: `docs/07-planning/02-core-capabilities/security/vulnerability-management-core-planning.md:254`
 - Keys and relationships: Vulnerability asset inventory metadata is a planned persistence option.
@@ -1641,7 +1642,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `security`; capability `Security`; Module `not_applicable`
+- Ownership: `core`; owner `security`; capability `security`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `unknown`; resource `unknown`; Actor `unknown`; target Tenant/Instance `not_applicable`
 - Sources: `docs/07-planning/02-core-capabilities/security/vulnerability-management-core-planning.md:269`
 - Keys and relationships: Vulnerability findings may become persistent when reporting requires it.
@@ -1659,7 +1660,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `security`; capability `Security`; Module `not_applicable`
+- Ownership: `core`; owner `security`; capability `security`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `explicit`; resource `unknown`; Actor `explicit`; target Tenant/Instance `not_applicable`
 - Sources: `docs/07-planning/02-core-capabilities/auth-identity-access/api-webhook-service-account-security-planning.md:424`
 - Keys and relationships: Webhook delivery metadata, safe payload evidence, replay state, and processing status are a candidate persistence surface.
@@ -1677,7 +1678,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `security`; capability `Security`; Module `not_applicable`
+- Ownership: `core`; owner `security`; capability `security`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `explicit`; resource `unknown`; Actor `unknown`; target Tenant/Instance `not_applicable`
 - Sources: `docs/07-planning/02-core-capabilities/auth-identity-access/api-webhook-service-account-security-planning.md:405`
 - Keys and relationships: Webhook endpoint identity and safe secret references are a candidate persistence surface.
@@ -1695,7 +1696,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `monitoring`; capability `Monitoring`; Module `not_applicable`
+- Ownership: `core`; owner `monitoring`; capability `monitoring`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `explicit`; resource `unknown`; Actor `unknown`; target Tenant/Instance `not_applicable`
 - Sources: `docs/07-planning/02-core-capabilities/auth-identity-access/api-webhook-service-account-security-planning.md:451`
 - Keys and relationships: Webhook processing attempts are a candidate retry and failure-evidence surface.
@@ -1713,7 +1714,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `identity`; capability `Identity`; Module `not_applicable`
+- Ownership: `core`; owner `identity`; capability `identity`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `explicit`; resource `unknown`; Actor `unknown`; target Tenant/Instance `not_applicable`
 - Sources: `docs/07-planning/02-core-capabilities/auth-identity-access/service-accounts-machine-identity-planning.md:68`
 - Keys and relationships: Workload Identity references require a persistent mapping boundary.
@@ -1737,7 +1738,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `data_protection`; capability `DataProtection`; Module `not_applicable`
+- Ownership: `core`; owner `data_protection`; capability `data_protection`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `not_applicable`; resource `explicit`; Actor `unknown`; target Tenant/Instance `unknown`
 - Sources: `docs/07-planning/02-core-capabilities/audit-monitoring-response/backup-recovery-planning.md:67`
 - Keys and relationships: Backup artifacts remain outside ordinary application-created tables.
@@ -1755,7 +1756,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `implemented` / `retain`
-- Ownership: `core`; owner `infrastructure`; capability `Infrastructure`; Module `not_applicable`
+- Ownership: `core`; owner `infrastructure`; capability `infrastructure`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `not_applicable`; resource `not_applicable`; Actor `unknown`; target Tenant/Instance `unknown`
 - Sources: `config/cache.php:18`
 - Keys and relationships: The default cache store uses database persistence and the cache/cache_locks tables.
@@ -1773,7 +1774,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `implemented` / `investigate`
-- Ownership: `core`; owner `database`; capability `Database`; Module `not_applicable`
+- Ownership: `core`; owner `database`; capability `database`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `not_applicable`; resource `not_applicable`; Actor `unknown`; target Tenant/Instance `unknown`
 - Sources: `config/database.php:20`, `.env.example:31`
 - Keys and relationships: The runtime connection fallback and canonical PostgreSQL direction require explicit reconciliation. The source-controlled example environment selects PostgreSQL while config/database.php retains a SQLite fallback.
@@ -1791,7 +1792,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `implemented` / `retain`
-- Ownership: `core`; owner `infrastructure`; capability `Infrastructure`; Module `not_applicable`
+- Ownership: `core`; owner `infrastructure`; capability `infrastructure`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `not_applicable`; resource `not_applicable`; Actor `unknown`; target Tenant/Instance `unknown`
 - Sources: `config/queue.php:16`
 - Keys and relationships: The default queue connection persists jobs, batches, and failures in database tables.
@@ -1809,7 +1810,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `implemented` / `retain`
-- Ownership: `core`; owner `auth`; capability `Auth`; Module `not_applicable`
+- Ownership: `core`; owner `auth`; capability `auth`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `indirect`; resource `not_applicable`; Actor `unknown`; target Tenant/Instance `unknown`
 - Sources: `config/session.php:21`
 - Keys and relationships: The default session driver persists session payloads in the database.
@@ -1827,7 +1828,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `data_protection`; capability `DataProtection`; Module `not_applicable`
+- Ownership: `core`; owner `data_protection`; capability `data_protection`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `indirect`; resource `explicit`; Actor `unknown`; target Tenant/Instance `unknown`
 - Sources: `docs/07-planning/02-core-capabilities/data-governance-protection/data-protection-core-planning.md:7`
 - Keys and relationships: Generated exports require private storage, expiry, access, and erasure controls.
@@ -1845,7 +1846,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `security`; capability `Security`; Module `not_applicable`
+- Ownership: `core`; owner `security`; capability `security`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `indirect`; resource `not_applicable`; Actor `unknown`; target Tenant/Instance `unknown`
 - Sources: `docs/07-planning/02-core-capabilities/security/secrets-management-core-planning.md:598`
 - Keys and relationships: An external secret manager is a candidate protected credential-material boundary.
@@ -1863,7 +1864,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `implemented` / `retain`
-- Ownership: `core`; owner `infrastructure`; capability `Infrastructure`; Module `not_applicable`
+- Ownership: `core`; owner `infrastructure`; capability `infrastructure`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `not_applicable`; resource `not_applicable`; Actor `unknown`; target Tenant/Instance `unknown`
 - Sources: `config/cache.php:50`
 - Keys and relationships: Laravel can persist cache entries under the framework cache directory.
@@ -1881,7 +1882,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `implemented` / `retain`
-- Ownership: `core`; owner `auth`; capability `Auth`; Module `not_applicable`
+- Ownership: `core`; owner `auth`; capability `auth`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `indirect`; resource `not_applicable`; Actor `unknown`; target Tenant/Instance `unknown`
 - Sources: `config/session.php:54`
 - Keys and relationships: Laravel can persist session payloads in framework session files.
@@ -1899,7 +1900,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `implemented` / `retain`
-- Ownership: `core`; owner `database`; capability `Database`; Module `not_applicable`
+- Ownership: `core`; owner `database`; capability `database`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `not_applicable`; resource `not_applicable`; Actor `unknown`; target Tenant/Instance `unknown`
 - Sources: `config/database.php:121`
 - Keys and relationships: Laravel tracks applied migration names in its framework-managed migration repository.
@@ -1917,7 +1918,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `implemented` / `retain`
-- Ownership: `core`; owner `data_protection`; capability `DataProtection`; Module `not_applicable`
+- Ownership: `core`; owner `data_protection`; capability `data_protection`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `not_applicable`; resource `explicit`; Actor `unknown`; target Tenant/Instance `unknown`
 - Sources: `config/filesystems.php:50`
 - Keys and relationships: The S3 disk represents external object storage without recording credentials.
@@ -1935,7 +1936,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `implemented` / `retain`
-- Ownership: `core`; owner `data_protection`; capability `DataProtection`; Module `not_applicable`
+- Ownership: `core`; owner `data_protection`; capability `data_protection`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `not_applicable`; resource `explicit`; Actor `unknown`; target Tenant/Instance `unknown`
 - Sources: `config/filesystems.php:35`
 - Keys and relationships: The local disk maps to private application storage.
@@ -1953,7 +1954,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `planned` / `investigate`
-- Ownership: `core`; owner `identity`; capability `Identity`; Module `not_applicable`
+- Ownership: `core`; owner `identity`; capability `identity`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `indirect`; resource `explicit`; Actor `unknown`; target Tenant/Instance `unknown`
 - Sources: `docs/07-planning/02-core-capabilities/auth-identity-access/users-module-implementation-planning.md:297`
 - Keys and relationships: Profile-image file persistence has unresolved lifecycle, classification, and erasure evidence.
@@ -1971,7 +1972,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `implemented` / `investigate`
-- Ownership: `core`; owner `data_protection`; capability `DataProtection`; Module `not_applicable`
+- Ownership: `core`; owner `data_protection`; capability `data_protection`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `not_applicable`; resource `explicit`; Actor `unknown`; target Tenant/Instance `unknown`
 - Sources: `config/filesystems.php:41`
 - Keys and relationships: The public disk maps to web-addressable application storage.
@@ -1989,7 +1990,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `implemented` / `retain`
-- Ownership: `core`; owner `infrastructure`; capability `Infrastructure`; Module `not_applicable`
+- Ownership: `core`; owner `infrastructure`; capability `infrastructure`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `not_applicable`; resource `not_applicable`; Actor `unknown`; target Tenant/Instance `unknown`
 - Sources: `config/cache.php:75`
 - Keys and relationships: Laravel can use Redis as an external cache and lock boundary.
@@ -2007,7 +2008,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 
 - Review: reviewed
 - Implementation / disposition: `implemented` / `retain`
-- Ownership: `core`; owner `infrastructure`; capability `Infrastructure`; Module `not_applicable`
+- Ownership: `core`; owner `infrastructure`; capability `infrastructure`; Module `not_applicable`
 - Scope: Tenant `unknown`; Instance `unknown`; Principal `not_applicable`; resource `not_applicable`; Actor `unknown`; target Tenant/Instance `unknown`
 - Sources: `config/queue.php:69`
 - Keys and relationships: Laravel can use Redis as an external queue boundary.
@@ -2333,7 +2334,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 - `model_has_roles`: classification — No canonical per-table data classification is established by migration source. Retention/erasure — Foreign-key deletion behavior includes cascade; retention and legal hold remain undocumented. Audit — No table-specific Audit requirement is established by migration source.
 - `module_registry_entries`: classification — No canonical per-table data classification is established by migration source. Retention/erasure — Retention, erasure, and legal-hold behavior are not established by migration source. Audit — No table-specific Audit requirement is established by migration source.
 - `notification_registry_entries`: classification — No canonical per-table data classification is established by migration source. Retention/erasure — Retention, erasure, and legal-hold behavior are not established by migration source. Audit — No table-specific Audit requirement is established by migration source.
-- `notifications`: classification — No canonical per-table data classification is established by migration source. No canonical per-table data classification is established by migration source. Retention/erasure — Retention, erasure, and legal-hold behavior are not established by migration source. Retention, erasure, and legal-hold behavior are not established by migration source. Audit — No table-specific Audit requirement is established by migration source. No table-specific Audit requirement is established by migration source.
+- `notifications`: classification — No canonical per-table data classification is established by migration source. Retention/erasure — Retention, erasure, and legal-hold behavior are not established by migration source. Audit — No table-specific Audit requirement is established by migration source.
 - `password_reset_tokens`: classification — Sensitive or credential/session-material field names are present; no values were collected. Retention/erasure — Retention, erasure, and legal-hold behavior are not established by migration source. Audit — No table-specific Audit requirement is established by migration source.
 - `permission_registry_entries`: classification — No canonical per-table data classification is established by migration source. Retention/erasure — Foreign-key deletion behavior includes set_null; retention and legal hold remain undocumented. Audit — No table-specific Audit requirement is established by migration source.
 - `permissions`: classification — No canonical per-table data classification is established by migration source. Retention/erasure — Retention, erasure, and legal-hold behavior are not established by migration source. Audit — No table-specific Audit requirement is established by migration source.
@@ -2350,10 +2351,10 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
 - `setup_registry_entries`: classification — No canonical per-table data classification is established by migration source. Retention/erasure — Retention, erasure, and legal-hold behavior are not established by migration source. Audit — No table-specific Audit requirement is established by migration source.
 - `user_contact_emails`: classification — No canonical per-table data classification is established by migration source. Retention/erasure — Foreign-key deletion behavior includes cascade; retention and legal hold remain undocumented. Audit — No table-specific Audit requirement is established by migration source.
 - `user_dashboard_layouts`: classification — No canonical per-table data classification is established by migration source. Retention/erasure — Foreign-key deletion behavior includes cascade; retention and legal hold remain undocumented. Audit — No table-specific Audit requirement is established by migration source.
-- `user_mfa_methods`: classification — Sensitive or credential/session-material field names are present; no values were collected. Sensitive or credential/session-material field names are present; no values were collected. Retention/erasure — Foreign-key deletion behavior includes cascade, set_null; retention and legal hold remain undocumented. Foreign-key deletion behavior includes cascade, set_null; retention and legal hold remain undocumented. Audit — No table-specific Audit requirement is established by migration source. No table-specific Audit requirement is established by migration source.
+- `user_mfa_methods`: classification — Sensitive or credential/session-material field names are present; no values were collected. Retention/erasure — Foreign-key deletion behavior includes cascade, set_null; retention and legal hold remain undocumented. Audit — No table-specific Audit requirement is established by migration source.
 - `user_mfa_policies`: classification — No canonical per-table data classification is established by migration source. Retention/erasure — Foreign-key deletion behavior includes cascade, set_null; retention and legal hold remain undocumented. Audit — Actor-related columns provide partial accountable-change evidence.
-- `user_notification_preferences`: classification — No canonical per-table data classification is established by migration source. No canonical per-table data classification is established by migration source. Retention/erasure — Foreign-key deletion behavior includes cascade; retention and legal hold remain undocumented. Foreign-key deletion behavior includes cascade; retention and legal hold remain undocumented. Audit — No table-specific Audit requirement is established by migration source. No table-specific Audit requirement is established by migration source.
-- `users`: classification — Sensitive or credential/session-material field names are present; no values were collected. Sensitive or credential/session-material field names are present; no values were collected. Sensitive or credential/session-material field names are present; no values were collected. Sensitive or credential/session-material field names are present; no values were collected. Sensitive or credential/session-material field names are present; no values were collected. Retention/erasure — Retention, erasure, and legal-hold behavior are not established by migration source. Retention, erasure, and legal-hold behavior are not established by migration source. Retention, erasure, and legal-hold behavior are not established by migration source. Retention, erasure, and legal-hold behavior are not established by migration source. Retention, erasure, and legal-hold behavior are not established by migration source. Audit — No table-specific Audit requirement is established by migration source. No table-specific Audit requirement is established by migration source. No table-specific Audit requirement is established by migration source. No table-specific Audit requirement is established by migration source. No table-specific Audit requirement is established by migration source.
+- `user_notification_preferences`: classification — No canonical per-table data classification is established by migration source. Retention/erasure — Foreign-key deletion behavior includes cascade; retention and legal hold remain undocumented. Audit — No table-specific Audit requirement is established by migration source.
+- `users`: classification — Sensitive or credential/session-material field names are present; no values were collected. Retention/erasure — Retention, erasure, and legal-hold behavior are not established by migration source. Audit — No table-specific Audit requirement is established by migration source.
 
 <!-- PERSISTENT-DATA-INVENTORY:GOVERNANCE:END -->
 
@@ -2578,7 +2579,7 @@ Dispositions: `retain`, `investigate`, `compatibility`, `duplicate`.
     - `npm run inventory:m0:persistent-data:render -- --baseline 1d103f5fa47aab8c8adfba8ea134dd29540426fe`
     - `npm run lint:m0:persistent-data-inventory -- --baseline 1d103f5fa47aab8c8adfba8ea134dd29540426fe --fixtures`
 - Runtime discovery:
-- `php artisan migrate:status --no-interaction --no-ansi`: exit unavailable, timed out; spawnSync php ETIMEDOUT
+- `php artisan migrate:status --no-interaction --no-ansi`: exit 1; Command exited with status 1.
 - `php artisan config:show permission --no-ansi`: exit 0
 - Fixture, formatting, documentation guardrail, and final diff results are command evidence in the pull request; rendering does not self-certify later commands.
 - Repository-owner Architecture, Security, Data Governance, database ownership, ledger, chain, contract, and contradiction acceptance remains required.

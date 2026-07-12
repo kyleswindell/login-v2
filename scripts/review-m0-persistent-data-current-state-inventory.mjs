@@ -8,12 +8,17 @@ import { spawnSync } from "node:child_process";
 
 const CLASSIFICATIONS_PATH =
     "docs/07-planning/00-overview/evidence/m0-persistent-data-current-state-classifications.json";
+const RAW_PATH =
+    "docs/07-planning/00-overview/evidence/m0-persistent-data-current-state-raw.json";
+const CANONICAL_KEY_PATTERN = /^[a-z][a-z0-9_]*$/;
 const METADATA_FIELDS = new Set([
     "_record_id",
     "_reviewed",
     "_review_note",
     "_review_required",
     "_source_hashes",
+    "_generated_fingerprint",
+    "_generator_schema_version",
 ]);
 const SCOPE_FIELDS = [
     "tenant_scope",
@@ -27,6 +32,10 @@ const SCOPE_FIELDS = [
 const root = run("git", ["rev-parse", "--show-toplevel"]).trim();
 process.chdir(root);
 const classifications = JSON.parse(readFileSync(CLASSIFICATIONS_PATH, "utf8"));
+const raw = JSON.parse(readFileSync(RAW_PATH, "utf8"));
+const generatedById = new Map(
+    raw.material_record_seeds.map((item) => [item._record_id, item]),
+);
 const args = process.argv.slice(2);
 
 if (args.length === 0) usage();
@@ -93,7 +102,14 @@ function setField(identifier, field, jsonValue) {
     ) {
         throw new Error(`Field is not part of the issue schema: ${field}`);
     }
-    if (["_record_id", "_source_hashes"].includes(field)) {
+    if (
+        [
+            "_record_id",
+            "_source_hashes",
+            "_generated_fingerprint",
+            "_generator_schema_version",
+        ].includes(field)
+    ) {
         throw new Error(`${field} cannot be changed by the review helper.`);
     }
     let value;
@@ -150,6 +166,15 @@ function addContradiction(identifier, code, explanation, evidenceJson) {
 
 function markReviewed(identifier) {
     const item = findRecord(identifier);
+    const generated = generatedById.get(item._record_id);
+    if (
+        !generated ||
+        generated._generated_fingerprint !== item._generated_fingerprint
+    ) {
+        throw new Error(
+            `Cannot mark ${item._record_id} reviewed: generated fingerprint is stale.`,
+        );
+    }
     const failures = validateRecord(item, true);
     if (failures.length > 0) {
         throw new Error(
@@ -171,6 +196,15 @@ function validateRecord(item, finalReview) {
     }
     if (!item._record_id || !item.storage_identifier)
         failures.push("missing stable identity");
+    for (const field of ["owner_key", "capability_key", "module_key"]) {
+        if (!CANONICAL_KEY_PATTERN.test(String(item[field] ?? "")))
+            failures.push(`invalid canonical ${field}`);
+    }
+    if (
+        typeof item._generated_fingerprint !== "string" ||
+        item._generated_fingerprint.length !== 64
+    )
+        failures.push("missing generated fingerprint");
     for (const [field, values] of [
         [
             "implementation_state",

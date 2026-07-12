@@ -1,0 +1,13 @@
+{
+    "minimum_surface_count": 7,
+    "required_record_fragments": [
+        "component:resources:views:components:ui:foo",
+        "pattern:resources:views:components:patterns:foo",
+        "component:resources:views:components:ui:grid",
+        "component_family:resources:views:components:ui:dialog",
+        "element:resources:views:elements:color",
+        "icon_system:icons-system",
+        "javascript_control:resources:js:components:foo.js"
+    ],
+    "contract_variation_path": "resources/views/components/ui/grid/contract.blade.php"
+}

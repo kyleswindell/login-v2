@@ -313,16 +313,8 @@
     ],
     "source_reference_subject_types": [
       "surface",
-      "surface_alias",
-      "surface_file",
-      "mismatch",
-      "test_trace",
       "standard",
-      "surface_standard",
-      "standard_finding",
-      "metadata_evidence",
-      "dependency",
-      "review_status"
+      "test_trace"
     ],
     "review_subject_types": [
       "surface",
@@ -3664,7 +3656,7 @@
       "file": "ui-source-references.csv",
       "location": "headers",
       "table_name": "ui_source_references",
-      "purpose": "One row per accepted evidence-source reference; multiple rows may support one subject.",
+      "purpose": "One row per exact accepted evidence token emitted by an explicit reviewed-record binding.",
       "primary_key": [
         "source_reference_id"
       ],
@@ -3672,9 +3664,9 @@
       "sort_order": [
         "subject_type",
         "subject_id",
-        "evidence_kind",
-        "evidence_value",
-        "line_start"
+        "evidence_raw",
+        "line_start",
+        "line_end"
       ],
       "columns": [
         {
@@ -3741,7 +3733,7 @@
           "source_roles": [],
           "source_json_pointers": [],
           "mapping_status": "derived",
-          "transformation": "Hash subject_type, subject_id, evidence_kind, evidence_value, and line range.",
+          "transformation": "Hash subject_type, subject_id, evidence_raw, line_start, and line_end.",
           "excel_formula_protection": false
         },
         {
@@ -3753,22 +3745,14 @@
           "foreign_key": null,
           "controlled_values": [
             "surface",
-            "surface_alias",
-            "surface_file",
-            "mismatch",
-            "test_trace",
             "standard",
-            "surface_standard",
-            "standard_finding",
-            "metadata_evidence",
-            "dependency",
-            "review_status"
+            "test_trace"
           ],
           "description": "Record family supported by the evidence.",
           "source_roles": [],
           "source_json_pointers": [],
           "mapping_status": "derived",
-          "transformation": "Assign from the normalized output record family.",
+          "transformation": "Assign only from source_reference_bindings.",
           "excel_formula_protection": false
         },
         {
@@ -3783,8 +3767,34 @@
           "source_roles": [],
           "source_json_pointers": [],
           "mapping_status": "derived",
-          "transformation": "Use the normalized output record primary key.",
+          "transformation": "Resolve from the binding subject_id_pointer or subject_id_transform.",
           "excel_formula_protection": false
+        },
+        {
+          "file": "ui-source-references.csv",
+          "column": "evidence_raw",
+          "type": "string",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "controlled_values": null,
+          "description": "Complete accepted evidence-source token preserved without prefix loss.",
+          "source_roles": [
+            "classifications",
+            "test_traces"
+          ],
+          "source_json_pointers": [
+            "/items/*/evidence_source/*",
+            "/items/*/icon_or_asset_dependencies/*/evidence_source/*",
+            "/items/*/metadata_evidence/evidence_source/*",
+            "/items/*/registration_evidence/*/evidence_source/*",
+            "/items/*/standards_evidence/*/evidence_source/*",
+            "/standard_reviews/*/evidence_source/*",
+            "/test_traces/*/evidence_source/*"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Preserve the exact accepted evidence_source array entry unchanged.",
+          "excel_formula_protection": true
         },
         {
           "file": "ui-source-references.csv",
@@ -3806,14 +3816,19 @@
           "description": "Parsed evidence-reference category.",
           "source_roles": [
             "classifications",
-            "observations",
             "test_traces"
           ],
           "source_json_pointers": [
-            "/**/evidence_source/*"
+            "/items/*/evidence_source/*",
+            "/items/*/icon_or_asset_dependencies/*/evidence_source/*",
+            "/items/*/metadata_evidence/evidence_source/*",
+            "/items/*/registration_evidence/*/evidence_source/*",
+            "/items/*/standards_evidence/*/evidence_source/*",
+            "/standard_reviews/*/evidence_source/*",
+            "/test_traces/*/evidence_source/*"
           ],
           "mapping_status": "derived",
-          "transformation": "Parse the accepted evidence-source prefix.",
+          "transformation": "Parse evidence_raw using evidence_reference_parsing; never use parsed fields for identity.",
           "excel_formula_protection": false
         },
         {
@@ -3827,14 +3842,19 @@
           "description": "Exact accepted evidence-source value after the prefix.",
           "source_roles": [
             "classifications",
-            "observations",
             "test_traces"
           ],
           "source_json_pointers": [
-            "/**/evidence_source/*"
+            "/items/*/evidence_source/*",
+            "/items/*/icon_or_asset_dependencies/*/evidence_source/*",
+            "/items/*/metadata_evidence/evidence_source/*",
+            "/items/*/registration_evidence/*/evidence_source/*",
+            "/items/*/standards_evidence/*/evidence_source/*",
+            "/standard_reviews/*/evidence_source/*",
+            "/test_traces/*/evidence_source/*"
           ],
           "mapping_status": "derived",
-          "transformation": "Preserve the accepted value without workstation-path expansion.",
+          "transformation": "Parse evidence_raw using evidence_reference_parsing while preserving qualifiers in evidence_raw.",
           "excel_formula_protection": true
         },
         {
@@ -3848,14 +3868,19 @@
           "description": "Repository-relative path for path evidence.",
           "source_roles": [
             "classifications",
-            "observations",
             "test_traces"
           ],
           "source_json_pointers": [
-            "/**/evidence_source/*"
+            "/items/*/evidence_source/*",
+            "/items/*/icon_or_asset_dependencies/*/evidence_source/*",
+            "/items/*/metadata_evidence/evidence_source/*",
+            "/items/*/registration_evidence/*/evidence_source/*",
+            "/items/*/standards_evidence/*/evidence_source/*",
+            "/standard_reviews/*/evidence_source/*",
+            "/test_traces/*/evidence_source/*"
           ],
           "mapping_status": "derived",
-          "transformation": "Populate only for path evidence.",
+          "transformation": "Populate from evidence_value only when evidence_kind is path.",
           "excel_formula_protection": false
         },
         {
@@ -4215,5 +4240,96 @@
         }
       ]
     }
-  ]
+  ],
+  "source_pointer_syntax": {
+    "kind": "json_pointer_glob",
+    "literal_segments": "Use RFC 6901 segment decoding: ~0 represents ~ and ~1 represents /.",
+    "single_wildcard": "* matches exactly one array element or object member segment.",
+    "recursive_wildcard": "** matches zero or more descendant segments.",
+    "record_relative_pointers": "subject_id_pointer and evidence_pointers are evaluated relative to each record matched by record_pointer.",
+    "evaluation": "Evaluate every pattern only against its declared source_role; preserve source array order before deterministic output sorting."
+  },
+  "source_reference_bindings": [
+    {
+      "subject_type": "surface",
+      "source_role": "classifications",
+      "record_pointer": "/items/*",
+      "subject_id_pointer": "/_record_id",
+      "subject_id_transform": null,
+      "evidence_pointers": [
+        "/evidence_source/*",
+        "/icon_or_asset_dependencies/*/evidence_source/*",
+        "/metadata_evidence/evidence_source/*",
+        "/registration_evidence/*/evidence_source/*",
+        "/standards_evidence/*/evidence_source/*"
+      ]
+    },
+    {
+      "subject_type": "standard",
+      "source_role": "classifications",
+      "record_pointer": "/standard_reviews/*",
+      "subject_id_pointer": null,
+      "subject_id_transform": "standard_id_from__standard_path",
+      "evidence_pointers": [
+        "/evidence_source/*"
+      ]
+    },
+    {
+      "subject_type": "test_trace",
+      "source_role": "test_traces",
+      "record_pointer": "/test_traces/*",
+      "subject_id_pointer": "/_trace_id",
+      "subject_id_transform": null,
+      "evidence_pointers": [
+        "/evidence_source/*"
+      ]
+    }
+  ],
+  "evidence_reference_parsing": {
+    "raw_field": "evidence_raw",
+    "identity_rule": "Preserve the complete accepted token. Derive source_reference_id from subject_type, subject_id, evidence_raw, line_start, and line_end.",
+    "separator": "Use the first colon as the structural separator only after applying the ordered match rules.",
+    "rules": [
+      {
+        "match": "prefix path:",
+        "evidence_kind": "path",
+        "evidence_value": "substring after path:"
+      },
+      {
+        "match": "prefix path-pattern:",
+        "evidence_kind": "path_pattern",
+        "evidence_value": "substring after path-pattern:"
+      },
+      {
+        "match": "prefix observation:",
+        "evidence_kind": "observation",
+        "evidence_value": "substring after observation:"
+      },
+      {
+        "match": "prefix issue-<decimal issue number>:",
+        "evidence_kind": "issue",
+        "evidence_value": "substring after the issue-qualified prefix; evidence_raw retains the issue number"
+      },
+      {
+        "match": "prefix command:",
+        "evidence_kind": "command",
+        "evidence_value": "substring after command:"
+      },
+      {
+        "match": "prefix git:",
+        "evidence_kind": "git",
+        "evidence_value": "substring after git:"
+      },
+      {
+        "match": "prefix manual-review: or manual_review:",
+        "evidence_kind": "manual_review",
+        "evidence_value": "substring after the matched prefix"
+      },
+      {
+        "match": "otherwise",
+        "evidence_kind": "other",
+        "evidence_value": "complete evidence_raw token"
+      }
+    ]
+  }
 }

@@ -46,6 +46,41 @@ The JSON schema owns exact file names, header order, types, nullability, keys, c
 | `observations` | Generated supporting evidence |
 | `test_traces` | Reviewed trace judgments |
 
+### 3.1. Source Pointer Syntax
+
+| Concern | Rule |
+| --- | --- |
+| Kind | `json_pointer_glob` |
+| Literal segments | Use RFC 6901 segment decoding: ~0 represents ~ and ~1 represents /. |
+| `*` | * matches exactly one array element or object member segment. |
+| `**` | ** matches zero or more descendant segments. |
+| Relative pointers | subject_id_pointer and evidence_pointers are evaluated relative to each record matched by record_pointer. |
+| Evaluation | Evaluate every pattern only against its declared source_role; preserve source array order before deterministic output sorting. |
+
+### 3.2. Source Reference Bindings
+
+Only explicitly bound reviewed record families may emit `ui-source-references.csv` rows.
+
+| Subject type | Source role | Record pointer | Subject ID | Evidence pointers |
+| --- | --- | --- | --- | --- |
+| `surface` | `classifications` | `/items/*` | pointer /_record_id | `/evidence_source/*`<br>`/icon_or_asset_dependencies/*/evidence_source/*`<br>`/metadata_evidence/evidence_source/*`<br>`/registration_evidence/*/evidence_source/*`<br>`/standards_evidence/*/evidence_source/*` |
+| `standard` | `classifications` | `/standard_reviews/*` | transform standard_id_from__standard_path | `/evidence_source/*` |
+| `test_trace` | `test_traces` | `/test_traces/*` | pointer /_trace_id | `/evidence_source/*` |
+### 3.3. Evidence Token Parsing
+
+`evidence_raw` preserves the complete accepted evidence token. Parsed fields are convenience projections and never replace the raw token.
+
+| Rule | Evidence kind | Evidence value |
+| --- | --- | --- |
+| prefix path: | `path` | substring after path: |
+| prefix path-pattern: | `path_pattern` | substring after path-pattern: |
+| prefix observation: | `observation` | substring after observation: |
+| prefix issue-<decimal issue number>: | `issue` | substring after the issue-qualified prefix; evidence_raw retains the issue number |
+| prefix command: | `command` | substring after command: |
+| prefix git: | `git` | substring after git: |
+| prefix manual-review: or manual_review: | `manual_review` | substring after the matched prefix |
+| otherwise | `other` | complete evidence_raw token |
+
 ## 4. Files
 
 
@@ -489,18 +524,18 @@ Deterministic order: `surface_id, dependency_kind, dependency_target_surface_id,
 
 ### 4.14. `ui-source-references.csv`
 
-One row per accepted evidence-source reference; multiple rows may support one subject.
+One row per exact accepted evidence token emitted by an explicit reviewed-record binding.
 
 Header:
 
 ```csv
-export_id,inventory_baseline_sha,export_schema_version,source_reference_id,subject_type,subject_id,evidence_kind,evidence_value,path,line_start,line_end,existence_state,source_blob_oid,source_sha256
+export_id,inventory_baseline_sha,export_schema_version,source_reference_id,subject_type,subject_id,evidence_raw,evidence_kind,evidence_value,path,line_start,line_end,existence_state,source_blob_oid,source_sha256
 ```
 
 Primary key: `source_reference_id`
 
 
-Deterministic order: `subject_type, subject_id, evidence_kind, evidence_value, line_start`
+Deterministic order: `subject_type, subject_id, evidence_raw, line_start, line_end`
 
 | Column | Type | Required | PK | FK | Controlled values | Source mapping | Description |
 | --- | --- | --- | --- | --- | --- | --- | --- |
@@ -508,17 +543,17 @@ Deterministic order: `subject_type, subject_id, evidence_kind, evidence_value, l
 | `inventory_baseline_sha` | `git_sha` | yes |  |  |  | derived: classifications; observations; test_traces /baseline_sha; /baseline/sha | Immutable Issue #30 evidence baseline commit SHA. |
 | `export_schema_version` | `string` | yes |  |  |  | derived | Version of this CSV/SQLite projection schema. |
 | `source_reference_id` | `string` | yes | yes |  |  | derived | Deterministic evidence reference ID. |
-| `subject_type` | `string` | yes |  |  | surface, surface_alias, surface_file, mismatch, test_trace, standard, surface_standard, standard_finding, metadata_evidence, dependency, review_status | derived | Record family supported by the evidence. |
+| `subject_type` | `string` | yes |  |  | surface, standard, test_trace | derived | Record family supported by the evidence. |
 | `subject_id` | `string` | yes |  |  |  | derived | Identifier of the supported output record. |
-| `evidence_kind` | `string` | yes |  |  | path, path_pattern, observation, issue, command, git, manual_review, other | derived: classifications; observations; test_traces /**/evidence_source/* | Parsed evidence-reference category. |
-| `evidence_value` | `string` | yes |  |  |  | derived: classifications; observations; test_traces /**/evidence_source/* | Exact accepted evidence-source value after the prefix. |
-| `path` | `string` | no |  |  |  | derived: classifications; observations; test_traces /**/evidence_source/* | Repository-relative path for path evidence. |
+| `evidence_raw` | `string` | yes |  |  |  | confirmed: classifications; test_traces /items/*/evidence_source/*; /items/*/registration_evidence/*/evidence_source/*; /standard_reviews/*/evidence_source/*; /test_traces/*/evidence_source/* | Complete accepted evidence-source token preserved without prefix loss. |
+| `evidence_kind` | `string` | yes |  |  | path, path_pattern, observation, issue, command, git, manual_review, other | derived: classifications; test_traces /items/*/evidence_source/*; /items/*/registration_evidence/*/evidence_source/*; /standard_reviews/*/evidence_source/*; /test_traces/*/evidence_source/* | Parsed evidence-reference category. |
+| `evidence_value` | `string` | yes |  |  |  | derived: classifications; test_traces /items/*/evidence_source/*; /items/*/registration_evidence/*/evidence_source/*; /standard_reviews/*/evidence_source/*; /test_traces/*/evidence_source/* | Exact accepted evidence-source value after the prefix. |
+| `path` | `string` | no |  |  |  | derived: classifications; test_traces /items/*/evidence_source/*; /items/*/registration_evidence/*/evidence_source/*; /standard_reviews/*/evidence_source/*; /test_traces/*/evidence_source/* | Repository-relative path for path evidence. |
 | `line_start` | `integer` | no |  |  |  | pending | Optional one-based evidence start line. |
 | `line_end` | `integer` | no |  |  |  | pending | Optional one-based evidence end line. |
 | `existence_state` | `string` | yes |  |  | present, absent, unknown, not_applicable | derived: observations /surfaces/*/** | Physical-source existence state where applicable. |
 | `source_blob_oid` | `string` | no |  |  |  | derived: observations /surfaces/*/**/object_sha | Git blob OID when available. |
 | `source_sha256` | `sha256` | no |  |  |  | derived: observations /surfaces/*/**/source_sha256 | Source SHA-256 when available. |
-
 ### 4.15. `ui-review-status.csv`
 
 One row per independently reviewed surface, standard, or test trace.
@@ -568,7 +603,7 @@ Natural keys:
 | Standard finding | `standard_id`, `finding_kind`, `finding_value` |
 | Metadata evidence | `surface_id`, `metadata_field` |
 | Dependency | `surface_id`, `dependency_kind`, target identity, canonical payload |
-| Source reference | `subject_type`, `subject_id`, `evidence_kind`, `evidence_value`, line range |
+| Source reference | `subject_type`, `subject_id`, `evidence_raw`, line range |
 | Review status | `subject_type`, `subject_id` |
 
 ## 6. Review Boundary

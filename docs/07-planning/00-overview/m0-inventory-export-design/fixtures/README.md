@@ -26,6 +26,8 @@ The expected fixture intentionally covers:
 - trace relationship kinds;
 - `present_claim`, `not_observed`, and `unknown` coverage states;
 - multiple evidence sources;
+- exact raw evidence tokens, including issue-qualified values such as `issue-29:route-list`;
+- explicit surface, standard, and test-trace source-reference bindings;
 - resolved and unresolved dependencies;
 - surface, standard, and trace review records;
 - spreadsheet formula neutralization.

@@ -105,6 +105,27 @@ Normalize:
 - independently reviewed surfaces, standards, and traces into `ui-review-status.csv`.
 
 Some Issue #30 values are structured records rather than simple relationships. Columns ending in `_json` explicitly store deterministic compact JSON to preserve those exact source values. A JSON-valued column is never presented as an ordinary scalar.
+### 6.1. Evidence-Source Bindings
+
+`ui-source-references.csv` emits rows only for explicitly bound reviewed record families:
+
+- `surface` from `classifications.items`;
+- `standard` from `classifications.standard_reviews`;
+- `test_trace` from `test_traces.test_traces`.
+
+The source binding registry in `csv-schema.json` identifies the record pointer, subject-ID rule, and allowed evidence pointers for each family. Recursive discovery does not choose evidence ownership.
+
+Every row preserves the complete accepted token in `evidence_raw`. Parsed `evidence_kind` and `evidence_value` columns are convenience fields only. For example:
+
+```text
+evidence_raw  = issue-29:route-list
+evidence_kind = issue
+evidence_value = route-list
+```
+
+The issue qualifier remains part of identity. Source-reference IDs are derived from `subject_type`, `subject_id`, `evidence_raw`, `line_start`, and `line_end`.
+
+The schema uses an explicit JSON Pointer glob grammar. `*` matches one segment and `**` matches zero or more descendant segments; each pattern is evaluated only against its declared source role.
 
 ## 7. CSV Format
 

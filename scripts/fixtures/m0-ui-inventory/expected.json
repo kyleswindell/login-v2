@@ -1,0 +1,29 @@
+{
+    "schema_version": 2,
+    "minimum_surface_count": 14,
+    "contract_variation_path": "resources/views/components/ui/grid/contract.blade.php",
+    "copied_template_slugs": ["forms-dialog", "forms-side-panel"],
+    "pictogram_implementation_entry": "resources/views/elements/pictograms/alert.svg",
+    "required_surface_types": [
+        "component",
+        "component_family",
+        "element",
+        "icon_system",
+        "javascript_control",
+        "pattern",
+        "renderer",
+        "ui_contribution",
+        "url_view",
+        "view_model"
+    ],
+    "forbidden_false_trace_pairs": [
+        [
+            "Modules/Notifications/resources/views/index.blade.php",
+            "resources/views/elements/spacing/__tests__/index.md"
+        ],
+        [
+            "Modules/Roles/resources/views/index.blade.php",
+            "resources/views/elements/pictograms/__tests__/index.md"
+        ]
+    ]
+}

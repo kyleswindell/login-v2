@@ -1,0 +1,165 @@
+{
+    "schema_version": 2,
+    "files": [
+        {
+            "path": "resources/views/components/ui/foo/index.blade.php",
+            "content": "{{-- File: resources/views/components/ui/foo/index.blade.php | Purpose: Foo. --}}\n@props(['label' => null, 'type' => 'button', 'disabled' => false])\n<div data-ui-foo aria-label=\"{{ $label }}\">{{ $slot }}</div>"
+        },
+        {
+            "path": "resources/views/components/ui/foo/contract.php",
+            "content": "<?php use App\\Surfaces\\Contracts\\Surface; return Surface::component(['identity' => ['slug' => 'foo', 'component' => 'x-ui.foo', 'ui_key' => 'component.foo'], 'api' => ['props' => [['name' => 'label', 'type' => 'string'], ['name' => 'type', 'type' => 'bool'], ['name' => 'disabled', 'type' => 'bool']]], 'source' => ['blade' => ['resources/views/components/ui/foo/index.blade.php']]]);"
+        },
+        {
+            "path": "resources/views/components/ui/foo/__tests__/FooComponentTest.php",
+            "content": "<?php test('renders foo', function () { expect('x-ui.foo')->toBeString(); });"
+        },
+        {
+            "path": "resources/views/components/ui/foo/__tests__/FooInteraction.spec.js",
+            "content": "test('toggles foo', () => { expect('[data-ui-foo]').toBeTruthy(); });"
+        },
+        {
+            "path": "resources/views/components/patterns/foo/index.blade.php",
+            "content": "{{-- File: resources/views/components/patterns/foo/index.blade.php | Purpose: Foo pattern. --}}\n<x-ui.foo label=\"Pattern\" />"
+        },
+        {
+            "path": "resources/views/components/patterns/foo/contract.php",
+            "content": "<?php use App\\Surfaces\\Contracts\\Surface; return Surface::pattern(['identity' => ['slug' => 'foo-pattern', 'ui_key' => 'pattern.foo']]);"
+        },
+        {
+            "path": "resources/views/components/patterns/forms/dialog/index.blade.php",
+            "content": "<x-ui.modal>{{ $slot }}</x-ui.modal>"
+        },
+        {
+            "path": "resources/views/components/patterns/forms/dialog/contract.php",
+            "content": "<?php\n/* File: docs/09-reference/ui/ui-contract-template.php\n * Purpose: Copyable baseline for Login App UI contract.php files.\n * Copy this shape into an owning UI surface folder.\n */\nreturn ['schema_version' => 1, 'identity' => ['slug' => '   ', 'label' => '', 'group' => 'Foundation Elements', 'type' => 'element'], 'lifecycle' => ['status' => 'legacy-compatible'], 'api' => ['props' => [['name' => 'slug'], ['name' => 'label'], ['name' => 'type']]], 'testing' => [], 'review' => []];"
+        },
+        {
+            "path": "resources/views/components/patterns/forms/side-panel/index.blade.php",
+            "content": "<aside>{{ $slot }}</aside>"
+        },
+        {
+            "path": "resources/views/components/patterns/forms/side-panel/contract.php",
+            "content": "<?php\n/* File: docs/09-reference/ui/ui-contract-template.php\n * Purpose: Copyable baseline for Login App UI contract.php files.\n * Copy this shape into an owning UI surface folder.\n */\nreturn ['schema_version' => 1, 'identity' => ['slug' => '', 'label' => '   ', 'group' => 'Foundation Elements', 'type' => 'element'], 'lifecycle' => ['status' => 'legacy-compatible'], 'api' => ['props' => [['name' => 'slug'], ['name' => 'label'], ['name' => 'type']]], 'testing' => [], 'review' => []];"
+        },
+        {
+            "path": "resources/views/components/ui/grid/index.blade.php",
+            "content": "@props(['columns' => 2])\n<div class=\"grid\">{{ $slot }}</div>"
+        },
+        {
+            "path": "resources/views/components/ui/grid/contract.blade.php",
+            "content": "<?php return ['schema_version' => 1, 'identity' => ['slug' => 'grid', 'component' => 'x-ui.grid', 'ui_key' => 'component.grid'], 'api' => ['props' => [['name' => 'columns']]]];"
+        },
+        {
+            "path": "resources/views/components/ui/dialog/contract.php",
+            "content": "<?php use App\\Surfaces\\Contracts\\Surface; return Surface::component(['identity' => ['slug' => 'dialog', 'component' => 'x-ui.dialog.*'], 'api' => ['props' => []], 'subcomponents' => ['root' => ['component' => 'x-ui.dialog.root', 'props' => ['open']]]]);"
+        },
+        {
+            "path": "resources/views/components/ui/dialog/root.blade.php",
+            "content": "@props(['open' => false])\n<dialog data-ui-dialog-root @if ($open) open @endif>{{ $slot }}</dialog>"
+        },
+        {
+            "path": "resources/views/components/ui/dialog/title.blade.php",
+            "content": "<h2>{{ $slot }}</h2>"
+        },
+        {
+            "path": "resources/views/elements/color/contract.php",
+            "content": "<?php use App\\Surfaces\\Contracts\\Surface; return Surface::element(['identity' => ['slug' => 'color', 'ui_key' => 'element.color'], 'source' => ['css' => ['resources/css/ui/theme-seed.css']]]);"
+        },
+        {
+            "path": "resources/css/ui/theme-seed.css",
+            "content": ":root { --color-background: #fff; }"
+        },
+        {
+            "path": "resources/views/elements/icons/contract.php",
+            "content": "<?php return ['schema_version' => 1, 'identity' => ['slug' => 'icons', 'ui_key' => 'element.icons']];"
+        },
+        {
+            "path": "resources/views/components/icons/add.svg",
+            "content": null
+        },
+        {
+            "path": "resources/views/components/icons/close.svg",
+            "content": null
+        },
+        {
+            "path": "resources/views/elements/spacing/__tests__/index.md",
+            "content": "# Spacing visual review"
+        },
+        {
+            "path": "resources/views/elements/pictograms/__tests__/index.md",
+            "content": "# Pictogram visual review"
+        },
+        {
+            "path": "resources/views/elements/pictograms/contract.php",
+            "content": "<?php use App\\Surfaces\\Contracts\\Surface; return Surface::element(['identity' => ['slug' => 'pictograms', 'label' => 'Pictograms']]);"
+        },
+        {
+            "path": "resources/views/elements/pictograms/alert.svg",
+            "content": null
+        },
+        {
+            "path": "resources/views/elements/pictograms/empty-state.svg",
+            "content": null
+        },
+        {
+            "path": "Modules/Notifications/resources/views/index.blade.php",
+            "content": "<x-layouts.app><h1>Notifications</h1></x-layouts.app>"
+        },
+        {
+            "path": "Modules/Roles/resources/views/index.blade.php",
+            "content": "<x-layouts.app><h1>Roles</h1></x-layouts.app>"
+        },
+        {
+            "path": "tests/Feature/Ui/NotificationsViewTest.php",
+            "content": "<?php test('notifications view', function () { expect('Modules/Notifications/resources/views/index.blade.php')->toBeString(); });"
+        },
+        {
+            "path": "Modules/Notifications/Header/ActionViewData.php",
+            "content": "<?php\n/* This class prepares render-only notification data. */\nfinal class ActionViewData { public static function make(): array { return []; } }"
+        },
+        {
+            "path": "Modules/Notifications/Header/PanelDataProvider.php",
+            "content": "<?php final class PanelDataProvider { public function forUser(): array { return []; } }"
+        },
+        {
+            "path": "app/Platform/Dashboard/RendersOnDashboard.php",
+            "content": "<?php interface RendersOnDashboard { public function getDashboardView(): string; }"
+        },
+        {
+            "path": "app/Platform/Dashboard/WidgetRegistry.php",
+            "content": "<?php class WidgetRegistry { public function register(string $key, string $widgetClass): void {} }"
+        },
+        {
+            "path": "app/Platform/Dashboard/Widgets/PlatformStatsWidget.php",
+            "content": "<?php class PlatformStatsWidget implements RendersOnDashboard { public function getDashboardView(): string { return 'dashboard.stats'; } public function getDashboardViewData(): array { return []; } }"
+        },
+        {
+            "path": "app/Livewire/Platform/Dashboard/DashboardPage.php",
+            "content": "<?php class DashboardPage extends Component { public function render() { return view('livewire.platform.dashboard'); } }"
+        },
+        {
+            "path": "Modules/Account/Definition.php",
+            "content": "<?php self::mainView('account.main.index', 'account.index', 'Modules/Account/resources/views/index.blade.php');"
+        },
+        {
+            "path": "resources/js/components/foo.js",
+            "content": "export function initFoo(root = document) { root.querySelectorAll('[data-ui-foo]'); }"
+        },
+        {
+            "path": "docs/02-standards/ui/components/foo.md",
+            "content": "---\nstatus: current-standard\n---\n# Foo"
+        },
+        {
+            "path": "docs/02-standards/ui/contract-file.md",
+            "content": "# UI contract.php File"
+        },
+        {
+            "path": "docs/02-standards/ui/reference-file.md",
+            "content": "# UI reference.php File"
+        },
+        {
+            "path": "vite.config.js",
+            "content": "export default {};"
+        }
+    ]
+}

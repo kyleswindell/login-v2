@@ -1,0 +1,181 @@
+{
+    "schema_version": 2,
+    "issue": 30,
+    "repository": "kyleswindell/login-v2",
+    "inventory_baseline": "1d103f5fa47aab8c8adfba8ea134dd29540426fe",
+    "expected_execution_base": "0ead8c7b1e0e6ba447a5da6376ff27884daabcc7",
+    "correction_start_head": "2f0736b62902a8ede9807385e666e03625e63f74",
+    "branch_name": "m0/issue-30-ui-inventory",
+    "outputs": {
+        "observations": "docs/07-planning/00-overview/evidence/m0-ui-current-state-observations.json",
+        "classifications": "docs/07-planning/00-overview/evidence/m0-ui-current-state-classifications.json",
+        "test_traces": "docs/07-planning/00-overview/evidence/m0-ui-current-state-test-traces.json",
+        "document": "docs/07-planning/00-overview/m0-ui-current-state-inventory.md"
+    },
+    "issue_29_supporting_evidence": {
+        "raw_path": "docs/07-planning/00-overview/evidence/m0-repository-current-state-raw.json",
+        "required": true
+    },
+    "artifact_limits": {
+        "observations": {
+            "max_bytes": 12582912,
+            "max_lines": 140000
+        },
+        "classifications": {
+            "max_bytes": 8388608,
+            "max_lines": 100000
+        },
+        "test_traces": {
+            "max_bytes": 3145728,
+            "max_lines": 40000
+        },
+        "document": {
+            "max_bytes": 2097152,
+            "max_lines": 12000
+        },
+        "combined_max_bytes": 25165824,
+        "combined_max_lines": 250000
+    },
+    "required_coverage": {
+        "surface_types_any_of": ["renderer", "view_model"],
+        "required_path_patterns": [
+            "^Modules/Notifications/Header/ActionViewData\\.php$",
+            "^Modules/Notifications/Header/PanelDataProvider\\.php$",
+            "^app/Platform/Dashboard/WidgetRegistry\\.php$",
+            "^app/Platform/Dashboard/Widgets/.+Widget\\.php$",
+            "^app/Livewire/Platform/Dashboard/DashboardPage\\.php$"
+        ]
+    },
+    "scoped_roots": [
+        "resources/views/elements",
+        "resources/views/components",
+        "resources/views/platform",
+        "resources/css",
+        "resources/js",
+        "Modules",
+        "app/Surfaces/Contracts",
+        "app/Platform/Dashboard",
+        "app/Platform/Navigation",
+        "app/Platform/Shell",
+        "app/Platform/Docs",
+        "app/Livewire/Platform",
+        "app/Http/Controllers/Platform",
+        "app/Core/Modules/Definitions.php",
+        "app/Core/Modules/Definitions",
+        "app/Core/Modules/Manifest.php",
+        "app/Core/Modules/UiEntry.php",
+        "app/Core/Modules/UiEntryType.php",
+        "app/Core/Modules/UiPlacement.php",
+        "app/Core/Modules/PackageRegistrar.php",
+        "app/Core/Modules/PackageLoader.php",
+        "app/Core/Modules/Repository.php",
+        "routes/web.php",
+        "config/navigation.php",
+        "vite.config.js",
+        "package.json",
+        "docs/02-standards/ui",
+        "docs/09-reference/ui",
+        "tests/Feature/Ui",
+        "tests/Feature/Patterns"
+    ],
+    "module_include_patterns": [
+        "^Modules/[^/]+/(Definition\\.php|module\\.php)$",
+        "^Modules/[^/]+/routes/",
+        "^Modules/[^/]+/resources/(views|css|js)/",
+        "^Modules/[^/]+/(ViewModels|ViewModel|PageData|Renderers|Presentation)/",
+        "^Modules/[^/]+/Header/[^/]+\\.php$",
+        "^Modules/[^/]+/(?:[^/]+/)*(?:[^/]*(?:Renderer|ViewModel|PageData|ViewData|DataProvider|Widget|Registry))\\.php$"
+    ],
+    "exclude_patterns": [
+        "(^|/)vendor/",
+        "(^|/)node_modules/",
+        "(^|/)storage/",
+        "(^|/)bootstrap/cache/",
+        "(^|/)public/build/",
+        "(^|/)docs/_archive/",
+        "(^|/)docs/11-ai/_archive/"
+    ],
+    "text_extensions": [
+        ".blade.php",
+        ".css",
+        ".js",
+        ".json",
+        ".md",
+        ".mjs",
+        ".php",
+        ".svg",
+        ".txt"
+    ],
+    "max_text_bytes": 2097152,
+    "asset_group_patterns": {
+        "icons": [
+            "^resources/views/components/icons/",
+            "^resources/views/elements/icons/"
+        ],
+        "pictograms": [
+            "^resources/views/components/pictograms/",
+            "^resources/views/elements/pictograms/"
+        ]
+    },
+    "standalone_css_patterns": [
+        "^resources/css/app\\.css$",
+        "^resources/css/ui/theme-seed\\.css$"
+    ],
+    "runtime_discovery": [
+        {
+            "key": "route_list",
+            "command": ["php", "artisan", "route:list", "--json"]
+        },
+        {
+            "key": "artisan_list",
+            "command": ["php", "artisan", "list", "--format=json"]
+        },
+        {
+            "key": "module_list",
+            "command": ["php", "artisan", "platform:modules:list", "--json"]
+        }
+    ],
+    "allowed_worktree_paths": [
+        "docs/07-planning/00-overview/m0-ui-current-state-inventory.md",
+        "docs/07-planning/00-overview/evidence/m0-ui-current-state-observations.json",
+        "docs/07-planning/00-overview/evidence/m0-ui-current-state-classifications.json",
+        "docs/07-planning/00-overview/evidence/m0-ui-current-state-test-traces.json",
+        "docs/07-planning/index.md",
+        "package.json",
+        "scripts/m0-ui-inventory.config.json",
+        "scripts/collect-m0-ui-current-state-inventory.mjs",
+        "scripts/review-m0-ui-current-state-inventory.mjs",
+        "scripts/render-m0-ui-current-state-inventory.mjs",
+        "scripts/check-m0-ui-current-state-inventory.mjs",
+        "scripts/test-m0-ui-current-state-inventory.mjs",
+        "scripts/fixtures/m0-ui-inventory",
+        "scripts/lib/m0-ui-inventory"
+    ],
+    "ui_source_diff_roots": [
+        "resources",
+        "Modules",
+        "app/Surfaces/Contracts",
+        "app/Platform/Dashboard",
+        "app/Platform/Navigation",
+        "app/Platform/Shell",
+        "app/Platform/Docs",
+        "app/Livewire/Platform",
+        "app/Http/Controllers/Platform",
+        "app/Core/Modules/Definitions.php",
+        "app/Core/Modules/Definitions",
+        "app/Core/Modules/Manifest.php",
+        "app/Core/Modules/UiEntry.php",
+        "app/Core/Modules/UiEntryType.php",
+        "app/Core/Modules/UiPlacement.php",
+        "app/Core/Modules/PackageRegistrar.php",
+        "app/Core/Modules/PackageLoader.php",
+        "app/Core/Modules/Repository.php",
+        "routes/web.php",
+        "config/navigation.php",
+        "vite.config.js",
+        "tests/Feature/Ui",
+        "tests/Feature/Patterns",
+        "docs/02-standards/ui",
+        "docs/09-reference/ui"
+    ]
+}

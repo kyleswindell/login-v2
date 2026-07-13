@@ -1,12 +1,30 @@
 /**
  * ============================================================================
  * File: scripts/lib/m0-ui-inventory/contract-inspector.mjs
- * Purpose: Inspect UI contract and Blade APIs without executing repository PHP.
+ * Purpose: Inspect UI contracts and Blade APIs without executing repository PHP.
  * ============================================================================
  */
 
 import { basename } from "node:path";
 import { arrayDifference, normalizePath, uniqueSorted } from "./utilities.mjs";
+
+const PROFILE_DEFAULTS = {
+    component: {
+        schema_version: 1,
+        identity_type: "component",
+        identity_group: "Components",
+    },
+    element: {
+        schema_version: 1,
+        identity_type: "element",
+        identity_group: "Foundation Elements",
+    },
+    pattern: {
+        schema_version: 1,
+        identity_type: "pattern",
+        identity_group: "Patterns",
+    },
+};
 
 export function isContractSource(path, content = "") {
     const filename = basename(path);
@@ -15,7 +33,7 @@ export function isContractSource(path, content = "") {
         filename === "contract.php" ||
         filename === "contract.blade.php" ||
         /Surface::(?:component|element|pattern)\s*\(/.test(content) ||
-        /['"]schema_version['"]\s*=>/.test(content)
+        /["']schema_version["']\s*=>/.test(content)
     );
 }
 
@@ -26,7 +44,11 @@ export function inspectContract(file) {
         content,
         /Surface::(component|element|pattern)\s*\(/,
     );
+    const defaults = PROFILE_DEFAULTS[profile] ?? null;
+    const identitySection = extractArraySection(content, "identity") ?? "";
+    const lifecycleSection = extractArraySection(content, "lifecycle") ?? "";
     const apiSection = extractArraySection(content, "api") ?? "";
+    const sourceSection = extractArraySection(content, "source") ?? "";
     const subcomponentsSection =
         extractArraySection(content, "subcomponents") ?? "";
     const propsSection = extractArraySection(apiSection, "props");
@@ -36,6 +58,11 @@ export function inspectContract(file) {
         apiSection,
         "data_attributes",
     );
+    const explicitSchemaVersion = numberMatch(
+        content,
+        /["']schema_version["']\s*=>\s*(\d+)/,
+    );
+    const sourcePaths = extractRepositoryPaths(sourceSection || content);
     const subcomponentProps = extractArraySections(
         subcomponentsSection,
         "props",
@@ -44,6 +71,12 @@ export function inspectContract(file) {
         subcomponentsSection,
         "slots",
     ).flatMap(extractNamedEntries);
+    const identityType =
+        stringValue(identitySection, "type") ?? defaults?.identity_type ?? null;
+    const identityGroup =
+        stringValue(identitySection, "group") ??
+        defaults?.identity_group ??
+        null;
 
     return {
         path: file.path,
@@ -52,27 +85,30 @@ export function inspectContract(file) {
         filename,
         filename_variation: filename !== "contract.php",
         profile: profile ?? "raw_array_or_unknown",
-        schema_version: numberMatch(
-            content,
-            /['"]schema_version['"]\s*=>\s*(\d+)/,
-        ),
-        identity: {
-            slug: stringValue(content, "slug"),
-            label: stringValue(content, "label"),
-            component: stringValue(content, "component"),
-            type: stringValue(content, "type"),
-            group: stringValue(content, "group"),
-            ui_key:
-                stringValue(content, "ui_key") ??
-                stringValue(content, "component_key") ??
-                stringValue(content, "pattern_key") ??
-                stringValue(content, "layout_key") ??
-                stringValue(content, "contract_key"),
+        schema_version: {
+            value: explicitSchemaVersion ?? defaults?.schema_version ?? null,
+            explicit: explicitSchemaVersion !== null,
+            source:
+                explicitSchemaVersion !== null
+                    ? "contract_source"
+                    : defaults
+                      ? "surface_profile_default"
+                      : "unknown",
         },
-        lifecycle_status: stringValue(
-            extractArraySection(content, "lifecycle") ?? "",
-            "status",
-        ),
+        identity: {
+            slug: stringValue(identitySection, "slug"),
+            label: stringValue(identitySection, "label"),
+            component: stringValue(identitySection, "component"),
+            type: identityType,
+            group: identityGroup,
+            ui_key:
+                stringValue(identitySection, "ui_key") ??
+                stringValue(identitySection, "component_key") ??
+                stringValue(identitySection, "pattern_key") ??
+                stringValue(identitySection, "layout_key") ??
+                stringValue(identitySection, "contract_key"),
+        },
+        lifecycle_status: stringValue(lifecycleSection, "status"),
         api: {
             props: uniqueSorted([
                 ...extractNamedEntries(propsSection),
@@ -92,11 +128,12 @@ export function inspectContract(file) {
                 ),
             ].map((match) => match[1]),
         ),
-        source_paths: extractRepositoryPaths(content),
-        has_testing_section: /['"]testing['"]\s*=>/.test(content),
-        has_review_section: /['"]review['"]\s*=>/.test(content),
+        source_paths: sourcePaths,
+        has_testing_section: /["']testing["']\s*=>/.test(content),
+        has_review_section: /["']review["']\s*=>/.test(content),
         metadata: inspectMetadata(file.path, content, file.source_sha256),
-        parse_status: content === "" ? "unavailable" : "partial_static_parse",
+        parse_status:
+            content === "" ? "unavailable" : "section_aware_static_parse",
     };
 }
 
@@ -125,7 +162,7 @@ export function inspectBladeApi(files) {
         }
 
         for (const match of content.matchAll(
-            /dispatchEvent\s*\(\s*new\s+CustomEvent\s*\(\s*['"]([^'"]+)['"]/g,
+            /dispatchEvent\s*\(\s*new\s+CustomEvent\s*\(\s*["']([^"']+)["']/g,
         )) {
             events.push(match[1]);
         }
@@ -172,70 +209,99 @@ export function compareApis(implementationApi, contracts) {
 }
 
 export function inspectMetadata(path, content, sourceHash) {
+    const normalizedPath = normalizePath(path);
     const headerPresent =
         /\bFile:\s*[^\r\n]+/i.test(content) &&
         /\bPurpose:\s*[^\r\n]+/i.test(content);
+    const isContract = basename(path).startsWith("contract");
 
     return {
-        implementation_or_contract_path: normalizePath(path),
-        human_readable_header: {
+        path: normalizedPath,
+        human_readable_header: evidenceValue({
             status: headerPresent ? "present" : "absent",
             value: headerPresent
                 ? firstMatch(content, /\bFile:\s*([^\r\n]+)/i)
                 : null,
             format: headerPresent ? "File/Purpose header" : null,
-            disagreement: null,
-            evidence_source: [`path:${normalizePath(path)}`],
-        },
-        ui_key: metadataValue(content, [
-            "ui_key",
-            "component_key",
-            "pattern_key",
-            "layout_key",
-            "contract_key",
-        ]),
-        blade_alias: metadataValue(content, ["blade_alias", "component"]),
+            path: normalizedPath,
+        }),
+        ui_key: metadataValue(
+            content,
+            [
+                "ui_key",
+                "component_key",
+                "pattern_key",
+                "layout_key",
+                "contract_key",
+            ],
+            normalizedPath,
+        ),
+        blade_alias: metadataValue(
+            extractArraySection(content, "identity") ?? content,
+            ["blade_alias", "component"],
+            normalizedPath,
+        ),
         implementation_path_reference: pathReferenceValue(
             content,
             /resources\/views\/[A-Za-z0-9_./-]+\.blade\.php/g,
+            normalizedPath,
         ),
         contract_path_reference: pathReferenceValue(
             content,
             /resources\/views\/[A-Za-z0-9_./-]+\/contract(?:\.blade)?\.php/g,
+            normalizedPath,
         ),
-        contract_schema_version: metadataNumber(content, "schema_version"),
-        public_api_version: metadataValue(content, [
-            "public_api_version",
-            "api_version",
-        ]),
+        contract_schema_version: metadataNumber(
+            content,
+            "schema_version",
+            normalizedPath,
+        ),
+        public_api_version: metadataValue(
+            content,
+            ["public_api_version", "api_version"],
+            normalizedPath,
+        ),
         verification_commit: regexMetadata(
             content,
-            /(?:verification_commit|verified_commit)['"\s=>:]+([0-9a-f]{40})/i,
+            /(?:verification_commit|verified_commit)["'\s=>:]+([0-9a-f]{40})/i,
+            normalizedPath,
         ),
         verification_timestamp: regexMetadata(
             content,
-            /(?:verification_timestamp|verified_at)['"\s=>:]+([0-9T:+.-]{10,35}Z?)/i,
+            /(?:verification_timestamp|verified_at)["'\s=>:]+([0-9T:+.-]{10,35}Z?)/i,
+            normalizedPath,
         ),
-        source_hash: {
+        source_hash: evidenceValue({
             status: sourceHash === null ? "unknown" : "present",
             value: sourceHash,
             format: sourceHash === null ? null : "sha256",
-            disagreement: null,
-            evidence_source: [`path:${normalizePath(path)}`],
-        },
-        contract_hash: {
+            path: normalizedPath,
+        }),
+        contract_hash: evidenceValue({
             status:
-                basename(path).startsWith("contract") && sourceHash !== null
+                isContract && sourceHash !== null
                     ? "present"
-                    : "not_applicable",
-            value: basename(path).startsWith("contract") ? sourceHash : null,
-            format: basename(path).startsWith("contract") ? "sha256" : null,
-            disagreement: null,
-            evidence_source: [`path:${normalizePath(path)}`],
-        },
-        last_updated: metadataValue(content, ["last_updated", "last_reviewed"]),
-        known_disagreements: [],
-        evidence_source: [`path:${normalizePath(path)}`],
+                    : isContract
+                      ? "unknown"
+                      : "not_applicable",
+            value: isContract ? sourceHash : null,
+            format: isContract && sourceHash !== null ? "sha256" : null,
+            path: normalizedPath,
+        }),
+        last_updated: metadataValue(
+            content,
+            ["last_updated", "last_reviewed"],
+            normalizedPath,
+        ),
+    };
+}
+
+function evidenceValue({ status, value, format, path }) {
+    return {
+        status,
+        value,
+        format,
+        evidence_source: [`path:${path}`],
     };
 }
 
@@ -416,7 +482,6 @@ function splitTopLevelEntries(value) {
             } else if (character === quote) {
                 quote = null;
             }
-
             continue;
         }
 
@@ -437,92 +502,81 @@ function splitTopLevelEntries(value) {
 }
 
 function extractArrayKeys(content) {
-    const names = [];
-
-    for (const match of content.matchAll(
-        /["']([A-Za-z][A-Za-z0-9_]*)["']\s*=>/g,
-    )) {
-        names.push(match[1]);
-    }
-
-    return uniqueSorted(names);
+    return uniqueSorted(
+        [...content.matchAll(/["']([A-Za-z][A-Za-z0-9_]*)["']\s*=>/g)].map(
+            (match) => match[1],
+        ),
+    );
 }
 
 function extractRepositoryPaths(content) {
-    const paths = [];
-
-    for (const match of content.matchAll(
-        /(?:app|Modules|resources|routes|config|docs|tests)\/[A-Za-z0-9_ .@/()-]+\.[A-Za-z0-9.]+/g,
-    )) {
-        paths.push(normalizePath(match[0].trim()));
-    }
-
-    return uniqueSorted(paths);
+    return uniqueSorted(
+        [
+            ...content.matchAll(
+                /(?:app|Modules|resources|routes|config|docs|tests)\/[A-Za-z0-9_ .@/()-]+\.[A-Za-z0-9.]+/g,
+            ),
+        ].map((match) => normalizePath(match[0].trim())),
+    );
 }
 
-function metadataValue(content, keys) {
+function metadataValue(content, keys, path) {
     for (const key of keys) {
         const value = stringValue(content, key);
 
         if (value !== null) {
-            return {
+            return evidenceValue({
                 status: "present",
                 value,
                 format: "string",
-                disagreement: null,
-                evidence_source: [],
-            };
+                path,
+            });
         }
     }
 
-    return {
+    return evidenceValue({
         status: "absent",
         value: null,
         format: null,
-        disagreement: null,
-        evidence_source: [],
-    };
+        path,
+    });
 }
 
-function metadataNumber(content, key) {
+function metadataNumber(content, key, path) {
     const value = numberMatch(
         content,
         new RegExp(`["']${escapeRegex(key)}["']\\s*=>\\s*(\\d+)`),
     );
 
-    return {
+    return evidenceValue({
         status: value === null ? "absent" : "present",
         value,
         format: value === null ? null : "integer",
-        disagreement: null,
-        evidence_source: [],
-    };
+        path,
+    });
 }
 
-function regexMetadata(content, pattern) {
+function regexMetadata(content, pattern, path) {
     const value = firstMatch(content, pattern);
 
-    return {
+    return evidenceValue({
         status: value === null ? "absent" : "present",
         value,
         format: value === null ? null : "string",
-        disagreement: null,
-        evidence_source: [],
-    };
+        path,
+    });
 }
 
-function pathReferenceValue(content, pattern) {
+function pathReferenceValue(content, pattern, path) {
     const values = uniqueSorted(
         [...content.matchAll(pattern)].map((match) => match[0]),
     );
 
-    return {
+    return evidenceValue({
         status: values.length === 0 ? "absent" : "present",
         value: values,
         format: values.length === 0 ? null : "repository_path_list",
-        disagreement: null,
-        evidence_source: [],
-    };
+        path,
+    });
 }
 
 function stringValue(content, key) {

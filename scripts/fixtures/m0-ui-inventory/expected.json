@@ -1,13 +1,27 @@
 {
-    "minimum_surface_count": 7,
-    "required_record_fragments": [
-        "component:resources:views:components:ui:foo",
-        "pattern:resources:views:components:patterns:foo",
-        "component:resources:views:components:ui:grid",
-        "component_family:resources:views:components:ui:dialog",
-        "element:resources:views:elements:color",
-        "icon_system:icons-system",
-        "javascript_control:resources:js:components:foo.js"
+    "schema_version": 2,
+    "minimum_surface_count": 14,
+    "contract_variation_path": "resources/views/components/ui/grid/contract.blade.php",
+    "required_surface_types": [
+        "component",
+        "component_family",
+        "element",
+        "icon_system",
+        "javascript_control",
+        "pattern",
+        "renderer",
+        "ui_contribution",
+        "url_view",
+        "view_model"
     ],
-    "contract_variation_path": "resources/views/components/ui/grid/contract.blade.php"
+    "forbidden_false_trace_pairs": [
+        [
+            "Modules/Notifications/resources/views/index.blade.php",
+            "resources/views/elements/spacing/__tests__/index.md"
+        ],
+        [
+            "Modules/Roles/resources/views/index.blade.php",
+            "resources/views/elements/pictograms/__tests__/index.md"
+        ]
+    ]
 }

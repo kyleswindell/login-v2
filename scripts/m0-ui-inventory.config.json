@@ -1,15 +1,50 @@
 {
-    "schema_version": 1,
+    "schema_version": 2,
     "issue": 30,
     "repository": "kyleswindell/login-v2",
     "inventory_baseline": "1d103f5fa47aab8c8adfba8ea134dd29540426fe",
     "expected_execution_base": "0ead8c7b1e0e6ba447a5da6376ff27884daabcc7",
-    "branch_name": "m0/issue-30-ui-current-state-inventory",
+    "correction_start_head": "2c6b7b49bceb55c16b22a876a2837f1664a08ad1",
+    "branch_name": "m0/issue-30-ui-inventory",
     "outputs": {
         "observations": "docs/07-planning/00-overview/evidence/m0-ui-current-state-observations.json",
         "classifications": "docs/07-planning/00-overview/evidence/m0-ui-current-state-classifications.json",
         "test_traces": "docs/07-planning/00-overview/evidence/m0-ui-current-state-test-traces.json",
         "document": "docs/07-planning/00-overview/m0-ui-current-state-inventory.md"
+    },
+    "issue_29_supporting_evidence": {
+        "raw_path": "docs/07-planning/00-overview/evidence/m0-repository-current-state-raw.json",
+        "required": true
+    },
+    "artifact_limits": {
+        "observations": {
+            "max_bytes": 12582912,
+            "max_lines": 140000
+        },
+        "classifications": {
+            "max_bytes": 8388608,
+            "max_lines": 100000
+        },
+        "test_traces": {
+            "max_bytes": 3145728,
+            "max_lines": 40000
+        },
+        "document": {
+            "max_bytes": 2097152,
+            "max_lines": 12000
+        },
+        "combined_max_bytes": 25165824,
+        "combined_max_lines": 250000
+    },
+    "required_coverage": {
+        "surface_types_any_of": ["renderer", "view_model"],
+        "required_path_patterns": [
+            "^Modules/Notifications/Header/ActionViewData\\.php$",
+            "^Modules/Notifications/Header/PanelDataProvider\\.php$",
+            "^app/Platform/Dashboard/WidgetRegistry\\.php$",
+            "^app/Platform/Dashboard/Widgets/.+Widget\\.php$",
+            "^app/Livewire/Platform/Dashboard/DashboardPage\\.php$"
+        ]
     },
     "scoped_roots": [
         "resources/views/elements",
@@ -47,7 +82,9 @@
         "^Modules/[^/]+/(Definition\\.php|module\\.php)$",
         "^Modules/[^/]+/routes/",
         "^Modules/[^/]+/resources/(views|css|js)/",
-        "^Modules/[^/]+/(ViewModels|ViewModel|PageData|Renderers|Presentation)/"
+        "^Modules/[^/]+/(ViewModels|ViewModel|PageData|Renderers|Presentation)/",
+        "^Modules/[^/]+/Header/[^/]+\\.php$",
+        "^Modules/[^/]+/(?:[^/]+/)*(?:[^/]*(?:Renderer|ViewModel|PageData|ViewData|DataProvider|Widget|Registry))\\.php$"
     ],
     "exclude_patterns": [
         "(^|/)vendor/",

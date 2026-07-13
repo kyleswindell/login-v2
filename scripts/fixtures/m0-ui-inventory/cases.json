@@ -1,17 +1,17 @@
 {
-    "schema_version": 1,
+    "schema_version": 2,
     "files": [
         {
             "path": "resources/views/components/ui/foo/index.blade.php",
-            "content": "{{-- File: resources/views/components/ui/foo/index.blade.php | Purpose: Foo. --}}\n@props(['label' => null, 'type' => 'button', 'disabled' => false])\n<div data-ui-foo aria-label=\"{{ $resolvedLabel ?? $label }}\">{{ $slot }}</div>"
+            "content": "{{-- File: resources/views/components/ui/foo/index.blade.php | Purpose: Foo. --}}\n@props(['label' => null, 'type' => 'button', 'disabled' => false])\n<div data-ui-foo aria-label=\"{{ $label }}\">{{ $slot }}</div>"
         },
         {
             "path": "resources/views/components/ui/foo/contract.php",
-            "content": "<?php use App\\Surfaces\\Contracts\\Surface; return Surface::component(['identity' => ['slug' => 'foo', 'component' => 'x-ui.foo', 'ui_key' => 'component.foo'], 'api' => ['props' => [['name' => 'label'], ['name' => 'type'], ['name' => 'disabled']]], 'source' => ['blade' => ['resources/views/components/ui/foo/index.blade.php']]]);"
+            "content": "<?php use App\\Surfaces\\Contracts\\Surface; return Surface::component(['identity' => ['slug' => 'foo', 'component' => 'x-ui.foo', 'ui_key' => 'component.foo'], 'api' => ['props' => [['name' => 'label', 'type' => 'string'], ['name' => 'type', 'type' => 'bool'], ['name' => 'disabled', 'type' => 'bool']]], 'source' => ['blade' => ['resources/views/components/ui/foo/index.blade.php']]]);"
         },
         {
             "path": "resources/views/components/ui/foo/__tests__/FooComponentTest.php",
-            "content": "<?php test('renders foo', function () { expect('aria-label')->toBeString(); });"
+            "content": "<?php test('renders foo', function () { expect('x-ui.foo')->toBeString(); });"
         },
         {
             "path": "resources/views/components/ui/foo/__tests__/FooInteraction.spec.js",
@@ -26,16 +26,8 @@
             "content": "<?php use App\\Surfaces\\Contracts\\Surface; return Surface::pattern(['identity' => ['slug' => 'foo-pattern', 'ui_key' => 'pattern.foo']]);"
         },
         {
-            "path": "resources/views/components/patterns/standalone-one.blade.php",
-            "content": "<section data-ui-standalone-one>{{ $slot }}</section>"
-        },
-        {
-            "path": "resources/views/components/patterns/standalone-two.blade.php",
-            "content": "<section data-ui-standalone-two>{{ $slot }}</section>"
-        },
-        {
             "path": "resources/views/components/ui/grid/index.blade.php",
-            "content": "{{-- File: resources/views/components/ui/grid/index.blade.php | Purpose: Grid. --}}\n@props(['columns' => 2])\n<div class=\"grid\">{{ $slot }}</div>"
+            "content": "@props(['columns' => 2])\n<div class=\"grid\">{{ $slot }}</div>"
         },
         {
             "path": "resources/views/components/ui/grid/contract.blade.php",
@@ -43,35 +35,23 @@
         },
         {
             "path": "resources/views/components/ui/dialog/contract.php",
-            "content": "<?php use App\\Surfaces\\Contracts\\Surface; return Surface::component(['identity' => ['slug' => 'dialog', 'ui_key' => 'component.dialog'], 'api' => ['props' => []], 'subcomponents' => ['root' => ['component' => 'x-ui.dialog.root', 'props' => ['open']]]]);"
+            "content": "<?php use App\\Surfaces\\Contracts\\Surface; return Surface::component(['identity' => ['slug' => 'dialog', 'component' => 'x-ui.dialog.*'], 'api' => ['props' => []], 'subcomponents' => ['root' => ['component' => 'x-ui.dialog.root', 'props' => ['open']]]]);"
         },
         {
             "path": "resources/views/components/ui/dialog/root.blade.php",
-            "content": "{{-- File: resources/views/components/ui/dialog/root.blade.php | Purpose: Dialog root. --}}\n@props(['open' => false])\n<dialog data-ui-dialog-root @if ($open) open @endif>{{ $slot }}</dialog>"
+            "content": "@props(['open' => false])\n<dialog data-ui-dialog-root @if ($open) open @endif>{{ $slot }}</dialog>"
         },
         {
             "path": "resources/views/components/ui/dialog/title.blade.php",
-            "content": "{{-- File: resources/views/components/ui/dialog/title.blade.php | Purpose: Dialog title. --}}\n<h2>{{ $slot }}</h2>"
-        },
-        {
-            "path": "resources/views/components/ui/dialog/partials/description.blade.php",
-            "content": "<p>{{ $slot }}</p>"
-        },
-        {
-            "path": "resources/views/components/ui/dialog/partials/label.blade.php",
-            "content": "<span>{{ $slot }}</span>"
+            "content": "<h2>{{ $slot }}</h2>"
         },
         {
             "path": "resources/views/elements/color/contract.php",
-            "content": "<?php use App\\Surfaces\\Contracts\\Surface; return Surface::element(['identity' => ['slug' => 'color', 'ui_key' => 'element.color'], 'source' => ['css' => ['resources/css/ui/theme-seed.css'], 'docs' => ['docs/02-standards/ui/elements/tokens.md']]]);"
+            "content": "<?php use App\\Surfaces\\Contracts\\Surface; return Surface::element(['identity' => ['slug' => 'color', 'ui_key' => 'element.color'], 'source' => ['css' => ['resources/css/ui/theme-seed.css']]]);"
         },
         {
             "path": "resources/css/ui/theme-seed.css",
             "content": ":root { --color-background: #fff; }"
-        },
-        {
-            "path": "docs/02-standards/ui/elements/tokens.md",
-            "content": "# Token Governance Element Standard"
         },
         {
             "path": "resources/views/elements/icons/contract.php",
@@ -86,16 +66,56 @@
             "content": null
         },
         {
-            "path": "resources/js/components/foo.js",
-            "content": "export function initFoo(root = document) { root.querySelectorAll('[data-ui-foo]'); }"
+            "path": "resources/views/elements/spacing/__tests__/index.md",
+            "content": "# Spacing visual review"
         },
         {
-            "path": "vite.config.js",
-            "content": "export default { build: { manifest: true } };"
+            "path": "resources/views/elements/pictograms/__tests__/index.md",
+            "content": "# Pictogram visual review"
+        },
+        {
+            "path": "Modules/Notifications/resources/views/index.blade.php",
+            "content": "<x-layouts.app><h1>Notifications</h1></x-layouts.app>"
+        },
+        {
+            "path": "Modules/Roles/resources/views/index.blade.php",
+            "content": "<x-layouts.app><h1>Roles</h1></x-layouts.app>"
+        },
+        {
+            "path": "tests/Feature/Ui/NotificationsViewTest.php",
+            "content": "<?php test('notifications view', function () { expect('Modules/Notifications/resources/views/index.blade.php')->toBeString(); });"
+        },
+        {
+            "path": "Modules/Notifications/Header/ActionViewData.php",
+            "content": "<?php\n/* This class prepares render-only notification data. */\nfinal class ActionViewData { public static function make(): array { return []; } }"
+        },
+        {
+            "path": "Modules/Notifications/Header/PanelDataProvider.php",
+            "content": "<?php final class PanelDataProvider { public function forUser(): array { return []; } }"
+        },
+        {
+            "path": "app/Platform/Dashboard/RendersOnDashboard.php",
+            "content": "<?php interface RendersOnDashboard { public function getDashboardView(): string; }"
+        },
+        {
+            "path": "app/Platform/Dashboard/WidgetRegistry.php",
+            "content": "<?php class WidgetRegistry { public function register(string $key, string $widgetClass): void {} }"
+        },
+        {
+            "path": "app/Platform/Dashboard/Widgets/PlatformStatsWidget.php",
+            "content": "<?php class PlatformStatsWidget implements RendersOnDashboard { public function getDashboardView(): string { return 'dashboard.stats'; } public function getDashboardViewData(): array { return []; } }"
+        },
+        {
+            "path": "app/Livewire/Platform/Dashboard/DashboardPage.php",
+            "content": "<?php class DashboardPage extends Component { public function render() { return view('livewire.platform.dashboard'); } }"
         },
         {
             "path": "Modules/Account/Definition.php",
-            "content": "<?php self::mainView('account.main.legacy-platform-directory', 'account.index', 'Modules/Account/resources/views/index.blade.php');"
+            "content": "<?php self::mainView('account.main.index', 'account.index', 'Modules/Account/resources/views/index.blade.php');"
+        },
+        {
+            "path": "resources/js/components/foo.js",
+            "content": "export function initFoo(root = document) { root.querySelectorAll('[data-ui-foo]'); }"
         },
         {
             "path": "docs/02-standards/ui/components/foo.md",
@@ -108,6 +128,10 @@
         {
             "path": "docs/02-standards/ui/reference-file.md",
             "content": "# UI reference.php File"
+        },
+        {
+            "path": "vite.config.js",
+            "content": "export default {};"
         }
     ]
 }

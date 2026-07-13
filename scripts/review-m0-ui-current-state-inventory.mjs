@@ -57,6 +57,7 @@ if (command === "sync") {
         observations,
         classificationsPath,
         testTracesPath,
+        resetReviews: args.reset_reviews === true,
     });
 
     console.log(
@@ -211,7 +212,7 @@ switch (command) {
             [
                 "Unknown or missing review command.",
                 "Commands:",
-                "  sync",
+                "  sync [--reset-reviews]",
                 "  list [--pending] [--type TYPE] [--mismatch CODE]",
                 "  show <record-id|ui-key|implementation-path>",
                 "  set <record-id> <field> <json-or-string-value>",

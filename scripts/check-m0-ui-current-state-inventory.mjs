@@ -1,10 +1,11 @@
 /**
  * ============================================================================
  * File: scripts/check-m0-ui-current-state-inventory.mjs
- * Purpose: Validate issue #30 evidence completeness, traceability, and review.
+ * Purpose: Validate corrected Issue #30 evidence and semantic traceability.
  * ============================================================================
  */
 
+import { readFileSync, statSync } from "node:fs";
 import { resolve } from "node:path";
 import process from "node:process";
 import {
@@ -21,11 +22,11 @@ import {
     TEST_RESULTS,
     TEST_STATUSES,
     TEST_TYPES,
+    TRACE_RELATIONSHIP_KINDS,
     summarizeTestAuthority,
     summarizeTestStatus,
 } from "./lib/m0-ui-inventory/schema.mjs";
 import {
-    ensure,
     parseArguments,
     readJson,
     sourceFingerprint,
@@ -40,16 +41,15 @@ const config = readJson(
         args.config ?? "scripts/m0-ui-inventory.config.json",
     ),
 );
-const observations = readJson(
-    resolve(repositoryRoot, config.outputs.observations),
-);
-const classifications = readJson(
-    resolve(repositoryRoot, config.outputs.classifications),
-);
-const testTraces = readJson(
-    resolve(repositoryRoot, config.outputs.test_traces),
-);
-
+const paths = {
+    observations: resolve(repositoryRoot, config.outputs.observations),
+    classifications: resolve(repositoryRoot, config.outputs.classifications),
+    test_traces: resolve(repositoryRoot, config.outputs.test_traces),
+    document: resolve(repositoryRoot, config.outputs.document),
+};
+const observations = readJson(paths.observations);
+const classifications = readJson(paths.classifications);
+const testTraces = readJson(paths.test_traces);
 const errors = [];
 const sourcePaths = new Set(observations.source_path_index ?? []);
 const observationById = new Map(
@@ -61,41 +61,53 @@ const reviewById = new Map(
 
 check(
     config.inventory_baseline === PINNED_INVENTORY_BASELINE,
-    `Config baseline must equal ${PINNED_INVENTORY_BASELINE}.`,
+    "Config baseline mismatch.",
 );
 check(
     observations.baseline.sha === PINNED_INVENTORY_BASELINE,
-    `Observation baseline must equal ${PINNED_INVENTORY_BASELINE}.`,
+    "Observation baseline mismatch.",
 );
 check(
     classifications.baseline_sha === PINNED_INVENTORY_BASELINE,
-    `Classification baseline must equal ${PINNED_INVENTORY_BASELINE}.`,
+    "Classification baseline mismatch.",
 );
 check(
     testTraces.baseline_sha === PINNED_INVENTORY_BASELINE,
-    `Test-trace baseline must equal ${PINNED_INVENTORY_BASELINE}.`,
+    "Test-trace baseline mismatch.",
+);
+check(
+    observations.schema_version === 2,
+    "Corrected observations must use schema version 2.",
+);
+check(
+    classifications.schema_version === 2,
+    "Corrected classifications must use schema version 2.",
+);
+check(
+    testTraces.schema_version === 2,
+    "Corrected test traces must use schema version 2.",
 );
 check(
     observations.baseline.expected_execution_base ===
         config.expected_execution_base,
-    "Observation expected execution base does not match config.",
+    "Observation execution base does not match config.",
 );
 check(
     observations.baseline.ui_source_diff?.changed === false,
-    "UI source differs between the pinned inventory baseline and expected execution base.",
+    "UI source differs between baseline and execution base.",
 );
 check(
     classifications.generated_from_observations_sha256 ===
         sourceFingerprint(observations),
-    "Classifications are not synchronized to the current observations artifact.",
+    "Classifications are not synchronized to observations.",
 );
 check(
     arraysEqual(observations.required_surface_fields, REQUIRED_SURFACE_FIELDS),
-    "Observation required surface fields disagree with the issue schema.",
+    "Observation surface fields disagree with Issue #30.",
 );
 check(
     arraysEqual(observations.required_trace_fields, REQUIRED_TRACE_FIELDS),
-    "Observation required trace fields disagree with the issue schema.",
+    "Observation trace fields disagree with Issue #30.",
 );
 check(
     (observations.unclaimed_material_files ?? []).length === 0,
@@ -103,16 +115,19 @@ check(
 );
 check(
     (classifications.orphaned_prior_records ?? []).length === 0,
-    `Orphaned prior surface reviews remain: ${(classifications.orphaned_prior_records ?? []).join(", ")}`,
+    "Orphaned prior surface reviews remain.",
 );
 check(
     (testTraces.orphaned_prior_traces ?? []).length === 0,
-    `Orphaned prior test traces remain: ${(testTraces.orphaned_prior_traces ?? []).join(", ")}`,
+    "Orphaned prior test traces remain.",
 );
 check(
     String(testTraces.ownership_boundary ?? "").includes("Issue #32"),
-    "Test trace artifact must preserve the issue #32 ownership boundary.",
+    "Test artifact does not preserve Issue #32 ownership.",
 );
+validateIssue29Support();
+validateCoverage();
+validateArtifactLimits();
 
 for (const observation of observations.surfaces) {
     check(
@@ -126,12 +141,24 @@ for (const item of classifications.items) {
 }
 
 const tracePairs = new Set();
+const traceCountByPath = new Map();
 
 for (const trace of testTraces.test_traces) {
     validateTrace(trace);
     const pair = `${trace._surface_record_id}\0${trace.test_path}`;
     check(!tracePairs.has(pair), `Duplicate surface/test trace pair: ${pair}`);
     tracePairs.add(pair);
+    traceCountByPath.set(
+        trace.test_path,
+        (traceCountByPath.get(trace.test_path) ?? 0) + 1,
+    );
+}
+
+for (const [path, count] of traceCountByPath) {
+    check(
+        count <= 20,
+        `${path} is linked to ${count} surfaces; review for broad false associations.`,
+    );
 }
 
 validateDuplicateUiKeys();
@@ -139,7 +166,7 @@ validateDuplicateUiKeys();
 if (errors.length > 0) {
     console.error(
         [
-            "Issue #30 inventory validation failed:",
+            "Issue #30 corrected inventory validation failed:",
             ...errors.map((error) => `- ${error}`),
         ].join("\n"),
     );
@@ -148,10 +175,12 @@ if (errors.length > 0) {
 
 console.log(
     [
-        "Issue #30 inventory validation passed.",
+        "Issue #30 corrected inventory validation passed.",
         `Material surfaces: ${classifications.items.length}.`,
         `Reviewed UI test traces: ${testTraces.test_traces.length}.`,
         `Pinned inventory baseline: ${PINNED_INVENTORY_BASELINE}.`,
+        `Combined artifact bytes: ${artifactMetrics().bytes}.`,
+        `Combined artifact lines: ${artifactMetrics().lines}.`,
     ].join("\n"),
 );
 
@@ -192,11 +221,11 @@ function validateSurface(item) {
     );
     check(
         INVENTORY_DISPOSITIONS.has(item.inventory_disposition),
-        `${item._record_id} has invalid inventory_disposition.`,
+        `${item._record_id} has invalid disposition.`,
     );
     check(
         CARBON_PROVENANCE_VALUES.has(item.carbon_provenance),
-        `${item._record_id} has invalid carbon_provenance.`,
+        `${item._record_id} has invalid provenance.`,
     );
     check(
         TEST_STATUSES.has(item.test_status),
@@ -212,11 +241,11 @@ function validateSurface(item) {
     );
     check(
         typeof item.current_slug === "string",
-        `${item._record_id} current_slug must be a string.`,
+        `${item._record_id} slug must be a string.`,
     );
     check(
         Array.isArray(item.known_mismatches),
-        `${item._record_id} known_mismatches must be an array.`,
+        `${item._record_id} mismatches must be an array.`,
     );
 
     for (const mismatch of item.known_mismatches ?? []) {
@@ -229,7 +258,7 @@ function validateSurface(item) {
     if (item.known_mismatches?.includes("aligned")) {
         check(
             item.known_mismatches.length === 1,
-            `${item._record_id} cannot combine aligned with another mismatch.`,
+            `${item._record_id} combines aligned with another mismatch.`,
         );
     }
 
@@ -264,11 +293,10 @@ function validateSurface(item) {
         Array.isArray(item.standards_evidence),
         `${item._record_id} standards_evidence must be an array.`,
     );
-
     for (const standard of item.standards_evidence ?? []) {
         check(
             typeof standard.standard_path === "string",
-            `${item._record_id} standard evidence lacks standard_path.`,
+            `${item._record_id} standard lacks path.`,
         );
         validatePathField(
             item._record_id,
@@ -278,12 +306,10 @@ function validateSurface(item) {
     }
 
     check(
-        item.metadata_evidence !== null &&
-            typeof item.metadata_evidence === "object",
-        `${item._record_id} metadata_evidence must be structured.`,
+        item.metadata_evidence && typeof item.metadata_evidence === "object",
+        `${item._record_id} metadata evidence must be structured.`,
     );
-
-    for (const metadataField of [
+    for (const field of [
         "human_readable_header",
         "ui_key",
         "blade_alias",
@@ -300,8 +326,8 @@ function validateSurface(item) {
         "evidence_source",
     ]) {
         check(
-            Object.hasOwn(item.metadata_evidence ?? {}, metadataField),
-            `${item._record_id} metadata_evidence is missing ${metadataField}.`,
+            Object.hasOwn(item.metadata_evidence ?? {}, field),
+            `${item._record_id} metadata is missing ${field}.`,
         );
     }
 
@@ -311,26 +337,26 @@ function validateSurface(item) {
     const tracePaths = uniqueSorted(traces.map((trace) => trace.test_path));
     check(
         arraysEqual(uniqueSorted(item.test_paths ?? []), tracePaths),
-        `${item._record_id} test_paths do not exactly match detailed traces.`,
+        `${item._record_id} test_paths disagree with traces.`,
     );
 
     if (traces.length === 0) {
         check(
             ["missing", "unknown", "not_applicable"].includes(item.test_status),
-            `${item._record_id} has no traces but test_status is ${item.test_status}.`,
+            `${item._record_id} has no traces but status=${item.test_status}.`,
         );
         check(
             ["unknown", "not_applicable"].includes(item.test_authority),
-            `${item._record_id} has no traces but test_authority is ${item.test_authority}.`,
+            `${item._record_id} has no traces but authority=${item.test_authority}.`,
         );
     } else {
         check(
             item.test_status === summarizeTestStatus(traces),
-            `${item._record_id} test_status disagrees with detailed traces.`,
+            `${item._record_id} test status disagrees with traces.`,
         );
         check(
             item.test_authority === summarizeTestAuthority(traces),
-            `${item._record_id} test_authority disagrees with detailed traces.`,
+            `${item._record_id} test authority disagrees with traces.`,
         );
     }
 }
@@ -344,9 +370,14 @@ function validateTrace(trace) {
     }
 
     const surface = reviewById.get(trace._surface_record_id);
+    const observation = observationById.get(trace._surface_record_id);
     check(
         Boolean(surface),
         `${trace._trace_id} references an unknown surface.`,
+    );
+    check(
+        Boolean(observation),
+        `${trace._trace_id} references an unknown observation.`,
     );
     check(trace._reviewed === true, `${trace._trace_id} is not reviewed.`);
     check(
@@ -355,7 +386,7 @@ function validateTrace(trace) {
     );
     check(
         trace.surface_ui_key === surface?.ui_key,
-        `${trace._trace_id} surface_ui_key does not match its material surface.`,
+        `${trace._trace_id} UI key does not match surface.`,
     );
     check(
         TEST_TYPES.has(trace.test_type),
@@ -363,44 +394,207 @@ function validateTrace(trace) {
     );
     check(
         TEST_RESULTS.has(trace.current_result),
-        `${trace._trace_id} has invalid current_result.`,
+        `${trace._trace_id} has invalid result.`,
     );
     check(
         TEST_AUTHORITIES.has(trace.test_authority),
-        `${trace._trace_id} has invalid test_authority.`,
+        `${trace._trace_id} has invalid authority.`,
     );
     check(
         trace.test_exists === true,
         `${trace._trace_id} does not resolve to an existing test.`,
     );
     validatePathField(trace._trace_id, "test_path", trace.test_path);
+
+    const relationship = trace._relationship_evidence;
+    check(
+        Boolean(relationship),
+        `${trace._trace_id} lacks relationship evidence.`,
+    );
+    check(
+        TRACE_RELATIONSHIP_KINDS.has(relationship?.kind),
+        `${trace._trace_id} has invalid relationship kind.`,
+    );
+    validateRelationship(trace, observation, relationship);
+}
+
+function validateRelationship(trace, observation, relationship) {
+    if (!observation || !relationship) return;
+    const value = String(relationship.value ?? "");
+
+    if (relationship.kind === "owner_local_test") {
+        check(
+            trace.test_path.startsWith(`${value}/__tests__/`),
+            `${trace._trace_id} owner-local relationship is invalid.`,
+        );
+        return;
+    }
+
+    if (relationship.kind === "exact_repository_path_reference") {
+        const validPaths = new Set([
+            observation.implementation_entry,
+            ...observation.implementation_support_files,
+            ...observation.contracts.map((contract) => contract.path),
+        ]);
+        check(
+            validPaths.has(value),
+            `${trace._trace_id} references a path outside its surface.`,
+        );
+        return;
+    }
+
+    if (relationship.kind === "exact_blade_alias_reference") {
+        check(
+            observation.blade_aliases.includes(value),
+            `${trace._trace_id} references an unrelated Blade alias.`,
+        );
+        return;
+    }
+
+    if (relationship.kind === "exact_ui_key_reference") {
+        check(
+            observation.declared_ui_key === value,
+            `${trace._trace_id} references an unrelated UI key.`,
+        );
+        return;
+    }
+
+    if (relationship.kind === "exact_symbol_reference") {
+        check(
+            value.length >= 5,
+            `${trace._trace_id} symbol relationship is too generic.`,
+        );
+        check(
+            !["index", "main", "page", "show", "edit", "create"].includes(
+                value.toLowerCase(),
+            ),
+            `${trace._trace_id} uses a prohibited generic symbol.`,
+        );
+    }
+}
+
+function validateCoverage() {
+    const counts = observations.summary?.surface_type_counts ?? {};
+    for (const type of config.required_coverage?.surface_types_any_of ?? []) {
+        check(
+            (counts[type] ?? 0) > 0,
+            `Required material surface type ${type} was not collected.`,
+        );
+    }
+
+    const collectedPaths = new Set(
+        observations.surfaces.flatMap((surface) => [
+            surface.implementation_entry,
+            ...surface.implementation_support_files,
+        ]),
+    );
+
+    for (const pattern of config.required_coverage?.required_path_patterns ??
+        []) {
+        const regex = new RegExp(pattern);
+        check(
+            [...collectedPaths].some((path) => regex.test(path)),
+            `Required presentation path pattern was not represented: ${pattern}`,
+        );
+    }
+}
+
+function validateIssue29Support() {
+    const support = observations.discovery?.issue_29_support;
+    check(
+        support?.status === "accepted_baseline_match",
+        "Accepted Issue #29 supporting evidence was not loaded.",
+    );
+    check(
+        support?.baseline_sha === PINNED_INVENTORY_BASELINE,
+        "Issue #29 support baseline mismatch.",
+    );
+    check((support?.route_count ?? 0) > 0, "Issue #29 route support is empty.");
+    check(
+        (support?.module_count ?? 0) > 0,
+        "Issue #29 Module support is empty.",
+    );
+    check(
+        Boolean(observations.discovery?.commands?.route_list?.last_success),
+        "No successful route evidence is available.",
+    );
+    check(
+        Boolean(observations.discovery?.commands?.module_list?.last_success),
+        "No successful Module evidence is available.",
+    );
+}
+
+function validateArtifactLimits() {
+    const metrics = artifactMetrics();
+    const limits = config.artifact_limits ?? {};
+
+    for (const key of [
+        "observations",
+        "classifications",
+        "test_traces",
+        "document",
+    ]) {
+        const metric = metrics.by_artifact[key];
+        const limit = limits[key];
+        if (!limit || !metric) continue;
+        check(
+            metric.bytes <= limit.max_bytes,
+            `${key} is ${metric.bytes} bytes; limit=${limit.max_bytes}.`,
+        );
+        check(
+            metric.lines <= limit.max_lines,
+            `${key} is ${metric.lines} lines; limit=${limit.max_lines}.`,
+        );
+    }
+
+    check(
+        metrics.bytes <= limits.combined_max_bytes,
+        `Combined artifacts are ${metrics.bytes} bytes; limit=${limits.combined_max_bytes}.`,
+    );
+    check(
+        metrics.lines <= limits.combined_max_lines,
+        `Combined artifacts are ${metrics.lines} lines; limit=${limits.combined_max_lines}.`,
+    );
+}
+
+function artifactMetrics() {
+    const byArtifact = {};
+    let bytes = 0;
+    let lines = 0;
+
+    for (const [key, path] of Object.entries(paths)) {
+        const content = readFileSync(path, "utf8");
+        const metric = {
+            bytes: statSync(path).size,
+            lines: content.split(/\r?\n/).length,
+        };
+        byArtifact[key] = metric;
+        bytes += metric.bytes;
+        lines += metric.lines;
+    }
+
+    return { bytes, lines, by_artifact: byArtifact };
 }
 
 function validateDuplicateUiKeys() {
     const byKey = new Map();
-
     for (const item of classifications.items) {
-        if (["unknown", "not_applicable", "missing"].includes(item.ui_key)) {
+        if (["unknown", "not_applicable", "missing"].includes(item.ui_key))
             continue;
-        }
-
         const matches = byKey.get(item.ui_key) ?? [];
         matches.push(item);
         byKey.set(item.ui_key, matches);
     }
 
     for (const [uiKey, items] of byKey) {
-        if (items.length < 2) {
-            continue;
-        }
-
+        if (items.length < 2) continue;
         for (const item of items) {
             check(
                 item.known_mismatches.includes("duplicate_identity") &&
                     ["duplicate", "investigate"].includes(
                         item.inventory_disposition,
                     ),
-                `Duplicate UI key ${uiKey} is not explicitly classified on ${item._record_id}.`,
+                `Duplicate UI key ${uiKey} is not classified on ${item._record_id}.`,
             );
         }
     }
@@ -411,33 +605,28 @@ function validatePathValue(recordId, field, value, options = {}) {
         validatePathList(recordId, field, value, options);
         return;
     }
-
     validatePathField(recordId, field, value, options);
 }
 
 function validatePathList(recordId, field, value, options = {}) {
     check(Array.isArray(value), `${recordId} ${field} must be an array.`);
-
-    for (const path of value ?? []) {
+    for (const path of value ?? [])
         validatePathField(recordId, field, path, options);
-    }
 }
 
 function validatePathField(recordId, field, value, options = {}) {
     const allowed = new Set(options.allow ?? []);
-
-    if (allowed.has(value)) {
-        return;
+    if (allowed.has(value)) return;
+    check(
+        typeof value === "string" && value !== "",
+        `${recordId} ${field} must be a path.`,
+    );
+    if (typeof value === "string" && value !== "") {
+        check(
+            sourcePaths.has(value),
+            `${recordId} ${field} path is absent from pinned source: ${value}`,
+        );
     }
-
-    check(
-        typeof value === "string",
-        `${recordId} ${field} must be a string path.`,
-    );
-    check(
-        sourcePaths.has(value),
-        `${recordId} ${field} does not resolve at baseline: ${value}`,
-    );
 }
 
 function arraysEqual(left, right) {
@@ -445,7 +634,5 @@ function arraysEqual(left, right) {
 }
 
 function check(condition, message) {
-    if (!condition) {
-        errors.push(message);
-    }
+    if (!condition) errors.push(message);
 }

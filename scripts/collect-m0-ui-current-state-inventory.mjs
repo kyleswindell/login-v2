@@ -1,11 +1,12 @@
 /**
  * ============================================================================
  * File: scripts/collect-m0-ui-current-state-inventory.mjs
- * Purpose: Collect deterministic implementation-first issue #30 observations.
+ * Purpose: Collect corrected implementation-first Issue #30 observations.
  * ============================================================================
  */
 
 import { spawnSync } from "node:child_process";
+import { statSync } from "node:fs";
 import { relative, resolve } from "node:path";
 import process from "node:process";
 import {
@@ -18,6 +19,7 @@ import {
     listScopedTree,
 } from "./lib/m0-ui-inventory/git-batch-reader.mjs";
 import { collectDiscoveryEvidence } from "./lib/m0-ui-inventory/discovery-runner.mjs";
+import { loadIssue29SupportingEvidence } from "./lib/m0-ui-inventory/issue29-support.mjs";
 import { collectMaterialSurfaces } from "./lib/m0-ui-inventory/surface-collector.mjs";
 import {
     PINNED_INVENTORY_BASELINE,
@@ -53,7 +55,7 @@ ensure(
 );
 ensure(
     config.inventory_baseline === PINNED_INVENTORY_BASELINE,
-    "The configuration inventory baseline does not match the issue #30 pinned baseline.",
+    "The configuration inventory baseline does not match the pinned Issue #30 baseline.",
 );
 
 assertCommitAvailable(repositoryRoot, baseline);
@@ -67,10 +69,9 @@ const uiSourceDiff = inspectUiSourceDiff(repositoryRoot, config);
 ensure(
     uiSourceDiff.changed === false,
     [
-        `UI source changed between the pinned inventory baseline ${baseline}`,
-        `and expected execution base ${config.expected_execution_base}.`,
+        `UI source changed between ${baseline} and ${config.expected_execution_base}.`,
         ...uiSourceDiff.paths.map((path) => `- ${path}`),
-        "Stop. Do not repin or continue without explicit repository-owner approval.",
+        "Stop. Do not repin or continue without repository-owner approval.",
     ].join("\n"),
 );
 
@@ -78,6 +79,11 @@ const treeEntries = listScopedTree(repositoryRoot, baseline, config);
 const files = hydrateScopedFiles(repositoryRoot, treeEntries, config);
 const observationsPath = resolve(repositoryRoot, config.outputs.observations);
 const priorObservations = readJsonIfExists(observationsPath);
+const issue29Support = loadIssue29SupportingEvidence({
+    repositoryRoot,
+    config,
+    baseline,
+});
 const discovery = collectDiscoveryEvidence({
     repositoryRoot,
     config,
@@ -86,16 +92,14 @@ const discovery = collectDiscoveryEvidence({
         priorObservations?.baseline?.sha === baseline
             ? priorObservations.discovery
             : null,
+    issue29Support,
 });
 const collection = collectMaterialSurfaces({ files, discovery, config });
-const generatedAt = currentIsoTimestamp();
-const generatorCommand = commandText([
-    "node",
-    "scripts/collect-m0-ui-current-state-inventory.mjs",
-    ...process.argv.slice(2),
-]);
 const observations = {
-    schema_version: 1,
+    schema_version: 2,
+    generator_schema_version: 2,
+    correction_reason:
+        "PR #44 parser, trace-link, presentation coverage, Issue #29 support, and output-size correction",
     issue: 30,
     baseline: {
         sha: baseline,
@@ -108,8 +112,12 @@ const observations = {
     generator: {
         path: "scripts/collect-m0-ui-current-state-inventory.mjs",
         config_path: normalizePath(relative(repositoryRoot, configPath)),
-        command: generatorCommand,
-        generated_at: generatedAt,
+        command: commandText([
+            "node",
+            "scripts/collect-m0-ui-current-state-inventory.mjs",
+            ...process.argv.slice(2),
+        ]),
+        generated_at: currentIsoTimestamp(),
         static_only: Boolean(args.static_only),
         collection_mode: "scoped_git_tree_and_batched_blob_read",
     },
@@ -146,13 +154,15 @@ const observations = {
 };
 
 writeJsonAtomic(observationsPath, observations);
+assertArtifactSize(observationsPath, config.artifact_limits?.observations);
 
 console.log(
     [
-        `Issue #30 observations collected from ${baseline}.`,
+        `Issue #30 corrected observations collected from ${baseline}.`,
         `Scoped Git entries: ${treeEntries.length}.`,
         `Material UI surfaces: ${collection.surfaces.length}.`,
         `Unclaimed material candidates: ${collection.unclaimed_material_files.length}.`,
+        `Issue #29 support: ${issue29Support.status}; routes=${issue29Support.routes.length}; modules=${issue29Support.modules.length}.`,
         `Observations: ${config.outputs.observations}`,
         "Reviewed classifications and test traces were not modified.",
     ].join("\n"),
@@ -175,10 +185,7 @@ function inspectUiSourceDiff(root, settings) {
         windowsHide: true,
     });
 
-    if (result.error) {
-        throw result.error;
-    }
-
+    if (result.error) throw result.error;
     ensure(
         result.status === 0,
         `Unable to compare UI source baselines:\n${String(result.stderr ?? "").slice(0, 4000)}`,
@@ -195,4 +202,13 @@ function inspectUiSourceDiff(root, settings) {
         paths,
         command: commandText(command),
     };
+}
+
+function assertArtifactSize(path, limit) {
+    if (!limit?.max_bytes) return;
+    const size = statSync(path).size;
+    ensure(
+        size <= limit.max_bytes,
+        `${normalizePath(relative(repositoryRoot, path))} is ${size} bytes; limit is ${limit.max_bytes}. Reduce evidence duplication before continuing.`,
+    );
 }

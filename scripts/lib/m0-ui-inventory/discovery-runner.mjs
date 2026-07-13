@@ -1,7 +1,7 @@
 /**
  * ============================================================================
  * File: scripts/lib/m0-ui-inventory/discovery-runner.mjs
- * Purpose: Run bounded read-only Laravel discovery and preserve prior evidence.
+ * Purpose: Run bounded UI discovery while preserving accepted prior evidence.
  * ============================================================================
  */
 
@@ -17,30 +17,41 @@ export function collectDiscoveryEvidence({
     config,
     staticOnly,
     existing,
+    issue29Support,
 }) {
+    const supportingCommands = issue29Support?.commands ?? {};
+    const definitions = config.runtime_discovery ?? [];
+
     if (staticOnly) {
-        return (
-            existing ?? {
-                mode: "static_only_no_prior_evidence",
-                commands: {},
-            }
-        );
+        return mergeSupportingEvidence({
+            existing,
+            definitions,
+            supportingCommands,
+            issue29Support,
+            mode: "static_only_preserved",
+        });
     }
 
     const commands = {};
 
-    for (const definition of config.runtime_discovery) {
+    for (const definition of definitions) {
         const attempt = runOptional(repositoryRoot, definition.command);
-        const { _stdout: _privateStdout, ...currentAttempt } = attempt;
+        const { _stdout: privateStdout, ...currentAttempt } = attempt;
         const previous = existing?.commands?.[definition.key] ?? null;
+        const imported = importedSuccess(definition.key, issue29Support);
 
         commands[definition.key] = {
             command: commandText(definition.command),
             current_attempt: currentAttempt,
             last_success:
                 attempt.status === "passed"
-                    ? compactSuccessfulPayload(definition.key, attempt)
-                    : (previous?.last_success ?? null),
+                    ? compactSuccessfulPayload(definition.key, {
+                          ...attempt,
+                          _stdout: privateStdout,
+                      })
+                    : (previous?.last_success ?? imported),
+            accepted_supporting_evidence:
+                supportingCommands[definition.key] ?? null,
             preserved_prior_failure:
                 attempt.status === "passed"
                     ? previous?.current_attempt?.status !== "passed"
@@ -51,9 +62,83 @@ export function collectDiscoveryEvidence({
     }
 
     return {
-        mode: "runtime_attempted",
+        mode: "runtime_attempted_with_issue_29_support",
         collected_at: currentIsoTimestamp(),
+        issue_29_support: compactSupportHeader(issue29Support),
         commands,
+    };
+}
+
+function mergeSupportingEvidence({
+    existing,
+    definitions,
+    supportingCommands,
+    issue29Support,
+    mode,
+}) {
+    const commands = {};
+
+    for (const definition of definitions) {
+        const previous = existing?.commands?.[definition.key] ?? null;
+        commands[definition.key] = {
+            command: commandText(definition.command),
+            current_attempt: previous?.current_attempt ?? {
+                status: "not_attempted_static_only",
+                exit_code: null,
+                started_at: null,
+                stderr: "",
+                stdout_summary: "",
+            },
+            last_success:
+                previous?.last_success ??
+                importedSuccess(definition.key, issue29Support),
+            accepted_supporting_evidence:
+                supportingCommands[definition.key] ?? null,
+            preserved_prior_failure: previous?.preserved_prior_failure ?? null,
+        };
+    }
+
+    return {
+        mode,
+        collected_at: existing?.collected_at ?? currentIsoTimestamp(),
+        issue_29_support: compactSupportHeader(issue29Support),
+        commands,
+    };
+}
+
+function importedSuccess(key, issue29Support) {
+    if (issue29Support?.status !== "accepted_baseline_match") {
+        return null;
+    }
+
+    if (key === "route_list") {
+        return {
+            source: "issue_29_accepted_runtime_evidence",
+            baseline_sha: issue29Support.baseline_sha,
+            artifact_path: issue29Support.path,
+            payload: issue29Support.routes,
+        };
+    }
+
+    if (key === "module_list") {
+        return {
+            source: "issue_29_accepted_runtime_evidence",
+            baseline_sha: issue29Support.baseline_sha,
+            artifact_path: issue29Support.path,
+            payload: issue29Support.modules,
+        };
+    }
+
+    return null;
+}
+
+function compactSupportHeader(issue29Support) {
+    return {
+        status: issue29Support?.status ?? "unavailable",
+        path: issue29Support?.path ?? null,
+        baseline_sha: issue29Support?.baseline_sha ?? null,
+        route_count: issue29Support?.routes?.length ?? 0,
+        module_count: issue29Support?.modules?.length ?? 0,
     };
 }
 
@@ -79,6 +164,7 @@ function runOptional(repositoryRoot, command) {
                 repositoryRoot,
             ),
             stdout_summary: "",
+            _stdout: "",
         };
     }
 
@@ -97,21 +183,20 @@ function runOptional(repositoryRoot, command) {
 
 function sanitizeDiscoveryOutput(value, repositoryRoot, maxLength = 4000) {
     const root = String(repositoryRoot ?? "");
-    const normalizedRoot = root.replaceAll("\\", "/");
-    const nativeWindowsRoot = root.replaceAll("/", "\\");
-    const escapedRoots = [root, normalizedRoot, nativeWindowsRoot]
+    const candidates = [
+        root,
+        root.replaceAll("\\", "/"),
+        root.replaceAll("/", "\\"),
+    ]
         .filter(Boolean)
         .filter(
             (candidate, index, values) => values.indexOf(candidate) === index,
-        )
-        .map((candidate) => candidate.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"));
-    const rootPattern =
-        escapedRoots.length > 0
-            ? new RegExp(escapedRoots.join("|"), "gi")
-            : null;
-    const redacted = rootPattern
-        ? String(value ?? "").replace(rootPattern, "<repository-root>")
-        : String(value ?? "");
+        );
+    let redacted = String(value ?? "");
+
+    for (const candidate of candidates) {
+        redacted = redacted.replaceAll(candidate, "<repository-root>");
+    }
 
     return sanitizeCommandOutput(redacted, maxLength);
 }
@@ -135,6 +220,7 @@ function compactSuccessfulPayload(key, attempt) {
                 : parsed;
 
     return {
+        source: "current_worktree_runtime_discovery",
         collected_at: attempt.started_at,
         exit_code: attempt.exit_code,
         payload,
@@ -147,24 +233,14 @@ function compactRoutes(payload) {
     }
 
     return payload
-        .filter((route) => {
-            const name = String(route.name ?? "");
-            const uri = String(route.uri ?? "");
-            return (
-                name !== "" ||
-                uri.startsWith("platform/") ||
-                uri.startsWith("account/") ||
-                uri.startsWith("settings/") ||
-                uri.startsWith("setup") ||
-                uri === "/"
-            );
-        })
         .map((route) => ({
-            method: route.method ?? null,
+            methods: normalizeMethods(route.method),
             uri: route.uri ?? null,
             name: route.name ?? null,
             action: route.action ?? null,
-            middleware: route.middleware ?? null,
+            middleware: Array.isArray(route.middleware)
+                ? route.middleware.map(String).sort()
+                : (route.middleware ?? null),
         }))
         .sort((left, right) =>
             `${left.name ?? ""}\0${left.uri ?? ""}`.localeCompare(
@@ -211,6 +287,18 @@ function compactModules(payload) {
         .sort((left, right) =>
             String(left.key).localeCompare(String(right.key)),
         );
+}
+
+function normalizeMethods(value) {
+    if (Array.isArray(value)) {
+        return value.map(String).sort();
+    }
+
+    return String(value ?? "")
+        .split("|")
+        .map((entry) => entry.trim())
+        .filter(Boolean)
+        .sort();
 }
 
 function summarizeOutput(value) {

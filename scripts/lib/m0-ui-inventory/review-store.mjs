@@ -1,7 +1,7 @@
 /**
  * ============================================================================
  * File: scripts/lib/m0-ui-inventory/review-store.mjs
- * Purpose: Preserve and validate reviewed issue #30 classifications and traces.
+ * Purpose: Preserve explicit Issue #30 reviews and support correction resets.
  * ============================================================================
  */
 
@@ -24,9 +24,14 @@ export function syncReviewArtifacts({
     observations,
     classificationsPath,
     testTracesPath,
+    resetReviews = false,
 }) {
-    const existingClassifications = readJsonIfExists(classificationsPath);
-    const existingTraces = readJsonIfExists(testTracesPath);
+    const existingClassifications = resetReviews
+        ? null
+        : readJsonIfExists(classificationsPath);
+    const existingTraces = resetReviews
+        ? null
+        : readJsonIfExists(testTracesPath);
     assertCompatibleBaseline(
         existingClassifications,
         observations.baseline.sha,
@@ -48,11 +53,7 @@ export function syncReviewArtifacts({
         const seed = createSurfaceReviewSeed(observation);
         const existing = existingByRecordId.get(observation.record_id);
 
-        if (!existing) {
-            return seed;
-        }
-
-        if (isUntouchedGeneratedSeed(existing, seed)) {
+        if (!existing || isUntouchedGeneratedSeed(existing, seed)) {
             return seed;
         }
 
@@ -71,32 +72,44 @@ export function syncReviewArtifacts({
             _review_note: changed
                 ? appendReviewNote(
                       existing._review_note,
-                      "Source evidence changed. Reviewed values were preserved and require re-review.",
+                      "Source evidence changed. Reviewed values were preserved but require re-review.",
                   )
                 : existing._review_note,
         };
     });
 
     const classifications = {
-        schema_version: 1,
+        schema_version: 2,
+        generator_schema_version: 2,
+        correction_reason:
+            resetReviews === true
+                ? "PR #44 systemic trace, parser, coverage, and evidence-size correction"
+                : (existingClassifications?.correction_reason ?? null),
         issue: 30,
         baseline_sha: observations.baseline.sha,
         generated_from_observations_sha256: sourceFingerprint(observations),
-        reviewer: existingClassifications?.reviewer ?? null,
-        reviewed_at: existingClassifications?.reviewed_at ?? null,
+        reviewer: resetReviews
+            ? null
+            : (existingClassifications?.reviewer ?? null),
+        reviewed_at: resetReviews
+            ? null
+            : (existingClassifications?.reviewed_at ?? null),
         required_fields: observations.required_surface_fields,
         items: nextItems.sort((left, right) =>
             left._record_id.localeCompare(right._record_id),
         ),
-        orphaned_prior_records: (existingClassifications?.items ?? [])
-            .filter(
-                (item) =>
-                    !observations.surfaces.some(
-                        (surface) => surface.record_id === item._record_id,
-                    ),
-            )
-            .map((item) => item._record_id)
-            .sort(),
+        orphaned_prior_records: resetReviews
+            ? []
+            : (existingClassifications?.items ?? [])
+                  .filter(
+                      (item) =>
+                          !observations.surfaces.some(
+                              (surface) =>
+                                  surface.record_id === item._record_id,
+                          ),
+                  )
+                  .map((item) => item._record_id)
+                  .sort(),
     };
 
     const itemByRecordId = new Map(
@@ -132,12 +145,7 @@ export function syncReviewArtifacts({
         const seed = createTestTraceSeed(surfaceReview, candidate);
         const existing = existingTraceByPair.get(pair);
 
-        if (!existing) {
-            nextTraces.push(seed);
-            continue;
-        }
-
-        if (isUntouchedGeneratedSeed(existing, seed)) {
+        if (!existing || isUntouchedGeneratedSeed(existing, seed)) {
             nextTraces.push(seed);
             continue;
         }
@@ -151,6 +159,7 @@ export function syncReviewArtifacts({
             _trace_id: seed._trace_id,
             _surface_record_id: surfaceRecordId,
             _source_fingerprint: seed._source_fingerprint,
+            _relationship_evidence: seed._relationship_evidence,
             surface_ui_key: surfaceReview.ui_key,
             _reviewed: changed ? false : existing._reviewed === true,
             _review_required: changed
@@ -159,7 +168,7 @@ export function syncReviewArtifacts({
             _review_note: changed
                 ? appendReviewNote(
                       existing._review_note,
-                      "Test source evidence changed. Reviewed trace values were preserved and require re-review.",
+                      "Test relationship or source evidence changed. Reviewed values were preserved but require re-review.",
                   )
                 : existing._review_note,
         });
@@ -171,33 +180,42 @@ export function syncReviewArtifacts({
         );
         item.test_paths = uniqueSorted(traces.map((trace) => trace.test_path));
 
-        if (traces.length > 0 && item._reviewed !== true) {
+        if (item._reviewed !== true) {
             item.test_status = summarizeTestStatus(traces);
             item.test_authority = summarizeTestAuthority(traces);
         }
     }
 
     const testTraces = {
-        schema_version: 1,
+        schema_version: 2,
+        generator_schema_version: 2,
+        correction_reason:
+            resetReviews === true
+                ? "PR #44 systemic false-link correction"
+                : (existingTraces?.correction_reason ?? null),
         issue: 30,
         baseline_sha: observations.baseline.sha,
         ownership_boundary:
             "Issue #30 owns UI surface-to-test traceability only. Issue #32 owns complete test-suite execution, warnings, failures, and disposition.",
-        reviewer: existingTraces?.reviewer ?? null,
-        reviewed_at: existingTraces?.reviewed_at ?? null,
+        reviewer: resetReviews ? null : (existingTraces?.reviewer ?? null),
+        reviewed_at: resetReviews
+            ? null
+            : (existingTraces?.reviewed_at ?? null),
         required_fields: observations.required_trace_fields,
         test_traces: nextTraces.sort((left, right) =>
             left._trace_id.localeCompare(right._trace_id),
         ),
-        orphaned_prior_traces: (existingTraces?.test_traces ?? [])
-            .filter(
-                (trace) =>
-                    !candidateByPair.has(
-                        `${trace._surface_record_id}\0${trace.test_path}`,
-                    ),
-            )
-            .map((trace) => trace._trace_id)
-            .sort(),
+        orphaned_prior_traces: resetReviews
+            ? []
+            : (existingTraces?.test_traces ?? [])
+                  .filter(
+                      (trace) =>
+                          !candidateByPair.has(
+                              `${trace._surface_record_id}\0${trace.test_path}`,
+                          ),
+                  )
+                  .map((trace) => trace._trace_id)
+                  .sort(),
     };
 
     writeJsonAtomic(classificationsPath, classifications);
@@ -212,7 +230,6 @@ export function markSurfaceReviewed(classifications, recordId, note, reviewer) {
     );
     ensure(item, `Unknown surface record: ${recordId}`);
     ensure(note && String(note).trim() !== "", "A review note is required.");
-
     item._reviewed = true;
     item._review_required = false;
     item._review_note = String(note).trim();
@@ -228,7 +245,10 @@ export function markTraceReviewed(testTraces, traceId, note, reviewer) {
     );
     ensure(trace, `Unknown test trace: ${traceId}`);
     ensure(note && String(note).trim() !== "", "A review note is required.");
-
+    ensure(
+        trace._relationship_evidence?.kind,
+        "A trace cannot be reviewed without semantic relationship evidence.",
+    );
     trace._reviewed = true;
     trace._review_required = false;
     trace._review_note = String(note).trim();
@@ -248,7 +268,6 @@ export function setSurfaceField(classifications, recordId, field, value) {
         "Use review commands for tooling metadata fields.",
     );
     ensure(Object.hasOwn(item, field), `Unknown surface field: ${field}`);
-
     item[field] = value;
     item._reviewed = false;
     item._review_required = true;
@@ -269,7 +288,6 @@ export function setTraceField(testTraces, traceId, field, value) {
         "Use review commands for tooling metadata fields.",
     );
     ensure(Object.hasOwn(trace, field), `Unknown trace field: ${field}`);
-
     trace[field] = value;
     trace._reviewed = false;
     trace._review_required = true;
@@ -302,7 +320,6 @@ export function summarizeSurfaceTests(classifications, testTraces, recordId) {
     const traces = testTraces.test_traces.filter(
         (trace) => trace._surface_record_id === recordId,
     );
-
     item.test_paths = uniqueSorted(traces.map((trace) => trace.test_path));
     item.test_status = summarizeTestStatus(traces);
     item.test_authority = summarizeTestAuthority(traces);
@@ -310,7 +327,7 @@ export function summarizeSurfaceTests(classifications, testTraces, recordId) {
     item._review_required = true;
     item._review_note = appendReviewNote(
         item._review_note,
-        "Surface-level test summary was recalculated from detailed traces and requires review.",
+        "Surface test summary was recalculated and requires review.",
     );
     return item;
 }
@@ -325,10 +342,7 @@ export function findSurface(classifications, identifier) {
 }
 
 function assertCompatibleBaseline(artifact, baseline, label) {
-    if (artifact === null) {
-        return;
-    }
-
+    if (artifact === null) return;
     ensure(
         artifact.baseline_sha === baseline,
         `Existing ${label} target ${artifact.baseline_sha}; expected ${baseline}.`,

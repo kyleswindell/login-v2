@@ -1,10 +1,11 @@
 /**
  * ============================================================================
  * File: scripts/render-m0-ui-current-state-inventory.mjs
- * Purpose: Render issue #30 Markdown from persisted reviewed evidence only.
+ * Purpose: Render Issue #30 Markdown from persisted reviewed evidence only.
  * ============================================================================
  */
 
+import { statSync } from "node:fs";
 import { resolve } from "node:path";
 import process from "node:process";
 import { renderInventoryMarkdown } from "./lib/m0-ui-inventory/markdown-renderer.mjs";
@@ -36,7 +37,7 @@ const testTraces = readJson(
 ensure(
     observations.baseline.sha === classifications.baseline_sha &&
         observations.baseline.sha === testTraces.baseline_sha,
-    "Cannot render issue #30: evidence artifact baselines disagree.",
+    "Cannot render Issue #30: evidence artifact baselines disagree.",
 );
 
 if (!args.allow_pending) {
@@ -46,7 +47,6 @@ if (!args.allow_pending) {
     const pendingTraces = testTraces.test_traces.filter(
         (trace) => trace._reviewed !== true || trace._review_required === true,
     );
-
     ensure(
         pendingSurfaces.length === 0 && pendingTraces.length === 0,
         `Cannot render final inventory with ${pendingSurfaces.length} pending surface review(s) and ${pendingTraces.length} pending test trace(s).`,
@@ -58,7 +58,23 @@ const markdown = renderInventoryMarkdown({
     classifications,
     testTraces,
 });
-writeTextAtomic(resolve(repositoryRoot, config.outputs.document), markdown);
+const documentPath = resolve(repositoryRoot, config.outputs.document);
+writeTextAtomic(documentPath, markdown);
+const limit = config.artifact_limits?.document;
+
+if (limit?.max_bytes) {
+    ensure(
+        statSync(documentPath).size <= limit.max_bytes,
+        `Rendered inventory exceeds ${limit.max_bytes} bytes. Reduce projection size before continuing.`,
+    );
+}
+
+if (limit?.max_lines) {
+    ensure(
+        markdown.split(/\r?\n/).length <= limit.max_lines,
+        `Rendered inventory exceeds ${limit.max_lines} lines. Reduce projection size before continuing.`,
+    );
+}
 
 console.log(
     `Rendered ${config.outputs.document} from persisted evidence only.`,

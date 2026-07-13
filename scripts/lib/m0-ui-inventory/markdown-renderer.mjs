@@ -279,7 +279,6 @@ export function renderInventoryMarkdown({
     lines.push(
         "Final acceptance requires all material surfaces and test traces to be reviewed, every mismatch to remain evidence-backed, and no target-state decision to be introduced by inventory tooling.",
     );
-    lines.push("");
 
     return `${lines.join("\n")}\n`;
 }

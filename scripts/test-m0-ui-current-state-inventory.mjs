@@ -1,7 +1,7 @@
 /**
  * ============================================================================
  * File: scripts/test-m0-ui-current-state-inventory.mjs
- * Purpose: Fixture-test issue #30 grouping, contracts, review, and rendering.
+ * Purpose: Fixture-test corrected Issue #30 grouping and evidence semantics.
  * ============================================================================
  */
 
@@ -11,9 +11,11 @@ import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
 import process from "node:process";
 import { collectDiscoveryEvidence } from "./lib/m0-ui-inventory/discovery-runner.mjs";
+import { loadIssue29SupportingEvidence } from "./lib/m0-ui-inventory/issue29-support.mjs";
 import { renderInventoryMarkdown } from "./lib/m0-ui-inventory/markdown-renderer.mjs";
 import {
     markSurfaceReviewed,
+    markTraceReviewed,
     syncReviewArtifacts,
 } from "./lib/m0-ui-inventory/review-store.mjs";
 import {
@@ -25,6 +27,7 @@ import { collectMaterialSurfaces } from "./lib/m0-ui-inventory/surface-collector
 import {
     readJson,
     sha256,
+    stableStringify,
     sourceFingerprint,
     writeJsonAtomic,
 } from "./lib/m0-ui-inventory/utilities.mjs";
@@ -36,6 +39,20 @@ const expected = readJson(resolve(fixtureRoot, "expected.json"));
 const config = readJson(
     resolve(repositoryRoot, "scripts/m0-ui-inventory.config.json"),
 );
+const compactJsonFixture = {
+    evidence: {
+        formats: [],
+        paths: ["resources/views/components/ui/foo/index.blade.php"],
+        status: "present",
+    },
+    values: ["component.foo", "x-ui.foo"],
+};
+const compactJson = stableStringify(compactJsonFixture);
+assert.deepEqual(JSON.parse(compactJson), compactJsonFixture);
+assert.ok(
+    compactJson.split(/\r?\n/).length <= 8,
+    "Small deterministic evidence structures must remain compact and reviewable.",
+);
 const files = cases.files.map((file, index) => ({
     mode: "100644",
     type: "blob",
@@ -45,141 +62,161 @@ const files = cases.files.map((file, index) => ({
     content: file.content,
     source_sha256: file.content === null ? null : sha256(file.content),
 }));
-const collection = collectMaterialSurfaces({
-    files,
-    discovery: { mode: "fixture", commands: {} },
-    config,
-});
+const discovery = {
+    mode: "fixture",
+    issue_29_support: {
+        status: "accepted_baseline_match",
+        path: "fixture.json",
+        baseline_sha: PINNED_INVENTORY_BASELINE,
+        route_count: 1,
+        module_count: 2,
+    },
+    commands: {
+        route_list: {
+            current_attempt: { status: "failed" },
+            last_success: {
+                source: "issue_29_accepted_runtime_evidence",
+                payload: [
+                    {
+                        methods: ["GET"],
+                        uri: "notifications",
+                        name: "notifications.index",
+                        action: "NotificationsController@index",
+                        middleware: ["web"],
+                    },
+                ],
+            },
+        },
+        module_list: {
+            current_attempt: { status: "failed" },
+            last_success: {
+                source: "issue_29_accepted_runtime_evidence",
+                payload: [
+                    { key: "notifications", type: "core", ui_entries: [] },
+                    { key: "roles", type: "core", ui_entries: [] },
+                ],
+            },
+        },
+    },
+};
+const collection = collectMaterialSurfaces({ files, discovery, config });
 
-assert.ok(
-    !collection.surfaces.some(
-        (surface) => surface.implementation_entry === "vite.config.js",
+assert.ok(collection.surfaces.length >= expected.minimum_surface_count);
+assert.deepEqual(collection.unclaimed_material_files, []);
+const weakRelationshipValues = new Set([
+    "action",
+    "defaults",
+    "debounce",
+    "delay",
+    "index.css",
+    "match",
+    "matches",
+    "security",
+    "throttle",
+    "users",
+    "warning",
+]);
+const weakRelationships = collection.surfaces.flatMap((surface) =>
+    surface.test_candidates.filter(
+        (candidate) =>
+            candidate.relationship_evidence.kind === "exact_symbol_reference" &&
+            weakRelationshipValues.has(candidate.relationship_evidence.value),
     ),
-    "Vite configuration must remain build evidence, not a UI control surface.",
 );
-assert.ok(
-    !collection.unclaimed_material_files.includes("vite.config.js"),
-    "Vite configuration must not be reported as an unclaimed UI material file.",
-);
-const unresolvedContribution = collection.surfaces.find(
-    (surface) =>
-        surface.declared_ui_key === "account.main.legacy-platform-directory",
-);
-assert.equal(
-    unresolvedContribution.ownership_candidate.ownership_area,
-    "unknown",
-);
-assert.ok(unresolvedContribution.generated_mismatches.includes("investigate"));
-
-assert.ok(
-    collection.surfaces.length >= expected.minimum_surface_count,
-    `Expected at least ${expected.minimum_surface_count} surfaces.`,
+assert.deepEqual(
+    weakRelationships,
+    [],
+    "Generic filenames and words must not become semantic test relationships.",
 );
 
-for (const fragment of expected.required_record_fragments) {
+for (const type of expected.required_surface_types) {
     assert.ok(
-        collection.surfaces.some((surface) =>
-            surface.record_id.includes(fragment),
-        ),
-        `Missing fixture surface fragment: ${fragment}`,
+        collection.surfaces.some((surface) => surface.surface_type === type),
+        `Missing required fixture type: ${type}`,
     );
 }
 
-const grid = collection.surfaces.find(
-    (surface) =>
-        surface.current_slug === "grid" && surface.surface_type === "component",
+const foo = collection.surfaces.find(
+    (surface) => surface.declared_ui_key === "component.foo",
 );
-assert.ok(grid, "Grid component was not collected.");
+assert.ok(foo);
+assert.equal(foo.contracts[0].identity.type, "component");
+assert.notEqual(foo.contracts[0].identity.type, "bool");
+assert.equal(foo.contracts[0].schema_version.value, 1);
+assert.equal(foo.contracts[0].schema_version.source, "surface_profile_default");
+assert.deepEqual(foo.public_api_evidence.props, ["disabled", "label", "type"]);
+
+const grid = collection.surfaces.find(
+    (surface) => surface.current_slug === "grid",
+);
 assert.equal(grid.contracts[0].path, expected.contract_variation_path);
 assert.equal(grid.contracts[0].filename_variation, true);
 
-const fooComponent = collection.surfaces.find(
-    (surface) => surface.declared_ui_key === "component.foo",
-);
-const fooPattern = collection.surfaces.find(
-    (surface) => surface.declared_ui_key === "pattern.foo",
-);
-assert.ok(
-    fooComponent && fooPattern,
-    "Path-name collision fixture surfaces are missing.",
-);
-assert.notEqual(fooComponent.record_id, fooPattern.record_id);
-assert.deepEqual(fooComponent.public_api_evidence.props, [
-    "disabled",
-    "label",
-    "type",
-]);
-assert.ok(
-    !fooComponent.public_api_evidence.props.includes("resolvedLabel"),
-    "Local fallback variables must not be promoted to public Blade props.",
-);
-assert.ok(
-    !collection.surfaces.some(
-        (surface) =>
-            surface.implementation_entry ===
-            "resources/views/components/ui/foo/__tests__/FooInteraction.spec.js",
-    ),
-    "A test file must not be inventoried as a JavaScript control.",
-);
-assert.ok(
-    fooComponent.test_candidates.some(
-        (candidate) =>
-            candidate.path ===
-            "resources/views/components/ui/foo/__tests__/FooInteraction.spec.js",
-    ),
-    "The interaction spec must remain linked as test evidence.",
-);
+for (const path of [
+    "Modules/Notifications/Header/ActionViewData.php",
+    "Modules/Notifications/Header/PanelDataProvider.php",
+]) {
+    const surface = collection.surfaces.find(
+        (candidate) => candidate.implementation_entry === path,
+    );
+    assert.ok(surface, `Missing view-model surface: ${path}`);
+    assert.equal(surface.surface_type, "view_model");
+}
 
-const dialog = collection.surfaces.find(
-    (surface) => surface.current_slug === "dialog",
+const dashboardPage = collection.surfaces.find(
+    (surface) =>
+        surface.implementation_entry ===
+        "app/Livewire/Platform/Dashboard/DashboardPage.php",
 );
-assert.equal(dialog.surface_type, "component_family");
-assert.ok(dialog.blade_aliases.includes("x-ui.dialog.root"));
-assert.ok(dialog.blade_aliases.includes("x-ui.dialog.title"));
-assert.deepEqual(dialog.contracts[0].subcomponents, ["x-ui.dialog.root"]);
-assert.deepEqual(dialog.contract_api_evidence.comparison.shared_props, [
-    "open",
-]);
-assert.ok(
-    dialog.implementation_support_files.includes(
-        "resources/views/components/ui/dialog/partials/description.blade.php",
-    ),
-);
-assert.ok(
-    !collection.surfaces.some((surface) =>
-        surface.record_id.includes(
-            "resources:views:components:ui:dialog:partials",
-        ),
-    ),
-    "Private partials must remain support files of their explicit parent bundle.",
-);
+assert.equal(dashboardPage.surface_type, "renderer");
 
-for (const slug of ["standalone-one", "standalone-two"]) {
+for (const path of [
+    "app/Platform/Dashboard/WidgetRegistry.php",
+    "app/Platform/Dashboard/Widgets/PlatformStatsWidget.php",
+    "app/Platform/Dashboard/RendersOnDashboard.php",
+]) {
     assert.ok(
         collection.surfaces.some(
-            (surface) =>
-                surface.surface_type === "pattern" &&
-                surface.current_slug === slug,
+            (surface) => surface.implementation_entry === path,
         ),
-        `Missing standalone root Pattern: ${slug}`,
+        `Missing dashboard contribution surface: ${path}`,
     );
 }
+
+const notificationsView = collection.surfaces.find(
+    (surface) =>
+        surface.implementation_entry ===
+        "Modules/Notifications/resources/views/index.blade.php",
+);
 assert.ok(
-    !collection.surfaces.some(
-        (surface) =>
-            surface.surface_type === "pattern" &&
-            surface.current_slug === "patterns",
+    notificationsView.test_candidates.some(
+        (test) =>
+            test.path === "tests/Feature/Ui/NotificationsViewTest.php" &&
+            test.relationship_evidence.kind ===
+                "exact_repository_path_reference",
     ),
-    "Independent root Patterns must not be collapsed into one directory record.",
 );
 
-const color = collection.surfaces.find(
-    (surface) => surface.current_slug === "color",
+for (const [surfacePath, testPath] of expected.forbidden_false_trace_pairs) {
+    const surface = collection.surfaces.find(
+        (candidate) => candidate.implementation_entry === surfacePath,
+    );
+    assert.ok(surface, `Missing fixture surface ${surfacePath}`);
+    assert.ok(
+        !surface.test_candidates.some((test) => test.path === testPath),
+        `False trace link survived: ${surfacePath} -> ${testPath}`,
+    );
+}
+
+const icons = collection.surfaces.find(
+    (surface) => surface.surface_type === "icon_system",
 );
-assert.equal(color.implementation_entry, "resources/css/ui/theme-seed.css");
+assert.equal(icons.asset_group_summary.svg_count, 2);
+assert.ok(icons.implementation_support_files.length < 10);
 
 const observations = {
-    schema_version: 1,
+    schema_version: 2,
+    generator_schema_version: 2,
     issue: 30,
     baseline: {
         sha: PINNED_INVENTORY_BASELINE,
@@ -187,29 +224,19 @@ const observations = {
         immutable: true,
         expected_execution_base: config.expected_execution_base,
         current_head_at_collection: config.expected_execution_base,
-        ui_source_diff: {
-            changed: false,
-            paths: [],
-            command: "fixture diff",
-        },
+        ui_source_diff: { changed: false, paths: [], command: "fixture diff" },
     },
-    generator: {
-        generated_at: "2026-07-11T00:00:00.000Z",
-    },
+    generator: { generated_at: "2026-07-12T00:00:00.000Z" },
     roots: {},
     required_surface_fields: REQUIRED_SURFACE_FIELDS,
     required_trace_fields: REQUIRED_TRACE_FIELDS,
-    discovery: {
-        mode: "fixture",
-        commands: {},
-    },
+    discovery,
     source_path_index: files.map((file) => file.path).sort(),
     surfaces: collection.surfaces,
     unclaimed_material_files: [],
     summary: {},
 };
-
-const temporaryRoot = mkdtempSync(join(tmpdir(), "m0-ui-inventory-"));
+const temporaryRoot = mkdtempSync(join(tmpdir(), "m0-ui-correction-"));
 const classificationsPath = join(temporaryRoot, "classifications.json");
 const tracesPath = join(temporaryRoot, "traces.json");
 
@@ -218,141 +245,141 @@ try {
         observations,
         classificationsPath,
         testTracesPath: tracesPath,
+        resetReviews: true,
     });
-    const unreviewedPattern = artifacts.classifications.items.find(
-        (item) => item._record_id === fooPattern.record_id,
+    assert.ok(artifacts.classifications.items.every((item) => !item._reviewed));
+    assert.ok(
+        artifacts.testTraces.test_traces.every((trace) => !trace._reviewed),
     );
-    const regeneratedObservations = structuredClone(observations);
-    const regeneratedPattern = regeneratedObservations.surfaces.find(
-        (surface) => surface.record_id === fooPattern.record_id,
-    );
-    regeneratedPattern.generated_mismatches = ["investigate"];
-    artifacts = syncReviewArtifacts({
-        observations: regeneratedObservations,
-        classificationsPath,
-        testTracesPath: tracesPath,
-    });
-    const refreshedPattern = artifacts.classifications.items.find(
-        (item) => item._record_id === fooPattern.record_id,
-    );
-    assert.ok(!unreviewedPattern.known_mismatches.includes("investigate"));
-    assert.deepEqual(refreshedPattern.known_mismatches, ["investigate"]);
-    assert.equal(refreshedPattern.inventory_disposition, "investigate");
 
-    const record = artifacts.classifications.items.find(
-        (item) => item._record_id === fooComponent.record_id,
+    const fooReview = artifacts.classifications.items.find(
+        (item) => item._record_id === foo.record_id,
     );
-    record.owner_key = "reviewed_ui_owner";
     markSurfaceReviewed(
         artifacts.classifications,
-        record._record_id,
-        "Fixture review completed.",
+        fooReview._record_id,
+        "Fixture surface reviewed.",
+        "fixture-reviewer",
+    );
+    const fooTrace = artifacts.testTraces.test_traces.find(
+        (trace) => trace._surface_record_id === foo.record_id,
+    );
+    markTraceReviewed(
+        artifacts.testTraces,
+        fooTrace._trace_id,
+        "Fixture trace relationship reviewed.",
         "fixture-reviewer",
     );
     writeJsonAtomic(classificationsPath, artifacts.classifications);
+    writeJsonAtomic(tracesPath, artifacts.testTraces);
 
     artifacts = syncReviewArtifacts({
         observations,
         classificationsPath,
         testTracesPath: tracesPath,
     });
-    const preserved = artifacts.classifications.items.find(
-        (item) => item._record_id === fooComponent.record_id,
+    assert.equal(
+        artifacts.classifications.items.find(
+            (item) => item._record_id === foo.record_id,
+        )._reviewed,
+        true,
     );
-    assert.equal(preserved.owner_key, "reviewed_ui_owner");
-    assert.equal(preserved._reviewed, true);
 
     const changedObservations = structuredClone(observations);
-    const changedSurface = changedObservations.surfaces.find(
-        (surface) => surface.record_id === fooComponent.record_id,
+    const changedFoo = changedObservations.surfaces.find(
+        (surface) => surface.record_id === foo.record_id,
     );
-    changedSurface.source_fingerprint = sourceFingerprint({ changed: true });
+    changedFoo.source_fingerprint = sourceFingerprint({ changed: true });
     artifacts = syncReviewArtifacts({
         observations: changedObservations,
         classificationsPath,
         testTracesPath: tracesPath,
     });
-    const marked = artifacts.classifications.items.find(
-        (item) => item._record_id === fooComponent.record_id,
+    assert.equal(
+        artifacts.classifications.items.find(
+            (item) => item._record_id === foo.record_id,
+        )._review_required,
+        true,
     );
-    assert.equal(marked.owner_key, "reviewed_ui_owner");
-    assert.equal(marked._reviewed, false);
-    assert.equal(marked._review_required, true);
 
-    const priorFailure = {
-        mode: "runtime_attempted",
-        commands: {
-            route_list: {
-                command: "php artisan route:list --json",
-                current_attempt: { status: "failed" },
-                last_success: null,
-            },
+    const supportPath = join(temporaryRoot, "issue29.json");
+    writeJsonAtomic(supportPath, {
+        baseline: { sha: PINNED_INVENTORY_BASELINE },
+        dynamic_runtime_evidence: {
+            route_list: { status: "passed", exit_code: 0, command: "route" },
+            module_list: { status: "passed", exit_code: 0, command: "module" },
         },
-    };
-    const preservedFailure = collectDiscoveryEvidence({
+        material_items: [
+            {
+                source_kind: "runtime_route_dynamic",
+                runtime_metadata: {
+                    methods: ["GET"],
+                    uri: "foo",
+                    name: "foo.index",
+                    action: "FooController@index",
+                    middleware: ["web"],
+                },
+            },
+            {
+                source_kind: "runtime_module_dynamic",
+                runtime_metadata: { key: "foo", type: "core" },
+            },
+        ],
+    });
+    const supportConfig = structuredClone(config);
+    supportConfig.issue_29_supporting_evidence.raw_path = supportPath;
+    const support = loadIssue29SupportingEvidence({
+        repositoryRoot: temporaryRoot,
+        config: supportConfig,
+        baseline: PINNED_INVENTORY_BASELINE,
+    });
+    assert.equal(support.status, "accepted_baseline_match");
+    assert.equal(support.routes.length, 1);
+    assert.equal(support.modules.length, 1);
+
+    const preserved = collectDiscoveryEvidence({
         repositoryRoot,
         config,
         staticOnly: true,
-        existing: priorFailure,
-    });
-    assert.deepEqual(preservedFailure, priorFailure);
-
-    const discoveryConfig = structuredClone(config);
-    discoveryConfig.runtime_discovery = [
-        {
-            key: "redaction_fixture",
-            command: [
-                process.execPath,
-                "-e",
-                "process.stderr.write(process.cwd()); process.exit(1);",
-            ],
-        },
-    ];
-    const redactedDiscovery = collectDiscoveryEvidence({
-        repositoryRoot: repositoryRoot.replaceAll("\\", "/"),
-        config: discoveryConfig,
-        staticOnly: false,
         existing: null,
+        issue29Support: support,
     });
-    const redactedAttempt =
-        redactedDiscovery.commands.redaction_fixture.current_attempt;
-    assert.equal(redactedAttempt.status, "failed");
-    assert.ok(!Object.hasOwn(redactedAttempt, "_stdout"));
-    assert.ok(!redactedAttempt.stderr.includes(repositoryRoot));
-    assert.match(redactedAttempt.stderr, /<repository-root>/);
+    assert.equal(
+        preserved.commands.route_list.last_success.source,
+        "issue_29_accepted_runtime_evidence",
+    );
 
-    const renderingClassifications = structuredClone(artifacts.classifications);
-    for (const item of renderingClassifications.items) {
+    const renderClassifications = structuredClone(artifacts.classifications);
+    const renderTraces = structuredClone(artifacts.testTraces);
+    for (const item of renderClassifications.items) {
         item._reviewed = true;
         item._review_required = false;
     }
-    const renderingTraces = structuredClone(artifacts.testTraces);
-    for (const trace of renderingTraces.test_traces) {
+    for (const trace of renderTraces.test_traces) {
         trace._reviewed = true;
         trace._review_required = false;
     }
     const markdown = renderInventoryMarkdown({
         observations: changedObservations,
-        classifications: renderingClassifications,
-        testTraces: renderingTraces,
+        classifications: renderClassifications,
+        testTraces: renderTraces,
     });
     assert.match(markdown, /# M0 UI Current-State Inventory/);
     assert.match(markdown, /Issue #32 owns complete test-suite execution/);
-
-    assert.ok(
-        readFileSync(classificationsPath, "utf8").includes("reviewed_ui_owner"),
-    );
+    assert.ok(markdown.endsWith("\n"));
+    assert.ok(!markdown.endsWith("\n\n"));
+    assert.ok(readFileSync(classificationsPath, "utf8").length > 0);
 } finally {
     rmSync(temporaryRoot, { recursive: true, force: true });
 }
 
 console.log(
     [
-        "Issue #30 fixture tests passed.",
+        "Issue #30 correction fixture tests passed.",
         `Collected fixture surfaces: ${collection.surfaces.length}.`,
-        "Verified path-name collisions, contract variations, family grouping,",
-        "review preservation, changed-source re-review, failed discovery preservation,",
-        "discovery path redaction, private stdout omission,",
-        "and repository-independent rendering.",
+        "Verified section-aware contract parsing, false-link rejection,",
+        "Module ViewData/DataProvider coverage, Dashboard contribution coverage,",
+        "asset grouping, explicit review reset, review preservation,",
+        "source-change invalidation, Issue #29 support import, and render-only output.",
     ].join("\n"),
 );

@@ -31,7 +31,52 @@ export function sourceFingerprint(value) {
 }
 
 export function stableStringify(value, spacing = 2) {
-    return `${JSON.stringify(sortRecursively(value), null, spacing)}\n`;
+    return `${stringifyCompact(sortRecursively(value), spacing)}\n`;
+}
+
+function stringifyCompact(value, spacing, depth = 0) {
+    if (value === null || typeof value !== "object") {
+        return JSON.stringify(value);
+    }
+
+    const compact = JSON.stringify(value);
+
+    if (
+        compact.length <= 160 ||
+        (Array.isArray(value) &&
+            value.every((item) => item === null || typeof item !== "object") &&
+            compact.length <= 240)
+    ) {
+        return compact;
+    }
+
+    const indent = typeof spacing === "number" ? " ".repeat(spacing) : spacing;
+    const currentIndent = indent.repeat(depth);
+    const childIndent = indent.repeat(depth + 1);
+
+    if (Array.isArray(value)) {
+        return [
+            "[",
+            value
+                .map(
+                    (item) =>
+                        `${childIndent}${stringifyCompact(item, spacing, depth + 1)}`,
+                )
+                .join(",\n"),
+            `${currentIndent}]`,
+        ].join("\n");
+    }
+
+    return [
+        "{",
+        Object.entries(value)
+            .map(
+                ([key, child]) =>
+                    `${childIndent}${JSON.stringify(key)}: ${stringifyCompact(child, spacing, depth + 1)}`,
+            )
+            .join(",\n"),
+        `${currentIndent}}`,
+    ].join("\n");
 }
 
 export function sortRecursively(value) {

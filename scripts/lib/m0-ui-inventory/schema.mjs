@@ -93,7 +93,6 @@ export const OWNERSHIP_AREAS = new Set([
     "not_applicable",
     "unknown",
 ]);
-
 export const CONTRACT_STATUSES = new Set([
     "present",
     "missing",
@@ -103,7 +102,6 @@ export const CONTRACT_STATUSES = new Set([
     "not_applicable",
     "unknown",
 ]);
-
 export const MISMATCH_CLASSIFICATIONS = new Set([
     "aligned",
     "contract_missing",
@@ -132,14 +130,12 @@ export const MISMATCH_CLASSIFICATIONS = new Set([
     "responsive_evidence_missing",
     "investigate",
 ]);
-
 export const INVENTORY_DISPOSITIONS = new Set([
     "retain",
     "compatibility",
     "duplicate",
     "investigate",
 ]);
-
 export const CARBON_PROVENANCE_VALUES = new Set([
     "carbon_direct_port",
     "carbon_api_adaptation",
@@ -150,7 +146,6 @@ export const CARBON_PROVENANCE_VALUES = new Set([
     "unknown",
     "not_applicable",
 ]);
-
 export const TEST_TYPES = new Set([
     "contract schema",
     "API rendering",
@@ -168,7 +163,6 @@ export const TEST_TYPES = new Set([
     "incidental markup assertion",
     "unknown",
 ]);
-
 export const TEST_RESULTS = new Set([
     "passed",
     "failed",
@@ -177,7 +171,6 @@ export const TEST_RESULTS = new Set([
     "missing",
     "unknown",
 ]);
-
 export const TEST_STATUSES = new Set([
     "passing",
     "failing",
@@ -188,7 +181,6 @@ export const TEST_STATUSES = new Set([
     "unknown",
     "not_applicable",
 ]);
-
 export const TEST_AUTHORITIES = new Set([
     "authoritative",
     "partial",
@@ -196,6 +188,13 @@ export const TEST_AUTHORITIES = new Set([
     "stale",
     "unknown",
     "not_applicable",
+]);
+export const TRACE_RELATIONSHIP_KINDS = new Set([
+    "owner_local_test",
+    "exact_repository_path_reference",
+    "exact_blade_alias_reference",
+    "exact_ui_key_reference",
+    "exact_symbol_reference",
 ]);
 
 export function createSurfaceReviewSeed(observation) {
@@ -210,7 +209,6 @@ export function createSurfaceReviewSeed(observation) {
               : observation.contracts[0].filename_variation
                 ? "variation"
                 : "present";
-
     const testPaths = uniqueSorted(
         observation.test_candidates.map((candidate) => candidate.path),
     );
@@ -221,7 +219,7 @@ export function createSurfaceReviewSeed(observation) {
         _reviewed: false,
         _review_required: true,
         _review_note:
-            "Generated seed. Review every field against the pinned implementation-first evidence order.",
+            "Generated correction seed. Review every field against implementation-first evidence; prior PR #44 reviews were intentionally invalidated.",
         ui_key: observation.declared_ui_key ?? "unknown",
         current_slug: observation.current_slug ?? "unknown",
         surface_type: observation.surface_type,
@@ -250,7 +248,7 @@ export function createSurfaceReviewSeed(observation) {
         example_paths: observation.example_paths,
         css_paths: observation.css_paths,
         javascript_paths: observation.javascript_paths,
-        icon_or_asset_dependencies: observation.icon_or_asset_dependencies,
+        icon_or_asset_dependencies: compactAssetEvidence(observation),
         lower_tier_dependencies: observation.lower_tier_dependencies,
         public_api_evidence: observation.public_api_evidence,
         contract_api_evidence: observation.contract_api_evidence,
@@ -267,21 +265,24 @@ export function createSurfaceReviewSeed(observation) {
         metadata_evidence: observation.metadata_evidence,
         carbon_provenance: "unknown",
         app_owned_deviations: [],
-        lifecycle_claim: observation.lifecycle_claim ?? "unknown",
+        lifecycle_claim:
+            observation.lifecycle_claim?.length > 0
+                ? observation.lifecycle_claim
+                : "unknown",
         review_claim: observation.review_claim ?? "unknown",
         accessibility_evidence: observation.accessibility_evidence,
         responsive_evidence: observation.responsive_evidence,
         browser_evidence: observation.browser_evidence,
         test_paths: testPaths,
         test_status: testPaths.length === 0 ? "missing" : "not_run",
-        test_authority: testPaths.length === 0 ? "unknown" : "unknown",
+        test_authority: "unknown",
         known_mismatches: observation.generated_mismatches,
         inventory_disposition:
             observation.generated_mismatches.length > 0
                 ? "investigate"
                 : "retain",
         target_question: observation.target_question ?? "not_applicable",
-        evidence_source: observation.evidence_source,
+        evidence_source: compactReviewEvidence(observation),
     };
 }
 
@@ -289,11 +290,13 @@ export function createTestTraceSeed(surfaceReview, candidate) {
     return {
         _trace_id: makeTraceId(surfaceReview._record_id, candidate.path),
         _surface_record_id: surfaceReview._record_id,
-        _source_fingerprint: sourceFingerprint(candidate),
+        _source_fingerprint:
+            candidate.source_fingerprint ?? sourceFingerprint(candidate),
         _reviewed: false,
         _review_required: true,
         _review_note:
-            "Generated trace seed. Review coverage, result, and authority without duplicating issue #32 suite ownership.",
+            "Generated correction trace. Verify the semantic relationship, coverage, result, and authority without duplicating issue #32.",
+        _relationship_evidence: candidate.relationship_evidence,
         surface_ui_key: surfaceReview.ui_key,
         test_path: candidate.path,
         test_exists: candidate.exists,
@@ -313,73 +316,43 @@ export function createTestTraceSeed(surfaceReview, candidate) {
 }
 
 export function summarizeTestStatus(traces) {
-    if (traces.length === 0) {
-        return "missing";
-    }
-
+    if (traces.length === 0) return "missing";
     const results = new Set(traces.map((trace) => trace.current_result));
-
-    if (results.has("failed") && results.size > 1) {
-        return "mixed";
-    }
-
-    if (results.has("failed")) {
-        return "failing";
-    }
-
-    if (results.has("warning")) {
-        return results.size > 1 ? "mixed" : "warning";
-    }
-
-    if (results.size === 1 && results.has("passed")) {
-        return "passing";
-    }
-
-    if (results.has("passed")) {
-        return "mixed";
-    }
-
-    if (results.size === 1 && results.has("not_run")) {
-        return "not_run";
-    }
-
-    if (results.size === 1 && results.has("missing")) {
-        return "missing";
-    }
-
+    if (results.has("failed") && results.size > 1) return "mixed";
+    if (results.has("failed")) return "failing";
+    if (results.has("warning")) return results.size > 1 ? "mixed" : "warning";
+    if (results.size === 1 && results.has("passed")) return "passing";
+    if (results.has("passed")) return "mixed";
+    if (results.size === 1 && results.has("not_run")) return "not_run";
+    if (results.size === 1 && results.has("missing")) return "missing";
     return "unknown";
 }
 
 export function summarizeTestAuthority(traces) {
-    if (traces.length === 0) {
-        return "unknown";
-    }
-
+    if (traces.length === 0) return "unknown";
     const authorities = new Set(traces.map((trace) => trace.test_authority));
-
-    if (authorities.size === 1) {
-        return [...authorities][0];
-    }
-
-    if (authorities.has("stale") && authorities.size === 1) {
-        return "stale";
-    }
-
-    if (authorities.has("authoritative")) {
-        return "partial";
-    }
-
-    if (authorities.has("partial")) {
-        return "partial";
-    }
-
-    if (authorities.has("incidental")) {
-        return "incidental";
-    }
-
-    if (authorities.has("stale")) {
-        return "stale";
-    }
-
+    if (authorities.size === 1) return [...authorities][0];
+    if (authorities.has("authoritative")) return "partial";
+    if (authorities.has("partial")) return "partial";
+    if (authorities.has("incidental")) return "incidental";
+    if (authorities.has("stale")) return "stale";
     return "unknown";
+}
+
+function compactAssetEvidence(observation) {
+    if (observation.asset_group_summary) {
+        return [observation.asset_group_summary];
+    }
+
+    return observation.icon_or_asset_dependencies;
+}
+
+function compactReviewEvidence(observation) {
+    return uniqueSorted([
+        `observation:${observation.record_id}`,
+        `path:${observation.implementation_entry}`,
+        ...observation.contracts.map((contract) => `path:${contract.path}`),
+        ...observation.reference_paths.map((path) => `path:${path}`),
+        ...observation.test_candidates.map((test) => `path:${test.path}`),
+    ]).filter((entry) => !entry.endsWith(":unknown"));
 }

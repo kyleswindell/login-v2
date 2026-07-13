@@ -1,0 +1,4 @@
+export_id,inventory_baseline_sha,export_schema_version,surface_alias_id,surface_id,alias_type,alias_value,is_primary
+export:cf5b34fc1b9beb1b7cd2,1d103f5fa47aab8c8adfba8ea134dd29540426fe,0.2.0,alias:ad9deb35ef893dde78df,component:resources:views:components:ui:button:fixture001,blade_alias,x-ui.button,true
+export:cf5b34fc1b9beb1b7cd2,1d103f5fa47aab8c8adfba8ea134dd29540426fe,0.2.0,alias:baeac574fbd537369816,component_family:resources:views:components:ui:modal:fixture002,blade_alias,x-ui.modal,true
+export:cf5b34fc1b9beb1b7cd2,1d103f5fa47aab8c8adfba8ea134dd29540426fe,0.2.0,alias:130b89a2f7ba3de38b5f,component_family:resources:views:components:ui:modal:fixture002,blade_alias,x-ui.modal.body,false

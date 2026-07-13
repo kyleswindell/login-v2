@@ -1,0 +1,1374 @@
+{
+  "schema_version": 2,
+  "generator_schema_version": 2,
+  "issue": 30,
+  "baseline": {
+    "sha": "1d103f5fa47aab8c8adfba8ea134dd29540426fe",
+    "inventory_date": "2026-07-13"
+  },
+  "required_surface_fields": [
+    "ui_key",
+    "current_slug",
+    "surface_type",
+    "ownership_area",
+    "owner_key",
+    "capability_key",
+    "module_key",
+    "blade_alias",
+    "implementation_entry",
+    "implementation_support_files",
+    "registration_evidence",
+    "contract_path",
+    "contract_status",
+    "reference_path",
+    "example_paths",
+    "css_paths",
+    "javascript_paths",
+    "icon_or_asset_dependencies",
+    "lower_tier_dependencies",
+    "public_api_evidence",
+    "contract_api_evidence",
+    "standards_evidence",
+    "metadata_evidence",
+    "carbon_provenance",
+    "app_owned_deviations",
+    "lifecycle_claim",
+    "review_claim",
+    "accessibility_evidence",
+    "responsive_evidence",
+    "browser_evidence",
+    "test_paths",
+    "test_status",
+    "test_authority",
+    "known_mismatches",
+    "inventory_disposition",
+    "target_question",
+    "evidence_source"
+  ],
+  "surfaces": [
+    {
+      "record_id": "component:resources:views:components:ui:button:fixture001",
+      "source_fingerprint": "8e8c25fd0be80a5ed43cd5bbb58890baf82aaa5966d6faf09e41e5b92bb2fcf0",
+      "surface_type": "component",
+      "current_slug": "button",
+      "declared_ui_key": "ui.component.button",
+      "blade_aliases": [
+        "x-ui.button"
+      ],
+      "implementation_entry": "resources/views/components/ui/button/index.blade.php",
+      "implementation_support_files": [
+        "resources/views/components/ui/button/contract.php",
+        "resources/css/components/button.css"
+      ],
+      "ownership_candidate": {
+        "ownership_area": "ui",
+        "owner_key": "button",
+        "capability_key": "not_applicable",
+        "module_key": "not_applicable"
+      },
+      "registration_evidence": [
+        {
+          "state": "blade_alias_resolves",
+          "claim": "x-ui.button resolves to the implementation entry.",
+          "evidence_source": [
+            "path:resources/views/components/ui/button/index.blade.php"
+          ]
+        }
+      ],
+      "contracts": [
+        {
+          "path": "resources/views/components/ui/button/contract.php",
+          "object_sha": "ceea33ea7ff0e89a29d50eadac65b51b00bfd5e3",
+          "source_sha256": "c7eeb6ed7c25f2d2421566c41fd77c39a475f746ce3410da90cb659378f239d1",
+          "filename_variation": false
+        }
+      ],
+      "reference_paths": [
+        "resources/views/components/ui/button/reference.php"
+      ],
+      "example_paths": [
+        "resources/views/components/ui/button/examples/basic.blade.php"
+      ],
+      "css_paths": [
+        "resources/css/components/button.css"
+      ],
+      "javascript_paths": [],
+      "icon_or_asset_dependencies": [
+        {
+          "alias": "x-ui.icon",
+          "name": "add",
+          "evidence_source": [
+            "path:resources/views/components/ui/button/index.blade.php"
+          ]
+        }
+      ],
+      "lower_tier_dependencies": [
+        "x-ui.icon"
+      ],
+      "public_api_evidence": {
+        "props": [
+          "variant",
+          "disabled"
+        ],
+        "slots": [
+          "default"
+        ],
+        "events": [],
+        "data_attributes": [
+          "data-ui-button"
+        ]
+      },
+      "contract_api_evidence": {
+        "contract_paths": [
+          "resources/views/components/ui/button/contract.php"
+        ],
+        "api": {
+          "props": [
+            "variant",
+            "disabled"
+          ],
+          "slots": [
+            "default"
+          ],
+          "events": [],
+          "data_attributes": [
+            "data-ui-button"
+          ]
+        }
+      },
+      "standard_candidates": [
+        {
+          "path": "docs/02-standards/ui/components/button.md",
+          "source_sha256": "6bb7de869d97f72d326215c742d65672223d40c743a943b491db270053e57b60",
+          "claimed_scope": "Button component behavior and contract guidance",
+          "evidence_source": [
+            "path:docs/02-standards/ui/components/button.md",
+            "path:resources/views/components/ui/button/index.blade.php",
+            "path:resources/views/components/ui/button/contract.php"
+          ]
+        },
+        {
+          "path": "docs/02-standards/ui/contract-file.md",
+          "source_sha256": "3825060885b8a626404f9a1b437dc42ab57e13b72747041a00857dbae8c2cdec",
+          "claimed_scope": "Shared UI contract file structure",
+          "evidence_source": [
+            "path:docs/02-standards/ui/contract-file.md",
+            "path:app/Surfaces/Contracts/Surface.php"
+          ]
+        }
+      ],
+      "metadata_evidence": {
+        "human_readable_header": {
+          "implementation": {
+            "present_count": 1,
+            "absent_count": 0,
+            "unknown_count": 0,
+            "not_applicable_count": 0,
+            "values": [
+              "present"
+            ],
+            "formats": [
+              "comment_header"
+            ],
+            "present_paths": [
+              "resources/views/components/ui/button/index.blade.php"
+            ]
+          },
+          "contract": {
+            "present_count": 1,
+            "absent_count": 0,
+            "unknown_count": 0,
+            "not_applicable_count": 0,
+            "values": [
+              "present"
+            ],
+            "formats": [
+              "comment_header"
+            ],
+            "present_paths": [
+              "resources/views/components/ui/button/contract.php"
+            ]
+          }
+        },
+        "ui_key": {
+          "implementation": {
+            "present_count": 1,
+            "absent_count": 0,
+            "unknown_count": 0,
+            "not_applicable_count": 0,
+            "values": [
+              "ui.component.button"
+            ],
+            "formats": [
+              "string"
+            ],
+            "present_paths": [
+              "resources/views/components/ui/button/index.blade.php"
+            ]
+          },
+          "contract": {
+            "present_count": 1,
+            "absent_count": 0,
+            "unknown_count": 0,
+            "not_applicable_count": 0,
+            "values": [
+              "ui.component.button"
+            ],
+            "formats": [
+              "string"
+            ],
+            "present_paths": [
+              "resources/views/components/ui/button/contract.php"
+            ]
+          }
+        },
+        "blade_alias": {
+          "implementation": {
+            "present_count": 1,
+            "absent_count": 0,
+            "unknown_count": 0,
+            "not_applicable_count": 0,
+            "values": [
+              "x-ui.button"
+            ],
+            "formats": [
+              "string"
+            ],
+            "present_paths": [
+              "resources/views/components/ui/button/index.blade.php"
+            ]
+          },
+          "contract": {
+            "present_count": 1,
+            "absent_count": 0,
+            "unknown_count": 0,
+            "not_applicable_count": 0,
+            "values": [
+              "x-ui.button"
+            ],
+            "formats": [
+              "string"
+            ],
+            "present_paths": [
+              "resources/views/components/ui/button/contract.php"
+            ]
+          }
+        },
+        "implementation_path_reference": {
+          "implementation": {
+            "present_count": 1,
+            "absent_count": 0,
+            "unknown_count": 0,
+            "not_applicable_count": 0,
+            "values": [
+              "resources/views/components/ui/button/index.blade.php"
+            ],
+            "formats": [
+              "repository_path"
+            ],
+            "present_paths": [
+              "resources/views/components/ui/button/index.blade.php"
+            ]
+          },
+          "contract": {
+            "present_count": 1,
+            "absent_count": 0,
+            "unknown_count": 0,
+            "not_applicable_count": 0,
+            "values": [
+              "resources/views/components/ui/button/index.blade.php"
+            ],
+            "formats": [
+              "repository_path"
+            ],
+            "present_paths": [
+              "resources/views/components/ui/button/contract.php"
+            ]
+          }
+        },
+        "contract_path_reference": {
+          "implementation": {
+            "present_count": 1,
+            "absent_count": 0,
+            "unknown_count": 0,
+            "not_applicable_count": 0,
+            "values": [
+              "resources/views/components/ui/button/contract.php"
+            ],
+            "formats": [
+              "repository_path"
+            ],
+            "present_paths": [
+              "resources/views/components/ui/button/index.blade.php"
+            ]
+          },
+          "contract": {
+            "present_count": 1,
+            "absent_count": 0,
+            "unknown_count": 0,
+            "not_applicable_count": 0,
+            "values": [
+              "resources/views/components/ui/button/contract.php"
+            ],
+            "formats": [
+              "repository_path"
+            ],
+            "present_paths": [
+              "resources/views/components/ui/button/contract.php"
+            ]
+          }
+        },
+        "contract_schema_version": {
+          "implementation": {
+            "present_count": 0,
+            "absent_count": 0,
+            "unknown_count": 0,
+            "not_applicable_count": 1,
+            "values": [],
+            "formats": [],
+            "present_paths": []
+          },
+          "contract": {
+            "present_count": 1,
+            "absent_count": 0,
+            "unknown_count": 0,
+            "not_applicable_count": 0,
+            "values": [
+              "2"
+            ],
+            "formats": [
+              "integer"
+            ],
+            "present_paths": [
+              "resources/views/components/ui/button/contract.php"
+            ]
+          }
+        },
+        "public_api_version": {
+          "implementation": {
+            "present_count": 0,
+            "absent_count": 1,
+            "unknown_count": 0,
+            "not_applicable_count": 0,
+            "values": [],
+            "formats": [],
+            "present_paths": []
+          },
+          "contract": {
+            "present_count": 0,
+            "absent_count": 1,
+            "unknown_count": 0,
+            "not_applicable_count": 0,
+            "values": [],
+            "formats": [],
+            "present_paths": []
+          }
+        },
+        "verification_commit": {
+          "implementation": {
+            "present_count": 0,
+            "absent_count": 1,
+            "unknown_count": 0,
+            "not_applicable_count": 0,
+            "values": [],
+            "formats": [],
+            "present_paths": []
+          },
+          "contract": {
+            "present_count": 0,
+            "absent_count": 1,
+            "unknown_count": 0,
+            "not_applicable_count": 0,
+            "values": [],
+            "formats": [],
+            "present_paths": []
+          }
+        },
+        "verification_timestamp": {
+          "implementation": {
+            "present_count": 0,
+            "absent_count": 1,
+            "unknown_count": 0,
+            "not_applicable_count": 0,
+            "values": [],
+            "formats": [],
+            "present_paths": []
+          },
+          "contract": {
+            "present_count": 0,
+            "absent_count": 1,
+            "unknown_count": 0,
+            "not_applicable_count": 0,
+            "values": [],
+            "formats": [],
+            "present_paths": []
+          }
+        },
+        "source_hash": {
+          "implementation": {
+            "present_count": 0,
+            "absent_count": 1,
+            "unknown_count": 0,
+            "not_applicable_count": 0,
+            "values": [],
+            "formats": [],
+            "present_paths": []
+          },
+          "contract": {
+            "present_count": 0,
+            "absent_count": 1,
+            "unknown_count": 0,
+            "not_applicable_count": 0,
+            "values": [],
+            "formats": [],
+            "present_paths": []
+          }
+        },
+        "contract_hash": {
+          "implementation": {
+            "present_count": 0,
+            "absent_count": 1,
+            "unknown_count": 0,
+            "not_applicable_count": 0,
+            "values": [],
+            "formats": [],
+            "present_paths": []
+          },
+          "contract": {
+            "present_count": 0,
+            "absent_count": 1,
+            "unknown_count": 0,
+            "not_applicable_count": 0,
+            "values": [],
+            "formats": [],
+            "present_paths": []
+          }
+        },
+        "last_updated": {
+          "implementation": {
+            "present_count": 0,
+            "absent_count": 1,
+            "unknown_count": 0,
+            "not_applicable_count": 0,
+            "values": [],
+            "formats": [],
+            "present_paths": []
+          },
+          "contract": {
+            "present_count": 0,
+            "absent_count": 1,
+            "unknown_count": 0,
+            "not_applicable_count": 0,
+            "values": [],
+            "formats": [],
+            "present_paths": []
+          }
+        },
+        "known_disagreements": [],
+        "evidence_source": [
+          "path:resources/views/components/ui/button/index.blade.php",
+          "path:resources/views/components/ui/button/contract.php"
+        ]
+      },
+      "accessibility_evidence": {
+        "status": "observed",
+        "observed_tokens": [
+          "aria-disabled"
+        ],
+        "paths": [
+          "resources/views/components/ui/button/index.blade.php"
+        ]
+      },
+      "responsive_evidence": {
+        "status": "not_observed",
+        "observed": [],
+        "paths": []
+      },
+      "browser_evidence": {
+        "status": "observed",
+        "test_paths": [
+          "resources/views/components/ui/button/__tests__/ButtonInteraction.spec.js"
+        ]
+      },
+      "test_candidates": [],
+      "generated_mismatches": [
+        "aligned"
+      ],
+      "target_question": "not_applicable",
+      "evidence_source": [
+        "observation:component:resources:views:components:ui:button:fixture001",
+        "path:resources/views/components/ui/button/index.blade.php",
+        "path:resources/views/components/ui/button/contract.php",
+        "path:docs/02-standards/ui/components/button.md"
+      ],
+      "files": [
+        {
+          "path": "resources/views/components/ui/button/index.blade.php",
+          "object_sha": "cb0aba071e08c608f4afb24203a8f761f434b763",
+          "source_sha256": "466a52a7cd6f03ce19808ae3d334d93e530a70dc11dd91e8afd7b9e2e41ea9f8"
+        },
+        {
+          "path": "resources/views/components/ui/button/contract.php",
+          "object_sha": "ceea33ea7ff0e89a29d50eadac65b51b00bfd5e3",
+          "source_sha256": "c7eeb6ed7c25f2d2421566c41fd77c39a475f746ce3410da90cb659378f239d1"
+        },
+        {
+          "path": "resources/css/components/button.css",
+          "object_sha": "04be680ce389464396e4ad3e1707206273ff0f12",
+          "source_sha256": "6b539fd2374e55182688d029cf2dcc01e0c6e576db2cb736755a49574e4d4dcb"
+        },
+        {
+          "path": "resources/views/components/ui/button/reference.php",
+          "object_sha": "90c058ff0fa30807b0d0a1e953ec0fb9d00048a4",
+          "source_sha256": "ad04e6e29a521a5a1ed1a7be096767c20d4f983e75fbd9210415abfbb2d7566e"
+        },
+        {
+          "path": "resources/views/components/ui/button/examples/basic.blade.php",
+          "object_sha": "0ce212273fef55f49c0a1e7118159be7a517ee14",
+          "source_sha256": "78b52dd3b2960b84bcbb3ca5c3654910f9bf8784708595034826992c5eae717b"
+        },
+        {
+          "path": "resources/views/components/ui/button/__tests__/ButtonInteraction.spec.js",
+          "object_sha": "6fa8a127382357612ae9d349de035cd579637b89",
+          "source_sha256": "c49fcb928de9f9c675ae0e2db6fd822265e7d27beefbbc80892c994ce4b04675"
+        }
+      ]
+    },
+    {
+      "record_id": "component_family:resources:views:components:ui:modal:fixture002",
+      "source_fingerprint": "f6a3ea4be0c1da4db11ba5e25321ac8edc1cf6b23af57e5de69563d2710c1f70",
+      "surface_type": "component_family",
+      "current_slug": "modal",
+      "declared_ui_key": "ui.component.modal",
+      "blade_aliases": [
+        "x-ui.modal",
+        "x-ui.modal.body"
+      ],
+      "implementation_entry": "resources/views/components/ui/modal/index.blade.php",
+      "implementation_support_files": [
+        "resources/views/components/ui/modal/body.blade.php",
+        "resources/views/components/ui/modal/contract.php",
+        "resources/css/components/modal.css",
+        "resources/js/ui-controls/modal.js"
+      ],
+      "ownership_candidate": {
+        "ownership_area": "ui",
+        "owner_key": "modal",
+        "capability_key": "not_applicable",
+        "module_key": "not_applicable"
+      },
+      "registration_evidence": [
+        {
+          "state": "blade_alias_resolves",
+          "claim": "Modal aliases resolve to owner-local Blade files.",
+          "evidence_source": [
+            "path:resources/views/components/ui/modal/index.blade.php",
+            "path:resources/views/components/ui/modal/body.blade.php"
+          ]
+        }
+      ],
+      "contracts": [
+        {
+          "path": "resources/views/components/ui/modal/contract.php",
+          "object_sha": "c0ccac318b80ab09ae4be03ff04a5458e7053af8",
+          "source_sha256": "8b2ce5512984b3ad3fbd2ce8fc07b5fdff7001061b0003dfea1a3aeb7dce5049",
+          "filename_variation": false
+        }
+      ],
+      "reference_paths": [],
+      "example_paths": [],
+      "css_paths": [
+        "resources/css/components/modal.css"
+      ],
+      "javascript_paths": [
+        "resources/js/ui-controls/modal.js"
+      ],
+      "icon_or_asset_dependencies": [],
+      "lower_tier_dependencies": [
+        "x-ui.button"
+      ],
+      "public_api_evidence": {
+        "props": [
+          "open",
+          "size"
+        ],
+        "slots": [
+          "default",
+          "footer"
+        ],
+        "events": [
+          "modal:close"
+        ],
+        "data_attributes": [
+          "data-ui-modal"
+        ]
+      },
+      "contract_api_evidence": {
+        "contract_paths": [
+          "resources/views/components/ui/modal/contract.php"
+        ],
+        "api": {
+          "props": [
+            "open"
+          ],
+          "slots": [
+            "default"
+          ],
+          "events": [],
+          "data_attributes": []
+        }
+      },
+      "standard_candidates": [
+        {
+          "path": "docs/02-standards/ui/contract-file.md",
+          "source_sha256": "3825060885b8a626404f9a1b437dc42ab57e13b72747041a00857dbae8c2cdec",
+          "claimed_scope": "Shared UI contract file structure",
+          "evidence_source": [
+            "path:docs/02-standards/ui/contract-file.md",
+            "path:app/Surfaces/Contracts/Surface.php"
+          ]
+        }
+      ],
+      "metadata_evidence": {
+        "human_readable_header": {
+          "implementation": {
+            "present_count": 1,
+            "absent_count": 0,
+            "unknown_count": 0,
+            "not_applicable_count": 0,
+            "values": [
+              "present"
+            ],
+            "formats": [
+              "comment_header"
+            ],
+            "present_paths": [
+              "resources/views/components/ui/modal/index.blade.php"
+            ]
+          },
+          "contract": {
+            "present_count": 1,
+            "absent_count": 0,
+            "unknown_count": 0,
+            "not_applicable_count": 0,
+            "values": [
+              "present"
+            ],
+            "formats": [
+              "comment_header"
+            ],
+            "present_paths": [
+              "resources/views/components/ui/modal/contract.php"
+            ]
+          }
+        },
+        "ui_key": {
+          "implementation": {
+            "present_count": 1,
+            "absent_count": 0,
+            "unknown_count": 0,
+            "not_applicable_count": 0,
+            "values": [
+              "ui.component.modal"
+            ],
+            "formats": [
+              "string"
+            ],
+            "present_paths": [
+              "resources/views/components/ui/modal/index.blade.php"
+            ]
+          },
+          "contract": {
+            "present_count": 1,
+            "absent_count": 0,
+            "unknown_count": 0,
+            "not_applicable_count": 0,
+            "values": [
+              "ui.component.modal"
+            ],
+            "formats": [
+              "string"
+            ],
+            "present_paths": [
+              "resources/views/components/ui/modal/contract.php"
+            ]
+          }
+        },
+        "blade_alias": {
+          "implementation": {
+            "present_count": 1,
+            "absent_count": 0,
+            "unknown_count": 0,
+            "not_applicable_count": 0,
+            "values": [
+              "x-ui.modal",
+              "x-ui.modal.body"
+            ],
+            "formats": [
+              "array"
+            ],
+            "present_paths": [
+              "resources/views/components/ui/modal/index.blade.php"
+            ]
+          },
+          "contract": {
+            "present_count": 1,
+            "absent_count": 0,
+            "unknown_count": 0,
+            "not_applicable_count": 0,
+            "values": [
+              "x-ui.modal",
+              "x-ui.modal.body"
+            ],
+            "formats": [
+              "array"
+            ],
+            "present_paths": [
+              "resources/views/components/ui/modal/contract.php"
+            ]
+          }
+        },
+        "implementation_path_reference": {
+          "implementation": {
+            "present_count": 1,
+            "absent_count": 0,
+            "unknown_count": 0,
+            "not_applicable_count": 0,
+            "values": [
+              "resources/views/components/ui/modal/index.blade.php"
+            ],
+            "formats": [
+              "repository_path"
+            ],
+            "present_paths": [
+              "resources/views/components/ui/modal/index.blade.php"
+            ]
+          },
+          "contract": {
+            "present_count": 1,
+            "absent_count": 0,
+            "unknown_count": 0,
+            "not_applicable_count": 0,
+            "values": [
+              "resources/views/components/ui/modal/index.blade.php"
+            ],
+            "formats": [
+              "repository_path"
+            ],
+            "present_paths": [
+              "resources/views/components/ui/modal/contract.php"
+            ]
+          }
+        },
+        "contract_path_reference": {
+          "implementation": {
+            "present_count": 1,
+            "absent_count": 0,
+            "unknown_count": 0,
+            "not_applicable_count": 0,
+            "values": [
+              "resources/views/components/ui/modal/contract.php"
+            ],
+            "formats": [
+              "repository_path"
+            ],
+            "present_paths": [
+              "resources/views/components/ui/modal/index.blade.php"
+            ]
+          },
+          "contract": {
+            "present_count": 1,
+            "absent_count": 0,
+            "unknown_count": 0,
+            "not_applicable_count": 0,
+            "values": [
+              "resources/views/components/ui/modal/contract.php"
+            ],
+            "formats": [
+              "repository_path"
+            ],
+            "present_paths": [
+              "resources/views/components/ui/modal/contract.php"
+            ]
+          }
+        },
+        "contract_schema_version": {
+          "implementation": {
+            "present_count": 0,
+            "absent_count": 0,
+            "unknown_count": 0,
+            "not_applicable_count": 1,
+            "values": [],
+            "formats": [],
+            "present_paths": []
+          },
+          "contract": {
+            "present_count": 1,
+            "absent_count": 0,
+            "unknown_count": 0,
+            "not_applicable_count": 0,
+            "values": [
+              "2"
+            ],
+            "formats": [
+              "integer"
+            ],
+            "present_paths": [
+              "resources/views/components/ui/modal/contract.php"
+            ]
+          }
+        },
+        "public_api_version": {
+          "implementation": {
+            "present_count": 0,
+            "absent_count": 1,
+            "unknown_count": 0,
+            "not_applicable_count": 0,
+            "values": [],
+            "formats": [],
+            "present_paths": []
+          },
+          "contract": {
+            "present_count": 0,
+            "absent_count": 1,
+            "unknown_count": 0,
+            "not_applicable_count": 0,
+            "values": [],
+            "formats": [],
+            "present_paths": []
+          }
+        },
+        "verification_commit": {
+          "implementation": {
+            "present_count": 0,
+            "absent_count": 1,
+            "unknown_count": 0,
+            "not_applicable_count": 0,
+            "values": [],
+            "formats": [],
+            "present_paths": []
+          },
+          "contract": {
+            "present_count": 0,
+            "absent_count": 1,
+            "unknown_count": 0,
+            "not_applicable_count": 0,
+            "values": [],
+            "formats": [],
+            "present_paths": []
+          }
+        },
+        "verification_timestamp": {
+          "implementation": {
+            "present_count": 0,
+            "absent_count": 1,
+            "unknown_count": 0,
+            "not_applicable_count": 0,
+            "values": [],
+            "formats": [],
+            "present_paths": []
+          },
+          "contract": {
+            "present_count": 0,
+            "absent_count": 1,
+            "unknown_count": 0,
+            "not_applicable_count": 0,
+            "values": [],
+            "formats": [],
+            "present_paths": []
+          }
+        },
+        "source_hash": {
+          "implementation": {
+            "present_count": 0,
+            "absent_count": 1,
+            "unknown_count": 0,
+            "not_applicable_count": 0,
+            "values": [],
+            "formats": [],
+            "present_paths": []
+          },
+          "contract": {
+            "present_count": 0,
+            "absent_count": 1,
+            "unknown_count": 0,
+            "not_applicable_count": 0,
+            "values": [],
+            "formats": [],
+            "present_paths": []
+          }
+        },
+        "contract_hash": {
+          "implementation": {
+            "present_count": 0,
+            "absent_count": 1,
+            "unknown_count": 0,
+            "not_applicable_count": 0,
+            "values": [],
+            "formats": [],
+            "present_paths": []
+          },
+          "contract": {
+            "present_count": 0,
+            "absent_count": 1,
+            "unknown_count": 0,
+            "not_applicable_count": 0,
+            "values": [],
+            "formats": [],
+            "present_paths": []
+          }
+        },
+        "last_updated": {
+          "implementation": {
+            "present_count": 0,
+            "absent_count": 1,
+            "unknown_count": 0,
+            "not_applicable_count": 0,
+            "values": [],
+            "formats": [],
+            "present_paths": []
+          },
+          "contract": {
+            "present_count": 0,
+            "absent_count": 1,
+            "unknown_count": 0,
+            "not_applicable_count": 0,
+            "values": [],
+            "formats": [],
+            "present_paths": []
+          }
+        },
+        "known_disagreements": [
+          {
+            "field": "blade_alias",
+            "implementation_values": [
+              "x-ui.modal",
+              "x-ui.modal.body"
+            ],
+            "contract_values": [
+              "x-ui.legacy"
+            ]
+          }
+        ],
+        "evidence_source": [
+          "path:resources/views/components/ui/modal/index.blade.php",
+          "path:resources/views/components/ui/modal/contract.php"
+        ]
+      },
+      "accessibility_evidence": {
+        "status": "observed",
+        "observed_tokens": [
+          "aria-modal",
+          "role"
+        ],
+        "paths": [
+          "resources/views/components/ui/modal/index.blade.php"
+        ]
+      },
+      "responsive_evidence": {
+        "status": "observed",
+        "observed": [
+          "max-width: 42rem"
+        ],
+        "paths": [
+          "resources/css/components/modal.css"
+        ]
+      },
+      "browser_evidence": {
+        "status": "observed",
+        "test_paths": [
+          "resources/views/components/ui/modal/__tests__/ModalInteraction.spec.js"
+        ]
+      },
+      "test_candidates": [],
+      "generated_mismatches": [
+        "investigate",
+        "standard_stale"
+      ],
+      "target_question": "=HYPERLINK(\"https://example.invalid\",\"review modal target\")",
+      "evidence_source": [
+        "observation:component_family:resources:views:components:ui:modal:fixture002",
+        "path:resources/views/components/ui/modal/index.blade.php",
+        "path:resources/views/components/ui/modal/contract.php",
+        "path:docs/02-standards/ui/contract-file.md"
+      ],
+      "files": [
+        {
+          "path": "resources/views/components/ui/modal/index.blade.php",
+          "object_sha": "50c5d4268f3f490ac62af1855345b4496f0e2aa1",
+          "source_sha256": "675dc851bb830a53508d326904970f7b99273b58af05d5dc68530b2c44ad977b"
+        },
+        {
+          "path": "resources/views/components/ui/modal/body.blade.php",
+          "object_sha": "d6e3f40cfc1f4c864ca7670960c8175c01ddf8d1",
+          "source_sha256": "d551888c86960f0050c57fcbbc65079b5a8387540d9c539e5a54ada2027707e2"
+        },
+        {
+          "path": "resources/views/components/ui/modal/contract.php",
+          "object_sha": "c0ccac318b80ab09ae4be03ff04a5458e7053af8",
+          "source_sha256": "8b2ce5512984b3ad3fbd2ce8fc07b5fdff7001061b0003dfea1a3aeb7dce5049"
+        },
+        {
+          "path": "resources/css/components/modal.css",
+          "object_sha": "311f1fb3600611892b84942b4fdbc1765d833d7c",
+          "source_sha256": "abfb9ef8de644d967b507b717b06c0a1aa7ff13dc276271b31696b776a384121"
+        },
+        {
+          "path": "resources/js/ui-controls/modal.js",
+          "object_sha": "ec491405660d4bfedf6592379580208df017c9c9",
+          "source_sha256": "3c2372a3e85797cde3c7091e83d25de68dc4429cab17801619bafd705cbb3e13"
+        },
+        {
+          "path": "resources/views/components/ui/modal/__tests__/ModalInteraction.spec.js",
+          "object_sha": "d69c72e43179612df0502b400dacf6dc425c68fd",
+          "source_sha256": "73b57e44762c98033afd05ebb0c29cef3f17ffd5c208fdf5d242111368c35885"
+        }
+      ]
+    },
+    {
+      "record_id": "url_view:resources:views:platform:dashboard:index.blade.php:fixture003",
+      "source_fingerprint": "6ec6b2e719c50e59792fdbf6e5f16cf7618abf085dd990b0fd5d41c3c0aea7c3",
+      "surface_type": "url_view",
+      "current_slug": "platform-dashboard-index",
+      "declared_ui_key": null,
+      "blade_aliases": [],
+      "implementation_entry": "resources/views/platform/dashboard/index.blade.php",
+      "implementation_support_files": [],
+      "ownership_candidate": {
+        "ownership_area": "core",
+        "owner_key": "dashboard",
+        "capability_key": "dashboard",
+        "module_key": "not_applicable"
+      },
+      "registration_evidence": [
+        {
+          "state": "registered_route_candidate",
+          "claim": "Accepted route evidence may reach this view.",
+          "evidence_source": [
+            "issue-29:route-list"
+          ]
+        }
+      ],
+      "contracts": [],
+      "reference_paths": [],
+      "example_paths": [],
+      "css_paths": [],
+      "javascript_paths": [],
+      "icon_or_asset_dependencies": [],
+      "lower_tier_dependencies": [
+        "x-ui.button"
+      ],
+      "public_api_evidence": {
+        "props": [],
+        "slots": [],
+        "events": [],
+        "data_attributes": []
+      },
+      "contract_api_evidence": {
+        "contract_paths": [],
+        "api": {
+          "props": [],
+          "slots": [],
+          "events": [],
+          "data_attributes": []
+        }
+      },
+      "standard_candidates": [],
+      "metadata_evidence": {
+        "human_readable_header": {
+          "implementation": {
+            "present_count": 1,
+            "absent_count": 0,
+            "unknown_count": 0,
+            "not_applicable_count": 0,
+            "values": [
+              "present"
+            ],
+            "formats": [
+              "comment_header"
+            ],
+            "present_paths": [
+              "resources/views/platform/dashboard/index.blade.php"
+            ]
+          },
+          "contract": {
+            "present_count": 0,
+            "absent_count": 0,
+            "unknown_count": 0,
+            "not_applicable_count": 1,
+            "values": [],
+            "formats": [],
+            "present_paths": []
+          }
+        },
+        "ui_key": {
+          "implementation": {
+            "present_count": 0,
+            "absent_count": 0,
+            "unknown_count": 1,
+            "not_applicable_count": 0,
+            "values": [],
+            "formats": [],
+            "present_paths": []
+          },
+          "contract": {
+            "present_count": 0,
+            "absent_count": 0,
+            "unknown_count": 0,
+            "not_applicable_count": 1,
+            "values": [],
+            "formats": [],
+            "present_paths": []
+          }
+        },
+        "blade_alias": {
+          "implementation": {
+            "present_count": 0,
+            "absent_count": 0,
+            "unknown_count": 0,
+            "not_applicable_count": 1,
+            "values": [],
+            "formats": [],
+            "present_paths": []
+          },
+          "contract": {
+            "present_count": 0,
+            "absent_count": 0,
+            "unknown_count": 0,
+            "not_applicable_count": 1,
+            "values": [],
+            "formats": [],
+            "present_paths": []
+          }
+        },
+        "implementation_path_reference": {
+          "implementation": {
+            "present_count": 1,
+            "absent_count": 0,
+            "unknown_count": 0,
+            "not_applicable_count": 0,
+            "values": [
+              "resources/views/platform/dashboard/index.blade.php"
+            ],
+            "formats": [
+              "repository_path"
+            ],
+            "present_paths": [
+              "resources/views/platform/dashboard/index.blade.php"
+            ]
+          },
+          "contract": {
+            "present_count": 0,
+            "absent_count": 0,
+            "unknown_count": 0,
+            "not_applicable_count": 1,
+            "values": [],
+            "formats": [],
+            "present_paths": []
+          }
+        },
+        "contract_path_reference": {
+          "implementation": {
+            "present_count": 0,
+            "absent_count": 0,
+            "unknown_count": 0,
+            "not_applicable_count": 1,
+            "values": [],
+            "formats": [],
+            "present_paths": []
+          },
+          "contract": {
+            "present_count": 0,
+            "absent_count": 0,
+            "unknown_count": 0,
+            "not_applicable_count": 1,
+            "values": [],
+            "formats": [],
+            "present_paths": []
+          }
+        },
+        "contract_schema_version": {
+          "implementation": {
+            "present_count": 0,
+            "absent_count": 0,
+            "unknown_count": 0,
+            "not_applicable_count": 1,
+            "values": [],
+            "formats": [],
+            "present_paths": []
+          },
+          "contract": {
+            "present_count": 0,
+            "absent_count": 0,
+            "unknown_count": 0,
+            "not_applicable_count": 1,
+            "values": [],
+            "formats": [],
+            "present_paths": []
+          }
+        },
+        "public_api_version": {
+          "implementation": {
+            "present_count": 0,
+            "absent_count": 1,
+            "unknown_count": 0,
+            "not_applicable_count": 0,
+            "values": [],
+            "formats": [],
+            "present_paths": []
+          },
+          "contract": {
+            "present_count": 0,
+            "absent_count": 0,
+            "unknown_count": 0,
+            "not_applicable_count": 1,
+            "values": [],
+            "formats": [],
+            "present_paths": []
+          }
+        },
+        "verification_commit": {
+          "implementation": {
+            "present_count": 0,
+            "absent_count": 1,
+            "unknown_count": 0,
+            "not_applicable_count": 0,
+            "values": [],
+            "formats": [],
+            "present_paths": []
+          },
+          "contract": {
+            "present_count": 0,
+            "absent_count": 0,
+            "unknown_count": 0,
+            "not_applicable_count": 1,
+            "values": [],
+            "formats": [],
+            "present_paths": []
+          }
+        },
+        "verification_timestamp": {
+          "implementation": {
+            "present_count": 0,
+            "absent_count": 1,
+            "unknown_count": 0,
+            "not_applicable_count": 0,
+            "values": [],
+            "formats": [],
+            "present_paths": []
+          },
+          "contract": {
+            "present_count": 0,
+            "absent_count": 0,
+            "unknown_count": 0,
+            "not_applicable_count": 1,
+            "values": [],
+            "formats": [],
+            "present_paths": []
+          }
+        },
+        "source_hash": {
+          "implementation": {
+            "present_count": 0,
+            "absent_count": 1,
+            "unknown_count": 0,
+            "not_applicable_count": 0,
+            "values": [],
+            "formats": [],
+            "present_paths": []
+          },
+          "contract": {
+            "present_count": 0,
+            "absent_count": 0,
+            "unknown_count": 0,
+            "not_applicable_count": 1,
+            "values": [],
+            "formats": [],
+            "present_paths": []
+          }
+        },
+        "contract_hash": {
+          "implementation": {
+            "present_count": 0,
+            "absent_count": 1,
+            "unknown_count": 0,
+            "not_applicable_count": 0,
+            "values": [],
+            "formats": [],
+            "present_paths": []
+          },
+          "contract": {
+            "present_count": 0,
+            "absent_count": 0,
+            "unknown_count": 0,
+            "not_applicable_count": 1,
+            "values": [],
+            "formats": [],
+            "present_paths": []
+          }
+        },
+        "last_updated": {
+          "implementation": {
+            "present_count": 0,
+            "absent_count": 1,
+            "unknown_count": 0,
+            "not_applicable_count": 0,
+            "values": [],
+            "formats": [],
+            "present_paths": []
+          },
+          "contract": {
+            "present_count": 0,
+            "absent_count": 0,
+            "unknown_count": 0,
+            "not_applicable_count": 1,
+            "values": [],
+            "formats": [],
+            "present_paths": []
+          }
+        },
+        "known_disagreements": [],
+        "evidence_source": [
+          "path:resources/views/platform/dashboard/index.blade.php"
+        ]
+      },
+      "accessibility_evidence": {
+        "status": "not_observed",
+        "observed_tokens": [],
+        "paths": []
+      },
+      "responsive_evidence": {
+        "status": "not_observed",
+        "observed": [],
+        "paths": []
+      },
+      "browser_evidence": {
+        "status": "not_observed",
+        "test_paths": []
+      },
+      "test_candidates": [],
+      "generated_mismatches": [
+        "investigate"
+      ],
+      "target_question": "Confirm whether Dashboard remains the long-term Core owner.",
+      "evidence_source": [
+        "observation:url_view:resources:views:platform:dashboard:index.blade.php:fixture003",
+        "path:resources/views/platform/dashboard/index.blade.php",
+        "issue-29:route-list"
+      ],
+      "files": [
+        {
+          "path": "resources/views/platform/dashboard/index.blade.php",
+          "object_sha": "4d543d76179e6b9255863b340bafb0411ab1775a",
+          "source_sha256": "2e16b116c350c56e9724d7b33c837a46533de6bb9fb28485113bf79700b8b130"
+        },
+        {
+          "path": "tests/Feature/DashboardViewTest.php",
+          "object_sha": "568dd54d621206b0763b641689e0a0bbeeadd66a",
+          "source_sha256": "35611d3510d2afcb52a593238dec1879054e28f2d85f8beb1204e1ea8d6a7b2b"
+        }
+      ]
+    }
+  ],
+  "unclaimed_material_files": []
+}

@@ -1,0 +1,7 @@
+{
+  "case": "excel_formula_like_text_unneutralized",
+  "table": "ui-surfaces.csv",
+  "column": "target_question",
+  "value": "=HYPERLINK(\"https://example.invalid\",\"unsafe\")",
+  "expected_error": "excel_formula_like_text_is_neutralized"
+}

@@ -1,1 +1,1 @@
-export_id,inventory_baseline_sha,source_schema_version,export_schema_version,coverage_id,trace_id,coverage_kind,coverage_value
+export_id,inventory_baseline_sha,export_schema_version,coverage_id,trace_id,coverage_kind,coverage_value

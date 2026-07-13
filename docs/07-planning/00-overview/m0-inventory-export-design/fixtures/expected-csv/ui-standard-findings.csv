@@ -1,0 +1,3 @@
+export_id,inventory_baseline_sha,export_schema_version,standard_finding_id,standard_id,finding_kind,finding_value
+export:cf5b34fc1b9beb1b7cd2,1d103f5fa47aab8c8adfba8ea134dd29540426fe,0.2.0,standard-finding:6a03b1698b416e4ac4ec,standard:f079c979fbe5e2277f28,moved_responsibility,Testing and manual review evidence moved to owner-local files.
+export:cf5b34fc1b9beb1b7cd2,1d103f5fa47aab8c8adfba8ea134dd29540426fe,0.2.0,standard-finding:f0507b2f10408a43cfc8,standard:f079c979fbe5e2277f28,staleness_evidence,Top-level contract shape no longer matches current Surface::component usage.

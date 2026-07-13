@@ -1,0 +1,5 @@
+export_id,inventory_baseline_sha,export_schema_version,mismatch_id,surface_id,mismatch_code
+export:cf5b34fc1b9beb1b7cd2,1d103f5fa47aab8c8adfba8ea134dd29540426fe,0.2.0,mismatch:e17915fafb79f87ef894,component:resources:views:components:ui:button:fixture001,aligned
+export:cf5b34fc1b9beb1b7cd2,1d103f5fa47aab8c8adfba8ea134dd29540426fe,0.2.0,mismatch:c13169ecefcae49e30c0,component_family:resources:views:components:ui:modal:fixture002,investigate
+export:cf5b34fc1b9beb1b7cd2,1d103f5fa47aab8c8adfba8ea134dd29540426fe,0.2.0,mismatch:d1af73f1de5e35c2dd11,component_family:resources:views:components:ui:modal:fixture002,standard_stale
+export:cf5b34fc1b9beb1b7cd2,1d103f5fa47aab8c8adfba8ea134dd29540426fe,0.2.0,mismatch:652b6d6d60dea73a050c,url_view:resources:views:platform:dashboard:index.blade.php:fixture003,investigate

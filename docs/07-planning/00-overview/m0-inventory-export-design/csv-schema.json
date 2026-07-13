@@ -1,11 +1,31 @@
 {
   "schema_name": "login-v2-ui-inventory-csv-export",
-  "schema_version": "0.1.0",
+  "schema_version": "0.2.0",
   "status": "design",
-  "authoritative_source": "Reviewed JSON accepted from Issue #30",
+  "authoritative_source": "Accepted reviewed Issue #30 JSON on main at merge commit 75d1d52c92ff3e0f068903e6903c94aabb009195",
+  "inventory_evidence_baseline_sha": "1d103f5fa47aab8c8adfba8ea134dd29540426fe",
+  "accepted_repository_source_snapshot": "75d1d52c92ff3e0f068903e6903c94aabb009195",
+  "untouched_package_baseline_commit": "580dcc01ad03ea39990a533b3bb763d87a153039",
   "generated_outputs": [
     "csv",
     "sqlite"
+  ],
+  "source_artifacts": [
+    {
+      "source_role": "classifications",
+      "path": "docs/07-planning/00-overview/evidence/m0-ui-current-state-classifications.json",
+      "review_authority": "reviewed_surface_and_standard_judgments"
+    },
+    {
+      "source_role": "observations",
+      "path": "docs/07-planning/00-overview/evidence/m0-ui-current-state-observations.json",
+      "review_authority": "generated_supporting_evidence"
+    },
+    {
+      "source_role": "test_traces",
+      "path": "docs/07-planning/00-overview/evidence/m0-ui-current-state-test-traces.json",
+      "review_authority": "reviewed_trace_judgments"
+    }
   ],
   "csv_format": {
     "encoding": "utf-8",
@@ -17,9 +37,13 @@
     "quoting": "rfc4180-compatible"
   },
   "value_conventions": {
-    "booleans": [
+    "csv_booleans": [
       "true",
       "false"
+    ],
+    "sqlite_booleans": [
+      0,
+      1
     ],
     "timestamps": "UTC ISO 8601 with trailing Z",
     "missing_optional_scalar": "empty cell",
@@ -28,9 +52,283 @@
       "not_applicable",
       "absent"
     ],
-    "multiline_text": "replace embedded newlines with literal \\n",
+    "multiline_text": "replace embedded CR/LF with literal \\n in free-text CSV columns",
     "excel_formula_protection": "prefix formula-like free text with an apostrophe in CSV only",
-    "arrays": "normalize into child tables"
+    "arrays": "normalize into child tables unless the column type is explicitly json_text",
+    "json_text": "deterministic compact JSON preserving the exact source value"
+  },
+  "stable_id_algorithm": {
+    "source_ids": "Preserve accepted surface_id and trace_id values.",
+    "derived_ids": "prefix + ':' + first 20 lowercase hexadecimal characters of SHA-256 over UTF-8 compact JSON of the ordered natural-key array.",
+    "normalization": "Preserve case and Unicode code points from accepted source values; use documented natural-key order."
+  },
+  "determinism": {
+    "data_csvs": "byte-identical for identical source bytes, export schema version, and generator version",
+    "manifest_comparison_ignores": [
+      "exported_at_utc"
+    ],
+    "export_id_inputs": [
+      "inventory_type",
+      "inventory_baseline_sha",
+      "source_set_sha256",
+      "export_schema_version",
+      "generator_version"
+    ],
+    "row_order": "Use each file definition sort_order with ordinal string comparison."
+  },
+  "sqlite": {
+    "storage_mode": "single_export_replace",
+    "append_allowed": false,
+    "foreign_keys_enabled": true,
+    "generated_database_is_authoritative": false,
+    "boolean_storage": "INTEGER constrained to 0 or 1"
+  },
+  "controlled_vocabularies": {
+    "inventory_types": [
+      "ui"
+    ],
+    "source_roles": [
+      "classifications",
+      "observations",
+      "test_traces"
+    ],
+    "manifest_statuses": [
+      "complete",
+      "partial",
+      "failed"
+    ],
+    "mapping_statuses": [
+      "confirmed",
+      "derived",
+      "pending",
+      "not_applicable"
+    ],
+    "surface_types": [
+      "element",
+      "primitive",
+      "component",
+      "component_family",
+      "subcomponent",
+      "pattern",
+      "layout",
+      "shell",
+      "navigation",
+      "url_view",
+      "renderer",
+      "view_model",
+      "page_data",
+      "ui_contribution",
+      "compatibility_alias",
+      "css_control",
+      "javascript_control",
+      "icon_system",
+      "pictogram_system"
+    ],
+    "ownership_areas": [
+      "core",
+      "module",
+      "ui",
+      "not_applicable",
+      "unknown"
+    ],
+    "contract_statuses": [
+      "present",
+      "missing",
+      "multiple",
+      "variation",
+      "unresolved",
+      "not_applicable",
+      "unknown"
+    ],
+    "mismatch_codes": [
+      "aligned",
+      "contract_missing",
+      "contract_stale",
+      "implementation_stale",
+      "standard_stale",
+      "test_missing",
+      "test_stale",
+      "test_incomplete",
+      "reference_missing",
+      "reference_stale",
+      "example_missing",
+      "example_stale",
+      "registration_missing",
+      "registration_stale",
+      "duplicate_identity",
+      "owner_mismatch",
+      "blade_alias_mismatch",
+      "source_path_mismatch",
+      "dependency_mismatch",
+      "provenance_unknown",
+      "review_unknown",
+      "lifecycle_conflict",
+      "accessibility_evidence_missing",
+      "browser_evidence_missing",
+      "responsive_evidence_missing",
+      "investigate"
+    ],
+    "inventory_dispositions": [
+      "retain",
+      "compatibility",
+      "duplicate",
+      "investigate"
+    ],
+    "carbon_provenance": [
+      "carbon_direct_port",
+      "carbon_api_adaptation",
+      "carbon_visual_reference",
+      "carbon_behavior_reference",
+      "app_owned",
+      "mixed",
+      "unknown",
+      "not_applicable"
+    ],
+    "test_types": [
+      "contract schema",
+      "API rendering",
+      "prop behavior",
+      "slot behavior",
+      "variant rendering",
+      "state rendering",
+      "class contract",
+      "accessibility",
+      "JavaScript behavior",
+      "browser",
+      "visual",
+      "snapshot",
+      "integration",
+      "incidental markup assertion",
+      "unknown"
+    ],
+    "test_results": [
+      "passed",
+      "failed",
+      "warning",
+      "not_run",
+      "missing",
+      "unknown"
+    ],
+    "test_statuses": [
+      "passing",
+      "failing",
+      "mixed",
+      "warning",
+      "not_run",
+      "missing",
+      "unknown",
+      "not_applicable"
+    ],
+    "test_authorities": [
+      "authoritative",
+      "partial",
+      "incidental",
+      "stale",
+      "unknown",
+      "not_applicable"
+    ],
+    "trace_relationship_kinds": [
+      "owner_local_test",
+      "exact_repository_path_reference",
+      "exact_blade_alias_reference",
+      "exact_ui_key_reference",
+      "exact_symbol_reference"
+    ],
+    "coverage_states": [
+      "present_claim",
+      "not_observed",
+      "unknown"
+    ],
+    "coverage_kinds": [
+      "contract_field",
+      "rendered_state"
+    ],
+    "standard_alignment": [
+      "aligned",
+      "partial",
+      "stale",
+      "not_applicable",
+      "unknown"
+    ],
+    "standard_authority": [
+      "current_standard",
+      "mixed_authority",
+      "historical_or_rollout_guidance",
+      "stale",
+      "unknown"
+    ],
+    "standard_finding_kinds": [
+      "staleness_evidence",
+      "moved_responsibility"
+    ],
+    "alias_types": [
+      "blade_alias"
+    ],
+    "file_roles": [
+      "implementation_entry",
+      "implementation_support",
+      "contract",
+      "reference",
+      "example",
+      "css",
+      "javascript",
+      "test"
+    ],
+    "metadata_fields": [
+      "human_readable_header",
+      "ui_key",
+      "blade_alias",
+      "implementation_path_reference",
+      "contract_path_reference",
+      "contract_schema_version",
+      "public_api_version",
+      "verification_commit",
+      "verification_timestamp",
+      "source_hash",
+      "contract_hash",
+      "last_updated"
+    ],
+    "dependency_kinds": [
+      "lower_tier_surface",
+      "component",
+      "icon",
+      "asset",
+      "other"
+    ],
+    "evidence_kinds": [
+      "path",
+      "path_pattern",
+      "observation",
+      "issue",
+      "command",
+      "git",
+      "manual_review",
+      "other"
+    ],
+    "evidence_existence_states": [
+      "present",
+      "absent",
+      "unknown",
+      "not_applicable"
+    ],
+    "source_reference_subject_types": [
+      "surface",
+      "surface_alias",
+      "surface_file",
+      "mismatch",
+      "test_trace",
+      "standard",
+      "surface_standard",
+      "standard_finding",
+      "metadata_evidence",
+      "dependency",
+      "review_status"
+    ],
+    "review_subject_types": [
+      "surface",
+      "standard",
+      "test_trace"
+    ]
   },
   "validation_requirements": [
     "required_header_present",
@@ -38,21 +336,26 @@
     "primary_key_present_and_unique",
     "foreign_keys_resolve",
     "controlled_values_valid",
-    "booleans_lowercase",
+    "csv_booleans_lowercase",
+    "sqlite_booleans_are_0_or_1",
     "timestamps_utc_iso8601",
     "sha256_is_64_hex",
     "repository_paths_are_relative_and_forward_slash",
     "child_records_have_parents",
     "manifest_row_counts_match",
     "row_order_is_deterministic",
-    "identical_json_produces_identical_csv",
+    "identical_sources_produce_identical_data_csvs",
     "excel_formula_like_text_is_neutralized",
-    "secret_or_runtime_only_content_is_rejected"
+    "secret_or_runtime_only_content_is_rejected",
+    "json_text_is_valid_compact_json",
+    "review_subject_types_are_supported"
   ],
   "files": [
     {
       "file": "inventory-export-manifest.csv",
       "location": "root",
+      "table_name": "inventory_export_manifest",
+      "purpose": "One row per generated CSV other than the manifest itself.",
       "primary_key": [
         "export_id",
         "export_file"
@@ -70,9 +373,12 @@
           "primary_key": true,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Stable identifier for one deterministic export run.",
-          "source_json_field": null,
-          "transformation": "Inject from deterministic export context."
+          "description": "Deterministic export-run identifier.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Derive from inventory type, baseline, source-set hash, export schema version, and generator version.",
+          "excel_formula_protection": false
         },
         {
           "file": "inventory-export-manifest.csv",
@@ -81,34 +387,56 @@
           "nullable": false,
           "primary_key": false,
           "foreign_key": null,
-          "controlled_values": "ui",
+          "controlled_values": [
+            "ui"
+          ],
           "description": "Inventory domain represented by the export.",
-          "source_json_field": "inventory_type",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/issue"
+          ],
+          "mapping_status": "derived",
+          "transformation": "Map accepted Issue #30 artifacts to the ui inventory type.",
+          "excel_formula_protection": false
         },
         {
           "file": "inventory-export-manifest.csv",
           "column": "inventory_baseline_sha",
-          "type": "string",
+          "type": "git_sha",
           "nullable": false,
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Immutable Git commit SHA used as the inventory evidence baseline.",
-          "source_json_field": "inventory_baseline_sha",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Immutable Issue #30 evidence baseline.",
+          "source_roles": [
+            "classifications",
+            "observations",
+            "test_traces"
+          ],
+          "source_json_pointers": [
+            "/baseline_sha",
+            "/baseline/sha"
+          ],
+          "mapping_status": "derived",
+          "transformation": "Require source baselines to agree.",
+          "excel_formula_protection": false
         },
         {
           "file": "inventory-export-manifest.csv",
-          "column": "source_schema_version",
-          "type": "string",
+          "column": "source_set_sha256",
+          "type": "sha256",
           "nullable": false,
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Version of the authoritative reviewed JSON schema.",
-          "source_json_field": "source_schema_version",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Hash of the ordered source-role and source-artifact hash set.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Hash canonical source role/path/hash tuples sorted by source_role.",
+          "excel_formula_protection": false
         },
         {
           "file": "inventory-export-manifest.csv",
@@ -118,33 +446,12 @@
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Version of this normalized export schema.",
-          "source_json_field": null,
-          "transformation": "Inject from deterministic export context."
-        },
-        {
-          "file": "inventory-export-manifest.csv",
-          "column": "source_artifact_path",
-          "type": "string",
-          "nullable": false,
-          "primary_key": false,
-          "foreign_key": null,
-          "controlled_values": null,
-          "description": "Repository-relative or package-relative path to the authoritative source artifact.",
-          "source_json_field": "source_artifact_path",
-          "transformation": "Normalize to a forward-slash path and reject prohibited absolute repository paths."
-        },
-        {
-          "file": "inventory-export-manifest.csv",
-          "column": "source_artifact_sha256",
-          "type": "sha256",
-          "nullable": false,
-          "primary_key": false,
-          "foreign_key": null,
-          "controlled_values": null,
-          "description": "SHA-256 digest of the authoritative source artifact.",
-          "source_json_field": "source_artifact_sha256",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Projection schema version.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Inject from csv-schema.json schema_version.",
+          "excel_formula_protection": false
         },
         {
           "file": "inventory-export-manifest.csv",
@@ -154,9 +461,12 @@
           "primary_key": true,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Generated CSV filename represented by the manifest row.",
-          "source_json_field": "export_file",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Generated CSV filename.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Emit one row for every generated CSV except the manifest.",
+          "excel_formula_protection": false
         },
         {
           "file": "inventory-export-manifest.csv",
@@ -166,9 +476,12 @@
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Number of data rows in the generated CSV, excluding the header.",
-          "source_json_field": null,
-          "transformation": "Calculate from normalized child or output rows."
+          "description": "Number of data rows excluding the header.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Count generated rows.",
+          "excel_formula_protection": false
         },
         {
           "file": "inventory-export-manifest.csv",
@@ -178,9 +491,12 @@
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "UTC timestamp when the export was generated.",
-          "source_json_field": null,
-          "transformation": "Inject from deterministic export context."
+          "description": "UTC export timestamp; excluded from byte-determinism comparisons.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Set once per export in UTC ISO 8601 form.",
+          "excel_formula_protection": false
         },
         {
           "file": "inventory-export-manifest.csv",
@@ -190,9 +506,12 @@
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Version of the exporter implementation.",
-          "source_json_field": "generator_version",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Exporter implementation version.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Inject from exporter version.",
+          "excel_formula_protection": false
         },
         {
           "file": "inventory-export-manifest.csv",
@@ -201,10 +520,15 @@
           "nullable": false,
           "primary_key": false,
           "foreign_key": null,
-          "controlled_values": "utf-8",
-          "description": "Text encoding used by the generated CSV.",
-          "source_json_field": null,
-          "transformation": "Inject from deterministic export context."
+          "controlled_values": [
+            "utf-8"
+          ],
+          "description": "CSV text encoding.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Always utf-8 without BOM.",
+          "excel_formula_protection": false
         },
         {
           "file": "inventory-export-manifest.csv",
@@ -213,10 +537,15 @@
           "nullable": false,
           "primary_key": false,
           "foreign_key": null,
-          "controlled_values": "comma",
-          "description": "Logical delimiter name used by the generated CSV.",
-          "source_json_field": null,
-          "transformation": "Inject from deterministic export context."
+          "controlled_values": [
+            "comma"
+          ],
+          "description": "Logical delimiter name.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Always comma.",
+          "excel_formula_protection": false
         },
         {
           "file": "inventory-export-manifest.csv",
@@ -225,10 +554,15 @@
           "nullable": false,
           "primary_key": false,
           "foreign_key": null,
-          "controlled_values": "lf",
-          "description": "Logical line-ending name used by the generated CSV.",
-          "source_json_field": null,
-          "transformation": "Inject from deterministic export context."
+          "controlled_values": [
+            "lf"
+          ],
+          "description": "Logical line-ending name.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Always lf.",
+          "excel_formula_protection": false
         },
         {
           "file": "inventory-export-manifest.csv",
@@ -242,15 +576,187 @@
             "partial",
             "failed"
           ],
-          "description": "Completion state for the generated export file.",
-          "source_json_field": "status",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Completion state for this generated file.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Set after file validation.",
+          "excel_formula_protection": false
+        }
+      ]
+    },
+    {
+      "file": "inventory-export-sources.csv",
+      "location": "root",
+      "table_name": "inventory_export_sources",
+      "purpose": "One row per Issue #30 source artifact used by an export.",
+      "primary_key": [
+        "source_id"
+      ],
+      "foreign_keys": [],
+      "sort_order": [
+        "source_role",
+        "source_artifact_path"
+      ],
+      "columns": [
+        {
+          "file": "inventory-export-sources.csv",
+          "column": "export_id",
+          "type": "string",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "controlled_values": null,
+          "description": "Deterministic export-run identifier.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Use the manifest export_id.",
+          "excel_formula_protection": false
+        },
+        {
+          "file": "inventory-export-sources.csv",
+          "column": "source_id",
+          "type": "string",
+          "nullable": false,
+          "primary_key": true,
+          "foreign_key": null,
+          "controlled_values": null,
+          "description": "Deterministic source-artifact identifier.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Hash source role, path, and SHA-256.",
+          "excel_formula_protection": false
+        },
+        {
+          "file": "inventory-export-sources.csv",
+          "column": "source_role",
+          "type": "string",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "controlled_values": [
+            "classifications",
+            "observations",
+            "test_traces"
+          ],
+          "description": "Role of the Issue #30 source artifact.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Assign from the fixed source-role registry.",
+          "excel_formula_protection": false
+        },
+        {
+          "file": "inventory-export-sources.csv",
+          "column": "source_artifact_path",
+          "type": "string",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "controlled_values": null,
+          "description": "Repository-relative accepted source-artifact path.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Use the fixed Issue #30 artifact path for the source role.",
+          "excel_formula_protection": false
+        },
+        {
+          "file": "inventory-export-sources.csv",
+          "column": "source_artifact_sha256",
+          "type": "sha256",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "controlled_values": null,
+          "description": "SHA-256 digest of the source artifact.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Hash the exact source bytes.",
+          "excel_formula_protection": false
+        },
+        {
+          "file": "inventory-export-sources.csv",
+          "column": "source_schema_version",
+          "type": "integer",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "controlled_values": null,
+          "description": "Accepted source artifact schema_version.",
+          "source_roles": [
+            "classifications",
+            "observations",
+            "test_traces"
+          ],
+          "source_json_pointers": [
+            "/schema_version"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Direct scalar projection.",
+          "excel_formula_protection": false
+        },
+        {
+          "file": "inventory-export-sources.csv",
+          "column": "source_generator_schema_version",
+          "type": "integer",
+          "nullable": true,
+          "primary_key": false,
+          "foreign_key": null,
+          "controlled_values": null,
+          "description": "Accepted source artifact generator_schema_version when present.",
+          "source_roles": [
+            "classifications",
+            "observations",
+            "test_traces"
+          ],
+          "source_json_pointers": [
+            "/generator_schema_version"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Direct scalar projection.",
+          "excel_formula_protection": false
+        },
+        {
+          "file": "inventory-export-sources.csv",
+          "column": "authoritative",
+          "type": "boolean",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "controlled_values": null,
+          "description": "Whether the artifact owns reviewed judgments.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "True for classifications and test_traces; false for generated observations.",
+          "excel_formula_protection": false
+        },
+        {
+          "file": "inventory-export-sources.csv",
+          "column": "required",
+          "type": "boolean",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "controlled_values": null,
+          "description": "Whether the artifact is required for this projection.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "True for all three Issue #30 source roles.",
+          "excel_formula_protection": false
         }
       ]
     },
     {
       "file": "ui-surfaces.csv",
       "location": "headers",
+      "table_name": "ui_surfaces",
+      "purpose": "One row per reviewed material UI surface.",
       "primary_key": [
         "surface_id"
       ],
@@ -267,33 +773,34 @@
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Stable identifier for one deterministic export run.",
-          "source_json_field": null,
-          "transformation": "Inject from deterministic export context."
+          "description": "Deterministic identifier for one export run.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Derive from inventory type, baseline, source-set hash, export schema version, and generator version.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-surfaces.csv",
           "column": "inventory_baseline_sha",
-          "type": "string",
+          "type": "git_sha",
           "nullable": false,
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Immutable Git commit SHA used as the inventory evidence baseline.",
-          "source_json_field": "inventory_baseline_sha",
-          "transformation": "Direct scalar projection from reviewed JSON."
-        },
-        {
-          "file": "ui-surfaces.csv",
-          "column": "source_schema_version",
-          "type": "string",
-          "nullable": false,
-          "primary_key": false,
-          "foreign_key": null,
-          "controlled_values": null,
-          "description": "Version of the authoritative reviewed JSON schema.",
-          "source_json_field": "source_schema_version",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Immutable Issue #30 evidence baseline commit SHA.",
+          "source_roles": [
+            "classifications",
+            "observations",
+            "test_traces"
+          ],
+          "source_json_pointers": [
+            "/baseline_sha",
+            "/baseline/sha"
+          ],
+          "mapping_status": "derived",
+          "transformation": "Require all source artifacts to resolve to the same immutable baseline.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-surfaces.csv",
@@ -303,9 +810,12 @@
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Version of this normalized export schema.",
-          "source_json_field": null,
-          "transformation": "Inject from deterministic export context."
+          "description": "Version of this CSV/SQLite projection schema.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Inject from csv-schema.json schema_version.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-surfaces.csv",
@@ -315,315 +825,726 @@
           "primary_key": true,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Stable Issue #30 reviewed record identifier for a material UI surface.",
-          "source_json_field": "surface_id",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Stable accepted Issue #30 surface record ID.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/items/*/_record_id"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Direct scalar projection.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-surfaces.csv",
           "column": "ui_key",
           "type": "string",
-          "nullable": true,
+          "nullable": false,
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Observed UI key; may be the controlled literal unknown and never replaces surface_id.",
-          "source_json_field": "ui_key",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Reviewed UI key or controlled semantic literal.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/items/*/ui_key"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Direct scalar projection.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-surfaces.csv",
           "column": "current_slug",
           "type": "string",
-          "nullable": true,
+          "nullable": false,
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Currently observed surface slug.",
-          "source_json_field": "current_slug",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Reviewed current slug.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/items/*/current_slug"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Direct scalar projection.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-surfaces.csv",
           "column": "surface_type",
           "type": "string",
-          "nullable": true,
+          "nullable": false,
           "primary_key": false,
           "foreign_key": null,
-          "controlled_values": null,
-          "description": "Observed material UI surface type.",
-          "source_json_field": "surface_type",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "controlled_values": [
+            "element",
+            "primitive",
+            "component",
+            "component_family",
+            "subcomponent",
+            "pattern",
+            "layout",
+            "shell",
+            "navigation",
+            "url_view",
+            "renderer",
+            "view_model",
+            "page_data",
+            "ui_contribution",
+            "compatibility_alias",
+            "css_control",
+            "javascript_control",
+            "icon_system",
+            "pictogram_system"
+          ],
+          "description": "Reviewed material surface type.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/items/*/surface_type"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Direct scalar projection.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-surfaces.csv",
           "column": "ownership_area",
           "type": "string",
-          "nullable": true,
+          "nullable": false,
           "primary_key": false,
           "foreign_key": null,
-          "controlled_values": null,
-          "description": "Observed ownership area for the surface.",
-          "source_json_field": "ownership_area",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "controlled_values": [
+            "core",
+            "module",
+            "ui",
+            "not_applicable",
+            "unknown"
+          ],
+          "description": "Reviewed application ownership area.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/items/*/ownership_area"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Direct scalar projection.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-surfaces.csv",
           "column": "owner_key",
           "type": "string",
-          "nullable": true,
+          "nullable": false,
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Observed owner identifier.",
-          "source_json_field": "owner_key",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Reviewed owner key.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/items/*/owner_key"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Direct scalar projection.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-surfaces.csv",
           "column": "capability_key",
           "type": "string",
-          "nullable": true,
+          "nullable": false,
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Observed capability identifier.",
-          "source_json_field": "capability_key",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Reviewed capability key.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/items/*/capability_key"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Direct scalar projection.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-surfaces.csv",
           "column": "module_key",
           "type": "string",
-          "nullable": true,
+          "nullable": false,
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Observed module identifier.",
-          "source_json_field": "module_key",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Reviewed Module key or semantic literal.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/items/*/module_key"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Direct scalar projection.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-surfaces.csv",
-          "column": "blade_alias",
-          "type": "string",
-          "nullable": true,
-          "primary_key": false,
-          "foreign_key": null,
-          "controlled_values": null,
-          "description": "Observed Blade component, pattern, or layout alias.",
-          "source_json_field": "blade_alias",
-          "transformation": "Direct scalar projection from reviewed JSON."
-        },
-        {
-          "file": "ui-surfaces.csv",
-          "column": "implementation_entry",
-          "type": "string",
-          "nullable": true,
-          "primary_key": false,
-          "foreign_key": null,
-          "controlled_values": null,
-          "description": "Primary repository-relative implementation entry path.",
-          "source_json_field": "implementation_entry",
-          "transformation": "Normalize to a forward-slash path and reject prohibited absolute repository paths."
-        },
-        {
-          "file": "ui-surfaces.csv",
-          "column": "contract_status",
-          "type": "string",
-          "nullable": true,
-          "primary_key": false,
-          "foreign_key": null,
-          "controlled_values": null,
-          "description": "Flattened summary of current contract presence and condition.",
-          "source_json_field": "contract_status",
-          "transformation": "Direct scalar projection from reviewed JSON."
-        },
-        {
-          "file": "ui-surfaces.csv",
-          "column": "registration_summary",
-          "type": "string",
-          "nullable": true,
-          "primary_key": false,
-          "foreign_key": null,
-          "controlled_values": null,
-          "description": "Flattened summary of current registration evidence.",
-          "source_json_field": "registration_summary",
-          "transformation": "Flatten to one line with literal \\n sequences and neutralize Excel formula-like prefixes in CSV only."
-        },
-        {
-          "file": "ui-surfaces.csv",
-          "column": "public_api_summary",
-          "type": "string",
-          "nullable": true,
-          "primary_key": false,
-          "foreign_key": null,
-          "controlled_values": null,
-          "description": "Flattened summary of the observed public API.",
-          "source_json_field": "public_api_summary",
-          "transformation": "Flatten to one line with literal \\n sequences and neutralize Excel formula-like prefixes in CSV only."
-        },
-        {
-          "file": "ui-surfaces.csv",
-          "column": "contract_api_summary",
-          "type": "string",
-          "nullable": true,
-          "primary_key": false,
-          "foreign_key": null,
-          "controlled_values": null,
-          "description": "Flattened summary of the observed contract API.",
-          "source_json_field": "contract_api_summary",
-          "transformation": "Flatten to one line with literal \\n sequences and neutralize Excel formula-like prefixes in CSV only."
-        },
-        {
-          "file": "ui-surfaces.csv",
-          "column": "carbon_provenance",
-          "type": "string",
-          "nullable": true,
-          "primary_key": false,
-          "foreign_key": null,
-          "controlled_values": null,
-          "description": "Observed Carbon provenance classification or evidence summary.",
-          "source_json_field": "carbon_provenance",
-          "transformation": "Direct scalar projection from reviewed JSON."
-        },
-        {
-          "file": "ui-surfaces.csv",
-          "column": "app_owned_deviation_summary",
-          "type": "string",
-          "nullable": true,
-          "primary_key": false,
-          "foreign_key": null,
-          "controlled_values": null,
-          "description": "Summary of observed app-owned deviations.",
-          "source_json_field": "app_owned_deviation_summary",
-          "transformation": "Flatten to one line with literal \\n sequences and neutralize Excel formula-like prefixes in CSV only."
-        },
-        {
-          "file": "ui-surfaces.csv",
-          "column": "lifecycle_claim",
-          "type": "string",
-          "nullable": true,
-          "primary_key": false,
-          "foreign_key": null,
-          "controlled_values": null,
-          "description": "Observed lifecycle claim without selecting future target state.",
-          "source_json_field": "lifecycle_claim",
-          "transformation": "Flatten to one line with literal \\n sequences and neutralize Excel formula-like prefixes in CSV only."
-        },
-        {
-          "file": "ui-surfaces.csv",
-          "column": "review_claim",
-          "type": "string",
-          "nullable": true,
-          "primary_key": false,
-          "foreign_key": null,
-          "controlled_values": null,
-          "description": "Observed review-state claim.",
-          "source_json_field": "review_claim",
-          "transformation": "Flatten to one line with literal \\n sequences and neutralize Excel formula-like prefixes in CSV only."
-        },
-        {
-          "file": "ui-surfaces.csv",
-          "column": "accessibility_summary",
-          "type": "string",
-          "nullable": true,
-          "primary_key": false,
-          "foreign_key": null,
-          "controlled_values": null,
-          "description": "Summary of available accessibility evidence.",
-          "source_json_field": "accessibility_summary",
-          "transformation": "Flatten to one line with literal \\n sequences and neutralize Excel formula-like prefixes in CSV only."
-        },
-        {
-          "file": "ui-surfaces.csv",
-          "column": "responsive_summary",
-          "type": "string",
-          "nullable": true,
-          "primary_key": false,
-          "foreign_key": null,
-          "controlled_values": null,
-          "description": "Summary of available responsive-behavior evidence.",
-          "source_json_field": "responsive_summary",
-          "transformation": "Flatten to one line with literal \\n sequences and neutralize Excel formula-like prefixes in CSV only."
-        },
-        {
-          "file": "ui-surfaces.csv",
-          "column": "browser_summary",
-          "type": "string",
-          "nullable": true,
-          "primary_key": false,
-          "foreign_key": null,
-          "controlled_values": null,
-          "description": "Summary of available browser-compatibility evidence.",
-          "source_json_field": "browser_summary",
-          "transformation": "Flatten to one line with literal \\n sequences and neutralize Excel formula-like prefixes in CSV only."
-        },
-        {
-          "file": "ui-surfaces.csv",
-          "column": "test_status",
-          "type": "string",
-          "nullable": true,
-          "primary_key": false,
-          "foreign_key": null,
-          "controlled_values": null,
-          "description": "Surface-level summary of current test status.",
-          "source_json_field": "test_status",
-          "transformation": "Direct scalar projection from reviewed JSON."
-        },
-        {
-          "file": "ui-surfaces.csv",
-          "column": "test_authority",
-          "type": "string",
-          "nullable": true,
-          "primary_key": false,
-          "foreign_key": null,
-          "controlled_values": null,
-          "description": "Surface-level summary of current test authority.",
-          "source_json_field": "test_authority",
-          "transformation": "Direct scalar projection from reviewed JSON."
-        },
-        {
-          "file": "ui-surfaces.csv",
-          "column": "inventory_disposition",
-          "type": "string",
-          "nullable": true,
-          "primary_key": false,
-          "foreign_key": null,
-          "controlled_values": null,
-          "description": "Current inventory-only disposition value, not a target-state decision.",
-          "source_json_field": "inventory_disposition",
-          "transformation": "Direct scalar projection from reviewed JSON."
-        },
-        {
-          "file": "ui-surfaces.csv",
-          "column": "target_question",
-          "type": "string",
-          "nullable": true,
-          "primary_key": false,
-          "foreign_key": null,
-          "controlled_values": null,
-          "description": "Open target-state question preserved for a later issue.",
-          "source_json_field": "target_question",
-          "transformation": "Flatten to one line with literal \\n sequences and neutralize Excel formula-like prefixes in CSV only."
-        },
-        {
-          "file": "ui-surfaces.csv",
-          "column": "source_fingerprint",
+          "column": "primary_blade_alias",
           "type": "string",
           "nullable": false,
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Deterministic fingerprint of source evidence used for staleness detection.",
-          "source_json_field": "source_fingerprint",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Direct alias when scalar, implementation-entry alias when deterministically derivable, or semantic literal.",
+          "source_roles": [
+            "classifications",
+            "observations"
+          ],
+          "source_json_pointers": [
+            "/items/*/blade_alias",
+            "/surfaces/*/blade_aliases",
+            "/surfaces/*/implementation_entry"
+          ],
+          "mapping_status": "derived",
+          "transformation": "Preserve scalar alias; for arrays select the alias derived from implementation_entry when present; otherwise emit the semantic literal unknown while child rows preserve all aliases.",
+          "excel_formula_protection": false
+        },
+        {
+          "file": "ui-surfaces.csv",
+          "column": "implementation_entry",
+          "type": "string",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "controlled_values": null,
+          "description": "Primary repository-relative implementation entry.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/items/*/implementation_entry"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Direct scalar projection.",
+          "excel_formula_protection": false
+        },
+        {
+          "file": "ui-surfaces.csv",
+          "column": "contract_status",
+          "type": "string",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "controlled_values": [
+            "present",
+            "missing",
+            "multiple",
+            "variation",
+            "unresolved",
+            "not_applicable",
+            "unknown"
+          ],
+          "description": "Reviewed current contract presence and condition.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/items/*/contract_status"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Direct scalar projection.",
+          "excel_formula_protection": false
+        },
+        {
+          "file": "ui-surfaces.csv",
+          "column": "carbon_provenance",
+          "type": "string",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "controlled_values": [
+            "carbon_direct_port",
+            "carbon_api_adaptation",
+            "carbon_visual_reference",
+            "carbon_behavior_reference",
+            "app_owned",
+            "mixed",
+            "unknown",
+            "not_applicable"
+          ],
+          "description": "Reviewed Carbon provenance classification.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/items/*/carbon_provenance"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Direct scalar projection.",
+          "excel_formula_protection": false
+        },
+        {
+          "file": "ui-surfaces.csv",
+          "column": "test_status",
+          "type": "string",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "controlled_values": [
+            "passing",
+            "failing",
+            "mixed",
+            "warning",
+            "not_run",
+            "missing",
+            "unknown",
+            "not_applicable"
+          ],
+          "description": "Reviewed surface-level test result summary.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/items/*/test_status"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Direct scalar projection.",
+          "excel_formula_protection": false
+        },
+        {
+          "file": "ui-surfaces.csv",
+          "column": "test_authority",
+          "type": "string",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "controlled_values": [
+            "authoritative",
+            "partial",
+            "incidental",
+            "stale",
+            "unknown",
+            "not_applicable"
+          ],
+          "description": "Reviewed surface-level test-authority summary.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/items/*/test_authority"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Direct scalar projection.",
+          "excel_formula_protection": false
+        },
+        {
+          "file": "ui-surfaces.csv",
+          "column": "inventory_disposition",
+          "type": "string",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "controlled_values": [
+            "retain",
+            "compatibility",
+            "duplicate",
+            "investigate"
+          ],
+          "description": "Issue #30 inventory-only disposition.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/items/*/inventory_disposition"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Direct scalar projection.",
+          "excel_formula_protection": false
+        },
+        {
+          "file": "ui-surfaces.csv",
+          "column": "target_question",
+          "type": "string",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "controlled_values": null,
+          "description": "Open target-state question retained for later ownership.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/items/*/target_question"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Direct scalar projection.",
+          "excel_formula_protection": true
+        },
+        {
+          "file": "ui-surfaces.csv",
+          "column": "registration_evidence_json",
+          "type": "json_text",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "controlled_values": null,
+          "description": "Canonical compact JSON for structured registration evidence.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/items/*/registration_evidence"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Serialize the exact source value as deterministic compact JSON.",
+          "excel_formula_protection": false
+        },
+        {
+          "file": "ui-surfaces.csv",
+          "column": "public_api_evidence_json",
+          "type": "json_text",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "controlled_values": null,
+          "description": "Canonical compact JSON for structured public API evidence.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/items/*/public_api_evidence"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Serialize the exact source value as deterministic compact JSON.",
+          "excel_formula_protection": false
+        },
+        {
+          "file": "ui-surfaces.csv",
+          "column": "contract_api_evidence_json",
+          "type": "json_text",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "controlled_values": null,
+          "description": "Canonical compact JSON for structured contract API evidence.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/items/*/contract_api_evidence"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Serialize the exact source value as deterministic compact JSON.",
+          "excel_formula_protection": false
+        },
+        {
+          "file": "ui-surfaces.csv",
+          "column": "app_owned_deviations_json",
+          "type": "json_text",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "controlled_values": null,
+          "description": "Canonical compact JSON for app-owned deviations.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/items/*/app_owned_deviations"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Serialize the exact source value as deterministic compact JSON.",
+          "excel_formula_protection": false
+        },
+        {
+          "file": "ui-surfaces.csv",
+          "column": "lifecycle_claim_json",
+          "type": "json_text",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "controlled_values": null,
+          "description": "Canonical compact JSON for lifecycle claims.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/items/*/lifecycle_claim"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Serialize the exact source value as deterministic compact JSON.",
+          "excel_formula_protection": false
+        },
+        {
+          "file": "ui-surfaces.csv",
+          "column": "review_claim_json",
+          "type": "json_text",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "controlled_values": null,
+          "description": "Canonical compact JSON for review claims.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/items/*/review_claim"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Serialize the exact source value as deterministic compact JSON.",
+          "excel_formula_protection": false
+        },
+        {
+          "file": "ui-surfaces.csv",
+          "column": "accessibility_evidence_json",
+          "type": "json_text",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "controlled_values": null,
+          "description": "Canonical compact JSON for accessibility evidence.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/items/*/accessibility_evidence"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Serialize the exact source value as deterministic compact JSON.",
+          "excel_formula_protection": false
+        },
+        {
+          "file": "ui-surfaces.csv",
+          "column": "responsive_evidence_json",
+          "type": "json_text",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "controlled_values": null,
+          "description": "Canonical compact JSON for responsive evidence.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/items/*/responsive_evidence"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Serialize the exact source value as deterministic compact JSON.",
+          "excel_formula_protection": false
+        },
+        {
+          "file": "ui-surfaces.csv",
+          "column": "browser_evidence_json",
+          "type": "json_text",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "controlled_values": null,
+          "description": "Canonical compact JSON for browser evidence.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/items/*/browser_evidence"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Serialize the exact source value as deterministic compact JSON.",
+          "excel_formula_protection": false
+        },
+        {
+          "file": "ui-surfaces.csv",
+          "column": "source_fingerprint",
+          "type": "sha256",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "controlled_values": null,
+          "description": "Reviewed source fingerprint used for staleness detection.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/items/*/_source_fingerprint"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Direct scalar projection.",
+          "excel_formula_protection": false
+        }
+      ]
+    },
+    {
+      "file": "ui-surface-aliases.csv",
+      "location": "headers",
+      "table_name": "ui_surface_aliases",
+      "purpose": "One row per normalized Blade alias.",
+      "primary_key": [
+        "surface_alias_id"
+      ],
+      "foreign_keys": [
+        {
+          "column": "surface_id",
+          "references_file": "ui-surfaces.csv",
+          "references_column": "surface_id"
+        }
+      ],
+      "sort_order": [
+        "surface_id",
+        "alias_type",
+        "alias_value"
+      ],
+      "columns": [
+        {
+          "file": "ui-surface-aliases.csv",
+          "column": "export_id",
+          "type": "string",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "controlled_values": null,
+          "description": "Deterministic identifier for one export run.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Derive from inventory type, baseline, source-set hash, export schema version, and generator version.",
+          "excel_formula_protection": false
+        },
+        {
+          "file": "ui-surface-aliases.csv",
+          "column": "inventory_baseline_sha",
+          "type": "git_sha",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "controlled_values": null,
+          "description": "Immutable Issue #30 evidence baseline commit SHA.",
+          "source_roles": [
+            "classifications",
+            "observations",
+            "test_traces"
+          ],
+          "source_json_pointers": [
+            "/baseline_sha",
+            "/baseline/sha"
+          ],
+          "mapping_status": "derived",
+          "transformation": "Require all source artifacts to resolve to the same immutable baseline.",
+          "excel_formula_protection": false
+        },
+        {
+          "file": "ui-surface-aliases.csv",
+          "column": "export_schema_version",
+          "type": "string",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "controlled_values": null,
+          "description": "Version of this CSV/SQLite projection schema.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Inject from csv-schema.json schema_version.",
+          "excel_formula_protection": false
+        },
+        {
+          "file": "ui-surface-aliases.csv",
+          "column": "surface_alias_id",
+          "type": "string",
+          "nullable": false,
+          "primary_key": true,
+          "foreign_key": null,
+          "controlled_values": null,
+          "description": "Deterministic alias relationship ID.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Hash surface_id, alias_type, and alias_value.",
+          "excel_formula_protection": false
+        },
+        {
+          "file": "ui-surface-aliases.csv",
+          "column": "surface_id",
+          "type": "string",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": "ui-surfaces.surface_id",
+          "controlled_values": null,
+          "description": "Owning surface ID.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/items/*/_record_id"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Direct scalar projection.",
+          "excel_formula_protection": false
+        },
+        {
+          "file": "ui-surface-aliases.csv",
+          "column": "alias_type",
+          "type": "string",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "controlled_values": [
+            "blade_alias"
+          ],
+          "description": "Alias category.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Use blade_alias for Issue #30 alias values.",
+          "excel_formula_protection": false
+        },
+        {
+          "file": "ui-surface-aliases.csv",
+          "column": "alias_value",
+          "type": "string",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "controlled_values": null,
+          "description": "One normalized alias value.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/items/*/blade_alias"
+          ],
+          "mapping_status": "derived",
+          "transformation": "Normalize scalar or array aliases into child rows; omit semantic not_applicable/unknown values.",
+          "excel_formula_protection": false
+        },
+        {
+          "file": "ui-surface-aliases.csv",
+          "column": "is_primary",
+          "type": "boolean",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "controlled_values": null,
+          "description": "Whether this alias matches the deterministic primary alias.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Compare alias_value with ui-surfaces.primary_blade_alias.",
+          "excel_formula_protection": false
         }
       ]
     },
     {
       "file": "ui-surface-files.csv",
       "location": "headers",
+      "table_name": "ui_surface_files",
+      "purpose": "One row per repository file associated with a reviewed surface.",
       "primary_key": [
         "surface_file_id"
       ],
@@ -648,33 +1569,34 @@
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Stable identifier for one deterministic export run.",
-          "source_json_field": null,
-          "transformation": "Inject from deterministic export context."
+          "description": "Deterministic identifier for one export run.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Derive from inventory type, baseline, source-set hash, export schema version, and generator version.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-surface-files.csv",
           "column": "inventory_baseline_sha",
-          "type": "string",
+          "type": "git_sha",
           "nullable": false,
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Immutable Git commit SHA used as the inventory evidence baseline.",
-          "source_json_field": "inventory_baseline_sha",
-          "transformation": "Direct scalar projection from reviewed JSON."
-        },
-        {
-          "file": "ui-surface-files.csv",
-          "column": "source_schema_version",
-          "type": "string",
-          "nullable": false,
-          "primary_key": false,
-          "foreign_key": null,
-          "controlled_values": null,
-          "description": "Version of the authoritative reviewed JSON schema.",
-          "source_json_field": "source_schema_version",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Immutable Issue #30 evidence baseline commit SHA.",
+          "source_roles": [
+            "classifications",
+            "observations",
+            "test_traces"
+          ],
+          "source_json_pointers": [
+            "/baseline_sha",
+            "/baseline/sha"
+          ],
+          "mapping_status": "derived",
+          "transformation": "Require all source artifacts to resolve to the same immutable baseline.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-surface-files.csv",
@@ -684,9 +1606,12 @@
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Version of this normalized export schema.",
-          "source_json_field": null,
-          "transformation": "Inject from deterministic export context."
+          "description": "Version of this CSV/SQLite projection schema.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Inject from csv-schema.json schema_version.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-surface-files.csv",
@@ -696,9 +1621,12 @@
           "primary_key": true,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Deterministic identifier for one surface-to-file relationship.",
-          "source_json_field": null,
-          "transformation": "Derive deterministically from the documented stable natural key."
+          "description": "Deterministic surface-to-file relationship ID.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Hash surface_id, file_role, and path.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-surface-files.csv",
@@ -708,9 +1636,16 @@
           "primary_key": false,
           "foreign_key": "ui-surfaces.surface_id",
           "controlled_values": null,
-          "description": "Stable Issue #30 reviewed record identifier for a material UI surface.",
-          "source_json_field": "surface_id",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Owning surface ID.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/items/*/_record_id"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Direct scalar projection.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-surface-files.csv",
@@ -725,20 +1660,16 @@
             "contract",
             "reference",
             "example",
-            "proof",
             "css",
             "javascript",
-            "test",
-            "asset",
-            "icon",
-            "pictogram",
-            "registration",
-            "route",
-            "other"
+            "test"
           ],
-          "description": "Controlled role of a repository file associated with a surface.",
-          "source_json_field": "file_role",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Role of the repository file.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Map implementation_entry, implementation_support_files, contract_path, reference_path, example_paths, css_paths, javascript_paths, and test_paths to controlled roles.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-surface-files.csv",
@@ -749,8 +1680,22 @@
           "foreign_key": null,
           "controlled_values": null,
           "description": "Repository-relative path using forward slashes.",
-          "source_json_field": "path",
-          "transformation": "Normalize to a forward-slash path and reject prohibited absolute repository paths."
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/items/*/implementation_entry",
+            "/items/*/implementation_support_files/*",
+            "/items/*/contract_path/*",
+            "/items/*/reference_path/*",
+            "/items/*/example_paths/*",
+            "/items/*/css_paths/*",
+            "/items/*/javascript_paths/*",
+            "/items/*/test_paths/*"
+          ],
+          "mapping_status": "derived",
+          "transformation": "Normalize path-bearing scalar/array fields and omit semantic missing literals.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-surface-files.csv",
@@ -760,9 +1705,12 @@
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Whether this file is the primary file for its recorded role.",
-          "source_json_field": "is_primary",
-          "transformation": "Serialize as lowercase true or false."
+          "description": "Whether this row is the implementation entry.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "True only for file_role implementation_entry.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-surface-files.csv",
@@ -772,21 +1720,17 @@
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Whether the referenced source existed at the immutable baseline.",
-          "source_json_field": "exists_at_baseline",
-          "transformation": "Serialize as lowercase true or false."
-        },
-        {
-          "file": "ui-surface-files.csv",
-          "column": "registration_state",
-          "type": "string",
-          "nullable": true,
-          "primary_key": false,
-          "foreign_key": null,
-          "controlled_values": null,
-          "description": "Observed registration state for the associated file or surface.",
-          "source_json_field": "registration_state",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Whether observations confirm physical presence at the immutable baseline.",
+          "source_roles": [
+            "observations"
+          ],
+          "source_json_pointers": [
+            "/surfaces/*/implementation_entry",
+            "/surfaces/*/implementation_support_files"
+          ],
+          "mapping_status": "derived",
+          "transformation": "Resolve the path against accepted observations.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-surface-files.csv",
@@ -796,9 +1740,16 @@
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Git blob object identifier for the referenced source.",
-          "source_json_field": "source_blob_oid",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Git blob OID when available.",
+          "source_roles": [
+            "observations"
+          ],
+          "source_json_pointers": [
+            "/surfaces/*/**/object_sha"
+          ],
+          "mapping_status": "derived",
+          "transformation": "Join accepted observation file evidence by repository path.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-surface-files.csv",
@@ -808,27 +1759,24 @@
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "SHA-256 digest of the referenced source content.",
-          "source_json_field": "source_sha256",
-          "transformation": "Direct scalar projection from reviewed JSON."
-        },
-        {
-          "file": "ui-surface-files.csv",
-          "column": "notes",
-          "type": "string",
-          "nullable": true,
-          "primary_key": false,
-          "foreign_key": null,
-          "controlled_values": null,
-          "description": "Optional review notes for the record.",
-          "source_json_field": "notes",
-          "transformation": "Flatten to one line with literal \\n sequences and neutralize Excel formula-like prefixes in CSV only."
+          "description": "Source content SHA-256 when available.",
+          "source_roles": [
+            "observations"
+          ],
+          "source_json_pointers": [
+            "/surfaces/*/**/source_sha256"
+          ],
+          "mapping_status": "derived",
+          "transformation": "Join accepted observation file evidence by repository path.",
+          "excel_formula_protection": false
         }
       ]
     },
     {
       "file": "ui-mismatches.csv",
       "location": "headers",
+      "table_name": "ui_mismatches",
+      "purpose": "One row per reviewed surface mismatch classification.",
       "primary_key": [
         "mismatch_id"
       ],
@@ -837,17 +1785,11 @@
           "column": "surface_id",
           "references_file": "ui-surfaces.csv",
           "references_column": "surface_id"
-        },
-        {
-          "column": "evidence_source_reference_id",
-          "references_file": "ui-source-references.csv",
-          "references_column": "source_reference_id"
         }
       ],
       "sort_order": [
         "surface_id",
-        "mismatch_code",
-        "mismatch_id"
+        "mismatch_code"
       ],
       "columns": [
         {
@@ -858,33 +1800,34 @@
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Stable identifier for one deterministic export run.",
-          "source_json_field": null,
-          "transformation": "Inject from deterministic export context."
+          "description": "Deterministic identifier for one export run.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Derive from inventory type, baseline, source-set hash, export schema version, and generator version.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-mismatches.csv",
           "column": "inventory_baseline_sha",
-          "type": "string",
+          "type": "git_sha",
           "nullable": false,
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Immutable Git commit SHA used as the inventory evidence baseline.",
-          "source_json_field": "inventory_baseline_sha",
-          "transformation": "Direct scalar projection from reviewed JSON."
-        },
-        {
-          "file": "ui-mismatches.csv",
-          "column": "source_schema_version",
-          "type": "string",
-          "nullable": false,
-          "primary_key": false,
-          "foreign_key": null,
-          "controlled_values": null,
-          "description": "Version of the authoritative reviewed JSON schema.",
-          "source_json_field": "source_schema_version",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Immutable Issue #30 evidence baseline commit SHA.",
+          "source_roles": [
+            "classifications",
+            "observations",
+            "test_traces"
+          ],
+          "source_json_pointers": [
+            "/baseline_sha",
+            "/baseline/sha"
+          ],
+          "mapping_status": "derived",
+          "transformation": "Require all source artifacts to resolve to the same immutable baseline.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-mismatches.csv",
@@ -894,9 +1837,12 @@
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Version of this normalized export schema.",
-          "source_json_field": null,
-          "transformation": "Inject from deterministic export context."
+          "description": "Version of this CSV/SQLite projection schema.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Inject from csv-schema.json schema_version.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-mismatches.csv",
@@ -906,9 +1852,12 @@
           "primary_key": true,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Deterministic identifier for one mismatch classification.",
-          "source_json_field": null,
-          "transformation": "Derive deterministically from the documented stable natural key."
+          "description": "Deterministic mismatch relationship ID.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Hash surface_id and mismatch_code.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-mismatches.csv",
@@ -918,9 +1867,16 @@
           "primary_key": false,
           "foreign_key": "ui-surfaces.surface_id",
           "controlled_values": null,
-          "description": "Stable Issue #30 reviewed record identifier for a material UI surface.",
-          "source_json_field": "surface_id",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Owning surface ID.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/items/*/_record_id"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Direct scalar projection.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-mismatches.csv",
@@ -957,39 +1913,24 @@
             "responsive_evidence_missing",
             "investigate"
           ],
-          "description": "Controlled mismatch classification from the Issue #30 vocabulary.",
-          "source_json_field": "mismatch_code",
-          "transformation": "Direct scalar projection from reviewed JSON."
-        },
-        {
-          "file": "ui-mismatches.csv",
-          "column": "explanation",
-          "type": "string",
-          "nullable": false,
-          "primary_key": false,
-          "foreign_key": null,
-          "controlled_values": null,
-          "description": "Evidence-grounded explanation for the mismatch classification.",
-          "source_json_field": "explanation",
-          "transformation": "Flatten to one line with literal \\n sequences and neutralize Excel formula-like prefixes in CSV only."
-        },
-        {
-          "file": "ui-mismatches.csv",
-          "column": "evidence_source_reference_id",
-          "type": "string",
-          "nullable": true,
-          "primary_key": false,
-          "foreign_key": "ui-source-references.source_reference_id",
-          "controlled_values": null,
-          "description": "Reference to the evidence row supporting this record.",
-          "source_json_field": "evidence_source_reference_id",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Accepted Issue #30 mismatch classification.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/items/*/known_mismatches/*"
+          ],
+          "mapping_status": "derived",
+          "transformation": "Normalize the known_mismatches array into one row per code.",
+          "excel_formula_protection": false
         }
       ]
     },
     {
       "file": "ui-test-traces.csv",
       "location": "headers",
+      "table_name": "ui_test_traces",
+      "purpose": "One row per reviewed UI surface-to-test relationship.",
       "primary_key": [
         "trace_id"
       ],
@@ -998,11 +1939,6 @@
           "column": "surface_id",
           "references_file": "ui-surfaces.csv",
           "references_column": "surface_id"
-        },
-        {
-          "column": "evidence_source_reference_id",
-          "references_file": "ui-source-references.csv",
-          "references_column": "source_reference_id"
         }
       ],
       "sort_order": [
@@ -1019,33 +1955,34 @@
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Stable identifier for one deterministic export run.",
-          "source_json_field": null,
-          "transformation": "Inject from deterministic export context."
+          "description": "Deterministic identifier for one export run.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Derive from inventory type, baseline, source-set hash, export schema version, and generator version.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-test-traces.csv",
           "column": "inventory_baseline_sha",
-          "type": "string",
+          "type": "git_sha",
           "nullable": false,
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Immutable Git commit SHA used as the inventory evidence baseline.",
-          "source_json_field": "inventory_baseline_sha",
-          "transformation": "Direct scalar projection from reviewed JSON."
-        },
-        {
-          "file": "ui-test-traces.csv",
-          "column": "source_schema_version",
-          "type": "string",
-          "nullable": false,
-          "primary_key": false,
-          "foreign_key": null,
-          "controlled_values": null,
-          "description": "Version of the authoritative reviewed JSON schema.",
-          "source_json_field": "source_schema_version",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Immutable Issue #30 evidence baseline commit SHA.",
+          "source_roles": [
+            "classifications",
+            "observations",
+            "test_traces"
+          ],
+          "source_json_pointers": [
+            "/baseline_sha",
+            "/baseline/sha"
+          ],
+          "mapping_status": "derived",
+          "transformation": "Require all source artifacts to resolve to the same immutable baseline.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-test-traces.csv",
@@ -1055,9 +1992,12 @@
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Version of this normalized export schema.",
-          "source_json_field": null,
-          "transformation": "Inject from deterministic export context."
+          "description": "Version of this CSV/SQLite projection schema.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Inject from csv-schema.json schema_version.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-test-traces.csv",
@@ -1067,9 +2007,16 @@
           "primary_key": true,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Stable identifier for one surface-to-test relationship.",
-          "source_json_field": "trace_id",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Stable accepted Issue #30 trace ID.",
+          "source_roles": [
+            "test_traces"
+          ],
+          "source_json_pointers": [
+            "/test_traces/*/_trace_id"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Direct scalar projection.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-test-traces.csv",
@@ -1079,21 +2026,35 @@
           "primary_key": false,
           "foreign_key": "ui-surfaces.surface_id",
           "controlled_values": null,
-          "description": "Stable Issue #30 reviewed record identifier for a material UI surface.",
-          "source_json_field": "surface_id",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Related surface record ID.",
+          "source_roles": [
+            "test_traces"
+          ],
+          "source_json_pointers": [
+            "/test_traces/*/_surface_record_id"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Direct scalar projection.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-test-traces.csv",
           "column": "surface_ui_key",
           "type": "string",
-          "nullable": true,
+          "nullable": false,
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Surface UI key duplicated on a test trace for convenient filtering.",
-          "source_json_field": "surface_ui_key",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Surface UI key duplicated for filtering.",
+          "source_roles": [
+            "test_traces"
+          ],
+          "source_json_pointers": [
+            "/test_traces/*/surface_ui_key"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Direct scalar projection.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-test-traces.csv",
@@ -1103,9 +2064,16 @@
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Repository-relative path to the associated test.",
-          "source_json_field": "test_path",
-          "transformation": "Normalize to a forward-slash path and reject prohibited absolute repository paths."
+          "description": "Repository-relative test path.",
+          "source_roles": [
+            "test_traces"
+          ],
+          "source_json_pointers": [
+            "/test_traces/*/test_path"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Direct scalar projection.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-test-traces.csv",
@@ -1115,69 +2083,193 @@
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Whether the associated test existed at the immutable baseline.",
-          "source_json_field": "test_exists",
-          "transformation": "Serialize as lowercase true or false."
+          "description": "Whether the test exists at the immutable baseline.",
+          "source_roles": [
+            "test_traces"
+          ],
+          "source_json_pointers": [
+            "/test_traces/*/test_exists"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Direct scalar projection.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-test-traces.csv",
           "column": "test_type",
           "type": "string",
-          "nullable": true,
+          "nullable": false,
           "primary_key": false,
           "foreign_key": null,
-          "controlled_values": null,
-          "description": "Observed test type.",
-          "source_json_field": "test_type",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "controlled_values": [
+            "contract schema",
+            "API rendering",
+            "prop behavior",
+            "slot behavior",
+            "variant rendering",
+            "state rendering",
+            "class contract",
+            "accessibility",
+            "JavaScript behavior",
+            "browser",
+            "visual",
+            "snapshot",
+            "integration",
+            "incidental markup assertion",
+            "unknown"
+          ],
+          "description": "Reviewed test type.",
+          "source_roles": [
+            "test_traces"
+          ],
+          "source_json_pointers": [
+            "/test_traces/*/test_type"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Direct scalar projection.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-test-traces.csv",
           "column": "current_result",
           "type": "string",
-          "nullable": true,
+          "nullable": false,
           "primary_key": false,
           "foreign_key": null,
-          "controlled_values": null,
-          "description": "Observed current test result or controlled unknown state.",
-          "source_json_field": "current_result",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "controlled_values": [
+            "passed",
+            "failed",
+            "warning",
+            "not_run",
+            "missing",
+            "unknown"
+          ],
+          "description": "Reviewed current test result.",
+          "source_roles": [
+            "test_traces"
+          ],
+          "source_json_pointers": [
+            "/test_traces/*/current_result"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Direct scalar projection.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-test-traces.csv",
           "column": "test_authority",
           "type": "string",
-          "nullable": true,
+          "nullable": false,
           "primary_key": false,
           "foreign_key": null,
-          "controlled_values": null,
-          "description": "Surface-level summary of current test authority.",
-          "source_json_field": "test_authority",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "controlled_values": [
+            "authoritative",
+            "partial",
+            "incidental",
+            "stale",
+            "unknown",
+            "not_applicable"
+          ],
+          "description": "Reviewed trace authority.",
+          "source_roles": [
+            "test_traces"
+          ],
+          "source_json_pointers": [
+            "/test_traces/*/test_authority"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Direct scalar projection.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-test-traces.csv",
-          "column": "accessibility_behavior_covered",
-          "type": "boolean",
-          "nullable": true,
+          "column": "relationship_kind",
+          "type": "string",
+          "nullable": false,
           "primary_key": false,
           "foreign_key": null,
-          "controlled_values": null,
-          "description": "Whether the trace covers accessibility behavior.",
-          "source_json_field": "accessibility_behavior_covered",
-          "transformation": "Serialize as lowercase true or false."
+          "controlled_values": [
+            "owner_local_test",
+            "exact_repository_path_reference",
+            "exact_blade_alias_reference",
+            "exact_ui_key_reference",
+            "exact_symbol_reference"
+          ],
+          "description": "Semantic reason the test is linked to the surface.",
+          "source_roles": [
+            "test_traces"
+          ],
+          "source_json_pointers": [
+            "/test_traces/*/_relationship_evidence/kind"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Direct scalar projection.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-test-traces.csv",
-          "column": "javascript_behavior_covered",
-          "type": "boolean",
-          "nullable": true,
+          "column": "relationship_value",
+          "type": "string",
+          "nullable": false,
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Whether the trace covers JavaScript behavior.",
-          "source_json_field": "javascript_behavior_covered",
-          "transformation": "Serialize as lowercase true or false."
+          "description": "Exact path, alias, key, root, or symbol supporting the relationship.",
+          "source_roles": [
+            "test_traces"
+          ],
+          "source_json_pointers": [
+            "/test_traces/*/_relationship_evidence/value"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Direct scalar projection.",
+          "excel_formula_protection": false
+        },
+        {
+          "file": "ui-test-traces.csv",
+          "column": "accessibility_coverage_state",
+          "type": "string",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "controlled_values": [
+            "present_claim",
+            "not_observed",
+            "unknown"
+          ],
+          "description": "Categorical accessibility-coverage evidence state.",
+          "source_roles": [
+            "test_traces"
+          ],
+          "source_json_pointers": [
+            "/test_traces/*/accessibility_behavior_covered"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Direct scalar projection.",
+          "excel_formula_protection": false
+        },
+        {
+          "file": "ui-test-traces.csv",
+          "column": "javascript_coverage_state",
+          "type": "string",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "controlled_values": [
+            "present_claim",
+            "not_observed",
+            "unknown"
+          ],
+          "description": "Categorical JavaScript-coverage evidence state.",
+          "source_roles": [
+            "test_traces"
+          ],
+          "source_json_pointers": [
+            "/test_traces/*/javascript_behavior_covered"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Direct scalar projection.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-test-traces.csv",
@@ -1188,8 +2280,15 @@
           "foreign_key": null,
           "controlled_values": null,
           "description": "Count of normalized contract-field coverage rows.",
-          "source_json_field": "contract_fields_covered_count",
-          "transformation": "Calculate from normalized child or output rows."
+          "source_roles": [
+            "test_traces"
+          ],
+          "source_json_pointers": [
+            "/test_traces/*/contract_fields_covered"
+          ],
+          "mapping_status": "derived",
+          "transformation": "Count array values.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-test-traces.csv",
@@ -1200,38 +2299,42 @@
           "foreign_key": null,
           "controlled_values": null,
           "description": "Count of normalized rendered-state coverage rows.",
-          "source_json_field": "rendered_states_covered_count",
-          "transformation": "Calculate from normalized child or output rows."
-        },
-        {
-          "file": "ui-test-traces.csv",
-          "column": "evidence_source_reference_id",
-          "type": "string",
-          "nullable": true,
-          "primary_key": false,
-          "foreign_key": "ui-source-references.source_reference_id",
-          "controlled_values": null,
-          "description": "Reference to the evidence row supporting this record.",
-          "source_json_field": "evidence_source_reference_id",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "source_roles": [
+            "test_traces"
+          ],
+          "source_json_pointers": [
+            "/test_traces/*/rendered_states_covered"
+          ],
+          "mapping_status": "derived",
+          "transformation": "Count array values.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-test-traces.csv",
           "column": "source_fingerprint",
-          "type": "string",
+          "type": "sha256",
           "nullable": false,
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Deterministic fingerprint of source evidence used for staleness detection.",
-          "source_json_field": "source_fingerprint",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Reviewed trace source fingerprint.",
+          "source_roles": [
+            "test_traces"
+          ],
+          "source_json_pointers": [
+            "/test_traces/*/_source_fingerprint"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Direct scalar projection.",
+          "excel_formula_protection": false
         }
       ]
     },
     {
       "file": "ui-test-trace-coverage.csv",
       "location": "headers",
+      "table_name": "ui_test_trace_coverage",
+      "purpose": "One row per contract field or rendered state covered by a trace.",
       "primary_key": [
         "coverage_id"
       ],
@@ -1256,33 +2359,34 @@
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Stable identifier for one deterministic export run.",
-          "source_json_field": null,
-          "transformation": "Inject from deterministic export context."
+          "description": "Deterministic identifier for one export run.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Derive from inventory type, baseline, source-set hash, export schema version, and generator version.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-test-trace-coverage.csv",
           "column": "inventory_baseline_sha",
-          "type": "string",
+          "type": "git_sha",
           "nullable": false,
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Immutable Git commit SHA used as the inventory evidence baseline.",
-          "source_json_field": "inventory_baseline_sha",
-          "transformation": "Direct scalar projection from reviewed JSON."
-        },
-        {
-          "file": "ui-test-trace-coverage.csv",
-          "column": "source_schema_version",
-          "type": "string",
-          "nullable": false,
-          "primary_key": false,
-          "foreign_key": null,
-          "controlled_values": null,
-          "description": "Version of the authoritative reviewed JSON schema.",
-          "source_json_field": "source_schema_version",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Immutable Issue #30 evidence baseline commit SHA.",
+          "source_roles": [
+            "classifications",
+            "observations",
+            "test_traces"
+          ],
+          "source_json_pointers": [
+            "/baseline_sha",
+            "/baseline/sha"
+          ],
+          "mapping_status": "derived",
+          "transformation": "Require all source artifacts to resolve to the same immutable baseline.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-test-trace-coverage.csv",
@@ -1292,9 +2396,12 @@
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Version of this normalized export schema.",
-          "source_json_field": null,
-          "transformation": "Inject from deterministic export context."
+          "description": "Version of this CSV/SQLite projection schema.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Inject from csv-schema.json schema_version.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-test-trace-coverage.csv",
@@ -1304,9 +2411,12 @@
           "primary_key": true,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Deterministic identifier for one normalized test-coverage value.",
-          "source_json_field": null,
-          "transformation": "Derive deterministically from the documented stable natural key."
+          "description": "Deterministic trace coverage ID.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Hash trace_id, coverage_kind, and coverage_value.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-test-trace-coverage.csv",
@@ -1316,9 +2426,16 @@
           "primary_key": false,
           "foreign_key": "ui-test-traces.trace_id",
           "controlled_values": null,
-          "description": "Stable identifier for one surface-to-test relationship.",
-          "source_json_field": "trace_id",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Owning trace ID.",
+          "source_roles": [
+            "test_traces"
+          ],
+          "source_json_pointers": [
+            "/test_traces/*/_trace_id"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Direct scalar projection.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-test-trace-coverage.csv",
@@ -1329,13 +2446,14 @@
           "foreign_key": null,
           "controlled_values": [
             "contract_field",
-            "rendered_state",
-            "accessibility_behavior",
-            "javascript_behavior"
+            "rendered_state"
           ],
-          "description": "Controlled category for a normalized coverage value.",
-          "source_json_field": "coverage_kind",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Normalized coverage array category.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Map contract_fields_covered to contract_field and rendered_states_covered to rendered_state.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-test-trace-coverage.csv",
@@ -1345,133 +2463,159 @@
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "One normalized covered contract field, state, or behavior.",
-          "source_json_field": "coverage_value",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "One covered field or rendered state.",
+          "source_roles": [
+            "test_traces"
+          ],
+          "source_json_pointers": [
+            "/test_traces/*/contract_fields_covered/*",
+            "/test_traces/*/rendered_states_covered/*"
+          ],
+          "mapping_status": "derived",
+          "transformation": "Normalize source arrays.",
+          "excel_formula_protection": false
         }
       ]
     },
     {
-      "file": "ui-standards-evidence.csv",
+      "file": "ui-standards.csv",
       "location": "headers",
+      "table_name": "ui_standards",
+      "purpose": "One row per unique reviewed UI standard.",
       "primary_key": [
-        "standard_evidence_id"
+        "standard_id"
       ],
-      "foreign_keys": [
-        {
-          "column": "surface_id",
-          "references_file": "ui-surfaces.csv",
-          "references_column": "surface_id"
-        },
-        {
-          "column": "evidence_source_reference_id",
-          "references_file": "ui-source-references.csv",
-          "references_column": "source_reference_id"
-        }
-      ],
+      "foreign_keys": [],
       "sort_order": [
-        "surface_id",
         "standard_path"
       ],
       "columns": [
         {
-          "file": "ui-standards-evidence.csv",
+          "file": "ui-standards.csv",
           "column": "export_id",
           "type": "string",
           "nullable": false,
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Stable identifier for one deterministic export run.",
-          "source_json_field": null,
-          "transformation": "Inject from deterministic export context."
+          "description": "Deterministic identifier for one export run.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Derive from inventory type, baseline, source-set hash, export schema version, and generator version.",
+          "excel_formula_protection": false
         },
         {
-          "file": "ui-standards-evidence.csv",
+          "file": "ui-standards.csv",
           "column": "inventory_baseline_sha",
-          "type": "string",
+          "type": "git_sha",
           "nullable": false,
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Immutable Git commit SHA used as the inventory evidence baseline.",
-          "source_json_field": "inventory_baseline_sha",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Immutable Issue #30 evidence baseline commit SHA.",
+          "source_roles": [
+            "classifications",
+            "observations",
+            "test_traces"
+          ],
+          "source_json_pointers": [
+            "/baseline_sha",
+            "/baseline/sha"
+          ],
+          "mapping_status": "derived",
+          "transformation": "Require all source artifacts to resolve to the same immutable baseline.",
+          "excel_formula_protection": false
         },
         {
-          "file": "ui-standards-evidence.csv",
-          "column": "source_schema_version",
-          "type": "string",
-          "nullable": false,
-          "primary_key": false,
-          "foreign_key": null,
-          "controlled_values": null,
-          "description": "Version of the authoritative reviewed JSON schema.",
-          "source_json_field": "source_schema_version",
-          "transformation": "Direct scalar projection from reviewed JSON."
-        },
-        {
-          "file": "ui-standards-evidence.csv",
+          "file": "ui-standards.csv",
           "column": "export_schema_version",
           "type": "string",
           "nullable": false,
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Version of this normalized export schema.",
-          "source_json_field": null,
-          "transformation": "Inject from deterministic export context."
+          "description": "Version of this CSV/SQLite projection schema.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Inject from csv-schema.json schema_version.",
+          "excel_formula_protection": false
         },
         {
-          "file": "ui-standards-evidence.csv",
-          "column": "standard_evidence_id",
+          "file": "ui-standards.csv",
+          "column": "standard_id",
           "type": "string",
           "nullable": false,
           "primary_key": true,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Deterministic identifier for one standard-to-surface evidence relationship.",
-          "source_json_field": null,
-          "transformation": "Derive deterministically from the documented stable natural key."
+          "description": "Deterministic stable ID derived from standard_path.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Hash standard_path only so content changes do not change identity.",
+          "excel_formula_protection": false
         },
         {
-          "file": "ui-standards-evidence.csv",
-          "column": "surface_id",
-          "type": "string",
-          "nullable": false,
-          "primary_key": false,
-          "foreign_key": "ui-surfaces.surface_id",
-          "controlled_values": null,
-          "description": "Stable Issue #30 reviewed record identifier for a material UI surface.",
-          "source_json_field": "surface_id",
-          "transformation": "Direct scalar projection from reviewed JSON."
-        },
-        {
-          "file": "ui-standards-evidence.csv",
+          "file": "ui-standards.csv",
           "column": "standard_path",
           "type": "string",
           "nullable": false,
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Repository-relative path to the reviewed standard.",
-          "source_json_field": "standard_path",
-          "transformation": "Normalize to a forward-slash path and reject prohibited absolute repository paths."
+          "description": "Repository-relative unique reviewed standard path.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/standard_reviews/*/_standard_path"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Direct scalar projection.",
+          "excel_formula_protection": false
         },
         {
-          "file": "ui-standards-evidence.csv",
-          "column": "claimed_scope",
-          "type": "string",
-          "nullable": true,
+          "file": "ui-standards.csv",
+          "column": "standard_source_fingerprint",
+          "type": "sha256",
+          "nullable": false,
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Scope claimed by the reviewed standard.",
-          "source_json_field": "claimed_scope",
-          "transformation": "Flatten to one line with literal \\n sequences and neutralize Excel formula-like prefixes in CSV only."
+          "description": "Reviewed standard source fingerprint.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/standard_reviews/*/_source_fingerprint"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Direct scalar projection.",
+          "excel_formula_protection": false
         },
         {
-          "file": "ui-standards-evidence.csv",
+          "file": "ui-standards.csv",
+          "column": "claimed_scope",
+          "type": "string",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "controlled_values": null,
+          "description": "Reviewed scope claimed by the standard.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/standard_reviews/*/claimed_scope"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Direct scalar projection.",
+          "excel_formula_protection": true
+        },
+        {
+          "file": "ui-standards.csv",
           "column": "implementation_alignment",
           "type": "string",
           "nullable": false,
@@ -1480,17 +2624,23 @@
           "controlled_values": [
             "aligned",
             "partial",
-            "misaligned",
             "stale",
-            "unknown",
-            "not_applicable"
+            "not_applicable",
+            "unknown"
           ],
-          "description": "Reviewed implementation alignment with the standard.",
-          "source_json_field": "implementation_alignment",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Reviewed implementation alignment.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/standard_reviews/*/implementation_alignment"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Direct scalar projection.",
+          "excel_formula_protection": false
         },
         {
-          "file": "ui-standards-evidence.csv",
+          "file": "ui-standards.csv",
           "column": "contract_alignment",
           "type": "string",
           "nullable": false,
@@ -1499,17 +2649,23 @@
           "controlled_values": [
             "aligned",
             "partial",
-            "misaligned",
             "stale",
-            "unknown",
-            "not_applicable"
+            "not_applicable",
+            "unknown"
           ],
-          "description": "Reviewed contract alignment with the standard.",
-          "source_json_field": "contract_alignment",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Reviewed contract alignment.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/standard_reviews/*/contract_alignment"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Direct scalar projection.",
+          "excel_formula_protection": false
         },
         {
-          "file": "ui-standards-evidence.csv",
+          "file": "ui-standards.csv",
           "column": "reference_or_example_alignment",
           "type": "string",
           "nullable": false,
@@ -1518,65 +2674,55 @@
           "controlled_values": [
             "aligned",
             "partial",
-            "misaligned",
             "stale",
-            "unknown",
-            "not_applicable"
+            "not_applicable",
+            "unknown"
           ],
-          "description": "Reviewed reference or example alignment with the standard.",
-          "source_json_field": "reference_or_example_alignment",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Reviewed reference/example alignment.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/standard_reviews/*/reference_or_example_alignment"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Direct scalar projection.",
+          "excel_formula_protection": false
         },
         {
-          "file": "ui-standards-evidence.csv",
+          "file": "ui-standards.csv",
           "column": "authority_state",
           "type": "string",
           "nullable": false,
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": [
-            "canonical",
-            "active_guidance",
-            "mixed",
-            "historical",
-            "superseded",
+            "current_standard",
+            "mixed_authority",
+            "historical_or_rollout_guidance",
+            "stale",
             "unknown"
           ],
-          "description": "Reviewed authority state of the standard.",
-          "source_json_field": "authority_state",
-          "transformation": "Direct scalar projection from reviewed JSON."
-        },
-        {
-          "file": "ui-standards-evidence.csv",
-          "column": "staleness_evidence",
-          "type": "string",
-          "nullable": true,
-          "primary_key": false,
-          "foreign_key": null,
-          "controlled_values": null,
-          "description": "Evidence supporting a stale, mixed, or unknown classification.",
-          "source_json_field": "staleness_evidence",
-          "transformation": "Flatten to one line with literal \\n sequences and neutralize Excel formula-like prefixes in CSV only."
-        },
-        {
-          "file": "ui-standards-evidence.csv",
-          "column": "evidence_source_reference_id",
-          "type": "string",
-          "nullable": true,
-          "primary_key": false,
-          "foreign_key": "ui-source-references.source_reference_id",
-          "controlled_values": null,
-          "description": "Reference to the evidence row supporting this record.",
-          "source_json_field": "evidence_source_reference_id",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Reviewed authority state.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/standard_reviews/*/authority_state"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Direct scalar projection.",
+          "excel_formula_protection": false
         }
       ]
     },
     {
-      "file": "ui-metadata-evidence.csv",
+      "file": "ui-surface-standards.csv",
       "location": "headers",
+      "table_name": "ui_surface_standards",
+      "purpose": "One row per reviewed surface-to-standard projection.",
       "primary_key": [
-        "metadata_evidence_id"
+        "surface_standard_id"
       ],
       "foreign_keys": [
         {
@@ -1585,9 +2731,302 @@
           "references_column": "surface_id"
         },
         {
-          "column": "evidence_source_reference_id",
-          "references_file": "ui-source-references.csv",
-          "references_column": "source_reference_id"
+          "column": "standard_id",
+          "references_file": "ui-standards.csv",
+          "references_column": "standard_id"
+        }
+      ],
+      "sort_order": [
+        "surface_id",
+        "standard_id"
+      ],
+      "columns": [
+        {
+          "file": "ui-surface-standards.csv",
+          "column": "export_id",
+          "type": "string",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "controlled_values": null,
+          "description": "Deterministic identifier for one export run.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Derive from inventory type, baseline, source-set hash, export schema version, and generator version.",
+          "excel_formula_protection": false
+        },
+        {
+          "file": "ui-surface-standards.csv",
+          "column": "inventory_baseline_sha",
+          "type": "git_sha",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "controlled_values": null,
+          "description": "Immutable Issue #30 evidence baseline commit SHA.",
+          "source_roles": [
+            "classifications",
+            "observations",
+            "test_traces"
+          ],
+          "source_json_pointers": [
+            "/baseline_sha",
+            "/baseline/sha"
+          ],
+          "mapping_status": "derived",
+          "transformation": "Require all source artifacts to resolve to the same immutable baseline.",
+          "excel_formula_protection": false
+        },
+        {
+          "file": "ui-surface-standards.csv",
+          "column": "export_schema_version",
+          "type": "string",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "controlled_values": null,
+          "description": "Version of this CSV/SQLite projection schema.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Inject from csv-schema.json schema_version.",
+          "excel_formula_protection": false
+        },
+        {
+          "file": "ui-surface-standards.csv",
+          "column": "surface_standard_id",
+          "type": "string",
+          "nullable": false,
+          "primary_key": true,
+          "foreign_key": null,
+          "controlled_values": null,
+          "description": "Deterministic surface-to-standard relationship ID.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Hash surface_id and standard_path.",
+          "excel_formula_protection": false
+        },
+        {
+          "file": "ui-surface-standards.csv",
+          "column": "surface_id",
+          "type": "string",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": "ui-surfaces.surface_id",
+          "controlled_values": null,
+          "description": "Linked surface ID.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/items/*/_record_id"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Direct scalar projection.",
+          "excel_formula_protection": false
+        },
+        {
+          "file": "ui-surface-standards.csv",
+          "column": "standard_id",
+          "type": "string",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": "ui-standards.standard_id",
+          "controlled_values": null,
+          "description": "Linked unique standard ID.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/items/*/standards_evidence/*/standard_path"
+          ],
+          "mapping_status": "derived",
+          "transformation": "Resolve standard_path to ui-standards.standard_id.",
+          "excel_formula_protection": false
+        },
+        {
+          "file": "ui-surface-standards.csv",
+          "column": "standard_source_fingerprint",
+          "type": "sha256",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "controlled_values": null,
+          "description": "Fingerprint projected into the linked surface.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/items/*/standards_evidence/*/standard_source_fingerprint"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Direct scalar projection.",
+          "excel_formula_protection": false
+        }
+      ]
+    },
+    {
+      "file": "ui-standard-findings.csv",
+      "location": "headers",
+      "table_name": "ui_standard_findings",
+      "purpose": "One row per reviewed standard staleness or moved-responsibility finding.",
+      "primary_key": [
+        "standard_finding_id"
+      ],
+      "foreign_keys": [
+        {
+          "column": "standard_id",
+          "references_file": "ui-standards.csv",
+          "references_column": "standard_id"
+        }
+      ],
+      "sort_order": [
+        "standard_id",
+        "finding_kind",
+        "finding_value"
+      ],
+      "columns": [
+        {
+          "file": "ui-standard-findings.csv",
+          "column": "export_id",
+          "type": "string",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "controlled_values": null,
+          "description": "Deterministic identifier for one export run.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Derive from inventory type, baseline, source-set hash, export schema version, and generator version.",
+          "excel_formula_protection": false
+        },
+        {
+          "file": "ui-standard-findings.csv",
+          "column": "inventory_baseline_sha",
+          "type": "git_sha",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "controlled_values": null,
+          "description": "Immutable Issue #30 evidence baseline commit SHA.",
+          "source_roles": [
+            "classifications",
+            "observations",
+            "test_traces"
+          ],
+          "source_json_pointers": [
+            "/baseline_sha",
+            "/baseline/sha"
+          ],
+          "mapping_status": "derived",
+          "transformation": "Require all source artifacts to resolve to the same immutable baseline.",
+          "excel_formula_protection": false
+        },
+        {
+          "file": "ui-standard-findings.csv",
+          "column": "export_schema_version",
+          "type": "string",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "controlled_values": null,
+          "description": "Version of this CSV/SQLite projection schema.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Inject from csv-schema.json schema_version.",
+          "excel_formula_protection": false
+        },
+        {
+          "file": "ui-standard-findings.csv",
+          "column": "standard_finding_id",
+          "type": "string",
+          "nullable": false,
+          "primary_key": true,
+          "foreign_key": null,
+          "controlled_values": null,
+          "description": "Deterministic normalized standard finding ID.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Hash standard_id, finding_kind, and finding_value.",
+          "excel_formula_protection": false
+        },
+        {
+          "file": "ui-standard-findings.csv",
+          "column": "standard_id",
+          "type": "string",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": "ui-standards.standard_id",
+          "controlled_values": null,
+          "description": "Owning unique standard ID.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/standard_reviews/*/_standard_path"
+          ],
+          "mapping_status": "derived",
+          "transformation": "Resolve _standard_path to ui-standards.standard_id.",
+          "excel_formula_protection": false
+        },
+        {
+          "file": "ui-standard-findings.csv",
+          "column": "finding_kind",
+          "type": "string",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "controlled_values": [
+            "staleness_evidence",
+            "moved_responsibility"
+          ],
+          "description": "Normalized standard finding category.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Map staleness_evidence entries and moved_responsibilities entries to controlled kinds.",
+          "excel_formula_protection": false
+        },
+        {
+          "file": "ui-standard-findings.csv",
+          "column": "finding_value",
+          "type": "string",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "controlled_values": null,
+          "description": "One reviewed standard finding.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/standard_reviews/*/staleness_evidence/*",
+            "/standard_reviews/*/moved_responsibilities/*"
+          ],
+          "mapping_status": "derived",
+          "transformation": "Normalize source arrays.",
+          "excel_formula_protection": true
+        }
+      ]
+    },
+    {
+      "file": "ui-metadata-evidence.csv",
+      "location": "headers",
+      "table_name": "ui_metadata_evidence",
+      "purpose": "One row per reviewed metadata field and surface, preserving both implementation and contract lanes.",
+      "primary_key": [
+        "metadata_evidence_id"
+      ],
+      "foreign_keys": [
+        {
+          "column": "surface_id",
+          "references_file": "ui-surfaces.csv",
+          "references_column": "surface_id"
         }
       ],
       "sort_order": [
@@ -1603,33 +3042,34 @@
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Stable identifier for one deterministic export run.",
-          "source_json_field": null,
-          "transformation": "Inject from deterministic export context."
+          "description": "Deterministic identifier for one export run.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Derive from inventory type, baseline, source-set hash, export schema version, and generator version.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-metadata-evidence.csv",
           "column": "inventory_baseline_sha",
-          "type": "string",
+          "type": "git_sha",
           "nullable": false,
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Immutable Git commit SHA used as the inventory evidence baseline.",
-          "source_json_field": "inventory_baseline_sha",
-          "transformation": "Direct scalar projection from reviewed JSON."
-        },
-        {
-          "file": "ui-metadata-evidence.csv",
-          "column": "source_schema_version",
-          "type": "string",
-          "nullable": false,
-          "primary_key": false,
-          "foreign_key": null,
-          "controlled_values": null,
-          "description": "Version of the authoritative reviewed JSON schema.",
-          "source_json_field": "source_schema_version",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Immutable Issue #30 evidence baseline commit SHA.",
+          "source_roles": [
+            "classifications",
+            "observations",
+            "test_traces"
+          ],
+          "source_json_pointers": [
+            "/baseline_sha",
+            "/baseline/sha"
+          ],
+          "mapping_status": "derived",
+          "transformation": "Require all source artifacts to resolve to the same immutable baseline.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-metadata-evidence.csv",
@@ -1639,9 +3079,12 @@
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Version of this normalized export schema.",
-          "source_json_field": null,
-          "transformation": "Inject from deterministic export context."
+          "description": "Version of this CSV/SQLite projection schema.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Inject from csv-schema.json schema_version.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-metadata-evidence.csv",
@@ -1651,9 +3094,12 @@
           "primary_key": true,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Deterministic identifier for one metadata field observation.",
-          "source_json_field": null,
-          "transformation": "Derive deterministically from the documented stable natural key."
+          "description": "Deterministic metadata field observation ID.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Hash surface_id and metadata_field.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-metadata-evidence.csv",
@@ -1663,9 +3109,16 @@
           "primary_key": false,
           "foreign_key": "ui-surfaces.surface_id",
           "controlled_values": null,
-          "description": "Stable Issue #30 reviewed record identifier for a material UI surface.",
-          "source_json_field": "surface_id",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Owning surface ID.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/items/*/_record_id"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Direct scalar projection.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-metadata-evidence.csv",
@@ -1688,98 +3141,309 @@
             "contract_hash",
             "last_updated"
           ],
-          "description": "Controlled metadata field being evaluated.",
-          "source_json_field": "metadata_field",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Metadata field being evaluated.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/items/*/metadata_evidence"
+          ],
+          "mapping_status": "derived",
+          "transformation": "Emit one row per controlled metadata field.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-metadata-evidence.csv",
-          "column": "presence_state",
-          "type": "string",
+          "column": "implementation_present_count",
+          "type": "integer",
           "nullable": false,
           "primary_key": false,
           "foreign_key": null,
-          "controlled_values": [
-            "present",
-            "absent",
-            "unknown",
-            "not_applicable"
+          "controlled_values": null,
+          "description": "Implementation lane present count.",
+          "source_roles": [
+            "classifications"
           ],
-          "description": "Controlled presence state of the metadata field.",
-          "source_json_field": "presence_state",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "source_json_pointers": [
+            "/items/*/metadata_evidence/{metadata_field}/implementation/present_count"
+          ],
+          "mapping_status": "derived",
+          "transformation": "Project the selected metadata field lane.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-metadata-evidence.csv",
-          "column": "observed_value",
-          "type": "string",
-          "nullable": true,
-          "primary_key": false,
-          "foreign_key": null,
-          "controlled_values": null,
-          "description": "Observed scalar metadata value.",
-          "source_json_field": "observed_value",
-          "transformation": "Flatten to one line with literal \\n sequences and neutralize Excel formula-like prefixes in CSV only."
-        },
-        {
-          "file": "ui-metadata-evidence.csv",
-          "column": "observed_format",
-          "type": "string",
-          "nullable": true,
-          "primary_key": false,
-          "foreign_key": null,
-          "controlled_values": null,
-          "description": "Observed representation or format of the metadata value.",
-          "source_json_field": "observed_format",
-          "transformation": "Flatten to one line with literal \\n sequences and neutralize Excel formula-like prefixes in CSV only."
-        },
-        {
-          "file": "ui-metadata-evidence.csv",
-          "column": "agreement_state",
-          "type": "string",
+          "column": "implementation_absent_count",
+          "type": "integer",
           "nullable": false,
           "primary_key": false,
           "foreign_key": null,
-          "controlled_values": [
-            "aligned",
-            "disagrees",
-            "partial",
-            "unknown",
-            "not_applicable"
+          "controlled_values": null,
+          "description": "Implementation lane absent count.",
+          "source_roles": [
+            "classifications"
           ],
-          "description": "Controlled agreement state across evidence sources.",
-          "source_json_field": "agreement_state",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "source_json_pointers": [
+            "/items/*/metadata_evidence/{metadata_field}/implementation/absent_count"
+          ],
+          "mapping_status": "derived",
+          "transformation": "Project the selected metadata field lane.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-metadata-evidence.csv",
-          "column": "known_disagreement",
-          "type": "string",
-          "nullable": true,
+          "column": "implementation_unknown_count",
+          "type": "integer",
+          "nullable": false,
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Summary of a known metadata disagreement.",
-          "source_json_field": "known_disagreement",
-          "transformation": "Flatten to one line with literal \\n sequences and neutralize Excel formula-like prefixes in CSV only."
+          "description": "Implementation lane unknown count.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/items/*/metadata_evidence/{metadata_field}/implementation/unknown_count"
+          ],
+          "mapping_status": "derived",
+          "transformation": "Project the selected metadata field lane.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-metadata-evidence.csv",
-          "column": "evidence_source_reference_id",
-          "type": "string",
-          "nullable": true,
+          "column": "implementation_not_applicable_count",
+          "type": "integer",
+          "nullable": false,
           "primary_key": false,
-          "foreign_key": "ui-source-references.source_reference_id",
+          "foreign_key": null,
           "controlled_values": null,
-          "description": "Reference to the evidence row supporting this record.",
-          "source_json_field": "evidence_source_reference_id",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Implementation lane not applicable count.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/items/*/metadata_evidence/{metadata_field}/implementation/not_applicable_count"
+          ],
+          "mapping_status": "derived",
+          "transformation": "Project the selected metadata field lane.",
+          "excel_formula_protection": false
+        },
+        {
+          "file": "ui-metadata-evidence.csv",
+          "column": "implementation_values_json",
+          "type": "json_text",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "controlled_values": null,
+          "description": "Canonical compact JSON for implementation values.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/items/*/metadata_evidence/{metadata_field}/implementation/values"
+          ],
+          "mapping_status": "derived",
+          "transformation": "Serialize the exact source array as deterministic compact JSON.",
+          "excel_formula_protection": false
+        },
+        {
+          "file": "ui-metadata-evidence.csv",
+          "column": "implementation_formats_json",
+          "type": "json_text",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "controlled_values": null,
+          "description": "Canonical compact JSON for implementation formats.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/items/*/metadata_evidence/{metadata_field}/implementation/formats"
+          ],
+          "mapping_status": "derived",
+          "transformation": "Serialize the exact source array as deterministic compact JSON.",
+          "excel_formula_protection": false
+        },
+        {
+          "file": "ui-metadata-evidence.csv",
+          "column": "implementation_present_paths_json",
+          "type": "json_text",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "controlled_values": null,
+          "description": "Canonical compact JSON for implementation present paths.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/items/*/metadata_evidence/{metadata_field}/implementation/present_paths"
+          ],
+          "mapping_status": "derived",
+          "transformation": "Serialize the exact source array as deterministic compact JSON.",
+          "excel_formula_protection": false
+        },
+        {
+          "file": "ui-metadata-evidence.csv",
+          "column": "contract_present_count",
+          "type": "integer",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "controlled_values": null,
+          "description": "Contract lane present count.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/items/*/metadata_evidence/{metadata_field}/contract/present_count"
+          ],
+          "mapping_status": "derived",
+          "transformation": "Project the selected metadata field lane.",
+          "excel_formula_protection": false
+        },
+        {
+          "file": "ui-metadata-evidence.csv",
+          "column": "contract_absent_count",
+          "type": "integer",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "controlled_values": null,
+          "description": "Contract lane absent count.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/items/*/metadata_evidence/{metadata_field}/contract/absent_count"
+          ],
+          "mapping_status": "derived",
+          "transformation": "Project the selected metadata field lane.",
+          "excel_formula_protection": false
+        },
+        {
+          "file": "ui-metadata-evidence.csv",
+          "column": "contract_unknown_count",
+          "type": "integer",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "controlled_values": null,
+          "description": "Contract lane unknown count.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/items/*/metadata_evidence/{metadata_field}/contract/unknown_count"
+          ],
+          "mapping_status": "derived",
+          "transformation": "Project the selected metadata field lane.",
+          "excel_formula_protection": false
+        },
+        {
+          "file": "ui-metadata-evidence.csv",
+          "column": "contract_not_applicable_count",
+          "type": "integer",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "controlled_values": null,
+          "description": "Contract lane not applicable count.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/items/*/metadata_evidence/{metadata_field}/contract/not_applicable_count"
+          ],
+          "mapping_status": "derived",
+          "transformation": "Project the selected metadata field lane.",
+          "excel_formula_protection": false
+        },
+        {
+          "file": "ui-metadata-evidence.csv",
+          "column": "contract_values_json",
+          "type": "json_text",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "controlled_values": null,
+          "description": "Canonical compact JSON for contract values.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/items/*/metadata_evidence/{metadata_field}/contract/values"
+          ],
+          "mapping_status": "derived",
+          "transformation": "Serialize the exact source array as deterministic compact JSON.",
+          "excel_formula_protection": false
+        },
+        {
+          "file": "ui-metadata-evidence.csv",
+          "column": "contract_formats_json",
+          "type": "json_text",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "controlled_values": null,
+          "description": "Canonical compact JSON for contract formats.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/items/*/metadata_evidence/{metadata_field}/contract/formats"
+          ],
+          "mapping_status": "derived",
+          "transformation": "Serialize the exact source array as deterministic compact JSON.",
+          "excel_formula_protection": false
+        },
+        {
+          "file": "ui-metadata-evidence.csv",
+          "column": "contract_present_paths_json",
+          "type": "json_text",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "controlled_values": null,
+          "description": "Canonical compact JSON for contract present paths.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/items/*/metadata_evidence/{metadata_field}/contract/present_paths"
+          ],
+          "mapping_status": "derived",
+          "transformation": "Serialize the exact source array as deterministic compact JSON.",
+          "excel_formula_protection": false
+        },
+        {
+          "file": "ui-metadata-evidence.csv",
+          "column": "known_disagreement_json",
+          "type": "json_text",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "controlled_values": null,
+          "description": "Canonical compact JSON for this field's known disagreement or null.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/items/*/metadata_evidence/known_disagreements/*"
+          ],
+          "mapping_status": "derived",
+          "transformation": "Select the disagreement whose field matches metadata_field; emit JSON null when absent.",
+          "excel_formula_protection": false
         }
       ]
     },
     {
       "file": "ui-dependencies.csv",
       "location": "headers",
+      "table_name": "ui_dependencies",
+      "purpose": "One row per reviewed lower-tier, component, icon, asset, or other dependency.",
       "primary_key": [
         "dependency_id"
       ],
@@ -1793,11 +3457,6 @@
           "column": "dependency_target_surface_id",
           "references_file": "ui-surfaces.csv",
           "references_column": "surface_id"
-        },
-        {
-          "column": "evidence_source_reference_id",
-          "references_file": "ui-source-references.csv",
-          "references_column": "source_reference_id"
         }
       ],
       "sort_order": [
@@ -1815,33 +3474,34 @@
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Stable identifier for one deterministic export run.",
-          "source_json_field": null,
-          "transformation": "Inject from deterministic export context."
+          "description": "Deterministic identifier for one export run.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Derive from inventory type, baseline, source-set hash, export schema version, and generator version.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-dependencies.csv",
           "column": "inventory_baseline_sha",
-          "type": "string",
+          "type": "git_sha",
           "nullable": false,
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Immutable Git commit SHA used as the inventory evidence baseline.",
-          "source_json_field": "inventory_baseline_sha",
-          "transformation": "Direct scalar projection from reviewed JSON."
-        },
-        {
-          "file": "ui-dependencies.csv",
-          "column": "source_schema_version",
-          "type": "string",
-          "nullable": false,
-          "primary_key": false,
-          "foreign_key": null,
-          "controlled_values": null,
-          "description": "Version of the authoritative reviewed JSON schema.",
-          "source_json_field": "source_schema_version",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Immutable Issue #30 evidence baseline commit SHA.",
+          "source_roles": [
+            "classifications",
+            "observations",
+            "test_traces"
+          ],
+          "source_json_pointers": [
+            "/baseline_sha",
+            "/baseline/sha"
+          ],
+          "mapping_status": "derived",
+          "transformation": "Require all source artifacts to resolve to the same immutable baseline.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-dependencies.csv",
@@ -1851,9 +3511,12 @@
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Version of this normalized export schema.",
-          "source_json_field": null,
-          "transformation": "Inject from deterministic export context."
+          "description": "Version of this CSV/SQLite projection schema.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Inject from csv-schema.json schema_version.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-dependencies.csv",
@@ -1863,9 +3526,12 @@
           "primary_key": true,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Deterministic identifier for one dependency edge.",
-          "source_json_field": null,
-          "transformation": "Derive deterministically from the documented stable natural key."
+          "description": "Deterministic dependency edge ID.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Hash surface_id, dependency_kind, target identity, and canonical payload.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-dependencies.csv",
@@ -1875,9 +3541,16 @@
           "primary_key": false,
           "foreign_key": "ui-surfaces.surface_id",
           "controlled_values": null,
-          "description": "Stable Issue #30 reviewed record identifier for a material UI surface.",
-          "source_json_field": "surface_id",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Source surface ID.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/items/*/_record_id"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Direct scalar projection.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-dependencies.csv",
@@ -1889,21 +3562,21 @@
           "controlled_values": [
             "lower_tier_surface",
             "component",
-            "pattern",
-            "layout",
-            "blade_alias",
-            "css",
-            "javascript",
             "icon",
-            "pictogram",
             "asset",
-            "registration",
-            "module_contribution",
             "other"
           ],
-          "description": "Controlled dependency category.",
-          "source_json_field": "dependency_kind",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Normalized dependency category.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/items/*/lower_tier_dependencies/*",
+            "/items/*/icon_or_asset_dependencies/*"
+          ],
+          "mapping_status": "derived",
+          "transformation": "Classify accepted dependency entries without inventing required/resolution states.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-dependencies.csv",
@@ -1913,9 +3586,18 @@
           "primary_key": false,
           "foreign_key": "ui-surfaces.surface_id",
           "controlled_values": null,
-          "description": "Stable surface identifier when the dependency target is inventoried.",
-          "source_json_field": "dependency_target_surface_id",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Resolved target surface ID when the dependency maps to another inventoried surface.",
+          "source_roles": [
+            "classifications",
+            "observations"
+          ],
+          "source_json_pointers": [
+            "/items/*/lower_tier_dependencies/*",
+            "/surfaces/*/blade_aliases/*"
+          ],
+          "mapping_status": "derived",
+          "transformation": "Resolve exact accepted alias/key/path matches; leave empty when unresolved.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-dependencies.csv",
@@ -1925,9 +3607,16 @@
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Observed UI key for the dependency target.",
-          "source_json_field": "dependency_target_ui_key",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Resolved target UI key when available.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/items/*/ui_key"
+          ],
+          "mapping_status": "derived",
+          "transformation": "Populate from the resolved target surface.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-dependencies.csv",
@@ -1937,75 +3626,45 @@
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Repository path, Blade alias, asset name, or unresolved dependency value.",
-          "source_json_field": "dependency_path_or_value",
-          "transformation": "Flatten to one line with literal \\n sequences and neutralize Excel formula-like prefixes in CSV only."
+          "description": "Path, Blade alias, icon name, asset name, or unresolved dependency value.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/items/*/lower_tier_dependencies/*",
+            "/items/*/icon_or_asset_dependencies/*"
+          ],
+          "mapping_status": "derived",
+          "transformation": "Extract the most useful scalar identity from the accepted dependency value.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-dependencies.csv",
-          "column": "relationship",
-          "type": "string",
-          "nullable": true,
-          "primary_key": false,
-          "foreign_key": null,
-          "controlled_values": null,
-          "description": "Observed relationship between the source surface and dependency.",
-          "source_json_field": "relationship",
-          "transformation": "Flatten to one line with literal \\n sequences and neutralize Excel formula-like prefixes in CSV only."
-        },
-        {
-          "file": "ui-dependencies.csv",
-          "column": "required_state",
-          "type": "string",
+          "column": "dependency_payload_json",
+          "type": "json_text",
           "nullable": false,
           "primary_key": false,
           "foreign_key": null,
-          "controlled_values": [
-            "required",
-            "optional",
-            "conditional",
-            "unknown"
-          ],
-          "description": "Controlled required, optional, conditional, or unknown state.",
-          "source_json_field": "required_state",
-          "transformation": "Direct scalar projection from reviewed JSON."
-        },
-        {
-          "file": "ui-dependencies.csv",
-          "column": "resolution_state",
-          "type": "string",
-          "nullable": false,
-          "primary_key": false,
-          "foreign_key": null,
-          "controlled_values": [
-            "resolved",
-            "missing",
-            "stale",
-            "ambiguous",
-            "unknown",
-            "not_applicable"
-          ],
-          "description": "Controlled dependency resolution state.",
-          "source_json_field": "resolution_state",
-          "transformation": "Direct scalar projection from reviewed JSON."
-        },
-        {
-          "file": "ui-dependencies.csv",
-          "column": "evidence_source_reference_id",
-          "type": "string",
-          "nullable": true,
-          "primary_key": false,
-          "foreign_key": "ui-source-references.source_reference_id",
           "controlled_values": null,
-          "description": "Reference to the evidence row supporting this record.",
-          "source_json_field": "evidence_source_reference_id",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Canonical compact JSON of the exact accepted dependency value.",
+          "source_roles": [
+            "classifications"
+          ],
+          "source_json_pointers": [
+            "/items/*/lower_tier_dependencies/*",
+            "/items/*/icon_or_asset_dependencies/*"
+          ],
+          "mapping_status": "derived",
+          "transformation": "Serialize the exact source value as deterministic compact JSON.",
+          "excel_formula_protection": false
         }
       ]
     },
     {
       "file": "ui-source-references.csv",
       "location": "headers",
+      "table_name": "ui_source_references",
+      "purpose": "One row per accepted evidence-source reference; multiple rows may support one subject.",
       "primary_key": [
         "source_reference_id"
       ],
@@ -2013,7 +3672,8 @@
       "sort_order": [
         "subject_type",
         "subject_id",
-        "path",
+        "evidence_kind",
+        "evidence_value",
         "line_start"
       ],
       "columns": [
@@ -2025,33 +3685,34 @@
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Stable identifier for one deterministic export run.",
-          "source_json_field": null,
-          "transformation": "Inject from deterministic export context."
+          "description": "Deterministic identifier for one export run.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Derive from inventory type, baseline, source-set hash, export schema version, and generator version.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-source-references.csv",
           "column": "inventory_baseline_sha",
-          "type": "string",
+          "type": "git_sha",
           "nullable": false,
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Immutable Git commit SHA used as the inventory evidence baseline.",
-          "source_json_field": "inventory_baseline_sha",
-          "transformation": "Direct scalar projection from reviewed JSON."
-        },
-        {
-          "file": "ui-source-references.csv",
-          "column": "source_schema_version",
-          "type": "string",
-          "nullable": false,
-          "primary_key": false,
-          "foreign_key": null,
-          "controlled_values": null,
-          "description": "Version of the authoritative reviewed JSON schema.",
-          "source_json_field": "source_schema_version",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Immutable Issue #30 evidence baseline commit SHA.",
+          "source_roles": [
+            "classifications",
+            "observations",
+            "test_traces"
+          ],
+          "source_json_pointers": [
+            "/baseline_sha",
+            "/baseline/sha"
+          ],
+          "mapping_status": "derived",
+          "transformation": "Require all source artifacts to resolve to the same immutable baseline.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-source-references.csv",
@@ -2061,9 +3722,12 @@
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Version of this normalized export schema.",
-          "source_json_field": null,
-          "transformation": "Inject from deterministic export context."
+          "description": "Version of this CSV/SQLite projection schema.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Inject from csv-schema.json schema_version.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-source-references.csv",
@@ -2073,9 +3737,12 @@
           "primary_key": true,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Deterministic identifier for one evidence source reference.",
-          "source_json_field": null,
-          "transformation": "Derive deterministically from the documented stable natural key."
+          "description": "Deterministic evidence reference ID.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Hash subject_type, subject_id, evidence_kind, evidence_value, and line range.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-source-references.csv",
@@ -2086,17 +3753,23 @@
           "foreign_key": null,
           "controlled_values": [
             "surface",
+            "surface_alias",
             "surface_file",
             "mismatch",
             "test_trace",
-            "standard_evidence",
+            "standard",
+            "surface_standard",
+            "standard_finding",
             "metadata_evidence",
             "dependency",
             "review_status"
           ],
-          "description": "Controlled type of record supported or reviewed.",
-          "source_json_field": "subject_type",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Record family supported by the evidence.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Assign from the normalized output record family.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-source-references.csv",
@@ -2106,38 +3779,63 @@
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Identifier of the record supported or reviewed.",
-          "source_json_field": "subject_id",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Identifier of the supported output record.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Use the normalized output record primary key.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-source-references.csv",
-          "column": "evidence_type",
+          "column": "evidence_kind",
           "type": "string",
           "nullable": false,
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": [
-            "implementation",
-            "contract",
-            "registration",
-            "test",
-            "standard",
-            "reference",
-            "example",
-            "route",
-            "css",
-            "javascript",
-            "asset",
-            "provenance",
+            "path",
+            "path_pattern",
+            "observation",
+            "issue",
+            "command",
             "git",
-            "generated_observation",
             "manual_review",
             "other"
           ],
-          "description": "Controlled category of evidence.",
-          "source_json_field": "evidence_type",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Parsed evidence-reference category.",
+          "source_roles": [
+            "classifications",
+            "observations",
+            "test_traces"
+          ],
+          "source_json_pointers": [
+            "/**/evidence_source/*"
+          ],
+          "mapping_status": "derived",
+          "transformation": "Parse the accepted evidence-source prefix.",
+          "excel_formula_protection": false
+        },
+        {
+          "file": "ui-source-references.csv",
+          "column": "evidence_value",
+          "type": "string",
+          "nullable": false,
+          "primary_key": false,
+          "foreign_key": null,
+          "controlled_values": null,
+          "description": "Exact accepted evidence-source value after the prefix.",
+          "source_roles": [
+            "classifications",
+            "observations",
+            "test_traces"
+          ],
+          "source_json_pointers": [
+            "/**/evidence_source/*"
+          ],
+          "mapping_status": "derived",
+          "transformation": "Preserve the accepted value without workstation-path expansion.",
+          "excel_formula_protection": true
         },
         {
           "file": "ui-source-references.csv",
@@ -2147,9 +3845,18 @@
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Repository-relative path using forward slashes.",
-          "source_json_field": "path",
-          "transformation": "Normalize to a forward-slash path and reject prohibited absolute repository paths."
+          "description": "Repository-relative path for path evidence.",
+          "source_roles": [
+            "classifications",
+            "observations",
+            "test_traces"
+          ],
+          "source_json_pointers": [
+            "/**/evidence_source/*"
+          ],
+          "mapping_status": "derived",
+          "transformation": "Populate only for path evidence.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-source-references.csv",
@@ -2159,9 +3866,12 @@
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Optional one-based starting line for stable source evidence.",
-          "source_json_field": "line_start",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Optional one-based evidence start line.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "pending",
+          "transformation": "Leave empty until an accepted source provides stable line ranges.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-source-references.csv",
@@ -2171,33 +3881,36 @@
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Optional one-based ending line for stable source evidence.",
-          "source_json_field": "line_end",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Optional one-based evidence end line.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "pending",
+          "transformation": "Leave empty until an accepted source provides stable line ranges.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-source-references.csv",
-          "column": "claim",
+          "column": "existence_state",
           "type": "string",
-          "nullable": true,
-          "primary_key": false,
-          "foreign_key": null,
-          "controlled_values": null,
-          "description": "Claim supported by the evidence reference.",
-          "source_json_field": "claim",
-          "transformation": "Flatten to one line with literal \\n sequences and neutralize Excel formula-like prefixes in CSV only."
-        },
-        {
-          "file": "ui-source-references.csv",
-          "column": "exists_at_baseline",
-          "type": "boolean",
           "nullable": false,
           "primary_key": false,
           "foreign_key": null,
-          "controlled_values": null,
-          "description": "Whether the referenced source existed at the immutable baseline.",
-          "source_json_field": "exists_at_baseline",
-          "transformation": "Serialize as lowercase true or false."
+          "controlled_values": [
+            "present",
+            "absent",
+            "unknown",
+            "not_applicable"
+          ],
+          "description": "Physical-source existence state where applicable.",
+          "source_roles": [
+            "observations"
+          ],
+          "source_json_pointers": [
+            "/surfaces/*/**"
+          ],
+          "mapping_status": "derived",
+          "transformation": "Use present/absent for resolvable path evidence; not_applicable for non-path evidence; unknown when unresolved.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-source-references.csv",
@@ -2207,9 +3920,16 @@
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Git blob object identifier for the referenced source.",
-          "source_json_field": "source_blob_oid",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Git blob OID when available.",
+          "source_roles": [
+            "observations"
+          ],
+          "source_json_pointers": [
+            "/surfaces/*/**/object_sha"
+          ],
+          "mapping_status": "derived",
+          "transformation": "Join by repository-relative path.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-source-references.csv",
@@ -2219,15 +3939,24 @@
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "SHA-256 digest of the referenced source content.",
-          "source_json_field": "source_sha256",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Source SHA-256 when available.",
+          "source_roles": [
+            "observations"
+          ],
+          "source_json_pointers": [
+            "/surfaces/*/**/source_sha256"
+          ],
+          "mapping_status": "derived",
+          "transformation": "Join by repository-relative path.",
+          "excel_formula_protection": false
         }
       ]
     },
     {
       "file": "ui-review-status.csv",
       "location": "headers",
+      "table_name": "ui_review_status",
+      "purpose": "One row per independently reviewed surface, standard, or test trace.",
       "primary_key": [
         "review_status_id"
       ],
@@ -2245,33 +3974,34 @@
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Stable identifier for one deterministic export run.",
-          "source_json_field": null,
-          "transformation": "Inject from deterministic export context."
+          "description": "Deterministic identifier for one export run.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Derive from inventory type, baseline, source-set hash, export schema version, and generator version.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-review-status.csv",
           "column": "inventory_baseline_sha",
-          "type": "string",
+          "type": "git_sha",
           "nullable": false,
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Immutable Git commit SHA used as the inventory evidence baseline.",
-          "source_json_field": "inventory_baseline_sha",
-          "transformation": "Direct scalar projection from reviewed JSON."
-        },
-        {
-          "file": "ui-review-status.csv",
-          "column": "source_schema_version",
-          "type": "string",
-          "nullable": false,
-          "primary_key": false,
-          "foreign_key": null,
-          "controlled_values": null,
-          "description": "Version of the authoritative reviewed JSON schema.",
-          "source_json_field": "source_schema_version",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Immutable Issue #30 evidence baseline commit SHA.",
+          "source_roles": [
+            "classifications",
+            "observations",
+            "test_traces"
+          ],
+          "source_json_pointers": [
+            "/baseline_sha",
+            "/baseline/sha"
+          ],
+          "mapping_status": "derived",
+          "transformation": "Require all source artifacts to resolve to the same immutable baseline.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-review-status.csv",
@@ -2281,9 +4011,12 @@
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Version of this normalized export schema.",
-          "source_json_field": null,
-          "transformation": "Inject from deterministic export context."
+          "description": "Version of this CSV/SQLite projection schema.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Inject from csv-schema.json schema_version.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-review-status.csv",
@@ -2293,9 +4026,12 @@
           "primary_key": true,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Deterministic identifier for one reviewed subject status.",
-          "source_json_field": null,
-          "transformation": "Derive deterministically from the documented stable natural key."
+          "description": "Deterministic review record ID.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Hash subject_type and subject_id.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-review-status.csv",
@@ -2306,15 +4042,15 @@
           "foreign_key": null,
           "controlled_values": [
             "surface",
-            "test_trace",
-            "standard_evidence",
-            "metadata_evidence",
-            "dependency",
-            "mismatch"
+            "standard",
+            "test_trace"
           ],
-          "description": "Controlled type of record supported or reviewed.",
-          "source_json_field": "subject_type",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Independently reviewed Issue #30 record family.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Use only surface, standard, or test_trace.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-review-status.csv",
@@ -2324,9 +4060,12 @@
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Identifier of the record supported or reviewed.",
-          "source_json_field": "subject_id",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Reviewed subject ID.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Use surface_id, standard_id, or trace_id.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-review-status.csv",
@@ -2336,9 +4075,19 @@
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Whether the subject has received human review.",
-          "source_json_field": "reviewed",
-          "transformation": "Serialize as lowercase true or false."
+          "description": "Whether the subject received human review.",
+          "source_roles": [
+            "classifications",
+            "test_traces"
+          ],
+          "source_json_pointers": [
+            "/items/*/_reviewed",
+            "/standard_reviews/*/_reviewed",
+            "/test_traces/*/_reviewed"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Direct scalar projection.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-review-status.csv",
@@ -2349,8 +4098,18 @@
           "foreign_key": null,
           "controlled_values": null,
           "description": "Whether the subject currently requires review or re-review.",
-          "source_json_field": "review_required",
-          "transformation": "Serialize as lowercase true or false."
+          "source_roles": [
+            "classifications",
+            "test_traces"
+          ],
+          "source_json_pointers": [
+            "/items/*/_review_required",
+            "/standard_reviews/*/_review_required",
+            "/test_traces/*/_review_required"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Direct scalar projection.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-review-status.csv",
@@ -2360,9 +4119,17 @@
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Reviewer identifier recorded by the accepted review process.",
-          "source_json_field": "reviewer",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Artifact-level reviewer identifier.",
+          "source_roles": [
+            "classifications",
+            "test_traces"
+          ],
+          "source_json_pointers": [
+            "/reviewer"
+          ],
+          "mapping_status": "derived",
+          "transformation": "Project the reviewer from the owning reviewed artifact.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-review-status.csv",
@@ -2372,9 +4139,17 @@
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "UTC timestamp of completed human review.",
-          "source_json_field": "reviewed_at_utc",
-          "transformation": "Normalize to UTC ISO 8601 with a trailing Z."
+          "description": "Artifact-level UTC review timestamp.",
+          "source_roles": [
+            "classifications",
+            "test_traces"
+          ],
+          "source_json_pointers": [
+            "/reviewed_at"
+          ],
+          "mapping_status": "derived",
+          "transformation": "Project and normalize the timestamp from the owning reviewed artifact.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-review-status.csv",
@@ -2385,44 +4160,58 @@
           "foreign_key": null,
           "controlled_values": null,
           "description": "Human review note retained across regeneration.",
-          "source_json_field": "review_note",
-          "transformation": "Flatten to one line with literal \\n sequences and neutralize Excel formula-like prefixes in CSV only."
+          "source_roles": [
+            "classifications",
+            "test_traces"
+          ],
+          "source_json_pointers": [
+            "/items/*/_review_note",
+            "/standard_reviews/*/_review_note",
+            "/test_traces/*/_review_note"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Direct scalar projection.",
+          "excel_formula_protection": true
         },
         {
           "file": "ui-review-status.csv",
           "column": "source_fingerprint",
-          "type": "string",
+          "type": "sha256",
           "nullable": false,
           "primary_key": false,
           "foreign_key": null,
           "controlled_values": null,
-          "description": "Deterministic fingerprint of source evidence used for staleness detection.",
-          "source_json_field": "source_fingerprint",
-          "transformation": "Direct scalar projection from reviewed JSON."
+          "description": "Reviewed source fingerprint.",
+          "source_roles": [
+            "classifications",
+            "test_traces"
+          ],
+          "source_json_pointers": [
+            "/items/*/_source_fingerprint",
+            "/standard_reviews/*/_source_fingerprint",
+            "/test_traces/*/_source_fingerprint"
+          ],
+          "mapping_status": "confirmed",
+          "transformation": "Direct scalar projection.",
+          "excel_formula_protection": false
         },
         {
           "file": "ui-review-status.csv",
-          "column": "stale_reason",
+          "column": "review_source_role",
           "type": "string",
-          "nullable": true,
+          "nullable": false,
           "primary_key": false,
           "foreign_key": null,
-          "controlled_values": null,
-          "description": "Reason a reviewed record is stale and requires re-review.",
-          "source_json_field": "stale_reason",
-          "transformation": "Flatten to one line with literal \\n sequences and neutralize Excel formula-like prefixes in CSV only."
-        },
-        {
-          "file": "ui-review-status.csv",
-          "column": "pending_reason",
-          "type": "string",
-          "nullable": true,
-          "primary_key": false,
-          "foreign_key": null,
-          "controlled_values": null,
-          "description": "Reason review remains pending.",
-          "source_json_field": "pending_reason",
-          "transformation": "Flatten to one line with literal \\n sequences and neutralize Excel formula-like prefixes in CSV only."
+          "controlled_values": [
+            "classifications",
+            "test_traces"
+          ],
+          "description": "Reviewed artifact owning the review metadata.",
+          "source_roles": [],
+          "source_json_pointers": [],
+          "mapping_status": "derived",
+          "transformation": "Use classifications for surfaces/standards and test_traces for traces.",
+          "excel_formula_protection": false
         }
       ]
     }

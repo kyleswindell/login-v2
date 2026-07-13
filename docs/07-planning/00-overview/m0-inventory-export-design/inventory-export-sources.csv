@@ -1,0 +1,1 @@
+export_id,source_id,source_role,source_artifact_path,source_artifact_sha256,source_schema_version,source_generator_schema_version,authoritative,required

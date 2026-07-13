@@ -1,91 +1,114 @@
----
-title: M0 Inventory Export Design
-version: 0.1
-status: design-only
-scope: External inventory export design package
+<!--
+DOC-META
+title: M0 UI Inventory Export Design
+doc_type: planning
+status: draft
+owner: docs
 canonical: false
-last_reviewed: 2026-07-13
----
+canonical_path: docs/07-planning/00-overview/m0-inventory-export-design/README.md
+parent: docs/07-planning/00-overview/m0-ui-current-state-inventory.md
+template: docs/09-reference/templates/docs/_planning.md
+summary: Defines a design-only normalized CSV and disposable SQLite projection for the accepted Issue #30 UI inventory.
+-->
 
-# M0 Inventory Export Design
+# M0 UI Inventory Export Design
 
-## Purpose
+Parent: [M0 UI Current-State Inventory](../m0-ui-current-state-inventory.md)
 
-This folder defines the planned CSV and SQLite projection model for large Login 2.0 inventories.
+## 1. Purpose
 
-The projections are intended to make accepted reviewed inventory data easier to:
+This folder defines a design-only projection model for querying the accepted Issue #30 UI inventory without loading the complete reviewed JSON artifacts for every bounded question.
 
-- filter in Excel;
-- query with SQLite;
-- inspect through bounded Codex commands;
-- compare across exports;
-- validate without loading an entire large JSON artifact.
+The projection targets:
 
-This package is a design aid only. It is not canonical repository documentation and does not replace accepted reviewed JSON or concise Markdown inventory artifacts.
+- deterministic normalized CSV files for spreadsheet and interchange use;
+- a generated disposable SQLite database for bounded local queries;
+- explicit source lineage back to accepted Issue #30 artifacts;
+- preservation of reviewed authority in JSON rather than CSV or SQLite.
 
-## Authority Model
+The package does not implement an exporter. It defines the contract a later tooling issue may implement.
 
-Use the following authority order:
+## 2. Baselines
 
-1. Current repository-owner instruction.
-2. Applicable repository `AGENTS.md` files when this folder is used inside a repository worktree.
-3. Accepted GitHub issue scope and acceptance criteria.
-4. Accepted reviewed JSON inventory artifacts.
-5. This folder's `AGENTS.md`.
-6. This README and `csv-data-dictionary.md`.
-7. Generated CSV and SQLite projections.
-8. Inference.
+| Baseline | Commit |
+| --- | --- |
+| Immutable Issue #30 evidence baseline | `1d103f5fa47aab8c8adfba8ea134dd29540426fe` |
+| Accepted repository source snapshot | `75d1d52c92ff3e0f068903e6903c94aabb009195` |
+| Untouched external-package baseline | `580dcc01ad03ea39990a533b3bb763d87a153039` |
+| Export design schema | `0.2.0` |
 
-CSV and SQLite outputs are disposable, rebuildable projections. They must never become independently editable sources of truth.
+The immutable evidence baseline identifies the repository state inventoried by Issue #30. The accepted repository source snapshot identifies the merged artifacts and tooling from which a future exporter reads.
 
-## Current Phase
+## 3. Source Authority
 
-This package is currently **design-only**.
+The required source roles are:
 
-Before Issue #30 is accepted and merged, it is safe to prepare:
+| Source role | Artifact | Authority |
+| --- | --- | --- |
+| `classifications` | `docs/07-planning/00-overview/evidence/m0-ui-current-state-classifications.json` | Reviewed surface and unique-standard judgments |
+| `observations` | `docs/07-planning/00-overview/evidence/m0-ui-current-state-observations.json` | Generated supporting implementation evidence |
+| `test_traces` | `docs/07-planning/00-overview/evidence/m0-ui-current-state-test-traces.json` | Reviewed surface-to-test judgments |
 
-- header-only CSV files;
-- `csv-schema.json`;
-- CSV data mappings;
-- SQLite schema design;
-- fixtures;
-- expected validation rules;
-- query examples.
+Reviewed JSON remains authoritative. Observations remain generated evidence. CSV and SQLite are replaceable projections and must never be edited as independent truth.
 
-Do not populate final CSV rows or build a canonical SQLite projection from an unaccepted Issue #30 branch.
-
-## Expected Folder Contents
+## 4. Projection Model
 
 ```text
-m0-inventory-export-design/
-├── AGENTS.md
-├── README.md
-├── csv-data-dictionary.md
-├── csv-schema.json
-├── inventory-export-manifest.csv
-├── headers/
-│   ├── ui-surfaces.csv
-│   ├── ui-surface-files.csv
-│   ├── ui-mismatches.csv
-│   ├── ui-test-traces.csv
-│   ├── ui-test-trace-coverage.csv
-│   ├── ui-standards-evidence.csv
-│   ├── ui-metadata-evidence.csv
-│   ├── ui-dependencies.csv
-│   ├── ui-source-references.csv
-│   └── ui-review-status.csv
-├── sqlite-schema.sql
-├── query-examples.sql
-└── fixtures/
-    ├── sample-reviewed-ui-inventory.json
-    └── expected-csv/
+accepted classifications JSON ─┐
+accepted observations JSON ────┼─> validated normalized CSV ─> disposable SQLite
+accepted test-traces JSON ─────┘
 ```
 
-The remaining files may be created manually during the design phase.
+The concise Issue #30 Markdown inventory remains the primary human-readable review projection.
 
-## CSV File Rules
+## 5. Required CSV Set
 
-Every CSV must use:
+```text
+inventory-export-manifest.csv
+inventory-export-sources.csv
+
+ui-surfaces.csv
+ui-surface-aliases.csv
+ui-surface-files.csv
+ui-mismatches.csv
+
+ui-test-traces.csv
+ui-test-trace-coverage.csv
+
+ui-standards.csv
+ui-surface-standards.csv
+ui-standard-findings.csv
+
+ui-metadata-evidence.csv
+ui-dependencies.csv
+ui-source-references.csv
+ui-review-status.csv
+```
+
+`csv-schema.json` is the machine-readable design authority for headers, column order, types, controlled values, keys, source roles, JSON pointers, transformations, and deterministic ordering.
+
+`csv-data-dictionary.md` is generated from the same schema for human review.
+
+## 6. Normalization Rules
+
+Normalize:
+
+- multiple Blade aliases into `ui-surface-aliases.csv`;
+- surface file collections into `ui-surface-files.csv`;
+- mismatch arrays into `ui-mismatches.csv`;
+- test contract-field and rendered-state arrays into `ui-test-trace-coverage.csv`;
+- unique standards into `ui-standards.csv`;
+- surface-standard relationships into `ui-surface-standards.csv`;
+- standard staleness and moved-responsibility arrays into `ui-standard-findings.csv`;
+- dependencies into `ui-dependencies.csv`;
+- multiple evidence sources into `ui-source-references.csv`;
+- independently reviewed surfaces, standards, and traces into `ui-review-status.csv`.
+
+Some Issue #30 values are structured records rather than simple relationships. Columns ending in `_json` explicitly store deterministic compact JSON to preserve those exact source values. A JSON-valued column is never presented as an ordinary scalar.
+
+## 7. CSV Format
+
+Every CSV uses:
 
 ```text
 Encoding: UTF-8 without BOM
@@ -98,117 +121,140 @@ Final newline: required
 Ordering: deterministic
 ```
 
-Additional rules:
+CSV booleans are lowercase `true` and `false`.
 
-- Header-only CSV files are valid during design.
-- Do not repeat the header row within a file.
-- Do not use row numbers as identifiers.
-- Treat IDs, hashes, SHAs, paths, and timestamps as text.
-- Normalize arrays into child CSVs instead of using semicolon- or pipe-delimited cells.
-- Use empty cells only for absent optional scalar values.
-- Preserve controlled semantic values such as `unknown`, `not_applicable`, and `absent`.
-- Repository paths must be relative, use `/`, and never contain workstation or UNC paths.
-- Free-text exports intended for Excel must neutralize formula-like values beginning with `=`, `+`, `-`, or `@`.
+An empty field means an optional scalar has no value. Controlled semantic states such as `unknown`, `absent`, and `not_applicable` remain explicit values.
 
-## Projection Model
+Free-text values beginning with `=`, `+`, `-`, or `@` are prefixed with an apostrophe in CSV only to prevent spreadsheet formula execution. Accepted JSON retains the original value.
+
+## 8. Stable Identity
+
+Accepted `surface_id` and `trace_id` values are preserved.
+
+Derived IDs use:
 
 ```text
-Accepted reviewed JSON
-    authoritative structured inventory
-
-Compact Markdown
-    human-readable reviewed projection
-
-Normalized CSV
-    spreadsheet and interchange projection
-
-SQLite
-    generated local query projection
+prefix + ":" + first 20 lowercase hexadecimal characters of
+SHA-256(UTF-8(compact JSON of the ordered natural-key array))
 ```
 
-SQLite should be generated from accepted reviewed JSON or validated CSVs and must remain disposable and replaceable.
+The exact natural key for every derived record is stated in `csv-schema.json`.
 
-Do not commit a binary SQLite database as the authoritative inventory.
+Row numbers, timestamps, workstation paths, and mutable file ordering must not influence IDs.
 
-## Stable Identity
+## 9. Determinism
 
-Use the accepted stable source record ID when one exists.
+For identical source bytes, export schema version, and generator version:
 
-Generated child IDs must be deterministic and based on stable natural keys, for example:
+- all data CSVs must be byte-identical;
+- IDs must be identical;
+- rows must follow the declared `sort_order`;
+- JSON-valued cells must use deterministic compact JSON;
+- the SQLite rebuild must produce equivalent row content and query results.
+
+`exported_at_utc` is run metadata and is excluded from byte-determinism comparison of the manifest.
+
+## 10. SQLite Model
+
+SQLite is:
+
+- generated;
+- disposable;
+- ignored by Git;
+- replaced for every export;
+- never manually edited;
+- never authoritative;
+- configured with `PRAGMA foreign_keys = ON`.
+
+Append mode is not supported.
+
+SQLite stores:
+
+- IDs, hashes, SHAs, paths, timestamps, and JSON as `TEXT`;
+- schema versions and counts as `INTEGER`;
+- booleans as `INTEGER` constrained to `0` or `1`.
+
+The committed `sqlite-schema.sql` must match `csv-schema.json`.
+
+## 11. Fixtures
+
+The fixture package contains:
 
 ```text
-surface_file_id = hash(surface_id + file_role + path)
-mismatch_id = hash(surface_id + mismatch_code + evidence_reference)
-dependency_id = hash(surface_id + dependency_kind + target)
-metadata_evidence_id = hash(surface_id + metadata_field + evidence_reference)
+fixtures/
+├── README.md
+├── source/
+│   ├── classifications.json
+│   ├── observations.json
+│   └── test-traces.json
+├── expected-csv/
+└── invalid/
 ```
 
-Unchanged source data must produce unchanged IDs.
+Fixtures cover:
 
-## Recommended Export Workflow
+- scalar, multiple, and non-applicable Blade aliases;
+- one standard linked to multiple surfaces;
+- staleness evidence and moved responsibilities;
+- trace relationship evidence;
+- `present_claim`, `not_observed`, and `unknown` coverage states;
+- multiple evidence sources;
+- surface and unresolved dependency targets;
+- reviewed surface, standard, and trace records;
+- invalid foreign keys, paths, controlled values, and spreadsheet formula handling.
 
-After Issue #30 is accepted:
+Fixtures are design examples. They are not accepted Issue #30 records.
 
-1. Read only the accepted reviewed JSON artifacts.
-2. Validate the source schema and baseline.
-3. Export normalized CSVs.
-4. Validate headers, keys, foreign keys, controlled values, row counts, and ordering.
-5. Generate the SQLite query database.
-6. Verify CSV and SQLite counts agree with the accepted JSON.
-7. Run bounded query fixtures.
-8. Delete and rebuild the SQLite database to prove reproducibility.
-9. Keep CSV and SQLite projections separate from reviewed authority.
+## 12. Validation Requirements
 
-## Minimum Validation Expectations
+A future implementation must reject:
 
-Future tooling should fail when:
+- missing, duplicate, or reordered headers;
+- blank or duplicate primary keys;
+- unresolved foreign keys;
+- unsupported controlled values;
+- source schema versions represented as strings;
+- CSV booleans other than lowercase `true` or `false`;
+- SQLite booleans other than `0` or `1`;
+- malformed UTC timestamps;
+- malformed SHA-256 values;
+- absolute or backslash repository paths;
+- unsupported review subject types;
+- unmarked array/object content in ordinary scalar columns;
+- unneutralized formula-like free text;
+- secrets, `.env` values, logs, credentials, sessions, storage contents, or runtime row data.
 
-- a required header is missing or reordered;
-- a primary key is blank or duplicated;
-- a foreign key does not resolve;
-- a controlled value is invalid;
-- a repository path is absolute or uses `\\`;
-- a child record has no parent;
-- a manifest row count differs from the CSV row count;
-- repeated exports from identical source data differ;
-- formula-like free text is not neutralized for Excel;
-- secret-bearing, runtime-only, `.env`, log, storage, credential, or row-level data appears;
-- CSV or SQLite content diverges from the accepted reviewed JSON.
+## 13. Current State And Target State
 
-## Excel Import
+### Current state
 
-Use:
+Issue #45 owns this design package and draft PR #46 preserves the untouched package baseline followed by reviewable corrections.
 
-```text
-Data → From Text/CSV
-```
+### Target state
 
-Import IDs, hashes, commit SHAs, blob OIDs, repository paths, and timestamps as text.
+A later tooling issue may implement read-only exporter, validator, SQLite builder, and bounded query commands using the accepted design.
 
-Avoid opening by double-click when validating data integrity because Excel may alter values.
+## 14. Non-Goals
 
-## Future Repository Integration
+This package does not:
 
-When the design is ready to become repository tooling:
-
-- create a dedicated GitHub issue;
-- create a dedicated branch and local-disk worktree;
-- keep the accepted reviewed JSON as authority;
-- add read-only export and query commands;
-- keep generated SQLite output ignored;
-- preserve Issue #30 review values and baseline;
-- do not modify UI implementation or accepted inventory findings;
-- require repository-owner acceptance before merge.
-
-## Non-Goals
-
-This folder does not:
-
-- redesign Issue #30's accepted schema;
+- modify accepted Issue #30 artifacts or reviewed values;
+- implement exporter or query scripts;
+- generate final production CSV rows;
+- commit a SQLite database;
 - convert accepted JSON to JSONL;
-- create a general-purpose analytics platform;
-- replace repository contracts or planning documents;
-- select UI lifecycle or readiness decisions;
-- define Issue #32 test dispositions;
-- define the Goal 06 target data model;
-- authorize repository or GitHub mutations.
+- define Issue #32 test-suite dispositions;
+- select Goal 06 persistence architecture;
+- authorize merge, issue closure, or worktree cleanup.
+
+## 15. Review
+
+Before accepting this design:
+
+1. compare all source mappings with accepted Issue #30 artifacts;
+2. verify controlled values against `scripts/lib/m0-ui-inventory/schema.mjs`;
+3. verify header CSVs match `csv-schema.json`;
+4. verify SQLite tables, columns, keys, and checks match the schema;
+5. inspect valid and invalid fixtures;
+6. run documentation and diff guardrails;
+7. keep PR #46 draft until repository-owner acceptance.

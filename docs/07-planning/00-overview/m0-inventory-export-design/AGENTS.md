@@ -2,236 +2,288 @@
 
 ## Scope
 
-This file governs `m0-inventory-export-design/` and all descendant files.
+This file governs `docs/07-planning/00-overview/m0-inventory-export-design/` and all descendant files.
 
-This folder is an external design package for normalized CSV and SQLite projections of accepted Login 2.0 inventory data.
-
-It is not canonical repository documentation and does not authorize repository or GitHub changes.
+The folder owns a design-only CSV and disposable SQLite projection contract for the accepted Issue #30 UI inventory.
 
 ## Authority
 
 Apply these sources in order:
 
 1. Current repository-owner instruction.
-2. Applicable repository `AGENTS.md` files when this folder is used inside a repository worktree.
-3. Accepted GitHub issue scope and acceptance criteria.
-4. Accepted reviewed inventory JSON artifacts.
-5. This file.
-6. `README.md`.
-7. `csv-data-dictionary.md`.
-8. Fixtures and generated convenience projections.
-9. Inference.
+2. Root `AGENTS.md`.
+3. `docs/AGENTS.md`.
+4. `docs/07-planning/AGENTS.md`.
+5. Accepted Issue #30 reviewed artifacts for source truth.
+6. GitHub Issue #45 and its accepted comments for scope and acceptance.
+7. This file.
+8. `csv-schema.json`.
+9. `README.md`.
+10. `csv-data-dictionary.md`.
+11. Fixtures and generated projections.
+12. Inference.
 
-This file adds folder-specific rules. It does not override repository security, worktree, branch, staging, PR, merge, or owner-acceptance requirements.
+Reviewed Issue #30 JSON remains authoritative. CSV and SQLite are replaceable projections.
+
+## Baselines
+
+Keep these distinct:
+
+```text
+Issue #30 immutable evidence baseline:
+1d103f5fa47aab8c8adfba8ea134dd29540426fe
+
+Accepted Issue #30 repository source snapshot:
+75d1d52c92ff3e0f068903e6903c94aabb009195
+
+Untouched Issue #45 package baseline:
+580dcc01ad03ea39990a533b3bb763d87a153039
+```
+
+Do not repin the immutable evidence baseline when the design branch synchronizes with later `main`.
 
 ## Current Mode
 
-The current mode is **design-only** unless the repository owner explicitly authorizes implementation.
+Issue #45 is design-only.
 
-Allowed design work includes:
+Allowed work:
 
-- creating header-only CSV files;
-- drafting `csv-schema.json`;
-- drafting SQLite DDL;
-- drafting fixtures;
-- drafting query examples;
-- documenting mappings and controlled values;
-- validating internal consistency of the design package.
+- correct design documentation;
+- correct `csv-schema.json`;
+- generate header-only CSV files from the schema;
+- correct SQLite DDL;
+- add valid and invalid design fixtures;
+- validate internal consistency.
 
-Do not populate final export rows from an unaccepted Issue #30 branch.
+Forbidden work:
 
-## Source Of Truth
+- implementing exporter, query, or SQLite-builder scripts;
+- generating final production export rows;
+- modifying Issue #30 artifacts or inventory tooling;
+- modifying `package.json`;
+- modifying `docs/07-planning/index.md`;
+- committing a binary SQLite database;
+- converting accepted JSON to JSONL.
 
-Accepted reviewed JSON remains the structured source of truth.
+## Source Roles
 
-Markdown remains the human-readable reviewed projection.
-
-CSV and SQLite are generated convenience projections.
-
-Never:
-
-- treat CSV as independently editable authority;
-- treat SQLite as independently editable authority;
-- reverse-import ad hoc CSV edits into accepted reviewed JSON;
-- infer accepted inventory findings from spreadsheet formatting;
-- overwrite reviewed source data from generated projections.
-
-## Repository And Worktree Safety
-
-If this package is later used for writable repository work:
-
-- use a dedicated issue branch;
-- use a dedicated local-disk worktree;
-- verify the repository root and origin;
-- verify the branch start and current `origin/main`;
-- verify the worktree is clean;
-- read all applicable repository `AGENTS.md` files;
-- apply files only after branch/worktree verification;
-- do not modify the coordination checkout or another issue worktree;
-- do not switch, stash, reset, clean, overwrite, relocate, or remove another issue's work;
-- do not merge, close issues, update parent checklists, delete branches, or remove worktrees without explicit repository-owner acceptance.
-
-## File Creation Rules
-
-Expected design files may include:
+Use exactly:
 
 ```text
-csv-schema.json
-inventory-export-manifest.csv
-headers/*.csv
-sqlite-schema.sql
-query-examples.sql
-fixtures/**
+classifications
+observations
+test_traces
 ```
 
-Do not create additional file families without documenting why they are needed.
+`classifications` owns reviewed surface and standard judgments.
 
-Header-only CSVs are permitted.
+`test_traces` owns reviewed trace judgments.
 
-Every CSV must have exactly one header row.
+`observations` contains generated supporting evidence and must not override reviewed values.
+
+## Required Table Set
+
+Use exactly:
+
+```text
+inventory-export-manifest.csv
+inventory-export-sources.csv
+ui-surfaces.csv
+ui-surface-aliases.csv
+ui-surface-files.csv
+ui-mismatches.csv
+ui-test-traces.csv
+ui-test-trace-coverage.csv
+ui-standards.csv
+ui-surface-standards.csv
+ui-standard-findings.csv
+ui-metadata-evidence.csv
+ui-dependencies.csv
+ui-source-references.csv
+ui-review-status.csv
+```
+
+Do not restore `ui-standards-evidence.csv`.
+
+## Schema Authority
+
+Within this package:
+
+1. update the intended design in `csv-schema.json`;
+2. generate header CSVs from the schema;
+3. generate `csv-data-dictionary.md` from the schema;
+4. generate `sqlite-schema.sql` from the schema;
+5. update fixtures;
+6. update README only when package workflow or meaning changes.
+
+Do not maintain competing header, SQL, or dictionary definitions by hand.
 
 ## CSV Rules
 
 Use:
 
 ```text
-Encoding: UTF-8 without BOM
-Delimiter: comma
-Line endings: LF
-Quoting: RFC 4180-compatible
-Header names: lowercase snake_case
-Final newline: required
-Ordering: deterministic
+UTF-8 without BOM
+comma delimiter
+LF line endings
+exactly one header row
+lowercase snake_case headers
+RFC 4180-compatible quoting
+final newline
+deterministic ordering
 ```
 
-Do not:
+Use lowercase `true` and `false` in CSV.
 
-- use row numbers as identifiers;
-- repeat headers inside a file;
-- embed workstation or UNC paths;
-- use `\\` in repository paths;
-- collapse arrays into semicolon- or pipe-delimited cells;
-- use multiline CSV cells unless explicitly approved;
-- use `NULL`, `N/A`, `-`, or `?` as generic missing values;
-- use spreadsheet formulas or executable cell content;
-- include secrets, `.env` values, logs, runtime rows, credentials, session contents, or storage contents.
+Use an empty field only for an absent optional scalar.
 
-## Identity And Relationships
+Preserve `unknown`, `absent`, and `not_applicable` as distinct semantic values.
 
-Prefer existing accepted stable record IDs.
+Normalize arrays into child rows unless a column is explicitly typed `json_text`. Columns ending in `_json` must contain valid deterministic compact JSON.
 
-Generated child IDs must be deterministic and derived from stable natural keys.
+Neutralize formula-like free text beginning with `=`, `+`, `-`, or `@` in CSV only.
 
-Every child row must resolve to a valid parent.
+## Mapping Rules
 
-Every foreign key must be validated before SQLite generation.
+Each column definition must state:
 
-Do not silently invent UI keys, owners, Module keys, aliases, review states, mismatches, provenance, or dispositions.
+```text
+source_roles
+source_json_pointers
+mapping_status
+transformation
+```
 
-## Normalization
+Allowed mapping states:
 
-Normalize one-to-many values into child tables.
+```text
+confirmed
+derived
+pending
+not_applicable
+```
 
-Examples:
+Do not silently invent source fields, review records, dependency states, mismatch explanations, or authority values.
 
-- surface files;
-- mismatches;
-- test coverage values;
-- standards evidence;
-- metadata evidence;
-- dependencies;
-- source references;
-- review records.
+## Identity Rules
 
-Do not place JSON arrays into ordinary CSV cells when a child table can represent the relationship.
+Preserve accepted surface and trace IDs.
 
-## Determinism
+Derived IDs must follow the algorithm declared in `csv-schema.json`.
 
-Repeated export from identical accepted reviewed JSON must produce byte-identical CSV content, except for explicitly separated run metadata.
+Never derive identity from:
 
-Use stable headers, column order, IDs, row ordering, quoting, newline behavior, and normalization rules.
+- row position;
+- export timestamp;
+- workstation path;
+- nondeterministic enumeration;
+- spreadsheet formatting.
 
-Run-level timestamps belong in the manifest, not repeated across every row unless required by an accepted schema.
+## Review Records
 
-## Excel Safety
+Only these record families receive independent review rows:
 
-Treat IDs, hashes, SHAs, paths, and timestamps as text.
+```text
+surface
+standard
+test_trace
+```
 
-Neutralize free-text values beginning with `=`, `+`, `-`, or `@`.
+Metadata evidence, dependencies, mismatches, aliases, and surface-standard links inherit the owning reviewed record and must not receive invented review state.
 
-The CSV projection may prefix an apostrophe for Excel safety. The accepted reviewed JSON must retain the original value.
+## Standards
 
-## SQLite Rules
+Store each unique reviewed standard once in `ui-standards.csv`.
 
-SQLite must be generated from validated accepted JSON or validated CSVs.
+Link surfaces through `ui-surface-standards.csv`.
 
-The database must be:
+Normalize `staleness_evidence` and `moved_responsibilities` through `ui-standard-findings.csv`.
 
-- disposable;
-- rebuildable;
-- ignored by Git;
-- never manually edited;
-- excluded from canonical authority;
-- validated against source counts and foreign keys.
+Use the accepted Issue #30 standard alignment and authority vocabularies exactly.
 
-Do not commit a binary SQLite file as the source of truth.
+## Test Traces
 
-## Validation Expectations
+Preserve semantic relationship evidence through:
 
-Before claiming the design is ready, verify:
+```text
+relationship_kind
+relationship_value
+```
 
-- every expected CSV has one valid header row;
-- headers match `csv-data-dictionary.md`;
-- column names are unique;
-- primary keys and foreign keys are defined;
-- controlled values are documented;
-- deterministic ordering is documented;
-- empty, unknown, absent, and not-applicable semantics are distinct;
-- path rules are explicit;
-- Excel formula protection is explicit;
-- secret-bearing content is prohibited;
-- SQLite table names and relationships match the CSV design;
-- fixtures cover valid and invalid cases.
+Keep accessibility and JavaScript coverage as categorical states.
 
-## Change Discipline
+Normalize only:
 
-When updating the design:
+```text
+contract_fields_covered
+rendered_states_covered
+```
 
-1. Update `csv-data-dictionary.md` first.
-2. Update `csv-schema.json` to match.
-3. Update header-only CSVs.
-4. Update SQLite DDL.
-5. Update fixtures.
-6. Update README only when package use or workflow changes.
+Do not convert categorical coverage evidence to booleans.
 
-Do not change column names, key semantics, or controlled values silently.
+## Evidence References
 
-Increment `export_schema_version` when a change is not backward-compatible.
+A subject may have multiple source references.
 
-## Handoff Expectations
+Use `ui-source-references.csv` rows rather than one evidence foreign-key column on every table.
 
-A future Codex implementation task must use:
+Repository paths must be relative and use `/`. Never write local worktree, drive-letter, or UNC paths into package files or fixtures.
 
-1. a short Plan-mode prompt;
-2. the accepted GitHub issue;
-3. applicable repository `AGENTS.md`;
-4. this folder's design documents;
-5. an approved ExecPlan;
-6. a separate execution phase;
-7. an independent read-only review.
+## SQLite
 
-Do not paste the entire data dictionary into a one-shot implementation prompt.
+SQLite uses a single-export replacement model.
+
+Requirements:
+
+- `PRAGMA foreign_keys = ON`;
+- append mode unsupported;
+- boolean storage uses `INTEGER` with `0` or `1`;
+- source schema versions use `INTEGER`;
+- IDs, hashes, SHAs, paths, timestamps, and JSON use `TEXT`;
+- primary and foreign keys match `csv-schema.json`;
+- controlled values use `CHECK` constraints where practical.
+
+The database is generated, disposable, ignored, and never authoritative.
+
+## Validation
+
+Before staging:
+
+- parse every JSON file;
+- verify UTF-8 without BOM;
+- verify LF endings and final newline;
+- verify every expected CSV exists;
+- verify header order against `csv-schema.json`;
+- verify no duplicate headers;
+- verify every primary and foreign-key column exists;
+- verify foreign-key targets exist;
+- verify controlled values against Issue #30;
+- verify SQLite tables and columns against the schema;
+- verify no obsolete table or fixture remains;
+- verify no unsupported review subject exists;
+- verify no absolute or workstation-specific path exists;
+- run `git diff --check`;
+- verify every changed path remains under this folder.
+
+## Git Safety
+
+Use the dedicated Issue #45 worktree and branch.
+
+Do not stage unrelated files.
+
+Do not commit, push, mark PR #46 ready, merge, close Issue #45, or remove the branch/worktree without explicit repository-owner instruction.
 
 ## Stop Conditions
 
 Stop and report when:
 
-- Issue #30's accepted reviewed source schema is unavailable or changed unexpectedly;
-- a required mapping cannot be represented without loss;
-- a stable ID cannot be established;
-- a foreign key is ambiguous;
-- a controlled value conflicts with accepted Issue #30 vocabulary;
-- implementation would require modifying accepted reviewed findings;
-- repository scope or authority is unclear;
-- secret-bearing or runtime-only content would be exported;
+- the worktree branch or baseline is unexpected;
+- the worktree is dirty before the correction starts;
+- accepted Issue #30 source shape conflicts with this design;
+- a mapping cannot be represented without loss;
+- a stable natural key cannot be established;
+- controlled vocabulary conflicts with accepted Issue #30;
+- another writer changes the package concurrently;
+- a change would escape the allowed package path;
+- sensitive, runtime-only, or workstation-specific content would be recorded;
 - CSV or SQLite would become independently editable authority.

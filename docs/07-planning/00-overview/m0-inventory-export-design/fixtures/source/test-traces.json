@@ -1,0 +1,112 @@
+{
+  "schema_version": 2,
+  "generator_schema_version": 2,
+  "issue": 30,
+  "baseline_sha": "1d103f5fa47aab8c8adfba8ea134dd29540426fe",
+  "ownership_boundary": "Issue #30 owns UI traceability; Issue #32 owns full-suite execution and disposition.",
+  "reviewer": "fixture-reviewer",
+  "reviewed_at": "2026-07-13T15:30:00Z",
+  "required_fields": [
+    "surface_ui_key",
+    "test_path",
+    "test_exists",
+    "test_type",
+    "contract_fields_covered",
+    "rendered_states_covered",
+    "accessibility_behavior_covered",
+    "javascript_behavior_covered",
+    "current_result",
+    "test_authority",
+    "evidence_source"
+  ],
+  "test_traces": [
+    {
+      "_relationship_evidence": {
+        "kind": "owner_local_test",
+        "value": "resources/views/components/ui/button"
+      },
+      "_review_note": "Owner-local test directly covers button rendering and accessibility claims.",
+      "_review_required": false,
+      "_reviewed": true,
+      "_source_fingerprint": "c58e6cd7f4ad86341468b106c62f367d15cf191f44cba2dc060b77c86369fae4",
+      "_surface_record_id": "component:resources:views:components:ui:button:fixture001",
+      "_trace_id": "trace:fixture000000000001",
+      "accessibility_behavior_covered": "present_claim",
+      "contract_fields_covered": [
+        "disabled",
+        "variant"
+      ],
+      "current_result": "not_run",
+      "evidence_source": [
+        "path:resources/views/components/ui/button/__tests__/ButtonInteraction.spec.js",
+        "path:resources/views/components/ui/button/index.blade.php"
+      ],
+      "javascript_behavior_covered": "not_observed",
+      "rendered_states_covered": [
+        "disabled",
+        "loading"
+      ],
+      "surface_ui_key": "ui.component.button",
+      "test_authority": "authoritative",
+      "test_exists": true,
+      "test_path": "resources/views/components/ui/button/__tests__/ButtonInteraction.spec.js",
+      "test_type": "accessibility"
+    },
+    {
+      "_relationship_evidence": {
+        "kind": "exact_blade_alias_reference",
+        "value": "x-ui.modal"
+      },
+      "_review_note": "Modal interaction spec references the exact Blade alias.",
+      "_review_required": false,
+      "_reviewed": true,
+      "_source_fingerprint": "0f4c5ef6372897f819aae8798dd0fc25902e12239425c99a7c3130d1181a5f1c",
+      "_surface_record_id": "component_family:resources:views:components:ui:modal:fixture002",
+      "_trace_id": "trace:fixture000000000002",
+      "accessibility_behavior_covered": "present_claim",
+      "contract_fields_covered": [
+        "open"
+      ],
+      "current_result": "not_run",
+      "evidence_source": [
+        "path:resources/views/components/ui/modal/__tests__/ModalInteraction.spec.js"
+      ],
+      "javascript_behavior_covered": "present_claim",
+      "rendered_states_covered": [
+        "open"
+      ],
+      "surface_ui_key": "ui.component.modal",
+      "test_authority": "partial",
+      "test_exists": true,
+      "test_path": "resources/views/components/ui/modal/__tests__/ModalInteraction.spec.js",
+      "test_type": "JavaScript behavior"
+    },
+    {
+      "_relationship_evidence": {
+        "kind": "exact_repository_path_reference",
+        "value": "resources/views/platform/dashboard/index.blade.php"
+      },
+      "_review_note": "Feature test references the exact view path but remains incidental UI evidence.",
+      "_review_required": false,
+      "_reviewed": true,
+      "_source_fingerprint": "41ce7b540d762724fd02b6eb0ab6fd2549a8bffbc82a80cffd8d8823aee1fc79",
+      "_surface_record_id": "url_view:resources:views:platform:dashboard:index.blade.php:fixture003",
+      "_trace_id": "trace:fixture000000000003",
+      "accessibility_behavior_covered": "unknown",
+      "contract_fields_covered": [],
+      "current_result": "not_run",
+      "evidence_source": [
+        "path:tests/Feature/DashboardViewTest.php",
+        "path:resources/views/platform/dashboard/index.blade.php"
+      ],
+      "javascript_behavior_covered": "unknown",
+      "rendered_states_covered": [],
+      "surface_ui_key": "unknown",
+      "test_authority": "incidental",
+      "test_exists": true,
+      "test_path": "tests/Feature/DashboardViewTest.php",
+      "test_type": "incidental markup assertion"
+    }
+  ],
+  "orphaned_prior_traces": []
+}

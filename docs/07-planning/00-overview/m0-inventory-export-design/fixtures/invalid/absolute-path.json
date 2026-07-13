@@ -1,0 +1,13 @@
+{
+  "case": "absolute_repository_path",
+  "table": "ui-surface-files.csv",
+  "row": {
+    "surface_file_id": "surface-file:absolute",
+    "surface_id": "component:resources:views:components:ui:button:fixture001",
+    "file_role": "implementation_entry",
+    "path": "C:/Repos/login-v2/resources/views/components/ui/button/index.blade.php",
+    "is_primary": true,
+    "exists_at_baseline": true
+  },
+  "expected_error": "repository_paths_are_relative_and_forward_slash"
+}

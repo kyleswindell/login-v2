@@ -1,0 +1,12 @@
+{
+  "case": "orphan_foreign_key",
+  "table": "ui-surface-aliases.csv",
+  "row": {
+    "surface_alias_id": "alias:orphan",
+    "surface_id": "surface:missing",
+    "alias_type": "blade_alias",
+    "alias_value": "x-ui.missing",
+    "is_primary": true
+  },
+  "expected_error": "foreign_keys_resolve"
+}

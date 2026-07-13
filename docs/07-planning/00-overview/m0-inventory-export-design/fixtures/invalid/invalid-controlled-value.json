@@ -1,0 +1,13 @@
+{
+  "case": "invalid_controlled_value",
+  "table": "ui-standards.csv",
+  "row": {
+    "standard_id": "standard:invalid",
+    "standard_path": "docs/02-standards/ui/example.md",
+    "implementation_alignment": "misaligned",
+    "contract_alignment": "aligned",
+    "reference_or_example_alignment": "aligned",
+    "authority_state": "canonical"
+  },
+  "expected_error": "controlled_values_valid"
+}

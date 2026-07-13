@@ -15,12 +15,12 @@ Apply these sources in order:
 3. `docs/AGENTS.md`.
 4. `docs/07-planning/AGENTS.md`.
 5. Accepted Issue #30 reviewed artifacts for source truth.
-6. GitHub Issue #45 and its accepted comments for scope and acceptance.
-7. This file.
-8. `csv-schema.json`.
-9. `README.md`.
-10. `csv-data-dictionary.md`.
-11. Fixtures and generated projections.
+6. This file.
+7. `csv-schema.json`.
+8. `README.md`.
+9. `csv-data-dictionary.md`.
+10. Fixtures and generated projections.
+11. Merged PR #46 and closed Issue #45 for acceptance history only.
 12. Inference.
 
 Reviewed Issue #30 JSON remains authoritative. CSV and SQLite are replaceable projections.
@@ -38,32 +38,42 @@ Accepted Issue #30 repository source snapshot:
 
 Untouched Issue #45 package baseline:
 580dcc01ad03ea39990a533b3bb763d87a153039
+
+Accepted export-design merge:
+92fdecdfcac2b159dc2c6c21b935075f7e3e2783
 ```
 
-Do not repin the immutable evidence baseline when the design branch synchronizes with later `main`.
+Do not repin the immutable evidence baseline when later `main` changes. The accepted export-design merge records design acceptance, not a replacement inventory baseline.
 
-## Current Mode
+## Current State
 
-Issue #45 is design-only.
+Schema version `0.2.0` was accepted through PR #46 and merged at `92fdecdfcac2b159dc2c6c21b935075f7e3e2783`.
 
-Allowed work:
+This folder contains the accepted design contract, header definitions, fixtures, expected fixture projections, and SQLite DDL. It does not prove that a production exporter, validator command, SQLite builder, bounded query command, or generated inventory database exists.
 
-- correct design documentation;
-- correct `csv-schema.json`;
-- generate header-only CSV files from the schema;
-- correct SQLite DDL;
-- add valid and invalid design fixtures;
-- validate internal consistency.
+Permitted work under a new bounded issue or explicitly authorized task:
+
+- maintain design documentation, `csv-schema.json`, generated definitions, and fixtures;
+- correct internal inconsistencies without changing reviewed Issue #30 truth;
+- implement exporter, validator, SQLite-builder, or query tooling when that implementation is explicitly in scope;
+- update routing documentation when package status or discoverability changes.
+
+Required boundaries:
+
+- accepted Issue #30 reviewed JSON remains authoritative;
+- observations remain generated supporting evidence;
+- CSV and SQLite remain generated, disposable projections;
+- generated CSV or SQLite content must not be manually edited as source truth;
+- projection output must not be reverse-imported to overwrite reviewed JSON;
+- do not claim operational tooling exists unless it is verified on current `main`;
+- do not generalize this UI-specific projection to repository, persistent-data, or complete test-suite inventories without explicit scope.
 
 Forbidden work:
 
-- implementing exporter, query, or SQLite-builder scripts;
-- generating final production export rows;
-- modifying Issue #30 artifacts or inventory tooling;
-- modifying `package.json`;
-- modifying `docs/07-planning/index.md`;
-- committing a binary SQLite database;
-- converting accepted JSON to JSONL.
+- committing a generated binary SQLite database;
+- recording secrets, runtime data, sessions, logs, credentials, or storage contents;
+- using projections to override accepted reviewed values;
+- converting accepted JSON to JSONL without a separately accepted design change.
 
 ## Source Roles
 
@@ -267,18 +277,18 @@ Before staging:
 
 ## Git Safety
 
-Use the dedicated Issue #45 worktree and branch.
+Use the branch and worktree strategy explicitly approved for the current issue or task. Do not recreate or reuse the historical Issue #45 worktree or branch.
 
-Do not stage unrelated files.
+Stage explicit paths only and do not include unrelated changes.
 
-Do not commit, push, mark PR #46 ready, merge, close Issue #45, or remove the branch/worktree without explicit repository-owner instruction.
+Treat merged PR #46 and closed Issue #45 as acceptance history. New writable work requires a new bounded issue or explicit repository-owner task scope.
 
 ## Stop Conditions
 
 Stop and report when:
 
-- the worktree branch or baseline is unexpected;
-- the worktree is dirty before the correction starts;
+- the current branch, task baseline, or accepted package version is unexpected;
+- another writer has uncommitted or concurrent changes in the package;
 - accepted Issue #30 source shape conflicts with this design;
 - a mapping cannot be represented without loss;
 - a stable natural key cannot be established;

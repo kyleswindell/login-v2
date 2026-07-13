@@ -2,7 +2,7 @@
 DOC-META
 title: M0 UI Inventory Export Design
 doc_type: planning
-status: draft
+status: planned
 owner: docs
 canonical: false
 canonical_path: docs/07-planning/00-overview/m0-inventory-export-design/README.md
@@ -35,6 +35,7 @@ The package does not implement an exporter. It defines the contract a later tool
 | Immutable Issue #30 evidence baseline | `1d103f5fa47aab8c8adfba8ea134dd29540426fe` |
 | Accepted repository source snapshot | `75d1d52c92ff3e0f068903e6903c94aabb009195` |
 | Untouched external-package baseline | `580dcc01ad03ea39990a533b3bb763d87a153039` |
+| Accepted export-design merge | `92fdecdfcac2b159dc2c6c21b935075f7e3e2783` |
 | Export design schema | `0.2.0` |
 
 The immutable evidence baseline identifies the repository state inventoried by Issue #30. The accepted repository source snapshot identifies the merged artifacts and tooling from which a future exporter reads.
@@ -249,33 +250,41 @@ A future implementation must reject:
 
 ### Current state
 
-Issue #45 owns this design package and draft PR #46 preserves the untouched package baseline followed by reviewable corrections.
+Schema version `0.2.0` was accepted through PR #46 and merged at `92fdecdfcac2b159dc2c6c21b935075f7e3e2783`.
+
+The repository contains the accepted design contract, header definitions, fixtures, expected fixture CSV projections, and SQLite DDL. It does not currently contain a production exporter, validator command, SQLite builder, bounded query command, or generated inventory database.
+
+Accepted Issue #30 reviewed JSON remains authoritative. CSV and SQLite remain replaceable projections.
 
 ### Target state
 
-A later tooling issue may implement read-only exporter, validator, SQLite builder, and bounded query commands using the accepted design.
+A separately scoped tooling issue may implement a read-only exporter, validator, SQLite builder, and bounded query commands using the accepted design.
+
+Future tooling must preserve the authority boundary, deterministic identity rules, explicit source bindings, fixtures, and validation requirements defined here unless a later accepted issue explicitly changes the design.
 
 ## 14. Non-Goals
 
 This package does not:
 
 - modify accepted Issue #30 artifacts or reviewed values;
-- implement exporter or query scripts;
-- generate final production CSV rows;
+- claim that production exporter or query tooling already exists;
+- generate or commit final production CSV rows as repository truth;
 - commit a SQLite database;
 - convert accepted JSON to JSONL;
-- define Issue #32 test-suite dispositions;
+- define Issue #32 complete test-suite dispositions;
 - select Goal 06 persistence architecture;
-- authorize merge, issue closure, or worktree cleanup.
+- generalize this UI projection contract to unrelated inventory domains.
 
-## 15. Review
+## 15. Maintenance And Future Implementation
 
-Before accepting this design:
+Before changing the accepted design or implementing tooling:
 
-1. compare all source mappings with accepted Issue #30 artifacts;
-2. verify controlled values against `scripts/lib/m0-ui-inventory/schema.mjs`;
-3. verify header CSVs match `csv-schema.json`;
-4. verify SQLite tables, columns, keys, and checks match the schema;
-5. inspect valid and invalid fixtures;
-6. run documentation and diff guardrails;
-7. keep PR #46 draft until repository-owner acceptance.
+1. use a bounded GitHub issue or explicitly authorized repository-owner task;
+2. read this folder's `AGENTS.md`, this README, and `csv-schema.json`;
+3. distinguish the immutable Issue #30 evidence baseline from the current implementation branch start;
+4. compare all source mappings with accepted Issue #30 artifacts;
+5. verify controlled values against `scripts/lib/m0-ui-inventory/schema.mjs`;
+6. verify headers, SQLite DDL, keys, controlled values, and fixtures against `csv-schema.json`;
+7. preserve reviewed JSON as authority and projections as disposable output;
+8. run documentation, diff, and implementation-specific validation before acceptance;
+9. never commit a generated binary SQLite database.

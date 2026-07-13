@@ -92,6 +92,8 @@ The charter remains `draft` until its parent-goal issue structure and initial ex
 
 [M0 UI Current-State Inventory](00-overview/m0-ui-current-state-inventory.md) is the canonical issue #30 implementation-first inventory of material UI Elements, Components, Patterns, Layouts, shell and navigation surfaces, URL views, renderers, UI contributions, supporting assets, contracts, test traces, standards evidence, metadata evidence, registration, provenance, contradictions, and unresolved target questions for the pinned Goal 02 baseline.
 
+[M0 UI Inventory Export Design](00-overview/m0-inventory-export-design/README.md) defines the accepted schema version `0.2.0`, normalized CSV table set, fixtures, and disposable SQLite projection contract for querying the Issue #30 inventory. Reviewed Issue #30 JSON remains authoritative; production exporter, validator, SQLite-builder, query-command, and generated-database tooling are not yet implemented.
+
 [M0 Persistent Data Current Implementation Snapshot](00-overview/m0-persistent-data-current-state-inventory.md) is the bounded issue #31 snapshot of source-controlled table names, persistence boundaries, ownership interpretations, planned concepts, contradictions, and Goal 06 questions at the pinned baseline. It is non-authoritative for migration semantics, does not prove deployed schema state, is not the Goal 06 target model, and has known completeness limitations.
 
 ### 4.2 Core Planning Matrix

@@ -26,6 +26,22 @@
             "content": "<?php use App\\Surfaces\\Contracts\\Surface; return Surface::pattern(['identity' => ['slug' => 'foo-pattern', 'ui_key' => 'pattern.foo']]);"
         },
         {
+            "path": "resources/views/components/patterns/forms/dialog/index.blade.php",
+            "content": "<x-ui.modal>{{ $slot }}</x-ui.modal>"
+        },
+        {
+            "path": "resources/views/components/patterns/forms/dialog/contract.php",
+            "content": "<?php\n/* File: docs/09-reference/ui/ui-contract-template.php\n * Purpose: Copyable baseline for Login App UI contract.php files.\n * Copy this shape into an owning UI surface folder.\n */\nreturn ['schema_version' => 1, 'identity' => ['slug' => '   ', 'label' => '', 'group' => 'Foundation Elements', 'type' => 'element'], 'lifecycle' => ['status' => 'legacy-compatible'], 'api' => ['props' => [['name' => 'slug'], ['name' => 'label'], ['name' => 'type']]], 'testing' => [], 'review' => []];"
+        },
+        {
+            "path": "resources/views/components/patterns/forms/side-panel/index.blade.php",
+            "content": "<aside>{{ $slot }}</aside>"
+        },
+        {
+            "path": "resources/views/components/patterns/forms/side-panel/contract.php",
+            "content": "<?php\n/* File: docs/09-reference/ui/ui-contract-template.php\n * Purpose: Copyable baseline for Login App UI contract.php files.\n * Copy this shape into an owning UI surface folder.\n */\nreturn ['schema_version' => 1, 'identity' => ['slug' => '', 'label' => '   ', 'group' => 'Foundation Elements', 'type' => 'element'], 'lifecycle' => ['status' => 'legacy-compatible'], 'api' => ['props' => [['name' => 'slug'], ['name' => 'label'], ['name' => 'type']]], 'testing' => [], 'review' => []];"
+        },
+        {
             "path": "resources/views/components/ui/grid/index.blade.php",
             "content": "@props(['columns' => 2])\n<div class=\"grid\">{{ $slot }}</div>"
         },
@@ -72,6 +88,18 @@
         {
             "path": "resources/views/elements/pictograms/__tests__/index.md",
             "content": "# Pictogram visual review"
+        },
+        {
+            "path": "resources/views/elements/pictograms/contract.php",
+            "content": "<?php use App\\Surfaces\\Contracts\\Surface; return Surface::element(['identity' => ['slug' => 'pictograms', 'label' => 'Pictograms']]);"
+        },
+        {
+            "path": "resources/views/elements/pictograms/alert.svg",
+            "content": null
+        },
+        {
+            "path": "resources/views/elements/pictograms/empty-state.svg",
+            "content": null
         },
         {
             "path": "Modules/Notifications/resources/views/index.blade.php",

@@ -10,9 +10,13 @@ import process from "node:process";
 import { discoverRepositoryRoot } from "./lib/m0-ui-inventory/git-batch-reader.mjs";
 import {
     addMismatch,
+    findStandardReview,
     findSurface,
+    markStandardReviewed,
     markSurfaceReviewed,
     markTraceReviewed,
+    projectReviewedStandards,
+    setStandardField,
     setSurfaceField,
     setTraceField,
     summarizeSurfaceTests,
@@ -20,6 +24,8 @@ import {
 } from "./lib/m0-ui-inventory/review-store.mjs";
 import {
     MISMATCH_CLASSIFICATIONS,
+    STANDARD_ALIGNMENT_VALUES,
+    STANDARD_AUTHORITY_STATES,
     TEST_AUTHORITIES,
     TEST_RESULTS,
     TEST_TYPES,
@@ -207,6 +213,78 @@ switch (command) {
         break;
     }
 
+    case "list-standards":
+        listStandards(classifications, args);
+        break;
+
+    case "show-standard": {
+        const standardPath = positionals[0];
+        ensure(standardPath, "Usage: review ... show-standard <standard-path>");
+        const review = findStandardReview(classifications, standardPath);
+        ensure(review, `Unknown standard: ${standardPath}`);
+        const linked_surfaces = observations.surfaces
+            .filter((surface) =>
+                surface.standard_candidates.some(
+                    (candidate) => candidate.path === standardPath,
+                ),
+            )
+            .map((surface) => surface.record_id);
+        console.log(stableStringify({ review, linked_surfaces }));
+        break;
+    }
+
+    case "set-standard": {
+        const [standardPath, field, rawValue] = positionals;
+        ensure(
+            standardPath && field && rawValue !== undefined,
+            "Usage: review ... set-standard <standard-path> <field> <json-or-string-value>",
+        );
+        const value = parseCliValue(rawValue);
+        validateStandardControlledField(field, value);
+        const review = setStandardField(
+            classifications,
+            standardPath,
+            field,
+            value,
+        );
+        writeJsonAtomic(classificationsPath, classifications);
+        console.log(stableStringify(review));
+        break;
+    }
+
+    case "mark-standard-reviewed": {
+        const standardPath = positionals[0];
+        ensure(
+            standardPath,
+            'Usage: review ... mark-standard-reviewed <standard-path> --note "..."',
+        );
+        const review = markStandardReviewed(
+            classifications,
+            standardPath,
+            args.note,
+            args.reviewer,
+        );
+        writeJsonAtomic(classificationsPath, classifications);
+        console.log(stableStringify(review));
+        break;
+    }
+
+    case "project-standards": {
+        const changedRecordIds = projectReviewedStandards(
+            classifications,
+            observations,
+        );
+        writeJsonAtomic(classificationsPath, classifications);
+        console.log(
+            [
+                `Projected reviewed standard evidence for ${classifications.standard_reviews.length} unique standard(s).`,
+                `Surface reviews invalidated: ${changedRecordIds.length}.`,
+                ...changedRecordIds,
+            ].join("\n"),
+        );
+        break;
+    }
+
     default:
         throw new Error(
             [
@@ -223,6 +301,11 @@ switch (command) {
                 "  set-trace <trace-id> <field> <json-or-string-value>",
                 '  mark-trace-reviewed <trace-id> --note "..." [--reviewer NAME]',
                 "  summarize-tests <record-id>",
+                "  list-standards [--pending]",
+                "  show-standard <standard-path>",
+                "  set-standard <standard-path> <field> <json-or-string-value>",
+                '  mark-standard-reviewed <standard-path> --note "..." [--reviewer NAME]',
+                "  project-standards",
             ].join("\n"),
         );
 }
@@ -287,6 +370,29 @@ function listTraces(artifact, options) {
     console.log(`Matched ${traces.length} trace(s).`);
 }
 
+function listStandards(artifact, options) {
+    const reviews = (artifact.standard_reviews ?? []).filter((review) =>
+        options.pending
+            ? review._reviewed !== true || review._review_required === true
+            : true,
+    );
+
+    for (const review of reviews) {
+        console.log(
+            [
+                review._standard_path,
+                `reviewed=${review._reviewed === true && review._review_required !== true}`,
+                `implementation=${review.implementation_alignment}`,
+                `contract=${review.contract_alignment}`,
+                `reference=${review.reference_or_example_alignment}`,
+                `authority=${review.authority_state}`,
+            ].join("\t"),
+        );
+    }
+
+    console.log(`Matched ${reviews.length} standard review(s).`);
+}
+
 function validateTraceControlledField(field, value) {
     if (field === "test_type") {
         ensure(TEST_TYPES.has(value), `Invalid test_type: ${value}`);
@@ -298,5 +404,31 @@ function validateTraceControlledField(field, value) {
 
     if (field === "test_authority") {
         ensure(TEST_AUTHORITIES.has(value), `Invalid test_authority: ${value}`);
+    }
+}
+
+function validateStandardControlledField(field, value) {
+    if (
+        [
+            "implementation_alignment",
+            "contract_alignment",
+            "reference_or_example_alignment",
+        ].includes(field)
+    ) {
+        ensure(
+            STANDARD_ALIGNMENT_VALUES.has(value),
+            `Invalid ${field}: ${value}`,
+        );
+    }
+
+    if (field === "authority_state") {
+        ensure(
+            STANDARD_AUTHORITY_STATES.has(value),
+            `Invalid authority_state: ${value}`,
+        );
+    }
+
+    if (["staleness_evidence", "moved_responsibilities"].includes(field)) {
+        ensure(Array.isArray(value), `${field} must be a JSON array.`);
     }
 }

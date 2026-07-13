@@ -40,6 +40,8 @@ export function isContractSource(path, content = "") {
 export function inspectContract(file) {
     const content = file.content ?? "";
     const filename = basename(file.path);
+    const actualPath = normalizePath(file.path);
+    const declaredHeaderPath = extractDeclaredHeaderPath(content);
     const profile = firstMatch(
         content,
         /Surface::(component|element|pattern)\s*\(/,
@@ -77,6 +79,23 @@ export function inspectContract(file) {
         stringValue(identitySection, "group") ??
         defaults?.identity_group ??
         null;
+    const identitySlug = stringValue(identitySection, "slug");
+    const identityLabel = stringValue(identitySection, "label");
+    const templateCopy = isTemplateCopy(content, declaredHeaderPath);
+    const headerPathMatchesActual =
+        declaredHeaderPath === null
+            ? null
+            : normalizePath(declaredHeaderPath) === actualPath;
+    const identityComplete =
+        hasNonBlankValue(identitySlug) && hasNonBlankValue(identityLabel);
+    const qualityReasons = uniqueSorted([
+        ...(declaredHeaderPath !== null && !headerPathMatchesActual
+            ? ["declared_header_path_mismatch"]
+            : []),
+        ...(templateCopy ? ["copyable_template_source"] : []),
+        ...(!hasNonBlankValue(identitySlug) ? ["identity_slug_blank"] : []),
+        ...(!hasNonBlankValue(identityLabel) ? ["identity_label_blank"] : []),
+    ]);
 
     return {
         path: file.path,
@@ -96,8 +115,8 @@ export function inspectContract(file) {
                       : "unknown",
         },
         identity: {
-            slug: stringValue(identitySection, "slug"),
-            label: stringValue(identitySection, "label"),
+            slug: identitySlug,
+            label: identityLabel,
             component: stringValue(identitySection, "component"),
             type: identityType,
             group: identityGroup,
@@ -108,6 +127,11 @@ export function inspectContract(file) {
                 stringValue(identitySection, "layout_key") ??
                 stringValue(identitySection, "contract_key"),
         },
+        declared_header_path: declaredHeaderPath,
+        header_path_matches_actual: headerPathMatchesActual,
+        template_copy: templateCopy,
+        identity_complete: identityComplete,
+        quality_reasons: qualityReasons,
         lifecycle_status: stringValue(lifecycleSection, "status"),
         api: {
             props: uniqueSorted([
@@ -584,6 +608,36 @@ function stringValue(content, key) {
         `["']${escapeRegex(key)}["']\\s*=>\\s*["']([^"']*)["']`,
     );
     return firstMatch(content, pattern);
+}
+
+function extractDeclaredHeaderPath(content) {
+    const value = firstMatch(content, /\bFile:\s*([^\r\n|]+)/i);
+
+    if (value === null) {
+        return null;
+    }
+
+    const cleaned = value.replace(/\s*(?:--}}|\*\/).*$/, "").trim();
+
+    return cleaned === "" ? null : normalizePath(cleaned);
+}
+
+function isTemplateCopy(content, declaredHeaderPath) {
+    if (
+        declaredHeaderPath === "docs/09-reference/ui/ui-contract-template.php"
+    ) {
+        return true;
+    }
+
+    return (
+        /Copyable baseline for Login App UI contract\.php files/i.test(
+            content,
+        ) && /Copy this shape into an owning UI surface folder/i.test(content)
+    );
+}
+
+function hasNonBlankValue(value) {
+    return typeof value === "string" && value.trim() !== "";
 }
 
 function firstMatch(content, pattern) {

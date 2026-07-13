@@ -14,6 +14,7 @@ export function renderInventoryMarkdown({
 }) {
     const items = classifications.items;
     const traces = testTraces.test_traces;
+    const standards = classifications.standard_reviews ?? [];
     const mismatched = items.filter(
         (item) =>
             Array.isArray(item.known_mismatches) &&
@@ -28,6 +29,10 @@ export function renderInventoryMarkdown({
     );
     const pendingTraces = traces.filter(
         (trace) => trace._reviewed !== true || trace._review_required === true,
+    );
+    const pendingStandards = standards.filter(
+        (standard) =>
+            standard._reviewed !== true || standard._review_required === true,
     );
     const sourceDiff = observations.baseline.ui_source_diff;
     const lines = [];
@@ -88,6 +93,9 @@ export function renderInventoryMarkdown({
     lines.push(`- Detailed UI test traces: ${traces.length}`);
     lines.push(
         `- Reviewed test traces: ${traces.length - pendingTraces.length}/${traces.length}`,
+    );
+    lines.push(
+        `- Reviewed unique standards: ${standards.length - pendingStandards.length}/${standards.length}`,
     );
     lines.push(
         `- Surfaces with material mismatch evidence: ${mismatched.length}`,
@@ -213,6 +221,18 @@ export function renderInventoryMarkdown({
     );
     lines.push("");
     lines.push(
+        "| Standard | Implementation | Contract | Reference / Example | Authority | Staleness Evidence | Moved Responsibilities |",
+    );
+    lines.push("| --- | --- | --- | --- | --- | --- | --- |");
+
+    for (const standard of standards) {
+        lines.push(
+            `| ${cell(standard._standard_path)} | ${cell(standard.implementation_alignment)} | ${cell(standard.contract_alignment)} | ${cell(standard.reference_or_example_alignment)} | ${cell(standard.authority_state)} | ${cell(listSummary(standard.staleness_evidence))} | ${cell(listSummary(standard.moved_responsibilities))} |`,
+        );
+    }
+
+    lines.push("");
+    lines.push(
         "Standards and metadata findings are current-state evidence only. Final contract metadata, API/schema versioning, readiness, review-state, and durable standards policy remain assigned to Goals 04, 05, and 08.",
     );
     lines.push("");
@@ -268,6 +288,7 @@ export function renderInventoryMarkdown({
     lines.push("## 11. Review State");
     lines.push("");
     lines.push(`- Pending surface reviews: ${pendingSurfaces.length}`);
+    lines.push(`- Pending standard reviews: ${pendingStandards.length}`);
     lines.push(`- Pending test-trace reviews: ${pendingTraces.length}`);
     lines.push(
         `- Orphaned prior surface reviews: ${classifications.orphaned_prior_records.length}`,

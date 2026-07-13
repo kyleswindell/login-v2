@@ -196,6 +196,89 @@ export const TRACE_RELATIONSHIP_KINDS = new Set([
     "exact_ui_key_reference",
     "exact_symbol_reference",
 ]);
+export const STANDARD_ALIGNMENT_VALUES = new Set([
+    "aligned",
+    "partial",
+    "stale",
+    "not_applicable",
+    "unknown",
+]);
+export const STANDARD_AUTHORITY_STATES = new Set([
+    "current_standard",
+    "mixed_authority",
+    "historical_or_rollout_guidance",
+    "stale",
+    "unknown",
+]);
+
+export function standardSourceFingerprint(candidate) {
+    return sourceFingerprint({
+        standard_path: candidate.path,
+        source_sha256: candidate.source_sha256 ?? null,
+    });
+}
+
+export function createStandardReviewSeed(candidate) {
+    return {
+        _standard_path: candidate.path,
+        _source_fingerprint: standardSourceFingerprint(candidate),
+        _reviewed: false,
+        _review_required: true,
+        _review_note:
+            "Generated standard seed. Review this unique standard against pinned implementation, contract, and reference evidence.",
+        claimed_scope: candidate.claimed_scope ?? "unknown",
+        implementation_alignment: "unknown",
+        contract_alignment: "unknown",
+        reference_or_example_alignment: "unknown",
+        authority_state: "unknown",
+        staleness_evidence: [],
+        moved_responsibilities: [],
+        evidence_source: candidate.evidence_source ?? [
+            `path:${candidate.path}`,
+        ],
+    };
+}
+
+export function createStandardProjection(candidate, standardReview = null) {
+    const seed = createStandardReviewSeed(candidate);
+    const reviewed =
+        standardReview?._reviewed === true &&
+        standardReview?._review_required !== true &&
+        standardReview?._source_fingerprint === seed._source_fingerprint;
+    const source = reviewed ? standardReview : seed;
+
+    return {
+        standard_path: candidate.path,
+        standard_source_fingerprint: seed._source_fingerprint,
+        claimed_scope: source.claimed_scope,
+        implementation_alignment: source.implementation_alignment,
+        contract_alignment: source.contract_alignment,
+        reference_or_example_alignment: source.reference_or_example_alignment,
+        authority_state: source.authority_state,
+        staleness_evidence: source.staleness_evidence,
+        moved_responsibilities: source.moved_responsibilities,
+        evidence_source: source.evidence_source,
+    };
+}
+
+export function standardReviewRequiresStale(standardReview) {
+    if (
+        standardReview?._reviewed !== true ||
+        standardReview?._review_required === true
+    ) {
+        return false;
+    }
+
+    return (
+        ["mixed_authority", "stale"].includes(standardReview.authority_state) ||
+        [
+            standardReview.implementation_alignment,
+            standardReview.contract_alignment,
+            standardReview.reference_or_example_alignment,
+        ].includes("stale") ||
+        (standardReview.staleness_evidence?.length ?? 0) > 0
+    );
+}
 
 export function createSurfaceReviewSeed(observation) {
     const contractPaths = observation.contracts.map(
@@ -252,16 +335,9 @@ export function createSurfaceReviewSeed(observation) {
         lower_tier_dependencies: observation.lower_tier_dependencies,
         public_api_evidence: observation.public_api_evidence,
         contract_api_evidence: observation.contract_api_evidence,
-        standards_evidence: observation.standard_candidates.map((standard) => ({
-            standard_path: standard.path,
-            claimed_scope: standard.claimed_scope ?? "unknown",
-            implementation_alignment: "unknown",
-            contract_alignment: "unknown",
-            reference_or_example_alignment: "unknown",
-            authority_state: standard.authority_state ?? "unknown",
-            staleness_evidence: [],
-            evidence_source: standard.evidence_source,
-        })),
+        standards_evidence: observation.standard_candidates.map((standard) =>
+            createStandardProjection(standard),
+        ),
         metadata_evidence: observation.metadata_evidence,
         carbon_provenance: "unknown",
         app_owned_deviations: [],

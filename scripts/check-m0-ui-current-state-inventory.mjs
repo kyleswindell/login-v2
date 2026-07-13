@@ -11,12 +11,17 @@ import process from "node:process";
 import {
     CARBON_PROVENANCE_VALUES,
     CONTRACT_STATUSES,
+    createStandardProjection,
     INVENTORY_DISPOSITIONS,
     MISMATCH_CLASSIFICATIONS,
     OWNERSHIP_AREAS,
     PINNED_INVENTORY_BASELINE,
     REQUIRED_SURFACE_FIELDS,
     REQUIRED_TRACE_FIELDS,
+    STANDARD_ALIGNMENT_VALUES,
+    STANDARD_AUTHORITY_STATES,
+    standardReviewRequiresStale,
+    standardSourceFingerprint,
     SURFACE_TYPES,
     TEST_AUTHORITIES,
     TEST_RESULTS,
@@ -30,6 +35,7 @@ import {
     parseArguments,
     readJson,
     sourceFingerprint,
+    stableStringify,
     uniqueSorted,
 } from "./lib/m0-ui-inventory/utilities.mjs";
 
@@ -57,6 +63,20 @@ const observationById = new Map(
 );
 const reviewById = new Map(
     classifications.items.map((item) => [item._record_id, item]),
+);
+const standardCandidatesByPath = new Map(
+    observations.surfaces.flatMap((surface) =>
+        surface.standard_candidates.map((candidate) => [
+            candidate.path,
+            candidate,
+        ]),
+    ),
+);
+const standardReviewByPath = new Map(
+    (classifications.standard_reviews ?? []).map((review) => [
+        review._standard_path,
+        review,
+    ]),
 );
 
 check(
@@ -118,6 +138,10 @@ check(
     "Orphaned prior surface reviews remain.",
 );
 check(
+    (classifications.orphaned_prior_standard_reviews ?? []).length === 0,
+    "Orphaned prior standard reviews remain.",
+);
+check(
     (testTraces.orphaned_prior_traces ?? []).length === 0,
     "Orphaned prior test traces remain.",
 );
@@ -135,6 +159,30 @@ for (const observation of observations.surfaces) {
         `Missing review for ${observation.record_id}.`,
     );
 }
+
+for (const [standardPath] of standardCandidatesByPath) {
+    check(
+        standardReviewByPath.has(standardPath),
+        `Missing standard review for ${standardPath}.`,
+    );
+}
+
+for (const review of classifications.standard_reviews ?? []) {
+    validateStandardReview(review);
+}
+
+check(
+    [...standardCandidatesByPath].some(([standardPath]) => {
+        const review = standardReviewByPath.get(standardPath);
+        return [
+            review?.implementation_alignment,
+            review?.contract_alignment,
+            review?.reference_or_example_alignment,
+        ].some((value) => value !== "unknown");
+    }),
+    "All linked standards still have wholly unknown alignment evidence.",
+);
+validateContractFileContradiction();
 
 for (const item of classifications.items) {
     validateSurface(item);
@@ -178,6 +226,7 @@ console.log(
         "Issue #30 corrected inventory validation passed.",
         `Material surfaces: ${classifications.items.length}.`,
         `Reviewed UI test traces: ${testTraces.test_traces.length}.`,
+        `Reviewed unique standards: ${classifications.standard_reviews.length}.`,
         `Pinned inventory baseline: ${PINNED_INVENTORY_BASELINE}.`,
         `Combined artifact bytes: ${artifactMetrics().bytes}.`,
         `Combined artifact lines: ${artifactMetrics().lines}.`,
@@ -244,6 +293,17 @@ function validateSurface(item) {
         `${item._record_id} slug must be a string.`,
     );
     check(
+        typeof item.current_slug === "string" &&
+            item.current_slug.trim() !== "",
+        `${item._record_id} current_slug must not be empty.`,
+    );
+    check(
+        item.target_question === null ||
+            (typeof item.target_question === "string" &&
+                item.target_question.trim() !== ""),
+        `${item._record_id} target_question must not be blank.`,
+    );
+    check(
         Array.isArray(item.known_mismatches),
         `${item._record_id} mismatches must be an array.`,
     );
@@ -289,6 +349,18 @@ function validateSurface(item) {
         item.javascript_paths,
     );
 
+    if (
+        ["icon_system", "pictogram_system"].includes(item.surface_type) &&
+        (observation?.asset_group_summary?.member_count ?? 0) > 0
+    ) {
+        check(
+            typeof item.implementation_entry === "string" &&
+                item.implementation_entry.trim() !== "" &&
+                item.implementation_entry !== "unknown",
+            `${item._record_id} asset group requires a pinned implementation entry.`,
+        );
+    }
+
     check(
         Array.isArray(item.standards_evidence),
         `${item._record_id} standards_evidence must be an array.`,
@@ -302,6 +374,58 @@ function validateSurface(item) {
             item._record_id,
             "standards_evidence.standard_path",
             standard.standard_path,
+        );
+    }
+    const expectedStandards = (observation?.standard_candidates ?? []).map(
+        (candidate) =>
+            createStandardProjection(
+                candidate,
+                standardReviewByPath.get(candidate.path),
+            ),
+    );
+    check(
+        stableStringify(item.standards_evidence ?? []) ===
+            stableStringify(expectedStandards),
+        `${item._record_id} standards_evidence differs from reviewed projection.`,
+    );
+    const expectsStandardStale = (observation?.standard_candidates ?? []).some(
+        (candidate) =>
+            standardReviewRequiresStale(
+                standardReviewByPath.get(candidate.path),
+            ),
+    );
+    check(
+        item.known_mismatches?.includes("standard_stale") ===
+            expectsStandardStale,
+        `${item._record_id} standard_stale mismatch disagrees with reviewed standards.`,
+    );
+
+    const copiedTemplateContracts = (observation?.contracts ?? []).filter(
+        (contract) => contract.template_copy === true,
+    );
+    if (copiedTemplateContracts.length > 0) {
+        check(
+            item.contract_status === "present",
+            `${item._record_id} copied template contract must remain physically present.`,
+        );
+        for (const mismatch of ["contract_stale", "source_path_mismatch"]) {
+            check(
+                item.known_mismatches?.includes(mismatch),
+                `${item._record_id} copied template contract lacks ${mismatch}.`,
+            );
+        }
+    }
+    if (
+        item.surface_type === "pattern" &&
+        (observation?.contracts ?? []).some(
+            (contract) =>
+                contract.identity?.type === "element" ||
+                contract.identity?.group === "Foundation Elements",
+        )
+    ) {
+        check(
+            item.known_mismatches?.includes("lifecycle_conflict"),
+            `${item._record_id} Pattern with Element identity lacks lifecycle_conflict.`,
         );
     }
 
@@ -359,6 +483,85 @@ function validateSurface(item) {
             `${item._record_id} test authority disagrees with traces.`,
         );
     }
+}
+
+function validateStandardReview(review) {
+    const candidate = standardCandidatesByPath.get(review._standard_path);
+    check(
+        Boolean(candidate),
+        `Standard review is not linked: ${review._standard_path}.`,
+    );
+    check(
+        review._reviewed === true,
+        `${review._standard_path} standard is not reviewed.`,
+    );
+    check(
+        review._review_required !== true,
+        `${review._standard_path} standard still requires review.`,
+    );
+    check(
+        review._source_fingerprint ===
+            (candidate ? standardSourceFingerprint(candidate) : null),
+        `${review._standard_path} standard source fingerprint is stale.`,
+    );
+    check(
+        typeof review.claimed_scope === "string" &&
+            review.claimed_scope.trim() !== "",
+        `${review._standard_path} standard claimed_scope is blank.`,
+    );
+    for (const field of [
+        "implementation_alignment",
+        "contract_alignment",
+        "reference_or_example_alignment",
+    ]) {
+        check(
+            STANDARD_ALIGNMENT_VALUES.has(review[field]),
+            `${review._standard_path} standard has invalid ${field}.`,
+        );
+    }
+    check(
+        STANDARD_AUTHORITY_STATES.has(review.authority_state),
+        `${review._standard_path} standard has invalid authority_state.`,
+    );
+    check(
+        Array.isArray(review.staleness_evidence),
+        `${review._standard_path} staleness_evidence must be an array.`,
+    );
+    check(
+        Array.isArray(review.moved_responsibilities),
+        `${review._standard_path} moved_responsibilities must be an array.`,
+    );
+    check(
+        Array.isArray(review.evidence_source) &&
+            review.evidence_source.includes(`path:${review._standard_path}`),
+        `${review._standard_path} standard lacks direct path evidence.`,
+    );
+    check(
+        [
+            review.implementation_alignment,
+            review.contract_alignment,
+            review.reference_or_example_alignment,
+        ].some((value) => value !== "unknown"),
+        `${review._standard_path} standard alignments remain wholly unknown.`,
+    );
+}
+
+function validateContractFileContradiction() {
+    const path = "docs/02-standards/ui/contract-file.md";
+    const review = standardReviewByPath.get(path);
+    check(Boolean(review), `${path} requires a reviewed contradiction record.`);
+    check(
+        ["mixed_authority", "stale"].includes(review?.authority_state),
+        `${path} must record mixed or stale authority.`,
+    );
+    check(
+        (review?.staleness_evidence?.length ?? 0) > 0,
+        `${path} lacks staleness evidence.`,
+    );
+    check(
+        (review?.moved_responsibilities?.length ?? 0) > 0,
+        `${path} lacks moved-responsibility evidence.`,
+    );
 }
 
 function validateTrace(trace) {

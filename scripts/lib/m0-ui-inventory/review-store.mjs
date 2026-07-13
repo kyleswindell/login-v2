@@ -6,8 +6,11 @@
  */
 
 import {
+    createStandardProjection,
+    createStandardReviewSeed,
     createSurfaceReviewSeed,
     createTestTraceSeed,
+    standardReviewRequiresStale,
     summarizeTestAuthority,
     summarizeTestStatus,
 } from "./schema.mjs";
@@ -16,6 +19,7 @@ import {
     ensure,
     readJsonIfExists,
     sourceFingerprint,
+    stableStringify,
     uniqueSorted,
     writeJsonAtomic,
 } from "./utilities.mjs";
@@ -42,6 +46,43 @@ export function syncReviewArtifacts({
         observations.baseline.sha,
         "test traces",
     );
+    const standardCandidates = uniqueStandardCandidates(observations);
+    const existingStandardByPath = new Map(
+        (existingClassifications?.standard_reviews ?? []).map((review) => [
+            review._standard_path,
+            review,
+        ]),
+    );
+    const nextStandardReviews = standardCandidates.map((candidate) => {
+        const seed = createStandardReviewSeed(candidate);
+        const existing = existingStandardByPath.get(candidate.path);
+
+        if (!existing || isUntouchedGeneratedSeed(existing, seed)) {
+            return seed;
+        }
+
+        const changed =
+            existing._source_fingerprint !== seed._source_fingerprint;
+
+        return {
+            ...seed,
+            ...existing,
+            _standard_path: candidate.path,
+            _source_fingerprint: seed._source_fingerprint,
+            claimed_scope: seed.claimed_scope,
+            evidence_source: seed.evidence_source,
+            _reviewed: changed ? false : existing._reviewed === true,
+            _review_required: changed
+                ? true
+                : existing._review_required === true,
+            _review_note: changed
+                ? appendReviewNote(
+                      existing._review_note,
+                      "Pinned standard source changed. Re-review this standard and its linked surfaces.",
+                  )
+                : existing._review_note,
+        };
+    });
 
     const existingByRecordId = new Map(
         (existingClassifications?.items ?? []).map((item) => [
@@ -95,6 +136,9 @@ export function syncReviewArtifacts({
             ? null
             : (existingClassifications?.reviewed_at ?? null),
         required_fields: observations.required_surface_fields,
+        standard_reviews: nextStandardReviews.sort((left, right) =>
+            left._standard_path.localeCompare(right._standard_path),
+        ),
         items: nextItems.sort((left, right) =>
             left._record_id.localeCompare(right._record_id),
         ),
@@ -110,7 +154,21 @@ export function syncReviewArtifacts({
                   )
                   .map((item) => item._record_id)
                   .sort(),
+        orphaned_prior_standard_reviews: resetReviews
+            ? []
+            : (existingClassifications?.standard_reviews ?? [])
+                  .filter(
+                      (review) =>
+                          !standardCandidates.some(
+                              (candidate) =>
+                                  candidate.path === review._standard_path,
+                          ),
+                  )
+                  .map((review) => review._standard_path)
+                  .sort(),
     };
+
+    projectReviewedStandards(classifications, observations);
 
     const itemByRecordId = new Map(
         classifications.items.map((item) => [item._record_id, item]),
@@ -258,6 +316,24 @@ export function markTraceReviewed(testTraces, traceId, note, reviewer) {
     return trace;
 }
 
+export function markStandardReviewed(
+    classifications,
+    standardPath,
+    note,
+    reviewer,
+) {
+    const review = findStandardReview(classifications, standardPath);
+    ensure(review, `Unknown standard: ${standardPath}`);
+    ensure(note && String(note).trim() !== "", "A review note is required.");
+    review._reviewed = true;
+    review._review_required = false;
+    review._review_note = String(note).trim();
+    classifications.reviewer =
+        reviewer ?? classifications.reviewer ?? "repository-owner-review";
+    classifications.reviewed_at = currentIsoTimestamp();
+    return review;
+}
+
 export function setSurfaceField(classifications, recordId, field, value) {
     const item = classifications.items.find(
         (candidate) => candidate._record_id === recordId,
@@ -296,6 +372,24 @@ export function setTraceField(testTraces, traceId, field, value) {
         `Field ${field} changed and requires review.`,
     );
     return trace;
+}
+
+export function setStandardField(classifications, standardPath, field, value) {
+    const review = findStandardReview(classifications, standardPath);
+    ensure(review, `Unknown standard: ${standardPath}`);
+    ensure(
+        !field.startsWith("_"),
+        "Use review commands for tooling metadata fields.",
+    );
+    ensure(Object.hasOwn(review, field), `Unknown standard field: ${field}`);
+    review[field] = value;
+    review._reviewed = false;
+    review._review_required = true;
+    review._review_note = appendReviewNote(
+        review._review_note,
+        `Field ${field} changed and requires review.`,
+    );
+    return review;
 }
 
 export function addMismatch(classifications, recordId, mismatch) {
@@ -341,6 +435,66 @@ export function findSurface(classifications, identifier) {
     );
 }
 
+export function findStandardReview(classifications, standardPath) {
+    return (classifications.standard_reviews ?? []).find(
+        (review) => review._standard_path === standardPath,
+    );
+}
+
+export function projectReviewedStandards(classifications, observations) {
+    const reviewByPath = new Map(
+        (classifications.standard_reviews ?? []).map((review) => [
+            review._standard_path,
+            review,
+        ]),
+    );
+    const itemById = new Map(
+        classifications.items.map((item) => [item._record_id, item]),
+    );
+    const changedRecordIds = [];
+
+    for (const observation of observations.surfaces) {
+        const item = itemById.get(observation.record_id);
+        if (!item) continue;
+        const projection = observation.standard_candidates.map((candidate) =>
+            createStandardProjection(
+                candidate,
+                reviewByPath.get(candidate.path),
+            ),
+        );
+        const requiresStale = observation.standard_candidates.some(
+            (candidate) =>
+                standardReviewRequiresStale(reviewByPath.get(candidate.path)),
+        );
+        const mismatches = uniqueSorted([
+            ...(item.known_mismatches ?? []).filter(
+                (mismatch) => mismatch !== "standard_stale",
+            ),
+            ...(requiresStale ? ["standard_stale"] : []),
+        ]);
+        const changed =
+            stableStringify(item.standards_evidence ?? []) !==
+                stableStringify(projection) ||
+            stableStringify(item.known_mismatches ?? []) !==
+                stableStringify(mismatches);
+
+        item.standards_evidence = projection;
+        item.known_mismatches = mismatches;
+
+        if (changed) {
+            item._reviewed = false;
+            item._review_required = true;
+            item._review_note = appendReviewNote(
+                item._review_note,
+                "Reviewed standards projection changed and requires surface re-review.",
+            );
+            changedRecordIds.push(item._record_id);
+        }
+    }
+
+    return uniqueSorted(changedRecordIds);
+}
+
 function assertCompatibleBaseline(artifact, baseline, label) {
     if (artifact === null) return;
     ensure(
@@ -352,6 +506,25 @@ function assertCompatibleBaseline(artifact, baseline, label) {
 function appendReviewNote(existing, addition) {
     const current = String(existing ?? "").trim();
     return current === "" ? addition : `${current} ${addition}`;
+}
+
+function uniqueStandardCandidates(observations) {
+    const candidates = new Map();
+
+    for (const surface of observations.surfaces) {
+        for (const candidate of surface.standard_candidates) {
+            const existing = candidates.get(candidate.path);
+            ensure(
+                !existing || existing.source_sha256 === candidate.source_sha256,
+                `Conflicting pinned source hashes for ${candidate.path}.`,
+            );
+            candidates.set(candidate.path, candidate);
+        }
+    }
+
+    return [...candidates.values()].sort((left, right) =>
+        left.path.localeCompare(right.path),
+    );
 }
 
 function isUntouchedGeneratedSeed(existing, seed) {

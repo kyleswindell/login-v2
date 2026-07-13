@@ -6,6 +6,7 @@
  */
 
 import assert from "node:assert/strict";
+import { spawnSync } from "node:child_process";
 import { mkdtempSync, readFileSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
@@ -14,8 +15,11 @@ import { collectDiscoveryEvidence } from "./lib/m0-ui-inventory/discovery-runner
 import { loadIssue29SupportingEvidence } from "./lib/m0-ui-inventory/issue29-support.mjs";
 import { renderInventoryMarkdown } from "./lib/m0-ui-inventory/markdown-renderer.mjs";
 import {
+    markStandardReviewed,
     markSurfaceReviewed,
     markTraceReviewed,
+    projectReviewedStandards,
+    setStandardField,
     syncReviewArtifacts,
 } from "./lib/m0-ui-inventory/review-store.mjs";
 import {
@@ -30,6 +34,7 @@ import {
     stableStringify,
     sourceFingerprint,
     writeJsonAtomic,
+    writeTextAtomic,
 } from "./lib/m0-ui-inventory/utilities.mjs";
 
 const repositoryRoot = process.cwd();
@@ -214,6 +219,49 @@ const icons = collection.surfaces.find(
 assert.equal(icons.asset_group_summary.svg_count, 2);
 assert.ok(icons.implementation_support_files.length < 10);
 
+for (const slug of expected.copied_template_slugs) {
+    const copied = collection.surfaces.find(
+        (surface) => surface.current_slug === slug,
+    );
+    assert.ok(copied, `Missing copied-template fixture surface: ${slug}`);
+    assert.equal(copied.contracts[0].template_copy, true);
+    assert.equal(copied.contracts[0].identity_complete, false);
+    assert.equal(copied.contracts[0].header_path_matches_actual, false);
+    assert.ok(copied.contracts[0].identity.slug.trim() === "");
+    assert.equal(copied.contracts[0].identity.type, "element");
+    assert.deepEqual(
+        copied.contracts[0].api.props,
+        ["label", "slug", "type"],
+        "Nested prop keys must not overwrite identity fields.",
+    );
+    for (const mismatch of [
+        "contract_stale",
+        "source_path_mismatch",
+        "lifecycle_conflict",
+    ]) {
+        assert.ok(
+            copied.generated_mismatches.includes(mismatch),
+            `${slug} lacks ${mismatch}`,
+        );
+    }
+    assert.equal(
+        copied.contract_api_evidence.quality[0].declared_header_path,
+        "docs/09-reference/ui/ui-contract-template.php",
+    );
+}
+
+const pictograms = collection.surfaces.find(
+    (surface) => surface.surface_type === "pictogram_system",
+);
+assert.equal(
+    pictograms.implementation_entry,
+    expected.pictogram_implementation_entry,
+);
+assert.equal(
+    pictograms.asset_group_summary.representative_kind,
+    "representative_svg",
+);
+
 const observations = {
     schema_version: 2,
     generator_schema_version: 2,
@@ -234,7 +282,22 @@ const observations = {
     source_path_index: files.map((file) => file.path).sort(),
     surfaces: collection.surfaces,
     unclaimed_material_files: [],
-    summary: {},
+    summary: {
+        surface_type_counts: Object.fromEntries(
+            [
+                ...new Set(
+                    collection.surfaces.map((surface) => surface.surface_type),
+                ),
+            ]
+                .sort()
+                .map((type) => [
+                    type,
+                    collection.surfaces.filter(
+                        (surface) => surface.surface_type === type,
+                    ).length,
+                ]),
+        ),
+    },
 };
 const temporaryRoot = mkdtempSync(join(tmpdir(), "m0-ui-correction-"));
 const classificationsPath = join(temporaryRoot, "classifications.json");
@@ -251,25 +314,71 @@ try {
     assert.ok(
         artifacts.testTraces.test_traces.every((trace) => !trace._reviewed),
     );
+    assert.ok(
+        artifacts.classifications.standard_reviews.every(
+            (standard) => !standard._reviewed,
+        ),
+    );
+    assert.ok(
+        !artifacts.classifications.items.some((item) =>
+            Object.hasOwn(item, "_standard_path"),
+        ),
+        "Unique standard review seeds must remain separate from surface seeds.",
+    );
 
-    const fooReview = artifacts.classifications.items.find(
-        (item) => item._record_id === foo.record_id,
+    reviewFixtureStandards(artifacts.classifications);
+    projectReviewedStandards(artifacts.classifications, observations);
+    assert.ok(
+        artifacts.classifications.items
+            .find((item) => item._record_id === foo.record_id)
+            .known_mismatches.includes("standard_stale"),
     );
-    markSurfaceReviewed(
+
+    const contractStandard = artifacts.classifications.standard_reviews.find(
+        (standard) =>
+            standard._standard_path === "docs/02-standards/ui/contract-file.md",
+    );
+    setStandardField(
         artifacts.classifications,
-        fooReview._record_id,
-        "Fixture surface reviewed.",
+        contractStandard._standard_path,
+        "authority_state",
+        "current_standard",
+    );
+    setStandardField(
+        artifacts.classifications,
+        contractStandard._standard_path,
+        "contract_alignment",
+        "aligned",
+    );
+    setStandardField(
+        artifacts.classifications,
+        contractStandard._standard_path,
+        "staleness_evidence",
+        [],
+    );
+    setStandardField(
+        artifacts.classifications,
+        contractStandard._standard_path,
+        "moved_responsibilities",
+        [],
+    );
+    markStandardReviewed(
+        artifacts.classifications,
+        contractStandard._standard_path,
+        "Fixture confirmed a current projection without stale guidance.",
         "fixture-reviewer",
     );
-    const fooTrace = artifacts.testTraces.test_traces.find(
-        (trace) => trace._surface_record_id === foo.record_id,
+    projectReviewedStandards(artifacts.classifications, observations);
+    assert.ok(
+        !artifacts.classifications.items
+            .find((item) => item._record_id === foo.record_id)
+            .known_mismatches.includes("standard_stale"),
+        "Projection must remove standard_stale when reviewed stale evidence is removed.",
     );
-    markTraceReviewed(
-        artifacts.testTraces,
-        fooTrace._trace_id,
-        "Fixture trace relationship reviewed.",
-        "fixture-reviewer",
-    );
+
+    reviewFixtureContractStandard(artifacts.classifications);
+    projectReviewedStandards(artifacts.classifications, observations);
+    markAllFixtureReviews(artifacts);
     writeJsonAtomic(classificationsPath, artifacts.classifications);
     writeJsonAtomic(tracesPath, artifacts.testTraces);
 
@@ -279,17 +388,36 @@ try {
         testTracesPath: tracesPath,
     });
     assert.equal(
-        artifacts.classifications.items.find(
-            (item) => item._record_id === foo.record_id,
-        )._reviewed,
+        artifacts.classifications.standard_reviews.every(
+            (standard) => standard._reviewed,
+        ),
         true,
+        "Reviewed standard values must survive unchanged recollection.",
     );
 
     const changedObservations = structuredClone(observations);
     const changedFoo = changedObservations.surfaces.find(
         (surface) => surface.record_id === foo.record_id,
     );
-    changedFoo.source_fingerprint = sourceFingerprint({ changed: true });
+    const changedStandard = changedFoo.standard_candidates.find(
+        (standard) =>
+            standard.path === "docs/02-standards/ui/components/foo.md",
+    );
+    const changedStandardHash = sourceFingerprint({ changed: true });
+    for (const surface of changedObservations.surfaces.filter((candidate) =>
+        candidate.standard_candidates.some(
+            (standard) => standard.path === changedStandard.path,
+        ),
+    )) {
+        surface.standard_candidates.find(
+            (standard) => standard.path === changedStandard.path,
+        ).source_sha256 = changedStandardHash;
+        surface.source_fingerprint = sourceFingerprint({
+            previous: surface.source_fingerprint,
+            changed_standard_path: changedStandard.path,
+            changed_standard_hash: changedStandardHash,
+        });
+    }
     artifacts = syncReviewArtifacts({
         observations: changedObservations,
         classificationsPath,
@@ -301,6 +429,38 @@ try {
         )._review_required,
         true,
     );
+    assert.equal(
+        artifacts.classifications.standard_reviews.find(
+            (standard) => standard._standard_path === changedStandard.path,
+        )._review_required,
+        true,
+    );
+    const unrelatedSurface = artifacts.classifications.items.find(
+        (item) =>
+            item.implementation_entry ===
+            "Modules/Notifications/resources/views/index.blade.php",
+    );
+    assert.equal(
+        unrelatedSurface._reviewed,
+        true,
+        "A changed standard must not invalidate unrelated reviewed surfaces.",
+    );
+    assert.ok(
+        artifacts.testTraces.test_traces.every((trace) => trace._reviewed),
+        "A standards-only change must not invalidate unrelated test traces.",
+    );
+
+    artifacts = syncReviewArtifacts({
+        observations,
+        classificationsPath,
+        testTracesPath: tracesPath,
+        resetReviews: true,
+    });
+    reviewFixtureStandards(artifacts.classifications);
+    projectReviewedStandards(artifacts.classifications, observations);
+    markAllFixtureReviews(artifacts);
+    writeJsonAtomic(classificationsPath, artifacts.classifications);
+    writeJsonAtomic(tracesPath, artifacts.testTraces);
 
     const supportPath = join(temporaryRoot, "issue29.json");
     writeJsonAtomic(supportPath, {
@@ -349,26 +509,54 @@ try {
         "issue_29_accepted_runtime_evidence",
     );
 
-    const renderClassifications = structuredClone(artifacts.classifications);
-    const renderTraces = structuredClone(artifacts.testTraces);
-    for (const item of renderClassifications.items) {
-        item._reviewed = true;
-        item._review_required = false;
-    }
-    for (const trace of renderTraces.test_traces) {
-        trace._reviewed = true;
-        trace._review_required = false;
-    }
     const markdown = renderInventoryMarkdown({
-        observations: changedObservations,
-        classifications: renderClassifications,
-        testTraces: renderTraces,
+        observations,
+        classifications: artifacts.classifications,
+        testTraces: artifacts.testTraces,
     });
     assert.match(markdown, /# M0 UI Current-State Inventory/);
     assert.match(markdown, /Issue #32 owns complete test-suite execution/);
     assert.ok(markdown.endsWith("\n"));
     assert.ok(!markdown.endsWith("\n\n"));
     assert.ok(readFileSync(classificationsPath, "utf8").length > 0);
+
+    const documentPath = join(temporaryRoot, "inventory.md");
+    const configPath = join(temporaryRoot, "config.json");
+    const validatorConfig = structuredClone(config);
+    validatorConfig.outputs = {
+        observations: join(temporaryRoot, "observations.json"),
+        classifications: classificationsPath,
+        test_traces: tracesPath,
+        document: documentPath,
+    };
+    writeJsonAtomic(validatorConfig.outputs.observations, observations);
+    writeJsonAtomic(configPath, validatorConfig);
+    writeTextAtomic(documentPath, markdown);
+
+    let validation = runFixtureValidator(configPath);
+    assert.equal(
+        validation.status,
+        0,
+        `Valid fixture artifacts must pass the validator.\n${validation.output}`,
+    );
+
+    const validClassifications = structuredClone(artifacts.classifications);
+    const emptySlugClassifications = structuredClone(validClassifications);
+    emptySlugClassifications.items[0].current_slug = "   ";
+    writeJsonAtomic(classificationsPath, emptySlugClassifications);
+    validation = runFixtureValidator(configPath);
+    assert.notEqual(validation.status, 0);
+    assert.match(validation.output, /current_slug must not be empty/);
+
+    const unreviewedStandardClassifications =
+        structuredClone(validClassifications);
+    unreviewedStandardClassifications.standard_reviews[0]._reviewed = false;
+    unreviewedStandardClassifications.standard_reviews[0]._review_required = true;
+    writeJsonAtomic(classificationsPath, unreviewedStandardClassifications);
+    validation = runFixtureValidator(configPath);
+    assert.notEqual(validation.status, 0);
+    assert.match(validation.output, /standard is not reviewed/);
+    writeJsonAtomic(classificationsPath, validClassifications);
 } finally {
     rmSync(temporaryRoot, { recursive: true, force: true });
 }
@@ -379,7 +567,139 @@ console.log(
         `Collected fixture surfaces: ${collection.surfaces.length}.`,
         "Verified section-aware contract parsing, false-link rejection,",
         "Module ViewData/DataProvider coverage, Dashboard contribution coverage,",
-        "asset grouping, explicit review reset, review preservation,",
-        "source-change invalidation, Issue #29 support import, and render-only output.",
+        "copied-template evidence, deterministic asset grouping, unique standard reviews,",
+        "projection invalidation, validator rejection, Issue #29 support import, and rendering.",
     ].join("\n"),
 );
+
+function reviewFixtureStandards(classifications) {
+    for (const standard of classifications.standard_reviews) {
+        const isContractFile =
+            standard._standard_path === "docs/02-standards/ui/contract-file.md";
+        setStandardField(
+            classifications,
+            standard._standard_path,
+            "implementation_alignment",
+            isContractFile ? "partial" : "aligned",
+        );
+        setStandardField(
+            classifications,
+            standard._standard_path,
+            "contract_alignment",
+            isContractFile ? "stale" : "aligned",
+        );
+        setStandardField(
+            classifications,
+            standard._standard_path,
+            "reference_or_example_alignment",
+            "partial",
+        );
+        setStandardField(
+            classifications,
+            standard._standard_path,
+            "authority_state",
+            isContractFile ? "mixed_authority" : "current_standard",
+        );
+        setStandardField(
+            classifications,
+            standard._standard_path,
+            "staleness_evidence",
+            isContractFile
+                ? [
+                      "Required testing/review shape conflicts with normalized Defaults exclusions.",
+                  ]
+                : [],
+        );
+        setStandardField(
+            classifications,
+            standard._standard_path,
+            "moved_responsibilities",
+            isContractFile
+                ? [
+                      "Testing results and manual readiness moved outside normalized contracts.",
+                  ]
+                : [],
+        );
+        markStandardReviewed(
+            classifications,
+            standard._standard_path,
+            `Reviewed fixture direct evidence for ${standard._standard_path}.`,
+            "fixture-reviewer",
+        );
+    }
+}
+
+function reviewFixtureContractStandard(classifications) {
+    const path = "docs/02-standards/ui/contract-file.md";
+    setStandardField(
+        classifications,
+        path,
+        "implementation_alignment",
+        "partial",
+    );
+    setStandardField(classifications, path, "contract_alignment", "stale");
+    setStandardField(
+        classifications,
+        path,
+        "reference_or_example_alignment",
+        "partial",
+    );
+    setStandardField(
+        classifications,
+        path,
+        "authority_state",
+        "mixed_authority",
+    );
+    setStandardField(classifications, path, "staleness_evidence", [
+        "Required testing/review shape conflicts with normalized Defaults exclusions.",
+    ]);
+    setStandardField(classifications, path, "moved_responsibilities", [
+        "Testing results and manual readiness moved outside normalized contracts.",
+    ]);
+    markStandardReviewed(
+        classifications,
+        path,
+        "Reviewed fixture contract standard contradiction.",
+        "fixture-reviewer",
+    );
+}
+
+function markAllFixtureReviews(artifacts) {
+    for (const item of artifacts.classifications.items) {
+        markSurfaceReviewed(
+            artifacts.classifications,
+            item._record_id,
+            `Reviewed fixture surface ${item._record_id}.`,
+            "fixture-reviewer",
+        );
+    }
+
+    for (const trace of artifacts.testTraces.test_traces) {
+        markTraceReviewed(
+            artifacts.testTraces,
+            trace._trace_id,
+            `Reviewed fixture trace ${trace._trace_id}.`,
+            "fixture-reviewer",
+        );
+    }
+}
+
+function runFixtureValidator(configPath) {
+    const result = spawnSync(
+        process.execPath,
+        [
+            resolve(
+                repositoryRoot,
+                "scripts/check-m0-ui-current-state-inventory.mjs",
+            ),
+            "--config",
+            configPath,
+        ],
+        { cwd: repositoryRoot, encoding: "utf8" },
+    );
+
+    return {
+        status: result.status,
+        output: `${result.stdout ?? ""}${result.stderr ?? ""}`,
+    };
+}

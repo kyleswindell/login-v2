@@ -129,6 +129,7 @@ function collectAssetSystems({ files, config, surfaces, claimedFiles }) {
                 !file.path.endsWith("/AGENTS.md") &&
                 !file.path.endsWith(".svg"),
         );
+        const groupEntry = selectAssetGroupEntry(members);
         const type = key === "icons" ? "icon_system" : "pictogram_system";
         const memberPaths = members.map((file) => file.path).sort();
 
@@ -137,15 +138,15 @@ function collectAssetSystems({ files, config, surfaces, claimedFiles }) {
                 surfaceType: type,
                 identity: `${key}-system`,
                 currentSlug: key,
-                declaredUiKey: contracts[0]?.identity.ui_key ?? null,
+                declaredUiKey: firstNonBlankValue(
+                    contracts[0]?.identity.ui_key,
+                ),
                 bladeAliases: uniqueSorted(
                     implementationCandidates
                         .filter((file) => file.path.endsWith(".blade.php"))
                         .map((file) => deriveBladeAlias(file.path)),
                 ),
-                implementationEntry:
-                    selectNonContractImplementation(implementationCandidates)
-                        ?.path ?? "unknown",
+                implementationEntry: groupEntry.path,
                 supportFiles: materialSupport.map((file) => file.path),
                 contracts,
                 ownershipCandidate: uiOwnership(),
@@ -166,6 +167,7 @@ function collectAssetSystems({ files, config, surfaces, claimedFiles }) {
                     ).length,
                     member_path_sha256: sourceFingerprint(memberPaths),
                     sample_paths: memberPaths.slice(0, 20),
+                    representative_kind: groupEntry.kind,
                 },
                 evidenceSource: uniqueSorted([
                     ...contracts.map((contract) => `path:${contract.path}`),
@@ -223,8 +225,10 @@ function collectElementSurfaces({ files, fileByPath, surfaces, claimedFiles }) {
             createBaseSurface({
                 surfaceType: "element",
                 identity: root,
-                currentSlug: contracts[0]?.identity.slug ?? slug,
-                declaredUiKey: contracts[0]?.identity.ui_key ?? null,
+                currentSlug: contractSlugOrFallback(contracts, slug),
+                declaredUiKey: firstNonBlankValue(
+                    contracts[0]?.identity.ui_key,
+                ),
                 bladeAliases: uniqueSorted(
                     implementationCandidates
                         .filter((file) => file.path.endsWith(".blade.php"))
@@ -344,10 +348,13 @@ function collectComponentSurfaces({ files, surfaces, claimedFiles }) {
             createBaseSurface({
                 surfaceType,
                 identity: root,
-                currentSlug:
-                    contracts[0]?.identity.slug ??
-                    relativeRoot.replaceAll("/", "-"),
-                declaredUiKey: contracts[0]?.identity.ui_key ?? null,
+                currentSlug: contractSlugOrFallback(
+                    contracts,
+                    physicalComponentSlug(relativeRoot),
+                ),
+                declaredUiKey: firstNonBlankValue(
+                    contracts[0]?.identity.ui_key,
+                ),
                 bladeAliases: aliasesForComponentRoot(
                     root,
                     rootFiles,
@@ -753,6 +760,14 @@ function enrichSurface(surface, files, fileByPath) {
             source_fingerprint: test.source_fingerprint,
         })),
         asset_group_summary: surface.asset_group_summary,
+        ...(standards.length > 0
+            ? {
+                  standards: standards.map((standard) => ({
+                      path: standard.path,
+                      source_sha256: standard.source_sha256,
+                  })),
+              }
+            : {}),
     });
 
     return {
@@ -779,6 +794,7 @@ function enrichSurface(surface, files, fileByPath) {
         contract_api_evidence: compactContractEvidence(
             surface.contracts,
             apiComparison,
+            surface.surface_type,
         ),
         standard_candidates: standards,
         metadata_evidence: metadata,
@@ -1157,7 +1173,7 @@ function inspectBrowserEvidence(tests) {
     };
 }
 
-function compactContractEvidence(contracts, comparison) {
+function compactContractEvidence(contracts, comparison, surfaceType) {
     return {
         contract_paths: contracts.map((contract) => contract.path),
         profiles: uniqueSorted(contracts.map((contract) => contract.profile)),
@@ -1197,7 +1213,44 @@ function compactContractEvidence(contracts, comparison) {
         parse_statuses: uniqueSorted(
             contracts.map((contract) => contract.parse_status),
         ),
+        quality: contracts.map((contract) =>
+            compactContractQuality(contract, surfaceType),
+        ),
         comparison,
+    };
+}
+
+function compactContractQuality(contract, surfaceType) {
+    const typeConflict =
+        surfaceType === "pattern" && contract.identity.type === "element";
+    const groupConflict =
+        surfaceType === "pattern" &&
+        contract.identity.group === "Foundation Elements";
+    const genericTemplateLifecycle =
+        contract.template_copy &&
+        contract.lifecycle_status === "legacy-compatible";
+
+    return {
+        actual_path: contract.path,
+        declared_header_path: contract.declared_header_path,
+        header_path_matches_actual: contract.header_path_matches_actual,
+        template_copy: contract.template_copy,
+        identity_complete: contract.identity_complete,
+        declared_identity: contract.identity,
+        collected_surface_type: surfaceType,
+        identity_type_conflict: typeConflict,
+        identity_group_conflict: groupConflict,
+        generic_template_lifecycle_unsupported: genericTemplateLifecycle,
+        quality_reasons: uniqueSorted([
+            ...contract.quality_reasons,
+            ...(typeConflict ? ["collected_pattern_declared_as_element"] : []),
+            ...(groupConflict
+                ? ["collected_pattern_declared_in_element_group"]
+                : []),
+            ...(genericTemplateLifecycle
+                ? ["generic_template_lifecycle_not_surface_specific"]
+                : []),
+        ]),
     };
 }
 
@@ -1212,6 +1265,11 @@ function compactContractFingerprint(contract) {
         api: contract.api,
         subcomponents: contract.subcomponents,
         source_paths: contract.source_paths,
+        declared_header_path: contract.declared_header_path,
+        header_path_matches_actual: contract.header_path_matches_actual,
+        template_copy: contract.template_copy,
+        identity_complete: contract.identity_complete,
+        quality_reasons: contract.quality_reasons,
     };
 }
 
@@ -1267,6 +1325,33 @@ function generateMismatchCandidates({
         surface.contracts.some((contract) => contract.api.props.length > 0)
     ) {
         mismatches.push("investigate");
+    }
+
+    if (surface.contracts.some((contract) => contract.template_copy)) {
+        mismatches.push("contract_stale");
+    }
+
+    if (
+        surface.contracts.some(
+            (contract) =>
+                contract.declared_header_path !== null &&
+                contract.header_path_matches_actual === false,
+        )
+    ) {
+        mismatches.push("source_path_mismatch");
+    }
+
+    if (
+        surface.surface_type === "pattern" &&
+        surface.contracts.some(
+            (contract) =>
+                contract.identity.type === "element" ||
+                contract.identity.group === "Foundation Elements" ||
+                (contract.template_copy &&
+                    contract.lifecycle_status === "legacy-compatible"),
+        )
+    ) {
+        mismatches.push("lifecycle_conflict");
     }
 
     return uniqueSorted(mismatches);
@@ -1476,6 +1561,50 @@ function selectNonContractImplementation(files) {
     })[0];
 }
 
+function selectAssetGroupEntry(members) {
+    const eligible = members.filter(
+        (file) =>
+            !isContractSource(file.path, file.content ?? "") &&
+            !file.path.includes("/__tests__/") &&
+            !file.path.endsWith("/reference.php") &&
+            !file.path.endsWith("/AGENTS.md") &&
+            !file.path.endsWith(".svg"),
+    );
+    const implementation = selectNonContractImplementation(eligible);
+
+    if (implementation) {
+        return {
+            path: implementation.path,
+            kind: "implementation_or_manifest",
+        };
+    }
+
+    const svg = [...members]
+        .filter((file) => file.path.endsWith(".svg"))
+        .sort((left, right) => left.path.localeCompare(right.path))[0];
+
+    if (svg) {
+        return { path: svg.path, kind: "representative_svg" };
+    }
+
+    const contract = [...members]
+        .filter((file) => isContractSource(file.path, file.content ?? ""))
+        .sort((left, right) => left.path.localeCompare(right.path))[0];
+
+    if (contract) {
+        return { path: contract.path, kind: "contract_group_root" };
+    }
+
+    const first = [...members].sort((left, right) =>
+        left.path.localeCompare(right.path),
+    )[0];
+
+    return {
+        path: first?.path ?? "unknown",
+        kind: first ? "group_member_fallback" : "unknown",
+    };
+}
+
 function implementationPriority(path) {
     if (path.endsWith(".css") && /tokens?|theme-seed|variables/i.test(path)) {
         return 0;
@@ -1546,9 +1675,29 @@ function findStandardCandidates(files, surfaceType, slug, contracted) {
         .map((file) => ({
             path: file.path,
             claimed_scope: firstHeadingOrTitle(file.content),
-            authority_state: documentStatus(file.content),
+            claimed_authority_state: documentStatus(file.content),
+            object_sha: file.object_sha,
+            source_sha256: file.source_sha256,
             evidence_source: [`path:${file.path}`],
         }));
+}
+
+function contractSlugOrFallback(contracts, fallback) {
+    return firstNonBlankValue(contracts[0]?.identity.slug) ?? fallback;
+}
+
+function physicalComponentSlug(relativeRoot) {
+    const parts = relativeRoot.split("/");
+    return (parts[0] === "patterns" ? parts.slice(1) : parts).join("-");
+}
+
+function firstNonBlankValue(value) {
+    if (typeof value !== "string") {
+        return null;
+    }
+
+    const trimmed = value.trim();
+    return trimmed === "" ? null : trimmed;
 }
 
 function collectDependencies(files) {

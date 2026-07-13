@@ -4,7 +4,7 @@
     "repository": "kyleswindell/login-v2",
     "inventory_baseline": "1d103f5fa47aab8c8adfba8ea134dd29540426fe",
     "expected_execution_base": "0ead8c7b1e0e6ba447a5da6376ff27884daabcc7",
-    "correction_start_head": "2c6b7b49bceb55c16b22a876a2837f1664a08ad1",
+    "correction_start_head": "2f0736b62902a8ede9807385e666e03625e63f74",
     "branch_name": "m0/issue-30-ui-inventory",
     "outputs": {
         "observations": "docs/07-planning/00-overview/evidence/m0-ui-current-state-observations.json",

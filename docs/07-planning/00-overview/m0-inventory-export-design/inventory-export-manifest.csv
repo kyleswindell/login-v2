@@ -1,0 +1,1 @@
+export_id,inventory_type,inventory_baseline_sha,source_schema_version,export_schema_version,source_artifact_path,source_artifact_sha256,export_file,row_count,exported_at_utc,generator_version,encoding,delimiter,line_ending,status

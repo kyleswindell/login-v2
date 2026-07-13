@@ -1,0 +1,1 @@
+export_id,inventory_baseline_sha,source_schema_version,export_schema_version,surface_file_id,surface_id,file_role,path,is_primary,exists_at_baseline,registration_state,source_blob_oid,source_sha256,notes

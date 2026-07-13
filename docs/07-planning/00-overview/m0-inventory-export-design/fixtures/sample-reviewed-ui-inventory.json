@@ -1,0 +1,9 @@
+{
+  "fixture_status": "design_placeholder",
+  "authoritative_source": "reviewed_json",
+  "source_schema_version": "pending_issue_30_acceptance",
+  "inventory_type": "ui",
+  "inventory_baseline_sha": null,
+  "reviewed_at_utc": null,
+  "surfaces": []
+}

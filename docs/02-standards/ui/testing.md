@@ -19,12 +19,12 @@ Element tests enforce global API boundaries. Component tests enforce the exact E
 
 Use these folders for UI API-owned tests:
 
-| UI surface | Test folder |
-| --- | --- |
-| Component | `resources/views/components/ui/{component}/__tests__/` |
-| Foundation Element | `resources/views/elements/{element}/__tests__/` |
+| UI surface         | Test folder                                            |
+| ------------------ | ------------------------------------------------------ |
+| Component          | `resources/views/components/ui/{component}/__tests__/` |
+| Foundation Element | `resources/views/elements/{element}/__tests__/`        |
 
-Pattern-owned tests should use the app test tree or a future co-located Pattern source folder when that owner exists. Rendered evidence route and catalog coverage remains in `owner-specific feature tests`; shared UI static/unit helpers may live under `tests/Unit/Ui/`.
+Pattern-owned tests belong in the owner-local Pattern bundle at `resources/views/components/patterns/{pattern}/__tests__/` when that bundle exists. Existing root-located Pattern tests are transitional current placement until deterministic discovery and migration are accepted. Cross-Pattern and repository-wide test infrastructure may remain beneath root `tests/`.
 
 Executable test locations are future/expected ownership paths when a folder does not exist yet. Do not create executable test folders from documentation requirements alone.
 

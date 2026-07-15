@@ -102,7 +102,7 @@ Those concerns belong to later Goal 3 phases, bounded implementation issues, or 
 | [2.3 Cross-Cutting Technical Code](2.3%20Cross-Cutting%20Technical%20Code.md)                             | Records how broadly consumed technical behavior retains one explicit responsibility owner.                             | planned |
 | [2.4 Delivery-Code Organization](2.4%20Delivery-Code%20Organization.md)                                   | Records how web, API, console, webhook, and presentation delivery code follows behavior ownership.                     | planned |
 | [2.5 Structural Consistency And Exceptions](2.5%20Structural%20Consistency%20And%20Exceptions.md)         | Records mandatory structural boundaries, normal variation, and the bounded exception policy.                           | planned |
-| [2.90 Surface Reclassification](2-90-surface-host-registry-reclassification.md)                          | Corrects the earlier Surface model by separating UI presentation from Host Registry and contribution responsibilities. | planned |
+| [2.90 Surface Reclassification](2.90%20Surface%20Reclassification.md)                                     | Corrects the earlier Surface model by separating UI presentation from Host Registry and contribution responsibilities. | planned |
 
 ## 5. Resolved Phase 2 Direction
 
@@ -209,11 +209,11 @@ Phase 2 is ready for formal closeout when:
 * [X] this index and all six detailed Phase 2 documents use their accepted document formats;
 * [X] the Goal 3 target-architecture artifact contains the accepted Phase 2 result;
 * [X] the Surface definition is reconciled with Decision 2.90;
-* [ ] required definition work is created or explicitly assigned;
-* [x] stale conflicting terminology is removed or marked transitional;
-* [ ] the parent Goal 3 index routes to this Phase 2 index;
-* [ ] `npm run lint:docs:guardrails` passes;
-* [ ] `git diff --check` passes;
+* [X] required definition work is created or explicitly assigned;
+* [X] stale conflicting terminology is removed or marked transitional;
+* [X] the parent Goal 3 index routes to this Phase 2 index;
+* [X] `npm run lint:docs:guardrails` passes;
+* [X] `git diff --check` passes;
 * [ ] the repository owner completes the Issue #49 Final Acceptance Record.
 
 ## 9. Subfolders

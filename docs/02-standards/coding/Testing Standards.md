@@ -134,7 +134,7 @@ Add or update tests when a change affects:
 - database schema behavior
 - registry/contribution behavior
 - UI component public contracts
-- business module workflows
+- Module workflows
 
 For access-sensitive behavior, test both allowed and denied paths.
 

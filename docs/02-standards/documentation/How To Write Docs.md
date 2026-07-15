@@ -245,10 +245,13 @@ Obsidian links may be used as optional graph aids. They must not be the only pat
 
 Use current project vocabulary:
 
-- Core Capability
-- Platform Surface
-- Business Module
-- Shared UI
+- Core capability
+- Module
+- UI
+- Laravel integration
+- Surface
+- Delivery Adapter
+- Registry
 - Planning Document
 - canonical owner
 - implementation slice
@@ -263,10 +266,11 @@ Update documentation in the same work cycle when a change affects:
 
 - setup, build, tests, deployment, release, cron, queues, services, or recovery
 - user, admin, tenant, workspace, or public behavior
-- Core Capability behavior
-- Platform Surface behavior
-- Business Module behavior
-- Shared UI contracts
+- Core capability behavior
+- Module behavior
+- UI contracts
+- Laravel integration
+- owner-specific Surface presentation, Delivery Adapter behavior, or Host-owned Registry behavior
 - architecture or ownership
 - schema or data contracts
 - authentication, authorization, audit, security, monitoring, secrets, or data movement

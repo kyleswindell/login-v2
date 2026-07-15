@@ -15,7 +15,7 @@ This matrix is a planning artifact. It does not replace audit contracts, monitor
 | Source ID | Stable planning key for the evidence source. |
 | Source | System or capability that produces the evidence. |
 | Evidence Examples | Events, records, files, logs, or metadata that may be preserved. |
-| Owner | Core capability, platform surface, business module, or operations owner. |
+| Owner | Core capability, Module, UI, Laravel integration, or operations owner; Surface, Delivery Adapter, and Registry remain technical responsibilities beneath that owner. |
 | Required Fields | Fields needed for reconstruction and correlation. |
 | Redaction / Handling | Sensitive-value handling expectation. |
 | Retention / Export | Planning expectation for retention or investigation export. |

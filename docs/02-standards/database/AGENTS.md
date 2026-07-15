@@ -146,15 +146,20 @@ Do not reintroduce V1 Perfex `install.php` or `tbl`-prefixed schema conventions 
 
 Use current project vocabulary:
 
-- Core Capability
-- Platform Surface
-- Business Module
-- Shared UI
+- Core capability
+- Module
+- UI
+- Laravel integration
+- Surface
+- Delivery Adapter
+- Registry
 - Planning Document
 - canonical owner
 - implementation slice
 - GitHub issue
 - GitHub Project
+
+Surface, Delivery Adapter, Registry, and other technical responsibilities must be classified beneath an explicit Core, Module, or UI owner. Existing `app/Platform/*` paths describe transitional current placement only and must not be treated as target ownership or a destination for new canonical work.
 
 ---
 
@@ -187,7 +192,7 @@ Database standards in this folder should define:
 - what table docs or database indexes must be updated
 - what testing or verification is expected
 - what stop conditions apply
-- how Core / Platform / Business Module ownership affects database design
+- how Core, Module, UI, and Laravel integration boundaries affect database design
 
 They should not:
 
@@ -196,7 +201,7 @@ They should not:
 - include broad historical commentary
 - preserve deprecated Perfex module behavior as active rules
 - reintroduce deprecated `/docs/08-active` workflow language
-- introduce conflicting terminology for Core, Platform, Modules, Shared UI, or Planning
+- introduce conflicting terminology for Core, Modules, UI, Laravel integration, or Planning
 - define one-off rules for a single table unless they are being promoted into a reusable standard
 
 ---
@@ -230,7 +235,7 @@ Stop and ask before editing when:
 - the correct canonical owner is unclear
 - a change would move standards across branches
 - a standard would change PostgreSQL assumptions
-- a standard would change Core / Platform / Module ownership
+- a standard would change Core, Module, or UI ownership or Laravel integration boundaries
 - a standard would affect auth, access, audit, security, data governance, data protection, retention, deletion, exports, or deployment beyond database documentation
 - a change would require broad link rewrites
 - a change would rename many files or paths

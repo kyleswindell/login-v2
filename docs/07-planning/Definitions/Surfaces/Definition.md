@@ -6,9 +6,9 @@ status: active
 owner: architecture
 canonical: true
 canonical_path: docs/07-planning/Definitions/Surfaces/Definition.md
-parent: docs/07-planning/index.md
+parent: docs/07-planning/Definitions/Index.md
 template: docs/09-reference/templates/docs/_definition.md
-summary: Defines a Surface as an assembled interaction boundary through which Core- or Module-owned application behavior is exposed.
+summary: Defines a Surface as an owner-specific UI presentation and interaction layer through which Core- or Module-owned behavior is presented.
 -->
 
 # Surface Definition
@@ -27,45 +27,81 @@ Parent: [Definitions Index](../Index.md)
 
 ## 1. Definition
 
-A Surface is a distinct assembled interaction boundary through which application behavior is exposed to a user, operator, system, or external caller.
+A Surface is an owner-specific UI presentation and interaction layer through which Core- or Module-owned application behavior is presented to a user or operator.
 
-A Surface is defined by how behavior is encountered or accessed. It does not determine who owns the underlying behavior.
+A Surface provides a coherent interface context, such as a page, destination, area, or multi-step interaction flow.
 
-Core and Modules retain ownership of the behavior, state, contracts, authorization, persistence, and lifecycle exposed through a Surface. UI owns reusable presentation infrastructure used to render interactive Surfaces.
+The applicable Core capability or Module owns the behavior being presented. UI owns the reusable presentation infrastructure used to render the Surface.
+
+A Surface may consume resolved output from a Host-owned Registry, but it is not itself:
+
+* the Host;
+* the Registry;
+* an extension point;
+* a contribution mechanism;
+* a delivery channel;
+* a source-of-truth application owner.
 
 ## 2. Classification Rule
 
-An interface is a Surface when it provides:
+An interface qualifies as a Surface when it provides:
 
-* a recognizable entry point;
-* a defined audience or caller;
-* a consistent interaction or response model;
-* assembled behavior or content supplied by one or more owners.
+* a recognizable UI destination or interaction context;
+* a defined user or operator audience;
+* a coherent presentation and interaction model;
+* owner-specific composition of behavior or content;
+* presentation through UI-owned reusable layouts, components, patterns, Elements, or controls.
 
-A Surface may include multiple routes, views, endpoints, commands, or contribution regions when they form one coherent interaction boundary.
+A Surface may span multiple routes, views, sections, or interaction steps when they form one coherent UI experience.
 
-A single route, view, controller, component, or invocation channel is not automatically a Surface.
+A single route, Blade view, controller, component, layout, or form is not automatically a Surface.
+
+The following are not Surfaces:
+
+* APIs;
+* console commands;
+* webhooks;
+* background jobs;
+* queue consumers;
+* scheduled processes;
+* other non-UI invocation channels.
+
+Those are delivery adapters or channels and are classified separately.
+
+A capability or Module may have:
+
+* a Surface and a Registry;
+* a Surface without a Registry;
+* a Registry without a Surface;
+* neither.
+
+The presence of one does not imply the presence or ownership of the other.
 
 ## 3. Owns
 
 A Surface may own:
 
-* interaction-level composition;
-* entry-point organization;
-* channel-specific presentation or response structure;
-* navigation or interaction flow within the Surface;
-* adaptation of owner-supplied behavior into the Surface experience;
-* integration of contributions from multiple owners;
-* Surface-specific documentation and review requirements.
+* owner-specific page and interaction composition;
+* Surface-specific navigation composition;
+* presentation of owner-controlled application behavior;
+* Surface-specific PageData;
+* Surface-specific ViewModels;
+* Surface-specific presenters or renderers;
+* selection and arrangement of UI-owned layouts and components;
+* interaction flow within the Surface;
+* presentation of resolved Host Registry output;
+* Surface-specific documentation;
+* Surface-specific browser, accessibility, and manual-review requirements.
 
-Examples include:
+Examples may include:
 
-* the authenticated Dashboard;
-* the Settings area;
-* the Account area;
-* the Global Administration interface;
-* a public API;
-* an operator-facing command interface.
+* the authenticated Dashboard Surface;
+* the Settings Surface;
+* the Account Surface;
+* the Global Administration Surface;
+* an owner-specific setup or onboarding Surface.
+
+The presence of a Surface does not transfer ownership of the presented behavior from its Core capability or Module.
 
 ## 4. Must Not Own
 
@@ -74,72 +110,127 @@ A Surface must not own:
 * authoritative business or system behavior;
 * Core or Module state;
 * persistence rules;
-* authorization policy;
+* authoritative authorization policy;
 * reusable UI infrastructure;
+* application-wide UI Elements, Components, Patterns, Layouts, tokens, or controls;
+* Host Registry contracts;
+* extension-point definitions;
+* contribution discovery;
+* contribution validation;
+* contribution ordering or resolution;
+* another owner’s contributed behavior;
 * Module lifecycle or discovery;
-* behavior solely because it is exposed through the Surface;
+* HTTP request validation;
+* route invocation;
+* API response policy;
+* console input handling;
+* webhook transport handling;
+* behavior solely because it is visible through the Surface;
 * another owner’s internal implementation.
 
 A Surface is not:
 
-* a fourth source-of-truth owner;
-* automatically a repository folder;
+* a fourth application ownership area alongside Core, Modules, and UI;
+* automatically a top-level repository branch;
+* synonymous with a Host;
+* synonymous with a Registry;
 * synonymous with a route or Blade view;
 * synonymous with an invocation channel;
-* a substitute for Core, Module, or UI ownership.
+* a substitute for Core, Module, UI, or Laravel integration ownership.
 
 ## 5. Dependency Rules
 
 A Surface:
 
-* may consume public contracts from Core and Modules;
-* may use reusable UI contracts for interactive presentation;
-* may assemble contributions from multiple owners;
-* may adapt behavior to web, API, command, or other interaction models;
-* must not access owner internals;
-* must not move authoritative behavior into presentation or delivery code;
-* must preserve the authorization and lifecycle rules defined by the behavior owner.
+* remains owned by the Core capability or Module whose UI presentation it composes;
+* may invoke owner-controlled Actions, Queries, workflows, and public contracts;
+* may depend on UI-owned reusable presentation contracts and infrastructure;
+* may consume resolved output from a Registry owned by the same Host;
+* may present contributions supplied by other owners after they have been validated and resolved by the Host Registry;
+* may receive transport-neutral data from an applicable delivery adapter;
+* must not access another owner’s internal implementation;
+* must not discover, validate, order, or resolve contributions independently of the Host Registry;
+* must not move authoritative behavior into presentation code;
+* must preserve authorization and lifecycle rules defined by the behavior owner;
+* must remain independent of HTTP, API, console, webhook, or other transport-specific policy.
 
-Core and Modules must remain usable independently of a particular Surface unless that Surface is explicitly part of their public contract.
+Core or Module domain and system behavior must not depend on Surface implementation.
+
+UI-owned reusable infrastructure must not depend on a capability- or Module-specific Surface.
+
+Delivery adapters may invoke owner behavior and select an applicable Surface response, but delivery code and Surface presentation remain separate responsibilities.
 
 ## 6. Target Status
 
 Status: permanent
 
-Surface is a permanent architecture concept.
+Surface is a permanent architecture concept representing owner-specific UI presentation and interaction.
 
-A Surface is not a canonical ownership area alongside Core, Modules, and UI.
+Surface is not a permanent source-of-truth ownership area alongside Core, Modules, and UI.
 
-The physical organization of Surface-specific adapters, presentation, routes, and documentation is defined by later Goal 03 phases.
+The working technical-role vocabulary may represent Surface-specific code beneath:
 
-The same Surface definition may apply across multiple repository and documentation locations.
+```text
+Surface/
+```
+
+The exact physical placement, namespace, internal subfolders, and naming rules remain owned by later Goal 3 repository-tree, placement, and naming decisions.
+
+API, console, webhook, queue, scheduler, and background entry points are permanently excluded from the Surface definition and remain delivery adapters or invocation channels.
+
+The previous use of Surface as a general assembled interaction boundary or extension Registry is superseded.
 
 ## 7. Accepted Decision
 
 Status: accepted
 
-A Surface is the assembled interaction boundary through which application behavior is exposed.
+A Surface is an owner-specific UI presentation and interaction layer through which Core- or Module-owned behavior is presented.
 
-It is broader than an individual route, view, endpoint, or command, but narrower than an architecture owner.
+The Surface owner controls Surface-specific composition, presentation data, navigation composition, and interaction flow. UI controls the reusable presentation infrastructure used by the Surface. The applicable Core capability or Module retains ownership of the behavior, state, contracts, authorization, persistence, and lifecycle being presented.
 
-A Surface may combine behavior from multiple owners while every underlying responsibility retains exactly one primary Core, Module, or UI owner.
+A Host may expose a Registry containing explicit extension points. Other owners may supply Contributions through their own contribution integration. The Host Registry validates and resolves those Contributions. A separate Surface may then present the resolved result.
+
+The accepted relationship is:
+
+```text
+Contributor-owned behavior
+    ↓
+Contributor-owned contribution
+    ↓
+Host-owned Registry
+    ↓
+Optional owner-specific Surface
+    ↓
+UI-owned reusable presentation infrastructure
+```
+
+This decision corrects the earlier definition of Surface as an assembled interaction boundary that could include APIs, console commands, webhooks, or Registry responsibilities.
+
+It does not reopen the accepted Core, Module, UI, Laravel integration, or transitional `app/Platform` boundaries.
 
 ## 8. Open Questions
 
-The following decisions remain deferred:
+No open question remains about the architectural meaning of Surface.
 
-* which Surfaces require dedicated physical repository locations;
-* which Surface adapters remain colocated with their Core or Module owner;
-* how interactive, API, command, webhook, and background interaction boundaries are physically organized;
-* which Surface-specific naming conventions apply.
+The following implementation details remain deferred and do not change this definition:
 
-These questions are owned by later Goal 03 phases and do not change this definition.
+* exact physical placement of Surface-specific artifacts;
+* exact Surface namespace conventions;
+* exact internal organization of Pages, PageData, ViewModels, presenters, and navigation composition;
+* criteria for when a capability or Module requires a dedicated `Surface/` role;
+* final naming and casing conventions;
+* exact browser, accessibility, and manual-review proof required for each Surface.
+
+These decisions belong to later Goal 3 phases and applicable capability or Module contracts.
 
 ## 9. Related
 
-* [Temporary Surfaces README](../../temp/Surfaces/README.md)
 * [Definitions Index](../Index.md)
-* [M0 Target Repository Architecture](../../00-overview/m0-target-repository-architecture.md)
+* [Goal 3 Target Repository Architecture](../../Milestones/milestone-0/goal-3/target-repository-architecture.md)
+* [Phase 2 Repository Organization Index](../../Milestones/milestone-0/goal-3/phase-2/index.md)
+* [Phase 2.90 Surface, Host, And Registry Reclassification](../../Milestones/milestone-0/goal-3/phase-2/2-90-surface-host-registry-reclassification.md)
 * [ADR-0005: Core, Modules, And UI Ownership Taxonomy](../../../01-decisions/adr-0005-core-modules-ui-ownership-taxonomy.md)
 * [ADR-0006: Tenant, Instance, Workspace, Principal, And Invocation Vocabulary](../../../01-decisions/adr-0006-tenant-instance-workspace-principal-and-invocation-vocabulary.md)
+* [ADR-0007: Owner, Registry, And Identifier Key Conventions](../../../01-decisions/adr-0007-owner-registry-and-identifier-key-conventions.md)
 * Related GitHub issue: #48
+* Corrective planning issue: #49

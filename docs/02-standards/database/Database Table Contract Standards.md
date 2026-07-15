@@ -51,10 +51,9 @@ Table docs should make it possible for developers, reviewers, and Codex agents t
 
 This standard applies to documentation for:
 
-- Core Capability tables
-- Platform Surface tables
-- Business Module tables
-- registry tables
+- Core capability tables
+- Module tables
+- Host-owned Registry tables
 - settings and preferences tables
 - audit, monitoring, security, and evidence tables
 - join tables
@@ -150,15 +149,10 @@ Every table doc must identify the owning layer.
 
 Use one of:
 
-- Core Capability
-- Platform Surface
-- Business Module
-- Shared UI
-- Ops
-- Data
-- Security
+- Core capability
+- Module
 
-Also identify the specific capability, surface, or module when known.
+Also identify the specific capability or Module. Ops, Data, Security, Docs, and Tests may describe repository workflow or stewardship responsibilities, but they do not replace the application owner. UI and Laravel integration do not own durable application data. Surface, Delivery Adapter, and Registry are technical responsibilities beneath the application owner, not table-owner categories. A Host-owned Registry table remains owned by the Host's Core capability or Module; Surface presentation does not own persisted contribution data.
 
 Examples:
 
@@ -168,12 +162,12 @@ Examples:
 | `roles`                         | Core Access                |
 | `audit_events`                  | Core Audit                 |
 | `notification_registry_entries` | Core Notifications         |
-| `module_registry_entries`       | Platform / Module Registry |
-| `customers`                     | Customers Business Module  |
+| `module_registry_entries`       | Core Module Lifecycle Host Registry |
+| `customers`                     | Customers Module            |
 
-Platform tables must not silently become owners of Business Module domain data.
+Transitional Platform-named tables must not silently become owners of Module domain data.
 
-Business Module tables must not redefine Core Auth, Access, Audit, Notifications, Security, Settings, or DataProtection infrastructure.
+Module tables must not redefine Core Auth, Access, Audit, Notifications, Security, Settings, or DataProtection infrastructure.
 
 ---
 

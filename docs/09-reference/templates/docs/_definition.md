@@ -27,7 +27,7 @@ Parent: [Section Name Index](Index.md)
 
 ## 1. Definition
 
-Define the responsibility, architecture area, capability, Module, UI area, delivery Surface, framework boundary, or repository concept.
+Define the responsibility, architecture area, capability, Module, UI area, Surface, Delivery Adapter, framework boundary, or repository concept.
 
 State what distinguishes it from adjacent ownership areas.
 

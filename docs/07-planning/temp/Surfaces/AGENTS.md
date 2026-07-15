@@ -115,14 +115,15 @@ Folder-specific rules:
 
 When drafting Surface planning:
 
-* treat a Surface as an assembled interaction boundary
+* treat a Surface as an owner-specific UI presentation and interaction layer
 * do not treat a Surface as a fourth source-of-truth owner
 * preserve Core and Module ownership of behavior and state
 * preserve UI ownership of reusable presentation infrastructure
-* do not equate a Surface with one route, view, controller, component, or invocation channel
-* allow a Surface to combine contributions from multiple owners
+* do not classify APIs, console commands, webhooks, queues, schedulers, or background entry points as Surfaces; they are Delivery Adapters or invocation channels
+* keep Host-owned Registry discovery, validation, ordering, and resolution separate from Surface presentation
+* allow a Surface to present resolved Contributions from multiple owners without taking ownership of those Contributions
 * require each underlying responsibility to retain one primary owner
-* do not move business logic into Surface adapters or presentation code
+* do not move business logic into Delivery Adapters or Surface presentation code
 * do not assume that every Surface needs a centralized repository folder
 
 A proposal that contradicts the canonical Surface definition requires explicit architecture review.

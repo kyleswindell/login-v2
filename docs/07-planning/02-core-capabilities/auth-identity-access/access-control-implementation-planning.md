@@ -10,7 +10,7 @@ This document owns implementation sequencing and intent only. Final architecture
 
 ## Direction
 
-Use `app/Core/Access` for the governed IAM area, while keeping existing identity, audit, notification, and platform presentation owners independent.
+Use `app/Core/Access` for the governed IAM area, while keeping existing identity, audit, notification, and owner-specific Surface responsibilities independent.
 
 Target logical package direction:
 
@@ -29,8 +29,9 @@ app/Core/DataProtection/
 app/Core/Audit/
 app/Core/Notifications/
 app/Core/Settings/
-app/Platform/
 ```
+
+Existing `app/Platform/*` presentation paths are transitional current placement only. They establish no target owner, must not receive new canonical work, and move to the applicable Core capability or Module through Goal 3 migration planning.
 
 Access Control is the area owner and policy-orchestration owner. It is not the owner of every access-adjacent record, and it should not be treated as a business module.
 

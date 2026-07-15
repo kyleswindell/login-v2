@@ -6,7 +6,7 @@ status: active
 owner: architecture
 canonical: true
 canonical_path: docs/07-planning/Definitions/Laravel/Definition.md
-parent: docs/07-planning/index.md
+parent: docs/07-planning/Definitions/Index.md
 template: docs/09-reference/templates/docs/_definition.md
 summary: Defines Laravel as the framework, runtime, and composition system used across Login 2.0 ownership areas without making Laravel a source-of-truth application owner.
 -->
@@ -29,7 +29,7 @@ Parent: [Definitions Index](../Index.md)
 
 Laravel is the application framework, runtime, and composition system used by Login 2.0.
 
-Laravel provides the mechanisms through which Core, Modules, UI, and Surfaces are bootstrapped, registered, invoked, persisted, queued, scheduled, rendered, and tested.
+Laravel provides the mechanisms through which Core, Modules, UI, owner-specific Surfaces, and Delivery Adapters are bootstrapped, registered, invoked, persisted, queued, scheduled, rendered, and tested.
 
 Laravel is not a source-of-truth application owner. Application responsibilities remain owned by Core, Modules, or UI.
 
@@ -92,14 +92,14 @@ Laravel integration must not own:
 * persistence rules merely because Eloquent is used;
 * reusable UI infrastructure;
 * Module lifecycle or feature behavior;
-* Surface behavior beyond framework adaptation;
+* owner-specific Surface presentation merely because Laravel renders it;
 * generic technical-layer folders used as default homes for owner-specific artifacts.
 
 Root Laravel folders must not become competing application owners.
 
 ## 5. Dependency Rules
 
-Core, Modules, UI, and Surface adapters may use appropriate Laravel APIs and framework mechanisms.
+Core, Modules, UI, owner-specific Surface presentation, and Delivery Adapters may use appropriate Laravel APIs and framework mechanisms.
 
 Owner-specific Laravel artifacts should remain with their Core capability or Module when Laravel permits owner-local registration and discovery.
 

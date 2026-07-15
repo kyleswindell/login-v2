@@ -156,7 +156,7 @@ The planning matrix should track:
 | Notifications | Required user/operator notifications. |
 | Runbook | Response procedure when the threat materializes. |
 | Status | Planned, implemented, tested, failing, accepted-risk, deferred, or not-applicable. |
-| Owner | Core capability, platform surface, business module, or operations owner. |
+| Owner | Core capability, Module, UI, Laravel integration, or operations owner; Surface, Delivery Adapter, and Registry remain technical responsibilities beneath that owner. |
 
 The active planning artifact is [Threat-Control Traceability Matrix](threat-control-traceability-matrix.md).
 

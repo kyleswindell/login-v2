@@ -86,11 +86,11 @@ Examples:
 
 - Core Auth action under `app/Core/Auth/`
 - Core Access resolver under `app/Core/Access/`
-- Platform Navigation builder under `app/Platform/Navigation/`
+- Core Navigation builder under the owning Core capability
 - Orders query under `Modules/Orders/`
-- UI page data under the owning surface or module
+- UI page data under the Core capability or Module that owns the Surface
 
-Do not put all reusable objects under `app/Platform/`.
+Existing `app/Platform/*` paths are transitional current placement only. Do not place new canonical objects there; place them with the owning Core capability or Module.
 
 ---
 

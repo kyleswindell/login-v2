@@ -152,10 +152,11 @@ Do not place detailed implementation acceptance criteria in roadmap documents.
 
 Use for:
 
-- one Core Capability
-- one Platform Surface
-- one Business Module
-- one Shared UI system
+- one Core capability
+- one Module
+- one UI system
+- one Laravel integration boundary
+- one owner-specific Surface, Delivery Adapter, or Host-owned Registry responsibility
 - one cross-cutting technical subsystem
 
 This category may define target ownership, boundaries, dependencies, implementation slices, and promotion targets.

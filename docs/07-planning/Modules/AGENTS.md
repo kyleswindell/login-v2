@@ -224,7 +224,7 @@ Stop and report before editing when:
 * another document already owns the same subject
 * the change would introduce a competing Module definition inside this package
 * the proposed responsibility may actually be required Core behavior
-* the change would redefine Core, UI, delivery Surfaces, or Laravel integration without explicit scope
+* the change would redefine Core, UI, Delivery Adapters, or Laravel integration without explicit scope
 * a cross-Module dependency lacks a public contract or declared version relationship
 * physical placement is being used as the sole evidence of Module ownership
 * package completion and ownership classification are being conflated

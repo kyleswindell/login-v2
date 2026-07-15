@@ -40,7 +40,7 @@ Read this package in the following order:
 
 ## 3. Folder Contract
 
-This folder owns documentation for one clearly defined architecture area, capability, Module, UI area, delivery Surface, framework boundary, or repository responsibility.
+This folder owns documentation for one clearly defined architecture area, capability, Module, UI area, Surface, Delivery Adapter, framework boundary, or repository responsibility.
 
 Documents in this folder must:
 

@@ -58,7 +58,7 @@ Use this ownership split:
 | `app/Core/Settings` | App-owned deployment/security policy values, not raw environment secrets. |
 | `app/Core/DataProtection` | Private storage, export/download safety, data residency/retention expectations. |
 | `app/Core/Security/Secrets` | Environment secret handling, rotation, redaction, deploy credential inventory. |
-| `app/Platform/Console` | Optional internal evidence views after checks exist. |
+| Core Security Surface | Optional internal evidence views after checks exist. Current `app/Platform/Console` placement is transitional only; Goal 3 assigns target Core placement and no new canonical work belongs in the transitional path. |
 | Infrastructure/runbooks | Actual server, cloud, networking, user, backup, and deployment operations. |
 
 Laravel may define required checks, run app-level safety checks, record safe evidence, emit audit/monitoring events, notify owners, and block release through scripts/CI where possible. Laravel must not become a cloud control plane.

@@ -4,9 +4,11 @@ Status: Planning draft
 
 ## Purpose
 
-Plan the Blade view architecture for core admin/account pages, platform surfaces, and business module pages so the app can reuse components and patterns heavily without turning every page into an opaque dynamic renderer.
+Plan the Blade view architecture for Core admin/account pages, owner-specific Surfaces, and Module pages so the app can reuse components and patterns heavily without turning every page into an opaque dynamic renderer.
 
 This document owns implementation sequencing and intent only. Final UI standards, component contracts, pattern contracts, route contracts, and code conventions must be promoted to their owning docs before implementation.
+
+> **Transitional planning package:** The `03-platform-surfaces/` folder name and every `app/Platform/*` path in this document describe transitional current placement retained from the previous Platform Surface model. They do not establish target ownership. Content must be reclassified into its owning Core capability, Module, UI responsibility, Host Registry, Surface, or Delivery Adapter through Goal 3. No new canonical work should target `app/Platform/*`.
 
 ## Direction
 
@@ -46,7 +48,8 @@ Recommended registry-driven page flow:
 ```text
 Route
   -> Controller
-  -> Registry service
+  -> Host-owned Registry service
+  -> Resolved Contributions
   -> Surface/Page definition
   -> Renderer
   -> Pattern Blade component
@@ -62,7 +65,7 @@ Route
 | Purpose-built patterns | `resources/views/components/patterns` | reusable page/workflow compositions made from UI primitives | database queries, authorization decisions, domain mutation behavior |
 | URL views | `resources/views/account`, `resources/views/admin/*`, `Modules/*/resources/views` | thin page composition and pattern selection | duplicated layout logic, raw table rendering, repeated action markup, business rules |
 | ViewModels/PageData | `app/Core/*/ViewModels`, `Modules/*/ViewModels` | normalized display data for Blade | Blade markup, querying everything from views |
-| Renderers | `app/Platform/Surfaces/Renderers` | registry-driven page aggregation and contribution rendering | universal page generation, arbitrary form/table DSLs, domain behavior |
+| Renderers | Transitional current candidate: `app/Platform/Surfaces/Renderers`; target placement remains with the owning Core capability or Module | render resolved, authorized Contributions into an owner-specific Surface | Registry discovery, Contribution validation or ordering, universal page generation, arbitrary form/table DSLs, domain behavior |
 
 ## UI Primitives
 
@@ -298,7 +301,7 @@ Every business workflow
 Every one-off feature page
 ```
 
-Renderer direction:
+Transitional current renderer placement (not target authority):
 
 ```text
 app/Platform/Surfaces/
@@ -316,8 +319,7 @@ app/Platform/Surfaces/
 Renderers should:
 
 - accept typed page/surface definitions
-- filter or receive already-filtered visible entries according to Access rules
-- sort consistently
+- receive already-resolved, authorized Contributions from the Host-owned Registry
 - select known patterns
 - pass normalized data to Blade
 - keep registry-driven pages consistent
@@ -415,7 +417,7 @@ Renderers:
 - Use typed definitions.
 - Do not build a field-level generic form/page renderer.
 
-### 5. Business Module Template Update
+### 5. Module Template Update
 
 - Update `_Template` to include thin URL views, ViewModels, and approved pattern usage.
 - Keep business module views in `Modules/{Module}/resources/views`.
@@ -424,7 +426,7 @@ Renderers:
 ## Transition Rules
 
 - Do not create a universal renderer for all pages.
-- Do not move every feature page into Platform renderers.
+- Do not move every feature page into renderers.
 - Do not put business logic, authorization, or queries in Blade components.
 - Do not copy shell layout, navigation, or shared UI primitives into business modules.
 - Do not build arbitrary Blade path overrides as the extension mechanism.
@@ -437,7 +439,7 @@ Renderers:
 - Should core admin/account Blade views live centrally under `resources/views/admin/*` and `resources/views/account/*`, or package-local under `app/Core/*/resources/views`?
 - Which surfaces are renderer-driven versus normal ViewModel-driven?
 - What is the standard PageData/ViewModel shape for index, detail, form, settings, setup, and dashboard pages?
-- Should renderer classes live under `app/Platform/Surfaces/Renderers`, or should narrowly scoped renderers live with the owning platform surface?
+- How should current renderer classes move from transitional `app/Platform/Surfaces/Renderers` to the owning Core capability or Module Surface without moving Host Registry responsibilities into presentation code?
 - What is the first proof page for the thin URL view plus admin pattern plus ViewModel flow?
 
 Recommendation:
@@ -445,8 +447,8 @@ Recommendation:
 ```text
 Core/admin/account views live centrally under resources/views.
 Business module views live under Modules/{Module}/resources/views.
-Shared components/patterns live under resources/views/components.
-Renderers live under Platform only for registry-driven surfaces.
+UI components and patterns live under resources/views/components.
+Renderers remain with the owning Core capability or Module Surface and consume resolved Contributions from the Host-owned Registry. The current app/Platform path is transitional and receives no new canonical work.
 ```
 
 ## Related

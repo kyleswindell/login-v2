@@ -4,9 +4,11 @@ Status: Planning draft
 
 ## Purpose
 
-Plan the migration from the current broad "module" vocabulary to a mature package model that separates core platform capabilities from business modules.
+Plan the migration from the current broad "module" and Platform vocabulary to the owner-first Core, Module, UI, and Laravel integration model.
 
 This document owns sequencing and migration intent only. Final architecture vocabulary, registry schema contracts, route contracts, and code names must be promoted to their owning docs before implementation.
+
+> **Decision 2.90 reconciliation:** A Surface is an owner-specific UI presentation and interaction layer. APIs, commands, webhooks, queues, schedulers, and background entry points are Delivery Adapters or invocation channels. Host-owned Registries define and resolve Extension Points and Contributions remain owned by their Contributors. Every `app/Platform/*` path below is transitional current placement only; it establishes no target ownership and must not receive new canonical work. Goal 3 must assign each responsibility to Core, a Module, UI, or Laravel integration before migration.
 
 ## Problem
 
@@ -27,15 +29,15 @@ Runtime packages currently backed by `Modules/*`:
 
 | Package | Current Type | Target Classification | Migration Notes |
 | --- | --- | --- | --- |
-| `_Template` | Template, not runtime | Business module scaffolding template | Keep as a template. Rename docs language to package template or business module template when the package vocabulary changes. |
+| `_Template` | Template, not runtime | Module scaffolding template | Keep as a template and align it with the accepted Module package contract. |
 | `Account` | `core` module | Core identity/account capability | Owns current-user account surfaces and account-menu contribution. Target physical owner is `app/Core/Identity` with shared views under account/admin view paths. |
 | `Auth` | `core` module | Core authentication capability | Owns authentication, MFA, password mechanics, sessions, recovery, and security notification types. Target physical owner is `app/Core/Auth`. |
-| `Dashboard` | `core` module | Platform workspace surface | Owns the dashboard landing surface and future widget layout state. Target physical owner is `app/Platform/Dashboard`. Business modules may contribute widgets. |
+| `Dashboard` | `core` module | Core Dashboard capability with an owner-specific Surface and Host-owned widget Registry | Current `app/Platform/Dashboard` placement is transitional. Goal 3 assigns target Core placement; Modules may contribute widgets without transferring Contribution ownership. |
 | `Notifications` | `core` module | Core communication capability | Owns persistent notification delivery, inbox state, notification type registry, settings/preference contributions. Target physical owner is `app/Core/Notifications`. |
 | `Preferences` | `core` module | Core preferences capability | Owns personal defaults as account-level preference surfaces. Target physical owner is `app/Core/Preferences` if preferences grow beyond Identity-owned profile defaults and Notifications-owned notification preferences. |
 | `Roles` | `core` module | Core access object capability | Owns role/action bundles, permission registry consumption, role CRUD, and role-assignment notifications. Target physical owner is `app/Core/Access`; it is not a business module. |
-| `Settings` | `core` module | Core settings capability plus platform settings surface | Owns settings shell, value storage service, and settings contribution aggregation. Target physical owner is `app/Core/Settings` for domain logic with platform presentation under `app/Platform` or shared views as needed. |
-| `Setup` | `core` module | Platform setup/onboarding surface | Owns setup shell and setup contribution aggregation. Target physical owner is `app/Platform` unless a specific setup workflow belongs to a core capability. |
+| `Settings` | `core` module | Core Settings capability with an owner-specific Surface and Host-owned Registry | Owns settings behavior and the Registry separately from presentation. Target Core placement remains `app/Core/Settings`; no new canonical presentation belongs under transitional `app/Platform/*`. |
+| `Setup` | `core` module | Core Setup capability with an owner-specific Surface and Host-owned Registry | Goal 3 assigns target Core placement. Setup workflows remain with their applicable Core capability or Module and contribute through declared Extension Points. |
 
 Static manifest entries not yet backed by `Modules/*`:
 
@@ -43,9 +45,9 @@ Static manifest entries not yet backed by `Modules/*`:
 | --- | --- | --- | --- |
 | `users` | `core` module | Core identity lifecycle capability | Should be planned under `app/Core/Identity` before Access Control builds on user subjects. |
 | `logging` | `core` module | Core audit capability | Should own audit evidence under `app/Core/Audit`; platform audit views remain presentation. |
-| `ui-system` | `core` module | Shared UI infrastructure | Infrastructure capability, not user-facing business module. Shared components remain under `resources/views/components` and UI infrastructure may remain app-core. |
+| `ui-system` | `core` module | UI infrastructure | UI owns reusable presentation infrastructure; it is not a Core capability or Module. Shared components remain under `resources/views/components`. |
 | `runtime-security` | `core` module | Core application security infrastructure | Target owner is `app/Core/Security` for cross-cutting guardrails such as security headers, route sensitivity, safe redirects, request redaction, and release checks. |
-| `docs-viewer` | `platform_management` module | Internal platform tool | Target physical owner is `app/Platform/Docs`; keep separate from business modules and tenant workspace features. |
+| `docs-viewer` | `platform_management` module | Internal Module candidate | Current `app/Platform/Docs` placement is transitional. Goal 3 must assign an explicit Core or Module owner before migration. |
 | `retired-reference-viewer` | `platform_management` module | Transitional artifact to ignore/retire | Do not plan it as a module, core capability, or platform feature set. Do not include it in target architecture. |
 | `security-checklist` | `platform_management` module | Internal platform tool over security/readiness evidence | Keep as an internal tool. It may consume evidence from `app/Core/Security`, `app/Core/Access`, `app/Core/Identity`, `app/Core/DataProtection`, `app/Core/Audit`, or `app/Core/Monitoring`, but it should not own enforcement. |
 | `runtime-readiness` | `platform_management` module | Internal platform tool | Command/readiness package, not a business module. |
@@ -116,15 +118,6 @@ app/Core/
     ThreatDetection/
       DataExfiltration/
 
-app/Platform/
-  Dashboard/
-  Docs/
-  Navigation/
-  Shell/
-  Surfaces/
-  Setup/
-  Console/
-
 Modules/
   Customers/
   Inventory/
@@ -138,9 +131,10 @@ Ownership rule:
 
 ```text
 app/Core      = auth, identity, access, data governance, data protection, application security guardrails, audit, notifications, preferences, settings, monitoring, and security-sensitive domain logic
-app/Platform  = admin shell, navigation, dashboard, docs, setup UI, registry-driven surface renderers, and presentation glue
-Modules/*     = business feature modules users perform work inside
-resources/*   = shared UI system, Blade components, CSS, JS, and patterns
+Modules/*     = optional, cohesive feature packages
+resources/*   = UI system, Blade components, CSS, JS, and patterns
+Laravel integration locations = application-wide framework bootstrap, registration, and thin adaptation
+app/Platform/* = transitional current placement only; Goal 3 assigns every retained responsibility to Core, a Module, UI, or Laravel integration
 ```
 
 Keep `App\Models\User` as the Laravel authenticatable model. Identity lifecycle logic, profile/security state, invitations, lifecycle history, and session metadata should live under `app/Core/Identity` once implemented.
@@ -247,7 +241,7 @@ shipments.*
 View direction:
 
 ```text
-resources/views/components/     shared UI primitives, shell components, and patterns
+resources/views/components/     UI primitives, shell components, and patterns
 resources/views/account/        current-user account pages
 resources/views/admin/users/    privileged user administration
 resources/views/admin/access/   access control administration
@@ -256,21 +250,21 @@ resources/views/admin/audit/    audit log presentation
 resources/views/admin/settings/ settings presentation
 resources/views/admin/monitoring/ operational error/health presentation
 
-Modules/{BusinessModule}/resources/views/
+Modules/{Module}/resources/views/
 ```
 
 Recommended view composition direction:
 
 ```text
 Core/admin/account views live centrally under resources/views.
-Business module views live under Modules/{Module}/resources/views.
-Shared components and patterns live under resources/views/components.
-Registry-driven renderers live under app/Platform/Surfaces.
+Module views live under Modules/{Module}/resources/views.
+UI components and patterns live under resources/views/components.
+Owner-specific Surface renderers remain with the owning Core capability or Module and consume Contributions resolved by the Host-owned Registry. Current app/Platform/Surfaces placement is transitional only.
 ```
 
-Business module views should remain module-owned. Core admin/account URL views should stay thin, compose reusable page patterns with ViewModel/PageData, and avoid raw repeated table, action, form, authorization, and query logic. Renderers should be used only for registry-driven surfaces such as Settings, Preferences, Setup, Dashboard widgets, and evidence/check summaries.
+Module views should remain Module-owned. Core admin/account URL views should stay thin, compose reusable UI patterns with ViewModel/PageData, and avoid raw repeated table, action, form, authorization, and query logic. Renderers should be used only for owner-specific Surfaces that consume resolved Registry output, such as Settings, Preferences, Setup, Dashboard widgets, and evidence/check summaries.
 
-View surface sequencing is tracked in [View Surface Composition Planning](view-surface-composition-planning.md).
+View Surface sequencing is tracked in [View Surface Composition Planning](../03-platform-surfaces/view-surface-composition-planning.md); that planning folder name is transitional and does not establish target ownership.
 
 Database direction:
 
@@ -407,13 +401,13 @@ Existing folder migration map:
 | `Modules/Account` | `app/Core/Identity` plus account views | Current-user self-service identity/account surfaces. |
 | `Modules/Roles` | `app/Core/Access` | Roles, permissions/actions, permission registry, role CRUD, and assignment guardrails. |
 | `Modules/Preferences` | `app/Core/Preferences` | User-owned preferences should remain distinct from admin-owned system settings. Identity can own profile-level defaults; Notifications owns notification-specific preferences. |
-| `Modules/Settings` | `app/Core/Settings` plus platform presentation | Settings storage and settings definition behavior. |
-| `Modules/Setup` | `app/Platform` or capability-owned setup workflows | Setup shell belongs to platform presentation; specific setup workflows belong to their owning core/business package. |
-| `Modules/Dashboard` | `app/Platform/Dashboard` | Dashboard is a platform/workspace surface; business modules contribute widgets. |
+| `Modules/Settings` | `app/Core/Settings` plus its owner-specific Surface | Settings storage and Registry behavior remain separate from Surface presentation. |
+| `Modules/Setup` | Goal 3 Core placement plus capability- or Module-owned setup workflows | Setup Surface and Host Registry remain Core-owned; specific workflows remain with their owning Core capability or Module. |
+| `Modules/Dashboard` | Goal 3 Core Dashboard placement | Dashboard owns its Surface and Host Registry separately; Modules may contribute widgets. Current `app/Platform/Dashboard` is transitional only. |
 | `Modules/Notifications` | `app/Core/Notifications` | Shared notification backbone, inbox state, and delivery. |
 | `resources/views/platform/users` | `resources/views/admin/users` or `app/Core/Identity` views | User administration views are core identity administration, not business module views. |
-| `resources/views/platform/audit-logs` | `resources/views/admin/audit` or `app/Core/Audit` views | Audit views are platform/admin presentation over core audit records. |
-| `resources/views/platform/docs` | `app/Platform/Docs` views | Internal platform tool. |
+| `resources/views/platform/audit-logs` | `resources/views/admin/audit` or `app/Core/Audit` views | Audit views are an owner-specific Core Audit Surface over Core Audit records. |
+| `resources/views/platform/docs` | Explicit Core or Module owner assigned by Goal 3 | Current `app/Platform/Docs` placement is transitional; no new canonical work belongs there. |
 | `retired reference viewer views` | No target owner | Transitional development artifact to ignore/retire. Do not plan it as a module, core capability, or platform feature. |
 | `resources/views/platform/security` | Internal tool or core security capability after scope review | Do not classify as a business module. |
 
@@ -576,7 +570,7 @@ Change later:
 
 ### Setup
 
-Target: `app/Platform` setup/onboarding surface, with setup workflows owned by the relevant core or business package.
+Target: Core-owned Setup Surface and Host Registry in Goal 3-approved placement, with setup workflows owned by the relevant Core capability or Module.
 
 Keep:
 
@@ -606,7 +600,7 @@ Review later:
 
 ### Dashboard
 
-Target: `app/Platform/Dashboard` workspace landing surface.
+Target: Core-owned Dashboard Surface and Host Registry in Goal 3-approved placement. Current `app/Platform/Dashboard` is transitional only.
 
 Keep:
 
@@ -615,8 +609,8 @@ Keep:
 
 Change later:
 
-- Business modules may contribute widgets.
-- Dashboard itself remains a core surface, not a business module.
+- Modules may contribute widgets while retaining ownership of their Contributions.
+- Dashboard remains a Core capability with a Surface and a separate Host-owned Registry, not a Module.
 
 ### Audit
 
@@ -683,13 +677,15 @@ Auth depends on Identity
 Access depends on Identity
 DataGovernance depends on Identity, Access, Audit, Monitoring, Notifications, and Settings boundaries
 DataProtection depends on DataGovernance, Identity, Access, Auth, Audit, Monitoring, Notifications, and Settings boundaries
-Security provides cross-cutting guardrails used by Core, Platform, and business modules
+Security provides cross-cutting guardrails used by Core and Modules
 Notifications depend on Identity and Access
 Audit accepts events from everything
 Settings are read by everything
-Platform depends on Core
-Business modules depend on Core
-Core should not depend on business modules
+Modules may depend on Core and UI
+Core presentation may depend on UI; Core business and system logic may not
+UI must not depend on Core or Module domain implementation
+Laravel integration may compose public Core and Module contracts without owning application behavior
+Core must not depend on optional Modules
 ```
 
 More explicit flow:
@@ -779,8 +775,8 @@ Notification   = who needs to know
 Decide the canonical code vocabulary before more packages are added:
 
 - use `Package` as the umbrella technical term
-- reserve `Module` for business feature packages
-- use `Core Capability` for platform/security/system packages
+- reserve `Module` for optional, cohesive feature packages
+- use `Core Capability` for required base-application behavior
 - use `Internal Tool` for operator/developer support packages
 
 ### 2. Architecture Documentation Update
@@ -789,11 +785,11 @@ Update architecture docs to introduce:
 
 - package catalog
 - core capability packages
-- business module packages
-- internal platform tool packages
+- Module packages
+- internal tool packages
 - package contributions
-- business modules as one package classification, not the whole system
-- the physical ownership split between `app/Core`, `app/Platform`, root `Modules/*`, and shared `resources/*`
+- Modules as one owner classification, not the whole system
+- the physical ownership split among Core, Modules, UI, and Laravel integration, with `app/Platform/*` retained only as transitional current placement
 
 Candidate docs:
 
@@ -869,8 +865,8 @@ Do not move folders first, but use this as the target order once architecture an
 10. `app/Core/Preferences`
 11. `app/Core/Settings`
 12. `app/Core/Monitoring`
-13. `app/Platform/Shell`, `app/Platform/Navigation`, `app/Platform/Dashboard`, `app/Platform/Setup`, `app/Platform/Surfaces`, `app/Platform/Docs`, and other approved internal platform tools
-14. root `Modules/*` business modules
+13. classify and migrate current `app/Platform/Shell`, `Navigation`, `Dashboard`, `Setup`, `Surfaces`, `Docs`, and related transitional paths into their Goal 3-approved Core, Module, UI, or Laravel integration owners
+14. root `Modules/*` packages
 
 Rationale:
 
@@ -906,8 +902,10 @@ Final physical endpoint:
 
 ```text
 app/Core      core domain/security/system capabilities
-app/Platform  shell/admin presentation and internal tools
-Modules       business modules only
+Modules       optional, cohesive feature packages
+resources     UI presentation infrastructure
+Laravel integration locations for application-wide framework wiring
+app/Platform  no target owner; transitional paths migrate through bounded Goal 3/Goal 9 work
 ```
 
 Execution rule:
@@ -915,7 +913,7 @@ Execution rule:
 - keep current `Modules/*` physically stable until a specific migration batch owns a specific package move
 - correct product/architecture vocabulary first
 - move one capability at a time with route/view/autoload/test compatibility
-- update `_Template` to represent business modules only before the first new business module is created
+- update `_Template` to represent the accepted Module contract before the first new Module is created
 - keep migrations centralized in `database/migrations` unless a package-local migration convention is approved for an entire package family
 
 ## Testing Direction
@@ -937,7 +935,7 @@ Additional tests once physical migration begins:
 - core capability routes load from their target route files without URL changes
 - business module routes continue to load from root `Modules/*`
 - shared UI components remain under `resources/views/components`
-- platform presentation classes do not own identity/access/audit business rules
+- owner-specific Surface presentation does not own identity/access/audit behavior or Host Registry responsibilities
 
 ## Transition Rules
 
@@ -973,7 +971,7 @@ Additional tests once physical migration begins:
 - Should vulnerability findings be persisted immediately under `app/Core/Security/VulnerabilityManagement`, or generated as reports until a dashboard/reporting need exists?
 - Should core admin/account Blade views live centrally under `resources/views/admin/*` and `resources/views/account/*`, or package-local under `app/Core/*/resources/views`?
 - Which surfaces should be renderer-driven versus normal ViewModel/PageData-driven?
-- Should Setup shell live under `app/Platform`, with setup workflows contributed from their owning capabilities?
+- Which Goal 3-approved Core location owns the Setup Surface and Host Registry, and how do other Core capabilities or Modules contribute workflows through declared Extension Points?
 - Should Support mean a core support capability for the platform itself, or a business support/ticketing module for tenant/customer workflows?
 
 ## Immediate Next Step
@@ -982,7 +980,7 @@ Use this planning direction to update the architecture vocabulary before impleme
 
 Recommended next documentation order:
 
-1. Architecture: revise module system language into Core/Platform/Modules package taxonomy.
+1. Architecture: revise package-system language into the Core, Module, UI, and Laravel integration owner taxonomy with separate Surface, Delivery Adapter, and Registry roles.
 2. Planning: correct Auth, Users, and Access Control docs to `app/Core/Auth`, `app/Core/Identity`, and `app/Core/Access` direction.
 3. Planning: align threat modeling, security controls, and release evidence before high-risk capability implementation begins.
 4. Planning: align DLP data movement, export/download enforcement, and exfiltration detection before business exports expand.

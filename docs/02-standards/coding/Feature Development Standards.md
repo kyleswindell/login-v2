@@ -12,7 +12,7 @@ canonical: true
 canonical_path: docs/02-standards/coding/Feature Development Standards.md
 parent: docs/02-standards/index.md
 template: docs/09-reference/templates/docs/_doc.md
-summary: Defines standards for developing Core Capabilities, Platform Surfaces, Business Modules, Shared UI features, and their documentation, permissions, settings, audit, and verification.
+summary: Defines standards for developing Core capabilities, Modules, UI, Laravel integration, and owner-specific technical responsibilities with their documentation, permissions, settings, audit, and verification.
 -->
 
 # Feature Development Standards
@@ -24,9 +24,10 @@ This document defines development standards for discrete capabilities and surfac
 - [3. Ownership Decision Before Implementation](#3-ownership-decision-before-implementation)
 - [4. Layer Ownership](#4-layer-ownership)
   - [4.1. Core Capability](#41-core-capability)
-  - [4.2. Platform Surface](#42-platform-surface)
-  - [4.3. Business Module](#43-business-module)
-  - [4.4. Shared UI](#44-shared-ui)
+  - [4.2. Module](#42-module)
+  - [4.3. UI](#43-ui)
+  - [4.4. Laravel Integration](#44-laravel-integration)
+  - [4.5. Technical Responsibilities](#45-technical-responsibilities)
 - [5. Canonical Feature Doc](#5-canonical-feature-doc)
 - [6. UI Ownership Standard](#6-ui-ownership-standard)
 - [7. Setup, Settings, And Preferences](#7-setup-settings-and-preferences)
@@ -49,17 +50,22 @@ Ensure new and changed functionality is planned, owned, implemented, documented,
 
 Use current project vocabulary.
 
-| Term             | Meaning                                                                                                                                  |
-| ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| Core Capability  | Required platform, security, identity, access, data, audit, monitoring, notification, settings, or system capability under `app/Core/*`. |
-| Platform Surface | Shell, navigation, dashboard, setup, docs, UI reference, or registry-driven presentation under `app/Platform/*`.                         |
-| Business Module  | Tenant/workspace business work area under `Modules/*`.                                                                                   |
-| Shared UI        | UI primitives, patterns, shell, layouts, CSS, JS controls, and UI reference assets.                                                      |
-| Feature Document | Canonical behavior document under `docs/04-features/`, when a capability or surface has user/admin/system behavior to describe.          |
+| Term                | Meaning                                                                                                                                   |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
+| Core capability     | Required base-application behavior, state, coordination, infrastructure, and contracts under the Core owner.                             |
+| Module              | Optional, cohesive feature package under `Modules/*`.                                                                                     |
+| UI                  | Reusable Elements, Components, Patterns, Layouts, CSS, JavaScript, icons, contracts, tests, and review evidence.                         |
+| Laravel integration | Application-wide framework bootstrap, registration, and thin adaptation that does not own application behavior.                         |
+| Surface             | Owner-specific UI presentation and interaction layer; not an application owner.                                                          |
+| Delivery Adapter    | Owner-local HTTP, API, console, webhook, queue, scheduler, or background invocation integration.                                         |
+| Registry            | Host-owned mechanism that defines and resolves Extension Points and validates, collects, orders, and exposes Contributions.              |
+| Feature Document    | Canonical behavior document under `docs/04-features/`, when an owner-specific capability or Surface has behavior to describe.            |
 
 The word “feature” may still be used for canonical behavior documentation, but it must not erase the implementation owner.
 
-Do not use “module” as a generic synonym for any capability. In current architecture, `Modules/*` means Business Modules.
+Do not use “module” as a generic synonym for any capability. In the current architecture, a Module is an optional package owner.
+
+Existing `app/Platform/*` paths are transitional current placement only. They establish no target ownership and are not a destination for new canonical work.
 
 ---
 
@@ -67,16 +73,17 @@ Do not use “module” as a generic synonym for any capability. In current arch
 
 Before implementing new behavior, answer:
 
-1. Is this a Core Capability, Platform Surface, Business Module, Shared UI change, or documentation/ops-only change?
+1. Is the owner a Core capability, Module, UI, Laravel integration, or a documentation/ops-only workflow owner?
 2. Which layer owns the durable behavior?
-3. Which canonical doc owns the behavior?
-4. Which routes, panels, views, commands, jobs, or APIs expose it?
-5. Which database tables, config keys, registry entries, or payloads does it affect?
-6. Which permissions, policies, gates, middleware, or access rules apply?
-7. Which audit, monitoring, notification, or error-reporting behavior applies?
-8. Which tests or manual review surfaces prove the change?
-9. Which planning note or GitHub issue owns the implementation slice?
-10. Which docs must be updated when the implementation is complete?
+3. Is the technical responsibility a Surface, Delivery Adapter, Registry, Action, Query, Contract, or another accepted role?
+4. Which canonical doc owns the behavior?
+5. Which routes, panels, views, commands, jobs, or APIs expose it?
+6. Which database tables, config keys, registry entries, or payloads does it affect?
+7. Which permissions, policies, gates, middleware, or access rules apply?
+8. Which audit, monitoring, notification, or error-reporting behavior applies?
+9. Which tests or manual review surfaces prove the change?
+10. Which planning note or GitHub issue owns the implementation slice?
+11. Which docs must be updated when the implementation is complete?
 
 Record answers in the GitHub issue, planning note, or canonical document before broad implementation begins.
 
@@ -103,26 +110,11 @@ Use Core for required system capabilities such as:
 
 Core must not contain business-module domain workflows unless the workflow is truly cross-cutting platform infrastructure.
 
-### 4.2. Platform Surface
-
-Use Platform for:
-
-- shell
-- navigation
-- dashboard
-- setup
-- docs viewer
-- UI reference
-- registry-driven aggregation
-- presentation of Core/Module contributions
-
-Platform may aggregate and render contributions. It must not become the owner of business rules, authorization truth, audit truth, or data-protection truth.
-
-### 4.3. Business Module
+### 4.2. Module
 
 Use `Modules/*` for tenant/workspace business work areas.
 
-Business Modules must consume Core capabilities for:
+Modules must consume Core capabilities for:
 
 - auth
 - access
@@ -133,13 +125,31 @@ Business Modules must consume Core capabilities for:
 - security
 - monitoring
 
-Business Modules must not redefine platform-level infrastructure.
+Modules must not redefine required Core infrastructure.
 
-### 4.4. Shared UI
+### 4.3. UI
 
-Use Shared UI for reusable primitives, patterns, shell components, component CSS, JS controls, and reference examples.
+Use UI for reusable primitives, patterns, shell components, component CSS, JS controls, contracts, tests, and reference examples.
 
-Shared UI must be domain-free unless explicitly scoped as a pattern or feature surface.
+UI must remain domain-free and must not own route behavior, authorization decisions, database access, or domain mutations.
+
+### 4.4. Laravel Integration
+
+Use Laravel integration for application-wide bootstrap, framework registration, and thin adaptation that cannot remain owner-local.
+
+Laravel integration must delegate durable behavior to the applicable Core capability or Module and must not become a competing application owner.
+
+### 4.5. Technical Responsibilities
+
+Classify technical responsibility separately beneath the owner:
+
+- a Surface is an owner-specific UI presentation and interaction layer;
+- a Delivery Adapter exposes owner-controlled behavior through HTTP, API, console, webhook, queue, scheduler, or background invocation;
+- a Host owns an extensible feature and its Registry;
+- a Host-owned Registry defines and resolves Extension Points and validates, collects, orders, and exposes Contributions;
+- Contributions remain owned by their Contributors.
+
+A Surface must not own contribution discovery, validation, ordering, or assembly. Delivery Adapters and invocation channels are not Surfaces.
 
 ---
 
@@ -179,11 +189,10 @@ Planning notes must link to the canonical feature doc.
 
 Before implementing UI work, identify the UI owner:
 
-- Shared UI primitive
-- Shared UI pattern
-- Platform Surface
+- UI primitive
+- UI pattern
 - Core-owned account/admin surface
-- Business Module surface
+- Module-owned surface
 - Filament/admin resource when appropriate
 - Livewire/custom Blade surface when appropriate
 
@@ -254,7 +263,7 @@ Do not hard-code permission strings throughout the codebase.
 
 Do not rely on UI visibility as authorization.
 
-Business Modules must consume Core Access patterns rather than redefining authorization infrastructure.
+Modules must consume Core Access patterns rather than redefining authorization infrastructure.
 
 ---
 
@@ -262,7 +271,7 @@ Business Modules must consume Core Access patterns rather than redefining author
 
 Audit-worthy actions must flow through the audit pipeline owned by Core Audit.
 
-Operational failures must flow through logging or monitoring owned by the appropriate Core/Platform infrastructure.
+Operational failures must flow through logging or monitoring owned by the appropriate Core capability.
 
 At minimum, audit:
 

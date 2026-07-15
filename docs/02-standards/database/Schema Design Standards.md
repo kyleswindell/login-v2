@@ -15,7 +15,7 @@ summary: Defines PostgreSQL schema design rules for table naming, keys, relation
 
 This document defines schema design standards for Login App 2.0.
 
-These standards apply to PostgreSQL-backed Laravel schema design across Core Capabilities, Platform Surfaces, and Business Modules.
+These standards apply to PostgreSQL-backed Laravel schema design across Core capabilities and Modules, including data used by owner-specific Surfaces, Delivery Adapters, and Host-owned Registries.
 
 - [1. Purpose](#1-purpose)
 - [2. Core Rule](#2-core-rule)
@@ -98,8 +98,8 @@ Every table should have a clear owner.
 | Notifications and notification state             | Core Notifications                        |
 | Settings and preferences                         | Core Settings / Core Preferences          |
 | Data classification and protection               | Core DataGovernance / Core DataProtection |
-| Shell, navigation, setup, UI reference metadata  | Platform                                  |
-| Customers, orders, shipments, inventory, reports | Business Modules                          |
+| Shell, navigation, setup, UI reference metadata  | Owning Core capability or Module Host Registry |
+| Customers, orders, shipments, inventory, reports | Modules                                   |
 
 Scoped business data must include the correct tenant, workspace, account, customer, or module scope.
 

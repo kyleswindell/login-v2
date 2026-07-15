@@ -97,7 +97,7 @@ Operational procedures belong in:
 | [Database Migration Standards](Database%20Migration%20Standards.md)                                                       | Defines safe Laravel and PostgreSQL migration rules for schema changes, data changes, backfills, rollbacks, ownership, and documentation sync.                                                              |
 | [Schema Design Standards](Schema%20Design%20Standards.md)                                                                 | Defines PostgreSQL schema design rules for table naming, keys, relationships, indexes, JSONB, scope, lifecycle fields, and data integrity.                                                                  |
 | [Database Table Contract Standards](Database%20Table%20Contract%20Standards.md)                                           | Defines the required shape and content for table documentation under `docs/06-database/tables/`.                                                                                                            |
-| [Database Tenant Workspace Isolation Standards](Database%20Tenant%20Workspace%20Isolation%20Standards.md)                 | Defines database rules for tenant, workspace, account, customer, module, and scope isolation across Core, Platform, and Business Module data.                                                               |
+| [Database Tenant Workspace Isolation Standards](Database%20Tenant%20Workspace%20Isolation%20Standards.md)                 | Defines database rules for tenant, workspace, account, customer, Module, and scope isolation across Core capability and Module data.                                                                        |
 | [Database Access Control Data Model Standards](Database%20Access%20Control%20Data%20Model%20Standards.md)                 | Defines database standards for IAM-style access-control data including subjects, targets, roles, actions, groups, assignments, elevation, reviews, and effective access.                                    |
 | [Database Audit And Evidence Standards](Database%20Audit%20And%20Evidence%20Standards.md)                                 | Defines database standards for audit events, evidence records, actor/subject/target modeling, redaction, correlation, forensic readiness, retention, and evidence integrity.                                |
 | [Database Data Classification And Retention Standards](Database%20Data%20Classification%20And%20Retention%20Standards.md) | Defines database standards for data classification, sensitive fields, retention, deletion, anonymization, masking, export eligibility, and audit-preserving lifecycle behavior.                             |
@@ -143,17 +143,17 @@ Login App 2.0 uses PostgreSQL as the active database target.
 
 Database design must support the current ownership model:
 
-| Layer            | Typical Database Responsibility                                                                                                                        |
-| ---------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| Core Capability  | Auth, Identity, Access, Audit, Monitoring, Notifications, Settings, Preferences, Security, DataGovernance, DataProtection, and required system tables. |
-| Platform Surface | Shell, navigation, setup, dashboard, docs, UI reference, and registry-driven presentation/aggregation metadata.                                        |
-| Business Module  | Tenant/workspace business tables such as Customers, Inventory, Orders, Shipments, Reports, Projects, Support, and Websites.                            |
-| Shared UI        | Registry/reference/configuration metadata only when the UI system owns the data contract.                                                              |
-| Ops              | Operational records, release/deployment metadata, or runbook-supported data when explicitly documented.                                                |
+| Owner or integration boundary | Typical Database Responsibility                                                                                                                        |
+| ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Core capability               | Auth, Identity, Access, Audit, Monitoring, Notifications, Settings, Preferences, Security, DataGovernance, DataProtection, and required system tables. |
+| Module                        | Optional feature-owned tenant/workspace business tables.                                                                                              |
+| UI                            | No application database ownership; reusable presentation infrastructure must not query or mutate domain data.                                         |
+| Laravel integration           | No durable application ownership; framework persistence integration delegates to the applicable Core capability or Module.                            |
+| Ops                           | Operational records, release/deployment metadata, or runbook-supported data when explicitly documented.                                                |
 
-Do not let Platform tables silently become owners of Business Module data.
+Host-owned Registry tables remain owned by the Host's Core capability or Module. Surface presentation, Delivery Adapters, and transitional `app/Platform/*` placement do not establish database ownership.
 
-Do not let Business Module tables redefine Core Auth, Access, Audit, Notifications, Settings, Security, DataGovernance, or DataProtection infrastructure.
+Do not let Module tables redefine Core Auth, Access, Audit, Notifications, Settings, Security, DataGovernance, or DataProtection infrastructure.
 
 ---
 
@@ -214,7 +214,7 @@ When adding or changing database standards:
 - link the standard from [Standards Index](../index.md) when appropriate
 - keep standards enforceable and concise
 - avoid duplicating rules owned by coding, security, logging, documentation, or runbook standards
-- use current Core / Platform / Business Module / Shared UI vocabulary
+- use current Core, Module, UI, Laravel integration, Surface, Delivery Adapter, and Registry vocabulary
 - keep PostgreSQL as the assumed database target unless a decision record changes it
 
 When moving, splitting, or archiving database standards:

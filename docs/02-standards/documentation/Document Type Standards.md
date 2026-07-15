@@ -618,7 +618,7 @@ Confirm the document has a review, promotion, or closure path and does not compe
 
 ### Purpose
 
-Define the responsibility, architecture area, capability, Module, UI area, delivery Surface, framework boundary, or repository concept.
+Define the responsibility, architecture area, capability, Module, UI area, Surface, Delivery Adapter, framework boundary, or repository concept.
 
 ### Normal Uses
 

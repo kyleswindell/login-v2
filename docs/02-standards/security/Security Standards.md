@@ -28,7 +28,7 @@ Parent: [Security Standards Index](index.md)
 
 ## 1. Purpose
 
-Define the security rules that apply across Core Capabilities, Platform Surfaces, Business Modules, Shared UI, operational tooling, and deployment environments.
+Define the security rules that apply across Core capabilities, Modules, UI, Laravel integration, owner-specific Surfaces, Delivery Adapters, Host-owned Registries, operational tooling, and deployment environments.
 
 ## 2. Core Principles
 
@@ -62,7 +62,7 @@ Security controls must be enforceable in server-side behavior. Navigation, hidde
 | Monitoring       | Errors, failed jobs, health, telemetry, detections, and operational signals            |
 | Notifications    | Durable security and operational alert delivery                                        |
 | Operations       | Infrastructure, deployment, backup, restoration, and incident procedures               |
-| Business Modules | Domain authorization, data declarations, audit semantics, and secure workflows         |
+| Modules          | Domain authorization, data declarations, audit semantics, and secure workflows         |
 
 A capability must not silently absorb another owner's security responsibility.
 

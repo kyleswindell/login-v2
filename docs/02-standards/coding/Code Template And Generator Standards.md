@@ -641,12 +641,14 @@ Generators must validate that:
 - relative paths do not escape the repository through traversal
 - destination files do not already exist unless force behavior is explicit
 
-Generated ownership must follow the architecture model:
+Generated ownership must follow the owner-first architecture model:
 
-- Core Capability → `app/Core/*`
-- Platform Surface → `app/Platform/*`
-- Business Module → `Modules/*`
-- Shared UI → `resources/views/components/*`, `resources/css/*`, and `resources/js/*`
+- Core capability → owner-specific Core placement, currently `app/Core/*`
+- Module → `Modules/*`
+- UI → `resources/views/components/*`, `resources/css/*`, and `resources/js/*`
+- Laravel integration → the applicable framework integration location
+
+Generators must classify Surface, Delivery Adapter, Registry, Action, Query, Contract, and similar technical responsibilities separately beneath the selected owner. They must not target `app/Platform/*`; that path is transitional current placement only and establishes no target ownership.
 
 A generator must not use convenience as justification for placing files in the wrong architectural owner.
 

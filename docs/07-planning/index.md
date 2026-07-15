@@ -36,7 +36,7 @@ Use it for:
 
 - target-state planning
 - architecture and ownership convergence
-- capability, platform, module, and Shared UI decomposition
+- Core capability, Module, UI, and Laravel integration decomposition
 - dependency and decision planning
 - migration, compatibility, and refactor direction
 - implementation sequencing rationale
@@ -119,8 +119,8 @@ Planning is organized by stable ownership and planning purpose:
 | `00-overview/`                | Milestone charters, planning control documents, review backlogs, and cross-cutting planning overviews         |
 | `01-architecture-boundaries/` | Application structure, capability boundaries, context models, vocabulary, and structural migration planning   |
 | `02-core-capabilities/`       | Core capability target state, dependencies, data, security, implementation direction, and capability matrices |
-| `03-platform-surfaces/`       | Platform-owned surfaces, renderers, composition, control-plane behavior, and platform migration planning      |
-| `04-business-modules/`        | Business Module package, layout, contribution, and surface planning                                           |
+| `03-platform-surfaces/`       | Transitional planning retained from the previous Platform Surface model. Content must be reclassified into its owning Core capability, Module, UI responsibility, Host Registry, Surface, or Delivery Adapter. This folder is not a target ownership area. |
+| `04-business-modules/`        | Module package, layout, Contribution, and owner-specific Surface planning                                     |
 | planning root                 | Cross-cutting matrices and control documents whose scope spans multiple planning groups                       |
 
 Do not create empty folders solely to match a proposed tree.
@@ -132,7 +132,7 @@ Add a planning subfolder only when it has:
 - a clear routing need
 - an active maintenance reason
 
-Shared UI planning may remain within the owning architecture, platform-surface, or standards planning until a dedicated planning group has enough stable material to require its own index.
+UI planning may remain within the owning architecture, standards planning, or the transitional `03-platform-surfaces/` package until it is reclassified or a dedicated planning group has enough stable material to require its own index.
 
 ## 6. M0 Delivery Model
 

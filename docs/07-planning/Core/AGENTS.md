@@ -213,7 +213,7 @@ Stop and report before editing when:
 * the change conflicts with the [Core Definition](../Definitions/Core/Definition.md) or an accepted ADR
 * another document already owns the same subject
 * the change would introduce a competing Core definition inside this package
-* the change would redefine Modules, UI, delivery Surfaces, or Laravel integration without explicit scope
+* the change would redefine Modules, UI, Delivery Adapters, or Laravel integration without explicit scope
 * the change would treat current physical placement as target ownership
 * an accepted decision is being replaced without explicit repository-owner authority
 * a new subfolder is required but has not been architecturally approved

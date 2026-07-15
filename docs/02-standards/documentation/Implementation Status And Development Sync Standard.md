@@ -61,10 +61,11 @@ This standard exists so contributors and agents can answer:
 
 This standard applies to work affecting:
 
-- Core Capabilities
-- Platform Surfaces
-- Business Modules
-- Shared UI
+- Core capabilities
+- Modules
+- UI
+- Laravel integration
+- owner-specific Surfaces, Delivery Adapters, and Host-owned Registries
 - architecture
 - feature behavior
 - flows
@@ -222,10 +223,11 @@ Metadata parent fields do not replace visible links.
 
 ### Architecture And Ownership
 
-- Core Capability boundary
-- Platform Surface boundary
-- Business Module boundary
-- Shared UI boundary
+- Core capability boundary
+- Module boundary
+- UI boundary
+- Laravel integration boundary
+- owner-specific Surface, Delivery Adapter, or Host-owned Registry responsibility
 - route, controller, action, service, policy, view, registry, or renderer ownership
 
 ### Data And Security

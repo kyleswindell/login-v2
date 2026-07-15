@@ -8,7 +8,7 @@ canonical: true
 canonical_path: docs/02-standards/coding/Testing Standards.md
 parent: docs/02-standards/index.md
 template: docs/09-reference/templates/docs/_doc.md
-summary: Defines testing expectations for Laravel, Core Capabilities, Platform Surfaces, Business Modules, Shared UI, security boundaries, documentation, and manual review.
+summary: Defines testing expectations for Core capabilities, Modules, UI, Laravel integration, owner-specific technical responsibilities, security boundaries, documentation, and manual review.
 -->
 
 # Testing Standards
@@ -21,9 +21,9 @@ This document defines testing and verification expectations for Login App 2.0.
 - [5. Test Templates](#5-test-templates)
 - [6. Required Test Coverage Areas](#6-required-test-coverage-areas)
 - [7. Core Capability Testing](#7-core-capability-testing)
-- [8. Platform Surface Testing](#8-platform-surface-testing)
-- [9. Business Module Testing](#9-business-module-testing)
-- [10. Shared UI Testing](#10-shared-ui-testing)
+- [8. Surface, Delivery Adapter, And Registry Testing](#8-surface-delivery-adapter-and-registry-testing)
+- [9. Module Testing](#9-module-testing)
+- [10. UI Testing](#10-ui-testing)
 - [11. Database And Migration Testing](#11-database-and-migration-testing)
 - [12. Security Testing](#12-security-testing)
 - [13. Documentation Verification](#13-documentation-verification)
@@ -157,25 +157,22 @@ Do not only test happy paths for Core security or data behavior.
 
 ---
 
-## 8. Platform Surface Testing
+## 8. Surface, Delivery Adapter, And Registry Testing
 
-Platform tests should verify:
+Test each technical responsibility beneath its Core capability or Module owner:
 
-- shell/navigation/dashboard/setup behavior
-- route authorization
-- registry/contribution aggregation
-- rendering of Core/Module contributions
-- empty/error states
-- settings/setup visibility
-- UI surface access controls
+- Surface tests verify owner-specific UI presentation, interaction, access controls, and empty/error states;
+- Delivery Adapter tests verify transport or invocation behavior, validation, authorization integration, delegation, and failure handling;
+- Registry tests verify Host-owned Extension Point contracts plus Contribution validation, collection, ordering, resolution, and exposure;
+- cross-owner tests verify that Contributions remain owned by their Contributors.
 
-Platform tests should not redefine business-module domain behavior.
+Do not use Surface tests to make presentation responsible for Registry discovery, Contribution assembly, or domain behavior. APIs, console commands, webhooks, queues, schedulers, and background entry points are Delivery Adapters or invocation channels, not Surfaces.
 
 ---
 
-## 9. Business Module Testing
+## 9. Module Testing
 
-Business Module tests should verify:
+Module tests should verify:
 
 - module-owned business workflows
 - tenant/workspace/customer scoping
@@ -188,9 +185,9 @@ Modules must not test by bypassing Core authorization or data boundaries.
 
 ---
 
-## 10. Shared UI Testing
+## 10. UI Testing
 
-Shared UI tests should verify public component contracts.
+UI tests should verify public component contracts.
 
 Test when changing:
 

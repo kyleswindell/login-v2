@@ -217,10 +217,13 @@ Use current project vocabulary consistently.
 
 Preferred terms:
 
-- Core Capability
-- Platform Surface
-- Business Module
-- Shared UI
+- Core capability
+- Module
+- UI
+- Laravel integration
+- Surface
+- Delivery Adapter
+- Registry
 - canonical owner
 - file archetype
 - source template
@@ -235,7 +238,9 @@ Preferred terms:
 
 Avoid older terminology when it conflicts with the current architecture model.
 
-Do not describe `app/Platform/` as the default home for all reusable application behavior.
+Treat Surface, Delivery Adapter, Registry, Action, Query, Contract, and similar terms as technical responsibilities beneath an explicit owner, not as application owners.
+
+Do not describe `app/Platform/` as a target owner or the default home for reusable application behavior. It is transitional current placement, establishes no target ownership, and must not receive new canonical work unless a bounded Goal 3 decision explicitly authorizes it.
 
 Reusable behavior belongs to the layer that owns the responsibility.
 
@@ -283,7 +288,7 @@ When creating or materially rewriting coding standards in this folder:
 - update `docs/02-standards/index.md` when the standard should be visible from the branch index
 - update this `AGENTS.md` when routing or ownership changes
 - keep standards enforceable and concise
-- keep examples current with the Core Capability, Platform Surface, Business Module, and Shared UI model
+- keep examples current with the Core capability, Module, UI, and Laravel integration owner model and the separate technical-role vocabulary
 - link to specialized standards rather than duplicating their full contents
 - avoid mixing standards, planning, architecture, research, and issue-specific instructions in one file
 
@@ -318,7 +323,7 @@ They should not:
 - duplicate long planning documents
 - include broad historical commentary
 - preserve deprecated `/docs/08-active/` workflows as active rules
-- introduce conflicting terminology for Core, Platform, Modules, Shared UI, or Planning
+- introduce conflicting terminology for Core, Modules, UI, Laravel integration, or Planning
 - define issue-specific instructions as reusable standards
 - prescribe a new architecture without an accepted planning or decision owner
 - duplicate database, UI, security, logging, or documentation standards unnecessarily
@@ -430,7 +435,7 @@ Stop and ask before editing when:
 - a standard would introduce a new custom generator without a stable consumption model
 - a standard would introduce new required tooling or dependencies
 - a standard would introduce new mandatory tests across the repository without an accepted implementation path
-- a standard would change Core Capability, Platform Surface, Business Module, or Shared UI ownership
+- a standard would change Core, Module, or UI ownership or Laravel integration boundaries
 - a standard would affect auth, access, audit, security, data, schema, exports, or deployment beyond coding implementation rules
 - a change would require broad link rewrites
 - a change would rename many files or paths

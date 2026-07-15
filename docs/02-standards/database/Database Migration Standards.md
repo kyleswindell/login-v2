@@ -57,7 +57,7 @@ This standard applies to:
 - data backfills
 - registry table changes
 - seeders that support required baseline data
-- Core, Platform, and Business Module database changes
+- Core capability and Module database changes
 
 This standard does not apply to legacy Perfex `install.php` module installers except when reviewing historical reference material.
 
@@ -71,7 +71,7 @@ Every database change must have a clear owner, a clear purpose, and a safe migra
 
 Before creating a migration, identify:
 
-- owning layer: Core, Platform, Business Module, UI, Ops, or Docs
+- owning area: Core capability, Module, Ops, or the applicable documentation workflow owner; UI and Laravel integration do not own durable application data
 - affected table or tables
 - whether the change is schema-only, data-only, or both
 - whether existing data must be preserved or transformed
@@ -185,11 +185,11 @@ When creating a table, define:
 - audit fields when applicable
 - data classification implications when applicable
 
-Business Module tables should include the required tenant, workspace, account, customer, or module scope according to the module contract.
+Module tables should include the required tenant, workspace, account, customer, or module scope according to the Module contract.
 
 Core tables should declare the Core capability that owns them.
 
-Platform tables should not become hidden owners of business-module data.
+Transitional Platform-named tables must not become hidden owners of Module data; assign them to the applicable Core capability or Module before target migration.
 
 ---
 
@@ -311,7 +311,7 @@ Potential docs to update:
 - `docs/06-database/index.md`
 - table docs under `docs/06-database/tables/`
 - feature contracts under `docs/06-database/feature-contracts/`
-- relevant Core, Platform, or Module planning docs
+- relevant Core capability or Module planning docs
 - canonical feature or architecture docs
 - runbooks when operational steps are required
 

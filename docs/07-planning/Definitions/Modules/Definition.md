@@ -13,7 +13,7 @@ summary: Defines Module ownership, classification, package target state, lifecyc
 
 # Module Definition
 
-Parent: [Modules Index](Index.md)
+Parent: [Definitions Index](../Index.md)
 
 - [1. Definition](#1-definition)
 - [2. Classification Rule](#2-classification-rule)
@@ -150,11 +150,9 @@ Specific Module identities, package locations, internal structures, naming conve
 
 ## 9. Related
 
-* [Modules README](README.md)
-* [Modules Index](Index.md)
-* [M0 Target Repository Architecture](../00-overview/m0-target-repository-architecture.md)
-* [ADR-0005: Core, Modules, And UI Ownership Taxonomy](../../01-decisions/adr-0005-core-modules-ui-ownership-taxonomy.md)
-* [ADR-0007: Owner, Registry, And Identifier Key Conventions](../../01-decisions/adr-0007-owner-registry-and-identifier-key-conventions.md)
+* [Modules README](../../Modules/README.md)
+* [Modules Index](../../Modules/Index.md)
+* [M0 Target Repository Architecture](../../00-overview/m0-target-repository-architecture.md)
+* [ADR-0005: Core, Modules, And UI Ownership Taxonomy](../../../01-decisions/adr-0005-core-modules-ui-ownership-taxonomy.md)
+* [ADR-0007: Owner, Registry, And Identifier Key Conventions](../../../01-decisions/adr-0007-owner-registry-and-identifier-key-conventions.md)
 * Related GitHub issue: #48
-
----

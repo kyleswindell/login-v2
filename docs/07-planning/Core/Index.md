@@ -2,7 +2,7 @@
 DOC-META
 title: Core Index
 doc_type: index
-status: draft
+status: active
 owner: architecture
 canonical: true
 canonical_path: docs/07-planning/Core/Index.md
@@ -28,25 +28,25 @@ Use this index to navigate the documents in this folder.
 
 ## 1. Purpose
 
-Briefly explain what the Core documentation folder owns.
+This folder routes the architecture and planning documentation for Core within Login 2.0. It supports Core-specific capability, contract, placement, implementation, and migration planning while the canonical ownership boundary remains external in the [Core Definition](../Definitions/Core/Definition.md).
 
 ## 2. Scope
 
 ### 2.1. Belongs Here
 
-List the Core definitions, capabilities, contracts, implementation plans, and migration plans that belong in this folder.
+Core-specific architecture and planning documents belong here when they address required base-application capabilities; application-wide coordination or lifecycle; contracts consumed by optional Modules; Core-owned persistence, infrastructure, delivery, or presentation; or Core implementation and migration work.
 
 ### 2.2. Does Not Belong Here
 
-List related concepts that should be routed to Modules, UI, delivery Surfaces, Laravel integration, or another documentation owner.
+Optional Module definitions, reusable UI-system definitions, generic Surface definitions, non-Core Laravel integration rules, implemented feature, flow, or schema truth, and active GitHub issue or Project status belong with their respective canonical owners.
 
 ## 3. Documents
 
-| Document                         | Purpose                                                                                        | Status |
-| -------------------------------- | ---------------------------------------------------------------------------------------------- | ------ |
-| [README](README.md)              | Explains the Core documentation package, reading order, required files, and maintenance rules. | active |
-| [Core Definition](Definition.md) | Defines Core ownership, classification, dependencies, and target status.                       | active |
-| [Agents](AGENTS.md)              | Defines Agent guidance, rules and other configurations for AI agent usage of this repo folder. | active |
+| Document                                                   | Purpose                                                                                        | Status |
+| ---------------------------------------------------------- | ---------------------------------------------------------------------------------------------- | ------ |
+| [README](README.md)                                        | Explains the Core documentation package, reading order, required files, and maintenance rules. | active |
+| [Core Definition](../Definitions/Core/Definition.md)       | Defines Core ownership, classification, dependencies, and target status.                       | active |
+| [AGENTS](AGENTS.md)                                        | Provides agent-facing routing and folder-specific working rules.                               | active |
 
 ## 4. Subfolders
 
@@ -61,4 +61,5 @@ No subfolders currently exist.
 ## 6. Related
 
 * [Planning Index](../index.md)
+* [Core Definition](../Definitions/Core/Definition.md)
 * [M0 Target Repository Architecture](../00-overview/m0-target-repository-architecture.md)

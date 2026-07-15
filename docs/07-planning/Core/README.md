@@ -44,7 +44,7 @@ The documents in this folder define:
 Read this package in the following order:
 
 1. `README.md` for the package purpose and document rules.
-2. `Definition.md` for the authoritative Core boundary.
+2. [Core Definition](../Definitions/Core/Definition.md) for the authoritative Core boundary.
 3. `Index.md` to locate additional Core documents.
 4. Supporting documents only when their specific subject is required.
 
@@ -75,17 +75,19 @@ No subfolders are created unless the Core document set grows beyond a practical 
 
 Every standardized architecture documentation package contains:
 
-| File            | Purpose                                                                    |
-| --------------- | -------------------------------------------------------------------------- |
-| `README.md`     | Explains how the package is organized and maintained.                      |
-| `Definition.md` | Defines the package’s ownership boundary, dependencies, and target status. |
-| `Index.md`      | Routes readers to the documents contained in the package.                  |
+| File        | Purpose                                                                    |
+| ----------- | -------------------------------------------------------------------------- |
+| `README.md` | Explains how the package is organized and maintained.                      |
+| `AGENTS.md` | Provides agent-facing routing and folder-specific working rules.           |
+| `Index.md`  | Routes readers to the documents contained in the package.                  |
 
-Additional documents may be added when they own a distinct Core subject that does not belong in `Definition.md`.
+The canonical Core definition is external to this package: [Core Definition](../Definitions/Core/Definition.md).
+
+Additional documents may be added when they own a distinct Core subject that is not owned by the central [Core Definition](../Definitions/Core/Definition.md).
 
 ## 5. Content Rules
 
-* Keep `Definition.md` authoritative for the Core boundary.
+* Keep the [Core Definition](../Definitions/Core/Definition.md) authoritative for the Core boundary.
 * Keep `Index.md` focused on routing and document status.
 * Keep this README focused on package use and maintenance.
 * Do not duplicate complete sections between package documents.

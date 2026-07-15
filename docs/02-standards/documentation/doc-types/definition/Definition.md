@@ -1,11 +1,11 @@
 <!--
 DOC-META
 title: Definition Document Type
-doc_type: definition
+doc_type: Definition
 status: active
 owner: docs
 canonical: true
-canonical_path: docs/02-standards/documentation/doc-types/definitions/definition.md
+canonical_path: docs/02-standards/documentation/doc-types/definition/Definition.md
 parent: docs/02-standards/documentation/doc-types/index.md
 template: docs/09-reference/templates/docs/_definition.md
 summary: Defines the purpose, required structure, ownership rules, and canonical-location requirements for definition documents.

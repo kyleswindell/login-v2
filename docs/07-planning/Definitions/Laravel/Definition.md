@@ -2,7 +2,7 @@
 DOC-META
 title: Laravel Definition
 doc_type: definition
-status: draft
+status: active
 owner: architecture
 canonical: true
 canonical_path: docs/07-planning/Definitions/Laravel/Definition.md
@@ -13,7 +13,7 @@ summary: Defines Laravel as the framework, runtime, and composition system used 
 
 # Laravel Definition
 
-Parent: [Planning Index](../../index.md)
+Parent: [Definitions Index](../Index.md)
 
 - [1. Definition](#1-definition)
 - [2. Classification Rule](#2-classification-rule)
@@ -128,7 +128,7 @@ Exact root-folder roles, owner-local placement, namespaces, and compatibility ru
 
 ## 7. Accepted Decision
 
-Status: proposed
+Status: accepted
 
 Laravel is the framework, runtime, and composition system used across every Login 2.0 ownership area.
 
@@ -157,6 +157,6 @@ These questions do not change Laravel’s framework role.
 * [UI Definition](../UI/Definition.md)
 * [Surface Definition](../Surfaces/Definition.md)
 * [Temporary Laravel README](../../temp/Laravel/README.md)
-* [Temporary Laravel Index](../../temp/Laravel/Index.md)
+* [Definitions Index](../Index.md)
 * [M0 Target Repository Architecture](../../00-overview/m0-target-repository-architecture.md)
 * Related GitHub issue: #48

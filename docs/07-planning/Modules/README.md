@@ -45,7 +45,7 @@ The documents in this folder define:
 Read this package in the following order:
 
 1. `README.md` for package purpose and document rules.
-2. `Definition.md` for the authoritative Module boundary.
+2. [Module Definition](../Definitions/Modules/Definition.md) for the authoritative Module boundary.
 3. `Index.md` to locate additional Module documents.
 4. Supporting documents only when their specific subject is required.
 
@@ -78,19 +78,21 @@ No subfolders are created unless the Modules document set grows beyond a practic
 
 Every standardized architecture documentation package contains:
 
-| File            | Purpose                                                                    |
-| --------------- | -------------------------------------------------------------------------- |
-| `README.md`     | Explains how the package is organized and maintained.                      |
-| `Definition.md` | Defines the package’s ownership boundary, dependencies, and target status. |
-| `Index.md`      | Routes readers to the documents contained in the package.                  |
+| File        | Purpose                                                          |
+| ----------- | ---------------------------------------------------------------- |
+| `README.md` | Explains how the package is organized and maintained.            |
+| `AGENTS.md` | Provides agent-facing routing and folder-specific working rules. |
+| `Index.md`  | Routes readers to the documents contained in the package.        |
 
-Additional documents may be added when they own a distinct Module architecture subject that does not belong in `Definition.md`.
+The canonical Module definition is external to this package: [Module Definition](../Definitions/Modules/Definition.md).
+
+Additional documents may be added when they own a distinct Module architecture subject that is not owned by the central [Module Definition](../Definitions/Modules/Definition.md).
 
 Individual Module documentation packages are defined separately from this architecture-area package.
 
 ## 5. Content Rules
 
-* Keep `Definition.md` authoritative for the Module boundary.
+* Keep the [Module Definition](../Definitions/Modules/Definition.md) authoritative for the Module boundary.
 * Keep `Index.md` focused on routing and document status.
 * Keep this README focused on package use and maintenance.
 * Do not duplicate complete sections between package documents.
@@ -124,5 +126,3 @@ Keep metadata, parent links, document links, and lifecycle status current.
 * [M0 Target Repository Architecture](../00-overview/m0-target-repository-architecture.md)
 * [ADR-0005: Core, Modules, And UI Ownership Taxonomy](../../01-decisions/adr-0005-core-modules-ui-ownership-taxonomy.md)
 * [ADR-0007: Owner, Registry, And Identifier Key Conventions](../../01-decisions/adr-0007-owner-registry-and-identifier-key-conventions.md)
-
----

@@ -1,5 +1,3 @@
-# `docs/07-planning/UI/Definition.md`
-
 <!--
 DOC-META
 title: UI Definition
@@ -15,7 +13,7 @@ summary: Defines UI ownership, classification, presentation boundaries, dependen
 
 # UI Definition
 
-Parent: [UI Index](Index.md)
+Parent: [Definitions Index](../Index.md)
 
 - [1. Definition](#1-definition)
 - [2. Classification Rule](#2-classification-rule)
@@ -148,11 +146,8 @@ Specific placement, naming, contract structure, and migration decisions are reso
 
 ## 9. Related
 
-* [UI README](README.md)
-* [UI Index](Index.md)
-* [M0 Target Repository Architecture](../00-overview/m0-target-repository-architecture.md)
-* [ADR-0005: Core, Modules, And UI Ownership Taxonomy](../../01-decisions/adr-0005-core-modules-ui-ownership-taxonomy.md)
+* [UI README](../../UI/README.md)
+* [UI Index](../../UI/Index.md)
+* [M0 Target Repository Architecture](../../00-overview/m0-target-repository-architecture.md)
+* [ADR-0005: Core, Modules, And UI Ownership Taxonomy](../../../01-decisions/adr-0005-core-modules-ui-ownership-taxonomy.md)
 * Related GitHub issue: #48
-
----
-

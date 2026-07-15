@@ -13,7 +13,7 @@ summary: Defines Core ownership, classification, dependency boundaries, and targ
 
 # Core Definition
 
-Parent: [Core Index](Index.md)
+Parent: [Definitions Index](../Index.md)
 
 - [1. Definition](#1-definition)
 - [2. Classification Rule](#2-classification-rule)
@@ -117,8 +117,8 @@ Whether a specific existing or planned capability satisfies the Core classificat
 
 ## 9. Related
 
-* [Core README](README.md)
-* [Core Index](Index.md)
-* [M0 Target Repository Architecture](../00-overview/m0-target-repository-architecture.md)
-* [ADR-0005: Core, Modules, And UI Ownership Taxonomy](../../01-decisions/adr-0005-core-modules-ui-ownership-taxonomy.md)
+* [Core README](../../Core/README.md)
+* [Core Index](../../Core/Index.md)
+* [M0 Target Repository Architecture](../../00-overview/m0-target-repository-architecture.md)
+* [ADR-0005: Core, Modules, And UI Ownership Taxonomy](../../../01-decisions/adr-0005-core-modules-ui-ownership-taxonomy.md)
 * Related GitHub issue: #48

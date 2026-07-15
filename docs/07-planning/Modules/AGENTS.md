@@ -6,9 +6,9 @@ This folder owns the architecture and planning documentation for Modules within 
 
 Use this file to guide Codex and other AI agents working inside this folder. This file is agent-facing routing guidance, not the canonical definition of a Module.
 
-Canonical Module truth remains in:
+The canonical Module definition is external to this package. Module truth remains in:
 
-* `Definition.md`
+* [Module Definition](../Definitions/Modules/Definition.md)
 * accepted architecture decisions
 * later canonical architecture and standards documents
 
@@ -21,7 +21,7 @@ This folder may contain:
 * the Modules documentation package files:
 
   * `README.md`
-  * `Definition.md`
+  * `AGENTS.md`
   * `Index.md`
 * Module architecture and planning documents
 * Module package and lifecycle planning
@@ -52,7 +52,7 @@ Before making changes in this folder, read:
 2. `../../AGENTS.md`
 3. `../AGENTS.md`
 4. `README.md`
-5. `Definition.md`
+5. [Module Definition](../Definitions/Modules/Definition.md)
 6. `Index.md`
 7. only the specific supporting document required by the task
 
@@ -76,7 +76,7 @@ Prefer targeted section reads over loading unrelated Module planning documents.
 
 | Change Type                                 | Canonical Owner                                                                                                   |
 | ------------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| Module definition or ownership boundary     | `Definition.md` and applicable files under `docs/01-decisions/`                                                   |
+| Module definition or ownership boundary     | [Module Definition](../Definitions/Modules/Definition.md) and applicable files under `docs/01-decisions/`         |
 | Target repository architecture              | `docs/07-planning/00-overview/m0-target-repository-architecture.md` during Goal 03; later `docs/03-architecture/` |
 | Individual Module behavior                  | `docs/04-features/`                                                                                               |
 | Module execution path or workflow           | `docs/05-flows/`                                                                                                  |
@@ -106,9 +106,10 @@ When creating or modifying files in this folder:
 
 Folder-specific rules:
 
-* `Definition.md` is authoritative for the Module boundary.
+* The [Module Definition](../Definitions/Modules/Definition.md) is external to this package and authoritative for the Module boundary.
 * `README.md` owns package purpose, reading order, and maintenance rules.
 * `Index.md` owns routing and document status.
+* `AGENTS.md` owns agent-facing routing and folder-specific working rules.
 * Additional files must own one distinct Module architecture subject.
 * Keep the folder flat unless a later accepted architecture decision authorizes subfolders.
 * Do not add generic files such as `notes.md`, `misc.md`, or `shared.md`.
@@ -125,12 +126,12 @@ Documentation changes in this folder must:
 * keep parent and related links current
 * update `Index.md` when documents are added, moved, renamed, superseded, or removed
 * update `README.md` only when the package contract or reading order changes
-* update `Definition.md` only when the Module boundary itself changes
+* update the central [Module Definition](../Definitions/Modules/Definition.md) only when the Module boundary itself changes and that external file is in scope
 * link to accepted decisions instead of reproducing their full contents
 * state whether a rule is proposed, accepted, transitional, compatibility-only, or superseded
 * identify the later owner for unresolved placement, naming, migration, implementation, or verification work
 
-Do not create a second document that competes with an existing Module document for the same responsibility.
+Do not create a document that competes with the central Module definition or an existing Modules package document for the same responsibility.
 
 ---
 
@@ -219,8 +220,9 @@ When reporting work, include:
 Stop and report before editing when:
 
 * the requested document does not have a clear Module architecture owner
-* the change conflicts with `Definition.md` or an accepted ADR
+* the change conflicts with the [Module Definition](../Definitions/Modules/Definition.md) or an accepted ADR
 * another document already owns the same subject
+* the change would introduce a competing Module definition inside this package
 * the proposed responsibility may actually be required Core behavior
 * the change would redefine Core, UI, delivery Surfaces, or Laravel integration without explicit scope
 * a cross-Module dependency lacks a public contract or declared version relationship
@@ -239,7 +241,7 @@ Stop and report before editing when:
 * [Docs AGENTS](../../AGENTS.md)
 * [Planning AGENTS](../AGENTS.md)
 * [Modules README](README.md)
-* [Module Definition](Definition.md)
+* [Module Definition](../Definitions/Modules/Definition.md)
 * [Modules Index](Index.md)
 * [How To Write Docs](../../02-standards/documentation/How%20To%20Write%20Docs.md)
 * [Doc Governance](../../02-standards/documentation/Doc%20Governance.md)

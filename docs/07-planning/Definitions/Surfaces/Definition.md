@@ -13,7 +13,7 @@ summary: Defines a Surface as an assembled interaction boundary through which Co
 
 # Surface Definition
 
-Parent: [Planning Index](../../index.md)
+Parent: [Definitions Index](../Index.md)
 
 - [1. Definition](#1-definition)
 - [2. Classification Rule](#2-classification-rule)
@@ -138,7 +138,7 @@ These questions are owned by later Goal 03 phases and do not change this definit
 ## 9. Related
 
 * [Temporary Surfaces README](../../temp/Surfaces/README.md)
-* [Temporary Surfaces Index](../../temp/Surfaces/Index.md)
+* [Definitions Index](../Index.md)
 * [M0 Target Repository Architecture](../../00-overview/m0-target-repository-architecture.md)
 * [ADR-0005: Core, Modules, And UI Ownership Taxonomy](../../../01-decisions/adr-0005-core-modules-ui-ownership-taxonomy.md)
 * [ADR-0006: Tenant, Instance, Workspace, Principal, And Invocation Vocabulary](../../../01-decisions/adr-0006-tenant-instance-workspace-principal-and-invocation-vocabulary.md)

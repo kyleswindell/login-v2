@@ -6,9 +6,9 @@ This folder owns the architecture and planning documentation for the reusable UI
 
 Use this file to guide Codex and other AI agents working inside this folder. This file is agent-facing routing guidance, not the canonical definition of UI.
 
-Canonical UI truth remains in:
+The canonical UI definition is external to this package. UI truth remains in:
 
-* `Definition.md`
+* [UI Definition](../Definitions/UI/Definition.md)
 * accepted architecture decisions
 * later canonical UI architecture and standards documents
 
@@ -21,7 +21,7 @@ This folder may contain:
 * the UI documentation package files:
 
   * `README.md`
-  * `Definition.md`
+  * `AGENTS.md`
   * `Index.md`
 * UI architecture and planning documents
 * Element, Component, Pattern, and Layout planning
@@ -51,7 +51,7 @@ Before making changes in this folder, read:
 2. `../../AGENTS.md`
 3. `../AGENTS.md`
 4. `README.md`
-5. `Definition.md`
+5. [UI Definition](../Definitions/UI/Definition.md)
 6. `Index.md`
 7. only the specific supporting document required by the task
 
@@ -74,7 +74,7 @@ Prefer targeted section reads over loading unrelated UI planning documents.
 
 | Change Type                             | Canonical Owner                                                                                                   |
 | --------------------------------------- | ----------------------------------------------------------------------------------------------------------------- |
-| UI definition or ownership boundary     | `Definition.md` and applicable files under `docs/01-decisions/`                                                   |
+| UI definition or ownership boundary     | [UI Definition](../Definitions/UI/Definition.md) and applicable files under `docs/01-decisions/`                 |
 | Target repository architecture          | `docs/07-planning/00-overview/m0-target-repository-architecture.md` during Goal 03; later `docs/03-architecture/` |
 | UI implementation convention            | `docs/02-standards/ui/` and `docs/02-standards/coding/`                                                           |
 | Core or Module feature behavior         | `docs/04-features/`                                                                                               |
@@ -102,9 +102,10 @@ When creating or modifying files in this folder:
 
 Folder-specific rules:
 
-* `Definition.md` is authoritative for the UI boundary.
+* The [UI Definition](../Definitions/UI/Definition.md) is external to this package and authoritative for the UI boundary.
 * `README.md` owns package purpose, reading order, and maintenance rules.
 * `Index.md` owns routing and document status.
+* `AGENTS.md` owns agent-facing routing and folder-specific working rules.
 * Additional files must own one distinct UI subject.
 * Keep the folder flat unless a later accepted architecture decision authorizes subfolders.
 * Do not add generic files such as `notes.md`, `misc.md`, or `shared.md`.
@@ -139,12 +140,12 @@ Documentation changes in this folder must:
 * keep parent and related links current
 * update `Index.md` when documents are added, moved, renamed, superseded, or removed
 * update `README.md` only when the package contract or reading order changes
-* update `Definition.md` only when the UI boundary itself changes
+* update the central [UI Definition](../Definitions/UI/Definition.md) only when the UI boundary itself changes and that external file is in scope
 * link to accepted decisions instead of reproducing their full contents
 * distinguish reusable UI contracts from feature-specific implementation
 * identify the later owner for unresolved placement, naming, migration, implementation, or verification work
 
-Do not create a second document that competes with an existing UI document for the same responsibility.
+Do not create a document that competes with the central UI definition or an existing UI package document for the same responsibility.
 
 ---
 
@@ -223,8 +224,9 @@ When reporting work, include:
 Stop and report before editing when:
 
 * the requested document does not have a clear UI owner
-* the change conflicts with `Definition.md` or an accepted ADR
+* the change conflicts with the [UI Definition](../Definitions/UI/Definition.md) or an accepted ADR
 * another document already owns the same subject
+* the change would introduce a competing UI definition inside this package
 * the proposed responsibility may actually be Core- or Module-owned presentation
 * authorization, persistence, domain behavior, or lifecycle logic is being assigned to UI
 * physical placement or file type is being used as the sole evidence of UI ownership
@@ -242,7 +244,7 @@ Stop and report before editing when:
 * [Docs AGENTS](../../AGENTS.md)
 * [Planning AGENTS](../AGENTS.md)
 * [UI README](README.md)
-* [UI Definition](Definition.md)
+* [UI Definition](../Definitions/UI/Definition.md)
 * [UI Index](Index.md)
 * [How To Write Docs](../../02-standards/documentation/How%20To%20Write%20Docs.md)
 * [Doc Governance](../../02-standards/documentation/Doc%20Governance.md)

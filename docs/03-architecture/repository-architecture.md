@@ -25,9 +25,9 @@ It does not map every current file, perform migration, define final names, imple
 
 ## 2. Status And Scope
 
-- Target architecture: accepted through Goal 3 Phase 4
+- Target architecture: accepted through Goal 3 Phase 5
 - Current implementation: transitional
-- Final naming: pending Goal 3 Phase 5
+- Naming model: accepted through Goal 3 Phase 5
 - Representative validation: pending Goal 3 Phase 6
 - Migration direction: pending Goal 3 Phase 7
 - Automated enforcement: later bounded implementation and verification work
@@ -41,9 +41,9 @@ This document owns:
 - dependency direction and cross-owner communication boundaries;
 - transitional, compatibility-only, prohibited, and exception structures.
 
-Detailed artifact rows remain in the Goal 3 Phase 4 matrices. Final class, namespace, route, key, descriptor, manifest, suite, and fixture names remain Phase 5 authority.
+Detailed placement rows remain in the Goal 3 Phase 4 matrices. General naming rules are owned by [Repository Naming Standards](../02-standards/coding/repository-naming-standards.md), while specialist standards retain their domain detail.
 
-This document does not own feature behavior, detailed schema design, final naming, physical migration, or implementation.
+This document does not own feature behavior, detailed schema design, physical migration, or implementation.
 
 ## 3. Architecture Principles
 
@@ -178,6 +178,8 @@ app/Core/<Capability>/
 
 Structure is sparse. A capability contains only the roles and support branches it needs.
 
+Each direct capability owner has one explicit identity record. Its PascalCase folder and namespace name, snake_case owner or capability keys, non-PHP slug, and documentation title remain separate representations.
+
 Runtime persistence implementation remains owner-local:
 
 ```text
@@ -239,6 +241,8 @@ Modules/<Module>/
 
 A Module must be independently understandable, versioned, installable, distributable, explicit about dependencies, and locally verifiable.
 
+A Module uses a PascalCase folder, the namespace `Parasolutions\Modules\<Module>\`, the Composer package `parasolutions/module-<module-slug>`, and its snake_case `module_key` as the default route-name and configuration root. These identities remain separate.
+
 Its `src/` roles correspond to roles beneath `app/Core/<Capability>/`. Package-root support branches are not competing Technical Roles.
 
 Module-to-Module dependencies require explicit public Contracts, declared package dependencies, and an acyclic dependency graph.
@@ -291,7 +295,9 @@ Configuration remains owner-specific:
 
 Tenant settings, User preferences, editable operational state, and secrets are not Laravel configuration.
 
-Each registrable owner exposes an explicit Owner Registration Descriptor. A deterministic Registration Compiler validates and dependency-orders descriptors and produces a Compiled Registration Manifest. One Root Application Registrar consumes that manifest and delegates to Typed Registrars, native framework or build APIs, or owner-local Providers.
+Each registrable owner exposes one explicit owner-controlled registration declaration. The architecture retains the terms Owner Registration Descriptor, Registration Compiler, Compiled Registration Manifest, Root Application Registrar, and Typed Registrar, but those responsibilities do not require one custom PHP class or wrapper per term.
+
+A formal Module Definition, owner-local Provider, immutable Data Object, native framework integration, or dedicated descriptor may fulfill the applicable responsibility. When custom artifacts are independently justified, they follow the conditional names defined by [Repository Naming Standards](../02-standards/coding/repository-naming-standards.md).
 
 See [Application Registration](application-registration.md) for the canonical registration architecture.
 
@@ -491,7 +497,7 @@ Removal requires accepted ownership and placement, resolved compatibility, passi
 
 ## 18. Deferred Authority
 
-Phase 5 owns final folder, namespace, class, route, configuration, event, job, test, fixture, aggregator, alias, descriptor, manifest, registrar, and compatibility naming.
+Phase 5 accepted the folder, namespace, class, route, configuration, event, job, test, fixture, documentation, compatibility, and conditional Application Registration naming model.
 
 Phase 6 owns representative architecture validation.
 
@@ -511,3 +517,5 @@ Detailed schema remains Goal 6 authority. Complete verification architecture and
 - [Phase 4 Placement And Dependency Rules Index](../07-planning/Milestones/milestone-0/goal-3/phase-4/index.md)
 - [Phase 4 Artifact Placement Matrix](../07-planning/Milestones/milestone-0/goal-3/phase-4/artifact-placement-matrix.md)
 - [Phase 4 Dependency And Communication Matrix](../07-planning/Milestones/milestone-0/goal-3/phase-4/dependency-and-communication-matrix.md)
+- [Phase 5 Naming Conventions Index](../07-planning/Milestones/milestone-0/goal-3/phase-5/index.md)
+- [Repository Naming Standards](../02-standards/coding/repository-naming-standards.md)

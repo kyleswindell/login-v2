@@ -70,6 +70,8 @@ Use:
 - no legacy `tbl` prefixes
 - no vague table names such as `data`, `items`, `records`, or `values`
 
+Laravel Model classes use singular PascalCase semantic nouns. Their default table names use plural snake_case. Do not add automatic Core, Module, owner, or package prefixes to table names. Use an explicit `$table` override only for a documented domain, compatibility, external-system, or Goal 6 reason.
+
 Examples:
 
 - `users`
@@ -380,6 +382,7 @@ Stop before designing schema when:
 ## 20. Related
 
 - [Database Migration Standards](Database%20Migration%20Standards.md)
+- [Repository Naming Standards](../coding/repository-naming-standards.md)
 - [Settings Data Governance Standards](Settings%20Data%20Governance%20Standards.md)
 - [Database Index](../../06-database/index.md)
 - [Database Tables Index](../../06-database/tables/index.md)

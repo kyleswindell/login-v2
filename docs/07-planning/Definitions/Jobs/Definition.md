@@ -105,7 +105,7 @@ app/Core/<Capability>/Jobs/
 Modules/<Module>/src/Jobs/
 ```
 
-Final queue naming, retry, timeout, serialization, uniqueness, batching, and scheduling conventions remain Phase 5 and later standards authority.
+Job classes use `<ImperativeOperation>Job`. Job keys and logical queue keys remain separate machine-identifier families. Retry, timeout, serialization, uniqueness, batching, and scheduling remain later standards authority.
 
 ## 7. Accepted Decision
 
@@ -119,7 +119,6 @@ Framework queue registration does not transfer Job ownership to Laravel integrat
 
 The following details remain deferred:
 
-- exact Job naming conventions;
 - exact queue and priority rules;
 - exact retry, timeout, and backoff standards;
 - exact idempotency requirements;

@@ -103,7 +103,7 @@ app/Core/<Capability>/Queries/
 Modules/<Module>/src/Queries/
 ```
 
-Final class, namespace, result, pagination, and filtering naming remain Phase 5 authority.
+Concrete Query classes use `<ReadVerb><Subject>Query`. Query criteria use `<Subject>Criteria`; explicit results use `<Subject>Result` or a more precise semantic name.
 
 ## 7. Accepted Decision
 
@@ -117,8 +117,8 @@ They remain distinct from Actions, Delivery Adapters, and Surface presentation. 
 
 The following details remain deferred:
 
-- exact Query naming conventions;
-- exact result-object conventions;
+- exact pagination and filtering implementation standards;
+- exact result compatibility and serialization rules;
 - exact pagination and filtering standards;
 - exact caching rules;
 - exact static enforcement of read-only behavior.

@@ -286,7 +286,14 @@ Manual visual review is required for UI changes involving spacing, layout, hiera
 
 Use behavior-focused names.
 
-Good names describe the expected outcome.
+- Test classes use `<SubjectOrBehavior>Test`.
+- Test methods use `test_<context>_<expected_outcome>` or another explicit context-and-condition form.
+- Browser tests use `<Flow>BrowserTest`.
+- Architecture tests use `<BoundaryOrRule>ArchitectureTest`.
+- Contract tests use `<Subject>ContractTest`.
+- Dataset names use snake_case.
+- PHP fixture classes use `<Subject>Fixture`.
+- Non-PHP fixture filenames use descriptive lowercase kebab-case by default.
 
 Prefer:
 
@@ -345,6 +352,7 @@ Every implementation summary or PR should state:
 - [Coding Standards](Coding%20Standards.md)
 - [File Building Standards](File%20Building%20Standards.md)
 - [Feature Development Standards](Feature%20Development%20Standards.md)
+- [Repository Naming Standards](repository-naming-standards.md)
 - [Documentation Review Standards](../documentation/Documentation%20Review%20Standards.md)
 - [Implementation Status And Development Sync Standard](../documentation/Implementation%20Status%20And%20Development%20Sync%20Standard.md)
 - [Runbook Index](../../10-runbooks/index.md)

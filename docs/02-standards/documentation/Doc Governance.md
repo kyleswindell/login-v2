@@ -171,6 +171,8 @@ Required behavior:
 - canonical docs link back to active planning when useful
 - superseded files identify replacements
 - moved files preserve old paths as concise hubs only when practical
+- new prose paths follow the filename and reserved-name rules in [Repository Naming Standards](../coding/repository-naming-standards.md)
+- legacy path retention is treated as explicit compatibility rather than an equally canonical destination
 
 Do not:
 
@@ -402,5 +404,6 @@ Verify:
 - [Runbook Documentation Standards](Runbook%20Documentation%20Standards.md)
 - [Obsidian Vault Structure Guide](Obsidian%20Vault%20Structure%20Guide.md)
 - [Documentation Review Standards](Documentation%20Review%20Standards.md)
+- [Repository Naming Standards](../coding/repository-naming-standards.md)
 - [Coding Agent Standards](../coding-agents/index.md)
 - [Documentation Templates](../../09-reference/templates/docs/_index.md)

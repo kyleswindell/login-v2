@@ -23,14 +23,14 @@ Behavior, workflow steps, schema details, implementation standards, planning, op
 
 ## 2. Architecture Documents
 
-| Document | Owns |
-| --- | --- |
-| [System Overview](system-overview.md) | High-level system, Tenant Instance, Workspace, Principal, execution, and application ownership model |
-| [Repository Architecture](repository-architecture.md) | Target repository topology, owner-local artifact placement, dependency direction, presentation and test topology, supporting branches, exceptions, and transitional structures |
-| [Application Registration](application-registration.md) | Owner registration descriptors, deterministic compilation, generated manifests, root composition, Typed Registrars, and native Laravel and Vite boundaries |
-| [Stack Overview](stack-overview.md) | Application stack, framework, runtime, database, frontend, and deployment technology boundaries |
-| [Tenant, Instance, User Account, And Workspace Model](workspace-identity-model.md) | Canonical identity, Tenant Instance, User Account, and Workspace relationships |
-| [Tenancy](tenancy.md) | Tenant and Instance isolation, resolution, and cross-scope architecture |
+| Document                                                                           | Owns                                                                                                                                                                                                          |
+| ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [System Overview](system-overview.md)                                              | High-level system, Tenant Instance, Workspace, Principal, execution, and application ownership model                                                                                                          |
+| [Repository Architecture](repository-architecture.md)                              | Target repository topology, accepted naming relationships, owner-local artifact placement, dependency direction, presentation and test topology, supporting branches, exceptions, and transitional structures |
+| [Application Registration](application-registration.md)                            | Registration responsibilities, conditional custom-artifact naming, deterministic compilation, generated manifests, root composition, Typed Registrars, and native Laravel and Vite boundaries                 |
+| [Stack Overview](stack-overview.md)                                                | Application stack, framework, runtime, database, frontend, and deployment technology boundaries                                                                                                               |
+| [Tenant, Instance, User Account, And Workspace Model](workspace-identity-model.md) | Canonical identity, Tenant Instance, User Account, and Workspace relationships                                                                                                                                |
+| [Tenancy](tenancy.md)                                                              | Tenant and Instance isolation, resolution, and cross-scope architecture                                                                                                                                       |
 
 ## 3. Reading Order
 
@@ -75,3 +75,5 @@ Do not read every architecture document for a local change.
 - [Planning Index](../07-planning/index.md)
 - [Goal 3 Target Repository Architecture](../07-planning/Milestones/milestone-0/goal-3/target-repository-architecture.md)
 - [Phase 4 Placement And Dependency Rules Index](../07-planning/Milestones/milestone-0/goal-3/phase-4/index.md)
+- [Phase 5 Naming Conventions Index](../07-planning/Milestones/milestone-0/goal-3/phase-5/index.md)
+- [Repository Naming Standards](../02-standards/coding/repository-naming-standards.md)

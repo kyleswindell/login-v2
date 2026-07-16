@@ -100,7 +100,7 @@ Modules/<Module>/src/Console/
 
 Root `app/Console/` remains restricted to application-wide Laravel integration, base console artifacts, global registration, and bounded compatibility.
 
-Final command names, namespaces, scheduler relationships, and internal subdivisions remain Phase 5 and later standards authority.
+Console command classes use `<Verb><Subject>Command`. Namespaces, scheduler relationships, Artisan signatures, and internal subdivisions remain later standards and implementation authority.
 
 ## 7. Accepted Decision
 

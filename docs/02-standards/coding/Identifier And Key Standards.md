@@ -120,7 +120,7 @@ Keep Composer package identity separate:
 
 ```text
 module_key: projects
-composer_package: parasolutions/login-projects
+composer_package: parasolutions/module-projects
 ```
 
 A future `package_key` must not duplicate `module_key` unless it identifies a materially different packaging concept.
@@ -311,6 +311,8 @@ Map provider-specific and environment-specific queue names outside the canonical
 
 A job, event, listener, or queue key identifies execution behavior or infrastructure. It does not identify the Actor or Invocation Channel.
 
+Application Registration metadata references these existing canonical identifier families. It must keep owner identity, artifact family, and canonical artifact identity separate rather than manufacturing competing `registration.*` route, configuration, event, job, contribution, or asset keys.
+
 ## 15. Collision And Uniqueness Rules
 
 These key families are globally unique within their own family:
@@ -400,7 +402,7 @@ Module example:
 ownership_area: module
 owner_key: projects
 module_key: projects
-composer_package: parasolutions/login-projects
+composer_package: parasolutions/module-projects
 permission_key: projects.update
 route_name: projects.update
 registry_key: ui.navigation
@@ -409,18 +411,18 @@ contribution_key: projects.index
 
 ### Invalid Examples
 
-| Invalid value | Reason |
-| --- | --- |
-| `Platform.Roles` | Uppercase characters and a retired generic Platform root. |
-| `data-governance.export` | Hyphenated internal segment. |
-| `core.identity` | Ownership-area prefix embedded in an owner key. |
-| `module.projects` | Ownership-area prefix embedded in a Module key. |
-| `projects..archive` | Repeated period. |
-| `.users.view` | Leading period. |
-| `users.view.` | Trailing period. |
-| `projects/archive` | Slash used inside a canonical internal key. |
-| `parasolutions/login-projects` | Composer package identity used as a Module key. |
-| `platform_surface_key` | Retired ambiguous UI-key family. |
+| Invalid value                  | Reason                                                    |
+| ------------------------------ | --------------------------------------------------------- |
+| `Platform.Roles`               | Uppercase characters and a retired generic Platform root. |
+| `data-governance.export`       | Hyphenated internal segment.                              |
+| `core.identity`                | Ownership-area prefix embedded in an owner key.           |
+| `module.projects`              | Ownership-area prefix embedded in a Module key.           |
+| `projects..archive`            | Repeated period.                                          |
+| `.users.view`                  | Leading period.                                           |
+| `users.view.`                  | Trailing period.                                          |
+| `projects/archive`             | Slash used inside a canonical internal key.               |
+| `parasolutions/login-projects` | Composer package identity used as a Module key.           |
+| `platform_surface_key`         | Retired ambiguous UI-key family.                          |
 
 Framework-native values such as `x-ui.modal`, `/platform/roles`, `App\\Core\\Identity`, and `PARASOLUTIONS_API_KEY` remain valid only in their separate alias, path, namespace, or environment-variable fields. They are not canonical internal keys.
 
@@ -444,5 +446,6 @@ Do not:
 - [ADR-0006](../../01-decisions/adr-0006-tenant-instance-workspace-principal-and-invocation-vocabulary.md)
 - [ADR-0007](../../01-decisions/adr-0007-owner-registry-and-identifier-key-conventions.md)
 - [Events Jobs And Queue Standards](Events%20Jobs%20And%20Queue%20Standards.md)
+- [Repository Naming Standards](repository-naming-standards.md)
 - [Feature Development Standards](Feature%20Development%20Standards.md)
 - [Core Service Build Plan Matrix](../../07-planning/core-service-build-plan-matrix.md)

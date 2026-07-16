@@ -21,13 +21,13 @@ This document is the canonical architecture owner for the Login 2.0 Application 
 
 It defines how Core capabilities, Modules, and UI responsibilities declare registrable artifacts and how those declarations are validated, dependency-ordered, compiled, and connected to Laravel, Livewire, Blade, Vite, and other approved runtime or build integrations.
 
-It does not define the final descriptor schema, filenames, class names, commands, generated paths, cache locations, or implementation sequence.
+It defines accepted terminology and conditional custom-artifact names. Descriptor schema, serialization, generated paths, cache policy, bootstrap integration, performance, and implementation sequence remain deferred.
 
 ## 2. Status And Scope
 
-- Target architecture: accepted through Goal 3 Phase 4
+- Target architecture: accepted through Goal 3 Phase 5
 - Current implementation: transitional and not yet proven to implement this architecture
-- Exact naming and physical implementation: pending Goal 3 Phase 5
+- Terminology and conditional artifact naming: accepted through Goal 3 Phase 5
 - Representative validation: pending Goal 3 Phase 6
 - Migration and compatibility direction: pending Goal 3 Phase 7
 - Runtime tooling and automated enforcement: later bounded implementation work
@@ -87,6 +87,8 @@ The pipeline separates:
 
 Filesystem presence alone does not register a canonical artifact.
 
+The pipeline terms describe responsibilities and artifact categories. They do not mandate classes named `ApplicationRegistrationSystem`, `OwnerRegistrationDescriptor`, or `TypedRegistrar`, and they do not require a custom wrapper around sufficient native Laravel or Vite behavior.
+
 ## 5. Owner Registration Descriptor
 
 Each registrable Core capability, Module, or UI responsibility exposes one explicit Owner Registration Descriptor.
@@ -106,6 +108,10 @@ A descriptor may declare applicable:
 - Host Contributions;
 - explicit owner or package dependencies.
 
+The descriptor responsibility may be fulfilled by a formal Module Definition, owner-local Provider, immutable Data Object, dedicated descriptor, or another accepted owner-controlled mechanism.
+
+When a dedicated class is justified, it uses `<Owner>RegistrationDescriptor`. A shared `RegistrationDescriptorInterface` is introduced only when a stable reusable contract materially requires it.
+
 The descriptor is the canonical registration input owned by the same owner as the declared artifacts.
 
 A descriptor declares registration intent. It does not execute feature behavior, become a Registry, or replace the declared artifact’s own Contract.
@@ -120,6 +126,8 @@ The Registration Compiler consumes Owner Registration Descriptors and:
 4. produces deterministic registration output;
 5. generates the Compiled Registration Manifest.
 
+When represented by a dedicated PHP class, the compiler uses `RegistrationCompiler`. Compile and validation command classes, when implemented, use `CompileRegistrationManifestCommand` and `ValidateRegistrationDescriptorsCommand`.
+
 The compiler is build, cache-preparation, deployment, or other bounded application-composition tooling. It is not unrestricted request-time feature discovery.
 
 The compiler must preserve Core independence from optional Modules and reject unknown or cyclic Module dependencies.
@@ -129,6 +137,8 @@ The compiler must preserve Core independence from optional Modules and reject un
 The Compiled Registration Manifest is generated deterministic output containing validated and ordered registration instructions.
 
 Owner Registration Descriptors remain canonical inputs. The manifest is reproducible derived output.
+
+When represented by a dedicated type, use `CompiledRegistrationManifest`. A materialized file uses `compiled-registration-manifest.<format>`.
 
 The final source-control, cache, and invalidation policy remains deferred, but the target architecture requires:
 
@@ -142,7 +152,7 @@ Owner behavior must not depend on the generated manifest.
 
 ## 8. Root Application Registrar
 
-The Root Application Registrar is restricted application-wide Laravel integration.
+The Root Application Registrar is restricted application-wide Laravel integration. When a dedicated class is justified, use `RootApplicationRegistrar`; a native Provider or bootstrap integration may fulfill the responsibility without an additional wrapper.
 
 It consumes the Compiled Registration Manifest and delegates registration to:
 
@@ -156,22 +166,22 @@ The Root Application Registrar owns root composition only. It must not absorb ow
 
 ## 9. Typed Registrars
 
-A Typed Registrar performs one bounded registration family.
+A Typed Registrar performs one bounded registration family. Custom classes use `<ArtifactFamily>Registrar` and remain sparse. `TypedRegistrar`, `GenericRegistrar`, and `DefaultRegistrar` are not valid concrete class names.
 
 Potential families include:
 
-| Registration family | Native or owner-controlled destination |
-| --- | --- |
-| Routes | Laravel route registration and route cache |
-| Providers and bindings | Laravel service-container and Provider integration |
-| Commands and schedules | Laravel console and scheduler integration |
-| Views and Blade components | Laravel view and Blade registration |
-| Livewire aliases | Livewire component registration |
-| Configuration | Laravel configuration repository and configuration cache |
-| Migrations and seeders | Laravel database execution |
-| Events and Listeners | Laravel event integration |
-| Assets | Deterministic owner declaration and Vite composition |
-| Host Contributions | Host-owned Registry submission and validation |
+| Registration family        | Native or owner-controlled destination                   |
+| -------------------------- | -------------------------------------------------------- |
+| Routes                     | Laravel route registration and route cache               |
+| Providers and bindings     | Laravel service-container and Provider integration       |
+| Commands and schedules     | Laravel console and scheduler integration                |
+| Views and Blade components | Laravel view and Blade registration                      |
+| Livewire aliases           | Livewire component registration                          |
+| Configuration              | Laravel configuration repository and configuration cache |
+| Migrations and seeders     | Laravel database execution                               |
+| Events and Listeners       | Laravel event integration                                |
+| Assets                     | Deterministic owner declaration and Vite composition     |
+| Host Contributions         | Host-owned Registry submission and validation            |
 
 A Typed Registrar does not become the owner of registered artifacts.
 
@@ -280,14 +290,9 @@ Until migration and validation are complete:
 
 ## 15. Deferred Authority
 
-Goal 3 Phase 5 owns final naming for:
+Goal 3 Phase 5 accepted the Application Registration terminology and conditional names for dedicated descriptors, compilers, manifests, registrars, commands, and generated files.
 
-- descriptor files and schemas;
-- compiler and command names;
-- manifest format and path;
-- registrar class and family names;
-- registration keys, aliases, and namespaces;
-- generated-output naming.
+Descriptor schema, serialization format, generated path, source-control and cache policy, bootstrap integration, compiler implementation, performance model, and migration sequence remain later bounded authority.
 
 Goal 3 Phase 6 owns representative validation.
 
@@ -305,3 +310,5 @@ Later bounded implementation work owns architecture, smallest vertical slice, na
 - [Goal 3 Target Repository Architecture](../07-planning/Milestones/milestone-0/goal-3/target-repository-architecture.md)
 - [Phase 4 Placement And Dependency Rules Index](../07-planning/Milestones/milestone-0/goal-3/phase-4/index.md)
 - [Phase 4 Dependency And Communication Matrix](../07-planning/Milestones/milestone-0/goal-3/phase-4/dependency-and-communication-matrix.md)
+- [Phase 5 Application Registration Terminology And Naming Boundaries](../07-planning/Milestones/milestone-0/goal-3/phase-5/5-14-application-registration-terminology-and-naming-boundaries.md)
+- [Repository Naming Standards](../02-standards/coding/repository-naming-standards.md)

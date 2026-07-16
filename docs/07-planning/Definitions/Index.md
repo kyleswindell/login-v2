@@ -23,7 +23,7 @@ Use this index to locate canonical reusable architecture definitions.
   - [2.2. Does Not Belong Here](#22-does-not-belong-here)
 - [3. Documents](#3-documents)
   - [3.1. Architecture Ownership And Presentation](#31-architecture-ownership-and-presentation)
-  - [3.2. Organization And Extension Concepts](#32-organization-and-extension-concepts)
+  - [3.2. Organization, Extension, And Application Registration Concepts](#32-organization-extension-and-application-registration-concepts)
   - [3.3. Shared Technical Roles](#33-shared-technical-roles)
   - [3.4. Delivery Adapter Specializations](#34-delivery-adapter-specializations)
 - [4. Subfolders](#4-subfolders)
@@ -78,85 +78,85 @@ Capability- and Module-specific required files and folders belong in the applica
 
 ### 3.1. Architecture Ownership And Presentation
 
-| Document | Purpose | Status |
-| --- | --- | --- |
-| [Core Definition](Core/Definition.md) | Defines required and authoritative base-application ownership. | active |
-| [Module Definition](Modules/Definition.md) | Defines optional Module ownership, lifecycle, packaging, and dependency boundaries. | active |
-| [UI Definition](UI/Definition.md) | Defines reusable presentation infrastructure and UI dependency boundaries. | active |
-| [Laravel Definition](Laravel/Definition.md) | Defines Laravel as the application framework, runtime, and composition system. | active |
-| [Surface Definition](Surfaces/Definition.md) | Defines an owner-specific UI presentation and interaction layer. | active |
+| Document                                     | Purpose                                                                             | Status |
+| -------------------------------------------- | ----------------------------------------------------------------------------------- | ------ |
+| [Core Definition](Core/Definition.md)        | Defines required and authoritative base-application ownership.                      | active |
+| [Module Definition](Modules/Definition.md)   | Defines optional Module ownership, lifecycle, packaging, and dependency boundaries. | active |
+| [UI Definition](UI/Definition.md)            | Defines reusable presentation infrastructure and UI dependency boundaries.          | active |
+| [Laravel Definition](Laravel/Definition.md)  | Defines Laravel as the application framework, runtime, and composition system.      | active |
+| [Surface Definition](Surfaces/Definition.md) | Defines an owner-specific UI presentation and interaction layer.                    | active |
 
 ### 3.2. Organization, Extension, And Application Registration Concepts
 
-| Document | Purpose | Status |
-| --- | --- | --- |
-| [Technical Role Definition](Technical-Roles/Definition.md) | Defines the secondary responsibility classification used beneath an explicit owner and capability or Module. | active |
-| [Delivery Adapter Definition](Delivery-Adapters/Definition.md) | Defines owner-local invocation-channel integration around owner-controlled behavior. | active |
-| [Host Definition](Hosts/Definition.md) | Defines a Core capability or Module that owns a bounded extensible feature. | active |
-| [Registry Definition](Registries/Definition.md) | Defines an owner-controlled mechanism for validating, collecting, resolving, and exposing registered entries. | active |
-| [Extension Point Definition](Extension-Points/Definition.md) | Defines a named Host-owned contract for one bounded kind of Contribution. | active |
-| [Contribution Definition](Contributions/Definition.md) | Defines Contributor-owned integration targeting one explicit Extension Point. | active |
-| [Contributor Definition](Contributors/Definition.md) | Defines the Core capability or Module that owns and supplies a Contribution. | active |
+| Document                                                                             | Purpose                                                                                                                                | Status |
+| ------------------------------------------------------------------------------------ | -------------------------------------------------------------------------------------------------------------------------------------- | ------ |
+| [Technical Role Definition](Technical-Roles/Definition.md)                           | Defines the secondary responsibility classification used beneath an explicit owner and capability or Module.                           | active |
+| [Delivery Adapter Definition](Delivery-Adapters/Definition.md)                       | Defines owner-local invocation-channel integration around owner-controlled behavior.                                                   | active |
+| [Host Definition](Hosts/Definition.md)                                               | Defines a Core capability or Module that owns a bounded extensible feature.                                                            | active |
+| [Registry Definition](Registries/Definition.md)                                      | Defines an owner-controlled mechanism for validating, collecting, resolving, and exposing registered entries.                          | active |
+| [Extension Point Definition](Extension-Points/Definition.md)                         | Defines a named Host-owned contract for one bounded kind of Contribution.                                                              | active |
+| [Contribution Definition](Contributions/Definition.md)                               | Defines Contributor-owned integration targeting one explicit Extension Point.                                                          | active |
+| [Contributor Definition](Contributors/Definition.md)                                 | Defines the Core capability or Module that owns and supplies a Contribution.                                                           | active |
 | [Application Registration System Definition](Application-Registration/Definition.md) | Defines deterministic descriptor validation, dependency ordering, compilation, manifest generation, and root application registration. | active |
 
 ### 3.3. Shared Technical Roles
 
-| Document | Purpose | Status |
-| --- | --- | --- |
-| [Action Definition](Actions/Definition.md) | Defines an owner-controlled application operation or state-changing use case. | active |
-| [Query Definition](Queries/Definition.md) | Defines an owner-controlled read-oriented operation. | active |
-| [Contract Definition](Contracts/Definition.md) | Defines a stable owner-controlled interface, protocol, or data agreement. | active |
-| [Data Object Definition](Data-Objects/Definition.md) | Defines an explicit structured value used to transfer command, Query, result, or boundary data. | active |
-| [Model Definition](Models/Definition.md) | Defines an owner-controlled representation of domain or persistent state. | active |
-| [Policy Definition](Policies/Definition.md) | Defines owner-controlled authorization logic. | active |
-| [Event Definition](Events/Definition.md) | Defines an owner-defined fact communicating that a meaningful occurrence happened. | active |
-| [Listener Definition](Listeners/Definition.md) | Defines owner-controlled behavior that reacts to an accepted Event. | active |
-| [Job Definition](Jobs/Definition.md) | Defines owner-controlled deferred or queueable work. | active |
-| [Notification Definition](Notifications/Definition.md) | Defines owner-specific communication content and channel intent. | active |
-| [Provider Definition](Providers/Definition.md) | Defines owner-local Laravel registration and composition code. | active |
+| Document                                               | Purpose                                                                                         | Status |
+| ------------------------------------------------------ | ----------------------------------------------------------------------------------------------- | ------ |
+| [Action Definition](Actions/Definition.md)             | Defines an owner-controlled application operation or state-changing use case.                   | active |
+| [Query Definition](Queries/Definition.md)              | Defines an owner-controlled read-oriented operation.                                            | active |
+| [Contract Definition](Contracts/Definition.md)         | Defines a stable owner-controlled interface, protocol, or data agreement.                       | active |
+| [Data Object Definition](Data-Objects/Definition.md)   | Defines an explicit structured value used to transfer command, Query, result, or boundary data. | active |
+| [Model Definition](Models/Definition.md)               | Defines an owner-controlled representation of domain or persistent state.                       | active |
+| [Policy Definition](Policies/Definition.md)            | Defines owner-controlled authorization logic.                                                   | active |
+| [Event Definition](Events/Definition.md)               | Defines an owner-defined fact communicating that a meaningful occurrence happened.              | active |
+| [Listener Definition](Listeners/Definition.md)         | Defines owner-controlled behavior that reacts to an accepted Event.                             | active |
+| [Job Definition](Jobs/Definition.md)                   | Defines owner-controlled deferred or queueable work.                                            | active |
+| [Notification Definition](Notifications/Definition.md) | Defines owner-specific communication content and channel intent.                                | active |
+| [Provider Definition](Providers/Definition.md)         | Defines owner-local Laravel registration and composition code.                                  | active |
 
 Registry, Surface, and Contribution are also working Technical Roles where applicable, but their definitions are listed with the architecture and extension concepts they primarily govern.
 
 ### 3.4. Delivery Adapter Specializations
 
-| Document | Purpose | Status |
-| --- | --- | --- |
-| [HTTP Delivery Adapter Definition](HTTP-Delivery-Adapters/Definition.md) | Defines owner-local web and API transport integration. | active |
-| [Console Delivery Adapter Definition](Console-Delivery-Adapters/Definition.md) | Defines owner-local command-line transport integration. | active |
+| Document                                                                       | Purpose                                                                | Status |
+| ------------------------------------------------------------------------------ | ---------------------------------------------------------------------- | ------ |
+| [HTTP Delivery Adapter Definition](HTTP-Delivery-Adapters/Definition.md)       | Defines owner-local web and API transport integration.                 | active |
+| [Console Delivery Adapter Definition](Console-Delivery-Adapters/Definition.md) | Defines owner-local command-line transport integration.                | active |
 | [Webhook Delivery Adapter Definition](Webhook-Delivery-Adapters/Definition.md) | Defines owner-local inbound or outbound webhook transport integration. | active |
 
 ## 4. Subfolders
 
 Each concept subfolder contains one canonical `Definition.md`.
 
-| Folder | Purpose |
-| --- | --- |
-| `Actions/` | Action responsibility and working `Actions/` role. |
-| `Application-Registration/` | Deterministic owner registration, compilation, manifest, and registrar concepts. |
-| `Console-Delivery-Adapters/` | Console delivery specialization and working `Console/` role. |
-| `Contracts/` | Contract responsibility and working `Contracts/` role. |
-| `Contributions/` | Contribution ownership and working `Contrib/` role. |
-| `Contributors/` | Contributor relationship boundary. |
-| `Core/` | Core ownership and classification. |
-| `Data-Objects/` | Data Object responsibility and working `Data/` role. |
-| `Delivery-Adapters/` | General Delivery Adapter boundary. |
-| `Events/` | Event responsibility and working `Events/` role. |
-| `Extension-Points/` | Host-owned Extension Point boundary. |
-| `Hosts/` | Host role and extensible-feature ownership. |
-| `HTTP-Delivery-Adapters/` | HTTP and API delivery specialization and working `Http/` role. |
-| `Jobs/` | Job responsibility and working `Jobs/` role. |
-| `Laravel/` | Laravel framework and integration boundary. |
-| `Listeners/` | Listener responsibility and working `Listeners/` role. |
-| `Models/` | Model responsibility and working `Models/` role. |
-| `Modules/` | Module ownership, lifecycle, and packaging boundary. |
-| `Notifications/` | Owner-specific Notification responsibility and working `Notifications/` role. |
-| `Policies/` | Policy responsibility and working `Policies/` role. |
-| `Providers/` | Provider responsibility and working `Providers/` role. |
-| `Queries/` | Query responsibility and working `Queries/` role. |
-| `Registries/` | Registry mechanism and working `Registry/` role. |
-| `Surfaces/` | Surface presentation boundary and working `Surface/` role. |
-| `Technical-Roles/` | Shared Technical Role classification model. |
-| `UI/` | Reusable UI ownership and presentation boundary. |
+| Folder                       | Purpose                                                                                   |
+| ---------------------------- | ----------------------------------------------------------------------------------------- |
+| `Actions/`                   | Action responsibility and working `Actions/` role.                                        |
+| `Application-Registration/`  | Deterministic owner registration, compilation, manifest, and registrar concepts.          |
+| `Console-Delivery-Adapters/` | Console delivery specialization and working `Console/` role.                              |
+| `Contracts/`                 | Contract responsibility and working `Contracts/` role.                                    |
+| `Contributions/`             | Contribution ownership and working `Contrib/` role.                                       |
+| `Contributors/`              | Contributor relationship boundary.                                                        |
+| `Core/`                      | Core ownership and classification.                                                        |
+| `Data-Objects/`              | Data Object responsibility and working `Data/` role.                                      |
+| `Delivery-Adapters/`         | General Delivery Adapter boundary.                                                        |
+| `Events/`                    | Event responsibility and working `Events/` role.                                          |
+| `Extension-Points/`          | Host-owned Extension Point boundary.                                                      |
+| `Hosts/`                     | Host role and extensible-feature ownership.                                               |
+| `HTTP-Delivery-Adapters/`    | HTTP and API delivery specialization and working `Http/` role.                            |
+| `Jobs/`                      | Job responsibility and working `Jobs/` role.                                              |
+| `Laravel/`                   | Laravel framework and integration boundary.                                               |
+| `Listeners/`                 | Listener responsibility and working `Listeners/` role.                                    |
+| `Models/`                    | Model responsibility and working `Models/` role.                                          |
+| `Modules/`                   | Module ownership, lifecycle, and packaging boundary.                                      |
+| `Notifications/`             | Owner-specific Notification responsibility and working `Notifications/` role.             |
+| `Policies/`                  | Policy responsibility and working `Policies/` role.                                       |
+| `Providers/`                 | Provider responsibility and working `Providers/` role.                                    |
+| `Queries/`                   | Query responsibility and working `Queries/` role.                                         |
+| `Registries/`                | Registry mechanism and working `Registry/` role.                                          |
+| `Surfaces/`                  | Surface presentation boundary and working `Surface/` role.                                |
+| `Technical-Roles/`           | Shared Technical Role classification model.                                               |
+| `UI/`                        | Reusable UI ownership and presentation boundary.                                          |
 | `Webhook-Delivery-Adapters/` | Webhook delivery specialization; final physical application folder name remains deferred. |
 
 Concept subfolders do not require their own README, index, Standard, or AGENTS file unless later documentation growth establishes a stable package that requires additional routing or governance.
@@ -173,7 +173,7 @@ Concept subfolders do not require their own README, index, Standard, or AGENTS f
 - The Application Registration System is composition infrastructure and is not automatically a Host Registry.
 - Capability- and Module-specific required structure belongs in the applicable owner contract.
 - Update consuming planning packages when a definition path, meaning, or status changes.
-- Final physical folder labels, placement, casing, and namespaces remain governed by the applicable Goal 3 phases.
+- Accepted folder labels, casing, namespace mapping, and class-role naming follow Goal 3 Phase 5 and Repository Naming Standards; implementation placement and migration remain governed by their applicable owners.
 
 ## 6. Related
 

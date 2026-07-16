@@ -77,13 +77,15 @@ Events should:
 - avoid sensitive payloads
 - be dispatched after commit when listeners require committed state
 
+Event classes use `<CompletedFact>Event`.
+
 Examples:
 
-- `UserInvited`
-- `MfaMethodRemoved`
-- `RoleAssigned`
-- `ExportRequested`
-- `ShipmentCreated`
+- `UserInvitedEvent`
+- `MfaMethodRemovedEvent`
+- `RoleAssignedEvent`
+- `ExportRequestedEvent`
+- `ShipmentCreatedEvent`
 
 ---
 
@@ -132,7 +134,7 @@ Document serialization expectations for queued listeners.
 
 ## 6. Listeners
 
-A listener owns one reaction.
+A Listener owns one reaction. Listener classes use `<ImperativePurpose>Listener`.
 
 Examples:
 
@@ -165,7 +167,7 @@ Do not hide essential primary business mutations only in listeners.
 
 ## 7. Jobs
 
-A job owns asynchronous or retryable work.
+A Job owns asynchronous or retryable work. Job classes use `<ImperativeOperation>Job`.
 
 Jobs should define:
 
@@ -418,6 +420,7 @@ Stop before adding asynchronous behavior when:
 - [ADR-0006: Tenant, Instance, Workspace, Principal, Actor, And Invocation Vocabulary](../../01-decisions/adr-0006-tenant-instance-workspace-principal-and-invocation-vocabulary.md)
 - [ADR-0007: Owner, Registry, And Identifier Key Conventions](../../01-decisions/adr-0007-owner-registry-and-identifier-key-conventions.md)
 - [Identifier And Key Standards](Identifier%20And%20Key%20Standards.md)
+- [Repository Naming Standards](repository-naming-standards.md)
 - [Transaction Concurrency And Idempotency Standards](Transaction%20Concurrency%20And%20Idempotency%20Standards.md)
 - [Error And Exception Handling Standards](Error%20And%20Exception%20Handling%20Standards.md)
 - [Application Actions Services And Data Objects Standards](Application%20Actions%20Services%20And%20Data%20Objects%20Standards.md)

@@ -106,7 +106,7 @@ app/Core/<Capability>/Events/
 Modules/<Module>/src/Events/
 ```
 
-Exact dispatch timing, transactional behavior, queue integration, naming, and compatibility remain later standards and Phase 5 authority.
+Event classes use `<CompletedFact>Event`. Event machine identifiers remain a separate capability-first completed-fact key family. Dispatch timing, transactional behavior, serialization, and compatibility remain later standards authority.
 
 ## 7. Accepted Decision
 
@@ -120,7 +120,6 @@ They provide an explicit communication boundary for independent reactions withou
 
 The following details remain deferred:
 
-- exact event naming conventions;
 - exact transactional dispatch rules;
 - exact cross-owner event compatibility rules;
 - exact serialization requirements;

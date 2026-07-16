@@ -118,6 +118,12 @@ Avoid migrations that combine unrelated schema changes across multiple capabilit
 
 A migration name should describe the result, not the implementation mechanics.
 
+Migration filenames use Laravel's timestamp prefix followed by a snake_case description of the resulting change:
+
+```text
+YYYY_MM_DD_HHMMSS_<result>.php
+```
+
 Examples:
 
 - `create_user_contact_emails_table`
@@ -359,6 +365,7 @@ Stop before writing or running a migration when:
 ## 18. Related
 
 - [Schema Design Standards](Schema%20Design%20Standards.md)
+- [Repository Naming Standards](../coding/repository-naming-standards.md)
 - [Settings Data Governance Standards](Settings%20Data%20Governance%20Standards.md)
 - [Testing Standards](../coding/Testing%20Standards.md)
 - [Implementation Status And Development Sync Standard](../documentation/Implementation%20Status%20And%20Development%20Sync%20Standard.md)

@@ -115,7 +115,7 @@ Registry/
 
 Default target placement is beneath the Host owner’s `Registry/` role. The Host’s public Registry and Extension Point Contracts remain in its `Contracts/` role.
 
-Unrestricted runtime filesystem discovery is not the target model. Final class names, namespaces, subordinate folders, cache behavior, and Registry-specific declaration APIs remain Phase 5 and owner implementation-contract authority.
+Unrestricted runtime filesystem discovery is not the target model. Concrete Registry classes use `<ArtifactFamily>Registry`. Namespaces, subordinate folders, cache behavior, and Registry-specific declaration APIs remain owner implementation-contract authority.
 
 ## 7. Accepted Decision
 

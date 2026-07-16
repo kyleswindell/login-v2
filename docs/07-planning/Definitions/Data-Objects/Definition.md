@@ -106,7 +106,7 @@ Modules/<Module>/src/Data/
 
 Reusable UI runtime Data Objects remain beneath the applicable UI responsibility when UI owns the data meaning.
 
-Final class, namespace, immutability, serialization, and validation naming remains Phase 5 and coding-standard authority.
+**Data Object** is the canonical project term. New classes use semantic forms such as `<Operation>Data`, `<Subject>Criteria`, and `<Subject>Result`; new `DTO` or `Dto` class names are not introduced.
 
 ## 7. Accepted Decision
 
@@ -120,7 +120,6 @@ Cross-owner Data Objects remain provider-owned parts of public Contracts. Data O
 
 The following details remain deferred:
 
-- exact DTO naming conventions;
 - exact immutability requirements;
 - exact validation boundaries;
 - exact serialization rules;

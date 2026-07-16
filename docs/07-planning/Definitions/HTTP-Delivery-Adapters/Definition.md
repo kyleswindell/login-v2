@@ -101,7 +101,7 @@ Modules/<Module>/src/Http/
 
 Root `app/Http/` remains restricted to application-wide Laravel integration, base classes, global middleware, root registration, and bounded compatibility.
 
-Final internal subdivisions, class names, namespaces, and casing remain Phase 5 authority. API delivery remains within HTTP delivery unless a later accepted decision separates it.
+HTTP subdivisions remain sparse and use `Controllers`, `Requests`, `Middleware`, `Resources`, `Presenters`, `Renderers`, `ViewModels`, and `PageData` only when required. Class names follow the accepted delivery-artifact patterns. API delivery remains within HTTP delivery unless a later accepted decision separates it.
 
 ## 7. Accepted Decision
 

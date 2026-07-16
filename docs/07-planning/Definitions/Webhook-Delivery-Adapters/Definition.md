@@ -90,9 +90,9 @@ Status: permanent
 
 Webhook Delivery Adapter is a permanent delivery specialization.
 
-No final working folder label is accepted by this definition. `Webhooks/` is a conceptual example only until Goal 3 placement and naming phases decide the physical role.
+The accepted delivery-artifact role is `Webhooks` beneath the explicit owner when a dedicated folder is required. Webhook handler classes use `<Provider><Event>WebhookHandler`.
 
-Inbound and outbound subdivision also remains deferred.
+Inbound and outbound subdivision remains owner-specific and sparse.
 
 ## 7. Accepted Decision
 

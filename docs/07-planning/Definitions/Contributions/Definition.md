@@ -116,7 +116,7 @@ Modules/<ContributorModule>/src/Contrib/<Host>/
 
 `Contrib/<Host>/` is reserved for Host Extension Point Contributions and is not a general framework-registration folder.
 
-Final class names, declaration schemas, filenames, and namespaces remain Phase 5 and Host Contract authority.
+Contribution class names remain specific to the Host-owned Extension Point Contract. Generic `RegistrationContribution` and `ModuleContribution` wrappers are not canonical names. Declaration schemas, filenames, and namespaces remain Host Contract authority.
 
 ## 7. Accepted Decision
 

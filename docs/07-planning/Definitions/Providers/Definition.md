@@ -110,6 +110,8 @@ app/Providers/
 
 Root `app/Providers/` is restricted to application-wide Laravel integration, Root Application Registrar composition, base integration, and bounded compatibility. Owner-local Providers remain with their owner.
 
+Provider classes use `<OwnerOrConcern>ServiceProvider`. A native Provider may fulfill an Application Registration responsibility without requiring an additional descriptor or registrar wrapper.
+
 ## 7. Accepted Decision
 
 Status: accepted
@@ -122,10 +124,8 @@ Providers execute validated registration and adapt owner-controlled artifacts to
 
 The following details remain deferred:
 
-- exact Provider naming conventions;
 - exact package-Provider requirements for Modules;
-- exact Typed Registrar and Provider boundaries;
-- exact Provider and Root Application Registrar naming;
+- exact runtime Typed Registrar and Provider boundaries;
 - exact automated registration proof and cache integration.
 
 ## 9. Related

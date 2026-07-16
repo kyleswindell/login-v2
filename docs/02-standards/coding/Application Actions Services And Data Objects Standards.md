@@ -8,7 +8,7 @@ canonical: true
 canonical_path: docs/02-standards/coding/Application Actions Services And Data Objects Standards.md
 parent: docs/02-standards/coding/index.md
 template: docs/09-reference/templates/docs/_doc.md
-summary: Defines responsibilities and boundaries for actions, services, query objects, DTOs, page-data objects, value objects, enums, and related application-layer classes.
+summary: Defines responsibilities and boundaries for Actions, exceptional Services, Queries, Data Objects, PageData, Value Objects, enums, results, and related application-layer classes.
 -->
 
 # Application Actions Services And Data Objects Standards
@@ -25,7 +25,7 @@ This document defines the application-object patterns used to keep controllers, 
   - [4.2. Actions Must Not](#42-actions-must-not)
 - [5. Services](#5-services)
 - [6. Query Objects](#6-query-objects)
-- [7. DTOs](#7-dtos)
+- [7. Data Objects](#7-data-objects)
 - [8. Page-Data Objects](#8-page-data-objects)
 - [9. Value Objects](#9-value-objects)
 - [10. Enums](#10-enums)
@@ -47,11 +47,11 @@ This document defines the application-object patterns used to keep controllers, 
 
 Provide clear distinctions between:
 
-- actions
-- services
-- query objects
-- DTOs
-- page-data objects
+- Actions
+- exceptional Services
+- Queries
+- Data Objects
+- PageData objects
 - value objects
 - enums
 - result objects
@@ -96,7 +96,9 @@ Existing `app/Platform/*` paths are transitional current placement only. Do not 
 
 ## 4. Actions
 
-An action represents one command-style operation.
+An Action represents one command-style operation.
+
+Concrete Action classes use `<Verb><Subject>Action`.
 
 Examples:
 
@@ -131,18 +133,9 @@ An action should:
 
 ## 5. Services
 
-A service owns reusable capability behavior that does not fit one command-style operation.
+`Service` is exceptional rather than a default application role. Use a Service only when one cohesive responsibility is not more accurately expressed as an Action, Query, Resolver, Coordinator, Handler, Registry, Provider, Factory, Builder, or another accepted role.
 
-Appropriate uses:
-
-- effective access resolution
-- audit event recording
-- notification delivery decisions
-- registry aggregation
-- data classification decisions
-- integration coordination
-
-A service should remain cohesive.
+A Service must have a precise subject and must not exist merely to group reusable methods or hide unresolved ownership.
 
 Avoid broad names such as:
 
@@ -162,9 +155,9 @@ Prefer names that identify the behavior:
 
 ## 6. Query Objects
 
-A query object owns a reusable or complex read.
+A Query owns one read intent. Concrete Query classes use `<ReadVerb><Subject>Query`.
 
-Use a query object when:
+Use a Query when:
 
 - filtering is substantial
 - scope rules matter
@@ -179,21 +172,27 @@ Authorization must occur before or as part of the query boundary according to th
 
 ---
 
-## 7. DTOs
+## 7. Data Objects
 
-A DTO defines a stable data shape crossing a boundary.
+A Data Object defines one explicit stable data shape crossing a method, operation, layer, or ownership boundary. **Data Object** is the canonical project term; do not introduce new `DTO` or `Dto` class names.
 
-DTOs should:
+Use:
 
-- use explicit types
-- prefer readonly properties
-- be constructed from validated or trusted input
-- avoid framework-specific behavior unless the boundary requires it
-- avoid database persistence behavior
-- avoid service resolution
-- avoid hidden lazy loading
+- `<Operation>Data` for operation input;
+- `<Subject>Criteria` for query or selection criteria;
+- `<Subject>Result` for explicit results when a more precise semantic name is unavailable.
 
-DTOs are useful when associative arrays would create fragile key-based contracts.
+Data Objects should:
+
+- use explicit types;
+- prefer readonly properties;
+- be constructed from validated or trusted input;
+- avoid framework-specific behavior unless the boundary requires it;
+- avoid database persistence behavior;
+- avoid service resolution;
+- avoid hidden lazy loading.
+
+Data Objects are useful when associative arrays would create fragile key-based contracts.
 
 ---
 
@@ -310,7 +309,7 @@ Rules:
 Application objects should receive:
 
 - validated scalar values
-- DTOs
+- Data Objects
 - value objects
 - explicit models when record identity is already verified
 - typed criteria objects
@@ -333,8 +332,8 @@ Appropriate outputs:
 
 - void
 - model or entity
-- DTO
-- page-data object
+- Data Object
+- PageData object
 - paginator
 - collection with documented item type
 - result object
@@ -413,7 +412,7 @@ Services:
 - boundary conditions
 - failure behavior
 
-DTOs/value objects/enums:
+Data Objects, Value Objects, and enums:
 
 - construction
 - normalization
@@ -448,6 +447,7 @@ Stop before creating an object when:
 ## 21. Related
 
 - [File Archetypes](File%20Archetypes.md)
+- [Repository Naming Standards](repository-naming-standards.md)
 - [PHP And Laravel Style Standards](PHP%20And%20Laravel%20Style%20Standards.md)
 - [Transaction Concurrency And Idempotency Standards](Transaction%20Concurrency%20And%20Idempotency%20Standards.md)
 - [Error And Exception Handling Standards](Error%20And%20Exception%20Handling%20Standards.md)

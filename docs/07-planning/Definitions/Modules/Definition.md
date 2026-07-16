@@ -146,7 +146,7 @@ Core must remain valid and operational when the Module is absent.
 
 None.
 
-Specific Module identities, package locations, internal structures, naming conventions, and migration order are resolved through later Goal 03 phases and implementation planning without changing this definition.
+Specific Module identities and migration order remain later implementation concerns. Accepted Module representations use a PascalCase folder, `Parasolutions\Modules\<Module>\`, `parasolutions/module-<module-slug>`, and a separate snake_case `module_key` used by default for route and configuration roots.
 
 ## 9. Related
 

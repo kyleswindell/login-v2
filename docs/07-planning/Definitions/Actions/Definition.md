@@ -105,7 +105,7 @@ app/Core/<Capability>/Actions/
 Modules/<Module>/src/Actions/
 ```
 
-Final class, namespace, and operation naming remain Phase 5 authority.
+Concrete Action classes use `<Verb><Subject>Action`; the folder and namespace role remains `Actions`.
 
 ## 7. Accepted Decision
 
@@ -119,7 +119,6 @@ Actions remain beneath the owner whose behavior they execute. Delivery Adapters 
 
 The following details remain deferred:
 
-- exact Action naming conventions;
 - exact transaction-boundary standards;
 - exact command-data conventions;
 - exact internal invocation and binding conventions;

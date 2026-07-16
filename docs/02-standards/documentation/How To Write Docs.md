@@ -218,6 +218,8 @@ Template selection is governed by:
 
 Templates define reusable shape. They do not define policy.
 
+New canonical Markdown prose filenames and folders use lowercase kebab-case. Reserved filenames retain their exact form: `index.md`, `README.md`, and `AGENTS.md`. Controlled Definition packages retain `Definitions/<Term>/Definition.md`. Existing legacy paths remain compatibility concerns until an authorized migration updates inbound links and canonical paths.
+
 When no dedicated template exists:
 
 - use `_doc.md`
@@ -377,4 +379,5 @@ A documentation change is complete when:
 - [Obsidian Vault Structure Guide](Obsidian%20Vault%20Structure%20Guide.md)
 - [Documentation Review Standards](Documentation%20Review%20Standards.md)
 - [Implementation Status And Development Sync Standard](Implementation%20Status%20And%20Development%20Sync%20Standard.md)
+- [Repository Naming Standards](../coding/repository-naming-standards.md)
 - [Documentation Templates](../../09-reference/templates/docs/_index.md)

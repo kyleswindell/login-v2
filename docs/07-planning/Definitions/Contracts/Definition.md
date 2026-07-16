@@ -110,7 +110,7 @@ app/UI/<Responsibility>/Contracts/
 
 Machine-readable UI artifact contracts such as `contract.php` remain colocated with the owning presentation artifact. Internal abstractions remain adjacent to their implementation role unless deliberately promoted.
 
-Final contract-family, class, interface, schema, namespace, and public/internal subdivision naming remain Phase 5 or owner-specific contract authority.
+Repository-owned PHP interfaces use the `Interface` suffix. External and framework interfaces retain native names. Exact public/internal subdivisions, schemas, and versioning remain owner-specific Contract authority.
 
 ## 7. Accepted Decision
 

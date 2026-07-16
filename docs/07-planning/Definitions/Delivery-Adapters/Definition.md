@@ -123,7 +123,7 @@ Modules/<Module>/src/Http/
 Modules/<Module>/src/Console/
 ```
 
-Jobs, Listeners, scheduler entry points, webhook handlers, and other channel adapters remain beneath the owner’s applicable accepted role. Exact webhook and background-adapter folder labels remain Phase 5 authority.
+Jobs, Listeners, scheduler entry points, webhook handlers, and other channel adapters remain beneath the owner’s applicable accepted role. Delivery artifacts use the precise patterns defined by Repository Naming Standards; API delivery remains within HTTP delivery.
 
 API delivery remains within HTTP delivery unless a later accepted decision establishes a distinct role.
 

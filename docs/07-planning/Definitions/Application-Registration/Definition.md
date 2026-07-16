@@ -151,7 +151,7 @@ Status: accepted proposed target
 
 The Application Registration System is an accepted permanent target architecture concept introduced by Phase 4. It is not yet implemented or validated.
 
-Final physical placement, descriptor and manifest formats, class names, command names, cache locations, and generated-output policy remain Phase 5 and later implementation authority.
+Phase 5 accepted the architecture terminology and conditional names for independently justified descriptors, compilers, manifests, registrars, commands, and generated files. Physical placement, schemas, serialization, cache locations, bootstrap integration, and generated-output policy remain later implementation authority.
 
 ## 8. Accepted Decision
 
@@ -167,7 +167,6 @@ The Application Registration System does not replace Laravel or Vite native runt
 
 The following details remain deferred:
 
-- final descriptor, compiler, manifest, registrar, and generated-file names;
 - final PHP, JSON, YAML, or other machine-readable descriptor format;
 - final source-controlled versus generated manifest policy;
 - exact compiler command and cache lifecycle;
@@ -177,7 +176,7 @@ The following details remain deferred:
 - exact validation command, architecture tests, and CI enforcement;
 - exact bootstrap and performance requirements.
 
-These questions belong to Phase 5 and later bounded implementation and verification work.
+These questions belong to Phase 6, Phase 7, and later bounded implementation and verification work. Naming boundaries are accepted by Phase 5.
 
 ## 10. Related
 

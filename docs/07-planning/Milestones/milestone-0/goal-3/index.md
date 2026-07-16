@@ -78,31 +78,31 @@ Those concerns belong to later Goals, bounded implementation issues, or their ap
 ## 3. Goal Status
 
 - Planning lifecycle: active
-- Acceptance state: Phases 1 through 3 accepted; Phase 4 decisions accepted with consolidated artifacts and architecture promotion drafted; final Phase 4 closeout pending; Phases 5 through 7 pending
+- Acceptance state: Phases 1 through 4 accepted; Phase 5 decisions and package accepted with canonical promotion under final validation; Phases 6 and 7 pending
 - Owning GitHub issue: [#19](https://github.com/kyleswindell/login-v2/issues/19)
-- Current active Phase issue: [#51](https://github.com/kyleswindell/login-v2/issues/51)
-- Next Phase issue: [#52](https://github.com/kyleswindell/login-v2/issues/52)
+- Current active Phase issue: [#52](https://github.com/kyleswindell/login-v2/issues/52)
+- Next Phase issue: [#53](https://github.com/kyleswindell/login-v2/issues/53)
 - Final acceptance: pending completion of all seven Phases and repository-owner review
 
 ## 4. Goal Documents
 
-| Document | Document type | Purpose | Status |
-| --- | --- | --- | --- |
-| [Target Repository Architecture](target-repository-architecture.md) | planning | Consolidates the accepted high-level result of each Goal 3 Phase and routes readers to detailed planning. | active |
+| Document                                                            | Document type | Purpose                                                                                                   | Status |
+| ------------------------------------------------------------------- | ------------- | --------------------------------------------------------------------------------------------------------- | ------ |
+| [Target Repository Architecture](target-repository-architecture.md) | planning      | Consolidates the accepted high-level result of each Goal 3 Phase and routes readers to detailed planning. | active |
 
 The synthesis remains a planning document while Goal 3 is active. Durable rules are promoted later to architecture, standards, definitions, agent guidance, and verification owners.
 
 ## 5. Phase Register
 
-| Phase | Subject | Issue | State | Detailed planning |
-| --- | --- | --- | --- | --- |
-| 1 | Architecture boundaries | [#48](https://github.com/kyleswindell/login-v2/issues/48) | accepted | [Phase 1 Index](phase-1/index.md) |
-| 2 | Repository organization | [#49](https://github.com/kyleswindell/login-v2/issues/49) | accepted | [Phase 2 Index](phase-2/index.md) |
-| 3 | Target repository tree | [#50](https://github.com/kyleswindell/login-v2/issues/50) | accepted | [Phase 3 Index](phase-3/index.md) |
-| 4 | Placement and dependency rules | [#51](https://github.com/kyleswindell/login-v2/issues/51) | decisions accepted; closeout pending | [Phase 4 Index](phase-4/index.md) |
-| 5 | Naming conventions | [#52](https://github.com/kyleswindell/login-v2/issues/52) | pending | Phase package not yet created |
-| 6 | Representative validation | [#53](https://github.com/kyleswindell/login-v2/issues/53) | pending | Phase package not yet created |
-| 7 | Migration direction and final acceptance | [#54](https://github.com/kyleswindell/login-v2/issues/54) | pending | Phase package not yet created |
+| Phase | Subject                                  | Issue                                                     | State                                                                  | Detailed planning                 |
+| ----- | ---------------------------------------- | --------------------------------------------------------- | ---------------------------------------------------------------------- | --------------------------------- |
+| 1     | Architecture boundaries                  | [#48](https://github.com/kyleswindell/login-v2/issues/48) | accepted                                                               | [Phase 1 Index](phase-1/index.md) |
+| 2     | Repository organization                  | [#49](https://github.com/kyleswindell/login-v2/issues/49) | accepted                                                               | [Phase 2 Index](phase-2/index.md) |
+| 3     | Target repository tree                   | [#50](https://github.com/kyleswindell/login-v2/issues/50) | accepted                                                               | [Phase 3 Index](phase-3/index.md) |
+| 4     | Placement and dependency rules           | [#51](https://github.com/kyleswindell/login-v2/issues/51) | accepted                                                               | [Phase 4 Index](phase-4/index.md) |
+| 5     | Naming conventions                       | [#52](https://github.com/kyleswindell/login-v2/issues/52) | decisions and package accepted; canonical promotion validation pending | [Phase 5 Index](phase-5/index.md) |
+| 6     | Representative validation                | [#53](https://github.com/kyleswindell/login-v2/issues/53) | pending                                                                | Phase package not yet created     |
+| 7     | Migration direction and final acceptance | [#54](https://github.com/kyleswindell/login-v2/issues/54) | pending                                                                | Phase package not yet created     |
 
 ## 6. Reading Order
 
@@ -114,13 +114,13 @@ For Goal 3 work:
 4. verify the applicable GitHub issue before writable work;
 5. do not reopen accepted prior-Phase decisions without an explicitly authorized corrective amendment.
 
-For current Phase 4 review:
+For current Phase 5 review:
 
-1. read the [Phase 4 Index](phase-4/index.md);
-2. read the applicable Decision 4.1–4.12 document;
-3. use the artifact-placement or dependency-and-communication matrix for consolidated lookup;
-4. use the durable-promotion register for architecture, standards, definition, agent-guidance, and future-enforcement routing;
-5. use the synthesis artifact only for the concise accumulated result.
+1. read the [Phase 5 Index](phase-5/index.md);
+2. use its naming, role, Module identity, compatibility, and promotion matrices;
+3. read the applicable Decision 5.1–5.14 document;
+4. use the synthesis artifact only for the concise accumulated result;
+5. use Phase 6 for representative proof rather than reopening accepted naming rules.
 
 ## 7. Maintenance Notes
 
@@ -145,6 +145,9 @@ For current Phase 4 review:
 - [Phase 4 Artifact Placement Matrix](phase-4/artifact-placement-matrix.md)
 - [Phase 4 Dependency And Communication Matrix](phase-4/dependency-and-communication-matrix.md)
 - [Phase 4 Durable Promotion Register](phase-4/durable-promotion-register.md)
+- [Phase 5 Naming Conventions Index](phase-5/index.md)
+- [Phase 5 Naming Convention Matrix](phase-5/naming-convention-matrix.md)
+- [Phase 5 Durable Promotion Register](phase-5/durable-promotion-register.md)
 - GitHub parent issue: [#19](https://github.com/kyleswindell/login-v2/issues/19)
-- Current Phase issue: [#51](https://github.com/kyleswindell/login-v2/issues/51)
-- Next Phase issue: [#52](https://github.com/kyleswindell/login-v2/issues/52)
+- Current Phase issue: [#52](https://github.com/kyleswindell/login-v2/issues/52)
+- Next Phase issue: [#53](https://github.com/kyleswindell/login-v2/issues/53)

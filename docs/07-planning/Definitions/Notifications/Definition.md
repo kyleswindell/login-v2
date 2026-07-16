@@ -91,7 +91,7 @@ Notification is a permanent shared Technical Role.
 
 This definition does not require every owner to contain a `Notifications/` folder.
 
-The distinction between owner-specific Notifications and the Core Notifications capability must remain explicit.
+The distinction between owner-specific Notifications and the Core Notifications capability must remain explicit. Concrete Notification classes use `<ConditionOrFact>Notification`; stable notification type keys remain a separate domain-first identifier family.
 
 ## 7. Accepted Decision
 
@@ -105,7 +105,6 @@ Shared notification delivery, preference, and infrastructure responsibilities re
 
 The following details remain deferred:
 
-- exact Notification naming conventions;
 - exact channel-selection rules;
 - exact template and localization ownership;
 - exact preference-resolution boundary;

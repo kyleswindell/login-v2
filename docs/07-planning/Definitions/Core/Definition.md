@@ -97,7 +97,7 @@ Status: permanent
 
 Core is a permanent source-of-truth ownership area.
 
-Its target physical organization, folder structure, namespace structure, and detailed artifact placement are defined by later Goal 03 phases.
+Its target organization uses `app/Core/<Capability>/<TechnicalRole>/`. Each accepted capability keeps its PascalCase folder and namespace name, snake_case keys, non-PHP slug, and documentation title as separate representations.
 
 Current physical placement does not determine Core ownership.
 

@@ -26,11 +26,11 @@ Goal 3 defines the destination. It does not perform the physical repository migr
 ## 2. Status
 
 - Planning lifecycle: active
-- Acceptance state: Phases 1 through 3 accepted; Phase 4 decisions accepted with consolidated artifacts and architecture promotion drafted; final Phase 4 closeout pending; Phases 5 through 7 pending
+- Acceptance state: Phases 1 through 4 accepted; Phase 5 decisions and package accepted with canonical promotion under final validation; Phases 6 and 7 pending
 - Current implementation state: target planning only
 - Owning GitHub issue: [#19](https://github.com/kyleswindell/login-v2/issues/19)
-- Current active Phase issue: [#51](https://github.com/kyleswindell/login-v2/issues/51)
-- Next Phase issue: [#52](https://github.com/kyleswindell/login-v2/issues/52)
+- Current active Phase issue: [#52](https://github.com/kyleswindell/login-v2/issues/52)
+- Next Phase issue: [#53](https://github.com/kyleswindell/login-v2/issues/53)
 - Final Goal 3 acceptance: pending
 
 ## 3. Scope
@@ -72,15 +72,15 @@ Use the [Goal 3 Index](index.md) to locate the current Phase package.
 
 ## 5. Phase Register
 
-| Phase | Subject                                  | State                                | Detailed planning                                               |
-| ----- | ---------------------------------------- | ------------------------------------ | --------------------------------------------------------------- |
-| 1     | Architecture boundaries                  | accepted                             | [Phase 1 Index](phase-1/index.md)                               |
-| 2     | Repository organization                  | accepted                             | [Phase 2 Index](phase-2/index.md)                               |
-| 3     | Target repository tree                   | accepted                             | [Phase 3 Index](phase-3/index.md)                               |
-| 4     | Placement and dependency rules           | decisions accepted; closeout pending | [Phase 4 Index](phase-4/index.md)                               |
-| 5     | Naming conventions                       | pending                              | Issue [#52](https://github.com/kyleswindell/login-v2/issues/52) |
-| 6     | Representative validation                | pending                              | Issue [#53](https://github.com/kyleswindell/login-v2/issues/53) |
-| 7     | Migration direction and final acceptance | pending                              | Issue [#54](https://github.com/kyleswindell/login-v2/issues/54) |
+| Phase | Subject                                  | State                                                                  | Detailed planning                                               |
+| ----- | ---------------------------------------- | ---------------------------------------------------------------------- | --------------------------------------------------------------- |
+| 1     | Architecture boundaries                  | accepted                                                               | [Phase 1 Index](phase-1/index.md)                               |
+| 2     | Repository organization                  | accepted                                                               | [Phase 2 Index](phase-2/index.md)                               |
+| 3     | Target repository tree                   | accepted                                                               | [Phase 3 Index](phase-3/index.md)                               |
+| 4     | Placement and dependency rules           | accepted                                                               | [Phase 4 Index](phase-4/index.md)                               |
+| 5     | Naming conventions                       | decisions and package accepted; canonical promotion validation pending | [Phase 5 Index](phase-5/index.md)                               |
+| 6     | Representative validation                | pending                                                                | Issue [#53](https://github.com/kyleswindell/login-v2/issues/53) |
+| 7     | Migration direction and final acceptance | pending                                                                | Issue [#54](https://github.com/kyleswindell/login-v2/issues/54) |
 
 ## 6. Accepted High-Level Architecture
 
@@ -396,16 +396,23 @@ Phase 5 retains final naming authority for folders, namespaces, classes, Contrac
 
 ### 6.5. Naming Conventions
 
-Pending Phase 5.
+Phase 5 Decisions 5.1–5.14 are accepted.
 
-Phase 5 will define names for:
+- Folder families follow native conventions; namespace-bearing PHP paths use exact PascalCase-to-namespace mapping.
+- Core capabilities and Modules keep technical names, machine keys, folders, namespaces, packages, URLs, configuration roots, and labels as separate representations.
+- Concrete PHP types use precise subjects and roles; repository interfaces use `Interface`; Data Object is the canonical project term.
+- Actions, Queries, Resolvers, Coordinators, Handlers, delivery artifacts, Events, Listeners, Jobs, Notifications, Audit Events, tests, fixtures, and documentation use the patterns recorded in the Phase 5 matrices.
+- Route names, URLs, configuration keys, class names, machine identifiers, and logical queues remain separate naming families.
+- Compatibility is direct, one-way, non-chainable, bounded, verified, and transitional by default.
+- Application Registration terms describe responsibilities; custom descriptors, compilers, manifests, registrars, commands, and files are conditional rather than mandatory wrappers.
 
-- folders and namespaces;
-- capabilities and Modules;
-- classes and delivery artifacts;
-- routes and configuration;
-- events, jobs, tests, fixtures, and documentation;
-- compatibility and rename behavior.
+Detailed naming:
+
+- [Phase 5 Index](phase-5/index.md)
+- [Naming Convention Matrix](phase-5/naming-convention-matrix.md)
+- [Role Terminology Matrix](phase-5/role-terminology-matrix.md)
+- [Module Identity Matrix](phase-5/module-identity-matrix.md)
+- [Compatibility And Rename Register](phase-5/compatibility-and-rename-register.md)
 
 ### 6.6. Representative Validation
 
@@ -441,15 +448,17 @@ Goal 3 is complete when future work can determine, without reopening repository 
 
 Accepted Goal 3 planning must be promoted to applicable durable owners.
 
-Phase 4 architecture promotion is drafted for:
+Phase 4 and Phase 5 durable promotion targets include:
 
 - [Repository Architecture](../../../../03-architecture/repository-architecture.md);
 - [Application Registration](../../../../03-architecture/application-registration.md);
 - [System Overview](../../../../03-architecture/system-overview.md);
 - [Stack Overview](../../../../03-architecture/stack-overview.md);
-- reusable architecture Definitions.
+- reusable architecture Definitions;
+- [Repository Naming Standards](../../../../02-standards/coding/repository-naming-standards.md);
+- specialist coding, database, and documentation standards identified by the [Phase 5 Durable Promotion Register](phase-5/durable-promotion-register.md).
 
-Coding, documentation, database, and agent-guidance standards remain explicit later-promotion rows in the [Phase 4 Durable Promotion Register](phase-4/durable-promotion-register.md). Runtime registration tooling and automated enforcement remain later bounded implementation work.
+Runtime registration tooling and automated enforcement remain later bounded implementation work.
 
 This planning document remains a concise historical and routing synthesis rather than the sole permanent owner of every durable rule.
 
@@ -477,7 +486,9 @@ Goal 3 acceptance requires:
 - [Phase 4 Artifact Placement Matrix](phase-4/artifact-placement-matrix.md)
 - [Phase 4 Dependency And Communication Matrix](phase-4/dependency-and-communication-matrix.md)
 - [Phase 4 Durable Promotion Register](phase-4/durable-promotion-register.md)
+- [Phase 5 Naming Conventions Index](phase-5/index.md)
+- [Phase 5 Durable Promotion Register](phase-5/durable-promotion-register.md)
 - [Milestone 0 Planning Index](../index.md)
 - GitHub parent issue: [#19](https://github.com/kyleswindell/login-v2/issues/19)
-- Current Phase issue: [#51](https://github.com/kyleswindell/login-v2/issues/51)
-- Next Phase issue: [#52](https://github.com/kyleswindell/login-v2/issues/52)
+- Current Phase issue: [#52](https://github.com/kyleswindell/login-v2/issues/52)
+- Next Phase issue: [#53](https://github.com/kyleswindell/login-v2/issues/53)

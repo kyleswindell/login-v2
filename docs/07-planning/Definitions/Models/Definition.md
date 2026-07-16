@@ -111,7 +111,7 @@ The following details remain deferred:
 - exact persistence relationship boundaries;
 - exact model-event usage;
 - exact aggregate and value-object vocabulary;
-- exact namespace and naming standards.
+- exact domain-model versus Eloquent implementation subdivisions beyond the accepted singular PascalCase Model and plural snake_case default table relationship.
 
 ## 9. Related
 

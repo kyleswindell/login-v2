@@ -115,7 +115,7 @@ The shared role vocabulary applies to Core capabilities and Modules without requ
 
 A role is represented physically only when the owner contains artifacts of that responsibility.
 
-Final physical labels, namespace conventions, and placement are resolved through later Goal 3 phases.
+Namespace-bearing Technical Role folders use accepted PascalCase role labels and exact PSR-4 case. Roles remain sparse and appear only when the owner contains that responsibility.
 
 ## 7. Accepted Decision
 

@@ -105,7 +105,7 @@ app/Core/<Capability>/Listeners/
 Modules/<Module>/src/Listeners/
 ```
 
-Final naming, registration, synchronization, queueing, ordering, and failure conventions remain Phase 5 and later standards authority.
+Listener classes use `<ImperativePurpose>Listener`. Stable listener keys remain separate and are required only when registration, configuration, observability, ordering, retry, compatibility, or lifecycle management needs one.
 
 ## 7. Accepted Decision
 
@@ -119,7 +119,6 @@ Event ownership and Listener ownership may differ without permitting direct acce
 
 The following details remain deferred:
 
-- exact Listener naming conventions;
 - exact queueing and retry defaults;
 - exact listener-ordering behavior;
 - exact idempotency requirements;

@@ -26,11 +26,11 @@ Goal 3 defines the destination. It does not perform the physical repository migr
 ## 2. Status
 
 - Planning lifecycle: active
-- Acceptance state: Phase 1 accepted; Phase 2 accepted; Phase 3 decisions accepted with final Phase 3 closeout pending; Phases 4 through 7 pending
+- Acceptance state: Phases 1 through 3 accepted; Phase 4 decisions accepted with consolidated artifacts and architecture promotion drafted; final Phase 4 closeout pending; Phases 5 through 7 pending
 - Current implementation state: target planning only
 - Owning GitHub issue: [#19](https://github.com/kyleswindell/login-v2/issues/19)
-- Current active Phase issue: [#50](https://github.com/kyleswindell/login-v2/issues/50)
-- Next Phase issue: [#51](https://github.com/kyleswindell/login-v2/issues/51)
+- Current active Phase issue: [#51](https://github.com/kyleswindell/login-v2/issues/51)
+- Next Phase issue: [#52](https://github.com/kyleswindell/login-v2/issues/52)
 - Final Goal 3 acceptance: pending
 
 ## 3. Scope
@@ -76,8 +76,8 @@ Use the [Goal 3 Index](index.md) to locate the current Phase package.
 | ----- | ---------------------------------------- | ------------------------------------ | --------------------------------------------------------------- |
 | 1     | Architecture boundaries                  | accepted                             | [Phase 1 Index](phase-1/index.md)                               |
 | 2     | Repository organization                  | accepted                             | [Phase 2 Index](phase-2/index.md)                               |
-| 3     | Target repository tree                   | decisions accepted; closeout pending | [Phase 3 Index](phase-3/index.md)                               |
-| 4     | Placement and dependency rules           | pending                              | Issue [#51](https://github.com/kyleswindell/login-v2/issues/51) |
+| 3     | Target repository tree                   | accepted                             | [Phase 3 Index](phase-3/index.md)                               |
+| 4     | Placement and dependency rules           | decisions accepted; closeout pending | [Phase 4 Index](phase-4/index.md)                               |
 | 5     | Naming conventions                       | pending                              | Issue [#52](https://github.com/kyleswindell/login-v2/issues/52) |
 | 6     | Representative validation                | pending                              | Issue [#53](https://github.com/kyleswindell/login-v2/issues/53) |
 | 7     | Migration direction and final acceptance | pending                              | Issue [#54](https://github.com/kyleswindell/login-v2/issues/54) |
@@ -328,38 +328,71 @@ Detailed topology planning:
 
 - [Phase 3 Target Repository Tree Index](phase-3/index.md)
 
-#### Phase 3 handoff
+#### Phase 3 result
 
-Phase 4 retains authority for:
-
-- exact contract and implementation placement;
-- route placement and registration;
-- configuration placement;
-- database artifact placement;
-- detailed view and asset placement;
-- detailed test placement and discovery;
-- documentation placement;
-- dependency direction;
-- cross-owner communication;
-- placement exceptions and later enforcement.
-
-Phase 5 retains final naming authority.
+Phase 3 establishes the permanent repository roots, direct `app/` branches, Core and Module structural patterns, artifact-owned presentation topology, hybrid test locations, supporting branches, and transitional or prohibited structures consumed by Phase 4.
 
 ### 6.4. Placement And Dependency Rules
 
-Pending Phase 4.
+Phase 4 decisions are accepted. The consolidated matrices and durable architecture promotion are drafted for final Phase 4 closeout.
 
-Phase 4 will define:
+#### Artifact placement
 
-- artifact placement;
-- contract and implementation locations;
-- Delivery Adapter placement;
-- route and configuration placement;
-- data, view, asset, test, and documentation placement;
-- permitted dependencies;
-- accepted cross-owner communication methods;
-- placement and dependency exceptions;
-- future static enforcement candidates.
+- Contracts remain with the owner that makes and maintains the promise.
+- Internal abstractions remain adjacent to implementation unless deliberately promoted into a public boundary.
+- Concrete implementation remains beneath the narrowest Core capability, Module, UI responsibility, Surface, Registry, Contribution, or restricted Laravel integration concern.
+- Delivery Adapters remain owner-local and delegate application behavior inward.
+- Core and Module routes, configuration, runtime persistence, presentation, tests, and documentation remain owner-specific or package-local according to the accepted placement matrix.
+- Core schema-lifecycle artifacts are grouped by capability beneath `database/core/`; Module schema-lifecycle artifacts remain package-local.
+- meaningful folder boundaries default to distinct `README.md`, `index.md`, and `AGENTS.md` files where useful, with bounded omission rules.
+
+Detailed placement:
+
+- [Artifact Placement Matrix](phase-4/artifact-placement-matrix.md)
+
+#### Application registration
+
+Each registrable owner exposes an Owner Registration Descriptor. A deterministic Registration Compiler validates declarations, resolves accepted dependencies, and produces a Compiled Registration Manifest. One Root Application Registrar consumes that manifest and delegates to Typed Registrars, native framework or build APIs, or owner-local Providers.
+
+Filesystem presence alone does not register a canonical artifact. Laravel and Vite retain their native runtime, cache, and build responsibilities.
+
+Durable architecture:
+
+- [Application Registration](../../../../03-architecture/application-registration.md)
+- [Application Registration System Definition](../../../Definitions/Application-Registration/Definition.md)
+
+#### Dependency direction and communication
+
+- dependencies flow toward provider-owned public Contracts;
+- Core remains independent of optional Modules;
+- Module-to-Module dependencies are explicit, declared, public-Contract based, and acyclic;
+- reusable UI does not depend on Core or Module domain implementation;
+- Surfaces and Delivery Adapters depend inward on owner behavior;
+- immediate commands use provider-owned public Contracts;
+- immediate reads use provider-owned public Query Contracts;
+- Events announce completed facts;
+- Listeners react independently;
+- Jobs represent deliberately deferred work;
+- Host Extensions use Host-owned Extension Point Contracts and Contributor-owned Contributions;
+- direct cross-owner concrete imports, Model or table access, generic shared services, and hidden registration are prohibited.
+
+Detailed dependency and communication model:
+
+- [Dependency And Communication Matrix](phase-4/dependency-and-communication-matrix.md)
+
+#### Exceptions and enforcement
+
+Exceptions are exact, bounded, owner-accepted, and nonprecedential. Unexpected mandatory failures do not create implicit permission to weaken a rule.
+
+Later enforcement targets include prohibited paths, registration completeness, duplicate declarations, stale generated output, dependency direction, Core independence, Module dependency cycles, UI isolation, deterministic test discovery, and significant-folder documentation.
+
+Promotion and future-work routing:
+
+- [Durable Promotion Register](phase-4/durable-promotion-register.md)
+
+#### Phase 5 handoff
+
+Phase 5 retains final naming authority for folders, namespaces, classes, Contracts, routes, configuration, Events, Jobs, tests, fixtures, Contributions, descriptors, manifests, registrars, aliases, and generated output. Phase 5 must not reopen accepted Phase 4 ownership, placement, dependency, or communication rules.
 
 ### 6.5. Naming Conventions
 
@@ -406,14 +439,17 @@ Goal 3 is complete when future work can determine, without reopening repository 
 
 ## 8. Documentation Promotion
 
-Accepted Goal 3 planning must eventually be promoted to applicable durable owners, including:
+Accepted Goal 3 planning must be promoted to applicable durable owners.
 
-- architecture documentation;
-- repository standards;
-- capability and Module contracts;
-- definitions;
-- `AGENTS.md` files and repository-agent skills where persistent execution rules are required;
-- later verification and migration planning.
+Phase 4 architecture promotion is drafted for:
+
+- [Repository Architecture](../../../../03-architecture/repository-architecture.md);
+- [Application Registration](../../../../03-architecture/application-registration.md);
+- [System Overview](../../../../03-architecture/system-overview.md);
+- [Stack Overview](../../../../03-architecture/stack-overview.md);
+- reusable architecture Definitions.
+
+Coding, documentation, database, and agent-guidance standards remain explicit later-promotion rows in the [Phase 4 Durable Promotion Register](phase-4/durable-promotion-register.md). Runtime registration tooling and automated enforcement remain later bounded implementation work.
 
 This planning document remains a concise historical and routing synthesis rather than the sole permanent owner of every durable rule.
 
@@ -437,7 +473,11 @@ Goal 3 acceptance requires:
 - [Phase 1 Index](phase-1/index.md)
 - [Phase 2 Index](phase-2/index.md)
 - [Phase 3 Index](phase-3/index.md)
+- [Phase 4 Index](phase-4/index.md)
+- [Phase 4 Artifact Placement Matrix](phase-4/artifact-placement-matrix.md)
+- [Phase 4 Dependency And Communication Matrix](phase-4/dependency-and-communication-matrix.md)
+- [Phase 4 Durable Promotion Register](phase-4/durable-promotion-register.md)
 - [Milestone 0 Planning Index](../index.md)
 - GitHub parent issue: [#19](https://github.com/kyleswindell/login-v2/issues/19)
-- Current Phase issue: [#50](https://github.com/kyleswindell/login-v2/issues/50)
-- Next Phase issue: [#51](https://github.com/kyleswindell/login-v2/issues/51)
+- Current Phase issue: [#51](https://github.com/kyleswindell/login-v2/issues/51)
+- Next Phase issue: [#52](https://github.com/kyleswindell/login-v2/issues/52)

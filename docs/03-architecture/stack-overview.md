@@ -74,6 +74,8 @@ Laravel does not own capability or Module behavior merely because that behavior 
 
 Owner-specific implementations remain with their Core, Module, or UI owner. Application-wide framework integration remains in the restricted Laravel integration branches defined by Repository Architecture.
 
+Laravel consumes validated registration through the accepted Application Registration System. Owner Registration Descriptors remain canonical owner inputs; the Registration Compiler and Compiled Registration Manifest prepare deterministic composition; the Root Application Registrar and Typed Registrars delegate to Laravel APIs without becoming behavior owners.
+
 ## 5. UI Rendering
 
 Blade is the primary server-rendered presentation technology.
@@ -139,6 +141,8 @@ resources/js/app.js
 
 These entrypoints compose owner-local and UI-owned source. They must not become generic feature implementation files.
 
+Owner CSS and JavaScript bundles are declared through deterministic application registration and included exactly once in explicit order. The Application Registration System validates and composes asset inputs; Vite remains responsible for serving, bundling, compiling, and generating assets.
+
 Vite does not own application state or UI behavior.
 
 ## 9. Local Development
@@ -188,6 +192,7 @@ The following boundaries apply:
 - Blade and Livewire are presentation technologies, not owner roots.
 - PostgreSQL and Redis are infrastructure technologies, not behavior owners.
 - Vite is an asset-build system, not an application-state manager.
+- The Application Registration System composes owner declarations; it does not replace Laravel caches, the service container, Host Registries, or Vite builds.
 - Docker Compose defines local orchestration, not production architecture.
 - Apache and PHP-FPM define production serving mechanics, not application ownership.
 - Current technology-specific paths do not override the accepted target repository topology.
@@ -208,6 +213,7 @@ Do not use this document to track dependency-update progress, migration tasks, i
 - [Architecture Index](index.md)
 - [System Overview](system-overview.md)
 - [Repository Architecture](repository-architecture.md)
+- [Application Registration](application-registration.md)
 - [Tenancy](tenancy.md)
 - [Tenant, Instance, User Account, And Workspace Model](workspace-identity-model.md)
 - [Database Standards Index](../02-standards/database/index.md)

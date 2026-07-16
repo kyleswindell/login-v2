@@ -27,9 +27,9 @@ Parent: [Definitions Index](../Index.md)
 
 ## 1. Definition
 
-A Job is owner-controlled deferred or queueable work that executes a bounded application responsibility outside the initiating call.
+A Job is owner-controlled deliberately deferred, retryable, scheduled, or queueable work that executes a bounded application responsibility outside the initiating call.
 
-A Job belongs to the Core capability or Module whose behavior it performs.
+A Job belongs to the Core capability or Module whose behavior it executes. It is not a substitute for a synchronous Contract call when the initiator requires an immediate result or confirmed failure.
 
 The working Technical Role label is:
 
@@ -53,36 +53,42 @@ A class is not a Job merely because it can run in the background.
 
 A Job may own:
 
+- one bounded deferred-execution unit;
 - deferred-execution orchestration;
-- queue-facing input;
-- retry and failure metadata when applicable;
-- invocation of owner-controlled Actions or services;
-- idempotency handling assigned to the Job;
+- queue-specific retry, timeout, uniqueness, or failure metadata;
+- invocation of owner-controlled Actions, Queries, or another explicitly defined owner-controlled operation;
+- Job-specific serialization data;
 - Job-specific tests and documentation.
 
 ## 4. Must Not Own
 
 A Job must not own:
 
-- HTTP, console, or webhook transport handling;
-- broad unrelated workflows;
+- unrelated application workflows;
 - another owner’s internals;
-- reusable UI presentation;
+- a required immediate result hidden behind deferred execution;
+- transport parsing unrelated to execution;
+- generic queue infrastructure;
+- authorization policy unrelated to the owner’s behavior;
 - arbitrary service-container lookup;
-- authoritative scheduling policy unless assigned;
-- hidden persistent state unrelated to its operation.
+- multiple unrelated units of work.
 
 ## 5. Dependency Rules
 
 A Job:
 
 - may depend on owner-controlled Actions, Contracts, Models, and persistence;
-- may consume public contracts from other owners when dependency rules permit;
+- may consume public Contracts from other owners when dependency rules permit;
 - must not depend on Delivery Adapters or Surfaces;
 - must not access another owner’s internals;
-- must preserve authorization, privacy, idempotency, and lifecycle requirements;
-- may emit Events or Notifications when owned behavior requires;
+- must not obscure a synchronous cross-owner dependency by dispatching a Job;
+- must preserve authorization, idempotency, retry, timeout, ordering, and failure requirements.
+- must preserve privacy and lifecycle requirements.
+- may emit Events or Notifications when owned behavior requires.
 - must comply with queue and operational standards.
+- must not own reusable UI presentation.
+- must not own authoritative scheduling policy unless assigned.
+- must not own hidden persistent state unrelated to its operation.
 
 ## 6. Target Status
 
@@ -92,7 +98,14 @@ Job is a permanent shared Technical Role.
 
 This definition does not require every owner to contain a `Jobs/` folder.
 
-Exact queue assignment, retry, timeout, uniqueness, serialization, and observability rules remain subject to later standards.
+Default target placement is:
+
+```text
+app/Core/<Capability>/Jobs/
+Modules/<Module>/src/Jobs/
+```
+
+Final queue naming, retry, timeout, serialization, uniqueness, batching, and scheduling conventions remain Phase 5 and later standards authority.
 
 ## 7. Accepted Decision
 
@@ -100,7 +113,7 @@ Status: accepted
 
 Jobs remain beneath the owner and cohesive capability or Module whose deferred behavior they execute.
 
-Framework queue registration does not transfer Job ownership to Laravel integration.
+Framework queue registration does not transfer Job ownership to Laravel integration. Jobs are used for intentionally deferred or isolated execution, not to conceal a required immediate cross-owner result.
 
 ## 8. Open Questions
 
@@ -119,4 +132,9 @@ The following details remain deferred:
 - [Action Definition](../Actions/Definition.md)
 - [Event Definition](../Events/Definition.md)
 - [Notification Definition](../Notifications/Definition.md)
-- Related GitHub issue: #49
+- [Contract Definition](../Contracts/Definition.md)
+- [Listener Definition](../Listeners/Definition.md)
+- [Phase 2.2 Secondary Organization Within Each Owner](../../Milestones/milestone-0/goal-3/phase-2/2-2-secondary-organization-within-each-owner.md)
+- [Phase 4.10 Dependency Direction](../../Milestones/milestone-0/goal-3/phase-4/4-10-dependency-direction.md)
+- [Phase 4.11 Cross-Owner Communication](../../Milestones/milestone-0/goal-3/phase-4/4-11-cross-owner-communication.md)
+- Related GitHub issues: #49, #51

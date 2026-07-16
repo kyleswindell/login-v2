@@ -92,9 +92,16 @@ Status: permanent
 
 HTTP Delivery Adapter is a permanent delivery specialization.
 
-The working role label is `Http/`. Final placement, route-file structure, internal subdivisions, namespaces, and casing remain subject to Goal 3 Phases 3 through 5.
+Default target placement is:
 
-API delivery remains within HTTP delivery unless a later accepted decision separates it.
+```text
+app/Core/<Capability>/Http/
+Modules/<Module>/src/Http/
+```
+
+Root `app/Http/` remains restricted to application-wide Laravel integration, base classes, global middleware, root registration, and bounded compatibility.
+
+Final internal subdivisions, class names, namespaces, and casing remain Phase 5 authority. API delivery remains within HTTP delivery unless a later accepted decision separates it.
 
 ## 7. Accepted Decision
 
@@ -109,8 +116,8 @@ Root Laravel HTTP folders remain limited to application-wide framework integrati
 The following details remain deferred:
 
 - exact Controllers, Requests, Resources, and Middleware subdivisions;
-- exact route-file placement;
-- exact API separation;
+- exact owner-local route filenames and internal route organization;
+- exact API separation and representation naming;
 - exact response and error standards;
 - exact HTTP architecture proof.
 
@@ -122,4 +129,6 @@ The following details remain deferred:
 - [Action Definition](../Actions/Definition.md)
 - [Query Definition](../Queries/Definition.md)
 - [Phase 2.4 Delivery Code Organization](../../Milestones/milestone-0/goal-3/phase-2/2-4-delivery-code-organization.md)
-- Related GitHub issue: #49
+- [Phase 4.3 Delivery Adapter Placement](../../Milestones/milestone-0/goal-3/phase-4/4-3-delivery-adapter-placement.md)
+- [Phase 4.4 Route Placement And Registration](../../Milestones/milestone-0/goal-3/phase-4/4-4-route-placement-and-registration.md)
+- Related GitHub issues: #49, #51

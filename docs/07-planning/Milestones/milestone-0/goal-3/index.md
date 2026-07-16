@@ -78,10 +78,10 @@ Those concerns belong to later Goals, bounded implementation issues, or their ap
 ## 3. Goal Status
 
 - Planning lifecycle: active
-- Acceptance state: Phase 1 accepted; Phase 2 accepted; Phase 3 decisions accepted with final Phase 3 closeout pending; Phases 4 through 7 pending
+- Acceptance state: Phases 1 through 3 accepted; Phase 4 decisions accepted with consolidated artifacts and architecture promotion drafted; final Phase 4 closeout pending; Phases 5 through 7 pending
 - Owning GitHub issue: [#19](https://github.com/kyleswindell/login-v2/issues/19)
-- Current active Phase issue: [#50](https://github.com/kyleswindell/login-v2/issues/50)
-- Next Phase issue: [#51](https://github.com/kyleswindell/login-v2/issues/51)
+- Current active Phase issue: [#51](https://github.com/kyleswindell/login-v2/issues/51)
+- Next Phase issue: [#52](https://github.com/kyleswindell/login-v2/issues/52)
 - Final acceptance: pending completion of all seven Phases and repository-owner review
 
 ## 4. Goal Documents
@@ -98,8 +98,8 @@ The synthesis remains a planning document while Goal 3 is active. Durable rules 
 | --- | --- | --- | --- | --- |
 | 1 | Architecture boundaries | [#48](https://github.com/kyleswindell/login-v2/issues/48) | accepted | [Phase 1 Index](phase-1/index.md) |
 | 2 | Repository organization | [#49](https://github.com/kyleswindell/login-v2/issues/49) | accepted | [Phase 2 Index](phase-2/index.md) |
-| 3 | Target repository tree | [#50](https://github.com/kyleswindell/login-v2/issues/50) | decisions accepted; closeout pending | [Phase 3 Index](phase-3/index.md) |
-| 4 | Placement and dependency rules | [#51](https://github.com/kyleswindell/login-v2/issues/51) | pending | Phase package not yet created |
+| 3 | Target repository tree | [#50](https://github.com/kyleswindell/login-v2/issues/50) | accepted | [Phase 3 Index](phase-3/index.md) |
+| 4 | Placement and dependency rules | [#51](https://github.com/kyleswindell/login-v2/issues/51) | decisions accepted; closeout pending | [Phase 4 Index](phase-4/index.md) |
 | 5 | Naming conventions | [#52](https://github.com/kyleswindell/login-v2/issues/52) | pending | Phase package not yet created |
 | 6 | Representative validation | [#53](https://github.com/kyleswindell/login-v2/issues/53) | pending | Phase package not yet created |
 | 7 | Migration direction and final acceptance | [#54](https://github.com/kyleswindell/login-v2/issues/54) | pending | Phase package not yet created |
@@ -114,11 +114,13 @@ For Goal 3 work:
 4. verify the applicable GitHub issue before writable work;
 5. do not reopen accepted prior-Phase decisions without an explicitly authorized corrective amendment.
 
-For current Phase 3 review:
+For current Phase 4 review:
 
-1. read the [Phase 3 Index](phase-3/index.md);
-2. read the applicable Decision 3.1–3.9 document;
-3. use the synthesis artifact only for the concise accumulated result.
+1. read the [Phase 4 Index](phase-4/index.md);
+2. read the applicable Decision 4.1–4.12 document;
+3. use the artifact-placement or dependency-and-communication matrix for consolidated lookup;
+4. use the durable-promotion register for architecture, standards, definition, agent-guidance, and future-enforcement routing;
+5. use the synthesis artifact only for the concise accumulated result.
 
 ## 7. Maintenance Notes
 
@@ -128,7 +130,7 @@ For current Phase 3 review:
 - Update the Phase register when acceptance state changes.
 - Do not duplicate detailed Phase decision analysis here.
 - Ensure corrective amendments are reflected in the synthesis and linked from affected Phase indexes.
-- Promote durable Goal 3 results to final canonical owners during or after Phase 7.
+- Promote durable Goal 3 results according to each accepted Phase promotion register; do not wait until Phase 7 when a durable owner is already established.
 - Remove or redirect obsolete duplicate Goal 3 synthesis locations after inbound links are updated.
 - Do not use this index as an active task board.
 
@@ -139,6 +141,10 @@ For current Phase 3 review:
 - [Phase 1 Index](phase-1/index.md)
 - [Phase 2 Index](phase-2/index.md)
 - [Phase 3 Index](phase-3/index.md)
+- [Phase 4 Index](phase-4/index.md)
+- [Phase 4 Artifact Placement Matrix](phase-4/artifact-placement-matrix.md)
+- [Phase 4 Dependency And Communication Matrix](phase-4/dependency-and-communication-matrix.md)
+- [Phase 4 Durable Promotion Register](phase-4/durable-promotion-register.md)
 - GitHub parent issue: [#19](https://github.com/kyleswindell/login-v2/issues/19)
-- Current Phase issue: [#50](https://github.com/kyleswindell/login-v2/issues/50)
-- Next Phase issue: [#51](https://github.com/kyleswindell/login-v2/issues/51)
+- Current Phase issue: [#51](https://github.com/kyleswindell/login-v2/issues/51)
+- Next Phase issue: [#52](https://github.com/kyleswindell/login-v2/issues/52)

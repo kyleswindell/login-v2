@@ -29,11 +29,13 @@ Parent: [Definitions Index](../Index.md)
 
 A Contribution is Contributor-owned integration that targets one explicit Extension Point exposed by a Host Registry.
 
-A Contribution may be declarative metadata, a contract implementation, or another bounded integration artifact accepted by the Extension Point.
+A Contribution may be declarative metadata, a Contract implementation, or another bounded integration artifact accepted by the Extension Point.
 
 The Contributor retains ownership of the behavior exposed through the Contribution.
 
 Registration does not transfer ownership to the Host.
+
+A Contributor may declare a Contribution through its Owner Registration Descriptor, but the artifact is a Contribution only when it targets one explicit Host-owned Extension Point. General route, Provider, view, command, migration, configuration, or asset registration is not a Contribution.
 
 ## 2. Classification Rule
 
@@ -41,12 +43,12 @@ An artifact is a Contribution when:
 
 - one Contributor owns it;
 - one target Host and Extension Point are explicit;
-- it conforms to the Host’s public Contribution contract;
+- it conforms to the Host’s public Contribution Contract;
 - its underlying behavior remains owned by the Contributor;
 - the Host Registry can validate, accept, reject, order, and resolve it;
 - it does not require access to Host internals.
 
-General cross-owner calls are not Contributions unless they participate through an explicit Extension Point.
+General cross-owner calls and general application registration are not Contributions unless they participate through an explicit Host-owned Extension Point.
 
 ## 3. Owns
 
@@ -67,13 +69,14 @@ The Contribution remains part of the Contributor’s owner boundary.
 A Contribution must not own:
 
 - the Host Registry;
-- the Extension Point contract;
+- the Extension Point Contract;
 - Host-wide ordering or conflict policy;
 - another Contributor’s behavior;
 - Host internals;
 - reusable UI infrastructure;
 - authoritative Host navigation or layout policy beyond accepted metadata;
-- direct mutation of Registry state outside the registration contract;
+- direct mutation of Registry state outside the registration Contract;
+- general Laravel or build-system registration unrelated to the target Extension Point;
 - behavior merely copied from the Contributor into the Host.
 
 A Contribution must not become a backdoor dependency on the Host implementation.
@@ -82,10 +85,11 @@ A Contribution must not become a backdoor dependency on the Host implementation.
 
 A Contribution:
 
-- may depend on the target Host’s public Extension Point contract;
+- may depend on the target Host’s public Extension Point Contract;
 - may reference public behavior owned by its Contributor;
+- may be declared through the Contributor’s Owner Registration Descriptor;
 - must not depend on Host internals;
-- must not bypass the Host Registry;
+- must not bypass the Host Registry or be treated as registered solely because a file exists;
 - must respect Core and Module dependency direction;
 - must not cause Core to depend on an optional Module;
 - may be rejected when its declared dependency or compatibility requirements are not satisfied;
@@ -103,7 +107,16 @@ The working physical role label is:
 Contrib/<Host>/
 ```
 
-Final casing, exact placement, file naming, declaration format, and namespaces remain subject to Goal 3 Phases 3 through 5.
+Default target placement remains owner-local:
+
+```text
+app/Core/<ContributorCapability>/Contrib/<Host>/
+Modules/<ContributorModule>/src/Contrib/<Host>/
+```
+
+`Contrib/<Host>/` is reserved for Host Extension Point Contributions and is not a general framework-registration folder.
+
+Final class names, declaration schemas, filenames, and namespaces remain Phase 5 and Host Contract authority.
 
 ## 7. Accepted Decision
 
@@ -111,7 +124,7 @@ Status: accepted
 
 Other owners contribute to a Host through owner-local Contributions targeting explicit Extension Points.
 
-The Host Registry validates and assembles accepted Contributions.
+The Application Registration System may validate and route declared Contributions to the applicable Host Registry. The Host Registry remains authoritative for acceptance, rejection, ordering, and resolution.
 
 Contribution ownership remains with the Contributor. Registry and Extension Point ownership remain with the Host.
 
@@ -121,14 +134,14 @@ A Surface may present resolved Contributions but does not own them.
 
 The following details remain deferred:
 
-- final `Contrib/` folder naming;
+- final `Contrib/` class and namespace naming;
 - exact Contribution declaration schema;
-- exact registration mechanism;
+- exact descriptor-to-Registry handoff and runtime binding mechanism;
 - exact ordering and conflict metadata;
 - exact compatibility versioning;
 - exact tests required for each Contribution type.
 
-These questions belong to later Goal 3, Goal 4, and owner-specific implementation contracts.
+These questions belong to Phase 5, later Goal 3 validation, Goal 4, and owner-specific implementation Contracts.
 
 ## 9. Related
 
@@ -138,5 +151,7 @@ These questions belong to later Goal 3, Goal 4, and owner-specific implementatio
 - [Registry Definition](../Registries/Definition.md)
 - [Extension Point Definition](../Extension-Points/Definition.md)
 - [Surface Definition](../Surfaces/Definition.md)
+- [Application Registration System Definition](../Application-Registration/Definition.md)
 - [Phase 2.90 Surface, Host, And Registry Reclassification](../../Milestones/milestone-0/goal-3/phase-2/2-90-surface-host-registry-reclassification.md)
-- Related GitHub issue: #49
+- [Phase 4.4 Route Placement And Registration](../../Milestones/milestone-0/goal-3/phase-4/4-4-route-placement-and-registration.md)
+- Related GitHub issues: #49, #51

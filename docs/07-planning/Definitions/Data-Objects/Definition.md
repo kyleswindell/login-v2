@@ -31,6 +31,8 @@ A Data Object is an explicit owner-controlled structured value used to transfer 
 
 A Data Object communicates data meaning without becoming the owner of the behavior that uses it.
 
+When a Data Object crosses an ownership boundary, the provider of the public operation or Contract owns the Data Object and its compatibility promise. It is not a neutral shared object jointly owned by consumers.
+
 The working Technical Role label is:
 
 ```text
@@ -83,8 +85,9 @@ A Data Object:
 - may be used by Actions, Queries, Contracts, Delivery Adapters, or Surfaces when permitted;
 - must not depend on Delivery Adapters;
 - should avoid dependency on persistence implementation unless it is explicitly a persistence-facing object;
-- must not expose another owner’s internals;
-- must preserve sensitive-data and serialization constraints defined by its owner.
+- may cross an ownership boundary only as part of an accepted provider-owned public Contract;
+- must not expose another owner’s internals, persistence Models, or internal structures;
+- must preserve sensitive-data, privacy, validation, and serialization constraints defined by its owner.
 
 ## 6. Target Status
 
@@ -94,7 +97,16 @@ Data Object is a permanent shared Technical Role.
 
 The existence of this definition does not require every owner to contain a `Data/` folder.
 
-Exact mutability, construction, validation, serialization, and naming conventions remain subject to later standards.
+Default target placement is:
+
+```text
+app/Core/<Capability>/Data/
+Modules/<Module>/src/Data/
+```
+
+Reusable UI runtime Data Objects remain beneath the applicable UI responsibility when UI owns the data meaning.
+
+Final class, namespace, immutability, serialization, and validation naming remains Phase 5 and coding-standard authority.
 
 ## 7. Accepted Decision
 
@@ -102,7 +114,7 @@ Status: accepted
 
 Core capabilities and Modules may use owner-local Data Objects for explicit command data, Query criteria, resolved results, and other stable transfer shapes.
 
-Data Objects remain distinct from Models, Actions, Queries, and Delivery Adapters.
+Cross-owner Data Objects remain provider-owned parts of public Contracts. Data Objects remain distinct from Models, Actions, Queries, framework requests, and untyped arrays.
 
 ## 8. Open Questions
 
@@ -121,4 +133,6 @@ The following details remain deferred:
 - [Contract Definition](../Contracts/Definition.md)
 - [Model Definition](../Models/Definition.md)
 - [Query Definition](../Queries/Definition.md)
-- Related GitHub issue: #49
+- [Phase 4.1 Contract Placement](../../Milestones/milestone-0/goal-3/phase-4/4-1-contract-placement.md)
+- [Phase 4.11 Cross-Owner Communication](../../Milestones/milestone-0/goal-3/phase-4/4-11-cross-owner-communication.md)
+- Related GitHub issues: #49, #51

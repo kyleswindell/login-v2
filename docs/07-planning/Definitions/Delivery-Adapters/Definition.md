@@ -40,7 +40,7 @@ Delivery Adapter types may include:
 
 A Delivery Adapter belongs to the Core capability or Module whose behavior it exposes.
 
-A Delivery Adapter is not an application owner and is not a Surface.
+A Delivery Adapter is not an application owner and is not a Surface. Root Laravel delivery branches contain only application-wide framework integration, base artifacts, global registration, and bounded compatibility.
 
 ## 2. Classification Rule
 
@@ -97,12 +97,13 @@ A controller, command, webhook handler, or consumer must not become the owner of
 A Delivery Adapter:
 
 - may depend on public behavior exposed by its owner;
-- may invoke owner-controlled Actions, Queries, workflows, and contracts;
+- may invoke owner-controlled Actions, Queries, workflows, and Contracts;
+- uses provider-owned public Contracts for any permitted cross-owner call;
 - may use framework integration required for its channel;
 - may select or return an applicable owner-specific Surface response;
 - must not access another owner’s internals;
 - must not be depended on by owner domain or system behavior;
-- must not move transport-specific concerns into channel-neutral contracts;
+- must not move transport-specific concerns into channel-neutral Contracts;
 - must preserve authorization and lifecycle rules defined by the behavior owner.
 
 Application-wide framework registration may remain in Laravel integration while owner-specific delivery behavior remains with its owner.
@@ -113,27 +114,28 @@ Status: permanent
 
 Delivery Adapter is a permanent architecture concept.
 
-Working physical roles may include:
+Default target placement is owner-local:
 
 ```text
-Http/
-Console/
-Webhooks/
+app/Core/<Capability>/Http/
+app/Core/<Capability>/Console/
+Modules/<Module>/src/Http/
+Modules/<Module>/src/Console/
 ```
 
-Final physical labels, placement, casing, and namespaces remain subject to Goal 3 Phases 3 through 5.
+Jobs, Listeners, scheduler entry points, webhook handlers, and other channel adapters remain beneath the owner’s applicable accepted role. Exact webhook and background-adapter folder labels remain Phase 5 authority.
 
-API delivery may remain within HTTP delivery unless a later accepted decision establishes a distinct role.
+API delivery remains within HTTP delivery unless a later accepted decision establishes a distinct role.
 
 ## 7. Accepted Decision
 
 Status: accepted
 
-Delivery adapters are organized beneath the Core capability or Module that owns the behavior they expose.
+Delivery Adapters are organized beneath the Core capability or Module that owns the behavior they expose.
 
-They handle channel-specific transport, validation, invocation, and response concerns while delegating application behavior to owner-controlled Actions, Queries, contracts, and workflows.
+They handle channel-specific transport, validation, invocation, and response concerns while delegating application behavior to owner-controlled Actions, Queries, Contracts, and workflows. Root `app/Http/` and `app/Console/` remain restricted application-wide Laravel integration.
 
-A multi-owner endpoint or interaction still requires one explicit composition owner.
+A multi-owner endpoint or interaction still requires one explicit composition owner. Livewire is normally owner-specific Surface implementation rather than an HTTP owner.
 
 ## 8. Open Questions
 
@@ -141,17 +143,21 @@ The following details remain deferred:
 
 - final folder names for webhook and background adapters;
 - exact separation of HTTP and API delivery;
-- exact placement of route files;
-- exact framework registration boundaries;
+- exact subordinate placement of route-adjacent adapter artifacts;
+- exact Typed Registrar and framework-binding conventions;
 - exact subordinate roles for Controllers, Requests, Resources, Commands, and Consumers;
 - channel-specific verification standards.
 
-These questions belong to Goal 3 placement, naming, and validation phases.
+These questions belong to Goal 3 naming and validation phases.
 
 ## 9. Related
 
 - [Definitions Index](../Index.md)
 - [Surface Definition](../Surfaces/Definition.md)
+- [HTTP Delivery Adapter Definition](../HTTP-Delivery-Adapters/Definition.md)
+- [Console Delivery Adapter Definition](../Console-Delivery-Adapters/Definition.md)
 - [Goal 3 Target Repository Architecture](../../Milestones/milestone-0/goal-3/target-repository-architecture.md)
 - [Phase 2.4 Delivery Code Organization](../../Milestones/milestone-0/goal-3/phase-2/2-4-delivery-code-organization.md)
-- Related GitHub issue: #49
+- [Phase 4.3 Delivery Adapter Placement](../../Milestones/milestone-0/goal-3/phase-4/4-3-delivery-adapter-placement.md)
+- [Phase 4.11 Cross-Owner Communication](../../Milestones/milestone-0/goal-3/phase-4/4-11-cross-owner-communication.md)
+- Related GitHub issues: #49, #51

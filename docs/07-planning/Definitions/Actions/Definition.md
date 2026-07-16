@@ -31,6 +31,8 @@ An Action is an owner-controlled application operation or use case that changes 
 
 An Action belongs to the Core capability or Module whose policy and behavior it executes.
 
+When another owner requires an immediate state-changing result or confirmed failure, it communicates through a provider-owned public Contract. The consumer does not import the Action implementation directly.
+
 The working Technical Role label is:
 
 ```text
@@ -78,11 +80,14 @@ An Action must not own:
 An Action:
 
 - may depend on owner-controlled Contracts, Models, Policies, and persistence;
-- may invoke public contracts of other owners when dependency rules permit;
+- may invoke public Contracts of other owners when dependency rules permit;
+- may be called across an ownership boundary only through a provider-owned public Contract;
+- must not require consumers to import its concrete implementation;
 - must not depend on Delivery Adapters or Surfaces;
 - must not access another owner’s internals;
-- may emit owner-defined Events;
-- may dispatch owner-defined Jobs or Notifications when required;
+- may emit owner-defined Events for completed facts;
+- may dispatch owner-defined Jobs or Notifications when execution is deliberately deferred;
+- must not replace a required immediate result with an Event or Job;
 - must preserve the authorization and lifecycle rules of its owner.
 
 ## 6. Target Status
@@ -93,7 +98,14 @@ Action is a permanent shared Technical Role for Core capabilities and Modules.
 
 The existence of this definition does not require every owner to contain an `Actions/` folder.
 
-Final physical placement, namespaces, and naming conventions remain subject to later Goal 3 phases.
+Default target placement is:
+
+```text
+app/Core/<Capability>/Actions/
+Modules/<Module>/src/Actions/
+```
+
+Final class, namespace, and operation naming remain Phase 5 authority.
 
 ## 7. Accepted Decision
 
@@ -101,7 +113,7 @@ Status: accepted
 
 Core capabilities and Modules use the same sparse Action role.
 
-Actions remain beneath the owner and cohesive capability or Module whose behavior they execute. Delivery Adapters invoke Actions but do not absorb their application behavior.
+Actions remain beneath the owner whose behavior they execute. Delivery Adapters and owner-specific Surfaces may invoke Actions, but they do not absorb Action behavior. Cross-owner synchronous invocation uses a provider-owned public Contract rather than a concrete Action import.
 
 ## 8. Open Questions
 
@@ -110,7 +122,7 @@ The following details remain deferred:
 - exact Action naming conventions;
 - exact transaction-boundary standards;
 - exact command-data conventions;
-- exact synchronous versus queued invocation rules;
+- exact internal invocation and binding conventions;
 - exact static enforcement of Action placement.
 
 ## 9. Related
@@ -118,6 +130,9 @@ The following details remain deferred:
 - [Definitions Index](../Index.md)
 - [Technical Role Definition](../Technical-Roles/Definition.md)
 - [Query Definition](../Queries/Definition.md)
+- [Contract Definition](../Contracts/Definition.md)
 - [Delivery Adapter Definition](../Delivery-Adapters/Definition.md)
 - [Phase 2.2 Secondary Organization Within Each Owner](../../Milestones/milestone-0/goal-3/phase-2/2-2-secondary-organization-within-each-owner.md)
-- Related GitHub issue: #49
+- [Phase 4.10 Dependency Direction](../../Milestones/milestone-0/goal-3/phase-4/4-10-dependency-direction.md)
+- [Phase 4.11 Cross-Owner Communication](../../Milestones/milestone-0/goal-3/phase-4/4-11-cross-owner-communication.md)
+- Related GitHub issues: #49, #51

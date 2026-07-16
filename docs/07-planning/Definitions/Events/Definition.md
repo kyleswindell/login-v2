@@ -27,9 +27,9 @@ Parent: [Definitions Index](../Index.md)
 
 ## 1. Definition
 
-An Event is an owner-defined fact that records or communicates that a meaningful application occurrence has happened.
+An Event is an owner-defined fact that records or communicates that a meaningful application occurrence has completed or happened.
 
-The Event belongs to the Core capability or Module whose behavior produced the occurrence.
+An Event belongs to the Core capability or Module that owns the occurrence and its meaning. It announces a fact to independent consumers; it is not a command requesting a required immediate result.
 
 The working Technical Role label is:
 
@@ -41,12 +41,14 @@ Events/
 
 An artifact is an Event when it:
 
-- represents a completed or recognized occurrence;
+- represents a completed or accepted occurrence;
 - has one explicit owner;
-- communicates defined event data;
-- may be consumed by permitted Listeners;
-- does not itself command a future operation;
-- has stable meaning independent of one Listener.
+- exposes a stable event contract;
+- may be observed by one or more independent Listeners;
+- does not require a Listener to complete the publisher’s synchronous operation;
+- is meaningful beyond one private method call.
+
+A mutable command, request, or arbitrary framework signal is not automatically an Event.
 
 ## 3. Owns
 
@@ -63,14 +65,13 @@ An Event may own:
 
 An Event must not own:
 
-- side-effect execution;
-- Listener behavior;
-- transport-specific delivery;
-- application workflow orchestration;
+- follow-up behavior performed by Listeners;
 - another owner’s state;
-- arbitrary mutable context;
-- generic unbounded payloads;
-- persistence mutation.
+- a required synchronous command, result, or rejection path;
+- hidden mutable implementation details;
+- UI presentation;
+- delivery transport;
+- generic application-wide coordination without an explicit occurrence owner.
 
 ## 5. Dependency Rules
 
@@ -78,11 +79,17 @@ An Event:
 
 - may be emitted by owner-controlled Actions, Models, Jobs, or other permitted behavior;
 - may be consumed by owner-local or explicitly permitted cross-owner Listeners;
-- must not depend on Listeners;
-- must not depend on Delivery Adapters or Surfaces;
-- must not expose owner internals beyond the accepted event contract;
-- must preserve Module dependency and compatibility rules;
+- requires cross-owner consumers to depend only on the public Event Contract;
+- must not require consumers to access Event-owner internals;
+- must not expose owner internals beyond the accepted Event contract;
+- must not conceal a synchronous dependency that requires an immediate result or confirmed failure;
 - may be dispatched through framework integration without transferring ownership.
+- must not depend on Listeners
+- must not depend on Delivery Adapters or Surfaces
+- must preserve Module dependency and compatibility rules
+- must not own persistence mutation
+- must not own generic unbounded payloads
+- must not own application workflow orchestration
 
 ## 6. Target Status
 
@@ -92,15 +99,22 @@ Event is a permanent shared Technical Role.
 
 This definition does not require every owner to contain an `Events/` folder.
 
-Exact synchronous, queued, transactional, and cross-owner event rules remain subject to later standards.
+Default target placement is:
+
+```text
+app/Core/<Capability>/Events/
+Modules/<Module>/src/Events/
+```
+
+Exact dispatch timing, transactional behavior, queue integration, naming, and compatibility remain later standards and Phase 5 authority.
 
 ## 7. Accepted Decision
 
 Status: accepted
 
-Events remain owner-defined artifacts beneath the capability or Module that owns the occurrence.
+Events remain owner-defined facts beneath the capability or Module that owns the occurrence.
 
-They provide an explicit communication boundary without transferring ownership of behavior to consumers.
+They provide an explicit communication boundary for independent reactions without transferring behavior ownership or replacing a required synchronous Contract call.
 
 ## 8. Open Questions
 
@@ -117,6 +131,9 @@ The following details remain deferred:
 - [Definitions Index](../Index.md)
 - [Technical Role Definition](../Technical-Roles/Definition.md)
 - [Listener Definition](../Listeners/Definition.md)
+- [Contract Definition](../Contracts/Definition.md)
 - [Job Definition](../Jobs/Definition.md)
 - [Phase 2.2 Secondary Organization Within Each Owner](../../Milestones/milestone-0/goal-3/phase-2/2-2-secondary-organization-within-each-owner.md)
-- Related GitHub issue: #49
+- [Phase 4.10 Dependency Direction](../../Milestones/milestone-0/goal-3/phase-4/4-10-dependency-direction.md)
+- [Phase 4.11 Cross-Owner Communication](../../Milestones/milestone-0/goal-3/phase-4/4-11-cross-owner-communication.md)
+- Related GitHub issues: #49, #51

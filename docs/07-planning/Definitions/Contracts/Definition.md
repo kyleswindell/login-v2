@@ -29,7 +29,9 @@ Parent: [Definitions Index](../Index.md)
 
 A Contract is an owner-controlled stable interface, protocol, or data agreement that defines permitted interaction within an owner or across an explicit ownership boundary.
 
-The owner whose requirements the Contract expresses owns that Contract.
+The provider whose promise, policy, or compatibility requirements the Contract expresses owns that Contract. Consumers do not redefine the provider’s Contract.
+
+An interface used only inside one implementation role remains adjacent to that implementation unless it is deliberately promoted into a stable public or cross-owner boundary.
 
 The working Technical Role label is:
 
@@ -42,12 +44,13 @@ Contracts/
 An artifact is a Contract when it:
 
 - defines behavior, data, or compatibility expected by callers or implementers;
-- has one explicit owner;
+- has one explicit provider owner;
 - establishes a boundary more stable than one implementation;
-- identifies permitted inputs, outputs, failures, or lifecycle expectations;
-- is intentionally consumed or implemented through that boundary.
+- identifies permitted inputs, outputs, failures, rejection, or lifecycle expectations;
+- is intentionally consumed or implemented through that boundary;
+- identifies whether the boundary is internal, owner-public, or cross-owner.
 
-A PHP interface is not automatically a public cross-owner Contract.
+A PHP interface is not automatically a public cross-owner Contract. Broad use alone does not promote an internal abstraction into `Contracts/`.
 
 ## 3. Owns
 
@@ -57,17 +60,19 @@ A Contract may own:
 - input and output expectations;
 - data shape and compatibility rules;
 - failure and rejection semantics;
-- lifecycle expectations;
+- lifecycle, compatibility, deprecation, and rejection expectations;
 - public versus internal boundary classification;
+- accepted implementation-binding requirements without owning implementation behavior;
 - contract-specific tests and documentation.
 
 ## 4. Must Not Own
 
 A Contract must not own:
 
-- implementation behavior;
+- concrete implementation behavior;
 - framework registration;
 - arbitrary interfaces without a stable responsibility;
+- consumer-owned copies of another provider’s promise;
 - another owner’s requirements;
 - hidden access to owner internals;
 - generic cross-application dependency lookup;
@@ -77,13 +82,15 @@ A Contract must not own:
 
 A Contract:
 
-- remains owned by the responsibility whose requirements it expresses;
+- remains owned by the provider whose promise and requirements it expresses;
 - may be consumed across owners only when dependency direction permits;
+- is the required dependency target for cross-owner synchronous calls;
 - must not force Core to depend on optional Module implementations;
-- must not expose owner internals;
+- must not expose owner internals or require a concrete implementation import;
 - may be implemented by owner-controlled or permitted external implementations;
-- must preserve declared compatibility and rejection behavior;
-- may be bound through Laravel integration without transferring ownership.
+- must preserve declared compatibility, deprecation, failure, and rejection behavior;
+- may be bound through Laravel integration without transferring ownership;
+- keeps Host Registry and Extension Point Contracts with the Host owner.
 
 ## 6. Target Status
 
@@ -93,23 +100,33 @@ Contract is a permanent shared Technical Role.
 
 The existence of this definition does not require every owner to contain a `Contracts/` folder.
 
-Final public/internal subdivisions, physical placement, and namespace conventions remain subject to later Goal 3 and Goal 4 decisions.
+Default target placement is:
+
+```text
+app/Core/<Capability>/Contracts/
+Modules/<Module>/src/Contracts/
+app/UI/<Responsibility>/Contracts/
+```
+
+Machine-readable UI artifact contracts such as `contract.php` remain colocated with the owning presentation artifact. Internal abstractions remain adjacent to their implementation role unless deliberately promoted.
+
+Final contract-family, class, interface, schema, namespace, and public/internal subdivision naming remain Phase 5 or owner-specific contract authority.
 
 ## 7. Accepted Decision
 
 Status: accepted
 
-Cross-owner interaction occurs through explicit public boundaries rather than direct access to another owner’s implementation.
+Cross-owner interaction occurs through explicit provider-owned public boundaries rather than direct access to another owner’s implementation.
 
-Contracts remain with the owner whose policy and requirements they express.
+Contracts remain with the provider whose promise, policy, and compatibility requirements they express. Consumers depend on the Contract, not a copied declaration or concrete implementation. Host Registry and Extension Point Contracts remain Host-owned.
 
 ## 8. Open Questions
 
 The following details remain deferred:
 
-- exact public versus internal folder structure;
-- exact compatibility and versioning rules;
-- exact interface, schema, and data-contract subdivisions;
+- exact public versus internal namespace and folder subdivisions;
+- exact compatibility, deprecation, and versioning standards;
+- exact interface, schema, and data-contract family naming;
 - exact discovery and export requirements;
 - exact contract-test standards.
 
@@ -120,4 +137,7 @@ The following details remain deferred:
 - [Data Object Definition](../Data-Objects/Definition.md)
 - [Registry Definition](../Registries/Definition.md)
 - [Phase 2.3 Cross-Cutting Technical Code](../../Milestones/milestone-0/goal-3/phase-2/2-3-cross-cutting-technical-code.md)
-- Related GitHub issue: #49
+- [Phase 4.1 Contract Placement](../../Milestones/milestone-0/goal-3/phase-4/4-1-contract-placement.md)
+- [Phase 4.10 Dependency Direction](../../Milestones/milestone-0/goal-3/phase-4/4-10-dependency-direction.md)
+- [Phase 4.11 Cross-Owner Communication](../../Milestones/milestone-0/goal-3/phase-4/4-11-cross-owner-communication.md)
+- Related GitHub issues: #49, #51

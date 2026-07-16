@@ -31,6 +31,8 @@ A Query is an owner-controlled read-oriented operation that retrieves, filters, 
 
 A Query belongs to the Core capability or Module that owns the data meaning and read policy.
 
+When another owner requires an immediate read result, it communicates through a provider-owned public Query Contract. The consumer does not import the Query implementation or read the provider’s Models, repositories, or tables directly.
+
 The working Technical Role label is:
 
 ```text
@@ -78,10 +80,12 @@ A Query must not own:
 A Query:
 
 - may depend on owner-controlled Models, Contracts, and read infrastructure;
-- may consume public read contracts from other owners when permitted;
+- may consume public Query Contracts from other owners when permitted;
+- may be called across an ownership boundary only through a provider-owned public Contract;
+- must not require consumers to import its concrete implementation;
 - must not depend on Delivery Adapters or Surfaces;
-- must not access another owner’s internals;
-- may return Data Objects or other explicit result types;
+- must not expose another owner’s Models, repositories, tables, or internal query implementation;
+- may return provider-owned Data Objects or other explicit result types;
 - must preserve owner-controlled authorization, privacy, and visibility rules.
 
 ## 6. Target Status
@@ -92,7 +96,14 @@ Query is a permanent shared Technical Role for Core capabilities and Modules.
 
 This definition does not require every owner to contain a `Queries/` folder.
 
-Final placement, namespaces, and naming conventions remain subject to later Goal 3 phases.
+Default target placement is:
+
+```text
+app/Core/<Capability>/Queries/
+Modules/<Module>/src/Queries/
+```
+
+Final class, namespace, result, pagination, and filtering naming remain Phase 5 authority.
 
 ## 7. Accepted Decision
 
@@ -100,7 +111,7 @@ Status: accepted
 
 Queries provide the shared read-oriented role beneath an explicit owner and cohesive capability or Module.
 
-They remain distinct from Actions, Delivery Adapters, and Surface presentation.
+They remain distinct from Actions, Delivery Adapters, and Surface presentation. Cross-owner immediate reads use provider-owned public Query Contracts and explicit result types rather than direct persistence access.
 
 ## 8. Open Questions
 
@@ -117,6 +128,9 @@ The following details remain deferred:
 - [Definitions Index](../Index.md)
 - [Technical Role Definition](../Technical-Roles/Definition.md)
 - [Action Definition](../Actions/Definition.md)
+- [Contract Definition](../Contracts/Definition.md)
 - [Data Object Definition](../Data-Objects/Definition.md)
 - [Phase 2.2 Secondary Organization Within Each Owner](../../Milestones/milestone-0/goal-3/phase-2/2-2-secondary-organization-within-each-owner.md)
-- Related GitHub issue: #49
+- [Phase 4.10 Dependency Direction](../../Milestones/milestone-0/goal-3/phase-4/4-10-dependency-direction.md)
+- [Phase 4.11 Cross-Owner Communication](../../Milestones/milestone-0/goal-3/phase-4/4-11-cross-owner-communication.md)
+- Related GitHub issues: #49, #51

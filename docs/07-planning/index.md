@@ -114,14 +114,14 @@ It does not create security requirements by itself.
 
 Planning is organized by stable ownership and planning purpose:
 
-| Path                          | Responsibility                                                                                                |
-| ----------------------------- | ------------------------------------------------------------------------------------------------------------- |
-| `00-overview/`                | Milestone charters, planning control documents, review backlogs, and cross-cutting planning overviews         |
-| `01-architecture-boundaries/` | Application structure, capability boundaries, context models, vocabulary, and structural migration planning   |
-| `02-core-capabilities/`       | Core capability target state, dependencies, data, security, implementation direction, and capability matrices |
+| Path                          | Responsibility                                                                                                                                                                                                                                             |
+| ----------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `00-overview/`                | Milestone charters, planning control documents, review backlogs, and cross-cutting planning overviews                                                                                                                                                      |
+| `01-architecture-boundaries/` | Application structure, capability boundaries, context models, vocabulary, and structural migration planning                                                                                                                                                |
+| `02-core-capabilities/`       | Core capability target state, dependencies, data, security, implementation direction, and capability matrices                                                                                                                                              |
 | `03-platform-surfaces/`       | Transitional planning retained from the previous Platform Surface model. Content must be reclassified into its owning Core capability, Module, UI responsibility, Host Registry, Surface, or Delivery Adapter. This folder is not a target ownership area. |
-| `04-business-modules/`        | Module package, layout, Contribution, and owner-specific Surface planning                                     |
-| planning root                 | Cross-cutting matrices and control documents whose scope spans multiple planning groups                       |
+| `04-business-modules/`        | Module package, layout, Contribution, and owner-specific Surface planning                                                                                                                                                                                  |
+| planning root                 | Cross-cutting matrices and control documents whose scope spans multiple planning groups                                                                                                                                                                    |
 
 Do not create empty folders solely to match a proposed tree.
 

@@ -100,6 +100,8 @@ Laravel provides the framework, runtime, and application-composition boundaries.
 
 A Surface is an owner-specific UI presentation and interaction layer. A Registry is owned by the Host capability or Module it extends. Delivery Adapters expose owner behavior through HTTP, console, webhook, queue, scheduler, or other invocation channels without owning that behavior.
 
+Cross-owner synchronous behavior uses provider-owned public Contracts. Events communicate completed facts to independent consumers, Jobs represent deliberately deferred work, and Host Contributions extend explicit Host-owned Extension Points.
+
 ## 7. Repository Architecture
 
 The accepted target repository structure organizes:
@@ -109,11 +111,14 @@ The accepted target repository structure organizes:
 - optional packages beneath repository-root `Modules/`;
 - application-wide Laravel integration beneath restricted root `app/Http/`, `app/Console/`, and `app/Providers/`;
 - presentation source through owner-visible artifact bundles;
-- tests beside their smallest clear owner, with repository-wide suites retained at root.
+- tests beside their smallest clear owner, with repository-wide suites retained at root;
+- owner-controlled registration descriptors composed through a deterministic Application Registration System.
 
 Current `app/Platform`, peer `app/Surfaces`, generic support branches, direct-root Module PHP layouts, and parallel component CSS and JavaScript trees are transitional rather than target architecture.
 
-See [Repository Architecture](repository-architecture.md) for the canonical repository topology, package patterns, resource structure, test locations, supporting branches, and transitional paths.
+See [Repository Architecture](repository-architecture.md) for the canonical repository topology, package patterns, artifact placement, dependency direction, resource structure, test locations, supporting branches, and transitional paths.
+
+See [Application Registration](application-registration.md) for descriptor ownership, deterministic compilation, generated manifests, root registration, Typed Registrars, and the distinction between application composition and Host Registries.
 
 ## 8. Tenant And Scope Boundaries
 
@@ -126,6 +131,7 @@ See [Repository Architecture](repository-architecture.md) for the canonical repo
 ## 9. Related
 
 - [Repository Architecture](repository-architecture.md)
+- [Application Registration](application-registration.md)
 - [Stack Overview](stack-overview.md)
 - [Tenant, Instance, User Account, And Workspace Model](workspace-identity-model.md)
 - [Tenancy](tenancy.md)

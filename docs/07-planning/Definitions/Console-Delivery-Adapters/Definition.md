@@ -91,7 +91,16 @@ Status: permanent
 
 Console Delivery Adapter is a permanent delivery specialization.
 
-The working role label is `Console/`. Final placement, command registration, namespace, and scheduler relationships remain subject to later Goal 3 phases.
+Default target placement is:
+
+```text
+app/Core/<Capability>/Console/
+Modules/<Module>/src/Console/
+```
+
+Root `app/Console/` remains restricted to application-wide Laravel integration, base console artifacts, global registration, and bounded compatibility.
+
+Final command names, namespaces, scheduler relationships, and internal subdivisions remain Phase 5 and later standards authority.
 
 ## 7. Accepted Decision
 
@@ -106,8 +115,8 @@ A command parses console input, invokes owner-controlled behavior, formats outpu
 The following details remain deferred:
 
 - exact command naming conventions;
-- exact registration and discovery;
-- exact scheduling boundaries;
+- exact descriptor fields and Typed Registrar command registration;
+- exact scheduling boundaries and schedule-registration naming;
 - exact interactive-command restrictions;
 - exact console verification requirements.
 
@@ -119,4 +128,6 @@ The following details remain deferred:
 - [Query Definition](../Queries/Definition.md)
 - [Job Definition](../Jobs/Definition.md)
 - [Phase 2.4 Delivery Code Organization](../../Milestones/milestone-0/goal-3/phase-2/2-4-delivery-code-organization.md)
-- Related GitHub issue: #49
+- [Phase 4.3 Delivery Adapter Placement](../../Milestones/milestone-0/goal-3/phase-4/4-3-delivery-adapter-placement.md)
+- [Phase 4.4 Route Placement And Registration](../../Milestones/milestone-0/goal-3/phase-4/4-4-route-placement-and-registration.md)
+- Related GitHub issues: #49, #51

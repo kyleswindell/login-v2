@@ -27,9 +27,11 @@ Parent: [Definitions Index](../Index.md)
 
 ## 1. Definition
 
-A Provider is owner-local Laravel registration and composition code that connects owner-controlled artifacts to the framework runtime.
+A Provider is Laravel registration and composition code that connects owner-controlled artifacts to the framework runtime.
 
-A Provider belongs to the Core capability or Module whose services, routes, Events, policies, commands, or other artifacts it registers.
+An owner-local Provider belongs to the Core capability or Module whose Contracts, implementations, routes, Events, Policies, commands, or other artifacts it registers. A root application Provider is restricted to application-wide Laravel integration, bootstrap composition, compatibility, or the bounded Root Application Registrar.
+
+A Provider is an execution mechanism within the Application Registration System; it is not the Owner Registration Descriptor, Registration Compiler, or Compiled Registration Manifest.
 
 The working Technical Role label is:
 
@@ -42,10 +44,11 @@ Providers/
 An artifact is a Provider when its primary responsibility is to:
 
 - register bindings;
-- register owner-local routes, commands, Events, Listeners, or policies;
+- register owner-local routes, commands, Events, Listeners, or Policies;
 - connect owner-controlled Contracts to implementations;
 - configure owner-local framework integration;
-- participate in framework bootstrapping for one explicit owner.
+- execute typed registration declared by an owner descriptor;
+- participate in framework bootstrapping for one explicit owner or one bounded application-wide composition concern.
 
 ## 3. Owns
 
@@ -54,8 +57,9 @@ A Provider may own:
 - owner-local service-container bindings;
 - owner-local registration;
 - owner-local framework bootstrapping;
+- execution of accepted typed registration instructions;
 - registration order required by its owner;
-- bounded compatibility registration;
+- bounded root composition or compatibility registration;
 - Provider-specific tests and documentation.
 
 ## 4. Must Not Own
@@ -70,7 +74,9 @@ A Provider must not own:
 - HTTP request handling;
 - UI presentation;
 - arbitrary configuration mutation;
-- generic cross-owner coordination.
+- descriptor discovery, validation, or compilation unless it is explicitly designated application registration infrastructure;
+- generic cross-owner coordination;
+- silent filesystem scanning used as owner registration.
 
 ## 5. Dependency Rules
 
@@ -78,11 +84,13 @@ A Provider:
 
 - may depend on owner-controlled Contracts and implementations;
 - may use Laravel framework APIs required for registration;
+- may consume validated instructions from the Compiled Registration Manifest;
 - must not transfer application ownership to Laravel integration;
-- must not register another owner’s internals without an accepted composition contract;
+- must not register another owner’s internals without an accepted composition Contract;
 - must preserve Core independence from optional Modules;
 - must not be depended on by owner domain behavior;
-- may register Host Contributions or Registry entries only through accepted public contracts.
+- may register Host Contributions or Registry entries only through accepted public Contracts;
+- must not bypass descriptor validation or treat filesystem presence as registration.
 
 ## 6. Target Status
 
@@ -92,7 +100,15 @@ Provider is a permanent shared Technical Role for Laravel-based owners.
 
 This definition does not require every owner to contain a `Providers/` folder.
 
-Application-wide root providers remain Laravel integration concerns; owner-local providers remain with their owner.
+Default target placement is:
+
+```text
+app/Core/<Capability>/Providers/
+Modules/<Module>/src/Providers/
+app/Providers/
+```
+
+Root `app/Providers/` is restricted to application-wide Laravel integration, Root Application Registrar composition, base integration, and bounded compatibility. Owner-local Providers remain with their owner.
 
 ## 7. Accepted Decision
 
@@ -100,17 +116,17 @@ Status: accepted
 
 Core capabilities and Modules may use owner-local Providers for Laravel registration and composition.
 
-Providers adapt owner-controlled artifacts to Laravel and do not become owners of the behavior they register.
+Providers execute validated registration and adapt owner-controlled artifacts to Laravel without becoming owners of the behavior they register. The Root Application Registrar consumes the Compiled Registration Manifest and delegates to Typed Registrars or owner-local Providers.
 
 ## 8. Open Questions
 
 The following details remain deferred:
 
 - exact Provider naming conventions;
-- exact package-provider requirements for Modules;
-- exact route and Event registration boundaries;
-- exact root versus owner-local provider placement;
-- exact automated registration proof.
+- exact package-Provider requirements for Modules;
+- exact Typed Registrar and Provider boundaries;
+- exact Provider and Root Application Registrar naming;
+- exact automated registration proof and cache integration.
 
 ## 9. Related
 
@@ -119,4 +135,6 @@ The following details remain deferred:
 - [Contract Definition](../Contracts/Definition.md)
 - [Registry Definition](../Registries/Definition.md)
 - [Delivery Adapter Definition](../Delivery-Adapters/Definition.md)
-- Related GitHub issue: #49
+- [Application Registration System Definition](../Application-Registration/Definition.md)
+- [Phase 4.4 Route Placement And Registration](../../Milestones/milestone-0/goal-3/phase-4/4-4-route-placement-and-registration.md)
+- Related GitHub issues: #49, #51

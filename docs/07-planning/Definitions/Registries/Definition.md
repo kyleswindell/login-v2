@@ -27,7 +27,7 @@ Parent: [Definitions Index](../Index.md)
 
 ## 1. Definition
 
-A Registry is an owner-controlled authoritative mechanism for validating, collecting, resolving, and exposing a bounded set of registered entries under one explicit contract.
+A Registry is an owner-controlled authoritative mechanism for validating, collecting, resolving, and exposing a bounded set of registered entries under one explicit Contract.
 
 When used for extensibility, the Registry belongs to a Host and resolves Contributions targeting Host-owned Extension Points.
 
@@ -35,19 +35,21 @@ Registry describes both an architecture mechanism and a working Technical Role. 
 
 Identifier and registry-key conventions remain governed by applicable accepted decisions and standards.
 
+The Application Registration System may deliver validated declarations to a Registry, but it does not become authoritative for the Registry’s entry Contract, acceptance, ordering, or resolved output.
+
 ## 2. Classification Rule
 
 A mechanism qualifies as a Registry when:
 
 - one explicit owner controls it;
 - the registered entry type or types are bounded;
-- registration contracts are explicit;
+- registration Contracts are explicit;
 - validation and rejection behavior are defined;
 - resolution behavior is deterministic or explicitly governed;
 - consumers use resolved Registry output rather than Contributor internals;
 - the mechanism is authoritative for its declared scope.
 
-A collection, configuration array, service container, or discovery scan is not automatically a Registry.
+A collection, configuration array, service container, discovery scan, Owner Registration Descriptor, or Compiled Registration Manifest is not automatically a Registry.
 
 ## 3. Owns
 
@@ -78,24 +80,26 @@ A Registry must not own:
 - application-wide dependency lookup;
 - another owner’s internal implementation;
 - UI presentation merely because Registry output is displayed;
-- delivery transport merely because registration occurs during framework bootstrap.
+- delivery transport merely because registration occurs during framework bootstrap;
+- application-wide route, Provider, view, command, migration, configuration, or asset composition.
 
-A Registry must not become a generic service locator or dumping ground.
+A Registry must not become a generic service locator, application registrar, or dumping ground.
 
 ## 5. Dependency Rules
 
 A Registry:
 
 - remains owned by its explicit capability or Module;
-- may depend on owner-controlled contracts and validation rules;
-- may accept Contributions only through public registration contracts;
+- may depend on owner-controlled Contracts and validation rules;
+- may accept Contributions only through public registration Contracts;
+- may receive validated Contribution declarations through the Application Registration System;
 - must not depend on Contributor implementations;
 - must not require Core to depend on optional Module Contributors;
 - may expose resolved output to owner-controlled behavior, Delivery Adapters, or Surfaces;
 - must preserve deterministic or explicitly governed resolution;
 - must not bypass Module dependency rules.
 
-Framework composition may register entries, but Laravel integration does not become the Registry owner.
+Framework composition may deliver declarations or bind the Registry, but Laravel integration and the Application Registration System do not become the Registry owner.
 
 ## 6. Target Status
 
@@ -109,7 +113,9 @@ The working folder label is:
 Registry/
 ```
 
-Final physical placement, namespace, subordinate folders, and discovery mechanics remain subject to later Goal 3 phases and implementation contracts.
+Default target placement is beneath the Host owner’s `Registry/` role. The Host’s public Registry and Extension Point Contracts remain in its `Contracts/` role.
+
+Unrestricted runtime filesystem discovery is not the target model. Final class names, namespaces, subordinate folders, cache behavior, and Registry-specific declaration APIs remain Phase 5 and owner implementation-contract authority.
 
 ## 7. Accepted Decision
 
@@ -117,7 +123,7 @@ Status: accepted
 
 A Host-owned Registry declares or exposes explicit Extension Points, validates Contributions, collects accepted entries, applies ordering and availability rules, and exposes resolved output.
 
-Registry ownership remains with the Host. Contribution ownership remains with each Contributor.
+Registry ownership remains with the Host. Contribution ownership remains with each Contributor. The Application Registration System may validate and route Contribution declarations but does not replace the Host Registry.
 
 A Surface may consume resolved Registry output but is not the Registry.
 
@@ -125,11 +131,10 @@ A Surface may consume resolved Registry output but is not the Registry.
 
 The following details remain deferred:
 
-- exact registration API;
-- exact static versus runtime discovery model;
+- exact Host-specific registration API;
 - exact Registry export or introspection requirements;
 - exact ordering and conflict metadata;
-- exact caching and performance requirements;
+- exact cache and invalidation integration with compiled application registration;
 - exact validation proof and tooling.
 
 These questions belong to later Goal 3, Goal 4, and implementation work.
@@ -142,5 +147,7 @@ These questions belong to later Goal 3, Goal 4, and implementation work.
 - [Contribution Definition](../Contributions/Definition.md)
 - [Contributor Definition](../Contributors/Definition.md)
 - [Surface Definition](../Surfaces/Definition.md)
+- [Application Registration System Definition](../Application-Registration/Definition.md)
 - [ADR-0007: Owner, Registry, And Identifier Key Conventions](../../../01-decisions/adr-0007-owner-registry-and-identifier-key-conventions.md)
-- Related GitHub issue: #49
+- [Phase 4.4 Route Placement And Registration](../../Milestones/milestone-0/goal-3/phase-4/4-4-route-placement-and-registration.md)
+- Related GitHub issues: #49, #51

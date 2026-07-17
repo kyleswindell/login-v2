@@ -109,7 +109,7 @@ For a complete Phase 4 review:
 | Decision | Document                                                                       | Accepted result                                                                                                                               |
 | -------- | ------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------- |
 | 4.1      | [Contract Placement](4-1-contract-placement.md)                                | Public and cross-owner Contracts remain provider-owned; internal abstractions remain adjacent unless deliberately promoted                    |
-| 4.2      | [Implementation Placement](4-2-implementation-placement.md)                    | Concrete implementation remains beneath the narrowest accepted Core, Module, UI, Surface, Registry, Contribution, or restricted Laravel owner |
+| 4.2      | [Implementation Placement](4-2-implementation-placement.md)                    | Concrete implementation remains beneath the narrowest accepted Core, Module, UI, Registry, Contribution, precise presentation role, or restricted Laravel owner |
 | 4.3      | [Delivery Adapter Placement](4-3-delivery-adapter-placement.md)                | Delivery Adapters remain owner-local, own channel concerns only, and delegate behavior inward                                                 |
 | 4.4      | [Route Placement And Registration](4-4-route-placement-and-registration.md)    | Routes remain owner-local and registrable artifacts use a deterministic Application Registration System                                       |
 | 4.5      | [Configuration Placement](4-5-configuration-placement.md)                      | Configuration remains owner-specific; root configuration is restricted; runtime settings remain owner-controlled data                         |
@@ -134,6 +134,12 @@ For a complete Phase 4 review:
 
 The matrices are canonical for their structured Phase 4 relationships after final owner acceptance. They do not replace the detailed decision documents, Definitions, architecture, or later standards.
 
+### Phase 6 correction
+
+ADR-0008 and Phase 6.90 supersede only the broad owner-specific Surface interpretation in Phase 4. Where a Phase 4 document or matrix uses Surface for ordinary Product Pages, destinations, areas, flows, PageData, ViewModels, Presenters, Renderers, or a generic `Surface/` role, interpret that responsibility as owner-specific Product presentation using the narrowest precise role. Frame Surface is reserved for named persistent-Frame regions. Core Navigation at `app/Core/Navigation/` hosts Product and Product Area Contributions through owner-local `Contrib/Navigation/` paths.
+
+All other accepted Phase 4 placement, delivery, persistence, registration, dependency, communication, documentation, exception, and significant-folder rules remain unchanged.
+
 ## 7. Accepted Architecture Summary
 
 ### 7.1. Artifact Placement
@@ -150,7 +156,7 @@ Modules/<Module>/src/<TechnicalRole>/
 
 Package support artifacts remain in accepted package-root branches. Application-wide Laravel integration remains restricted to bounded root integration branches.
 
-Generic ownership or implementation destinations such as `Shared`, `Common`, `Helpers`, `Utilities`, generic `Services`, generic `Support`, `Platform`, and `Surfaces` are prohibited for new canonical work.
+Generic ownership or implementation destinations such as `Shared`, `Common`, `Helpers`, `Utilities`, generic `Services`, generic `Support`, `Platform`, `Surface`, and `Surfaces` are prohibited for new canonical work.
 
 ### 7.2. Application Registration
 
@@ -176,9 +182,10 @@ The Application Registration System is not a Host Registry, Laravel service cont
 - Modules may depend on Core public Contracts and approved UI APIs.
 - Module-to-Module dependencies require explicit public Contracts, declared package dependencies, and an acyclic dependency graph.
 - reusable UI must not depend on Core or Module domain implementation;
-- owner-specific Surfaces may depend on their own owner and reusable UI;
+- owner-specific Product presentation may depend on its own owner and reusable UI;
+- Frame rendering consumes normalized Workspace and Core Navigation data and must not evaluate application policy;
 - Delivery Adapters depend inward on owner behavior;
-- owner behavior must not depend outward on Delivery Adapters or Surfaces;
+- owner behavior must not depend outward on Delivery Adapters or Frame rendering;
 - root Laravel integration may compose owners through accepted registration boundaries but must not absorb owner behavior.
 
 ### 7.4. Cross-Owner Communication

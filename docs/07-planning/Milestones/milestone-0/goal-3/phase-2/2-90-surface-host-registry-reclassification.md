@@ -2,7 +2,7 @@
 DOC-META
 title: Phase 2.90 Surface, Host, And Registry Reclassification
 doc_type: planning
-status: planned
+status: active
 owner: architecture
 canonical: true
 canonical_path: docs/07-planning/Milestones/milestone-0/goal-3/phase-2/2-90-surface-host-registry-reclassification.md
@@ -15,14 +15,16 @@ summary: Corrects the earlier Surface classification by separating UI presentati
 
 Parent: [Phase 2 Repository Organization Index](index.md)
 
+> **Partial supersession notice:** This document remains accepted authority for separating presentation, Host, Registry, Extension Point, Contribution, Contributor, delivery, and reusable UI responsibilities. Its broad use of Surface for owner-specific Pages, destinations, areas, flows, and a working `Surface/` Technical Role is superseded by [ADR-0008](../../../../../01-decisions/adr-0008-workspace-navigation-and-frame-surface-model.md), [Phase 6.90](../phase-6/6-90-workspace-navigation-and-frame-surface-clarification.md), and the [Frame Surface Definition](../../../../Definitions/Surfaces/Definition.md).
+
 ## 1. Purpose
 
 This document records a corrective Phase 2 decision separating UI presentation from extension Registry and contribution responsibilities.
 
 ## 2. Status
 
-- Planning lifecycle: planned
-- Acceptance state: accepted through repository-owner Phase 2 review
+- Planning lifecycle: active; partially superseded
+- Acceptance state: accepted through repository-owner Phase 2 review; broad Surface classification superseded through repository-owner Phase 6 review
 - Implementation state: documentation correction and target direction only
 - Owning GitHub issue: #49
 - Affected prior work: Phase 1 Surface definition and related planning language
@@ -39,15 +41,15 @@ These responsibilities have different owners and must remain separate.
 
 ## 4. Accepted Terminology
 
-| Concept | Responsibility |
-| --- | --- |
-| Host | Core capability or Module that owns an extensible feature |
-| Registry | Host-owned mechanism that declares, validates, collects, orders, and exposes contributions |
-| Extension Point | Named contract or insertion point exposed by the Registry |
-| Contribution | Another owner’s declaration or implementation targeting a Host extension point |
-| Contributor | Core capability or Module that owns and supplies a Contribution |
-| Surface | Owner-specific UI presentation and interaction layer |
-| UI | Reusable components, layouts, controls, and visual infrastructure used by Surfaces |
+| Concept         | Responsibility                                                                             |
+| --------------- | ------------------------------------------------------------------------------------------ |
+| Host            | Core capability or Module that owns an extensible feature                                  |
+| Registry        | Host-owned mechanism that declares, validates, collects, orders, and exposes contributions |
+| Extension Point | Named contract or insertion point exposed by the Registry                                  |
+| Contribution    | Another owner’s declaration or implementation targeting a Host extension point             |
+| Contributor     | Core capability or Module that owns and supplies a Contribution                            |
+| Surface         | Owner-specific UI presentation and interaction layer                                       |
+| UI              | Reusable components, layouts, controls, and visual infrastructure used by Surfaces         |
 
 ## 5. Surface
 
@@ -221,6 +223,8 @@ Confirm that:
 ## 16. Related
 
 - [Phase 2 Repository Organization Index](index.md)
+- [ADR-0008](../../../../../01-decisions/adr-0008-workspace-navigation-and-frame-surface-model.md)
+- [Phase 6.90 Workspace, Navigation Hierarchy, And Frame Surface Clarification](../phase-6/6-90-workspace-navigation-and-frame-surface-clarification.md)
 - [Phase 2.2 Secondary Organization Within Each Owner](2-2-secondary-organization-within-each-owner.md)
 - [Phase 2.4 Delivery Code Organization](2-4-delivery-code-organization.md)
 - GitHub issue: #49

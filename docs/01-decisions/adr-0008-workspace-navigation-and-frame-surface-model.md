@@ -2,13 +2,13 @@
 DOC-META
 title: ADR-0008: Workspace, Navigation Hierarchy, And Frame Surface Model
 doc_type: decision
-status: draft
+status: active
 owner: architecture
 canonical: true
 canonical_path: docs/01-decisions/adr-0008-workspace-navigation-and-frame-surface-model.md
 parent: docs/01-decisions/index.md
 template: docs/09-reference/templates/docs/_decision.md
-summary: Proposes multiple available Workspaces, a persistent authenticated Frame, narrowly defined Frame Surfaces, and a System-to-Product navigation hierarchy.
+summary: Establishes multiple available Workspaces, a persistent authenticated Frame, narrowly defined Frame Surfaces, and a System-to-Product navigation hierarchy.
 -->
 
 # ADR-0008: Workspace, Navigation Hierarchy, And Frame Surface Model
@@ -17,25 +17,25 @@ Parent: [Decisions Index](index.md)
 
 ## 1. Decision Status
 
-Proposed
+Accepted
 
 ## 2. Dates
 
 - Proposed: 2026-07-17
-- Accepted, rejected, deprecated, or superseded:
+- Accepted, rejected, deprecated, or superseded: 2026-07-17
 
 ## 3. Decision Owner
 
 - Owner: Login 2.0 architecture owner
 - Required reviewers: repository owner; architecture reviewer; UI and navigation reviewer; accessibility reviewer; Access and security reviewer
-- Acceptance source: pending repository-owner review in GitHub Issue #53 and the associated Goal 3 Phase 6 review
+- Acceptance source: explicit repository-owner approval recorded in the Goal 3 Phase 6 review; final Issue #53 closeout remains pending canonical reconciliation and repository checks
 
 ## 4. Related Work
 
 - GitHub issue: [#53 — Validate the repository architecture model](https://github.com/kyleswindell/login-v2/issues/53)
 - Parent goal: [#19 — M0 Goal 03: Target repository topology and naming](https://github.com/kyleswindell/login-v2/issues/19)
 - Planning document: [Phase 6.90 Workspace, Navigation Hierarchy, And Frame Surface Clarification](../07-planning/Milestones/milestone-0/goal-3/phase-6/6-90-workspace-navigation-and-frame-surface-clarification.md)
-- Proposed architecture owner: [Workspace Navigation And Frame Composition](../03-architecture/workspace-navigation-and-frame-composition.md)
+- Architecture owner: [Workspace Navigation And Frame Composition](../03-architecture/workspace-navigation-and-frame-composition.md)
 - Prior decisions:
   - [ADR-0005: Core, Modules, And UI Ownership Taxonomy](adr-0005-core-modules-ui-ownership-taxonomy.md)
   - [ADR-0006: Tenant, Instance, Workspace, Principal, Actor, And Invocation Vocabulary](adr-0006-tenant-instance-workspace-principal-and-invocation-vocabulary.md)
@@ -429,11 +429,11 @@ Reasons not selected:
 - implementation areas: Workspace resolution; Core navigation composition; Frame Surface Host contracts; navigation Contributions; UI Frame rendering; breadcrumb and active-state resolution
 - migrations: none authorized by this decision
 - compatibility behavior: verified legacy `Surface`, `Shell`, `Platform`, navigation, and UI inventory identifiers may remain transitional with explicit migration ownership
-- deployment or rollback: not applicable to this decision-only proposal
+- deployment or rollback: not applicable to this documentation-only decision
 - required GitHub issues: later bounded Workspace switching, navigation registration, UI-shell correction, and compatibility migration issues as needed
 - specialist review: architecture; UI/navigation; accessibility; Access/security; repository-owner review
 
-This section is not a full implementation plan.
+This accepted decision does not authorize implementation and is not a full implementation plan.
 
 ## 12. Canonical Documentation Updates
 
@@ -441,7 +441,7 @@ This section is not a full implementation plan.
 
 - `docs/03-architecture/workspace-navigation-and-frame-composition.md`
 
-### Update After Acceptance
+### Update During Reconciliation
 
 - `docs/01-decisions/index.md`
 - `docs/01-decisions/adr-0006-tenant-instance-workspace-principal-and-invocation-vocabulary.md`
@@ -457,8 +457,8 @@ This section is not a full implementation plan.
 
 ### Supersede Or Archive
 
-- no file is superseded in full by this proposed decision;
-- the applicable Workspace and Global Administration provisions of ADR-0006 are partially superseded only if this ADR is accepted;
+- no file is superseded in full by this decision;
+- the applicable Workspace and Global Administration provisions of ADR-0006 are partially superseded by this decision;
 - the broad Surface definition and owner-local generic `Surface/` role are replaced through later canonical reconciliation rather than archival of all affected documents.
 
 ## 13. Verification
@@ -487,7 +487,7 @@ Implementation and documentation alignment must confirm:
 
 ### Supersedes
 
-If accepted, this decision partially supersedes:
+This decision partially supersedes:
 
 - ADR-0006 Section 7.2 only where Global Administration is classified as a Surface inside one Workspace;
 - ADR-0006 Section 7.3 only where one User Account is described as receiving one indivisible resolved Workspace per active authenticated runtime;
@@ -501,20 +501,18 @@ All ADR-0006 Tenant, Instance, User Account, User Identity, Principal, Actor, Ma
 
 ### Transition Plan
 
-- record acceptance or rejection in Issue #53;
-- add bidirectional partial-supersession notes to ADR-0006 only after acceptance;
+- record final reconciliation and closeout evidence in Issue #53;
+- add bidirectional partial-supersession notes to ADR-0006 during canonical reconciliation;
 - synchronize the current-state architecture and UI standards during Phase 6 closeout and final Goal 3 documentation alignment;
 - retain existing runtime identifiers as transitional until separately verified migration issues authorize changes.
 
 ## 15. Acceptance Or Rejection Record
 
-Complete this section when the proposal is resolved.
-
-- Outcome:
-- Date:
-- Accepted or rejected by:
-- Evidence:
-- Required follow-up:
+- Outcome: Accepted
+- Date: 2026-07-17
+- Accepted or rejected by: Login 2.0 repository owner
+- Evidence: explicit acceptance of all Phase 6 decisions, ADR-0008, Core Navigation identity, and the no-permanent-exception result; Phase 6 checkpoint commit `0d5aab18`
+- Required follow-up: canonical reconciliation, repository documentation checks, Issue #53 Final Acceptance Record, and Phase 7 migration planning
 
 ## 16. Related
 

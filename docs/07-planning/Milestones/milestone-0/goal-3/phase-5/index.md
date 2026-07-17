@@ -41,6 +41,7 @@ Phase 5 consumes:
 - [ADR-0005](../../../../../01-decisions/adr-0005-core-modules-ui-ownership-taxonomy.md);
 - [ADR-0006](../../../../../01-decisions/adr-0006-tenant-instance-workspace-principal-and-invocation-vocabulary.md);
 - [ADR-0007](../../../../../01-decisions/adr-0007-owner-registry-and-identifier-key-conventions.md);
+- [ADR-0008](../../../../../01-decisions/adr-0008-workspace-navigation-and-frame-surface-model.md) for the later bounded Workspace, Frame Surface, and Core Navigation correction;
 - applicable coding, database, testing, and documentation standards;
 - current repository names only as implementation and compatibility evidence.
 
@@ -110,6 +111,12 @@ For a complete Phase 5 review:
 
 These matrices and registers are canonical for their accepted Phase 5 planning relationships. Durable rules are promoted into their primary standards, architecture, and Definition owners; final Phase 5 acceptance remains pending. They do not replace the detailed decisions or their future durable promotion targets.
 
+### Phase 6 correction
+
+Phase 6 accepts `Navigation`, `app/Core/Navigation/`, `App\Core\Navigation\`, `navigation`, and owner-local `Contrib/Navigation/` as the Core Host and Contribution identity family. It also removes broad `Surface/`, `Surfaces/`, `<SubjectOrSurface>`, and Product-or-Page `Surface` naming from target architecture. Use the actual Product, Page, subject, format, or precise presentation role instead. Frame Surface remains a prose architecture term for named persistent-Frame regions and does not require a PHP suffix or folder.
+
+All unrelated Phase 5 naming, package, route, configuration, Event, Job, test, fixture, documentation, Application Registration, and compatibility rules remain unchanged.
+
 ## 7. Accepted Naming Summary
 
 - Folder naming is native-convention-first rather than governed by one universal casing rule.
@@ -128,7 +135,7 @@ These matrices and registers are canonical for their accepted Phase 5 planning r
 
 - Issue #5 retains the exact administrative URL-prefix decision.
 - Goal 6 retains detailed database naming, schema, and physical database-migration authority.
-- Phase 6 must prove the naming model against one Core capability, one Module, one reusable UI responsibility, and one delivery Surface.
+- Phase 6 accepted the naming model against Settings, Projects, Modal and Dialog, and the Sidebar Navigation Frame Surface, with the bounded Core Navigation and Surface correction recorded above.
 - Later verification work owns exact PHPUnit discovery configuration, CI partitioning, browser-runner selection, parallel execution, and architecture guardrail implementation.
 - Phase 7 and later migration issues own physical renames, namespaces, package replacement, route and URL migration, configuration aliases, database migration, and compatibility removal.
 - The final identity and ownership of the unresolved global-administration tooling namespace remains a bounded later decision; `Platform` is only a reserved transitional placeholder.

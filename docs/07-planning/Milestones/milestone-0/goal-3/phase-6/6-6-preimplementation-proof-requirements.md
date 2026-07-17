@@ -2,7 +2,7 @@
 DOC-META
 title: Phase 6.6 Preimplementation Proof Requirements
 doc_type: planning
-status: draft
+status: active
 owner: architecture
 canonical: false
 canonical_path: docs/07-planning/Milestones/milestone-0/goal-3/phase-6/6-6-preimplementation-proof-requirements.md
@@ -23,8 +23,8 @@ This document does not write the tests or authorize implementation.
 
 ## 2. Status
 
-- Planning lifecycle: draft
-- Acceptance state: proposed for repository-owner Phase 6 review
+- Planning lifecycle: active
+- Acceptance state: accepted through repository-owner Phase 6 review; final closeout remains pending canonical reconciliation, repository checks, and the Issue #53 Final Acceptance Record
 - Implementation state: verification-design only
 - Owning GitHub issue: [#53](https://github.com/kyleswindell/login-v2/issues/53)
 - Depends on: Phase 6.5
@@ -135,7 +135,7 @@ The representative examples have clear proof strategies. No proof requires inven
 
 Exact commands, fixtures, expected initial results, protected baselines, and manual-review procedures remain mandatory inputs to each future executable issue.
 
-## 8. Proposed Decision
+## 8. Accepted Decision
 
 > Future implementation issues must establish the smallest accepted behavior, contract, authorization, persistence, UI, registration, and architecture proofs before production changes.
 >

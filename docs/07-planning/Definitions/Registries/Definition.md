@@ -95,7 +95,7 @@ A Registry:
 - may receive validated Contribution declarations through the Application Registration System;
 - must not depend on Contributor implementations;
 - must not require Core to depend on optional Module Contributors;
-- may expose resolved output to owner-controlled behavior, Delivery Adapters, or Surfaces;
+- may expose resolved output to owner-controlled behavior, Delivery Adapters, Product presentation, or applicable named Frame Surfaces;
 - must preserve deterministic or explicitly governed resolution;
 - must not bypass Module dependency rules.
 
@@ -125,7 +125,7 @@ A Host-owned Registry declares or exposes explicit Extension Points, validates C
 
 Registry ownership remains with the Host. Contribution ownership remains with each Contributor. The Application Registration System may validate and route Contribution declarations but does not replace the Host Registry.
 
-A Surface may consume resolved Registry output but is not the Registry.
+Owner-controlled Product presentation or a named Frame Surface may consume resolved Registry output but is not the Registry.
 
 ## 8. Open Questions
 
@@ -146,7 +146,7 @@ These questions belong to later Goal 3, Goal 4, and implementation work.
 - [Extension Point Definition](../Extension-Points/Definition.md)
 - [Contribution Definition](../Contributions/Definition.md)
 - [Contributor Definition](../Contributors/Definition.md)
-- [Surface Definition](../Surfaces/Definition.md)
+- [Frame Surface Definition](../Surfaces/Definition.md)
 - [Application Registration System Definition](../Application-Registration/Definition.md)
 - [ADR-0007: Owner, Registry, And Identifier Key Conventions](../../../01-decisions/adr-0007-owner-registry-and-identifier-key-conventions.md)
 - [Phase 4.4 Route Placement And Registration](../../Milestones/milestone-0/goal-3/phase-4/4-4-route-placement-and-registration.md)

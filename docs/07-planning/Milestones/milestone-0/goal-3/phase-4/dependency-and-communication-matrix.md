@@ -50,6 +50,11 @@ The dependency matrix owns structured edge classification. The communication mat
 - Implementation state: target direction only
 - Owning GitHub issue: #51
 - Consolidation blocker: none found
+- Phase 6 correction: broad owner-specific Surface dependency language is superseded by ADR-0008 and the Phase 6 correction below
+
+### Phase 6 correction
+
+Where this matrix uses Surface for ordinary Product presentation, interpret the edge as owner-specific Product presentation depending inward on its owner behavior and approved UI APIs. Frame rendering is a separate boundary: Core Navigation consumes public Workspace, Access, Module lifecycle, route-availability, and validated Contribution inputs; UI consumes normalized render data only. Navigation visibility does not replace authorization. No other dependency, communication, package declaration, registration, persistence, or failure rule in this matrix is changed.
 
 ## 3. Use This Matrix For
 

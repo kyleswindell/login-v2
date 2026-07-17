@@ -41,6 +41,13 @@ Provide one implementation-facing terminology lookup for selecting an accurate P
 - Terminology source: Decisions 5.4, 5.5, 5.6, 5.9, and 5.14 accepted through repository-owner Phase 5 review
 - Implementation state: target direction only
 - Owning GitHub issue: [#52](https://github.com/kyleswindell/login-v2/issues/52)
+- Phase 6 correction: broad Surface subjects and owner-local `Surface/` roles are superseded as described below
+
+### Phase 6 correction
+
+Existing rows that use `<SubjectOrSurface>` remain historical Phase 5 evidence. For target naming, use `<SubjectOrPage>`, `<Page>PageData`, or the actual Product, Page, subject, or format. Do not introduce `ProjectsSurface`, `SettingsSurface`, `<Surface>Presenter`, `<Surface>ViewModel`, `<Surface>PageData`, or owner-local `Surface/` namespaces. Frame Surface identifies a named persistent-Frame region and is not a default PHP role or suffix. Core Navigation uses `Navigation`, `App\Core\Navigation\`, and owner-local `Contrib/Navigation/`.
+
+All other role meanings and naming rules in this matrix remain unchanged.
 
 ## 3. Use This Matrix For
 

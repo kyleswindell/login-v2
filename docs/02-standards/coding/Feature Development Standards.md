@@ -17,7 +17,7 @@ summary: Defines standards for developing Core capabilities, Modules, UI, Larave
 
 # Feature Development Standards
 
-This document defines development standards for discrete capabilities and surfaces in Login App 2.0.
+This document defines development standards for discrete capabilities, Products, Pages, Frame composition, and reusable UI in Login App 2.0.
 
 - [1. Purpose](#1-purpose)
 - [2. Current Vocabulary](#2-current-vocabulary)
@@ -50,16 +50,19 @@ Ensure new and changed functionality is planned, owned, implemented, documented,
 
 Use current project vocabulary.
 
-| Term                | Meaning                                                                                                                                   |
-| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- |
-| Core capability     | Required base-application behavior, state, coordination, infrastructure, and contracts under the Core owner.                             |
-| Module              | Optional, cohesive feature package under `Modules/*`.                                                                                     |
-| UI                  | Reusable Elements, Components, Patterns, Layouts, CSS, JavaScript, icons, contracts, tests, and review evidence.                         |
-| Laravel integration | Application-wide framework bootstrap, registration, and thin adaptation that does not own application behavior.                         |
-| Surface             | Owner-specific UI presentation and interaction layer; not an application owner.                                                          |
-| Delivery Adapter    | Owner-local HTTP, API, console, webhook, queue, scheduler, or background invocation integration.                                         |
-| Registry            | Host-owned mechanism that defines and resolves Extension Points and validates, collects, orders, and exposes Contributions.              |
-| Feature Document    | Canonical behavior document under `docs/04-features/`, when an owner-specific capability or Surface has behavior to describe.            |
+| Term                | Meaning                                                                                                                                               |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Core capability     | Required base-application behavior, state, coordination, infrastructure, and contracts under the Core owner.                                          |
+| Module              | Optional, cohesive feature package under `Modules/*`.                                                                                                 |
+| UI                  | Reusable Elements, Components, Patterns, Layouts, CSS, JavaScript, icons, contracts, tests, and review evidence.                                      |
+| Laravel integration | Application-wide framework bootstrap, registration, and thin adaptation that does not own application behavior.                                       |
+| Workspace           | Named top-level rendered experience available to a User Account; one Workspace is active in a rendered context.                                       |
+| Product             | Major Core- or Module-owned capability available within a Workspace.                                                                                  |
+| Page                | Routed Product destination or deeper focused context rendered in Main.                                                                                |
+| Frame Surface       | Named persistent-Frame composition region; not an application owner, Product, Page, flow, or generic folder.                                          |
+| Delivery Adapter    | Owner-local HTTP, API, console, webhook, queue, scheduler, or background invocation integration.                                                      |
+| Registry            | Host-owned mechanism that defines and resolves Extension Points and validates, collects, orders, and exposes Contributions.                           |
+| Feature Document    | Canonical behavior document under `docs/04-features/`, when an owner-specific capability, Product, Page family, or workflow has behavior to describe. |
 
 The word “feature” may still be used for canonical behavior documentation, but it must not erase the implementation owner.
 
@@ -75,7 +78,7 @@ Before implementing new behavior, answer:
 
 1. Is the owner a Core capability, Module, UI, Laravel integration, or a documentation/ops-only workflow owner?
 2. Which layer owns the durable behavior?
-3. Is the technical responsibility a Surface, Delivery Adapter, Registry, Action, Query, Contract, or another accepted role?
+3. Is the technical responsibility Product presentation, a named Frame Surface, Delivery Adapter, Registry, Action, Query, Contract, or another accepted role?
 4. Which canonical doc owns the behavior?
 5. Which routes, panels, views, commands, jobs, or APIs expose it?
 6. Which database tables, config keys, registry entries, or payloads does it affect?
@@ -143,13 +146,15 @@ Laravel integration must delegate durable behavior to the applicable Core capabi
 
 Classify technical responsibility separately beneath the owner:
 
-- a Surface is an owner-specific UI presentation and interaction layer;
+- Product Pages and workflows remain presentation owned by the Core capability or Module whose behavior they expose;
+- a Frame Surface is a named persistent-Frame composition region, not a generic owner-local Technical Role;
 - a Delivery Adapter exposes owner-controlled behavior through HTTP, API, console, webhook, queue, scheduler, or background invocation;
 - a Host owns an extensible feature and its Registry;
 - a Host-owned Registry defines and resolves Extension Points and validates, collects, orders, and exposes Contributions;
-- Contributions remain owned by their Contributors.
+- Contributions remain owned by their Contributors;
+- UI owns reusable Frame, Component, Pattern, Layout, CSS, JavaScript, and accessibility rendering.
 
-A Surface must not own contribution discovery, validation, ordering, or assembly. Delivery Adapters and invocation channels are not Surfaces.
+Product presentation and Frame rendering must not own contribution discovery, permission evaluation, Module lifecycle, Registry resolution, or domain behavior. Delivery Adapters and Invocation Channels are not Frame Surfaces.
 
 ---
 
@@ -165,7 +170,7 @@ The feature doc must state:
 - implementation status
 - behavior contract
 - users and actors
-- UI surfaces
+- Pages, Product Areas, and applicable Frame relationships
 - data model
 - permissions/security
 - tenant or workspace considerations
@@ -191,10 +196,11 @@ Before implementing UI work, identify the UI owner:
 
 - UI primitive
 - UI pattern
-- Core-owned account/admin surface
-- Module-owned surface
+- Core-owned Product or Page presentation
+- Module-owned Product or Page presentation
+- named Frame Surface rendering when the change affects the persistent Frame
 - Filament/admin resource when appropriate
-- Livewire/custom Blade surface when appropriate
+- Livewire/custom Blade Page or interaction when appropriate
 
 Do not assume Filament owns all admin UI.
 
@@ -206,7 +212,7 @@ Filament resources, pages, and actions must call existing services or actions fo
 
 Every UI implementation must declare:
 
-- surface owner
+- Product/Page owner and any applicable Frame Surface
 - route path or panel owner
 - auth guard and permission gate/policy
 - database or context owner
@@ -325,6 +331,8 @@ Apply intelligently:
 
 Every feature/capability change should define verification before implementation starts.
 
+Map each acceptance criterion to observable success and rejection behavior, exact proof, fixtures, environment, expected initial result, required final result, protected baseline, and required manual or specialist review. Preservation work uses characterization proof; new or corrected behavior uses exact expected-nonpass proof. Syntax, fixture, dependency, boot, discovery, tooling, database, and environment failures are failures.
+
 Use:
 
 - feature tests for user-visible behavior and database effects
@@ -367,6 +375,7 @@ Before completion, confirm:
 - [File Building Standards](File%20Building%20Standards.md)
 - [Testing Standards](Testing%20Standards.md)
 - [Implementation Status And Development Sync Standard](../documentation/Implementation%20Status%20And%20Development%20Sync%20Standard.md)
-- [Platform And Tenant Application Boundary](../../03-architecture/platform-boundary.md)
+- [Repository Architecture](../../03-architecture/repository-architecture.md)
+- [Workspace Navigation And Frame Composition](../../03-architecture/workspace-navigation-and-frame-composition.md)
 - [Feature Index](../../04-features/index.md)
 - [Feature Spec Template](../../09-reference/templates/docs/_feature-spec.md)

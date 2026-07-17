@@ -128,7 +128,7 @@ The Application Registration System may validate and route declared Contribution
 
 Contribution ownership remains with the Contributor. Registry and Extension Point ownership remain with the Host.
 
-A Surface may present resolved Contributions but does not own them.
+Owner-controlled Product presentation or a named Frame Surface may present resolved Contributions but does not own them.
 
 ## 8. Open Questions
 
@@ -141,7 +141,7 @@ The following details remain deferred:
 - exact compatibility versioning;
 - exact tests required for each Contribution type.
 
-These questions belong to Phase 5, later Goal 3 validation, Goal 4, and owner-specific implementation Contracts.
+These questions belong to later Goal 3 migration planning, Goal 4, and owner-specific implementation Contracts. Phase 6 accepted `Contrib/Navigation/` as the owner-local Product navigation Contribution family.
 
 ## 9. Related
 
@@ -150,7 +150,7 @@ These questions belong to Phase 5, later Goal 3 validation, Goal 4, and owner-sp
 - [Host Definition](../Hosts/Definition.md)
 - [Registry Definition](../Registries/Definition.md)
 - [Extension Point Definition](../Extension-Points/Definition.md)
-- [Surface Definition](../Surfaces/Definition.md)
+- [Frame Surface Definition](../Surfaces/Definition.md)
 - [Application Registration System Definition](../Application-Registration/Definition.md)
 - [Phase 2.90 Surface, Host, And Registry Reclassification](../../Milestones/milestone-0/goal-3/phase-2/2-90-surface-host-registry-reclassification.md)
 - [Phase 4.4 Route Placement And Registration](../../Milestones/milestone-0/goal-3/phase-4/4-4-route-placement-and-registration.md)

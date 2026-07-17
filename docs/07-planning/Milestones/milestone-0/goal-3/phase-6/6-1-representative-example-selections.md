@@ -2,7 +2,7 @@
 DOC-META
 title: Phase 6.1 Representative Example Selections
 doc_type: planning
-status: draft
+status: active
 owner: architecture
 canonical: false
 canonical_path: docs/07-planning/Milestones/milestone-0/goal-3/phase-6/6-1-representative-example-selections.md
@@ -28,7 +28,7 @@ The examples must be substantial enough to validate ownership, placement, depend
 
 ## 2. Status
 
-- Planning lifecycle: draft
+- Planning lifecycle: active
 - Selection state: accepted through repository-owner Phase 6 review
 - Final Phase 6 acceptance: pending documentation reconciliation
 - Implementation state: target validation only

@@ -61,6 +61,11 @@ The matrix is canonical for this structured placement relationship after reposit
 - Parent GitHub issue: #19
 - Downstream naming issue: #52
 - Consolidation blocker: none found
+- Phase 6 correction: broad owner-specific Surface rows are superseded by ADR-0008 and the Phase 6 correction below
+
+### Phase 6 correction
+
+Where this matrix uses Surface for ordinary Product Pages, destinations, areas, flows, PageData, ViewModels, Presenters, Renderers, or a generic `Surface/` role, interpret the row as owner-specific Product presentation using the narrowest precise role. Frame Surface is reserved for named persistent-Frame regions. Core Navigation is the Host at `app/Core/Navigation/`, and Product owners contribute through owner-local `Contrib/Navigation/` paths. No other placement, registration, persistence, test, documentation, prohibition, or significant-folder rule in this matrix is changed.
 
 ## 3. Use This Matrix For
 

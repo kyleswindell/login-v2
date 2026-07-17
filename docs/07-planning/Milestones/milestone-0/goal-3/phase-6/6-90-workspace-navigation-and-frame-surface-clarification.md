@@ -2,13 +2,13 @@
 DOC-META
 title: Phase 6.90 Workspace, Navigation Hierarchy, And Frame Surface Clarification
 doc_type: planning
-status: draft
+status: active
 owner: architecture
 canonical: false
 canonical_path: docs/07-planning/Milestones/milestone-0/goal-3/phase-6/6-90-workspace-navigation-and-frame-surface-clarification.md
 parent: docs/07-planning/Milestones/milestone-0/goal-3/phase-6/index.md
 template: docs/09-reference/templates/docs/_planning.md
-summary: Records the Phase 6 corrective proposal for multiple available Workspaces, persistent Frame composition, Frame Surface terminology, and the System-to-Product navigation hierarchy.
+summary: Records the accepted Phase 6 correction for multiple available Workspaces, persistent Frame composition, Frame Surface terminology, and the System-to-Product navigation hierarchy.
 -->
 
 # Phase 6.90 Workspace, Navigation Hierarchy, And Frame Surface Clarification
@@ -17,7 +17,7 @@ Parent: [Phase 6 Representative Architecture Validation Index](index.md)
 
 ## 1. Purpose
 
-Record the corrective architecture proposal identified while selecting and mapping the representative Goal 3 Phase 6 examples.
+Record the accepted corrective architecture identified while selecting and mapping the representative Goal 3 Phase 6 examples.
 
 The correction establishes a deterministic distinction among:
 
@@ -32,15 +32,15 @@ This document prevents the broad term `Surface` from continuing to mean a Worksp
 
 ## 2. Status
 
-- Planning lifecycle: draft
-- Acceptance state: proposed for repository-owner Phase 6 review
+- Planning lifecycle: active
+- Acceptance state: accepted through repository-owner Phase 6 review; final closeout remains pending canonical reconciliation, repository checks, and the Issue #53 Final Acceptance Record
 - Implementation state: architecture clarification only
 - Owning GitHub issue: [#53](https://github.com/kyleswindell/login-v2/issues/53)
 - Parent GitHub issue: [#19](https://github.com/kyleswindell/login-v2/issues/19)
-- Proposed durable decision: [ADR-0008](../../../../../01-decisions/adr-0008-workspace-navigation-and-frame-surface-model.md)
-- Proposed canonical architecture owner: [Workspace Navigation And Frame Composition](../../../../../03-architecture/workspace-navigation-and-frame-composition.md)
+- Durable decision: [ADR-0008](../../../../../01-decisions/adr-0008-workspace-navigation-and-frame-surface-model.md)
+- Canonical architecture owner: [Workspace Navigation And Frame Composition](../../../../../03-architecture/workspace-navigation-and-frame-composition.md)
 - Current repository implementation: unchanged
-- Existing-document reconciliation: intentionally deferred until Phase 6 closeout and final Goal 3 documentation alignment
+- Existing-document reconciliation: applied by the Phase 6 closeout change set; repository validation and Issue #53 closeout remain pending
 
 ## 3. Validation Finding
 
@@ -79,7 +79,7 @@ Relevant Carbon concepts include:
 
 Login 2.0 adapts those concepts to its accepted Core, Module, UI, Tenant, Instance, User Account, and Workspace model.
 
-## 5. Proposed Vocabulary
+## 5. Accepted Vocabulary
 
 ### 5.1. Workspace
 
@@ -111,7 +111,7 @@ Workspace availability does not grant access. Every Workspace, Product, route, P
 
 Candidate Workspace classifications are:
 
-| Candidate                       | Proposed treatment                                                                                         |
+| Candidate                       | Accepted treatment                                                                                         |
 | ------------------------------- | ---------------------------------------------------------------------------------------------------------- |
 | Default Workspace               | Normal authenticated application experience and default Workspace for ordinary Products                    |
 | Tenant Administration Workspace | Candidate high-level administration experience when its breadth and ownership justify a separate Workspace |
@@ -167,7 +167,7 @@ The lowercase visual-design use of “surface,” such as a background or layer 
 
 ### 5.4. Initial Frame Surfaces
 
-The initial proposed Frame Surfaces are:
+The initial Frame Surfaces are:
 
 #### Global Header Navigation Surface
 
@@ -203,7 +203,7 @@ It is not a Frame Surface under this proposal.
 
 The active route renders the owning Product’s Page or flow into Main. Calling Main a Surface would reintroduce the ambiguity this correction is intended to remove.
 
-## 6. Proposed Navigation Hierarchy
+## 6. Accepted Navigation Hierarchy
 
 | Class | Canonical term | Responsibility                                                                          | Global shell placement                                                 |
 | ----- | -------------- | --------------------------------------------------------------------------------------- | ---------------------------------------------------------------------- |
@@ -320,13 +320,13 @@ That shortcut does not change the Page’s canonical hierarchy.
 
 Breadcrumbs and current-navigation state reflect canonical Product and Product Area ownership rather than the shortcut used to arrive.
 
-## 8. Proposed Composition Model
+## 8. Accepted Composition Model
 
 ### 8.1. Global Header
 
 The global header remains persistent across the active Workspace.
 
-Proposed placement:
+Accepted placement:
 
 ```text
 Global Header Navigation Surface
@@ -370,7 +370,7 @@ Main does not participate in Frame Surface contribution resolution.
 
 ## 9. Example Classifications
 
-| Example                              | Proposed classification                       | Rationale                                                                                   |
+| Example                              | Accepted classification                       | Rationale                                                                                   |
 | ------------------------------------ | --------------------------------------------- | ------------------------------------------------------------------------------------------- |
 | Default authenticated experience     | Default Workspace                             | High-level rendered experience containing ordinary Products                                 |
 | Global Administration                | Global Administration Workspace               | Rare, high-level experience with different system purpose and navigation composition        |
@@ -387,7 +387,7 @@ Main does not participate in Frame Surface contribution resolution.
 
 ## 10. Ownership And Dependency Direction
 
-| Concern                                                                   | Proposed owner                                                                  | Boundary                                                                     |
+| Concern                                                                   | Accepted owner                                                                  | Boundary                                                                     |
 | ------------------------------------------------------------------------- | ------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
 | Workspace availability and active Workspace resolution                    | Core application composition, Navigation, and Access responsibilities           | Must not depend on optional Module internals or filesystem discovery         |
 | Frame structure and Frame Surface hosting                                 | Core application composition with UI-owned reusable rendering                   | Products may contribute content but may not replace the Frame implementation |
@@ -472,7 +472,7 @@ This clarification does not define:
 - migration of current shell, route, or navigation implementation;
 - implementation of the Carbon switcher component.
 
-## 14. Proposed Decision
+## 14. Accepted Decision
 
 > Login 2.0 will treat a Workspace as a rare, named, top-level rendered experience available to an authenticated User Account within its resolved Tenant Instance. A User Account may have access to multiple Workspaces, with exactly one active for a rendered interaction context.
 >

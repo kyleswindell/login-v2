@@ -2,7 +2,7 @@
 DOC-META
 title: Phase 6.2 Representative Example Mappings
 doc_type: planning
-status: draft
+status: active
 owner: architecture
 canonical: false
 canonical_path: docs/07-planning/Milestones/milestone-0/goal-3/phase-6/6-2-representative-example-mappings.md
@@ -19,12 +19,12 @@ Parent: [Phase 6 Representative Architecture Validation Index](index.md)
 
 Map the four Phase 6 representative examples to target owners, locations, registration boundaries, dependencies, tests, and documentation.
 
-This mapping applies the accepted Goal 3 architecture and the bounded correction proposed by [Phase 6.90](6-90-workspace-navigation-and-frame-surface-clarification.md) and [ADR-0008](../../../../../01-decisions/adr-0008-workspace-navigation-and-frame-surface-model.md). The Frame Surface mapping remains provisional until that decision is accepted.
+This mapping applies the accepted Goal 3 architecture and the bounded correction recorded by [Phase 6.90](6-90-workspace-navigation-and-frame-surface-clarification.md) and [ADR-0008](../../../../../01-decisions/adr-0008-workspace-navigation-and-frame-surface-model.md).
 
 ## 2. Status
 
-- Planning lifecycle: draft
-- Acceptance state: proposed for repository-owner Phase 6 review
+- Planning lifecycle: active
+- Acceptance state: accepted through repository-owner Phase 6 review; final closeout remains pending canonical reconciliation, repository checks, and the Issue #53 Final Acceptance Record
 - Implementation state: target mapping only
 - Owning GitHub issue: [#53](https://github.com/kyleswindell/login-v2/issues/53)
 - Depends on: [Phase 6.1 Representative Example Selections](6-1-representative-example-selections.md), Phase 6.90, and accepted Goal 3 Phases 1 through 5
@@ -185,7 +185,7 @@ The Home Product is active by default in the Default Workspace. Navigating to Se
 
 ### 8.4. Result
 
-The Sidebar Navigation Frame Surface fits the proposed Frame model. Phase 6.5 resolves the Host as Core Navigation at `app/Core/Navigation/`; this does not authorize `app/Surfaces/` or another generic owner.
+The Sidebar Navigation Frame Surface fits the accepted Frame model. Phase 6.5 resolves the Host as Core Navigation at `app/Core/Navigation/`; this does not authorize `app/Surfaces/` or another generic owner.
 
 ## 9. Dependency And Registration Summary
 
@@ -230,7 +230,7 @@ This mapping does not decide:
 - physical migration or compatibility aliases;
 - final canonical-document reconciliation.
 
-## 11. Proposed Decision
+## 11. Accepted Decision
 
 > Settings maps to a required Core capability and Product. Projects maps to an optional independently managed Module and Product. Modal and Dialog map to artifact-owned reusable UI bundles. Sidebar Navigation maps to a Host-owned Frame Surface rendered by UI from owner-local Product Contributions.
 >

@@ -84,7 +84,7 @@ Capability- and Module-specific required files and folders belong in the applica
 | [Module Definition](Modules/Definition.md)   | Defines optional Module ownership, lifecycle, packaging, and dependency boundaries. | active |
 | [UI Definition](UI/Definition.md)            | Defines reusable presentation infrastructure and UI dependency boundaries.          | active |
 | [Laravel Definition](Laravel/Definition.md)  | Defines Laravel as the application framework, runtime, and composition system.      | active |
-| [Surface Definition](Surfaces/Definition.md) | Defines an owner-specific UI presentation and interaction layer.                    | active |
+| [Frame Surface Definition](Surfaces/Definition.md) | Defines a named persistent-Frame composition region; the existing folder path is retained for compatibility. | active |
 
 ### 3.2. Organization, Extension, And Application Registration Concepts
 
@@ -115,7 +115,7 @@ Capability- and Module-specific required files and folders belong in the applica
 | [Notification Definition](Notifications/Definition.md) | Defines owner-specific communication content and channel intent.                                | active |
 | [Provider Definition](Providers/Definition.md)         | Defines owner-local Laravel registration and composition code.                                  | active |
 
-Registry, Surface, and Contribution are also working Technical Roles where applicable, but their definitions are listed with the architecture and extension concepts they primarily govern.
+Registry and Contribution are also working Technical Roles where applicable. Frame Surface is a composition concept and does not authorize a generic owner-local `Surface/` Technical Role.
 
 ### 3.4. Delivery Adapter Specializations
 
@@ -154,7 +154,7 @@ Each concept subfolder contains one canonical `Definition.md`.
 | `Providers/`                 | Provider responsibility and working `Providers/` role.                                    |
 | `Queries/`                   | Query responsibility and working `Queries/` role.                                         |
 | `Registries/`                | Registry mechanism and working `Registry/` role.                                          |
-| `Surfaces/`                  | Surface presentation boundary and working `Surface/` role.                                |
+| `Surfaces/`                  | Compatibility documentation path for the Frame Surface definition; it does not authorize a working `Surface/` production role. |
 | `Technical-Roles/`           | Shared Technical Role classification model.                                               |
 | `UI/`                        | Reusable UI ownership and presentation boundary.                                          |
 | `Webhook-Delivery-Adapters/` | Webhook delivery specialization; final physical application folder name remains deferred. |
@@ -171,6 +171,7 @@ Concept subfolders do not require their own README, index, Standard, or AGENTS f
 - Do not create competing definitions for the same concept.
 - Shared definitions establish meaning and boundaries; they do not require universal folder presence.
 - The Application Registration System is composition infrastructure and is not automatically a Host Registry.
+- Frame Surface is restricted to named persistent-Frame regions and is not a Product, Page, flow, owner, or generic folder.
 - Capability- and Module-specific required structure belongs in the applicable owner contract.
 - Update consuming planning packages when a definition path, meaning, or status changes.
 - Accepted folder labels, casing, namespace mapping, and class-role naming follow Goal 3 Phase 5 and Repository Naming Standards; implementation placement and migration remain governed by their applicable owners.

@@ -2,13 +2,13 @@
 DOC-META
 title: Workspace Navigation And Frame Composition
 doc_type: architecture
-status: draft
+status: active
 owner: architecture
-canonical: false
+canonical: true
 canonical_path: docs/03-architecture/workspace-navigation-and-frame-composition.md
 parent: docs/03-architecture/index.md
 template: docs/09-reference/templates/docs/_architecture-note.md
-summary: Defines the proposed Workspace, persistent Frame, Frame Surface, and System-to-Product navigation architecture for authenticated Login 2.0 experiences.
+summary: Defines the accepted Workspace, persistent Frame, Frame Surface, and System-to-Product navigation architecture for authenticated Login 2.0 experiences.
 -->
 
 # Workspace Navigation And Frame Composition
@@ -22,7 +22,7 @@ Parent: [Architecture Index](index.md)
   - [3.2. Out Of Scope](#32-out-of-scope)
 - [4. Authority And External Benchmark](#4-authority-and-external-benchmark)
 - [5. Current Architecture](#5-current-architecture)
-- [6. Proposed Target Architecture](#6-proposed-target-architecture)
+- [6. Accepted Target Architecture](#6-accepted-target-architecture)
   - [6.1. Architecture Hierarchy](#61-architecture-hierarchy)
   - [6.2. Workspace](#62-workspace)
   - [6.3. Frame](#63-frame)
@@ -59,19 +59,19 @@ Parent: [Architecture Index](index.md)
 
 ## 1. Purpose
 
-Define the proposed authenticated Workspace, persistent Frame, named Frame Surface, and navigation hierarchy architecture for Login 2.0.
+Define the accepted authenticated Workspace, persistent Frame, named Frame Surface, and navigation hierarchy architecture for Login 2.0.
 
-This document describes what the architecture will mean if [ADR-0008](../01-decisions/adr-0008-workspace-navigation-and-frame-surface-model.md) is accepted. It does not authorize implementation or claim that current repository structure already conforms.
+This document owns the architecture established by [ADR-0008](../01-decisions/adr-0008-workspace-navigation-and-frame-surface-model.md). It does not authorize implementation or claim that current repository structure already conforms.
 
 ## 2. Status
 
-- Document lifecycle: draft
-- Decision state: pending ADR-0008 acceptance
+- Document lifecycle: active
+- Decision state: accepted by ADR-0008 and repository-owner Phase 6 review
 - Current implementation state: transitional and not reconciled to this model
 - Owning architecture issue: [#53](https://github.com/kyleswindell/login-v2/issues/53)
 - Parent Goal: [#19](https://github.com/kyleswindell/login-v2/issues/19)
-- Canonical status: proposed architecture owner; not current accepted truth until ADR-0008 acceptance
-- Existing-document reconciliation: deferred until Phase 6 closeout and final Goal 3 documentation alignment
+- Canonical status: active architecture owner
+- Existing-document reconciliation: applied by the Phase 6 closeout change set; repository validation and Issue #53 closeout remain pending
 
 ## 3. Scope
 
@@ -142,7 +142,7 @@ Current implementation includes a persistent header and sidebar, existing shell 
 
 This current state is not the target described below.
 
-## 6. Proposed Target Architecture
+## 6. Accepted Target Architecture
 
 ### 6.1. Architecture Hierarchy
 
@@ -640,9 +640,9 @@ The Frame and navigation implementation must preserve:
 
 ## 18. Decisions
 
-The proposed durable decision is [ADR-0008](../01-decisions/adr-0008-workspace-navigation-and-frame-surface-model.md).
+The durable decision is [ADR-0008](../01-decisions/adr-0008-workspace-navigation-and-frame-surface-model.md).
 
-This document must not be treated as accepted current architecture until ADR-0008 is accepted by the repository owner and required reviewers.
+This document is accepted target architecture. Current implementation remains transitional until separately migrated and verified.
 
 ## 19. Open Questions
 
@@ -655,11 +655,11 @@ The following decisions remain deferred:
 5. whether Workspace selection appears in the URL;
 6. whether active Product and sidebar expansion are restored per Workspace;
 7. exact Workspace, Product, Product Area, and navigation Contribution descriptor schemas;
-8. exact Core capability split among Shell, Navigation, Workspace resolution, and application composition;
+8. exact implementation split among Workspace resolution, restricted application composition, and UI Frame rendering; Core Navigation ownership is accepted;
 9. exact compatibility treatment for current `Surface`, `Shell`, `Platform`, and UI inventory identifiers;
 10. exact automated architecture and registration guardrails.
 
-These open questions do not reopen the proposed definitions of Workspace, Frame, Frame Surface, Product, Product Area, Page, or drill-down.
+These open questions do not reopen the accepted definitions of Workspace, Frame, Frame Surface, Product, Product Area, Page, or drill-down.
 
 ## 20. Related
 

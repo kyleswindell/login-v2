@@ -52,7 +52,7 @@ This index routes readers to the cumulative Goal 3 synthesis and the detailed Ph
 This folder owns Goal 3 planning for:
 
 - Core, Module, and UI ownership boundaries;
-- Surface, Host Registry, Contribution, Delivery Adapter, and Laravel integration responsibilities;
+- Workspace, Frame Surface, Host Registry, Contribution, Delivery Adapter, and Laravel integration responsibilities;
 - repository organization and topology;
 - artifact placement and dependencies;
 - repository naming;
@@ -78,10 +78,10 @@ Those concerns belong to later Goals, bounded implementation issues, or their ap
 ## 3. Goal Status
 
 - Planning lifecycle: active
-- Acceptance state: Phases 1 through 4 accepted; Phase 5 decisions and package accepted with canonical promotion under final validation; Phases 6 and 7 pending
+- Acceptance state: Phases 1 through 5 accepted; Phase 6 decisions and package accepted with canonical reconciliation and final closeout validation pending; Phase 7 pending
 - Owning GitHub issue: [#19](https://github.com/kyleswindell/login-v2/issues/19)
-- Current active Phase issue: [#52](https://github.com/kyleswindell/login-v2/issues/52)
-- Next Phase issue: [#53](https://github.com/kyleswindell/login-v2/issues/53)
+- Current active Phase issue: [#53](https://github.com/kyleswindell/login-v2/issues/53)
+- Next Phase issue: [#54](https://github.com/kyleswindell/login-v2/issues/54)
 - Final acceptance: pending completion of all seven Phases and repository-owner review
 
 ## 4. Goal Documents
@@ -100,8 +100,8 @@ The synthesis remains a planning document while Goal 3 is active. Durable rules 
 | 2     | Repository organization                  | [#49](https://github.com/kyleswindell/login-v2/issues/49) | accepted                                                               | [Phase 2 Index](phase-2/index.md) |
 | 3     | Target repository tree                   | [#50](https://github.com/kyleswindell/login-v2/issues/50) | accepted                                                               | [Phase 3 Index](phase-3/index.md) |
 | 4     | Placement and dependency rules           | [#51](https://github.com/kyleswindell/login-v2/issues/51) | accepted                                                               | [Phase 4 Index](phase-4/index.md) |
-| 5     | Naming conventions                       | [#52](https://github.com/kyleswindell/login-v2/issues/52) | decisions and package accepted; canonical promotion validation pending | [Phase 5 Index](phase-5/index.md) |
-| 6     | Representative validation                | [#53](https://github.com/kyleswindell/login-v2/issues/53) | pending                                                                | Phase package not yet created     |
+| 5     | Naming conventions                       | [#52](https://github.com/kyleswindell/login-v2/issues/52) | accepted; canonical promotion validation pending                       | [Phase 5 Index](phase-5/index.md) |
+| 6     | Representative validation                | [#53](https://github.com/kyleswindell/login-v2/issues/53) | decisions and package accepted; canonical reconciliation and closeout pending | [Phase 6 Index](phase-6/index.md) |
 | 7     | Migration direction and final acceptance | [#54](https://github.com/kyleswindell/login-v2/issues/54) | pending                                                                | Phase package not yet created     |
 
 ## 6. Reading Order
@@ -114,13 +114,13 @@ For Goal 3 work:
 4. verify the applicable GitHub issue before writable work;
 5. do not reopen accepted prior-Phase decisions without an explicitly authorized corrective amendment.
 
-For current Phase 5 review:
+For current Phase 6 closeout review:
 
-1. read the [Phase 5 Index](phase-5/index.md);
-2. use its naming, role, Module identity, compatibility, and promotion matrices;
-3. read the applicable Decision 5.1–5.14 document;
-4. use the synthesis artifact only for the concise accumulated result;
-5. use Phase 6 for representative proof rather than reopening accepted naming rules.
+1. read the [Phase 6 Index](phase-6/index.md);
+2. review ADR-0008 and Workspace Navigation And Frame Composition;
+3. verify the canonical reconciliation change set preserves unrelated accepted authority;
+4. run the repository documentation checks;
+5. complete the Issue #53 Final Acceptance Record before advancing Phase 7.
 
 ## 7. Maintenance Notes
 
@@ -148,6 +148,8 @@ For current Phase 5 review:
 - [Phase 5 Naming Conventions Index](phase-5/index.md)
 - [Phase 5 Naming Convention Matrix](phase-5/naming-convention-matrix.md)
 - [Phase 5 Durable Promotion Register](phase-5/durable-promotion-register.md)
+- [Phase 6 Representative Architecture Validation Index](phase-6/index.md)
+- [Phase 6 Durable Promotion Register](phase-6/durable-promotion-register.md)
 - GitHub parent issue: [#19](https://github.com/kyleswindell/login-v2/issues/19)
-- Current Phase issue: [#52](https://github.com/kyleswindell/login-v2/issues/52)
-- Next Phase issue: [#53](https://github.com/kyleswindell/login-v2/issues/53)
+- Current Phase issue: [#53](https://github.com/kyleswindell/login-v2/issues/53)
+- Next Phase issue: [#54](https://github.com/kyleswindell/login-v2/issues/54)

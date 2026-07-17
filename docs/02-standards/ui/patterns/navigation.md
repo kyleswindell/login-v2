@@ -26,12 +26,15 @@ related_patterns:
   - data-and-content
   - forms
   - tables
+architecture_owner: docs/03-architecture/workspace-navigation-and-frame-composition.md
+application_host: app/Core/Navigation/
 ---
 
 # Navigation Pattern API
 - [Navigation Pattern API](#navigation-pattern-api)
   - [1. API summary](#1-api-summary)
   - [2. Status and ownership](#2-status-and-ownership)
+    - [2.1. Phase 6 architecture alignment](#21-phase-6-architecture-alignment)
   - [3. Installed standard](#3-installed-standard)
   - [4. Pattern API](#4-pattern-api)
     - [4.1. Canonical composition examples](#41-canonical-composition-examples)
@@ -77,6 +80,26 @@ Carbon describes patterns as reusable combinations of components and templates t
 | rendered evidence proof | `not installed`  |
 | Source owner       | `not installed`  |
 
+### 2.1. Phase 6 architecture alignment
+
+[Workspace Navigation And Frame Composition](../../../03-architecture/workspace-navigation-and-frame-composition.md) owns the accepted application architecture. Core `Navigation` at `app/Core/Navigation/` owns Product and Product Area Extension Point Contracts, Registry validation, ordering, active-state resolution, and fallback. Product owners retain their Contributions. Workspace composition supplies Product scope. Access and Module lifecycle provide authoritative inputs. UI owns reusable rendering and interaction only.
+
+The accepted hierarchy is:
+
+```text
+System (A)
+Product (B)
+Product Area (C)
+Page (D)
+Drill-down (E+)
+```
+
+A-class System navigation belongs in Global Actions. B-class Products appear primarily in the persistent sidebar. The active Product exposes one C-class Product Area level. D-class Pages and E+ drill-down remain page-local by default.
+
+The Global Header Navigation Surface and Sidebar Navigation Surface are named Frame Surfaces. Main is a content outlet, not a Frame Surface. Navigation visibility never replaces route or Action authorization.
+
+This architecture alignment does not remove or rename any installed Pattern API, Blade composition, child Component API, class, example, or rendered-evidence requirement in this standard.
+
 ## 3. Installed standard
 
 Use Navigation patterns for route hierarchy, local section switching, shell areas, page title/action composition, contextual search/filter navigation, and responsive navigation collapse.
@@ -104,7 +127,7 @@ The installed standard owns these app-level composition decisions:
 | UI shell composition            | Implemented / pattern-owned    | Composes global header, navigation regions, account menu, action area, and content frame. | Shell layout is Pattern-owned even when represented in the Component catalog.  |
 | Search/filter navigation        | Implemented / pattern-owned    | Coordinates search scope, filters, result context, and reset/clear affordances.           | Search Component owns field behavior; Pattern owns query/filter orchestration. |
 
-Shared action vocabulary, including command vs navigation, reset vs clear, and link vs button decisions, belongs to [Common Actions](common-actions/index.md). Navigation owns active/current state, route hierarchy, and navigation-region composition.
+Shared action vocabulary, including command vs navigation, reset vs clear, and link vs button decisions, belongs to [Common Actions](common-actions/index.md). The Navigation Pattern owns UI composition and presentation of active/current state; Core Navigation owns the authoritative resolved Product and Product Area state.
 
 ### 4.1. Canonical composition examples
 

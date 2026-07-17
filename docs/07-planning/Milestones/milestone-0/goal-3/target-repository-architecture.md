@@ -26,11 +26,11 @@ Goal 3 defines the destination. It does not perform the physical repository migr
 ## 2. Status
 
 - Planning lifecycle: active
-- Acceptance state: Phases 1 through 4 accepted; Phase 5 decisions and package accepted with canonical promotion under final validation; Phases 6 and 7 pending
+- Acceptance state: Phases 1 through 5 accepted; Phase 6 decisions and package accepted with canonical reconciliation and final closeout validation pending; Phase 7 pending
 - Current implementation state: target planning only
 - Owning GitHub issue: [#19](https://github.com/kyleswindell/login-v2/issues/19)
-- Current active Phase issue: [#52](https://github.com/kyleswindell/login-v2/issues/52)
-- Next Phase issue: [#53](https://github.com/kyleswindell/login-v2/issues/53)
+- Current active Phase issue: [#53](https://github.com/kyleswindell/login-v2/issues/53)
+- Next Phase issue: [#54](https://github.com/kyleswindell/login-v2/issues/54)
 - Final Goal 3 acceptance: pending
 
 ## 3. Scope
@@ -78,8 +78,8 @@ Use the [Goal 3 Index](index.md) to locate the current Phase package.
 | 2     | Repository organization                  | accepted                                                               | [Phase 2 Index](phase-2/index.md)                               |
 | 3     | Target repository tree                   | accepted                                                               | [Phase 3 Index](phase-3/index.md)                               |
 | 4     | Placement and dependency rules           | accepted                                                               | [Phase 4 Index](phase-4/index.md)                               |
-| 5     | Naming conventions                       | decisions and package accepted; canonical promotion validation pending | [Phase 5 Index](phase-5/index.md)                               |
-| 6     | Representative validation                | pending                                                                | Issue [#53](https://github.com/kyleswindell/login-v2/issues/53) |
+| 5     | Naming conventions                       | accepted; canonical promotion validation pending                       | [Phase 5 Index](phase-5/index.md)                               |
+| 6     | Representative validation                | decisions and package accepted; canonical reconciliation and closeout pending | [Phase 6 Index](phase-6/index.md)                          |
 | 7     | Migration direction and final acceptance | pending                                                                | Issue [#54](https://github.com/kyleswindell/login-v2/issues/54) |
 
 ## 6. Accepted High-Level Architecture
@@ -94,13 +94,16 @@ Core, Modules, and UI are the source-of-truth application ownership areas.
 - Laravel is the framework, runtime, and application-composition system rather than a competing application owner.
 - Current `app/Platform` placement and `Platform`-prefixed identifiers are transitional and have no permanent ownership role.
 
-Surface terminology is restricted:
+Frame Surface terminology is restricted:
 
-- a Surface is an owner-specific UI presentation and interaction layer;
+- a Frame Surface is a named compositional region of the persistent authenticated Frame;
+- ordinary Products, Product Areas, Pages, destinations, and flows are not Frame Surfaces;
+- Main is a route-owned content outlet rather than a Frame Surface;
 - a Host owns an extensible feature;
 - a Host-owned Registry defines and resolves Extension Points;
 - Contributions remain owned by their Contributors;
-- API, console, webhook, queue, scheduler, and background entry points are Delivery Adapters or invocation channels, not Surfaces.
+- API, console, webhook, queue, scheduler, and background entry points are Delivery Adapters or Invocation Channels, not Frame Surfaces;
+- generic `Surface/` and `Surfaces/` production roles are not target architecture.
 
 Detailed boundary planning:
 
@@ -340,7 +343,7 @@ Phase 4 decisions are accepted. The consolidated matrices and durable architectu
 
 - Contracts remain with the owner that makes and maintains the promise.
 - Internal abstractions remain adjacent to implementation unless deliberately promoted into a public boundary.
-- Concrete implementation remains beneath the narrowest Core capability, Module, UI responsibility, Surface, Registry, Contribution, or restricted Laravel integration concern.
+- Concrete implementation remains beneath the narrowest Core capability, Module, UI responsibility, Registry, Contribution, precise presentation role, or restricted Laravel integration concern.
 - Delivery Adapters remain owner-local and delegate application behavior inward.
 - Core and Module routes, configuration, runtime persistence, presentation, tests, and documentation remain owner-specific or package-local according to the accepted placement matrix.
 - Core schema-lifecycle artifacts are grouped by capability beneath `database/core/`; Module schema-lifecycle artifacts remain package-local.
@@ -367,7 +370,8 @@ Durable architecture:
 - Core remains independent of optional Modules;
 - Module-to-Module dependencies are explicit, declared, public-Contract based, and acyclic;
 - reusable UI does not depend on Core or Module domain implementation;
-- Surfaces and Delivery Adapters depend inward on owner behavior;
+- owner-specific Product presentation and Delivery Adapters depend inward on owner behavior;
+- Frame rendering consumes normalized Workspace and Core Navigation output and must not evaluate application policy;
 - immediate commands use provider-owned public Contracts;
 - immediate reads use provider-owned public Query Contracts;
 - Events announce completed facts;
@@ -416,9 +420,33 @@ Detailed naming:
 
 ### 6.6. Representative Validation
 
-Pending Phase 6.
+Phase 6 decisions and package are accepted. Canonical reconciliation, repository checks, and the Issue #53 Final Acceptance Record remain pending.
 
-Phase 6 will apply the accepted model to representative Core, Module, UI, Surface, Registry, Delivery Adapter, test, and documentation examples and identify required future architecture proofs.
+Representative examples:
+
+- Settings — required Core capability, Settings Host, Product, and Navigation Contributor;
+- Projects — optional Module, Product, and Navigation Contributor;
+- Modal and Dialog — UI-owned reusable Component family;
+- Sidebar Navigation Frame Surface — Workspace-aware composition hosted by Core Navigation and rendered by UI.
+
+Phase 6 accepted:
+
+- multiple available Workspaces with exactly one active Workspace in a rendered context;
+- Global Administration as a Workspace;
+- the persistent Frame and narrow Header and Sidebar Navigation Frame Surfaces;
+- System, Product, Product Area, Page, and drill-down navigation;
+- Core Navigation at `app/Core/Navigation/`, namespace `App\Core\Navigation\`, key `navigation`;
+- owner-local `Contrib/Navigation/` paths;
+- no permanent structural exception;
+- verification-first proof requirements;
+- twelve bounded later architecture guardrails.
+
+Detailed validation:
+
+- [Phase 6 Index](phase-6/index.md)
+- [Phase 6 Durable Promotion Register](phase-6/durable-promotion-register.md)
+- [ADR-0008](../../../../01-decisions/adr-0008-workspace-navigation-and-frame-surface-model.md)
+- [Workspace Navigation And Frame Composition](../../../../03-architecture/workspace-navigation-and-frame-composition.md)
 
 ### 6.7. Migration And Compatibility Direction
 

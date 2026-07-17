@@ -28,7 +28,7 @@ It does not map every current file, perform migration, define final names, imple
 - Target architecture: accepted through Goal 3 Phase 5
 - Current implementation: transitional
 - Naming model: accepted through Goal 3 Phase 5
-- Representative validation: pending Goal 3 Phase 6
+- Representative validation: accepted through Goal 3 Phase 6; canonical reconciliation and repository closeout checks remain pending
 - Migration direction: pending Goal 3 Phase 7
 - Automated enforcement: later bounded implementation and verification work
 
@@ -56,7 +56,9 @@ Application responsibilities belong first to:
 3. UI;
 4. a bounded application-wide Laravel integration boundary.
 
-Technical Roles such as Surface, Delivery Adapter, Registry, Action, Query, Contract, Model, Policy, Job, Event, Listener, Notification, Rule, and Livewire implementation remain beneath an explicit owner.
+Technical Roles such as Delivery Adapter, Registry, Action, Query, Contract, Model, Policy, Job, Event, Listener, Notification, Rule, and Livewire implementation remain beneath an explicit owner.
+
+Frame Surface is a named persistent-Frame composition concept, not a generic owner-local Technical Role or `Surface/` folder.
 
 Broad use does not create generic ownership. Framework conventions do not transfer application ownership. Registration does not transfer ownership.
 
@@ -209,6 +211,19 @@ A Contributor owns its Contribution:
 app/Core/Audit/Contrib/Dashboard/
 ```
 
+Core Navigation is the accepted Host for Product and Product Area navigation Contributions:
+
+```text
+app/Core/Navigation/
+App\Core\Navigation\
+owner_key: navigation
+
+app/Core/<Contributor>/Contrib/Navigation/
+Modules/<Contributor>/src/Contrib/Navigation/
+```
+
+Core Navigation owns public Extension Point Contracts, Registry validation, ordering, active-state resolution, and fallback. It does not import optional Module implementation or own Workspace access, permission evaluation, Module lifecycle, Product behavior, or reusable UI rendering.
+
 Do not create generic Core branches such as:
 
 ```text
@@ -278,7 +293,7 @@ Modules/<Module>/src/Console/
 
 Controllers, requests, middleware, commands, webhook handlers, protocol resources, presenters, renderers, ViewModels, and PageData own channel or presentation concerns and delegate application behavior inward.
 
-Owner behavior must not depend outward on Delivery Adapters or Surfaces.
+Owner behavior must not depend outward on Delivery Adapters or Frame rendering. Product presentation uses precise owner-local roles rather than a generic `Surface/` role.
 
 ## 10. Routes, Configuration, And Application Registration
 
@@ -329,6 +344,10 @@ Module-owned presentation remains package-local beneath:
 ```text
 Modules/<Module>/resources/
 ```
+
+Presentation-specific PHP uses the narrowest precise role, such as PageData, ViewModel, Presenter, Renderer, Data, Query, or Navigation. Owner-local catch-all `Surface/` folders are not target architecture.
+
+The authenticated Frame is composed through public Workspace and Core Navigation boundaries and rendered through UI-owned shell APIs. Main remains a route-owned content outlet rather than a Frame Surface.
 
 Category aggregators explicitly and deterministically compose owner-declared bundles.
 
@@ -384,7 +403,8 @@ Dependencies flow toward stable provider-owned public boundaries.
 - Modules may depend on Core public Contracts and approved UI APIs.
 - Module-to-Module dependencies require explicit public Contracts and declared package dependencies.
 - reusable UI must not depend on Core or Module domain implementation;
-- owner-specific Surfaces may depend on their owner’s behavior and reusable UI;
+- owner-specific Product presentation may depend on its owner’s behavior and reusable UI;
+- Frame rendering consumes normalized Workspace and Core Navigation output and must not evaluate application policy;
 - Delivery Adapters depend inward on owner behavior;
 - root Laravel integration may compose owners through public registration boundaries but must not absorb owner behavior.
 
@@ -475,6 +495,7 @@ Do not introduce generic repository, application, Core, or Module ownership bran
 
 ```text
 Platform/
+Surface/
 Surfaces/
 Shared/
 Common/
@@ -499,7 +520,7 @@ Removal requires accepted ownership and placement, resolved compatibility, passi
 
 Phase 5 accepted the folder, namespace, class, route, configuration, event, job, test, fixture, documentation, compatibility, and conditional Application Registration naming model.
 
-Phase 6 owns representative architecture validation.
+Phase 6 accepted representative architecture validation, the Core Navigation identity, and the bounded Workspace and Frame Surface correction.
 
 Phase 7 owns coarse current-to-target mappings, compatibility direction, and final Goal 3 acceptance.
 
@@ -509,13 +530,16 @@ Detailed schema remains Goal 6 authority. Complete verification architecture and
 
 - [Architecture Index](index.md)
 - [Application Registration](application-registration.md)
+- [Workspace Navigation And Frame Composition](workspace-navigation-and-frame-composition.md)
 - [System Overview](system-overview.md)
 - [Stack Overview](stack-overview.md)
 - [ADR-0005: Core, Modules, And UI Ownership Taxonomy](../01-decisions/adr-0005-core-modules-ui-ownership-taxonomy.md)
 - [ADR-0007: Owner, Registry, And Identifier Key Conventions](../01-decisions/adr-0007-owner-registry-and-identifier-key-conventions.md)
+- [ADR-0008: Workspace, Navigation Hierarchy, And Frame Surface Model](../01-decisions/adr-0008-workspace-navigation-and-frame-surface-model.md)
 - [Goal 3 Target Repository Architecture](../07-planning/Milestones/milestone-0/goal-3/target-repository-architecture.md)
 - [Phase 4 Placement And Dependency Rules Index](../07-planning/Milestones/milestone-0/goal-3/phase-4/index.md)
 - [Phase 4 Artifact Placement Matrix](../07-planning/Milestones/milestone-0/goal-3/phase-4/artifact-placement-matrix.md)
 - [Phase 4 Dependency And Communication Matrix](../07-planning/Milestones/milestone-0/goal-3/phase-4/dependency-and-communication-matrix.md)
 - [Phase 5 Naming Conventions Index](../07-planning/Milestones/milestone-0/goal-3/phase-5/index.md)
+- [Phase 6 Representative Architecture Validation Index](../07-planning/Milestones/milestone-0/goal-3/phase-6/index.md)
 - [Repository Naming Standards](../02-standards/coding/repository-naming-standards.md)

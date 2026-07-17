@@ -62,7 +62,7 @@ This folder owns the resolved Phase 2 planning for:
 * delivery-code organization;
 * mandatory structural boundaries;
 * structural exceptions;
-* the distinction between UI Surfaces and Host Registries;
+* the distinction between presentation, named Frame Surfaces, and Host Registries as corrected by ADR-0008;
 * Phase 2 documentation synchronization and closeout.
 
 ### 2.2. Does Not Belong Here
@@ -113,11 +113,11 @@ Those concerns belong to later Goal 3 phases, bounded implementation issues, or 
 | 2.3 Cross-Cutting Technical Code          | Cross-cutting use does not create cross-cutting ownership. Every responsibility retains one explicit owner.                                      |
 | 2.4 Delivery-Code Organization            | Delivery adapters remain beneath the Core capability or Module that owns the behavior they expose.                                               |
 | 2.5 Structural Consistency And Exceptions | Shared ownership and role boundaries are mandatory; identical folder trees are not. Actual exceptions are bounded and repository-owner accepted. |
-| 2.90 Surface Reclassification             | A Surface is an owner-specific UI presentation layer. A Host-owned Registry defines and resolves contributions from other owners.                |
+| 2.90 Surface Reclassification             | Retains the separation between presentation and Host Registry responsibility; its broad owner-specific Surface model is superseded by ADR-0008 and Phase 6.90. |
 
 The consolidated Phase 2 rule is:
 
-> Login 2.0 uses owner-first, capability-first organization. Core capabilities and Modules use the same sparse technical-role vocabulary beneath their owner boundary. Cross-cutting use does not create cross-cutting ownership. Delivery adapters remain with the owner of the behavior they expose. Structural variation is permitted when accepted role meanings and ownership boundaries remain intact; actual exceptions require bounded repository-owner acceptance. A Surface is an owner-specific UI presentation layer, while a Host-owned Registry defines and resolves contributions from other owners.
+> Login 2.0 uses owner-first, capability-first organization. Core capabilities and Modules use the same sparse technical-role vocabulary beneath their owner boundary. Cross-cutting use does not create cross-cutting ownership. Delivery adapters remain with the owner of the behavior they expose. Structural variation is permitted when accepted role meanings and ownership boundaries remain intact; actual exceptions require bounded repository-owner acceptance. A Frame Surface is a named persistent-Frame composition region, while a Host-owned Registry defines and resolves Contributions from other owners. Ordinary Product Pages and flows do not create a generic Surface role or folder.
 
 ## 6. Resulting Documentation Work
 
@@ -150,7 +150,7 @@ Phase 2 requires the following reusable concepts and technical roles to be creat
 - Notification and the working `Notifications/` role
 - Provider and the working `Providers/` role
 - Registry and the working `Registry/` role
-- Surface and the working `Surface/` role
+- Frame Surface as a composition concept; no generic working `Surface/` production role
 - Contribution and the working `Contrib/` role
 - HTTP Delivery Adapter and the working `Http/` role
 - Console Delivery Adapter and the working `Console/` role
@@ -200,7 +200,7 @@ Phase 3 may decide the exact physical branches needed to express the model, but 
 * explicit ownership of cross-cutting responsibilities;
 * delivery ownership;
 * bounded exception requirements;
-* the distinction between Surface, Host, Registry, and Contribution.
+* the distinction between Frame Surface, Host, Registry, and Contribution.
 
 ## 8. Verification And Closeout
 
@@ -208,7 +208,7 @@ Phase 2 is ready for formal closeout when:
 
 * [X] this index and all six detailed Phase 2 documents use their accepted document formats;
 * [X] the Goal 3 target-architecture artifact contains the accepted Phase 2 result;
-* [X] the Surface definition is reconciled with Decision 2.90;
+* [X] the Frame Surface definition is reconciled with ADR-0008 and Phase 6.90 while Decision 2.90 remains historical rationale;
 * [X] required definition work is created or explicitly assigned;
 * [X] stale conflicting terminology is removed or marked transitional;
 * [X] the parent Goal 3 index routes to this Phase 2 index;

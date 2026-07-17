@@ -89,7 +89,7 @@ An Extension Point:
 - must preserve Core independence from optional Modules;
 - must respect explicit Module-to-Module dependency rules;
 - may be consumed by the Host Registry during validation and resolution;
-- may expose resolved data to the Host’s behavior or Surface;
+- may expose resolved data to the Host’s behavior, owner-controlled Product presentation, or an applicable named Frame Surface;
 - must not require direct access to another owner’s internals.
 
 ## 6. Target Status
@@ -121,7 +121,7 @@ The following details remain deferred:
 - exact machine-readable discovery and export requirements;
 - exact validation tooling.
 
-These questions belong to later Goal 3 and Goal 4 work.
+These questions belong to later Goal 3 migration work, Goal 4, and owner-specific Contracts. Phase 6 accepted Product and Product Area navigation as Core Navigation Extension Point families.
 
 ## 9. Related
 

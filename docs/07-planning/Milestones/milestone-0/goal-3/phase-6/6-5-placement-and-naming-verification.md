@@ -2,7 +2,7 @@
 DOC-META
 title: Phase 6.5 Placement And Naming Verification
 doc_type: planning
-status: draft
+status: active
 owner: architecture
 canonical: false
 canonical_path: docs/07-planning/Milestones/milestone-0/goal-3/phase-6/6-5-placement-and-naming-verification.md
@@ -21,8 +21,8 @@ Confirm that each representative example has one predictable owner path, namespa
 
 ## 2. Status
 
-- Planning lifecycle: draft
-- Acceptance state: proposed for repository-owner Phase 6 review
+- Planning lifecycle: active
+- Acceptance state: accepted through repository-owner Phase 6 review; final closeout remains pending canonical reconciliation, repository checks, and the Issue #53 Final Acceptance Record
 - Implementation state: placement and naming validation only
 - Owning GitHub issue: [#53](https://github.com/kyleswindell/login-v2/issues/53)
 - Depends on: Phase 6.4 and accepted Goal 3 Phases 3 through 5
@@ -115,7 +115,7 @@ parallel unowned CSS or JavaScript trees
 - UI-shell internal organization remains an artifact-level decision under the accepted UI owner, not a competing repository location.
 - Current transitional files require later migration planning but do not create valid alternate targets.
 
-## 8. Proposed Decision
+## 8. Accepted Decision
 
 > Settings, Projects, Modal, Dialog, Core Navigation, and Navigation Contributions each have one predictable target identity and location.
 >

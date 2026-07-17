@@ -2,7 +2,7 @@
 DOC-META
 title: Phase 6.7 Architecture Guardrail Selection
 doc_type: planning
-status: draft
+status: active
 owner: architecture
 canonical: false
 canonical_path: docs/07-planning/Milestones/milestone-0/goal-3/phase-6/6-7-architecture-guardrail-selection.md
@@ -23,8 +23,8 @@ This phase identifies guardrails only. It does not implement them.
 
 ## 2. Status
 
-- Planning lifecycle: draft
-- Acceptance state: proposed for repository-owner Phase 6 review
+- Planning lifecycle: active
+- Acceptance state: accepted through repository-owner Phase 6 review; final closeout remains pending canonical reconciliation, repository checks, and the Issue #53 Final Acceptance Record
 - Implementation state: guardrail selection only
 - Owning GitHub issue: [#53](https://github.com/kyleswindell/login-v2/issues/53)
 - Depends on: Phase 6.6
@@ -91,7 +91,7 @@ The twelve selected guardrails are bounded, enforceable, and directly supported 
 
 No new architecture layer or generic validation framework is required.
 
-## 8. Proposed Decision
+## 8. Accepted Decision
 
 > Phase 6 selects twelve future guardrails covering optional-Module isolation, UI independence, public cross-owner boundaries, Registry inversion, Module declaration integrity, path and namespace agreement, prohibited roots, explicit Contributions, delivery inversion, persistence isolation, UI artifact ownership, and deterministic test discovery.
 >

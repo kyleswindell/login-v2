@@ -60,7 +60,7 @@ A Host owns:
 - resolved Registry output;
 - Host-specific documentation and verification.
 
-A Host may own an optional Surface that presents resolved Registry output.
+A Host may expose resolved Registry output to owner-controlled Product presentation or, when the Host owns persistent Frame composition, to a named Frame Surface.
 
 ## 4. Must Not Own
 
@@ -87,7 +87,7 @@ A Host:
 - may depend on Core and UI only as permitted by its ownership classification;
 - may depend on required Module relationships only when explicit Module dependency rules permit;
 - must reject invalid or incompatible Contributions without bypassing ownership boundaries;
-- may expose resolved Registry output to its own Actions, Queries, Delivery Adapters, or Surface.
+- may expose resolved Registry output to its own Actions, Queries, Delivery Adapters, owner-controlled Product presentation, or an applicable named Frame Surface.
 
 A Core Host must not depend on optional Modules that contribute to it.
 
@@ -109,7 +109,7 @@ A Core capability or Module may act as a Host by exposing a Registry containing 
 
 Other owners contribute through their own owner-local Contribution integration. The Host Registry validates and assembles Contributions.
 
-A separate optional Surface may present the resolved result through UI-owned reusable infrastructure.
+Owner-controlled Product presentation or an applicable named Frame Surface may present the resolved result through UI-owned reusable infrastructure.
 
 ## 8. Open Questions
 
@@ -130,6 +130,6 @@ These questions belong to later contract, placement, and verification work.
 - [Extension Point Definition](../Extension-Points/Definition.md)
 - [Contribution Definition](../Contributions/Definition.md)
 - [Contributor Definition](../Contributors/Definition.md)
-- [Surface Definition](../Surfaces/Definition.md)
+- [Frame Surface Definition](../Surfaces/Definition.md)
 - [Phase 2.90 Surface, Host, And Registry Reclassification](../../Milestones/milestone-0/goal-3/phase-2/2-90-surface-host-registry-reclassification.md)
 - Related GitHub issue: #49

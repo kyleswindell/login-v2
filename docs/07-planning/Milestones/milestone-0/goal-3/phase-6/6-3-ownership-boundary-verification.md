@@ -2,7 +2,7 @@
 DOC-META
 title: Phase 6.3 Ownership Boundary Verification
 doc_type: planning
-status: draft
+status: active
 owner: architecture
 canonical: false
 canonical_path: docs/07-planning/Milestones/milestone-0/goal-3/phase-6/6-3-ownership-boundary-verification.md
@@ -24,18 +24,18 @@ This document consumes:
 - [Phase 6.1 Representative Example Selections](6-1-representative-example-selections.md);
 - [Phase 6.2 Representative Example Mappings](6-2-representative-example-mappings.md);
 - [Phase 6.90 Workspace, Navigation Hierarchy, And Frame Surface Clarification](6-90-workspace-navigation-and-frame-surface-clarification.md);
-- proposed [ADR-0008](../../../../../01-decisions/adr-0008-workspace-navigation-and-frame-surface-model.md).
+- accepted [ADR-0008](../../../../../01-decisions/adr-0008-workspace-navigation-and-frame-surface-model.md).
 
 It verifies ownership only. Placement and naming remain Phase 6.5 authority.
 
 ## 2. Status
 
-- Planning lifecycle: draft
-- Acceptance state: proposed for repository-owner Phase 6 review
+- Planning lifecycle: active
+- Acceptance state: accepted through repository-owner Phase 6 review; final closeout remains pending canonical reconciliation, repository checks, and the Issue #53 Final Acceptance Record
 - Implementation state: ownership validation only
 - Owning GitHub issue: [#53](https://github.com/kyleswindell/login-v2/issues/53)
 - Depends on: Phase 6.1, Phase 6.2, Phase 6.90, and accepted Goal 3 ownership rules
-- Provisional dependency: Frame Surface terminology remains subject to ADR-0008 acceptance
+- Architecture dependency: Frame Surface terminology is governed by accepted ADR-0008
 
 ## 3. Ownership Rules
 
@@ -245,7 +245,7 @@ No representative example requires:
 - shared persistence across owners;
 - delivery ownership of application behavior.
 
-## 11. Proposed Decision
+## 11. Accepted Decision
 
 > Settings retains ownership of settings behavior, state, delivery, and its settings Registry while contributing Product navigation to Core Navigation.
 >

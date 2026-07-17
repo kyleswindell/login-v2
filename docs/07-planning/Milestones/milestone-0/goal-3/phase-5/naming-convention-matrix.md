@@ -41,6 +41,19 @@ Provide one concise lookup for naming a material Login 2.0 artifact from its own
 - Decision source: Decisions 5.1 through 5.14 accepted through repository-owner Phase 5 review
 - Implementation state: target direction only
 - Owning GitHub issue: [#52](https://github.com/kyleswindell/login-v2/issues/52)
+- Phase 6 correction: Core Navigation identity and narrow Frame Surface naming are accepted as described below
+
+### Phase 6 correction
+
+```text
+Technical name: Navigation
+PHP path:       app/Core/Navigation/
+Namespace:      App\Core\Navigation\
+owner_key:      navigation
+Contribution:   Contrib/Navigation/
+```
+
+Where this matrix uses a Surface subject for ordinary Product presentation, use the actual Product, Page, subject, format, or precise presentation role instead. Frame Surface is reserved for named persistent-Frame regions and does not create a generic `Surface/` folder, namespace, or suffix. All unrelated Phase 5 naming and compatibility rows remain unchanged.
 
 ## 3. Use This Matrix For
 

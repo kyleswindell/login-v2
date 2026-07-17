@@ -68,7 +68,7 @@ A Contributor must not own:
 - the Host’s Extension Point contract;
 - Host-wide ordering or conflict policy;
 - another Contributor’s entry;
-- Host navigation, layout, or behavior beyond accepted Contribution metadata;
+- Host navigation resolution, Frame composition, layout, or behavior beyond accepted Contribution metadata;
 - Host internals;
 - acceptance of its own Contribution;
 - reusable UI infrastructure unless the Contributor is separately acting within the UI owner boundary.
@@ -86,7 +86,7 @@ A Contributor:
 - must use explicit versioned dependencies for permitted Module-to-Module extension relationships;
 - must not require the Host to depend on Contributor implementation;
 - must tolerate valid rejection or unavailability of its Contribution;
-- remains responsible for its own behavior when presented through a Host Surface.
+- remains responsible for its own behavior when presented through owner-controlled Product presentation or a named Frame Surface.
 
 A Core capability must not become dependent on an optional Module Host solely to contribute to it.
 
@@ -112,7 +112,7 @@ Other owners may contribute to a Host through owner-local Contribution integrati
 
 The Contributor retains ownership of its behavior. The Host retains ownership of the Registry, Extension Points, validation, ordering, and resolved result.
 
-A Surface may present contributed behavior without changing either ownership boundary.
+Owner-controlled Product presentation or a named Frame Surface may present contributed behavior without changing either ownership boundary.
 
 ## 8. Open Questions
 
@@ -133,6 +133,6 @@ These questions belong to later placement, contract, Module, and verification wo
 - [Host Definition](../Hosts/Definition.md)
 - [Registry Definition](../Registries/Definition.md)
 - [Extension Point Definition](../Extension-Points/Definition.md)
-- [Surface Definition](../Surfaces/Definition.md)
+- [Frame Surface Definition](../Surfaces/Definition.md)
 - [Phase 2.90 Surface, Host, And Registry Reclassification](../../Milestones/milestone-0/goal-3/phase-2/2-90-surface-host-registry-reclassification.md)
 - Related GitHub issue: #49

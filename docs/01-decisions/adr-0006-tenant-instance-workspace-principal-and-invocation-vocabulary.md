@@ -8,7 +8,7 @@ canonical: true
 canonical_path: docs/01-decisions/adr-0006-tenant-instance-workspace-principal-and-invocation-vocabulary.md
 parent: docs/01-decisions/index.md
 template: docs/09-reference/templates/docs/_decision.md
-summary: Records the canonical Tenant, Instance, Workspace, human and non-human principal, assurance, Actor, and Invocation Channel vocabulary.
+summary: Records canonical Tenant, Instance, User Account, identity, Principal, Actor, and Invocation Channel vocabulary; its original Workspace cardinality and Global Administration classification are partially superseded by ADR-0008.
 -->
 
 # ADR-0006: Tenant, Instance, Workspace, Principal, Actor, And Invocation Vocabulary
@@ -39,6 +39,8 @@ Accepted
 - Pull request: [#36 — Accept Tenant, Instance, principal, Actor, and invocation vocabulary](https://github.com/kyleswindell/login-v2/pull/36)
 - Prior decisions:
   - [ADR-0005: Core, Modules, And UI Ownership Taxonomy](adr-0005-core-modules-ui-ownership-taxonomy.md)
+- Later corrective decision:
+  - [ADR-0008: Workspace, Navigation Hierarchy, And Frame Surface Model](adr-0008-workspace-navigation-and-frame-surface-model.md)
 - Affected canonical owners:
   - `docs/03-architecture/`
   - `docs/02-standards/security/`
@@ -92,17 +94,21 @@ Deactivating a Tenant deactivates its Instance and User Accounts. Ordinary authe
 
 The internal organization uses the same Tenant, Instance, User Account, User Identity, and Workspace model as every client.
 
-Global Administration is a privileged Surface rendered only within authorized User Workspaces in the Internal Tenant Instance. It is not another Tenant, Instance, Workspace, or identity realm.
+ADR-0008 partially supersedes the original classification in this section. Global Administration is a named Workspace available only to authorized Internal Tenant User Accounts. It is not another Tenant, Instance, or identity realm.
 
 Global Administration packaging as Core or a restricted Module remains deferred.
 
 ### 7.3 Workspace
 
-A **Workspace** is the User Account-specific resolved runtime and user-experience scope through which an authenticated User interacts with their Tenant Instance.
+A **Workspace** is a named, top-level rendered application experience available to an authenticated User Account within its resolved Tenant Instance.
 
-A Workspace is assembled from Tenant and Instance resolution, Instance configuration and Module state, User Account access, and User Account personalization.
+A User Account may have access to one or more Workspaces. Exactly one Workspace is active for a rendered request or interaction context.
+
+Workspace availability and active selection may be resolved from Tenant and Instance state, Module state, User Account access, Settings, Preferences, configuration, and presentation state.
 
 A Workspace is not a stored container, database boundary, Tenant, Instance, organization, Principal, or replacement for authorization.
+
+Detailed Workspace, Frame, Frame Surface, Product, Product Area, Page, and navigation rules are owned by ADR-0008 and Workspace Navigation And Frame Composition.
 
 ### 7.4 Human User, User Account, And User Identity
 
@@ -260,7 +266,7 @@ Not selected because Workspace is a runtime resolution derived from Instance and
 
 ### Alternative D — Separate Control-Plane Workspace
 
-Not selected because the Internal Tenant uses the same runtime model as clients; privileged global behavior is a Surface, not another Workspace.
+The original rejection in this alternative is partially superseded by ADR-0008. The Internal Tenant still uses the same Tenant, Instance, User Account, and identity model as clients, but Global Administration is now a named high-level Workspace rather than an owner-specific Surface.
 
 ### Alternative E — Service Identity As The NHI Umbrella
 
@@ -377,7 +383,7 @@ Required follow-up remains owned by Goals 03, 06, 07, 08, and 09 and by the serv
 
 ### Superseded By
 
-- None
+- [ADR-0008](adr-0008-workspace-navigation-and-frame-surface-model.md) partially supersedes Section 7.2 where Global Administration was classified as a Surface, Section 7.3 where one indivisible resolved Workspace was implied, and Alternative D where a high-level administration Workspace was rejected. All other ADR-0006 decisions remain operative.
 
 ### Transition Plan
 

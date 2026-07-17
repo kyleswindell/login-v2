@@ -28,7 +28,7 @@ It defines accepted terminology and conditional custom-artifact names. Descripto
 - Target architecture: accepted through Goal 3 Phase 5
 - Current implementation: transitional and not yet proven to implement this architecture
 - Terminology and conditional artifact naming: accepted through Goal 3 Phase 5
-- Representative validation: pending Goal 3 Phase 6
+- Representative validation: accepted through Goal 3 Phase 6; implementation remains unproven
 - Migration and compatibility direction: pending Goal 3 Phase 7
 - Runtime tooling and automated enforcement: later bounded implementation work
 
@@ -51,7 +51,7 @@ It is not:
 - a Core capability;
 - a Module;
 - UI;
-- a Surface;
+- a Frame Surface;
 - a Delivery Adapter;
 - a Host;
 - a Registry;
@@ -212,6 +212,10 @@ The Host remains authoritative for:
 
 A Host Registry does not become the application-wide registrar, and the Registration Compiler does not become the Host Registry.
 
+### Navigation Contributions
+
+Settings, Projects, and other Product owners may declare Contributions targeting Core Navigation Extension Points. Application Registration validates the structural declaration and routes it to `App\Core\Navigation`; it does not determine active Workspace inclusion, permission, Module availability, route availability, ordering, current state, or fallback. Those remain Core Navigation and provider-owned public Contract responsibilities.
+
 ## 11. Native Framework And Build Boundaries
 
 Laravel remains responsible for its native runtime and cache behavior, including applicable:
@@ -294,7 +298,7 @@ Goal 3 Phase 5 accepted the Application Registration terminology and conditional
 
 Descriptor schema, serialization format, generated path, source-control and cache policy, bootstrap integration, compiler implementation, performance model, and migration sequence remain later bounded authority.
 
-Goal 3 Phase 6 owns representative validation.
+Goal 3 Phase 6 accepted representative validation and confirmed Product navigation as a Host Contribution family.
 
 Goal 3 Phase 7 owns migration and compatibility direction.
 
@@ -304,6 +308,7 @@ Later bounded implementation work owns architecture, smallest vertical slice, na
 
 - [Architecture Index](index.md)
 - [Repository Architecture](repository-architecture.md)
+- [Workspace Navigation And Frame Composition](workspace-navigation-and-frame-composition.md)
 - [System Overview](system-overview.md)
 - [Stack Overview](stack-overview.md)
 - [Application Registration System Definition](../07-planning/Definitions/Application-Registration/Definition.md)

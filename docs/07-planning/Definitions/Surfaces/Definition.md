@@ -1,6 +1,6 @@
 <!--
 DOC-META
-title: Surface Definition
+title: Frame Surface Definition
 doc_type: definition
 status: active
 owner: architecture
@@ -8,12 +8,14 @@ canonical: true
 canonical_path: docs/07-planning/Definitions/Surfaces/Definition.md
 parent: docs/07-planning/Definitions/Index.md
 template: docs/09-reference/templates/docs/_definition.md
-summary: Defines a Surface as an owner-specific UI presentation and interaction layer through which Core- or Module-owned behavior is presented.
+summary: Defines a Frame Surface as a named compositional region of the persistent authenticated Frame and supersedes broad owner-specific Surface and generic Surface-folder meanings.
 -->
 
-# Surface Definition
+# Frame Surface Definition
 
 Parent: [Definitions Index](../Index.md)
+
+> Compatibility note: the existing `Surfaces/` documentation path is retained until Phase 7 determines whether a physical documentation-path rename is warranted. The canonical concept defined here is **Frame Surface**.
 
 - [1. Definition](#1-definition)
 - [2. Classification Rule](#2-classification-rule)
@@ -27,210 +29,160 @@ Parent: [Definitions Index](../Index.md)
 
 ## 1. Definition
 
-A Surface is an owner-specific UI presentation and interaction layer through which Core- or Module-owned application behavior is presented to a user or operator.
+A **Frame Surface** is a named compositional region of the persistent authenticated Frame whose content is selected or contributed for the active Workspace and rendered through UI-owned shell infrastructure.
 
-A Surface provides a coherent interface context, such as a page, destination, area, or multi-step interaction flow.
+A Frame Surface defines one bounded composition contract:
 
-The applicable Core capability or Module owns the behavior being presented. UI owns the reusable presentation infrastructure used to render the Surface.
+- region identity and location;
+- accepted contribution family;
+- ordering and conflict rules;
+- availability and filtering inputs;
+- active-state inputs;
+- fallback behavior;
+- normalized output consumed by UI rendering.
 
-A Surface may consume resolved output from a Host-owned Registry, but it is not itself:
+A Frame Surface is not a source-of-truth application owner.
 
-* the Host;
-* the Registry;
-* an extension point;
-* a contribution mechanism;
-* a delivery channel;
-* a source-of-truth application owner.
+The initial Frame Surfaces are:
+
+1. Global Header Navigation Surface;
+2. Sidebar Navigation Surface.
+
+The Main Content Outlet is not a Frame Surface. It renders route-owned Product Pages, workflows, and deeper content.
 
 ## 2. Classification Rule
 
-An interface qualifies as a Surface when it provides:
+A region qualifies as a Frame Surface only when:
 
-* a recognizable UI destination or interaction context;
-* a defined user or operator audience;
-* a coherent presentation and interaction model;
-* owner-specific composition of behavior or content;
-* presentation through UI-owned reusable layouts, components, patterns, Elements, or controls.
+- it is part of the persistent authenticated Frame rather than one Product Page;
+- its content can vary by active Workspace, authorization, Module state, active Product, or accepted Contributions;
+- one Core Host owns its composition Contract and resolved output;
+- reusable UI owns rendering and interaction;
+- Product owners and Contributors retain their behavior and declarations.
 
-A Surface may span multiple routes, views, sections, or interaction steps when they form one coherent UI experience.
+A Page, destination, Product Area, workflow, form, Blade view, Livewire class, controller, or Module overview is not a Frame Surface merely because it renders UI.
 
-A single route, Blade view, controller, component, layout, or form is not automatically a Surface.
-
-The following are not Surfaces:
-
-* APIs;
-* console commands;
-* webhooks;
-* background jobs;
-* queue consumers;
-* scheduled processes;
-* other non-UI invocation channels.
-
-Those are delivery adapters or channels and are classified separately.
-
-A capability or Module may have:
-
-* a Surface and a Registry;
-* a Surface without a Registry;
-* a Registry without a Surface;
-* neither.
-
-The presence of one does not imply the presence or ownership of the other.
+The lowercase visual-design word “surface” for backgrounds, layers, and token roles is unrelated and remains valid.
 
 ## 3. Owns
 
-A Surface may own:
+A Frame Surface composition contract may own:
 
-* owner-specific page and interaction composition;
-* Surface-specific navigation composition;
-* presentation of owner-controlled application behavior;
-* Surface-specific PageData;
-* Surface-specific ViewModels;
-* Surface-specific presenters or renderers;
-* selection and arrangement of UI-owned layouts and components;
-* interaction flow within the Surface;
-* presentation of resolved Host Registry output;
-* Surface-specific documentation;
-* Surface-specific browser, accessibility, and manual-review requirements.
+- one canonical region identity;
+- accepted Contribution types;
+- ordering and collision rules;
+- availability and filtering inputs;
+- active-state inputs;
+- fallback behavior;
+- normalized resolved presentation data;
+- composition-specific documentation and verification.
 
-Examples may include:
+For the initial Navigation Frame Surfaces, Core Navigation owns the Extension Point Contracts, Registry, validation, ordering, current-state resolution, and fallback.
 
-* the authenticated Dashboard Surface;
-* the Settings Surface;
-* the Account Surface;
-* the Global Administration Surface;
-* an owner-specific setup or onboarding Surface.
-
-The presence of a Surface does not transfer ownership of the presented behavior from its Core capability or Module.
+UI owns the reusable header, sidebar, navigation, menu, breadcrumb, responsive, focus, keyboard, and accessibility rendering APIs used to present the result.
 
 ## 4. Must Not Own
 
-A Surface must not own:
+A Frame Surface must not own:
 
-* authoritative business or system behavior;
-* Core or Module state;
-* persistence rules;
-* authoritative authorization policy;
-* reusable UI infrastructure;
-* application-wide UI Elements, Components, Patterns, Layouts, tokens, or controls;
-* Host Registry contracts;
-* extension-point definitions;
-* contribution discovery;
-* contribution validation;
-* contribution ordering or resolution;
-* another owner’s contributed behavior;
-* Module lifecycle or discovery;
-* HTTP request validation;
-* route invocation;
-* API response policy;
-* console input handling;
-* webhook transport handling;
-* behavior solely because it is visible through the Surface;
-* another owner’s internal implementation.
+- Product behavior;
+- Core or Module persistence;
+- routes or request validation;
+- route, Action, resource, or target authorization;
+- Workspace identity or access;
+- permission meaning or evaluation;
+- Module lifecycle;
+- Contributor implementation;
+- reusable UI Components, Patterns, Layouts, CSS, or JavaScript;
+- Main-content Page behavior;
+- application-wide service location;
+- arbitrary delivery or registration behavior;
+- another owner’s Contribution.
 
-A Surface is not:
+A Frame Surface is not:
 
-* a fourth application ownership area alongside Core, Modules, and UI;
-* automatically a top-level repository branch;
-* synonymous with a Host;
-* synonymous with a Registry;
-* synonymous with a route or Blade view;
-* synonymous with an invocation channel;
-* a substitute for Core, Module, UI, or Laravel integration ownership.
+- a fourth application owner alongside Core, Modules, and UI;
+- a generic `Surface/` or `Surfaces/` production folder;
+- a Product, Product Area, Page, or flow;
+- a Host Registry by itself;
+- a route or invocation channel;
+- a replacement for authorization.
 
 ## 5. Dependency Rules
 
-A Surface:
+The accepted direction is:
 
-* remains owned by the Core capability or Module whose UI presentation it composes;
-* may invoke owner-controlled Actions, Queries, workflows, and public contracts;
-* may depend on UI-owned reusable presentation contracts and infrastructure;
-* may consume resolved output from a Registry owned by the same Host;
-* may present contributions supplied by other owners after they have been validated and resolved by the Host Registry;
-* may receive transport-neutral data from an applicable delivery adapter;
-* must not access another owner’s internal implementation;
-* must not discover, validate, order, or resolve contributions independently of the Host Registry;
-* must not move authoritative behavior into presentation code;
-* must preserve authorization and lifecycle rules defined by the behavior owner;
-* must remain independent of HTTP, API, console, webhook, or other transport-specific policy.
+```text
+Workspace scope and authoritative Core inputs
+    + Contributor-owned declarations
+    -> Host-owned Registry validation and resolution
+    -> normalized Frame Surface output
+    -> UI-owned rendering
+```
 
-Core or Module domain and system behavior must not depend on Surface implementation.
+Rules:
 
-UI-owned reusable infrastructure must not depend on a capability- or Module-specific Surface.
-
-Delivery adapters may invoke owner behavior and select an applicable Surface response, but delivery code and Surface presentation remain separate responsibilities.
+- Contributors depend only on the Host’s public Extension Point Contract.
+- A Core Host must not depend on optional Contributor implementation.
+- UI consumes normalized render data and must not import Core or Module implementation.
+- Navigation visibility does not replace route or Action authorization.
+- Application behavior must not depend on Frame rendering.
+- Delivery Adapters may invoke public resolution and select an applicable response, but they do not own Frame Surface policy.
+- Application Registration may validate and route declarations but does not replace the Host Registry.
 
 ## 6. Target Status
 
-Status: permanent
+Status: permanent.
 
-Surface is a permanent architecture concept representing owner-specific UI presentation and interaction.
+Frame Surface is a permanent architecture concept.
 
-Surface is not a permanent source-of-truth ownership area alongside Core, Modules, and UI.
-
-The working technical-role vocabulary may represent Surface-specific code beneath:
+The following are not canonical target destinations:
 
 ```text
-Surface/
+app/Surfaces/
+app/Core/<Capability>/Surface/
+Modules/<Module>/src/Surface/
 ```
 
-The exact physical placement, namespace, internal subfolders, and naming rules remain owned by later Goal 3 repository-tree, placement, and naming decisions.
+Presentation-specific PHP uses a precise role such as `PageData/`, `ViewModels/`, `Presenters/`, `Renderers/`, `Data/`, `Queries/`, or `Navigation/` only when justified.
 
-API, console, webhook, queue, scheduler, and background entry points are permanently excluded from the Surface definition and remain delivery adapters or invocation channels.
-
-The previous use of Surface as a general assembled interaction boundary or extension Registry is superseded.
+Existing `Surface`, `Shell`, `Platform`, or related identifiers may remain transitional only through an accepted compatibility record.
 
 ## 7. Accepted Decision
 
-Status: accepted
+Status: accepted through ADR-0008 and Goal 3 Phase 6.
 
-A Surface is an owner-specific UI presentation and interaction layer through which Core- or Module-owned behavior is presented.
+A User Account may access one or more Workspaces; one is active in a rendered context. The active Workspace supplies high-level Product scope. Core Navigation resolves Product and Product Area Contributions for the named Header and Sidebar Navigation Frame Surfaces. UI renders the result. Main remains a route-owned content outlet.
 
-The Surface owner controls Surface-specific composition, presentation data, navigation composition, and interaction flow. UI controls the reusable presentation infrastructure used by the Surface. The applicable Core capability or Module retains ownership of the behavior, state, contracts, authorization, persistence, and lifecycle being presented.
+The earlier broad use of Surface for owner-specific Pages, destinations, areas, flows, or generic presentation folders is superseded.
 
-A Host may expose a Registry containing explicit extension points. Other owners may supply Contributions through their own contribution integration. The Host Registry validates and resolves those Contributions. A separate Surface may then present the resolved result.
+The retained boundaries from the former definition remain operative:
 
-The accepted relationship is:
-
-```text
-Contributor-owned behavior
-    ↓
-Contributor-owned contribution
-    ↓
-Host-owned Registry
-    ↓
-Optional owner-specific Surface
-    ↓
-UI-owned reusable presentation infrastructure
-```
-
-This decision corrects the earlier definition of Surface as an assembled interaction boundary that could include APIs, console commands, webhooks, or Registry responsibilities.
-
-It does not reopen the accepted Core, Module, UI, Laravel integration, or transitional `app/Platform` boundaries.
+- Frame Surface does not own behavior, persistence, authorization, delivery, Registry responsibility, Contribution ownership, or reusable UI;
+- Host, Registry, Extension Point, Contribution, Contributor, Delivery Adapter, Core, Module, UI, and Laravel integration remain separate concepts;
+- APIs, console commands, webhooks, queues, schedulers, and background entry points remain Delivery Adapters or Invocation Channels rather than Frame Surfaces.
 
 ## 8. Open Questions
 
-No open question remains about the architectural meaning of Surface.
-
 The following implementation details remain deferred and do not change this definition:
 
-* exact physical placement of Surface-specific artifacts;
-* exact Surface namespace conventions;
-* exact internal organization of Pages, PageData, ViewModels, presenters, and navigation composition;
-* criteria for when a capability or Module requires a dedicated `Surface/` role;
-* final naming and casing conventions;
-* exact browser, accessibility, and manual-review proof required for each Surface.
-
-These decisions belong to later Goal 3 phases and applicable capability or Module contracts.
+- exact Product and Product Area Contribution schemas;
+- exact ordering, conflict, availability, cache, and fallback APIs;
+- exact Workspace switcher route, URL, session, persistence, and restoration behavior;
+- exact UI shell Blade, CSS, JavaScript, responsive, and accessibility APIs;
+- exact compatibility treatment and removal sequence for existing Surface identifiers;
+- whether the `Definitions/Surfaces/` documentation path is later renamed;
+- exact automated architecture, registration, browser, accessibility, and manual-review proof.
 
 ## 9. Related
 
-* [Definitions Index](../Index.md)
-* [Goal 3 Target Repository Architecture](../../Milestones/milestone-0/goal-3/target-repository-architecture.md)
-* [Phase 2 Repository Organization Index](../../Milestones/milestone-0/goal-3/phase-2/index.md)
-* [Phase 2.90 Surface, Host, And Registry Reclassification](../../Milestones/milestone-0/goal-3/phase-2/2-90-surface-host-registry-reclassification.md)
-* [ADR-0005: Core, Modules, And UI Ownership Taxonomy](../../../01-decisions/adr-0005-core-modules-ui-ownership-taxonomy.md)
-* [ADR-0006: Tenant, Instance, Workspace, Principal, And Invocation Vocabulary](../../../01-decisions/adr-0006-tenant-instance-workspace-principal-and-invocation-vocabulary.md)
-* [ADR-0007: Owner, Registry, And Identifier Key Conventions](../../../01-decisions/adr-0007-owner-registry-and-identifier-key-conventions.md)
-* Related GitHub issue: #48
-* Corrective planning issue: #49
+- [Definitions Index](../Index.md)
+- [ADR-0008](../../../01-decisions/adr-0008-workspace-navigation-and-frame-surface-model.md)
+- [Workspace Navigation And Frame Composition](../../../03-architecture/workspace-navigation-and-frame-composition.md)
+- [Repository Architecture](../../../03-architecture/repository-architecture.md)
+- [Host Definition](../Hosts/Definition.md)
+- [Registry Definition](../Registries/Definition.md)
+- [Contribution Definition](../Contributions/Definition.md)
+- [Phase 2.90 Surface, Host, And Registry Reclassification](../../Milestones/milestone-0/goal-3/phase-2/2-90-surface-host-registry-reclassification.md)
+- [Phase 6.90 Workspace, Navigation Hierarchy, And Frame Surface Clarification](../../Milestones/milestone-0/goal-3/phase-6/6-90-workspace-navigation-and-frame-surface-clarification.md)
+- Related GitHub issue: [#53](https://github.com/kyleswindell/login-v2/issues/53)

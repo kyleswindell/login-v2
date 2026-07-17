@@ -8,7 +8,7 @@ canonical: true
 canonical_path: docs/03-architecture/index.md
 parent: docs/index.md
 template: docs/09-reference/templates/docs/_index.md
-summary: Routes canonical Login 2.0 system, repository, application-registration, stack, tenancy, and workspace architecture.
+summary: Routes canonical Login 2.0 system, repository, application-registration, Workspace, Frame, navigation, stack, and tenancy architecture.
 -->
 
 # Architecture Index
@@ -28,6 +28,7 @@ Behavior, workflow steps, schema details, implementation standards, planning, op
 | [System Overview](system-overview.md)                                              | High-level system, Tenant Instance, Workspace, Principal, execution, and application ownership model                                                                                                          |
 | [Repository Architecture](repository-architecture.md)                              | Target repository topology, accepted naming relationships, owner-local artifact placement, dependency direction, presentation and test topology, supporting branches, exceptions, and transitional structures |
 | [Application Registration](application-registration.md)                            | Registration responsibilities, conditional custom-artifact naming, deterministic compilation, generated manifests, root composition, Typed Registrars, and native Laravel and Vite boundaries                 |
+| [Workspace Navigation And Frame Composition](workspace-navigation-and-frame-composition.md) | Available and active Workspaces, persistent Frame, Frame Surfaces, Core Navigation, Product hierarchy, deep links, breadcrumbs, and shell composition                                                 |
 | [Stack Overview](stack-overview.md)                                                | Application stack, framework, runtime, database, frontend, and deployment technology boundaries                                                                                                               |
 | [Tenant, Instance, User Account, And Workspace Model](workspace-identity-model.md) | Canonical identity, Tenant Instance, User Account, and Workspace relationships                                                                                                                                |
 | [Tenancy](tenancy.md)                                                              | Tenant and Instance isolation, resolution, and cross-scope architecture                                                                                                                                       |
@@ -37,11 +38,12 @@ Behavior, workflow steps, schema details, implementation standards, planning, op
 For broad architecture work:
 
 1. read [System Overview](system-overview.md);
-2. read [Repository Architecture](repository-architecture.md) when ownership, placement, folders, packages, resources, tests, dependencies, or migration topology are involved;
-3. read [Application Registration](application-registration.md) when routes, Providers, views, Livewire aliases, commands, configuration, migrations, assets, Contributions, or deterministic application composition are involved;
-4. read [Stack Overview](stack-overview.md) for framework and technology boundaries;
-5. read the applicable tenancy or workspace architecture document;
-6. follow links to ADRs or standards only where the architecture document delegates authority.
+2. read [Workspace Navigation And Frame Composition](workspace-navigation-and-frame-composition.md) when Workspace switching, Frame composition, navigation hierarchy, Core Navigation, breadcrumbs, or shell regions are involved;
+3. read [Repository Architecture](repository-architecture.md) when ownership, placement, folders, packages, resources, tests, dependencies, or migration topology are involved;
+4. read [Application Registration](application-registration.md) when routes, Providers, views, Livewire aliases, commands, configuration, migrations, assets, Contributions, or deterministic application composition are involved;
+5. read [Stack Overview](stack-overview.md) for framework and technology boundaries;
+6. read the applicable tenancy or workspace architecture document;
+7. follow links to ADRs or standards only where the architecture document delegates authority.
 
 Do not read every architecture document for a local change.
 
@@ -76,4 +78,5 @@ Do not read every architecture document for a local change.
 - [Goal 3 Target Repository Architecture](../07-planning/Milestones/milestone-0/goal-3/target-repository-architecture.md)
 - [Phase 4 Placement And Dependency Rules Index](../07-planning/Milestones/milestone-0/goal-3/phase-4/index.md)
 - [Phase 5 Naming Conventions Index](../07-planning/Milestones/milestone-0/goal-3/phase-5/index.md)
+- [Phase 6 Representative Architecture Validation](../07-planning/Milestones/milestone-0/goal-3/phase-6/index.md)
 - [Repository Naming Standards](../02-standards/coding/repository-naming-standards.md)

@@ -8,7 +8,7 @@ canonical: true
 canonical_path: docs/02-standards/coding/repository-naming-standards.md
 parent: docs/02-standards/coding/index.md
 template: docs/09-reference/templates/docs/_doc.md
-summary: Defines canonical repository naming for folders, namespaces, owners, Modules, PHP types, technical roles, delivery artifacts, routes, configuration, events, tests, documentation, Application Registration, compatibility, and broad database boundaries.
+summary: Defines canonical repository naming for folders, namespaces, owners, Modules, Core Navigation, PHP types, technical roles, delivery artifacts, routes, configuration, events, tests, documentation, Application Registration, compatibility, and broad database boundaries.
 -->
 
 # Repository Naming Standards
@@ -28,6 +28,7 @@ This standard governs:
 - repository and package folders;
 - PHP namespaces and declared types;
 - Core capability and Module identity representations;
+- Core Navigation identity and owner-local Navigation Contributions;
 - Technical Role class names;
 - delivery artifacts;
 - routes, URLs, configuration, Events, Listeners, Jobs, Notifications, audit events, and queues;
@@ -107,6 +108,7 @@ Services
 Managers
 Support
 Infrastructure
+Surface
 Surfaces
 Features
 Base
@@ -149,6 +151,19 @@ Name the enduring responsibility, not its current resource, route, navigation gr
 Do not add `Core`, `Capability`, `Platform`, generic `Service`, or generic `Management` affixes.
 
 Use the natural stable grammatical form. `Auth` is an accepted controlled abbreviation. Resource terms such as Account, Users, Roles, Logging, or Administration do not become Core owners without separate ownership acceptance.
+
+Phase 6 accepts the Core Navigation identity:
+
+```text
+Technical name: Navigation
+PHP path:       app/Core/Navigation/
+Namespace:      App\Core\Navigation
+owner_key:      navigation
+Non-PHP slug:   navigation
+Title:          Navigation
+```
+
+Product owners contribute through `app/Core/<Contributor>/Contrib/Navigation/` or `Modules/<Contributor>/src/Contrib/Navigation/`.
 
 ## 6. Module Identity
 
@@ -250,14 +265,16 @@ Prefer precise capability roles such as `PasswordHasher`, `RiskScorer`, `TokenIs
 | Middleware                  | `<Purpose>Middleware`             | `RequireRecentAuthenticationMiddleware`   |
 | API Resource                | `<Subject>Resource`               | `UserResource`                            |
 | API collection              | `<Subject>Collection`             | `UserCollection`                          |
-| Presenter                   | `<SubjectOrSurface>Presenter`     | `UserIndexPresenter`                      |
+| Presenter                   | `<SubjectOrPage>Presenter`        | `UserIndexPresenter`                      |
 | Renderer                    | `<SubjectOrFormat>Renderer`       | `AuditCsvRenderer`                        |
-| Page data                   | `<PageOrSurface>PageData`         | `UserIndexPageData`                       |
-| ViewModel                   | `<SubjectOrSurface>ViewModel`     | `UserIndexViewModel`                      |
+| Page data                   | `<Page>PageData`                  | `UserIndexPageData`                       |
+| ViewModel                   | `<SubjectOrPage>ViewModel`        | `UserIndexViewModel`                      |
 | Console command             | `<Verb><Subject>Command`          | `RebuildRegistrationManifestCommand`      |
 | Webhook handler             | `<Provider><Event>WebhookHandler` | `QuickBooksCustomerUpdatedWebhookHandler` |
 
 Use ViewModel only when presentation-specific derived state or behavior exceeds a PageData object.
+
+Frame Surface is an architecture region name, not a default PHP role or class suffix. Do not create `ProjectsSurface`, `SettingsSurface`, `<Surface>Presenter`, `<Surface>PageData`, or owner-local `Surface/` namespaces for ordinary Product presentation.
 
 Delivery artifacts parse, validate, translate, present, or render. They delegate application behavior inward.
 

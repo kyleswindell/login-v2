@@ -66,16 +66,16 @@ Use repository-wide four-digit identifiers.
 
 Historical archived records already reserve:
 
-| Identifier | Historical Record |
-| --- | --- |
-| `ADR-0001` | Documentation System |
-| `ADR-0002` | Block Based Website Builder Direction |
-| `ADR-0003` | App 2.0 Platform Foundation |
+| Identifier | Historical Record                                 |
+| ---------- | ------------------------------------------------- |
+| `ADR-0001` | Documentation System                              |
+| `ADR-0002` | Block Based Website Builder Direction             |
+| `ADR-0003` | App 2.0 Platform Foundation                       |
 | `ADR-0004` | Shared Core Instance And Panel Boundary Direction |
 
 Next available identifier:
 
-- `ADR-0008`
+- `ADR-0009`
 
 Before assigning it, search active and archived decision paths again to confirm no newer record exists.
 
@@ -90,8 +90,9 @@ Add proposed records here while they await authorized review.
 ## 6. Accepted Decisions
 
 - [ADR-0005: Core, Modules, And UI Ownership Taxonomy](adr-0005-core-modules-ui-ownership-taxonomy.md) — Establishes Core, Modules, and UI as the three canonical source-of-truth ownership areas.
-- [ADR-0006: Tenant, Instance, Workspace, Principal, Actor, And Invocation Vocabulary](adr-0006-tenant-instance-workspace-principal-and-invocation-vocabulary.md) — Establishes Tenant and Instance isolation, User Account-specific Workspaces, Principal and assurance identity, Actor attribution, and Invocation Channel vocabulary.
+- [ADR-0006: Tenant, Instance, Workspace, Principal, Actor, And Invocation Vocabulary](adr-0006-tenant-instance-workspace-principal-and-invocation-vocabulary.md) — Establishes Tenant and Instance isolation, User Account and identity vocabulary, Principal and assurance identity, Actor attribution, and Invocation Channel vocabulary. Its original Workspace cardinality and Global Administration classification are partially superseded by ADR-0008.
 - [ADR-0007: Owner, Registry, And Identifier Key Conventions](adr-0007-owner-registry-and-identifier-key-conventions.md) — Establishes canonical key grammar, ownership fields, key-family formats, collision rules, and compatibility aliases.
+- [ADR-0008: Workspace, Navigation Hierarchy, And Frame Surface Model](adr-0008-workspace-navigation-and-frame-surface-model.md) — Establishes multiple available Workspaces, exactly one active Workspace, the persistent Frame, narrow Frame Surfaces, A–E+ navigation, and Global Administration as a Workspace.
 
 Historical archived records must be reviewed before any are promoted back into the active branch.
 
@@ -101,7 +102,9 @@ No active deprecated decision records are currently published.
 
 ## 8. Superseded Decisions
 
-No active superseded decision records are currently published.
+No active decision is superseded in full.
+
+ADR-0008 partially supersedes only the Workspace-cardinality and Global Administration provisions identified in ADR-0006. ADR-0006 otherwise remains accepted.
 
 ## 9. Rejected Decisions
 

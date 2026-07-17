@@ -2,7 +2,7 @@
 DOC-META
 title: Phase 6.4 Dependency Direction Verification
 doc_type: planning
-status: draft
+status: active
 owner: architecture
 canonical: false
 canonical_path: docs/07-planning/Milestones/milestone-0/goal-3/phase-6/6-4-dependency-direction-verification.md
@@ -21,12 +21,12 @@ Verify that the ownership boundaries accepted in [Phase 6.3](6-3-ownership-bound
 
 ## 2. Status
 
-- Planning lifecycle: draft
-- Acceptance state: proposed for repository-owner Phase 6 review
+- Planning lifecycle: active
+- Acceptance state: accepted through repository-owner Phase 6 review; final closeout remains pending canonical reconciliation, repository checks, and the Issue #53 Final Acceptance Record
 - Implementation state: dependency validation only
 - Owning GitHub issue: [#53](https://github.com/kyleswindell/login-v2/issues/53)
 - Depends on: Phase 6.3 and accepted Goal 3 dependency rules
-- Provisional dependency: Frame Surface terminology remains subject to ADR-0008 acceptance
+- Architecture dependency: Frame Surface terminology is governed by accepted ADR-0008
 
 ## 3. Required Dependency Matrix
 
@@ -119,7 +119,7 @@ Owner behavior -> registration compiler or compiled manifest
 - No dependency exception is required.
 - The earlier broad Surface terminology requires reconciliation, but the underlying dependency inversion remains valid.
 
-## 9. Proposed Decision
+## 9. Accepted Decision
 
 > The representative examples use permitted dependency direction. Settings and Projects depend on Core Navigation and Access through public Contracts. Core Navigation consumes validated Contributions and authoritative Core results without importing optional Module implementation. UI consumes normalized render data only. Delivery adapters depend inward on their owning behavior, and no owner accesses another owner’s persistence internals.
 >

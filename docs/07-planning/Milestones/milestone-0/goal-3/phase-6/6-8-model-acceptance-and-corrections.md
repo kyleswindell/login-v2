@@ -2,13 +2,13 @@
 DOC-META
 title: Phase 6.8 Model Acceptance And Corrections
 doc_type: planning
-status: draft
+status: active
 owner: architecture
 canonical: false
 canonical_path: docs/07-planning/Milestones/milestone-0/goal-3/phase-6/6-8-model-acceptance-and-corrections.md
 parent: docs/07-planning/Milestones/milestone-0/goal-3/phase-6/index.md
 template: docs/09-reference/templates/docs/_planning.md
-summary: Records the provisional Phase 6 result, representative-example classifications, bounded corrections, later-owner decisions, and Phase 7 handoff.
+summary: Records the accepted Phase 6 result, representative-example classifications, bounded corrections, later-owner decisions, canonical reconciliation, and Phase 7 handoff.
 -->
 
 # Phase 6.8 Model Acceptance And Corrections
@@ -19,21 +19,21 @@ Parent: [Phase 6 Representative Architecture Validation Index](index.md)
 
 Determine whether the accepted Goal 3 repository model can represent the four Phase 6 examples without unresolved structural ambiguity.
 
-This is a first draft for repository-owner review. It does not record final acceptance.
+This document records the repository-owner accepted Phase 6 decisions. Final Phase 6 closeout remains pending canonical reconciliation, repository checks, and the Issue #53 Final Acceptance Record.
 
 ## 2. Status
 
-- Planning lifecycle: draft
-- Acceptance state: pending repository-owner Phase 6 review
+- Planning lifecycle: active
+- Acceptance state: accepted through repository-owner Phase 6 review; final closeout remains pending canonical reconciliation, repository checks, and the Issue #53 Final Acceptance Record
 - Implementation state: validation conclusion only
 - Owning GitHub issue: [#53](https://github.com/kyleswindell/login-v2/issues/53)
 - Depends on: Phases 6.1 through 6.7 and Phase 6.90
-- Blocking proposal: ADR-0008 must be accepted, revised, or rejected before final Phase 6 acceptance
-- Repository reconciliation: deferred until the end of Phase 6 and Goal 3 alignment
+- Durable decision: ADR-0008 accepted
+- Repository reconciliation: applied by the Phase 6 closeout change set; repository validation and Issue #53 closeout remain pending
 
 ## 3. Representative Results
 
-| Example                          | Provisional classification                            | Finding                                                                                                                                           |
+| Example                          | Accepted classification                            | Finding                                                                                                                                           |
 | -------------------------------- | ----------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Settings                         | Fits without structural exception                     | Required Core capability, Settings Host, and Navigation Contributor roles remain distinct                                                         |
 | Projects                         | Fits without structural exception                     | Optional package owns its behavior and contributes Product navigation through Core Contracts                                                      |
@@ -143,16 +143,16 @@ No permanent structural exception is currently required.
 
 Compatibility paths may remain temporarily only through explicit migration records, bounded allowlists, and removal conditions. Transitional placement must not become a target precedent.
 
-## 9. Proposed Phase 6 Result
+## 9. Accepted Phase 6 Result
 
 > The Goal 3 repository architecture is practical for the representative Settings, Projects, Modal and Dialog, and Sidebar Navigation examples.
 > The model requires one bounded correction to Workspace, Frame Surface, and navigation terminology and one corresponding Core Navigation Host identity. With that correction, each example has a clear owner, target root, namespace or artifact identity, permitted dependencies, test location, documentation owner, preimplementation proof strategy, and enforceable guardrails.
 > No permanent architecture exception or new source-of-truth owner is required.
-> Final Phase 6 acceptance remains pending ADR-0008 resolution, repository-owner review, and end-of-Goal-3 documentation reconciliation.
+> Phase 6 decisions are accepted. Final closeout remains pending application and validation of canonical reconciliation and the GitHub Issue #53 Final Acceptance Record.
 
 ## 10. Required Reconciliation
 
-After the repository owner accepts the Phase 6 result:
+The accepted Phase 6 result requires the following reconciliation:
 
 - update the Goal 3 target architecture and Phase 6 index;
 - update Issue #53 terminology and final acceptance record;
@@ -167,7 +167,7 @@ The exact existing-file change set should be reviewed immediately before reconci
 
 ## 11. Phase 7 Handoff
 
-Phase 7 may proceed after final Phase 6 acceptance to:
+Phase 7 may proceed after Phase 6 canonical reconciliation, repository checks, and the Issue #53 Final Acceptance Record to:
 
 - map coarse current-to-target migration direction;
 - classify moves, namespace changes, package extraction, registration changes, UI bundle consolidation, and compatibility work;

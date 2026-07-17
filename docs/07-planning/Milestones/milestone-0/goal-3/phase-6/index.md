@@ -67,14 +67,14 @@ Phase 6 does not:
 - Decision state: Phase 6.1 through 6.8 and Phase 6.90 accepted through repository-owner Phase 6 review
 - Architecture correction: ADR-0008, multiple available Workspaces, narrow Frame Surfaces, A–E+ navigation, and Core Navigation identity accepted
 - Permanent structural exceptions: none
-- Consolidated deliverables: drafted for repository application and validation
+- Consolidated deliverables: accepted; canonical reconciliation applied by this closeout change set, with repository validation pending
 - Implementation state: accepted target validation only
-- Final Phase 6 closeout: pending repository reconciliation, documentation checks, Goal 3 synthesis synchronization, and Issue #53 Final Acceptance Record
+- Final Phase 6 closeout: pending repository documentation checks and the Issue #53 Final Acceptance Record
 - Owning GitHub issue: [#53](https://github.com/kyleswindell/login-v2/issues/53)
 - Parent GitHub issue: [#19](https://github.com/kyleswindell/login-v2/issues/19)
 - Downstream migration issue: [#54](https://github.com/kyleswindell/login-v2/issues/54)
 
-This index does not claim repository application, runtime implementation, migration, or guardrail execution.
+This index records accepted target decisions and canonical reconciliation. It does not claim runtime implementation, physical migration, guardrail execution, or final Issue #53 closeout.
 
 ## 4. Reading Order
 

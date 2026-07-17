@@ -54,15 +54,17 @@ Unknown, inactive, suspended, or deactivated Tenant and Instance state must fail
 
 ## 4. Workspace
 
-Workspace is resolved for one authenticated User Account after Tenant and Instance resolution.
+Workspace availability is resolved for one authenticated User Account after Tenant and Instance resolution.
 
-Workspace is not a persistent Tenant scope, database boundary, or registry record.
+A User Account may have access to one or more Workspaces. Exactly one Workspace is active in a rendered context.
+
+Workspace is not a persistent Tenant scope, database boundary, registry record, or authorization grant.
 
 ## 5. Internal Tenant
 
 The Internal Tenant follows the same isolation contract as client Tenants.
 
-Authorized Internal Tenant User Accounts may use a Global Administration Surface. That Surface does not collapse Internal Tenant data with client Tenant data.
+Authorized Internal Tenant User Accounts may access the Global Administration Workspace. That Workspace does not collapse Internal Tenant data with client Tenant data.
 
 ## 6. Cross-Instance Administration
 
@@ -88,6 +90,8 @@ Retention, legal hold, archival, export, erasure, and physical deletion are sepa
 ## 8. Related
 
 - [ADR-0006](../01-decisions/adr-0006-tenant-instance-workspace-principal-and-invocation-vocabulary.md)
+- [ADR-0008](../01-decisions/adr-0008-workspace-navigation-and-frame-surface-model.md)
+- [Workspace Navigation And Frame Composition](workspace-navigation-and-frame-composition.md)
 - [System Overview](system-overview.md)
 - [Tenant, Instance, User Account, And Workspace Model](workspace-identity-model.md)
 - [Auth Architecture](auth.md)

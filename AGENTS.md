@@ -124,11 +124,13 @@ Examples include:
 - Notifications
 - Settings
 - Preferences
-- Shell
+- Workspace
 - Navigation
 - Dashboard
 - Setup
 - registries, Module lifecycle, and contribution discovery
+
+Core does not own one consolidated `Shell` capability. Workspace and Navigation own application-state resolution for the persistent Frame, while UI owns the reusable Frame Layout and rendering contracts. The persistent Frame is limited to Global Header Navigation, Sidebar Navigation, and the Main content outlet.
 
 Core may expose routes, services, policies, events, migrations, tests, account/admin surfaces, and presentation adapters when it owns the underlying responsibility.
 

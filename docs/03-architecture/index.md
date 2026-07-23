@@ -8,7 +8,7 @@ canonical: true
 canonical_path: docs/03-architecture/index.md
 parent: docs/index.md
 template: docs/09-reference/templates/docs/_index.md
-summary: Routes canonical Login 2.0 system, repository, application-registration, Workspace, Frame, navigation, stack, and tenancy architecture.
+summary: Routes canonical Login 2.0 system, repository, application-registration, public Contract, cross-owner interaction, Workspace, Frame, navigation, stack, and tenancy architecture.
 -->
 
 # Architecture Index

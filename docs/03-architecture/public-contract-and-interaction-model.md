@@ -2,7 +2,7 @@
 DOC-META
 title: Public Contract And Interaction Model
 doc_type: architecture
-status: draft
+status: active
 owner: architecture
 canonical: true
 canonical_path: docs/03-architecture/public-contract-and-interaction-model.md
@@ -26,7 +26,7 @@ This document answers:
 
 Status:
 
-- Target design: proposed for repository-owner acceptance through GitHub issue #23
+- Target design: accepted through GitHub issue #23 and pull request #56
 - Current implementation: pre-alpha and not target authority
 - Goal 3 ownership, topology, placement, dependency, and naming: accepted and fixed
 - Physical migration or production implementation authorized: no
@@ -168,13 +168,14 @@ A Contribution declaration communicates at least:
 | ------------------------------------ | ---------------------------------------------------------------- |
 | Contributor owner identity           | Identifies the Contribution owner                                |
 | Host owner identity                  | Identifies the accepting owner                                   |
-| `registry_key`                       | Identifies the Host Registry                                     |
-| Extension Point identity             | Identifies the Host Contract                                     |
+| `registry_key`                       | Identifies the Host Registry or Extension Point under ADR-0007   |
 | `contribution_key`                   | Provides stable Contribution identity                            |
 | Artifact or implementation reference | Identifies the declared Contribution                             |
 | Declared dependencies                | Supports structural dependency validation                        |
 | Source trace                         | Links compiled output to its declaration                         |
 | Host-defined metadata                | Supplies only metadata permitted by the Extension Point Contract |
+
+The canonical Contribution identity remains the pair `registry_key` and `contribution_key`.
 
 These are semantic requirements, not a mandated serialization format.
 
@@ -216,13 +217,13 @@ Expected public rejection is part of the provider Contract. Internal exceptions,
 ## 9. Core Runtime
 Core Runtime owns only the fixed technical invocation envelope and its lifecycle.
 
-| Envelope field         | Meaning                                                               |
-| ---------------------- | --------------------------------------------------------------------- |
-| Invocation identifier  | Unique identifier for one execution                                   |
-| Correlation identifier | Identifier shared across related executions                           |
-| Causation identifier   | Prior invocation or message, when known                               |
-| Invocation channel     | HTTP, console, queue, scheduler, webhook, or another accepted channel |
-| Start time             | Technical execution start timestamp                                   |
+| Envelope field         | Meaning                                                |
+| ---------------------- | ------------------------------------------------------ |
+| Invocation identifier  | Unique identifier for one execution                    |
+| Correlation identifier | Identifier shared across related executions            |
+| Causation identifier   | Prior invocation or message, when known                |
+| Invocation channel     | Canonical Invocation Channel value defined by ADR-0006 |
+| Start time             | Technical execution start timestamp                    |
 
 Runtime owns creation or restoration at accepted invocation boundaries, propagation of correlation and causation, immutable access through one narrow public Contract, required initialization and teardown, and rejection of a missing or malformed envelope.
 

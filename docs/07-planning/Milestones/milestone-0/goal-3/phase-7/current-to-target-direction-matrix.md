@@ -183,12 +183,11 @@ Before Phase 7.2 acceptance:
 
 ## 13. Acceptance Record
 
-* Outcome: Ready for repository-owner acceptance
+* Outcome: Accepted
 * Date: 2026-07-21
-* Accepted or rejected by:
+* Accepted or rejected by: Repository owner
 * Accepted matrix revision: Reconciled 66-row Phase 7 current-to-target direction matrix
 * Required corrections:
-
   * Added repository governance and instruction surfaces
   * Added owner-specific runtime artifacts
   * Added translations and owner-specific resource bundles

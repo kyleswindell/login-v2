@@ -351,16 +351,11 @@ Before acceptance:
 
 ## 17. Acceptance Record
 
-* Outcome:
-* Date:
-* Accepted or rejected by:
-* Accepted exception policy:
-* Accepted architecture exceptions:
-* Proposed architecture exceptions:
-* Rejected presumed exceptions:
-* Required corrections:
-* Validation evidence:
-* Downstream handoff:
+* Outcome: Accepted
+* Accepted architecture exceptions: None
+* Proposed architecture exceptions: None
+* Rejected presumed exceptions: As listed
+* Required corrections: None
 
 ## 18. Related
 

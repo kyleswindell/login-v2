@@ -454,15 +454,12 @@ Before acceptance:
 
 ## 13. Acceptance Record
 
-* Outcome:
-* Date:
-* Accepted or rejected by:
-* Accepted disposition vocabulary:
-* Required corrections:
-* Matrix rows corrected:
-* Compatibility implications:
-* Validation evidence:
-* Downstream handoff:
+* Outcome: Accepted
+* Accepted disposition vocabulary: Retain, Move, Rename, Split, Merge, Extract, Replace, Remove later, Decision blocked
+* Required corrections: None after matrix normalization
+* Matrix rows corrected: All rows normalized to one primary disposition
+* Compatibility implications: None created by disposition
+* Downstream handoff: Phase 7.4 compatibility requirements
 
 ## 14. Related
 

@@ -366,14 +366,12 @@ Before acceptance:
 
 ## 16. Acceptance Record
 
-* Outcome:
-* Date:
-* Accepted or rejected by:
-* Accepted later-owner policy:
-* Open later-owner decisions:
-* Required corrections:
-* Validation evidence:
-* Downstream handoff:
+* Outcome: Accepted
+* Open later-owner decisions: P7-LOD-001 through P7-LOD-006
+* Resolved later-owner decisions: None
+* Goal 3 blocking decisions: None
+* Required corrections: None
+* Downstream handoff: Phase 7.7 architecture-rule promotion
 
 ## 17. Related
 

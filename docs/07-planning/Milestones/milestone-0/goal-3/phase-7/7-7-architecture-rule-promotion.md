@@ -35,6 +35,7 @@ Planning documents remain historical decision evidence. They must not become the
 * Decision state: proposed for repository-owner Phase 7 review
 * Implementation state: planning only
 * Canonical-source edits authorized: no
+* Bounded reconciliation corrections: permitted only through explicit repository-owner direction
 * Register: [Durable Promotion Register](durable-promotion-register.md)
 * Owning GitHub issue: [#54](https://github.com/kyleswindell/login-v2/issues/54)
 * Parent GitHub issue: [#19](https://github.com/kyleswindell/login-v2/issues/19)
@@ -459,7 +460,7 @@ Required-before-acceptance promotion handoffs:
 * only concise active rules are promoted;
 * historical rationale remains in planning;
 * private Project workflow is not promoted automatically;
-* immediate topology, placement, dependency, Frame, Navigation, Laravel-boundary, and Runtime rules require promotion or confirmation before Goal 3 acceptance;
+* Immediate topology, placement, dependency, Frame, Navigation, Laravel-boundary, and Runtime rules require confirmed durable coverage or an accepted promotion handoff before Goal 3 acceptance.
 * persistence, UI, migration, and verification details may use explicit later-owner canonical handoffs;
 * all promotions are tracked in the durable-promotion register.
 
@@ -479,15 +480,12 @@ Required-before-acceptance promotion handoffs:
 
 ## 16. Acceptance Record
 
-* Outcome:
-* Date:
-* Accepted or rejected by:
-* Accepted promotion policy:
-* Required-before-acceptance promotion handoffs:
-* Accepted later-owner handoffs:
-* Required corrections:
-* Validation evidence:
-* Downstream handoff:
+* Outcome: Accepted
+* Accepted promotion policy: Durable Goal 3 rules require confirmed canonical coverage or an explicit accepted downstream handoff
+* Confirmed durable promotions: P7-PROM-001 through P7-PROM-007
+* Accepted later-owner handoffs: P7-PROM-008 through P7-PROM-012
+* Required corrections: ADR-0005 Shell clarification and promotion-register reconciliation completed
+* Downstream handoff: Phase 7.8 Goal 3 artifact reconciliation
 
 ## 17. Related
 

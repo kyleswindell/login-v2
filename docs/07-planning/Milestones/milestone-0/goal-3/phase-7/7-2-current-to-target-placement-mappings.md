@@ -342,15 +342,12 @@ Before Phase 7.2 acceptance:
 
 ## 14. Acceptance Record
 
-* Outcome:
-* Date:
-* Accepted or rejected by:
-* Accepted mapping artifact:
-* Accepted major directions:
-* Blocked mappings:
-* Required corrections:
-* Evidence:
-* Downstream handoff:
+* Outcome: Accepted
+* Accepted mapping artifact: Reconciled 66-row current-to-target direction matrix
+* Accepted major directions: As summarized in Section 11 and the matrix
+* Blocked mappings: None
+* Required corrections: Completed during matrix reconciliation
+* Downstream handoff: Phase 7.3 migration classification
 
 ## 15. Related
 

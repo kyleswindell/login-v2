@@ -368,15 +368,12 @@ Before acceptance:
 
 ## 14. Acceptance Record
 
-* Outcome:
-* Date:
-* Accepted or rejected by:
-* Accepted mapping granularity:
-* Accepted preservation policy:
-* Accepted compatibility policy:
-* Required corrections:
-* Evidence:
-* Downstream handoff:
+* Outcome: Accepted
+* Accepted mapping granularity: Pattern-level major subtree, repeated placement pattern, cohesive responsibility group, transitional architecture area, Laravel boundary, reusable UI pattern, or verified compatibility subject
+* Accepted preservation policy: Current non-UI implementation is disposable by default; accepted UI Contracts, useful tooling, required behavior and evidence, and verified external or persisted dependencies remain protected
+* Accepted compatibility policy: Opt-in and evidence-based
+* Required corrections: None
+* Downstream handoff: Phase 7.2 current-to-target placement mappings
 
 ## 15. Related
 

@@ -89,6 +89,12 @@ Parent: [Documentation Standards Index](index.md)
   - [18.3. Prohibited Content](#183-prohibited-content)
   - [18.4. Canonical Status](#184-canonical-status)
   - [18.5. Review](#185-review)
+- [`definition`](#definition)
+  - [Purpose](#purpose)
+  - [Normal Uses](#normal-uses)
+  - [Prohibited Content](#prohibited-content)
+  - [Canonical Status](#canonical-status)
+  - [Review](#review)
 - [19. Dedicated Type Standards](#19-dedicated-type-standards)
 - [20. Type Review Checklist](#20-type-review-checklist)
 - [21. Related](#21-related)
@@ -607,6 +613,28 @@ Use `canonical: false` by default.
 ### 18.5. Review
 
 Confirm the document has a review, promotion, or closure path and does not compete with instruction or canonical owners.
+
+## `definition`
+
+### Purpose
+
+Define the responsibility, architecture area, capability, Module, UI area, Surface, Delivery Adapter, framework boundary, or repository concept.
+
+### Normal Uses
+
+(TODO)
+
+### Prohibited Content
+
+(TODO)
+
+### Canonical Status
+
+(TODO)
+
+### Review
+
+(TODO)
 
 ## 19. Dedicated Type Standards
 

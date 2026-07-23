@@ -49,7 +49,7 @@ Parent: [Planning Index](../index.md)
 
 Define the M0 milestone as the convergence point between the current Login 2.0 repository and the accepted implementation-ready target state.
 
-M0 exists because the repository already contains substantial application, module, Shared UI, database, documentation, test, operations, and agent-governance work, while several foundational decisions and ownership boundaries remain unsettled or distributed across planning documents.
+M0 exists because the repository already contains substantial application, Module, UI, database, documentation, test, operations, and agent-governance work, while several foundational decisions and ownership boundaries remain unsettled or distributed across planning documents.
 
 M0 must convert that state into one coherent implementation authority.
 
@@ -187,7 +187,7 @@ M0 does not generally require:
 - Laravel application runtime
 - PostgreSQL
 - Redis, queues, scheduler, Reverb, and notifications
-- Shared UI and Carbon-aligned component infrastructure
+- UI and Carbon-aligned component infrastructure
 
 ## 5. Accepted Baseline
 
@@ -207,10 +207,10 @@ M0 baseline date: 2026-07-10
 The accepted baseline includes the current:
 
 - application code
-- Core and Platform support
-- Business Modules
+- Core and transitional Platform-named support
+- Modules
 - routes and middleware
-- Shared UI elements, components, patterns, contracts, and tests
+- UI Elements, Components, Patterns, contracts, and tests
 - Carbon SVG icon library
 - JavaScript and CSS runtime behavior
 - database migrations and seeders
@@ -448,7 +448,7 @@ Create an accurate inventory of the accepted baseline and assign a reviewable di
 - root repository files and configuration
 - `.agents`, skills, memory, and baselines
 - `app/Core`
-- `app/Platform`
+- `app/Platform` (transitional current placement)
 - `app/Surfaces`
 - `app/Http` and other current app folders
 - `Modules`
@@ -498,7 +498,7 @@ The matrix may use a more specific status only when the above mapping remains vi
 
 - Inventory current folders, namespaces, and ownership.
 - Inventory routes, middleware, commands, jobs, events, and listeners.
-- Inventory Core, Platform, Module, and Shared UI surfaces.
+- Inventory Core capabilities, Modules, UI, Laravel integration, owner-specific Surfaces, Delivery Adapters, and Host-owned Registries; classify Platform-named evidence as transitional.
 - Inventory UI contracts and references.
 - Inventory database tables, migrations, seeders, and documentation.
 - Inventory tests and classify failures.
@@ -537,7 +537,7 @@ Define the accepted target structure and naming conventions so future migrations
 M0 must define intended ownership for:
 
 - `app/Core`
-- `app/Platform`
+- `app/Platform` (transitional current placement)
 - `app/Surfaces`
 - `Modules`
 - `resources/views`
@@ -637,10 +637,11 @@ Make important contracts discoverable, validated, and machine-reviewable without
 
 ### 11.2 Contract Coverage
 
-- Core service contracts
-- Platform service contracts
-- module package definitions
-- registry and contribution contracts
+- Core capability contracts
+- Module package definitions and contracts
+- UI contracts
+- Laravel integration contracts
+- Host Registry, Extension Point, and Contribution contracts
 - route and middleware expectations
 - UI element contracts
 - UI component contracts
@@ -653,7 +654,7 @@ Make important contracts discoverable, validated, and machine-reviewable without
 - permission and policy contracts
 - audit-event contracts
 
-### 11.3 Shared UI Contract Visibility
+### 11.3 UI Contract Visibility
 
 The Carbon-aligned UI system must expose enough metadata to review current APIs consistently.
 
@@ -706,7 +707,7 @@ An optional local-development HTTP viewer or API may use the same registry, but 
 
 - contract ownership matrix
 - View Surface and Renderer Matrix
-- Shared UI contract metadata standard
+- UI contract metadata standard
 - contract registry or discovery specification
 - deterministic contract export
 - duplicate and missing-path validation
@@ -718,7 +719,7 @@ An optional local-development HTTP viewer or API may use the same registry, but 
 - Add or finalize the View Surface and Renderer Matrix.
 - Inventory Core and Platform contracts.
 - Inventory module definitions and contribution contracts.
-- Define Shared UI contract metadata requirements.
+- Define UI contract metadata requirements.
 - Implement deterministic UI contract export.
 - Add duplicate key and missing-path validation.
 - Define contract lifecycle and versioning.
@@ -880,7 +881,7 @@ Reconcile current migrations and tables with accepted capability ownership and t
 - current database tables
 - table contract documentation
 - planned tables and persistent concepts
-- Core, Platform, Module, instance, workspace, and tenant ownership
+- Core capability, Module, UI, Laravel integration, instance, workspace, and tenant ownership
 - key and relationship design
 - uniqueness and indexing
 - lifecycle and status fields
@@ -996,8 +997,8 @@ Define how capabilities cooperate without duplicating ownership or creating circ
 - Scheduler
 - APIs and webhooks
 - service identities
-- Platform Surfaces
-- Business Modules
+- owner-specific Surfaces
+- Modules
 
 ### 14.3 Required Questions
 
@@ -1026,7 +1027,7 @@ Who owns operational failure handling?
 - Audit/Monitoring/Notifications/Response boundary contract
 - settings/preferences/registry boundary contract
 - service identity, job actor, API, and webhook boundary contract
-- Business Module consumption rules
+- Module consumption rules
 
 ### 14.5 Candidate Child Issues
 
@@ -1037,7 +1038,7 @@ Who owns operational failure handling?
 - Define settings, preferences, and registry interactions.
 - Define service identity, job actor, command actor, API, and webhook boundaries.
 - Define events, listeners, queues, and transaction-boundary expectations.
-- Define Business Module consumption and extension rules.
+- Define Module consumption and extension rules.
 
 ### 14.6 Dependencies
 
@@ -1317,7 +1318,7 @@ At minimum, evaluate gates for:
 - database migration integrity
 - module and registry integrity
 - contract discovery validation
-- targeted Shared UI contract tests
+- targeted UI contract tests
 - documentation guardrails
 - production asset build
 - browser review smoke coverage
@@ -1523,8 +1524,8 @@ The exact canonical paths may be adjusted during Goal 01 and Goal 03, but one ca
 | Current-state disposition matrix      | `docs/07-planning/00-overview/`                              | Goal 02             | Repository-wide inventory and disposition                 |
 | Target repository tree                | Architecture-boundary planning                               | Goal 03             | Include dependency direction                              |
 | Folder and namespace migration matrix | Migration planning                                           | Goal 03 and Goal 09 | Current-to-target map                                     |
-| View Surface and Renderer Matrix      | Core surface and composition planning                       | Goal 04             | Includes ViewModel/PageData and renderer ownership        |
-| Shared UI contract export             | Repository tooling backed by canonical contracts             | Goal 04             | Generated output is non-canonical                         |
+| View Surface and Renderer Matrix      | Applicable Core/Module Surface planning with UI contracts     | Goal 04             | Includes ViewModel/PageData and renderer ownership        |
+| UI contract export                    | Repository tooling backed by canonical contracts             | Goal 04             | Generated output is non-canonical                         |
 | UI readiness matrix                   | UI planning                                                  | Goal 05             | Includes manual review and Carbon provenance              |
 | Manual pattern work queue             | UI planning plus GitHub issues                               | Goal 05             | GitHub owns active status                                 |
 | Current-versus-target data matrix     | Database planning and table contracts                        | Goal 06             | Include scope and migration direction                     |
@@ -1720,10 +1721,10 @@ M0 is complete when all of the following are true.
 - [ ] naming conventions are accepted
 - [ ] current-to-target migration mappings exist
 
-### 27.3 Contracts And Shared UI
+### 27.3 Contracts And UI
 
 - [ ] important contracts are discoverable
-- [ ] Shared UI contracts are machine-reviewable
+- [ ] UI contracts are machine-reviewable
 - [ ] UI readiness and blockers are visible
 - [ ] manual pattern work is sequenced
 - [ ] manual review authority is explicit
@@ -1795,7 +1796,7 @@ A material exception discovered after M0 must be handled through:
 - [Core Service Build Plan Matrix](../core-service-build-plan-matrix.md)
 - [Application Structure Baseline Planning](../01-architecture-boundaries/application-structure-baseline-planning.md)
 - [Core Capability Package Migration Planning](../01-architecture-boundaries/core-capability-package-migration-planning.md)
-- [View Surface Composition Planning](../03-platform-surfaces/view-surface-composition-planning.md)
+- [View Surface Composition Planning](../03-platform-surfaces/view-surface-composition-planning.md) — retained in the transitional `03-platform-surfaces/` planning folder; the folder name does not establish target ownership
 - [Planning Documentation Standards](../../02-standards/documentation/Planning%20Documentation%20Standards.md)
 - [Decision Record Standards](../../02-standards/documentation/Decision%20Record%20Standards.md)
 - [Document Type Standards](../../02-standards/documentation/Document%20Type%20Standards.md)

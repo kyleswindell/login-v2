@@ -51,7 +51,7 @@ This standard applies to:
 - application settings
 - platform settings
 - Core capability settings
-- Business Module settings
+- Module settings
 - user preferences
 - notification preferences
 - registry-backed configuration

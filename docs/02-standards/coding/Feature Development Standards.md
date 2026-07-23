@@ -12,21 +12,22 @@ canonical: true
 canonical_path: docs/02-standards/coding/Feature Development Standards.md
 parent: docs/02-standards/index.md
 template: docs/09-reference/templates/docs/_doc.md
-summary: Defines standards for developing Core Capabilities, Platform Surfaces, Business Modules, Shared UI features, and their documentation, permissions, settings, audit, and verification.
+summary: Defines standards for developing Core capabilities, Modules, UI, Laravel integration, and owner-specific technical responsibilities with their documentation, permissions, settings, audit, and verification.
 -->
 
 # Feature Development Standards
 
-This document defines development standards for discrete capabilities and surfaces in Login App 2.0.
+This document defines development standards for discrete capabilities, Products, Pages, Frame composition, and reusable UI in Login App 2.0.
 
 - [1. Purpose](#1-purpose)
 - [2. Current Vocabulary](#2-current-vocabulary)
 - [3. Ownership Decision Before Implementation](#3-ownership-decision-before-implementation)
 - [4. Layer Ownership](#4-layer-ownership)
   - [4.1. Core Capability](#41-core-capability)
-  - [4.2. Platform Surface](#42-platform-surface)
-  - [4.3. Business Module](#43-business-module)
-  - [4.4. Shared UI](#44-shared-ui)
+  - [4.2. Module](#42-module)
+  - [4.3. UI](#43-ui)
+  - [4.4. Laravel Integration](#44-laravel-integration)
+  - [4.5. Technical Responsibilities](#45-technical-responsibilities)
 - [5. Canonical Feature Doc](#5-canonical-feature-doc)
 - [6. UI Ownership Standard](#6-ui-ownership-standard)
 - [7. Setup, Settings, And Preferences](#7-setup-settings-and-preferences)
@@ -49,17 +50,25 @@ Ensure new and changed functionality is planned, owned, implemented, documented,
 
 Use current project vocabulary.
 
-| Term             | Meaning                                                                                                                                  |
-| ---------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| Core Capability  | Required platform, security, identity, access, data, audit, monitoring, notification, settings, or system capability under `app/Core/*`. |
-| Platform Surface | Shell, navigation, dashboard, setup, docs, UI reference, or registry-driven presentation under `app/Platform/*`.                         |
-| Business Module  | Tenant/workspace business work area under `Modules/*`.                                                                                   |
-| Shared UI        | UI primitives, patterns, shell, layouts, CSS, JS controls, and UI reference assets.                                                      |
-| Feature Document | Canonical behavior document under `docs/04-features/`, when a capability or surface has user/admin/system behavior to describe.          |
+| Term                | Meaning                                                                                                                                               |
+| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Core capability     | Required base-application behavior, state, coordination, infrastructure, and contracts under the Core owner.                                          |
+| Module              | Optional, cohesive feature package under `Modules/*`.                                                                                                 |
+| UI                  | Reusable Elements, Components, Patterns, Layouts, CSS, JavaScript, icons, contracts, tests, and review evidence.                                      |
+| Laravel integration | Application-wide framework bootstrap, registration, and thin adaptation that does not own application behavior.                                       |
+| Workspace           | Named top-level rendered experience available to a User Account; one Workspace is active in a rendered context.                                       |
+| Product             | Major Core- or Module-owned capability available within a Workspace.                                                                                  |
+| Page                | Routed Product destination or deeper focused context rendered in Main.                                                                                |
+| Frame Surface       | Named persistent-Frame composition region; not an application owner, Product, Page, flow, or generic folder.                                          |
+| Delivery Adapter    | Owner-local HTTP, API, console, webhook, queue, scheduler, or background invocation integration.                                                      |
+| Registry            | Host-owned mechanism that defines and resolves Extension Points and validates, collects, orders, and exposes Contributions.                           |
+| Feature Document    | Canonical behavior document under `docs/04-features/`, when an owner-specific capability, Product, Page family, or workflow has behavior to describe. |
 
 The word “feature” may still be used for canonical behavior documentation, but it must not erase the implementation owner.
 
-Do not use “module” as a generic synonym for any capability. In current architecture, `Modules/*` means Business Modules.
+Do not use “module” as a generic synonym for any capability. In the current architecture, a Module is an optional package owner.
+
+Existing `app/Platform/*` paths are transitional current placement only. They establish no target ownership and are not a destination for new canonical work.
 
 ---
 
@@ -67,16 +76,17 @@ Do not use “module” as a generic synonym for any capability. In current arch
 
 Before implementing new behavior, answer:
 
-1. Is this a Core Capability, Platform Surface, Business Module, Shared UI change, or documentation/ops-only change?
+1. Is the owner a Core capability, Module, UI, Laravel integration, or a documentation/ops-only workflow owner?
 2. Which layer owns the durable behavior?
-3. Which canonical doc owns the behavior?
-4. Which routes, panels, views, commands, jobs, or APIs expose it?
-5. Which database tables, config keys, registry entries, or payloads does it affect?
-6. Which permissions, policies, gates, middleware, or access rules apply?
-7. Which audit, monitoring, notification, or error-reporting behavior applies?
-8. Which tests or manual review surfaces prove the change?
-9. Which planning note or GitHub issue owns the implementation slice?
-10. Which docs must be updated when the implementation is complete?
+3. Is the technical responsibility Product presentation, a named Frame Surface, Delivery Adapter, Registry, Action, Query, Contract, or another accepted role?
+4. Which canonical doc owns the behavior?
+5. Which routes, panels, views, commands, jobs, or APIs expose it?
+6. Which database tables, config keys, registry entries, or payloads does it affect?
+7. Which permissions, policies, gates, middleware, or access rules apply?
+8. Which audit, monitoring, notification, or error-reporting behavior applies?
+9. Which tests or manual review surfaces prove the change?
+10. Which planning note or GitHub issue owns the implementation slice?
+11. Which docs must be updated when the implementation is complete?
 
 Record answers in the GitHub issue, planning note, or canonical document before broad implementation begins.
 
@@ -103,26 +113,11 @@ Use Core for required system capabilities such as:
 
 Core must not contain business-module domain workflows unless the workflow is truly cross-cutting platform infrastructure.
 
-### 4.2. Platform Surface
-
-Use Platform for:
-
-- shell
-- navigation
-- dashboard
-- setup
-- docs viewer
-- UI reference
-- registry-driven aggregation
-- presentation of Core/Module contributions
-
-Platform may aggregate and render contributions. It must not become the owner of business rules, authorization truth, audit truth, or data-protection truth.
-
-### 4.3. Business Module
+### 4.2. Module
 
 Use `Modules/*` for tenant/workspace business work areas.
 
-Business Modules must consume Core capabilities for:
+Modules must consume Core capabilities for:
 
 - auth
 - access
@@ -133,13 +128,33 @@ Business Modules must consume Core capabilities for:
 - security
 - monitoring
 
-Business Modules must not redefine platform-level infrastructure.
+Modules must not redefine required Core infrastructure.
 
-### 4.4. Shared UI
+### 4.3. UI
 
-Use Shared UI for reusable primitives, patterns, shell components, component CSS, JS controls, and reference examples.
+Use UI for reusable primitives, patterns, shell components, component CSS, JS controls, contracts, tests, and reference examples.
 
-Shared UI must be domain-free unless explicitly scoped as a pattern or feature surface.
+UI must remain domain-free and must not own route behavior, authorization decisions, database access, or domain mutations.
+
+### 4.4. Laravel Integration
+
+Use Laravel integration for application-wide bootstrap, framework registration, and thin adaptation that cannot remain owner-local.
+
+Laravel integration must delegate durable behavior to the applicable Core capability or Module and must not become a competing application owner.
+
+### 4.5. Technical Responsibilities
+
+Classify technical responsibility separately beneath the owner:
+
+- Product Pages and workflows remain presentation owned by the Core capability or Module whose behavior they expose;
+- a Frame Surface is a named persistent-Frame composition region, not a generic owner-local Technical Role;
+- a Delivery Adapter exposes owner-controlled behavior through HTTP, API, console, webhook, queue, scheduler, or background invocation;
+- a Host owns an extensible feature and its Registry;
+- a Host-owned Registry defines and resolves Extension Points and validates, collects, orders, and exposes Contributions;
+- Contributions remain owned by their Contributors;
+- UI owns reusable Frame, Component, Pattern, Layout, CSS, JavaScript, and accessibility rendering.
+
+Product presentation and Frame rendering must not own contribution discovery, permission evaluation, Module lifecycle, Registry resolution, or domain behavior. Delivery Adapters and Invocation Channels are not Frame Surfaces.
 
 ---
 
@@ -155,7 +170,7 @@ The feature doc must state:
 - implementation status
 - behavior contract
 - users and actors
-- UI surfaces
+- Pages, Product Areas, and applicable Frame relationships
 - data model
 - permissions/security
 - tenant or workspace considerations
@@ -179,13 +194,13 @@ Planning notes must link to the canonical feature doc.
 
 Before implementing UI work, identify the UI owner:
 
-- Shared UI primitive
-- Shared UI pattern
-- Platform Surface
-- Core-owned account/admin surface
-- Business Module surface
+- UI primitive
+- UI pattern
+- Core-owned Product or Page presentation
+- Module-owned Product or Page presentation
+- named Frame Surface rendering when the change affects the persistent Frame
 - Filament/admin resource when appropriate
-- Livewire/custom Blade surface when appropriate
+- Livewire/custom Blade Page or interaction when appropriate
 
 Do not assume Filament owns all admin UI.
 
@@ -197,7 +212,7 @@ Filament resources, pages, and actions must call existing services or actions fo
 
 Every UI implementation must declare:
 
-- surface owner
+- Product/Page owner and any applicable Frame Surface
 - route path or panel owner
 - auth guard and permission gate/policy
 - database or context owner
@@ -254,7 +269,7 @@ Do not hard-code permission strings throughout the codebase.
 
 Do not rely on UI visibility as authorization.
 
-Business Modules must consume Core Access patterns rather than redefining authorization infrastructure.
+Modules must consume Core Access patterns rather than redefining authorization infrastructure.
 
 ---
 
@@ -262,7 +277,7 @@ Business Modules must consume Core Access patterns rather than redefining author
 
 Audit-worthy actions must flow through the audit pipeline owned by Core Audit.
 
-Operational failures must flow through logging or monitoring owned by the appropriate Core/Platform infrastructure.
+Operational failures must flow through logging or monitoring owned by the appropriate Core capability.
 
 At minimum, audit:
 
@@ -316,6 +331,8 @@ Apply intelligently:
 
 Every feature/capability change should define verification before implementation starts.
 
+Map each acceptance criterion to observable success and rejection behavior, exact proof, fixtures, environment, expected initial result, required final result, protected baseline, and required manual or specialist review. Preservation work uses characterization proof; new or corrected behavior uses exact expected-nonpass proof. Syntax, fixture, dependency, boot, discovery, tooling, database, and environment failures are failures.
+
 Use:
 
 - feature tests for user-visible behavior and database effects
@@ -358,6 +375,7 @@ Before completion, confirm:
 - [File Building Standards](File%20Building%20Standards.md)
 - [Testing Standards](Testing%20Standards.md)
 - [Implementation Status And Development Sync Standard](../documentation/Implementation%20Status%20And%20Development%20Sync%20Standard.md)
-- [Platform And Tenant Application Boundary](../../03-architecture/platform-boundary.md)
+- [Repository Architecture](../../03-architecture/repository-architecture.md)
+- [Workspace Navigation And Frame Composition](../../03-architecture/workspace-navigation-and-frame-composition.md)
 - [Feature Index](../../04-features/index.md)
 - [Feature Spec Template](../../09-reference/templates/docs/_feature-spec.md)

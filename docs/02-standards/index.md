@@ -7,6 +7,7 @@
   - [3.3. Security](#33-security)
   - [3.4. Logging](#34-logging)
   - [3.5. UI Standards](#35-ui-standards)
+    - [Installed Source Topology](#installed-source-topology)
   - [3.6. Documentation Standards](#36-documentation-standards)
 - [4. Related](#4-related)
 
@@ -52,6 +53,20 @@ Rules and conventions only. This branch does not own feature behavior, architect
 - [Logging Standards](logging/Logging%20Standards.md)
 
 ### 3.5. UI Standards
+
+#### Installed Source Topology
+
+Physical source paths recorded in UI standards describe the installed implementation unless explicitly labeled as target structure.
+
+The following parallel source trees are transitional under [Repository Architecture](../../03-architecture/repository-architecture.md):
+
+`resources/css/components/`
+`resources/css/patterns/`
+`resources/css/tokens/`
+`resources/css/type/`
+`resources/css/ui/`
+`resources/js/ui-controls/`
+`resources/js/internal/`
 
 - [UI Standards Index](ui/index.md)
 - [UI API Registry](ui/api-registry.md)

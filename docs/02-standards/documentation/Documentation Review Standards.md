@@ -104,10 +104,11 @@ Ask whether the change affects:
 - queues, cron, scheduler, cache, storage, mail, or services
 - troubleshooting, recovery, or incident response
 - user, admin, tenant, workspace, or public behavior
-- Core Capabilities
-- Platform Surfaces
-- Business Modules
-- Shared UI
+- Core capabilities
+- Modules
+- UI
+- Laravel integration
+- owner-specific Surfaces, Delivery Adapters, and Host-owned Registries
 - architecture or ownership
 - schema or data contracts
 - authentication, access control, audit, monitoring, secrets, or data movement

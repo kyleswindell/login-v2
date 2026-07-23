@@ -64,19 +64,19 @@ If the owner or responsibility is unclear, do not create the file yet.
 
 Use Laravel defaults unless the project has a documented reason to create a clearer ownership boundary.
 
-Current ownership direction:
+Current owner-first direction:
 
-| Owner                 | Location                       |
-| --------------------- | ------------------------------ |
-| Core Capability       | `app/Core/*`                   |
-| Platform Surface      | `app/Platform/*`               |
-| Business Module       | `Modules/*`                    |
-| Shared UI Components  | `resources/views/components/*` |
-| Shared UI CSS         | `resources/css/*`              |
-| Shared UI JS Controls | `resources/js/*`               |
-| Documentation         | `docs/*`                       |
-| Tests                 | `tests/*`                      |
-| Stubs                 | `stubs/*`                      |
+| Owner or integration boundary | Current location                                                    |
+| ----------------------------- | ------------------------------------------------------------------- |
+| Core capability               | `app/Core/*`                                                        |
+| Module                        | `Modules/*`                                                         |
+| UI                            | `resources/views/components/*`, `resources/css/*`, `resources/js/*` |
+| Laravel integration           | Applicable Laravel framework locations                              |
+| Documentation                 | `docs/*`                                                            |
+| Tests                         | `tests/*`                                                           |
+| Stubs                         | `stubs/*`                                                           |
+
+Classify Surface, Delivery Adapter, Registry, Action, Query, Contract, and similar technical responsibilities separately beneath the selected owner. Existing `app/Platform/*` paths are transitional current placement only, establish no target ownership, and are not a destination for new canonical work.
 
 Do not create new top-level application folders without explicit approval or planning documentation.
 
@@ -165,8 +165,11 @@ Use services or actions for reusable application behavior.
 Place them under the owning layer:
 
 - Core service for Core capability behavior
-- Platform service for Platform surface/aggregation behavior
-- Module service for Business Module behavior
+- Module service for Module behavior
+- UI service only for domain-free reusable UI behavior
+- Laravel integration service only for application-wide framework wiring
+
+Surface presentation remains with its Core capability or Module owner, while Host-owned Registry aggregation remains a separate responsibility. Delivery Adapters remain thin and delegate to owner-controlled behavior.
 
 Services/actions should:
 
@@ -266,7 +269,7 @@ Blade views must not own:
 - audit dispatching
 - data-protection decisions
 
-Use comments sparingly. Shared UI Blade files may use required file/header comments and section comments when they clarify component ownership.
+Use comments sparingly. UI Blade files may use required file/header comments and section comments when they clarify component ownership.
 
 Do not leave commented-out markup or alternate implementations in templates.
 

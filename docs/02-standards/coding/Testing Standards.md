@@ -8,7 +8,7 @@ canonical: true
 canonical_path: docs/02-standards/coding/Testing Standards.md
 parent: docs/02-standards/index.md
 template: docs/09-reference/templates/docs/_doc.md
-summary: Defines testing expectations for Laravel, Core Capabilities, Platform Surfaces, Business Modules, Shared UI, security boundaries, documentation, and manual review.
+summary: Defines testing expectations for Core capabilities, Modules, UI, Laravel integration, owner-specific technical responsibilities, security boundaries, documentation, and manual review.
 -->
 
 # Testing Standards
@@ -16,14 +16,15 @@ summary: Defines testing expectations for Laravel, Core Capabilities, Platform S
 This document defines testing and verification expectations for Login App 2.0.
 - [1. Purpose](#1-purpose)
 - [2. Core Rule](#2-core-rule)
+  - [2.1. Verification-First Contract](#21-verification-first-contract)
 - [3. Current Testing Direction](#3-current-testing-direction)
 - [4. Test Types](#4-test-types)
 - [5. Test Templates](#5-test-templates)
 - [6. Required Test Coverage Areas](#6-required-test-coverage-areas)
 - [7. Core Capability Testing](#7-core-capability-testing)
-- [8. Platform Surface Testing](#8-platform-surface-testing)
-- [9. Business Module Testing](#9-business-module-testing)
-- [10. Shared UI Testing](#10-shared-ui-testing)
+- [8. Product Presentation, Frame Surface, Delivery Adapter, And Registry Testing](#8-product-presentation-frame-surface-delivery-adapter-and-registry-testing)
+- [9. Module Testing](#9-module-testing)
+- [10. UI Testing](#10-ui-testing)
 - [11. Database And Migration Testing](#11-database-and-migration-testing)
 - [12. Security Testing](#12-security-testing)
 - [13. Documentation Verification](#13-documentation-verification)
@@ -51,6 +52,18 @@ Verification may be automated, manual, or both, but it must be stated clearly in
 Do not claim tests passed unless they were run successfully.
 
 If tests cannot be run, state why and identify the minimum verification command or manual review still needed.
+
+### 2.1. Verification-First Contract
+
+Before production implementation, map each acceptance criterion to an automated, manual, browser, documentation, native-platform, or specialist proof.
+
+Record observable success and rejection behavior, fixtures and actors, environment, exact command or procedure, expected initial result, required final result, protected baseline, non-goals, and review authority.
+
+Use characterization tests when accepted current behavior must be preserved. For new or corrected behavior, use the smallest proof that executes correctly and demonstrates the exact missing behavior. Only the predeclared missing-behavior result may be treated as expected nonpass.
+
+Syntax, fixture, dependency, application-boot, discovery, tooling, database, and environment failures are failures. They are not expected nonpass.
+
+Protect accepted tests and fixtures from weakening, skipping, deletion, or material rewrite without an accepted verification-contract revision. The same targeted proof must pass unchanged after implementation.
 
 ---
 
@@ -134,7 +147,7 @@ Add or update tests when a change affects:
 - database schema behavior
 - registry/contribution behavior
 - UI component public contracts
-- business module workflows
+- Module workflows
 
 For access-sensitive behavior, test both allowed and denied paths.
 
@@ -157,25 +170,23 @@ Do not only test happy paths for Core security or data behavior.
 
 ---
 
-## 8. Platform Surface Testing
+## 8. Product Presentation, Frame Surface, Delivery Adapter, And Registry Testing
 
-Platform tests should verify:
+Test each technical responsibility beneath its actual owner:
 
-- shell/navigation/dashboard/setup behavior
-- route authorization
-- registry/contribution aggregation
-- rendering of Core/Module contributions
-- empty/error states
-- settings/setup visibility
-- UI surface access controls
+- Product presentation tests verify owner-specific Pages, interaction, access controls, and empty/error states;
+- Frame Surface tests verify Workspace-aware composition, normalized Core Navigation output, current state, fallback, accessibility, responsive behavior, and UI independence;
+- Delivery Adapter tests verify transport or invocation behavior, validation, authorization integration, delegation, and failure handling;
+- Registry tests verify Host-owned Extension Point contracts plus Contribution validation, collection, ordering, resolution, and exposure;
+- cross-owner tests verify that Contributions remain owned by their Contributors.
 
-Platform tests should not redefine business-module domain behavior.
+Do not use presentation or Frame Surface tests to make UI responsible for Registry discovery, Contribution assembly, permission evaluation, Module lifecycle, or domain behavior. APIs, console commands, webhooks, queues, schedulers, and background entry points are Delivery Adapters or Invocation Channels, not Frame Surfaces.
 
 ---
 
-## 9. Business Module Testing
+## 9. Module Testing
 
-Business Module tests should verify:
+Module tests should verify:
 
 - module-owned business workflows
 - tenant/workspace/customer scoping
@@ -188,9 +199,9 @@ Modules must not test by bypassing Core authorization or data boundaries.
 
 ---
 
-## 10. Shared UI Testing
+## 10. UI Testing
 
-Shared UI tests should verify public component contracts.
+UI tests should verify public component contracts.
 
 Test when changing:
 
@@ -289,7 +300,14 @@ Manual visual review is required for UI changes involving spacing, layout, hiera
 
 Use behavior-focused names.
 
-Good names describe the expected outcome.
+- Test classes use `<SubjectOrBehavior>Test`.
+- Test methods use `test_<context>_<expected_outcome>` or another explicit context-and-condition form.
+- Browser tests use `<Flow>BrowserTest`.
+- Architecture tests use `<BoundaryOrRule>ArchitectureTest`.
+- Contract tests use `<Subject>ContractTest`.
+- Dataset names use snake_case.
+- PHP fixture classes use `<Subject>Fixture`.
+- Non-PHP fixture filenames use descriptive lowercase kebab-case by default.
 
 Prefer:
 
@@ -348,7 +366,10 @@ Every implementation summary or PR should state:
 - [Coding Standards](Coding%20Standards.md)
 - [File Building Standards](File%20Building%20Standards.md)
 - [Feature Development Standards](Feature%20Development%20Standards.md)
+- [Repository Naming Standards](repository-naming-standards.md)
 - [Documentation Review Standards](../documentation/Documentation%20Review%20Standards.md)
 - [Implementation Status And Development Sync Standard](../documentation/Implementation%20Status%20And%20Development%20Sync%20Standard.md)
 - [Runbook Index](../../10-runbooks/index.md)
-- [Platform Boundary](../../03-architecture/platform-boundary.md)
+- [Repository Architecture](../../03-architecture/repository-architecture.md)
+- [Workspace Navigation And Frame Composition](../../03-architecture/workspace-navigation-and-frame-composition.md)
+- [Phase 6 Preimplementation Proof Requirements](../../07-planning/Milestones/milestone-0/goal-3/phase-6/6-6-preimplementation-proof-requirements.md)

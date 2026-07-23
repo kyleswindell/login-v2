@@ -31,7 +31,7 @@ Threats that require operational detection should also be represented in the [De
 | Notifications | Required user/operator notifications. |
 | Runbook | Response procedure when the threat materializes. |
 | Status | Planned, implemented, tested, failing, accepted-risk, deferred, or not-applicable. |
-| Owner | Owning capability, platform surface, business module, or operations owner. |
+| Owner | Owning Core capability, Module, UI, Laravel integration, or operations owner; Surface, Delivery Adapter, and Registry remain technical responsibilities beneath that owner. |
 
 ## Initial Matrix
 

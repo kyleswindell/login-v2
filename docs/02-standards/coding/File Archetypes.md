@@ -137,15 +137,17 @@ Use nearby files as implementation references only after confirming they represe
 
 ## 3. Ownership Layers
 
-| Layer            | Primary Location                                                    | Responsibility                                                                                                                |
-| ---------------- | ------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
-| Core Capability  | `app/Core/*`                                                        | Required system, identity, auth, access, security, audit, data, monitoring, notification, settings, and support capabilities. |
-| Platform Surface | `app/Platform/*`                                                    | Shell, navigation, dashboard, setup, docs, UI reference, and contribution aggregation.                                        |
-| Business Module  | `Modules/*`                                                         | Tenant or workspace business workflows and data.                                                                              |
-| Shared UI        | `resources/views/components/*`, `resources/css/*`, `resources/js/*` | Reusable UI primitives, patterns, shell components, styling, and behavior.                                                    |
-| Database         | `database/*`                                                        | Migrations, seeders, and factories.                                                                                           |
-| Tests            | `tests/*`                                                           | Automated behavioral verification.                                                                                            |
-| Documentation    | `docs/*`                                                            | Canonical standards, architecture, behavior, flows, data contracts, planning, reference, and runbooks.                        |
+| Owner or integration boundary | Current location                                                    | Responsibility                                                                                                                |
+| ----------------------------- | ------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------- |
+| Core capability               | `app/Core/*`                                                        | Required base-application behavior, state, coordination, infrastructure, and contracts.                                      |
+| Module                        | `Modules/*`                                                         | Optional, cohesive feature workflows and data.                                                                                |
+| UI                            | `resources/views/components/*`, `resources/css/*`, `resources/js/*` | Reusable UI primitives, patterns, shell components, styling, behavior, contracts, and tests.                                 |
+| Laravel integration           | Applicable Laravel framework locations                              | Application-wide bootstrap, registration, and thin framework adaptation.                                                     |
+| Database                      | `database/*`                                                        | Migrations, seeders, and factories under the applicable application owner.                                                    |
+| Tests                         | `tests/*`                                                           | Automated behavioral verification under the applicable application owner.                                                    |
+| Documentation                 | `docs/*`                                                            | Canonical standards, architecture, behavior, flows, data contracts, planning, reference, and runbooks.                        |
+
+After choosing an owner, classify the file's technical responsibility separately, such as Surface, Delivery Adapter, Registry, Action, Query, or Contract. Existing `app/Platform/*` paths are transitional current placement only, establish no target ownership, and are not a destination for new canonical work.
 
 ---
 
@@ -324,7 +326,7 @@ A service owns reusable behavior for a capability, surface, or module.
 
 Place the service under the layer that owns the behavior.
 
-Do not default all reusable services to `app/Platform/`.
+Do not place new canonical services under transitional `app/Platform/`; place them with the owning Core capability or Module.
 
 ---
 
@@ -866,7 +868,7 @@ Stop before creating or moving a file when:
 
 - the owning layer is unclear
 - two archetypes appear equally valid
-- the file would cross Core, Platform, Module, or Shared UI boundaries
+- the file would cross Core, Module, UI, or Laravel integration boundaries
 - a new abstraction has no repeated use
 - a design-sensitive UI decision is unspecified
 - a schema/security/data boundary is unresolved

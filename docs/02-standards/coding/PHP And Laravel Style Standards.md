@@ -46,6 +46,8 @@ This document defines PHP and Laravel-specific implementation standards for Logi
 
 Keep PHP code explicit, typed, testable, and aligned with Laravel conventions without allowing framework convenience to hide ownership or dependencies.
 
+Use [Repository Naming Standards](repository-naming-standards.md) for folder, namespace, declared-type, Technical Role, delivery-artifact, configuration, route, test, and compatibility naming.
+
 ---
 
 ## 2. Strict Types
@@ -117,7 +119,7 @@ Avoid nullable values when absence is not a valid state.
 
 Prefer readonly or immutable state for:
 
-- DTOs
+- Data Objects
 - value objects
 - event payloads
 - query criteria
@@ -174,7 +176,7 @@ Inappropriate container use:
 
 Laravel facades are acceptable at framework boundaries and for conventional Laravel integration.
 
-Reusable Core, Platform, or Module behavior should prefer explicit collaborators when:
+Reusable Core, UI, or Module behavior should prefer explicit collaborators when:
 
 - the dependency affects tests
 - the dependency controls time
@@ -396,6 +398,7 @@ Stop before implementation when:
 
 - [Coding Standards](Coding%20Standards.md)
 - [File Archetypes](File%20Archetypes.md)
+- [Repository Naming Standards](repository-naming-standards.md)
 - [Application Actions Services And Data Objects Standards](Application%20Actions%20Services%20And%20Data%20Objects%20Standards.md)
 - [Error And Exception Handling Standards](Error%20And%20Exception%20Handling%20Standards.md)
 - [Transaction Concurrency And Idempotency Standards](Transaction%20Concurrency%20And%20Idempotency%20Standards.md)

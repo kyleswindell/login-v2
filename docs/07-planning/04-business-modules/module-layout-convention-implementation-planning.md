@@ -33,14 +33,14 @@ Small modules may remain in Laravel-standard folders with manifest ownership. Ph
 
 ## View Composition Direction
 
-View surface composition is tracked in [View Surface Composition Planning](view-surface-composition-planning.md).
+View Surface composition is tracked in [View Surface Composition Planning](../03-platform-surfaces/view-surface-composition-planning.md). The linked planning package name and any `app/Platform/*` path it retains are transitional current placement, not target ownership.
 
 Current planning direction:
 
 - Core/admin/account URL views should stay thin and compose reusable patterns with ViewModel/PageData.
 - Business module URL views should live under `Modules/<ModuleName>/resources/views` and compose shared patterns.
-- Shared UI primitives, shell components, and patterns remain under `resources/views/components`.
-- Platform renderers should be reserved for registry-driven surfaces such as Settings, Preferences, Setup, Dashboard widgets, and evidence/check summaries.
+- UI primitives, shell components, and patterns remain under `resources/views/components`.
+- Owner-specific Surface renderers should consume resolved Contributions from the Host-owned Registry. Current renderer placement under `app/Platform/*` is transitional only and must not receive new canonical work.
 - Do not create one universal dynamic renderer for every page, form, table, or business workflow.
 
 ## Current View Ownership Map

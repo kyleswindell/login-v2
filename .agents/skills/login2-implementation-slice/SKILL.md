@@ -11,7 +11,7 @@ Execute one bounded Login 2.0 implementation slice from readiness preflight thro
 
 This skill is the outer implementation workflow.
 
-Apply narrower skills inside this workflow when the task includes specialized file generation, database changes, Shared UI work, security-sensitive behavior, or final verification.
+Apply narrower skills inside this workflow when the task includes specialized file generation, database changes, UI work, security-sensitive behavior, or final verification.
 
 This skill does not define product, architecture, schema, security, or design truth. Read those requirements from their canonical owners.
 
@@ -29,9 +29,9 @@ Use this skill when:
 
 Typical work includes:
 
-- implementing a Core Capability slice
-- implementing a Platform Surface slice
-- implementing a Business Module slice
+- implementing a Core capability slice
+- implementing an owner-specific Surface or Delivery Adapter slice
+- implementing a Module slice
 - adding or changing application behavior
 - adding tests for established behavior
 - creating compatibility wrappers
@@ -213,7 +213,7 @@ Require specialist review for applicable:
 - retention or erasure
 - destructive migrations
 - concurrency-sensitive writes
-- design-sensitive Shared UI
+- design-sensitive UI
 
 ### 7. Classify The Slice
 
@@ -234,16 +234,18 @@ Record:
 - operational impact
 - required specialist review
 
-Use current ownership:
+Use the accepted owner-first model:
 
-- Core Capability → `app/Core/*`
-- Platform Surface → `app/Platform/*`
-- Business Module → `Modules/*`
-- Shared UI → `resources/views/components/*`, `resources/css/*`, `resources/js/*`
+- Core capability → owner-specific Core placement, currently `app/Core/*`
+- Module → `Modules/*`
+- UI → `resources/views/components/*`, `resources/css/*`, `resources/js/*`
+- Laravel integration → the applicable framework integration location
 - Source templates → `stubs/*`
 - Database implementation → `database/*`
 - Tests → `tests/*`
 - Canonical documentation → `docs/*`
+
+Classify the technical responsibility separately, such as Surface, Delivery Adapter, Registry, Action, Query, or Contract. A Surface is an owner-specific UI presentation and interaction layer, not an owner category. Existing `app/Platform/*` paths are transitional current placement only, establish no target ownership, and must not receive new canonical work unless a bounded Goal 3 decision explicitly authorizes it.
 
 Do not create a future owner merely because it appears as a candidate in planning.
 
@@ -258,7 +260,7 @@ For new or materially reshaped files, apply:
 Future specialized skills may govern:
 
 - database changes
-- Shared UI components
+- UI components
 - security-sensitive changes
 - verification and review
 

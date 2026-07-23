@@ -108,16 +108,18 @@ For each file, record:
 - final destination
 - primary responsibility
 
-Use current ownership:
+Use the accepted owner-first model:
 
-- Core Capability → `app/Core/*`
-- Platform Surface → `app/Platform/*`
-- Business Module → `Modules/*`
-- Shared UI → `resources/views/components/*`, `resources/css/*`, `resources/js/*`
+- Core capability → owner-specific Core placement, currently `app/Core/*`
+- Module → `Modules/*`
+- UI → `resources/views/components/*`, `resources/css/*`, `resources/js/*`
+- Laravel integration → the applicable framework integration location
 - Source templates → `stubs/*`
 - Database implementation → `database/*`
 - Tests → `tests/*`
 - Documentation → `docs/*`
+
+Classify the file's technical responsibility separately, such as Surface, Delivery Adapter, Registry, Action, Query, or Contract. A Surface is an owner-specific UI presentation and interaction layer, not an application owner. Existing `app/Platform/*` paths are transitional current placement only, establish no target ownership, and must not receive new canonical work unless a bounded Goal 3 decision explicitly authorizes it.
 
 Do not generate into a future candidate directory unless the issue explicitly approves that owner.
 

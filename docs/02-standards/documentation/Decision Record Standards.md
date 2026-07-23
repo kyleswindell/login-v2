@@ -129,7 +129,7 @@ A decision record must not:
 Elevate a decision when one or more of these apply:
 
 - it affects multiple canonical branches
-- it affects multiple Core Capabilities, Platform Surfaces, Business Modules, or Shared UI owners
+- it affects multiple Core capabilities, Modules, UI responsibilities, or Laravel integration boundaries
 - it establishes a long-lived technical or product direction
 - it establishes a security, privacy, or data-governance rule with broad impact
 - it changes a platform-wide ownership boundary

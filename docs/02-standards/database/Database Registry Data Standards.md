@@ -222,7 +222,7 @@ Registry seeders should be reviewed as contract changes, not disposable setup sc
 
 ## Module Contribution Rules
 
-Business Modules may contribute registry entries.
+Modules may contribute Registry entries while retaining ownership of their Contributions.
 
 A Module contribution should identify:
 

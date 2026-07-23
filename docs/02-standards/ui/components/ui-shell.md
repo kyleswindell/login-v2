@@ -38,6 +38,7 @@ related_patterns:
   - layout
   - tables
   - overlays-feedback
+architecture_owner: docs/03-architecture/workspace-navigation-and-frame-composition.md
 carbon_reference:
   - https://carbondesignsystem.com/components/UI-shell-header/usage/
   - https://carbondesignsystem.com/components/UI-shell-header/accessibility/
@@ -51,6 +52,7 @@ carbon_reference:
   - [1.1. ### Canonical API responsibilities:](#11--canonical-api-responsibilities)
   - [1.2. Non-owned responsibilities:](#12-non-owned-responsibilities)
 - [2. Status and ownership](#2-status-and-ownership)
+  - [2.1. Phase 6 architecture mapping](#21-phase-6-architecture-mapping)
 - [3. Installed standard](#3-installed-standard)
   - [3.1. Installed production rules:](#31-installed-production-rules)
   - [3.2. Installed regions:](#32-installed-regions)
@@ -95,7 +97,7 @@ UI shell frames the global app experience with persistent orientation, navigatio
 
 Canonical API owner: `not installed`. Use this Component API entry instead of creating local markup, styling, or behavior for the same shell role.
 
-UI shell is an installed, pattern-owned Component API. The component catalog route documents the shell contract, but production ownership belongs to the Navigation Pattern at `not installed`. Feature work must not create page-local headers, sidebars, mobile drawers, account menus, notification action areas, skip links, or responsive shell wrappers. The app layout and Navigation Pattern own those surfaces.
+UI shell is an installed, pattern-owned Component API. The component catalog route documents the shell contract, but production ownership belongs to the Navigation Pattern at `not installed`. Feature work must not create page-local headers, sidebars, mobile drawers, account menus, notification action areas, skip links, or responsive shell wrappers. The app layout and Navigation Pattern render those Frame regions; Core Navigation owns authoritative Product and Product Area resolution.
 
 ### 1.1. ### Canonical API responsibilities:
 
@@ -148,6 +150,22 @@ Carbon alignment note: Carbon describes UI shell as a persistent navigation fram
 
 `Pattern-owned` means the component catalog documents the role and proof requirements, while production composition and shell behavior are owned by `not installed` and the app layout.
 
+### 2.1. Phase 6 architecture mapping
+
+The architecture term **Frame** describes the persistent authenticated structure. **UI shell** remains the installed UI implementation and API term.
+
+- the global header and sidebar are named Frame regions;
+- Global Header Navigation and Sidebar Navigation are Frame Surfaces;
+- Main is a route-owned content outlet and is not a Frame Surface;
+- Workspace composition supplies Product scope;
+- Core Navigation resolves Product and Product Area Contributions;
+- Access and Module lifecycle provide authoritative inputs;
+- UI shell renders normalized data and must not evaluate permissions, Module state, Product behavior, or Contributor implementation.
+
+The accepted initial sidebar model preserves B-class sibling Products while exposing one C-class Product Area level for the active Product. D-class Pages and deeper destinations remain outside persistent shell navigation by default.
+
+This mapping preserves every installed `ui-shell*` class, public API status, example, state, modifier, and proof requirement already defined below. Phase 6 does not authorize a visual redesign or a class/API rename.
+
 ## 3. Installed standard
 
 The installed standard is a Navigation Pattern-owned shell composition, represented by app layout markup and app-owned `ui-shell*` classes.
@@ -190,7 +208,7 @@ Use UI shell for the authenticated app frame only. The shell should be rendered 
 | Main content region      | Implemented                       | App layout                               | Page content target and skip-link destination.                        |
 | Mobile/collapsed shell   | Implemented / Pattern-owned       | Navigation Pattern                       | Responsive disclosure of navigation/actions.                          |
 | Right panel              | Deferred                          | Navigation Pattern                       | Future system panel/switcher region; do not fake production controls. |
-| Product switcher         | Deferred                          | Navigation Pattern                       | Future switcher behavior; not installed as a shell component today.   |
+| Workspace switcher       | Deferred                          | Navigation Pattern                       | Future A-class Workspace switching behavior; not installed as a shell component today. |
 
 ## 4. Public API
 

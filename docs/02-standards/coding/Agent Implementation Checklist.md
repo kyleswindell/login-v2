@@ -60,7 +60,7 @@ Use this checklist before Codex or another coding agent creates, modifies, moves
 
 ## 1. Purpose
 
-Make implementation behavior predictable and reviewable during the Core Capability, Platform Surface, Business Module, and Shared UI refactor.
+Make implementation behavior predictable and reviewable during the Core capability, Module, UI, and Laravel integration refactor.
 
 This checklist provides the standard execution path from a bounded work item to a reviewed implementation.
 
@@ -345,30 +345,30 @@ The selected execution mode must not be used to bypass stop conditions.
 
 Choose one primary owner:
 
-- Core Capability
-- Platform Surface
-- Business Module
-- Shared UI
+- Core capability
+- Module
+- UI
+- Laravel integration
 - Database
 - Docs
 - Ops
 - Tests
 - Tooling
 
-Then identify the specific capability, surface, module, component family, documentation branch, or tool owner.
+Then identify the specific capability, Module, UI family, framework boundary, documentation branch, or tool owner. Classify Surface, Delivery Adapter, Registry, Action, Query, Contract, and similar technical responsibilities separately.
 
-Use the current ownership model:
+Use the accepted owner-first model:
 
-- Core Capability → `app/Core/*`
-- Platform Surface → `app/Platform/*`
-- Business Module → `Modules/*`
-- Shared UI → `resources/views/components/*`, `resources/css/*`, `resources/js/*`
+- Core capability → owner-specific Core placement, currently `app/Core/*`
+- Module → `Modules/*`
+- UI → `resources/views/components/*`, `resources/css/*`, `resources/js/*`
+- Laravel integration → the applicable framework integration location
 - Source templates → `stubs/*`
 - Database implementation → `database/*`
 - Automated tests → `tests/*`
 - Canonical documentation → `docs/*`
 
-Do not default reusable application behavior to Platform.
+Do not default reusable application behavior to Platform. Existing `app/Platform/*` paths are transitional current placement only, establish no target ownership, and are not a destination for new canonical work.
 
 Do not create a new owner folder merely because a planning matrix lists it as a future possibility.
 
@@ -744,7 +744,7 @@ Stop when transaction ownership, retry behavior, or failure semantics are unclea
 
 For UI work, identify:
 
-- Shared UI, shell, Platform, Core, or Business Module owner
+- UI, Core capability, Module, Laravel integration, or workflow owner
 - public component contract
 - Blade owner
 - CSS owner

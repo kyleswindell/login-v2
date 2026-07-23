@@ -39,7 +39,7 @@ Use this standard with:
 
 ## 1. Purpose
 
-Keep application code readable, maintainable, testable, and aligned with the current Core / Platform / Business Module architecture.
+Keep application code readable, maintainable, testable, and aligned with the current Core, Module, UI, and Laravel integration architecture.
 
 ---
 
@@ -62,23 +62,25 @@ Keep application code readable, maintainable, testable, and aligned with the cur
 
 Use the current project ownership model.
 
-| Layer            | Code Location                                                       | Owns                                                                                                                            |
-| ---------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
-| Core Capability  | `app/Core/*`                                                        | Required platform, security, identity, access, data, audit, monitoring, notification, settings, and system capabilities.        |
-| Platform Surface | `app/Platform/*`                                                    | Shell, navigation, dashboard, setup, docs, UI reference, registry-driven presentation, and aggregation surfaces.                |
-| Business Module  | `Modules/*`                                                         | Tenant/workspace business work areas such as Customers, Inventory, Orders, Shipments, Reports, Projects, Support, and Websites. |
-| Shared UI        | `resources/views/components/*`, `resources/css/*`, `resources/js/*` | UI primitives, patterns, shell components, layouts, CSS tokens, JS controls, and UI reference support.                          |
-| Docs             | `docs/*`                                                            | Canonical standards, architecture, features, flows, database contracts, planning, reference, and runbooks.                      |
+| Owner or integration boundary | Current location                                                    | Owns                                                                                                                            |
+| ----------------------------- | ------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------- |
+| Core capability               | `app/Core/*`                                                        | Required base-application behavior, state, coordination, infrastructure, and contracts.                                        |
+| Module                        | `Modules/*`                                                         | Optional, cohesive feature packages that consume Core contracts.                                                               |
+| UI                            | `resources/views/components/*`, `resources/css/*`, `resources/js/*` | Reusable presentation infrastructure, patterns, layouts, tokens, controls, contracts, and tests.                               |
+| Laravel integration           | Applicable Laravel framework locations                              | Application-wide bootstrap, registration, and thin framework adaptation that does not own application behavior.                |
+| Docs                          | `docs/*`                                                            | Canonical standards, architecture, features, flows, database contracts, planning, reference, and runbooks.                      |
 
-Do not put all reusable behavior in `app/Platform/` by default. Reusable behavior belongs to the layer that owns the domain responsibility.
+Classify technical responsibility separately beneath the selected owner: Surface, Delivery Adapter, Registry, Action, Query, Contract, or another accepted role. A Surface is an owner-specific UI presentation and interaction layer. APIs, console commands, webhooks, queues, schedulers, and background entry points are Delivery Adapters or invocation channels. Host-owned Registries define and resolve Extension Points; a Surface does not own contribution discovery or assembly.
+
+Existing `app/Platform/*` paths are transitional current placement only. They establish no target ownership and are not a destination for new canonical work. Reusable behavior belongs to the owner of the responsibility.
 
 Examples:
 
 - Authentication behavior belongs in Core Auth.
 - Authorization behavior belongs in Core Access.
 - Audit event recording belongs in Core Audit.
-- Navigation aggregation may belong in Platform Navigation.
-- Business order fulfillment behavior belongs in the Orders Business Module.
+- Navigation aggregation belongs to the Core capability that Hosts the navigation Registry; navigation presentation belongs to that owner's Surface and reusable primitives belong to UI.
+- Business order fulfillment behavior belongs in the Orders Module.
 
 ---
 
@@ -155,7 +157,7 @@ Do not:
 - hard-code role checks throughout controllers or views
 - rely on hidden UI controls as authorization
 - expose protected routes without authorization middleware
-- let Business Modules redefine platform-level authorization behavior
+- let Modules redefine Core authorization behavior
 
 Permission strings should be centralized in the owning Access, capability, or module definition.
 
@@ -199,7 +201,7 @@ Do not treat generated code as correct merely because it was produced from a rep
 
 Stub ownership, placeholders, framework overrides, custom generators, and generated-output validation are governed by [Code Template And Generator Standards](Code%20Template%20And%20Generator%20Standards.md).
 
-Keep Core, Platform, Module, tenant, workspace, user, account, and security concepts explicit until the domain model is mature enough to safely shorten names.
+Keep Core, Module, UI, Laravel integration, tenant, workspace, user, account, and security concepts explicit until the domain model is mature enough to safely shorten names.
 
 ---
 

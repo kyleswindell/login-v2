@@ -103,8 +103,9 @@ Targets may include:
 
 - global platform
 - Core capability
-- Platform surface
-- Business Module
+- owner-specific Surface
+- Delivery Adapter or invocation channel
+- Module
 - tenant
 - workspace
 - account
@@ -115,6 +116,8 @@ Targets may include:
 - environment
 
 Access assignments should identify target scope clearly enough to compute effective access and prevent cross-scope leakage.
+
+A Surface target identifies owner-specific UI presentation and interaction only. APIs, console commands, webhooks, queues, schedulers, and background entry points are Delivery Adapters or invocation channels, not Surfaces.
 
 Do not store broad global assignments when scoped assignments are required.
 

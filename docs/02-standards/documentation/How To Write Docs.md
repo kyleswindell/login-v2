@@ -218,6 +218,8 @@ Template selection is governed by:
 
 Templates define reusable shape. They do not define policy.
 
+New canonical Markdown prose filenames and folders use lowercase kebab-case. Reserved filenames retain their exact form: `index.md`, `README.md`, and `AGENTS.md`. Controlled Definition packages retain `Definitions/<Term>/Definition.md`. Existing legacy paths remain compatibility concerns until an authorized migration updates inbound links and canonical paths.
+
 When no dedicated template exists:
 
 - use `_doc.md`
@@ -245,10 +247,13 @@ Obsidian links may be used as optional graph aids. They must not be the only pat
 
 Use current project vocabulary:
 
-- Core Capability
-- Platform Surface
-- Business Module
-- Shared UI
+- Core capability
+- Module
+- UI
+- Laravel integration
+- Surface
+- Delivery Adapter
+- Registry
 - Planning Document
 - canonical owner
 - implementation slice
@@ -263,10 +268,11 @@ Update documentation in the same work cycle when a change affects:
 
 - setup, build, tests, deployment, release, cron, queues, services, or recovery
 - user, admin, tenant, workspace, or public behavior
-- Core Capability behavior
-- Platform Surface behavior
-- Business Module behavior
-- Shared UI contracts
+- Core capability behavior
+- Module behavior
+- UI contracts
+- Laravel integration
+- owner-specific Surface presentation, Delivery Adapter behavior, or Host-owned Registry behavior
 - architecture or ownership
 - schema or data contracts
 - authentication, authorization, audit, security, monitoring, secrets, or data movement
@@ -373,4 +379,5 @@ A documentation change is complete when:
 - [Obsidian Vault Structure Guide](Obsidian%20Vault%20Structure%20Guide.md)
 - [Documentation Review Standards](Documentation%20Review%20Standards.md)
 - [Implementation Status And Development Sync Standard](Implementation%20Status%20And%20Development%20Sync%20Standard.md)
+- [Repository Naming Standards](../coding/repository-naming-standards.md)
 - [Documentation Templates](../../09-reference/templates/docs/_index.md)

@@ -45,6 +45,7 @@ Accepted
   - `docs/07-planning/core-service-build-plan-matrix.md`
   - root and folder-level `AGENTS.md`
   - future route, registry, permission, notification, audit, Module, and database contracts
+- Goal 3 target topology and placement: [Goal 3 Target Repository Architecture](../07-planning/Milestones/milestone-0/goal-3/target-repository-architecture.md)
 
 ## 5. Context
 
@@ -163,13 +164,13 @@ A file under `resources/` is not automatically UI-owned. Ownership follows respo
 
 Ownership and repository placement are separate concepts.
 
-| Artifact | Likely physical location | Owner |
-| --- | --- | --- |
-| User administration URL view | `resources/views/admin/users/` | Core/Identity |
-| Shared data-table component | `resources/views/components/ui/` | UI |
-| Orders list view | Module package views | Orders Module |
-| Module registry service | Core application infrastructure | Core |
-| Reusable form-actions pattern | `resources/views/components/patterns/` | UI |
+| Artifact                      | Likely physical location               | Owner         |
+| ----------------------------- | -------------------------------------- | ------------- |
+| User administration URL view  | `resources/views/admin/users/`         | Core/Identity |
+| Shared data-table component   | `resources/views/components/ui/`       | UI            |
+| Orders list view              | Module package views                   | Orders Module |
+| Module registry service       | Core application infrastructure        | Core          |
+| Reusable form-actions pattern | `resources/views/components/patterns/` | UI            |
 
 Goal 03 will define the target folder and namespace model. This decision defines responsibility only.
 
@@ -206,24 +207,24 @@ Rules:
 
 ## 11. Terminology Mapping
 
-| Current or ambiguous term | Accepted use |
-| --- | --- |
-| `Core` | Required base-application behavior, state, coordination, and infrastructure. |
-| `Core Capability` | A distinct capability within Core. |
-| `Platform` | Retired as a peer owner; replace with a precise Core area or UI responsibility. |
-| `Platform Surface` | Retired as an ownership term. |
-| `Module` | Optional, independently distributable Composer feature package. |
-| `Business Module` | A business-oriented subtype of Module. |
-| `Shared UI` | Descriptive name for the reusable UI system; canonical owner label is `UI`. |
-| `UI system` | Elements, Components, Patterns, Layouts, tokens, icons, CSS, JavaScript, contracts, and tests owned by UI. |
-| `Resources` | Laravel repository location, not an owner type. |
-| `Surface` | Rendered destination or interface, not a primary owner. |
-| `Package` | Packaging and distribution mechanism, not an owner. |
-| `Feature` | Unit of behavior or product functionality, not an owner. |
-| `Integration` | Behavior owned by Core or a Module, or a Module when optional and self-contained. |
-| `Internal tool` | Core when required; Module when optional and independently installable. |
-| `core module` | Replace with the precise Core area. |
-| `platform module` / `platform_management` | Replace with the precise Core area or optional Module classification. |
+| Current or ambiguous term                 | Accepted use                                                                                               |
+| ----------------------------------------- | ---------------------------------------------------------------------------------------------------------- |
+| `Core`                                    | Required base-application behavior, state, coordination, and infrastructure.                               |
+| `Core Capability`                         | A distinct capability within Core.                                                                         |
+| `Platform`                                | Retired as a peer owner; replace with a precise Core area or UI responsibility.                            |
+| `Platform Surface`                        | Retired as an ownership term.                                                                              |
+| `Module`                                  | Optional, independently distributable Composer feature package.                                            |
+| `Business Module`                         | A business-oriented subtype of Module.                                                                     |
+| `Shared UI`                               | Descriptive name for the reusable UI system; canonical owner label is `UI`.                                |
+| `UI system`                               | Elements, Components, Patterns, Layouts, tokens, icons, CSS, JavaScript, contracts, and tests owned by UI. |
+| `Resources`                               | Laravel repository location, not an owner type.                                                            |
+| `Surface`                                 | Rendered destination or interface, not a primary owner.                                                    |
+| `Package`                                 | Packaging and distribution mechanism, not an owner.                                                        |
+| `Feature`                                 | Unit of behavior or product functionality, not an owner.                                                   |
+| `Integration`                             | Behavior owned by Core or a Module, or a Module when optional and self-contained.                          |
+| `Internal tool`                           | Core when required; Module when optional and independently installable.                                    |
+| `core module`                             | Replace with the precise Core area.                                                                        |
+| `platform module` / `platform_management` | Replace with the precise Core area or optional Module classification.                                      |
 
 ## 12. Alternatives Considered
 
@@ -352,6 +353,8 @@ Confirm that:
 ### Transition Plan
 
 Treat existing Platform, core-module, platform-module, and generic module terminology as transitional until accepted follow-up work normalizes it. Do not remove current compatibility structures through this decision-only change.
+
+Later Goal 3 architecture refines the former `Shell` example without changing this decision’s Core, Module, and UI ownership taxonomy. The accepted target does not contain one consolidated Core `Shell` capability. Workspace and Core Navigation own application-state resolution for the persistent Frame, Core application composition connects those owners, and UI owns the reusable Frame Layout and rendering Contracts. Treat `Shell` in this decision as historical umbrella terminology rather than a permanent capability name or repository destination.
 
 ## 18. Acceptance Or Rejection Record
 

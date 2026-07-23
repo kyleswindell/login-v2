@@ -8,7 +8,7 @@ canonical: true
 canonical_path: docs/03-architecture/workspace-identity-model.md
 parent: docs/03-architecture/index.md
 template: docs/09-reference/templates/docs/_doc.md
-summary: Defines one-to-one Tenant and Instance ownership, Tenant-owned User Accounts and User Identity records, and User Account-specific runtime Workspaces.
+summary: Defines one-to-one Tenant and Instance ownership, Tenant-owned User Accounts and User Identity records, multiple available Workspaces, and one active Workspace in each rendered context.
 -->
 
 # Tenant, Instance, User Account, And Workspace Model
@@ -24,7 +24,8 @@ Tenant
 └── exclusively owns one Instance
     └── owns User Accounts
         └── each User Account contains one User Identity
-            └── each authenticated Account receives a resolved Workspace
+            └── may access one or more Workspaces
+                └── exactly one Workspace is active in a rendered context
 ```
 
 Cardinality:
@@ -33,7 +34,8 @@ Cardinality:
 Tenant 1 -- 1 Instance
 Instance 1 -- many User Accounts
 User Account 1 -- 1 User Identity
-User Account 1 -- 1 resolved Workspace per active authenticated runtime
+User Account 1 -- one or more available Workspaces
+Rendered interaction context 1 -- 1 active Workspace
 ```
 
 There is no multi-Tenant Instance in the current target model.
@@ -68,9 +70,9 @@ A User Identity is the identifying and profile subset of that one Account.
 
 A person participating in multiple Tenants has separate Accounts and separate User Identity records. Similar profile data does not establish a cross-Tenant identity relationship.
 
-## 5. Workspace Resolution
+## 5. Workspace Availability And Active Workspace
 
-A Workspace is resolved for one authenticated User Account from:
+Available Workspaces are resolved for one authenticated User Account from:
 
 1. Tenant and Instance resolution
 2. Instance configuration
@@ -79,7 +81,9 @@ A Workspace is resolved for one authenticated User Account from:
 5. roles, permissions, memberships, assignments, and resource restrictions
 6. settings, preferences, and presentation state
 
-The resolved Workspace determines available Surfaces, navigation, Actions, resources, data, and presentation.
+A User Account may access one or more Workspaces. Exactly one Workspace is active for a rendered request or interaction context.
+
+The active Workspace supplies high-level Product scope and Frame composition. Workspace selection does not grant authority; routes, Actions, resources, and targets remain independently authorized.
 
 Workspace is not:
 
@@ -88,6 +92,7 @@ Workspace is not:
 - a persistent organization record
 - a Principal
 - an authorization grant
+- a Product or Module
 
 ## 6. Internal Tenant And Global Administration
 
@@ -96,9 +101,9 @@ The Internal Tenant follows the same model.
 ```text
 Internal Tenant Instance
 └── User Account
-    └── resolved Workspace
-        ├── ordinary Tenant Surfaces
-        └── Global Administration Surface when authorized
+    └── available Workspaces
+        ├── Default Workspace
+        └── Global Administration Workspace when authorized
 ```
 
 Global Administration preserves the Internal Tenant Actor scope and the target Tenant and Instance scope independently.
@@ -112,8 +117,10 @@ Target runtime order:
 3. authenticate the User Account or Non-Human Identity against the resolved Instance
 4. resolve Account lifecycle and authorization state
 5. load Instance configuration and active Modules
-6. assemble the User Account-specific Workspace
-7. render or execute only authorized Surfaces and Actions
+6. resolve the available Workspace set
+7. select or restore one authorized active Workspace
+8. resolve Product scope and Frame composition
+9. render or execute only independently authorized Pages, Actions, and resources
 
 ## 8. Deferred Implementation
 
@@ -130,6 +137,8 @@ This architecture does not select:
 ## 9. Related
 
 - [ADR-0006](../01-decisions/adr-0006-tenant-instance-workspace-principal-and-invocation-vocabulary.md)
+- [ADR-0008](../01-decisions/adr-0008-workspace-navigation-and-frame-surface-model.md)
+- [Workspace Navigation And Frame Composition](workspace-navigation-and-frame-composition.md)
 - [System Overview](system-overview.md)
 - [Tenancy](tenancy.md)
 - [Auth Architecture](auth.md)

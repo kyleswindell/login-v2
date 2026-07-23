@@ -15,7 +15,7 @@ summary: Defines PostgreSQL schema design rules for table naming, keys, relation
 
 This document defines schema design standards for Login App 2.0.
 
-These standards apply to PostgreSQL-backed Laravel schema design across Core Capabilities, Platform Surfaces, and Business Modules.
+These standards apply to PostgreSQL-backed Laravel schema design across Core capabilities and Modules, including data used by owner-specific Surfaces, Delivery Adapters, and Host-owned Registries.
 
 - [1. Purpose](#1-purpose)
 - [2. Core Rule](#2-core-rule)
@@ -70,6 +70,8 @@ Use:
 - no legacy `tbl` prefixes
 - no vague table names such as `data`, `items`, `records`, or `values`
 
+Laravel Model classes use singular PascalCase semantic nouns. Their default table names use plural snake_case. Do not add automatic Core, Module, owner, or package prefixes to table names. Use an explicit `$table` override only for a documented domain, compatibility, external-system, or Goal 6 reason.
+
 Examples:
 
 - `users`
@@ -98,8 +100,8 @@ Every table should have a clear owner.
 | Notifications and notification state             | Core Notifications                        |
 | Settings and preferences                         | Core Settings / Core Preferences          |
 | Data classification and protection               | Core DataGovernance / Core DataProtection |
-| Shell, navigation, setup, UI reference metadata  | Platform                                  |
-| Customers, orders, shipments, inventory, reports | Business Modules                          |
+| Shell, navigation, setup, UI reference metadata  | Owning Core capability or Module Host Registry |
+| Customers, orders, shipments, inventory, reports | Modules                                   |
 
 Scoped business data must include the correct tenant, workspace, account, customer, or module scope.
 
@@ -380,6 +382,7 @@ Stop before designing schema when:
 ## 20. Related
 
 - [Database Migration Standards](Database%20Migration%20Standards.md)
+- [Repository Naming Standards](../coding/repository-naming-standards.md)
 - [Settings Data Governance Standards](Settings%20Data%20Governance%20Standards.md)
 - [Database Index](../../06-database/index.md)
 - [Database Tables Index](../../06-database/tables/index.md)

@@ -23,15 +23,16 @@ Behavior, workflow steps, schema details, implementation standards, planning, op
 
 ## 2. Architecture Documents
 
-| Document                                                                           | Owns                                                                                                                                                                                                          |
-| ---------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| [System Overview](system-overview.md)                                              | High-level system, Tenant Instance, Workspace, Principal, execution, and application ownership model                                                                                                          |
-| [Repository Architecture](repository-architecture.md)                              | Target repository topology, accepted naming relationships, owner-local artifact placement, dependency direction, presentation and test topology, supporting branches, exceptions, and transitional structures |
-| [Application Registration](application-registration.md)                            | Registration responsibilities, conditional custom-artifact naming, deterministic compilation, generated manifests, root composition, Typed Registrars, and native Laravel and Vite boundaries                 |
-| [Workspace Navigation And Frame Composition](workspace-navigation-and-frame-composition.md) | Available and active Workspaces, persistent Frame, Frame Surfaces, Core Navigation, Product hierarchy, deep links, breadcrumbs, and shell composition                                                 |
-| [Stack Overview](stack-overview.md)                                                | Application stack, framework, runtime, database, frontend, and deployment technology boundaries                                                                                                               |
-| [Tenant, Instance, User Account, And Workspace Model](workspace-identity-model.md) | Canonical identity, Tenant Instance, User Account, and Workspace relationships                                                                                                                                |
-| [Tenancy](tenancy.md)                                                              | Tenant and Instance isolation, resolution, and cross-scope architecture                                                                                                                                       |
+| Document                                                                                    | Owns                                                                                                                                                                                                          |
+| ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [System Overview](system-overview.md)                                                       | High-level system, Tenant Instance, Workspace, Principal, execution, and application ownership model                                                                                                          |
+| [Repository Architecture](repository-architecture.md)                                       | Target repository topology, accepted naming relationships, owner-local artifact placement, dependency direction, presentation and test topology, supporting branches, exceptions, and transitional structures |
+| [Application Registration](application-registration.md)                                     | Registration responsibilities, conditional custom-artifact naming, deterministic compilation, generated manifests, root composition, Typed Registrars, and native Laravel and Vite boundaries                 |
+| [Public Contract And Interaction Model](public-contract-and-interaction-model.md)           | Provider-owned public Contract families, synchronous and asynchronous interaction selection, boundary data, Host Registry handoff, rejection ownership, and the narrow Core Runtime boundary                  |
+| [Workspace Navigation And Frame Composition](workspace-navigation-and-frame-composition.md) | Available and active Workspaces, persistent Frame, Frame Surfaces, Core Navigation, Product hierarchy, deep links, breadcrumbs, and shell composition                                                         |
+| [Stack Overview](stack-overview.md)                                                         | Application stack, framework, runtime, database, frontend, and deployment technology boundaries                                                                                                               |
+| [Tenant, Instance, User Account, And Workspace Model](workspace-identity-model.md)          | Canonical identity, Tenant Instance, User Account, and Workspace relationships                                                                                                                                |
+| [Tenancy](tenancy.md)                                                                       | Tenant and Instance isolation, resolution, and cross-scope architecture                                                                                                                                       |
 
 ## 3. Reading Order
 
@@ -41,9 +42,10 @@ For broad architecture work:
 2. read [Workspace Navigation And Frame Composition](workspace-navigation-and-frame-composition.md) when Workspace switching, Frame composition, navigation hierarchy, Core Navigation, breadcrumbs, or shell regions are involved;
 3. read [Repository Architecture](repository-architecture.md) when ownership, placement, folders, packages, resources, tests, dependencies, or migration topology are involved;
 4. read [Application Registration](application-registration.md) when routes, Providers, views, Livewire aliases, commands, configuration, migrations, assets, Contributions, or deterministic application composition are involved;
-5. read [Stack Overview](stack-overview.md) for framework and technology boundaries;
-6. read the applicable tenancy or workspace architecture document;
-7. follow links to ADRs or standards only where the architecture document delegates authority.
+5. read [Public Contract And Interaction Model](public-contract-and-interaction-model.md) when one owner invokes, reads from, reacts to, contributes to, registers with, or depends on another owner, or when Core Runtime scope is involved;
+6. read [Stack Overview](stack-overview.md) for framework and technology boundaries;
+7. read the applicable tenancy or workspace architecture document;
+8. follow links to ADRs or standards only where the architecture document delegates authority.
 
 Do not read every architecture document for a local change.
 

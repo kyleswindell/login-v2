@@ -354,6 +354,8 @@ Confirm that:
 
 Treat existing Platform, core-module, platform-module, and generic module terminology as transitional until accepted follow-up work normalizes it. Do not remove current compatibility structures through this decision-only change.
 
+Later Goal 3 architecture refines the former `Shell` example without changing this decision’s Core, Module, and UI ownership taxonomy. The accepted target does not contain one consolidated Core `Shell` capability. Workspace and Core Navigation own application-state resolution for the persistent Frame, Core application composition connects those owners, and UI owns the reusable Frame Layout and rendering Contracts. Treat `Shell` in this decision as historical umbrella terminology rather than a permanent capability name or repository destination.
+
 ## 18. Acceptance Or Rejection Record
 
 - Outcome: Accepted

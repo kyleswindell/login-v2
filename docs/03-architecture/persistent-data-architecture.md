@@ -2,7 +2,7 @@
 DOC-META
 title: Persistent Data Architecture
 doc_type: architecture
-status: draft
+status: active
 owner: architecture
 canonical: true
 canonical_path: docs/03-architecture/persistent-data-architecture.md
@@ -49,8 +49,8 @@ This document is the canonical architecture result for GitHub issue [#22](https:
 
 Status:
 
-- Target decisions: accepted through repository-owner planning review.
-- Document lifecycle: draft pending repository publication and final Issue #22 acceptance record.
+- Target design: accepted through GitHub issue #22.
+- Document lifecycle: active.
 - Current implementation: pre-alpha and not target authority.
 - Detailed tables, columns, constraints, indexes, and migrations authorized: no.
 - Current-table inventory, compatibility planning, and migration sequencing authorized: no.
@@ -93,7 +93,7 @@ This document does not define:
 - exact application installer or updater ownership;
 - exact Settings registry or storage implementation;
 - Row-Level Security policy implementation;
-- changes to accepted Goal 3 repository ownership, topology, placement, or naming.
+- broad reopening of Goal 3 repository topology, placement, or naming beyond the bounded Core Users ownership clarification accepted by this document.
 
 ## 3. Initial Deployment And Isolation Boundary
 

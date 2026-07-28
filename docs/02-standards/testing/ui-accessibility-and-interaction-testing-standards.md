@@ -38,6 +38,8 @@ Parent: [Testing Standards Index](index.md)
 
 Define objective and human verification for UI Elements, Components, Patterns, Layouts, Frame rendering, owner-specific Product presentation, and browser interaction.
 
+This standard defines how accepted UI Contracts and design rules are verified. It does not define Component or Pattern public APIs, variants, states, semantic meanings, visual hierarchy, accessibility requirements, motion rules, or supported browser matrices. Those remain with the applicable UI, feature, architecture, accessibility, and browser-support owners.
+
 Passing UI automation does not constitute visual approval.
 
 ## 2. Four UI Assurance Layers
@@ -83,17 +85,7 @@ Verify:
 
 Invalid values should fail clearly during validation, development, static checks, or tests rather than silently degrading.
 
-Prefer semantic inputs over raw styling when the semantic intent can be modeled reliably.
-
-Example:
-
-```blade
-<x-ui.button action="destructive">
-    Delete user
-</x-ui.button>
-```
-
-A semantic Contract may derive the accepted visual variant, icon, confirmation behavior, and accessibility requirements.
+When a governing UI Contract models semantic intent, verification should prove that the accepted semantic input maps to the Contract-owned rendering, state, interaction, and accessibility behavior. This testing standard does not select or invent that public API.
 
 ## 4. Component Implementation Conformance
 
@@ -147,18 +139,22 @@ Do not rely on fragile regular expressions as the only parser when Blade structu
 
 ## 6. Semantic Action And Navigation Usage
 
-Verify applicable rules such as:
+Verify the applicable semantic action, navigation, hierarchy, confirmation, accessibility, and state rules defined by the governing UI Component, Pattern, feature, route, or interaction Contract.
 
-- buttons perform actions;
-- links navigate;
-- state-changing behavior is not exposed as GET-only navigation;
-- destructive actions use the accepted destructive semantic;
-- primary actions are used with appropriate hierarchy;
-- confirmation is required where the accepted Pattern requires it;
-- icon-only actions have accessible names;
+Applicable verification may include:
+
+- action controls use the Contract-owned action semantics;
+- navigation controls use the Contract-owned navigation semantics;
+- state-changing behavior is not exposed through a prohibited navigation method;
+- destructive behavior uses the accepted destructive treatment;
+- primary and secondary hierarchy follows the governing UI rule;
+- required confirmation behavior is present;
+- icon-only controls have accepted accessible names;
 - disabled controls do not remain misleadingly actionable;
-- loading state prevents duplicate action where required;
+- loading or pending behavior prevents duplicate action where required;
 - permission-hidden UI does not replace backend authorization.
+
+These are testing categories, not independent UI API definitions. The exact semantic terms, visual treatment, component choice, and interaction behavior come from the governing UI or feature owner.
 
 Semantic usage tests need the caller’s context. A raw Component variant enum alone cannot prove correct intent.
 

@@ -38,6 +38,10 @@ Parent: [Testing Standards Index](index.md)
 
 Define proof required for software that must remain correct under failure, concurrency, load, environment variation, deployment, and operation.
 
+This standard defines how accepted transaction, concurrency, retry, idempotency, recovery, performance, compatibility, deployment, and operational requirements are verified. It does not define their target behavior, thresholds, supported matrices, deployment procedures, recovery procedures, or operational policy.
+
+Those requirements remain with the applicable architecture, feature, flow, coding, database, security, integration, configuration, and runbook owners. The verification contract identifies which accepted requirement and threshold each proof must demonstrate.
+
 ## 2. Reliability And Failure Behavior
 
 Verify applicable:

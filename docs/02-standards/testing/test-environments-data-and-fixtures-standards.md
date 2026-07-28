@@ -40,6 +40,8 @@ Parent: [Testing Standards Index](index.md)
 
 Ensure test results are reproducible, environment-valid, isolated, and safe.
 
+This standard defines whether an environment can execute a declared proof validly. It does not authorize repository writes, determine implementation readiness, or own package-application workflow. Those responsibilities remain with the applicable work packet, Agent Implementation Checklist, and execution workflow.
+
 ## 2. Environment Declaration
 
 Every material verification contract identifies:
@@ -60,19 +62,19 @@ Do not use “local” or “CI” as the entire environment specification when 
 
 ## 3. Capability Preflight
 
-Before the first repository write or executable proof, confirm that the required environment can:
+Before executing a declared proof, confirm that the required environment can:
 
-- boot the application;
-- discover the target tests;
+- boot the application when the proof requires it;
+- discover the target tests or checks;
 - connect to required services;
 - create isolated test data;
 - execute the target runner;
 - collect required evidence;
 - preserve unrelated developer or issue state.
 
-A preflight failure is `FAIL`.
+A proof-environment preflight failure is `FAIL`.
 
-Do not patch production or package-owned code merely to force the first preflight to pass unless that recovery was explicitly accepted.
+Recovery from an environment-capability failure must follow the applicable work packet and execution workflow. This standard does not independently authorize production-code, package-owned-code, dependency, fixture, or infrastructure changes.
 
 ## 4. Environment Classes
 

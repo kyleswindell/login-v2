@@ -8,7 +8,7 @@ canonical: true
 canonical_path: docs/02-standards/testing/test-reporting-and-delivery-gates-standards.md
 parent: docs/02-standards/testing/index.md
 template: docs/09-reference/templates/docs/_doc.md
-summary: Defines testing-evidence gates, execution-state evaluation, result artifacts, failure and flaky-test handling, reporting, and proof completeness across implementation, pull request, merge-candidacy, release, deployment, and post-deployment stages.
+summary: Defines testing-evidence gates, initial-proof applicability, production-implementation evidence, protected-baseline integrity, result artifacts, reporting, and proof completeness across implementation, review, release, deployment, and post-deployment stages.
 -->
 
 # Test Reporting And Delivery Gates Standards
@@ -20,6 +20,10 @@ Parent: [Testing Standards Index](index.md)
 - [3. Gate Evaluation](#3-gate-evaluation)
 - [4. Testing Evidence Required For Implementation Readiness](#4-testing-evidence-required-for-implementation-readiness)
 - [5. Preimplementation Testing Gate](#5-preimplementation-testing-gate)
+  - [5.1. Preimplementation applicability](#51-preimplementation-applicability)
+  - [5.2. Required initial-proof gate](#52-required-initial-proof-gate)
+  - [5.3. Conditional and not-applicable proof](#53-conditional-and-not-applicable-proof)
+  - [5.4. Baseline identity and production boundary](#54-baseline-identity-and-production-boundary)
 - [6. Development Testing Evidence](#6-development-testing-evidence)
 - [7. Pull Request Testing Evidence](#7-pull-request-testing-evidence)
 - [8. Testing Evidence Required For Merge Candidacy](#8-testing-evidence-required-for-merge-candidacy)
@@ -120,43 +124,132 @@ Before testing evidence can support an implementation-readiness decision, the ve
 - complete criterion-to-proof mapping;
 - proof modes;
 - required stages;
-- applicability rules;
-- expected initial and final results;
+- stage-specific applicability;
+- initial expected and final required results;
 - declared environment capability;
 - responsible executors;
 - defined fixtures and actors;
-- anticipated protected evidence;
+- production implementation paths or artifact classes;
+- proof-only work allowed before initial execution;
+- preferred and fallback protected-baseline identity;
+- anticipated permitted mechanical edits;
 - proof-specific stop conditions;
-- required manual or specialist review authority.
+- required manual or specialist review authority;
+- material revision authority.
 
 Implementation readiness and authorization remain governed by the Agent Implementation Checklist and accepted work packet.
 
+This standard evaluates whether the required testing evidence exists. It does not independently authorize repository work.
+
 ## 5. Preimplementation Testing Gate
 
-When required, the preimplementation gate is satisfied only when:
+### 5.1. Preimplementation applicability
+
+Before execution, every material proof resolves the preimplementation stage to:
+
+```text
+REQUIRED
+Mandatory initial proof.
+
+CONDITIONAL
+A declared prerequisite determines whether initial proof is required.
+
+NOT_APPLICABLE
+No separate preimplementation execution is required.
+```
+
+The applicability record must identify:
+
+- work type;
+- reason;
+- requirement state;
+- environment or reviewer prerequisite;
+- final proof that remains required.
+
+`NOT_APPLICABLE` is accepted only before execution and does not remove final verification.
+
+### 5.2. Required initial-proof gate
+
+When initial proof is `REQUIRED`, the testing gate is satisfied only when:
 
 - required environment preflight passes;
-- every conditional proof due at the stage is resolved;
+- the proof and fixtures execute validly;
 - characterization proof produces `PASS` for preservation work; or
-- new-behavior proof produces the exact declared `EXPECTED_NONPASS`;
-- unrelated failures are absent from the targeted proof;
-- execution evidence is recorded;
-- the initial protected baseline is recorded;
-- no production implementation preceded the required proof.
+- new or corrected behavior produces the exact declared `EXPECTED_NONPASS`;
+- the result is attributable to the intended behavior;
+- unrelated failures are absent;
+- material execution evidence is retained;
+- the protected baseline is identified;
+- protected proof semantics are recorded;
+- permitted mechanical edits and revision authority are declared;
+- no production implementation of the criterion preceded the accepted proof.
 
 An unexpected pass where `EXPECTED_NONPASS` was declared is `FAIL`.
 
 A different nonpass is `FAIL`.
 
-A `BLOCKED`, `NOT_RUN`, or `FAIL` required proof blocks testing acceptance for production implementation unless the accepted work packet defines bounded recovery.
+A `BLOCKED`, `NOT_RUN`, `FAIL`, or unauthorized protected-proof change prevents testing evidence from supporting production implementation.
+
+### 5.3. Conditional and not-applicable proof
+
+A `CONDITIONAL` proof must resolve before the stage becomes due.
+
+Use:
+
+- `REQUIRED` when the declared prerequisite exists;
+- `NOT_APPLICABLE` with accepted reason when the proof is intentionally excluded.
+
+When a required prerequisite is unavailable before execution, use `BLOCKED`.
+
+Do not substitute:
+
+- simulated native-platform proof;
+- local fake for required provider integration;
+- server-rendered output for required browser interaction;
+- generic benchmark for an accepted performance threshold;
+- undocumented manual judgment for required specialist review.
+
+When preimplementation applicability is `NOT_APPLICABLE`, testing evidence should record:
+
+- accepted reason;
+- affected proof and criteria;
+- final static, manual, specialist, or dynamic proof still required;
+- confirmation that the work does not change executable verification tooling when that exception is used for documentation-only work.
+
+### 5.4. Baseline identity and production boundary
+
+Before testing evidence can support production implementation, record:
+
+- production artifacts or artifact classes that may make the criterion pass;
+- proof-only work allowed before initial execution;
+- dedicated initial-proof commit when used;
+- fallback branch revision, file hashes, and working-tree patch when a commit is impractical;
+- protected paths;
+- exact command and selection scope;
+- required environment;
+- initial result and material report hash;
+- protected proof semantics;
+- permitted mechanical edits;
+- material revision authority.
+
+A dedicated initial-proof commit is preferred for writable implementation work.
+
+A vague description such as “tests added before implementation” does not satisfy the gate.
+
+Actual implementation authorization remains with the accepted work packet and repository workflow.
 
 ## 6. Development Testing Evidence
 
-During implementation, testing evidence should demonstrate that:
+During production implementation, testing evidence should demonstrate that:
 
+- the work began after every required initial-proof gate was satisfied;
 - targeted proofs run at useful intervals;
 - static checks run for changed artifact types;
-- protected proofs and fixtures remain unchanged unless revision is accepted;
+- the protected baseline remains identifiable;
+- protected proof semantics remain unchanged;
+- protected files are unchanged except for recorded preauthorized mechanical edits;
+- before-and-after hashes exist for every permitted edit;
+- a material verification-contract revision was accepted before any material proof change;
 - new failures are investigated immediately;
 - unrelated suites are not used to hide targeted failure;
 - no required proof remains incomplete;
@@ -164,6 +257,8 @@ During implementation, testing evidence should demonstrate that:
 - routine iterations do not overwrite accepted material evidence.
 
 Routine development executions may remain console-only unless relied upon for acceptance.
+
+A passing modified proof does not count when its material change lacks accepted revision authority.
 
 ## 7. Pull Request Testing Evidence
 
@@ -173,13 +268,21 @@ A pull request’s testing evidence must report:
 - `AC-*` criteria covered;
 - `PF-*` proofs executed;
 - applicability, execution status, and result for each required proof;
+- initial-proof applicability decision;
+- protected-baseline commit or fallback identity;
+- production implementation start revision when materially relevant;
 - targeted commands or procedures;
+- final targeted result;
+- protected paths and baseline hashes;
+- protected-proof edits, including before-and-after hashes;
+- accepted verification-contract revision when applicable;
 - broader affected tests and results;
 - static checks;
 - build checks;
-- database verification when applicable;
-- browser or manual review when applicable;
-- specialist testing review when applicable;
+- database or migration verification when applicable;
+- browser, visual, or accessibility proof when applicable;
+- security, performance, compatibility, native-platform, operational, or other specialist proof when applicable;
+- manual and specialist review state;
 - proofs not run and why;
 - blockers;
 - known test or evidence failures;
@@ -190,18 +293,24 @@ Repository workflow and PR templates may require additional non-testing informat
 
 Do not report “all tests pass” when only a targeted subset ran.
 
+Do not report a protected proof as unchanged when it received unrecorded edits.
+
 ## 8. Testing Evidence Required For Merge Candidacy
 
 Testing evidence is complete for merge candidacy only when:
 
 - every required final targeted proof is `EXECUTED + PASS`;
+- the final targeted proof preserves the accepted baseline semantics;
+- the exact initial command was rerun unless a preauthorized path-only update is recorded;
+- every protected-file change is either nonsemantic and preauthorized or covered by an accepted contract revision;
+- baseline and final hashes are reconciled;
 - required broader suites pass;
 - mandatory static and documentation checks pass;
-- required manual and specialist testing review is accepted;
+- required browser, visual, accessibility, security, database, performance, compatibility, native-platform, operational, manual, and specialist proof is accepted;
 - no required proof is `NOT_RUN` or `BLOCKED`;
 - no unexplained in-scope test or evidence failure remains;
-- protected evidence is intact;
-- required material artifacts are retained and referenced.
+- required material artifacts are retained and referenced;
+- known limitations are explicit.
 
 Synchronization with `origin/main`, conflict resolution, shared-file reconciliation, documentation synchronization, PR state, and merge authorization remain repository-workflow responsibilities.
 
@@ -264,7 +373,7 @@ Do not omit a required targeted proof merely because a broad suite passes.
 
 ## 12. Failure Handling
 
-For each blocked or failed proof, record:
+For each blocked or failed proof, or each protected-baseline violation, record:
 
 - proof ID;
 - criterion IDs;
@@ -274,8 +383,10 @@ For each blocked or failed proof, record:
 - result when executed;
 - command or procedure;
 - environment;
+- protected-baseline identity;
 - blocking prerequisite or failure classification;
-- whether it is in scope;
+- unauthorized or disputed proof change when applicable;
+- whether the condition is in scope;
 - whether it blocks testing acceptance;
 - allowed next action;
 - evidence location.
@@ -284,7 +395,21 @@ In-scope failures must be resolved or the work remains blocked.
 
 Out-of-scope failures are reported and preserved. They are not automatically repaired.
 
-A proof that began execution and encountered an environment, fixture, dependency, boot, tooling, or discovery problem is `EXECUTED + FAIL`, not `BLOCKED`.
+A proof that began execution and encountered an environment, fixture, dependency, boot, tooling, discovery, or evidence-capture problem is `EXECUTED + FAIL`, not `BLOCKED`.
+
+An unauthorized material proof change blocks acceptance even when the modified proof passes.
+
+A failed mandatory gate or baseline violation is not authorization to:
+
+- weaken assertions;
+- change fixtures;
+- narrow the command;
+- add skips or exclusions;
+- replace a real boundary with a mock;
+- update unrelated dependencies;
+- remediate outside the accepted work packet.
+
+Preserve the accepted baseline and the disputed diff before any authorized recovery.
 
 ## 13. Flaky Tests
 
@@ -346,7 +471,10 @@ Retain structured evidence for:
 
 - preimplementation `EXPECTED_NONPASS`;
 - accepted characterization baseline;
+- protected-baseline identity and material baseline report;
 - final targeted proof;
+- authorized mechanical-edit reconciliation when applicable;
+- accepted verification-contract revision proof when applicable;
 - mandatory security proof;
 - mandatory database or migration proof;
 - mandatory browser proof;
@@ -383,6 +511,7 @@ The manifest should identify:
 - `PF-*` IDs;
 - `AC-*` IDs;
 - revision;
+- protected-baseline commit or fallback identity when applicable;
 - command or procedure;
 - working directory;
 - environment;
@@ -393,6 +522,9 @@ The manifest should identify:
 - exit code;
 - report identity;
 - report hash when required;
+- protected path hashes when applicable;
+- authorized mechanical edits when applicable;
+- verification-contract revision when applicable;
 - limitations;
 - reviewer when applicable.
 
@@ -443,6 +575,9 @@ Stage:
 Applicability:
 Execution status:
 Verification result:
+Initial-proof applicability:
+Protected-baseline identity:
+Production implementation start revision:
 Command or procedure:
 Operating system:
 Runtime:
@@ -451,25 +586,52 @@ Revision:
 Exit code:
 Artifact reference:
 Report hash:
+Protected paths and hashes:
+Authorized mechanical edits:
+Verification-contract revision:
 Limitations:
 Reviewer:
 ```
 
+For a protected proof, the report must state one of:
+
+```text
+UNCHANGED
+Protected paths and semantics match the accepted baseline.
+
+AUTHORIZED_MECHANICAL_EDIT
+Only predeclared nonsemantic edits occurred; before-and-after hashes are recorded.
+
+ACCEPTED_CONTRACT_REVISION
+A material revision was accepted before protected evidence changed.
+```
+
+These labels are reporting descriptions, not verification results.
+
 Concise summaries may omit fields that are genuinely not applicable, but must preserve enough information for review and reproduction.
 
 The issue or pull request should not reproduce thousands of lines of runner output.
+
+A concise summary must link or point to the material artifacts it relies upon.
 
 ## 17. Testing Acceptance Completeness
 
 Testing acceptance is complete only when:
 
 - every acceptance criterion maps to accepted proof;
-- every required proof is `EXECUTED + PASS` at the final applicable stage;
+- every required preimplementation proof has the accepted result;
+- every accepted initial baseline is identifiable;
+- production implementation did not precede a required initial proof;
+- every required final proof is `EXECUTED + PASS`;
 - every conditional proof due at that stage is resolved;
 - every required manual or specialist testing review is complete;
+- the final targeted proof preserves the accepted baseline semantics;
+- every protected-file change is reconciled as unchanged, preauthorized mechanical, or covered by accepted revision;
 - required material artifacts are retained and referenced;
 - known testing limitations are explicit;
-- no protected evidence was weakened without revision.
+- no protected evidence was weakened, skipped, deleted, narrowed, or materially rewritten without revision.
+
+For work with no separate preimplementation execution, completeness still requires the declared final proof and accepted reason for preimplementation `NOT_APPLICABLE`.
 
 Testing acceptance completeness does not authorize issue closure, pull-request merge, milestone closure, release, or deployment.
 

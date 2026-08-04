@@ -8,55 +8,72 @@ canonical: true
 canonical_path: docs/02-standards/testing/automated-and-static-testing-standards.md
 parent: docs/02-standards/testing/index.md
 template: docs/09-reference/templates/docs/_doc.md
-summary: Defines automated test construction, static verification, unit and capability tests, architecture and contract tests, design techniques, and test-quality rules.
+summary: Defines construction and evaluation rules for static verification, automated tests, unit, technical-component, capability, Contract, and architecture proofs, test-design techniques, doubles, assertions, coverage, and mutation analysis.
 -->
 
 # Automated And Static Testing Standards
 
 Parent: [Testing Standards Index](index.md)
 
-- [1. Purpose](#1-purpose)
+- [1. Purpose And Authority](#1-purpose-and-authority)
 - [2. Static Verification](#2-static-verification)
 - [3. Automated Dynamic Tests](#3-automated-dynamic-tests)
 - [4. Unit Testing](#4-unit-testing)
-- [5. Component And Capability Testing](#5-component-and-capability-testing)
-- [6. Contract Testing](#6-contract-testing)
-- [7. Architecture And Placement Testing](#7-architecture-and-placement-testing)
-- [8. Test Design Techniques](#8-test-design-techniques)
-  - [Requirements-based](#requirements-based)
-  - [Equivalence partitioning](#equivalence-partitioning)
-  - [Boundary-value analysis](#boundary-value-analysis)
-  - [Decision tables](#decision-tables)
-  - [State-transition testing](#state-transition-testing)
-  - [Pairwise or combinatorial testing](#pairwise-or-combinatorial-testing)
-  - [Property-based testing](#property-based-testing)
-  - [Fuzz testing](#fuzz-testing)
-  - [Characterization testing](#characterization-testing)
-  - [Exploratory testing](#exploratory-testing)
-- [9. Doubles And Isolation](#9-doubles-and-isolation)
-- [10. Assertions And Test Quality](#10-assertions-and-test-quality)
-- [11. Naming And Organization](#11-naming-and-organization)
-- [12. Coverage And Mutation Analysis](#12-coverage-and-mutation-analysis)
-- [13. Prohibited Patterns](#13-prohibited-patterns)
-- [14. Related](#14-related)
+- [5. Technical-Component Testing](#5-technical-component-testing)
+- [6. Capability Testing](#6-capability-testing)
+- [7. Contract Testing](#7-contract-testing)
+  - [7.1. Static Contract validation](#71-static-contract-validation)
+  - [7.2. Dynamic provider Contract testing](#72-dynamic-provider-contract-testing)
+  - [7.3. Consumer integration testing](#73-consumer-integration-testing)
+- [8. Architecture And Placement Testing](#8-architecture-and-placement-testing)
+- [9. Test-Design Techniques](#9-test-design-techniques)
+  - [9.1. Specification-based techniques](#91-specification-based-techniques)
+  - [9.2. Generative techniques](#92-generative-techniques)
+  - [9.3. Structural techniques](#93-structural-techniques)
+  - [9.4. Experience-based techniques](#94-experience-based-techniques)
+  - [9.5. Change-focused techniques and proof modes](#95-change-focused-techniques-and-proof-modes)
+- [10. Doubles And Isolation](#10-doubles-and-isolation)
+- [11. Assertions And Test Quality](#11-assertions-and-test-quality)
+- [12. Helpers, Datasets, And Shared Test Infrastructure](#12-helpers-datasets-and-shared-test-infrastructure)
+- [13. Naming And Organization](#13-naming-and-organization)
+- [14. Requirement Coverage, Code Coverage, And Mutation Analysis](#14-requirement-coverage-code-coverage-and-mutation-analysis)
+  - [Requirement coverage](#requirement-coverage)
+  - [Code coverage](#code-coverage)
+  - [Mutation analysis](#mutation-analysis)
+- [15. Prohibited Patterns](#15-prohibited-patterns)
+- [16. Related](#16-related)
 
-## 1. Purpose
+## 1. Purpose And Authority
 
-Define construction and review rules for repeatable automated and static verification.
+Define construction and evaluation rules for repeatable automated and static verification.
+
+This standard defines how automated and static proofs are built, executed, and reviewed. It does not define:
+
+- application behavior;
+- public Contracts;
+- architecture rules;
+- schema requirements;
+- UI APIs;
+- security controls;
+- naming conventions;
+- file placement;
+- supported compatibility targets.
+
+Those requirements remain with their canonical owners. Automated and static proofs enforce accepted requirements; they do not independently invent, broaden, or replace them.
 
 ## 2. Static Verification
 
-Use applicable static checks for:
+Use applicable static verification for:
 
 - PHP syntax and type constraints;
 - JavaScript and CSS linting;
-- formatting;
+- formatting conformance;
 - dependency direction;
 - forbidden imports and paths;
 - owner placement;
 - architecture rules;
 - duplicate identifiers;
-- schema and contract shape;
+- schema and Contract shape;
 - unresolved placeholders;
 - documentation metadata and links;
 - dependency vulnerabilities;
@@ -64,26 +81,51 @@ Use applicable static checks for:
 - generated-manifest determinism;
 - public API compatibility.
 
-Static checks should produce deterministic output and actionable failure messages.
+Static verification must:
 
-A static checker must not silently rewrite canonical source during validation unless the command is explicitly a formatter or generator step.
+- be deterministic for the same inputs and environment;
+- produce actionable failure messages;
+- identify the governing canonical rule when practical;
+- distinguish source defects from tool or environment failures;
+- avoid treating generated observations as reviewed target-state truth.
+
+A verification gate must be non-mutating.
+
+Use separate commands or modes for preparation and verification:
+
+```text
+formatter --write
+Preparation action
+
+formatter --check
+Verification action
+```
+
+After a formatter, generator, fixer, or migration command rewrites files, rerun the applicable non-mutating verification against the resulting source.
+
+A gate must not silently change the files it evaluates.
 
 ## 3. Automated Dynamic Tests
 
-Automated tests must:
+Automated dynamic tests must:
 
 - execute observable behavior;
-- be deterministic under their declared environment;
+- map to declared `AC-*` criteria through `PF-*` proofs;
+- be deterministic under the declared environment;
 - isolate or control external state;
 - assert meaningful outcomes;
-- fail for the intended reason;
+- fail for one coherent behavioral reason;
+- reach the intended target path;
 - clean up owned test state;
 - avoid production secrets and data;
 - remain discoverable by the authoritative runner;
 - declare special environment requirements;
-- use PostgreSQL when PostgreSQL behavior is material.
+- use PostgreSQL when PostgreSQL behavior is material;
+- produce structured evidence when the run is material.
 
-Select the narrowest level that proves the criterion.
+“One coherent behavioral reason” does not require one assertion. A test may need multiple assertions to prove one accepted outcome and its relevant side effects.
+
+Select the narrowest test level that reliably proves the criterion.
 
 ## 4. Unit Testing
 
@@ -91,51 +133,107 @@ Use unit tests for isolated:
 
 - value objects;
 - pure calculations;
-- validation rules;
-- state-transition logic;
-- policy decisions that can be evaluated without infrastructure;
 - normalization;
 - parsing and serialization;
-- deterministic resolvers;
+- deterministic mapping and classification;
+- validation rules independent from framework integration;
+- state-transition logic;
+- policy decisions that can be evaluated without infrastructure;
 - retry or backoff calculations;
-- mapping and classification logic.
+- invariant enforcement in pure logic.
 
-A unit test should not require the complete Laravel application unless the behavior depends on framework integration.
+A unit test should not require:
 
-Do not call a test “unit” when it requires database, HTTP, queues, filesystem, or multiple owners.
+- complete Laravel application boot;
+- database access;
+- HTTP;
+- queues;
+- filesystem;
+- network services;
+- multiple application owners.
 
-## 5. Component And Capability Testing
+Do not call a test “unit” when its proof depends on infrastructure or owner integration.
 
-Use component or capability tests for:
+Use a real value object or collaborator when it is small, deterministic, and part of the behavior being proven. Do not mock ordinary pure collaborators merely to preserve a unit label.
 
-- public component APIs;
+## 5. Technical-Component Testing
+
+A technical-component test verifies one independently usable implementation unit through its public API.
+
+Examples include:
+
+- parser;
+- serializer;
+- validator;
+- registry implementation;
+- repository adapter;
+- transport adapter;
+- cache adapter;
+- filesystem adapter;
+- reusable PHP service;
+- reusable UI Component, when governed by the UI testing standard.
+
+Technical-component tests may include limited infrastructure when that infrastructure is part of the component’s accepted Contract.
+
+Verify applicable:
+
+- accepted inputs;
+- rejected inputs;
+- public output;
+- stable identifiers;
+- state transitions;
+- observable failure behavior;
+- resource cleanup;
+- configuration;
+- compatibility behavior.
+
+Technical-component tests must not silently become cross-owner capability or system tests.
+
+UI Component testing also follows [UI, Accessibility, And Interaction Testing Standards](ui-accessibility-and-interaction-testing-standards.md).
+
+## 6. Capability Testing
+
+A capability test verifies one Core capability or Module-owned behavior with its accepted owner-local integration.
+
+Capability tests may include:
+
+- Laravel application boot;
 - owner-local Actions and Queries;
-- capability behavior with owner-local persistence;
-- validation and authorization integration;
-- domain Events and Notifications;
-- error and rejection behavior;
-- configuration and registration;
-- owner-local Delivery Adapters;
-- Module-owned workflows.
+- validation;
+- authorization integration;
+- owner-local persistence;
+- Events;
+- Jobs;
+- Notifications;
+- monitoring and audit behavior;
+- Delivery Adapters;
+- owner-local registration and configuration.
 
-Core and Module tests must cover applicable:
+Verify applicable:
 
-- success paths;
-- validation failures;
+- success path;
+- validation failure;
 - unauthenticated denial;
 - unauthorized denial;
-- object and scope denial;
+- object-level denial;
+- accepted scope denial;
 - state-transition guards;
-- audit behavior;
-- monitoring signals;
+- unchanged durable state on rejection;
+- transaction result;
+- emitted Events;
+- queued Jobs;
 - Notifications;
-- transaction outcomes.
+- audit evidence;
+- monitoring signals;
+- public failure behavior.
+
+A capability test remains within one primary owner. Cross-owner behavior belongs to integration testing.
 
 Workspace-aware presentation may be tested as presentation context. Workspace must not be treated as a general persistence or authorization scope.
 
-## 6. Contract Testing
+## 7. Contract Testing
 
-Use contract tests to verify promises at owner boundaries.
+Use Contract tests to verify accepted promises at owner or system boundaries.
 
 Contracts may include:
 
@@ -147,113 +245,207 @@ Contracts may include:
 - APIs and webhooks;
 - Registry Extension Points;
 - Contributions;
-- UI component APIs;
+- UI Component APIs;
 - configuration schemas;
-- database contracts;
+- database Contracts;
 - generated manifests;
 - external integration adapters.
 
-Contract tests should verify:
+A Contract test must cite or route to the canonical Contract owner.
+
+A Contract test must not:
+
+- invent a missing Contract;
+- expand accepted inputs or outputs;
+- select unresolved compatibility behavior;
+- make private implementation structure public by asserting it unnecessarily.
+
+### 7.1. Static Contract validation
+
+Use static validation for applicable:
+
+- signatures;
+- types;
+- required fields;
+- optional fields;
+- allowed values;
+- stable identifiers;
+- schema shape;
+- metadata;
+- registration;
+- dependency declarations;
+- version declarations;
+- prohibited fields or dependencies.
+
+Static Contract validation proves shape and declaration. It does not prove runtime provider behavior.
+
+### 7.2. Dynamic provider Contract testing
+
+Use dynamic provider tests for applicable:
 
 - accepted inputs;
 - rejected inputs;
-- required fields;
-- optional fields;
-- type and semantic constraints;
-- version or compatibility expectations;
-- stable identifiers;
-- public failure behavior;
-- deterministic serialization where applicable.
+- serialization and deserialization;
+- observable outputs;
+- provider state changes;
+- public errors;
+- Event or Job semantics;
+- compatibility behavior;
+- deterministic output where required.
 
-A contract test does not replace provider behavior tests or consumer integration tests.
+A provider Contract test does not replace owner-local capability tests when internal state, authorization, transactions, or side effects also matter.
 
-## 7. Architecture And Placement Testing
+### 7.3. Consumer integration testing
 
-Architecture tests should enforce accepted repository rules such as:
+Consumer integration tests prove that a consumer correctly uses an accepted provider Contract.
+
+Verify applicable:
+
+- request construction;
+- response handling;
+- failure translation;
+- compatibility expectations;
+- unavailable-provider behavior;
+- no dependency on provider-private implementation.
+
+Consumer integration tests belong with the consumer or the accepted cross-owner integration proof.
+
+A Contract test does not replace provider behavior tests or consumer integration tests.
+
+## 8. Architecture And Placement Testing
+
+Architecture tests may enforce accepted rules such as:
 
 - owner-first placement;
-- allowed direct dependencies;
+- allowed dependency direction;
 - prohibited Core-to-Module dependencies;
 - UI independence from domain implementation;
 - public Contract use across owners;
 - prohibited generic ownerless paths;
-- accepted namespaces and naming;
+- accepted namespaces;
 - test placement;
 - documentation ownership;
 - no direct cross-owner Model or table access.
 
-Architecture tests must cite the canonical architecture or standard that defines the rule.
+Every architecture assertion must cite the canonical architecture, decision, or standard that owns the rule.
 
-## 8. Test Design Techniques
+Architecture tests must:
 
-Select techniques based on behavior and risk.
+- enforce accepted target or compatibility rules explicitly;
+- distinguish current transitional exceptions from target rules;
+- avoid encoding inferred architecture;
+- produce a clear path and rule violation;
+- avoid rewriting source during verification.
 
-### Requirements-based
+Generated inventories or observations may support architecture tests but do not independently become architecture authority.
 
-Derive tests directly from accepted criteria and rejection behavior.
+## 9. Test-Design Techniques
 
-### Equivalence partitioning
+Select techniques based on accepted behavior and risk.
 
-Group inputs expected to behave the same and test representative members.
+A `PF-*` declaration should name a technique only when the technique materially affects proof coverage or review.
 
-### Boundary-value analysis
+### 9.1. Specification-based techniques
 
-Test values at and around accepted limits.
+Use applicable:
 
-### Decision tables
+- requirements-based testing;
+- scenario or use-case testing;
+- equivalence partitioning;
+- boundary-value analysis;
+- decision tables;
+- state-transition testing;
+- pairwise or combinatorial testing.
 
-Use when outcomes depend on combinations of permissions, states, flags, or conditions.
+These techniques derive cases from accepted requirements and observable behavior.
 
-### State-transition testing
+### 9.2. Generative techniques
 
-Use for lifecycle, workflow, session, installation, queue, and status transitions.
+Use applicable:
 
-### Pairwise or combinatorial testing
+- property-based testing;
+- fuzz testing;
+- model-based testing.
 
-Use when many independent options can combine and exhaustive testing is impractical.
+Generated cases must:
 
-### Property-based testing
+- preserve reproducibility;
+- record seeds when applicable;
+- use accepted invariants or models;
+- minimize or retain failing examples where practical;
+- avoid generating sensitive or unsafe data.
 
-Use for invariants across a large generated input space.
+### 9.3. Structural techniques
 
-### Fuzz testing
+Use structural analysis when code structure materially affects confidence.
 
-Use for parsers, inputs, protocols, serialization, and security-sensitive boundaries where malformed data is a risk.
+Examples:
 
-### Characterization testing
+- statement execution;
+- branch execution;
+- condition coverage;
+- path analysis for bounded critical logic.
 
-Use to preserve accepted current behavior before refactoring or moving implementation.
+Structural techniques supplement requirement-based proof. They do not establish requirement completeness.
 
-### Exploratory testing
+### 9.4. Experience-based techniques
 
-Use structured human exploration for unknown interaction, workflow, compatibility, or usability risks.
+Use applicable:
 
-The issue should name the technique when it materially affects proof coverage.
+- error guessing;
+- exploratory testing.
 
-## 9. Doubles And Isolation
+Exploratory testing is normally manual or system-level proof and also follows [Integration, System, And Acceptance Testing Standards](integration-system-and-acceptance-testing-standards.md).
+
+Experience-based findings do not silently redefine accepted requirements.
+
+### 9.5. Change-focused techniques and proof modes
+
+Regression selection and characterization support change-focused verification.
+
+Characterization is a proof mode governed by [Verification Contract And Evidence Standards](verification-contract-and-evidence-standards.md), not an independent source of accepted behavior.
+
+Use characterization only for behavior explicitly accepted for preservation.
+
+Regression selection should follow changed owners, Contracts, dependencies, schemas, security boundaries, UI primitives, and operational behavior.
+
+Mutation analysis evaluates test strength and is governed separately in Section 14.
+
+## 10. Doubles And Isolation
 
 Use:
 
-- fakes for controlled in-memory or local implementations;
+- fakes for controlled local implementations;
 - stubs for fixed responses;
-- spies for interaction observation;
-- mocks only when interaction is the actual contract;
-- contract test doubles for unavailable external systems;
+- spies for observing a public interaction;
+- mocks only when the interaction itself is the accepted Contract;
+- protocol or Contract doubles for unavailable external systems;
 - service virtualization when protocol behavior matters.
+
+A double must conform to the same public Contract as the real provider for the behavior it represents.
+
+Use the real collaborator when:
+
+- the boundary itself is material to the proof;
+- the collaborator is deterministic and inexpensive;
+- replacing it would hide the behavior claimed by the proof;
+- integration semantics, transactions, serialization, queueing, or protocol behavior matter.
 
 Do not:
 
 - mock the behavior under test;
 - mock every collaborator by default;
-- assert private implementation calls when observable behavior is sufficient;
-- use a double that violates the provider’s public Contract;
+- use partial mocks to bypass real behavior;
+- assert private-method calls;
+- mock framework, database, queue, filesystem, browser, or provider behavior that the proof claims to verify;
+- use a double that violates the provider Contract;
 - let test doubles become a competing source of external API truth.
 
-Critical external integrations require at least one contract or staged integration proof beyond local doubles.
+Critical external integrations require at least one authoritative Contract, sandbox, staged integration, or provider-compatible proof beyond local doubles.
 
-## 10. Assertions And Test Quality
+## 11. Assertions And Test Quality
 
-Assertions must verify applicable:
+Assertions must prove applicable:
 
 - return value or response;
 - state change;
@@ -263,71 +455,179 @@ Assertions must verify applicable:
 - queued Jobs;
 - Notifications;
 - audit evidence;
-- monitoring signal;
+- monitoring signals;
 - exception or public rejection;
 - rendered semantic output;
 - accessibility attributes;
-- integration payloads.
+- integration payloads;
+- resource cleanup;
+- compatibility behavior.
+
+A test may contain multiple assertions when they establish one coherent accepted behavior.
+
+For denied or failed paths, assert applicable:
+
+- expected public rejection;
+- unchanged durable state;
+- no prohibited Event, Job, Notification, or external effect;
+- required audit or monitoring evidence;
+- no sensitive-data exposure.
 
 Avoid:
 
 - unconditional passing assertions;
 - assertions that merely repeat fixture input;
 - assertions against unstable irrelevant details;
-- excessive private-method testing;
-- tests that pass when the target path is never executed;
-- broad snapshots where focused semantic assertions are more reliable.
+- excessive private implementation assertions;
+- tests that pass when the target path never executes;
+- status-code-only proof when state or side effects matter;
+- broad snapshots where focused semantic assertions are more reliable;
+- assertion helpers that hide the expected behavior.
 
-## 11. Naming And Organization
+## 12. Helpers, Datasets, And Shared Test Infrastructure
 
-Use behavior-focused test names.
+Test helpers should improve clarity without hiding:
 
-Recommended patterns:
+- actors;
+- fixtures;
+- state;
+- inputs;
+- expected outcomes;
+- environment requirements.
 
-- `<SubjectOrBehavior>Test`;
-- `test_<context>_<expected_outcome>`;
-- `<Flow>BrowserTest`;
-- `<BoundaryOrRule>ArchitectureTest`;
-- `<Subject>ContractTest`;
-- `<Subject>Fixture`.
+Shared helpers must:
 
-Dataset identifiers use descriptive snake case. Non-PHP fixture filenames use lowercase kebab-case by default.
+- have one clear owner;
+- remain deterministic;
+- preserve public test meaning;
+- avoid creating broad hidden state;
+- fail with actionable messages;
+- not bypass accepted application invariants.
+
+Datasets should:
+
+- identify the condition, rejection reason, or expected outcome;
+- keep materially distinct cases visible;
+- avoid compressing unrelated behaviors into one opaque table;
+- preserve stable case identity where evidence depends on a case.
+
+A helper, factory, or dataset used by a protected baseline is itself protected when changing it could alter proof meaning.
+
+## 13. Naming And Organization
+
+Test names should describe:
+
+- context;
+- condition;
+- expected outcome.
+
+Dataset cases should describe the condition, rejection reason, or expected outcome.
 
 Tests remain with the smallest clear owner according to Repository Architecture.
 
-## 12. Coverage And Mutation Analysis
+Named suites, filesystem paths, and groups remain separate execution dimensions:
 
-Code coverage may identify unexecuted code. It does not prove:
+- named suites represent stable test types;
+- filesystem paths select owners;
+- groups represent orthogonal execution characteristics.
+
+Exact class, method, dataset, fixture, filename, casing, and directory patterns are owned by [Repository Naming Standards](../coding/repository-naming-standards.md).
+
+Do not duplicate or redefine those naming rules here.
+
+## 14. Requirement Coverage, Code Coverage, And Mutation Analysis
+
+### Requirement coverage
+
+Requirement coverage is represented by explicit:
+
+```text
+AC-* → PF-*
+```
+
+mapping.
+
+A criterion is not covered merely because related code executed.
+
+### Code coverage
+
+Code coverage may identify unexecuted implementation paths.
+
+It does not prove:
 
 - requirements are complete;
 - assertions are meaningful;
 - rejection paths are covered;
 - security controls are correct;
 - integrations work;
-- UI is usable or accessible.
+- UI is usable or accessible;
+- operational behavior is safe.
 
-Do not set arbitrary repository-wide percentage targets without a risk-based purpose.
+Do not set arbitrary repository-wide percentage targets.
 
-Mutation testing may be used to evaluate assertion strength for critical pure logic, validation, access, financial, or security-sensitive code. Surviving mutations require review; they do not automatically require blanket test expansion.
+A bounded work packet may declare risk-specific coverage expectations for:
 
-## 13. Prohibited Patterns
+- one owner;
+- one critical algorithm;
+- one security boundary;
+- one migration;
+- one proof.
+
+Coverage configuration and exclusions must not hide executable production behavior without accepted justification.
+
+### Mutation analysis
+
+Mutation analysis may evaluate assertion strength for critical:
+
+- pure logic;
+- validation;
+- access decisions;
+- financial calculations;
+- state transitions;
+- security-sensitive behavior.
+
+Mutation testing is optional unless a work packet makes it mandatory.
+
+Record:
+
+- mutation scope;
+- tool and version;
+- configuration;
+- surviving mutations;
+- excluded mutations and reason;
+- limitations.
+
+A surviving mutation requires review. It does not automatically require blanket test expansion.
+
+Mutation results are test-quality evidence, not independent product requirements.
+
+## 15. Prohibited Patterns
 
 Do not:
 
-- hide nondeterminism with retries in the test runner;
-- depend on execution order;
+- hide nondeterminism with automatic runner retries;
+- depend on test execution order;
 - depend on real wall-clock time when a controlled clock is possible;
 - use random data without recording or controlling the seed;
 - share mutable state across tests;
 - depend on production services in ordinary local suites;
 - suppress warnings that indicate invalid test behavior;
-- leave required `markTestIncomplete()` calls;
-- use obsolete compatibility tests as authority after their behavior is intentionally removed.
+- leave required `markTestIncomplete()` or equivalent incomplete markers;
+- use obsolete compatibility tests as authority after their behavior is intentionally removed;
+- narrow the target command after the protected baseline merely to avoid failure;
+- exclude failing cases from discovery;
+- replace PostgreSQL with SQLite when semantics may differ;
+- mock the boundary the proof claims to verify;
+- use generated code or snapshots as a substitute for focused behavioral assertions;
+- let a mutating formatter, generator, or fixer serve as the final verification gate;
+- treat code coverage or mutation score as acceptance by itself.
 
-## 14. Related
+## 16. Related
 
 - [Testing And Verification Standards](testing-and-verification-standards.md)
+- [Verification Contract And Evidence Standards](verification-contract-and-evidence-standards.md)
 - [Test Environments, Data, And Fixtures Standards](test-environments-data-and-fixtures-standards.md)
 - [Integration, System, And Acceptance Testing Standards](integration-system-and-acceptance-testing-standards.md)
+- [UI, Accessibility, And Interaction Testing Standards](ui-accessibility-and-interaction-testing-standards.md)
 - [Repository Architecture](../../03-architecture/repository-architecture.md)
 - [Repository Naming Standards](../coding/repository-naming-standards.md)

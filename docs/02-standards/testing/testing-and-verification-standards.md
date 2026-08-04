@@ -8,7 +8,7 @@ canonical: true
 canonical_path: docs/02-standards/testing/testing-and-verification-standards.md
 parent: docs/02-standards/testing/index.md
 template: docs/09-reference/templates/docs/_doc.md
-summary: Defines the shared Login 2.0 testing taxonomy, principles, verification model, risk selection, test levels, methods, and minimum proof lifecycle.
+summary: Defines the shared Login 2.0 testing taxonomy, principles, verification model, risk selection, test levels, methods, initial-proof applicability, and minimum proof lifecycle.
 -->
 
 # Testing And Verification Standards
@@ -19,6 +19,10 @@ Parent: [Testing Standards Index](index.md)
 - [2. Core Principles](#2-core-principles)
 - [3. Scope](#3-scope)
 - [4. Verification Model And Identifiers](#4-verification-model-and-identifiers)
+  - [Acceptance criterion](#acceptance-criterion)
+  - [Verification proof](#verification-proof)
+  - [Proof execution](#proof-execution)
+  - [Testing gate](#testing-gate)
 - [5. Testing Classification](#5-testing-classification)
 - [6. Verification Methods](#6-verification-methods)
   - [6.1. Static verification](#61-static-verification)
@@ -61,7 +65,9 @@ Testing begins while requirements and acceptance criteria are being designed. It
 9. **Coverage percentages are diagnostic signals, not acceptance evidence by themselves.**
 10. **Tests, fixtures, UI Contracts, schemas, and review evidence are protected when accepted as part of a verification contract.**
 11. **A broken test environment is a failure of evidence production, not evidence that target behavior is missing.**
-12. **Do not weaken accepted proof to match incorrect implementation.**
+12. **Classify preimplementation applicability before execution; do not force speculative proof where requirements or environments are unresolved.**
+13. **Production implementation begins only after every required initial proof and protected baseline are complete.**
+14. **Do not weaken accepted proof to match incorrect implementation.**
 
 ## 3. Scope
 
@@ -278,16 +284,16 @@ Examples:
 
 ## 7. Test Levels
 
-| Level | Primary purpose |
-| --- | --- |
-| Unit | Verify one isolated function, method, value object, rule, or pure behavior |
-| Component | Verify one independently usable technical component and its public API |
-| Capability | Verify one Core capability or Module-owned behavior with owner-local dependencies |
-| Integration | Verify Contracts and behavior across components, owners, processes, or services |
-| System | Verify the assembled application or a major subsystem against system requirements |
-| End-to-end | Verify a complete representative workflow through applicable layers and channels |
-| Acceptance | Verify that delivered behavior satisfies accepted user, administrator, business, or system requirements |
-| Operational | Verify deployment, startup, migration, health, recovery, observability, and safe ongoing operation |
+| Level       | Primary purpose                                                                                         |
+| ----------- | ------------------------------------------------------------------------------------------------------- |
+| Unit        | Verify one isolated function, method, value object, rule, or pure behavior                              |
+| Component   | Verify one independently usable technical component and its public API                                  |
+| Capability  | Verify one Core capability or Module-owned behavior with owner-local dependencies                       |
+| Integration | Verify Contracts and behavior across components, owners, processes, or services                         |
+| System      | Verify the assembled application or a major subsystem against system requirements                       |
+| End-to-end  | Verify a complete representative workflow through applicable layers and channels                        |
+| Acceptance  | Verify that delivered behavior satisfies accepted user, administrator, business, or system requirements |
+| Operational | Verify deployment, startup, migration, health, recovery, observability, and safe ongoing operation      |
 
 The lowest level that provides reliable proof is preferred. Higher-level tests are added when lower levels cannot prove integration, configuration, transport, browser, deployment, or acceptance behavior.
 
@@ -418,6 +424,21 @@ Low-risk documentation or mechanical work does not require unrelated application
 
 ## 10. Minimum Verification Lifecycle
 
+Before preimplementation execution, classify each material `PF-*` proof for that stage:
+
+```text
+REQUIRED
+Initial proof is mandatory.
+
+CONDITIONAL
+A declared prerequisite determines whether initial proof becomes required.
+
+NOT_APPLICABLE
+No separate preimplementation execution is required.
+```
+
+Detailed work-type, production-boundary, baseline, permitted-edit, and revision rules are defined in [Verification Contract And Evidence Standards](verification-contract-and-evidence-standards.md).
+
 For each changed acceptance criterion:
 
 1. assign a stable `AC-*` identifier;
@@ -426,15 +447,21 @@ For each changed acceptance criterion:
 4. declare one or more `PF-*` proofs;
 5. map each proof to its criterion IDs;
 6. declare method, level, environment, executor, stage, applicability, and expected result;
-7. execute the smallest valid preimplementation proof when required;
-8. classify the exact observed result;
-9. record and protect the accepted initial baseline;
-10. implement without weakening protected proof;
-11. rerun the same targeted proof unchanged;
-12. run broader affected checks proportionate to risk;
-13. retain structured evidence for material runs;
-14. record remaining manual or specialist review;
-15. evaluate testing completeness for the applicable workflow stage.
+7. classify preimplementation applicability as `REQUIRED`, `CONDITIONAL`, or `NOT_APPLICABLE`;
+8. declare the production implementation boundary and proof-only work allowed before initial execution;
+9. execute the smallest valid initial proof when required;
+10. classify the exact observed result;
+11. record and protect the accepted baseline, preferably through a dedicated initial-proof commit;
+12. implement without weakening protected proof;
+13. rerun the accepted targeted proof with identical semantics and command, except for a preauthorized nonsemantic path-only update recorded by the contract;
+14. run broader affected checks proportionate to risk;
+15. retain structured evidence for material runs;
+16. record remaining manual or specialist review;
+17. evaluate testing completeness for the applicable workflow stage.
+
+Do not force an executable initial proof that would silently choose unresolved architecture, schema, UI, security, compatibility, or operational behavior.
+
+When no separate preimplementation execution is required, record the reason and still execute every declared final proof.
 
 Access-sensitive behavior must test applicable allow and deny paths.
 
@@ -471,6 +498,9 @@ Do not:
 - infer acceptance from a successful build alone;
 - claim success when the required command or procedure was not run;
 - treat `EXPECTED_NONPASS` as a general failure waiver;
+- begin production implementation before a required initial proof and protected baseline;
+- treat preimplementation `NOT_APPLICABLE` as permission to omit final proof;
+- make an unrecorded change to protected proof;
 - collapse applicability, execution status, and verification result into one ambiguous state;
 - append material verification history to a shared source-controlled flat log.
 

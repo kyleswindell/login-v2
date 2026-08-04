@@ -8,7 +8,7 @@ canonical: true
 canonical_path: docs/02-standards/testing/verification-contract-and-evidence-standards.md
 parent: docs/02-standards/testing/index.md
 template: docs/09-reference/templates/docs/_doc.md
-summary: Defines acceptance criteria, proof declarations, applicability, execution status, result semantics, preimplementation proof, protected baselines, contract revision, and verification evidence.
+summary: Defines acceptance criteria, proof declarations, result semantics, initial-proof applicability, production-implementation boundaries, protected baselines, contract revision, and verification evidence.
 -->
 
 # Verification Contract And Evidence Standards
@@ -23,7 +23,8 @@ Parent: [Testing Standards Index](index.md)
   - [5.1. Required criterion fields](#51-required-criterion-fields)
   - [5.2. Required proof fields](#52-required-proof-fields)
   - [5.3. Conditional proof fields](#53-conditional-proof-fields)
-  - [5.4. Proof-specific stop conditions](#54-proof-specific-stop-conditions)
+  - [5.4. Initial-proof and production-boundary fields](#54-initial-proof-and-production-boundary-fields)
+  - [5.5. Proof-specific stop conditions](#55-proof-specific-stop-conditions)
 - [6. Criterion And Proof Mapping](#6-criterion-and-proof-mapping)
 - [7. Proof Modes](#7-proof-modes)
   - [7.1. New or corrected behavior](#71-new-or-corrected-behavior)
@@ -38,8 +39,24 @@ Parent: [Testing Standards Index](index.md)
   - [10.2. `EXPECTED_NONPASS`](#102-expected_nonpass)
   - [10.3. `FAIL`](#103-fail)
 - [11. Initial Proof](#11-initial-proof)
+  - [11.1. Preimplementation applicability](#111-preimplementation-applicability)
+  - [11.2. Mandatory initial proof](#112-mandatory-initial-proof)
+  - [11.3. Conditional initial proof](#113-conditional-initial-proof)
+  - [11.4. No separate preimplementation execution](#114-no-separate-preimplementation-execution)
+  - [11.5. Production implementation boundary](#115-production-implementation-boundary)
+  - [11.6. Allowed preimplementation proof work](#116-allowed-preimplementation-proof-work)
 - [12. Protected Verification Baseline](#12-protected-verification-baseline)
+  - [12.1. Pre-execution declaration](#121-pre-execution-declaration)
+  - [12.2. Accepted baseline record](#122-accepted-baseline-record)
+  - [12.3. Preferred baseline commit](#123-preferred-baseline-commit)
+  - [12.4. Fallback baseline identity](#124-fallback-baseline-identity)
+  - [12.5. Protected proof semantics](#125-protected-proof-semantics)
+  - [12.6. Permitted mechanical edits](#126-permitted-mechanical-edits)
+  - [12.7. Changes requiring revision](#127-changes-requiring-revision)
 - [13. Verification Contract Revision](#13-verification-contract-revision)
+  - [13.1. Revision triggers](#131-revision-triggers)
+  - [13.2. Revision authority](#132-revision-authority)
+  - [13.3. Revision procedure](#133-revision-procedure)
 - [14. Execution Evidence And Result Artifacts](#14-execution-evidence-and-result-artifacts)
 - [15. Failed Mandatory Proofs](#15-failed-mandatory-proofs)
 - [16. Manual And Specialist Evidence](#16-manual-and-specialist-evidence)
@@ -162,9 +179,9 @@ Every proof declares:
 | Exact command or procedure | Reproducible proof                                                                                               |
 | Required environment       | Material runtime, services, database, browser, operating system, or platform                                     |
 | Responsible executor       | Session or reviewer responsible for execution                                                                    |
-| Required execution stage   | Preimplementation, final targeted, pull request, release, deployment, post-deployment, or another declared stage |
-| Stage applicability        | `REQUIRED`, `CONDITIONAL`, or `NOT_APPLICABLE`                                                                   |
-| Initial expected result    | Exact expected result when an initial execution is required                                                      |
+| Required execution stages  | Preimplementation, final targeted, pull request, release, deployment, post-deployment, or another declared stage |
+| Stage applicability        | `REQUIRED`, `CONDITIONAL`, or `NOT_APPLICABLE` for each declared stage                                           |
+| Initial expected result    | Exact expected result when a preimplementation execution is required                                             |
 | Final required result      | Normally `PASS`                                                                                                  |
 | Evidence destination       | Where the execution summary and material artifacts will be recorded                                              |
 
@@ -189,7 +206,37 @@ Declare these when materially relevant:
 
 A normally expected field must not silently disappear under “where applicable.” Record an explicit reason when it is not relevant.
 
-### 5.4. Proof-specific stop conditions
+### 5.4. Initial-proof and production-boundary fields
+
+Before executable production implementation, the work packet also declares:
+
+- preimplementation applicability for every material `PF-*` proof;
+- work type and reason for the applicability decision;
+- exact production artifacts or artifact classes that may make the criterion pass through real system behavior;
+- proof-only files and support work allowed before initial execution;
+- preferred protected-baseline identity;
+- fallback baseline identity when a dedicated commit is impractical;
+- anticipated permitted mechanical edits;
+- changes that require verification-contract revision;
+- repository-owner or delegated acceptance authority;
+- required specialist revision authority.
+
+Use the existing stage-applicability values:
+
+```text
+REQUIRED
+Mandatory initial proof.
+
+CONDITIONAL
+Initial proof becomes required when the declared prerequisite exists.
+
+NOT_APPLICABLE
+No separate preimplementation execution is required for the declared stage.
+```
+
+`NOT_APPLICABLE` at the preimplementation stage does not remove final verification requirements.
+
+### 5.5. Proof-specific stop conditions
 
 Proof-specific stop conditions may include:
 
@@ -464,28 +511,160 @@ Map those conditions to applicability, execution status, `FAIL`, or recorded lim
 
 ## 11. Initial Proof
 
-For new or corrected behavior, create and run the smallest executable proof before production implementation when:
+### 11.1. Preimplementation applicability
 
-- requirements are accepted;
-- environment capability is available;
-- fixtures can represent the behavior;
-- the proof can distinguish missing behavior from invalid setup.
+Every material proof declares its preimplementation-stage applicability before execution:
 
-For preservation work, establish a passing characterization baseline instead.
+| Applicability    | Initial-proof meaning                                                         |
+| ---------------- | ----------------------------------------------------------------------------- |
+| `REQUIRED`       | A valid initial proof is mandatory before production implementation           |
+| `CONDITIONAL`    | A declared prerequisite determines whether the initial proof becomes required |
+| `NOT_APPLICABLE` | No separate preimplementation execution is required for this proof and stage  |
 
-The initial proof must not require speculative production architecture merely to make the proof executable.
+The decision must cite the work type, requirement state, environment capability, and proof limitations.
 
-If a valid initial proof cannot be created, execution remains `NOT_RUN` or `BLOCKED` until the missing requirement, schema, environment, or capability is resolved through the proper owner.
+Do not:
+
+- leave a due proof unresolved as `CONDITIONAL`;
+- declare `NOT_APPLICABLE` after a required proof fails;
+- force a speculative proof that would choose unresolved architecture, schema, UI, security, or operational behavior;
+- treat `NOT_APPLICABLE` as permission to omit final proof.
+
+### 11.2. Mandatory initial proof
+
+Require an initial proof when the behavior and environment are ready for applicable:
+
+| Work type                                                       | Required initial result                                                                      |
+| --------------------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| New executable behavior                                         | Exact `EXPECTED_NONPASS`                                                                     |
+| Bug correction                                                  | Exact `EXPECTED_NONPASS` demonstrating the accepted defect                                   |
+| Refactor, movement, or internal replacement preserving behavior | `PASS` characterization baseline                                                             |
+| Public Contract change                                          | Existing accepted Contract behavior `PASS`; new or changed behavior exact `EXPECTED_NONPASS` |
+| Security or authorization behavior                              | Exact allowed and denied proof when safely executable                                        |
+| Schema or migration behavior                                    | Exact nonpass when the missing schema or migration behavior is itself the criterion          |
+| Test tooling, validator, generator, or verification command     | Self-test establishing the exact missing or incorrect tooling behavior                       |
+| Compatibility-preserving change                                 | `PASS` against the accepted compatibility boundary                                           |
+
+A missing table, route, binding, registration, dependency, or other artifact qualifies as `EXPECTED_NONPASS` only when:
+
+- it is the exact declared missing behavior;
+- the proof reaches the intended assertion or observation;
+- the application, fixtures, environment, and runner are otherwise valid.
+
+Application boot failure, invalid fixture state, broken discovery, missing unrelated infrastructure, or a different failure remains `FAIL`.
+
+### 11.3. Conditional initial proof
+
+Use `CONDITIONAL` when valid initial proof depends on an accepted prerequisite that is not yet available.
+
+Examples include:
+
+- UI behavior requiring an accepted Component or Pattern Contract and a real browser environment;
+- external integration behavior requiring an authoritative sandbox, protocol fixture, or staged provider;
+- native-platform behavior requiring the applicable operating system or platform service;
+- performance behavior requiring accepted thresholds and a representative environment;
+- operational behavior requiring an accepted runbook and safe preproduction environment.
+
+The contract states the exact condition.
+
+Before the stage becomes due, resolve the proof to:
+
+- `REQUIRED`; or
+- `NOT_APPLICABLE` with accepted reason.
+
+When the prerequisite is required but unavailable, execution is `BLOCKED`. Do not substitute a weaker or simulated proof that cannot establish the criterion.
+
+### 11.4. No separate preimplementation execution
+
+A separate initial execution is normally not required for:
+
+- prose-only documentation changes;
+- index and link updates;
+- mechanical formatting;
+- metadata corrections;
+- planning documents;
+- non-executable source changes that cannot alter runtime or validator behavior.
+
+Applicable final static, documentation, rendering, or manual proof still runs.
+
+Existing checks may run before and after the change when useful, but a separately protected initial result is not mandatory unless the work changes:
+
+- a validator;
+- a guardrail;
+- a generator;
+- a documentation build;
+- another executable behavior.
+
+When executable verification tooling changes, use the mandatory tooling self-test rule.
+
+### 11.5. Production implementation boundary
+
+Production implementation is any change capable of making an acceptance criterion pass through real system behavior.
+
+It includes applicable:
+
+- application source;
+- runtime configuration;
+- migrations and production seeders;
+- UI implementation;
+- routes and middleware;
+- Actions, Queries, services, policies, Events, Jobs, Listeners, Notifications, and adapters;
+- owner registration, bindings, manifests, and package integration;
+- deployment or operational scripts;
+- behavior-changing feature configuration;
+- production dependency or architecture changes.
+
+The accepted work packet identifies the exact production paths or artifact classes for the issue.
+
+When initial proof is required, do not create or modify those artifacts to implement the criterion before:
+
+1. the initial proof executes with the declared result;
+2. the execution evidence is recorded;
+3. the protected baseline is identified.
+
+Do not add production dependencies or speculative architecture merely to make an initial proof executable.
+
+### 11.6. Allowed preimplementation proof work
+
+Before required initial execution, the work packet may allow:
+
+- targeted tests;
+- test fixtures, factories, and scenario builders;
+- test-only helpers;
+- runner configuration strictly required to execute the proof;
+- proof-specific scripts or static validators;
+- verification-contract documentation;
+- evidence directories and safe capture configuration.
+
+Allowed proof support must:
+
+- be necessary for the declared proof;
+- remain outside production behavior;
+- not make the criterion pass through real system implementation;
+- preserve accepted architecture and owner boundaries;
+- remain inside declared paths.
+
+If proof support itself requires unresolved production behavior or architecture, the proof remains `NOT_RUN` or `BLOCKED` until the proper owner resolves the prerequisite.
 
 ## 12. Protected Verification Baseline
+
+### 12.1. Pre-execution declaration
 
 Before initial execution, declare:
 
 - expected proof paths;
 - intended protected behavior;
-- anticipated permitted edits;
+- expected assertions;
+- expected fixtures and actor states;
+- expected command and selection scope;
+- required environment class;
+- anticipated permitted mechanical edits;
 - anticipated prohibited edits;
+- preferred baseline identity;
+- fallback baseline identity;
 - required revision authority.
+
+### 12.2. Accepted baseline record
 
 After the accepted initial proof executes, record:
 
@@ -494,9 +673,10 @@ After the accepted initial proof executes, record:
 - exact test, fixture, Contract, script, or review-procedure paths;
 - accepted commit or file hashes;
 - exact command or procedure;
+- working directory;
 - environment;
 - initial applicability, execution status, and result;
-- evidence location and hash when required;
+- evidence location and report hash when required;
 - exact assertions and behavior protected;
 - permitted mechanical edits;
 - prohibited changes;
@@ -505,15 +685,138 @@ After the accepted initial proof executes, record:
 Protected evidence may include:
 
 - targeted tests;
-- fixtures and factories;
+- fixtures, factories, and scenario builders;
 - Contract definitions;
 - expected outputs;
-- approved snapshots where justified;
+- approved visual baselines where justified;
 - UI Contract declarations;
 - schema fixtures;
 - security assertions;
-- manual review procedures;
+- manual or specialist review procedures;
 - baseline reports.
+
+### 12.3. Preferred baseline commit
+
+For writable implementation work, prefer a dedicated initial-proof commit on the issue branch before production implementation.
+
+The commit should contain only accepted applicable:
+
+- verification-contract records;
+- targeted proof;
+- proof fixtures and test-only support;
+- material initial evidence references;
+- non-production runner configuration required by the proof.
+
+Record:
+
+```text
+Baseline commit:
+AC-* identifiers:
+PF-* identifiers:
+Protected paths:
+File hashes:
+Exact command:
+Working directory:
+Environment and material versions:
+Initial applicability:
+Execution status:
+Verification result:
+Structured report hash:
+Permitted edits:
+Revision authority:
+```
+
+The dedicated baseline commit is preferred because it provides one reviewable point before production behavior changes. It is not a substitute for exact proof and evidence records.
+
+### 12.4. Fallback baseline identity
+
+When a dedicated commit is impractical, record:
+
+- issue-branch revision;
+- exact file hashes;
+- exact working-tree patch or staged diff containing the proof;
+- protected paths;
+- exact command;
+- environment;
+- execution evidence and hash.
+
+A vague reference such as “the test added earlier” is insufficient.
+
+The fallback must still distinguish:
+
+- proof-only work;
+- production implementation;
+- later authorized proof edits.
+
+### 12.5. Protected proof semantics
+
+Protect more than filenames.
+
+The accepted baseline protects applicable:
+
+- criterion-to-proof mapping;
+- proof mode;
+- verification method and test level;
+- target success behavior;
+- rejection behavior;
+- assertions;
+- expected values;
+- actor, role, permission, and authentication state;
+- fixture meaning;
+- dataset cases;
+- command and test-selection scope;
+- required environment class;
+- manual or specialist review procedure;
+- expected stage result;
+- material artifact or report format.
+
+The final targeted proof must preserve the accepted proof scope and semantics.
+
+The exact command remains unchanged unless the contract expressly preauthorizes a path-only command update caused by an accepted file move and records both commands.
+
+### 12.6. Permitted mechanical edits
+
+The strongest default is no protected-proof source edit after the accepted baseline.
+
+The contract may preauthorize narrowly nonsemantic edits such as:
+
+- formatting;
+- comments;
+- import or namespace adjustment;
+- path update caused by an accepted file move;
+- nonsemantic proof-name correction;
+- runner-compatibility syntax that does not change execution, fixtures, assertions, or selected cases.
+
+For every permitted edit, record:
+
+- reason;
+- before hash;
+- after hash;
+- affected path;
+- confirmation that proof meaning and coverage are unchanged.
+
+The executor may record a strictly preauthorized mechanical edit without new material approval.
+
+Any ambiguity is a stop condition.
+
+### 12.7. Changes requiring revision
+
+A verification-contract revision is required before applicable:
+
+- assertion change;
+- expected-value change;
+- dataset-case removal or narrowing;
+- actor, permission, authentication, or scope change;
+- fixture-semantic change;
+- skip, exclusion, quarantine, or discovery change;
+- command narrowing;
+- database-engine substitution;
+- replacement of a real boundary with a mock or fake;
+- proof-mode, method, or level change;
+- required-environment-class change;
+- expected-result change;
+- criterion-to-proof mapping change;
+- change that makes a previously failing proof pass without production implementation.
 
 Protected evidence must not be:
 
@@ -526,24 +829,49 @@ Protected evidence must not be:
 - moved out of discovery;
 - made environment-dependent without accepted reason.
 
-The same targeted proof must pass unchanged after implementation unless a verification-contract revision is accepted first.
-
 ## 13. Verification Contract Revision
 
-A revision is required when changing:
+### 13.1. Revision triggers
+
+A material revision is required when changing:
 
 - acceptance meaning;
 - expected behavior;
 - rejection behavior;
 - criterion-to-proof mapping;
-- proof method or level;
-- protected tests or fixtures;
+- proof mode, method, or level;
+- protected tests, fixtures, or review procedures;
 - proof environment;
 - stage applicability;
 - required reviewer;
 - expected result;
 - compatibility expectation;
 - permitted or prohibited proof edits.
+
+Implementation convenience is not sufficient reason.
+
+### 13.2. Revision authority
+
+A material revision requires acceptance from:
+
+- the repository owner; or
+- an explicitly delegated issue-acceptance authority.
+
+Also require applicable specialist acceptance when the revision affects:
+
+- security;
+- database or migration behavior;
+- accessibility;
+- visual design;
+- privacy or data governance;
+- operations or recovery;
+- another named specialist domain.
+
+The implementing Codex or agent session may propose a revision. It may not approve its own material revision.
+
+A strictly preauthorized mechanical edit may be recorded by the executor only when it remains fully inside the accepted permitted-edit list.
+
+### 13.3. Revision procedure
 
 A revision must:
 
@@ -552,13 +880,15 @@ A revision must:
 3. explain why the contract is incorrect or incomplete;
 4. describe the exact proposed change;
 5. assess whether accepted behavior changes;
-6. preserve prior evidence;
+6. preserve the prior baseline and execution evidence;
 7. identify production work relying on the old baseline;
-8. identify the authority that may approve the revision;
+8. identify and obtain the required acceptance authority;
 9. be accepted before protected evidence is modified;
-10. define any required revised initial proof and baseline.
+10. define any required revised initial proof;
+11. execute and record the revised initial proof when required;
+12. establish a new protected baseline.
 
-Implementation convenience is not sufficient reason.
+The revised record must retain the superseded baseline for traceability.
 
 ## 14. Execution Evidence And Result Artifacts
 
@@ -575,6 +905,9 @@ Each execution record must identify:
 - runtime and material tool versions;
 - working directory;
 - target revision or commit;
+- protected-baseline commit or fallback identity when applicable;
+- protected path and file hashes when applicable;
+- authorized mechanical edits or contract revision when applicable;
 - start and end time when required;
 - exit code when applicable;
 - observed result;
@@ -594,6 +927,7 @@ The manifest should identify at least:
 - `PF-*` IDs;
 - `AC-*` IDs;
 - revision;
+- protected-baseline identity when applicable;
 - command or procedure;
 - environment;
 - applicability;
@@ -602,6 +936,8 @@ The manifest should identify at least:
 - exit code;
 - report identity;
 - report hash when required;
+- protected-proof edit record when applicable;
+- contract revision when applicable;
 - limitations.
 
 Do not append material test history to one shared source-controlled flat file.
@@ -612,15 +948,16 @@ Do not claim a test, suite, environment, platform workflow, or validation passed
 
 ## 15. Failed Mandatory Proofs
 
-When a mandatory proof is `BLOCKED` or produces `FAIL`:
+When a mandatory proof is `BLOCKED`, produces `FAIL`, or has an unauthorized protected-baseline change:
 
 1. stop dependent testing acceptance;
 2. preserve the command, output, environment, and repository state;
 3. record applicability, execution status, and result;
 4. classify the failure;
 5. determine whether it is in scope;
-6. report the blocker or failure and allowed next action;
-7. perform only preauthorized bounded recovery.
+6. report the blocker, failure, or baseline violation and allowed next action;
+7. preserve the accepted baseline and unauthorized diff when applicable;
+8. perform only preauthorized bounded recovery.
 
 A blocked or failed proof is not automatic authorization to:
 

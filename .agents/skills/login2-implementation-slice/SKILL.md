@@ -185,19 +185,19 @@ Run the accepted targeted proof after implementation. When required, run the sam
 
 If it does not satisfy the contract, stop, preserve evidence/state, and do not weaken proof or broaden remediation without authority.
 
-### 12. Run Required Broader Verification
-
-Run only declared broader checks and required browser, PostgreSQL, accessibility, Security, native-platform, operational, manual, or specialist proof.
-
-Automated success does not replace required human review.
-
-### 13. Synchronize Canonical Documentation
+### 12. Synchronize Canonical Documentation
 
 Use `Implementation Status And Development Sync Standard.md`.
 
 Update only affected canonical owners. Do not create a second durable owner in planning, `docs/11-ai/`, memory, issue comments, or skills.
 
 Do not mark a broader capability/Module/milestone/goal complete because one slice completed.
+
+### 13. Run Required Broader Verification
+
+Run only declared broader checks and required browser, PostgreSQL, accessibility, Security, native-platform, operational, manual, or specialist proof.
+
+Automated success does not replace required human review.
 
 ### 14. Review Final Diff
 

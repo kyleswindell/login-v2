@@ -3,17 +3,20 @@
 - [1. Purpose](#1-purpose)
 - [2. Read Order](#2-read-order)
 - [3. UI API Standards Preflight](#3-ui-api-standards-preflight)
-- [4. Installed Source And Target Topology](#4-installed-source-and-target-topology)
-- [5. Avoid](#5-avoid)
-- [6. Split Rule](#6-split-rule)
+- [4. Delivery And Review State](#4-delivery-and-review-state)
+- [5. Installed Source And Target Topology](#5-installed-source-and-target-topology)
+- [6. Avoid](#6-avoid)
+- [7. Split Rule](#7-split-rule)
 
 ## 1. Purpose
 
-UI standards only. This folder owns final Login App UI API expectations for Foundation Elements, Components, Patterns, and the stable UI API inventory.
+UI standards only.
 
-Standards define public API contracts, allowed tokens/classes/helpers/components, supported variants/options/states, prohibited usage, deferred gates, Rendered evidence requirements, and testing expectations. Rendered evidence pages are the live rendered proof of these standards.
+This folder owns final Login App UI API expectations for Foundation Elements, Components, Patterns, and the stable UI API inventory.
 
-Implementation progress, queue state, review state, and worklog status belong in `docs/08-active/`, not in this standards folder.
+Standards define public API Contracts, allowed tokens/classes/helpers/components, supported variants/options/states, prohibited usage, deferred gates, rendered evidence requirements, accessibility expectations, and testing expectations.
+
+Standards do not own current implementation status, GitHub workflow state, or chronological worklogs.
 
 ## 2. Read Order
 
@@ -24,41 +27,48 @@ Implementation progress, queue state, review state, and worklog status belong in
 5. For Components, read `components/index.md` and then the specific `components/{component}.md` standard.
 6. For Patterns, read `patterns/index.md`, `patterns/checklist.md`, and only the relevant `patterns/{pattern}.md` standard.
 7. For color/theme token work, read `elements/color.md`, `elements/themes.md`, and `api-registry.md` for the current token ownership map.
-8. For current build/review progress, switch to `docs/08-active/ui-implementation-sync.md` and the active queue/worklog.
+8. When current delivery or review state matters, use the governing GitHub issue and GitHub Project state. Read review evidence only when the issue or applicable standard identifies that evidence surface.
+
+Do not load the entire UI standards family for a narrow API change.
 
 ## 3. UI API Standards Preflight
 
-Before any UI source or rendered evidence edit, identify the primary UI API standard for the artifact being changed and read that standard's table of contents.
+Before any UI source or rendered-evidence edit:
 
-Then read these sections when present:
+1. identify the primary UI API standard for the artifact being changed;
+2. read that standard's table of contents;
+3. read applicable sections for:
+   - `Related APIs`;
+   - token, class, and helper usage;
+   - accessibility;
+   - content;
+   - rendered evidence;
+   - implementation and verification checklists;
+4. open related API standards only when the requested change touches those dependencies;
+5. inspect installed source behavior, direct consumers, applicable tests, and current rendered evidence before changing a public UI Contract;
+6. verify whether the requested source destination is permanent, transitional, or compatibility-only under Repository Architecture.
 
-- `Related APIs`;
-- `Token, class, and helper usage`;
-- `Accessibility contract`;
-- `Content contract`;
-- `Rendered evidence requirements`;
-- `Implementation and Rendered Evidence Checklist`.
+For example, sidebar-navigation work must check the applicable Navigation or Layout Pattern standard plus related Motion, Icons, Spacing, Typography, Color, and Theme Element standards when those APIs are affected.
 
-Open related API standards when the requested change touches those dependencies. For example, sidebar navigation work must check the Navigation or Layout Pattern standard plus related Motion, Icons, Spacing, Typography, Color, and Theme Element standards as applicable.
+If the primary standard and its related APIs do not define enough behavior for a behavior-heavy UI change, stop rather than inventing local behavior.
 
-Inspect the installed source API and current rendered evidence examples before editing. Also verify whether the requested destination is permanent, transitional, or compatibility-only under Repository Architecture.
+For an implementation issue, record the applicable UI authority, required states, accessibility behavior, browser scope, rendered-evidence requirements, and manual/specialist review in the issue's accepted verification and review contract.
 
-If the primary standard or `Related APIs` section lacks enough behavior guidance for a behavior-heavy UI change, stop and queue a standards gap instead of inventing local behavior.
+## 4. Delivery And Review State
 
-Active UI worklogs must include a `UI API Standards Preflight` section with:
+GitHub Issues own bounded UI implementation work and acceptance criteria.
 
-- primary API;
-- standards reviewed;
-- related APIs consulted;
-- Foundation Elements consumed;
-- source and live examples inspected;
-- source-topology classification;
-- motion, accessibility, and layout requirements;
-- visual-review notes.
+GitHub Projects own current workflow status, priority, sequencing, dependencies, and blockers.
 
-## 4. Installed Source And Target Topology
+Canonical UI standards own durable UI API requirements.
 
-Physical source paths recorded in UI standards describe the installed implementation unless explicitly labeled as target structure.
+Rendered evidence, browser proof, accessibility evidence, and manual visual review must be stored or referenced according to the applicable UI and Testing standards. They do not become delivery-state ledgers.
+
+Do not create or revive a documentation queue or worklog as a parallel task board.
+
+## 5. Installed Source And Target Topology
+
+Physical source paths recorded in UI standards describe installed implementation unless explicitly labeled as target structure.
 
 The following parallel source trees are transitional under Repository Architecture:
 
@@ -78,25 +88,28 @@ Installed source paths do not authorize those branches as permanent target owner
 
 Existing files in transitional branches may receive bounded maintenance, compatibility, or migration work only when the governing issue explicitly authorizes it.
 
-## 5. Avoid
+## 6. Avoid
 
 - Do not read every UI standard by default.
-- Do not treat reference or audit material as rules unless this standards folder adopts it.
-- Do not store active progress statuses here, including in progress, pending review, pending correction, passed review, or worklog-only notes.
+- Do not treat reference or audit material as rules unless this standards folder adopts the rule.
+- Do not store current implementation status, Project state, queue state, or chronological worklogs in UI standards.
 - Do not add generic placeholder examples to implemented API standards.
-- Do not write abstract design essays where an installed API contract is required.
+- Do not write abstract design essays where an installed API Contract is required.
 - Do not reintroduce deleted transitional `contracts/` or stale UI UX component/taxonomy files.
 - Do not edit UI source from memory when the relevant UI API standard has `Related APIs` and checklist sections available.
 - Do not interpret installed source paths in UI standards as permanent target topology.
 - Do not create new canonical files in transitional parallel CSS or JavaScript trees unless the governing issue explicitly authorizes bounded compatibility or migration work.
 - Do not move existing UI source solely to satisfy target topology before placement, naming, migration, and verification authority is accepted.
+- Do not treat automated browser or rendered-evidence proof as manual visual acceptance when specialist review is required.
 
-## 6. Split Rule
+## 7. Split Rule
 
-Keep canonical standards flat by default:
+Keep canonical UI standards flat by default:
 
 - `elements/{element}.md`;
 - `components/{component}.md`;
 - `patterns/{pattern}.md`.
 
-Split a single standard into child pages such as `usage.md`, `style.md`, or `accessibility.md` only after that specific standard becomes too large to review safely as one file.
+Split a single standard into focused child pages only when responsibilities are genuinely separable or the current file has become difficult to retrieve, review, or maintain reliably.
+
+Line count alone does not require a split.

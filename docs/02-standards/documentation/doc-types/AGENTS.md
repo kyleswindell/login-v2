@@ -38,7 +38,7 @@ This folder must not contain:
 - active issue or Project status
 - empty type packages created only for symmetry
 
-If a requested change crosses this folder’s ownership boundary, stop and identify the correct documentation owner before editing.
+If a requested change crosses this folder's ownership boundary, stop and identify the correct documentation owner before editing.
 
 ## Required Reading Before Editing
 
@@ -70,17 +70,17 @@ Prefer targeted reads over loading unrelated document-type packages.
 
 ## Canonical Owners To Check
 
-| Change Type                     | Canonical Owner                        |
-| ------------------------------- | -------------------------------------- |
-| Meaning of a document type      | applicable child `Definition.md`       |
-| Type-specific requirements      | applicable child `Standard.md`         |
-| Common type-system requirements | `Standard.md`                          |
-| Registered type routing         | `index.md`                             |
-| General writing requirements    | `../How To Write Docs.md`              |
-| Branch and canonical ownership  | `../Doc Governance.md`                 |
-| Copyable shape                  | `docs/09-reference/templates/docs/`    |
-| Documentation review            | `../Documentation Review Standards.md` |
-| Agent guidance                  | nearest applicable `AGENTS.md`         |
+| Change Type | Canonical Owner |
+| --- | --- |
+| Meaning of a document type | applicable child `Definition.md` |
+| Type-specific requirements | applicable child `Standard.md` |
+| Common type-system requirements | `Standard.md` |
+| Registered type routing | `index.md` |
+| General writing requirements | `../How To Write Docs.md` |
+| Branch and canonical ownership | `../Doc Governance.md` |
+| Copyable shape | `docs/09-reference/templates/docs/` |
+| Documentation review | `../Documentation Review Standards.md` |
+| Agent guidance | nearest applicable `AGENTS.md` |
 
 Do not leave durable type-system truth only in an `AGENTS.md` file.
 
@@ -149,17 +149,17 @@ For documentation changes in this folder, run:
 ```text
 npm run lint:docs:guardrails
 git diff --check
-````
+```
 
 Also verify manually that:
 
-* every metadata path exists;
-* parent and related links resolve;
-* controlled type values are registered;
-* child package status matches the parent index;
-* definitions, standards, and templates do not duplicate one another;
-* migrated legacy authority has been retired or bounded;
-* filename and folder casing are correct.
+- every metadata path exists;
+- parent and related links resolve;
+- controlled type values are registered;
+- child package status matches the parent index;
+- definitions, standards, and templates do not duplicate one another;
+- migrated legacy authority has been retired or bounded;
+- filename and folder casing are correct.
 
 Do not claim verification passed unless the commands ran successfully.
 
@@ -167,42 +167,43 @@ Do not claim verification passed unless the commands ran successfully.
 
 Before editing:
 
-* confirm the active issue branch and worktree;
-* inspect for unrelated changes;
-* stage only files within the accepted scope;
-* do not overwrite concurrent documentation work;
-* do not use `git add .` in a dirty worktree.
+- confirm the active issue or authorized task;
+- confirm the intended branch and worktree for writable work;
+- inspect for unrelated changes;
+- stage only files within the accepted scope when staging is authorized;
+- do not overwrite concurrent documentation work;
+- do not use `git add .` in a dirty worktree.
 
 When reporting work, include:
 
-* files changed;
-* document types registered or migrated;
-* standards or templates updated;
-* validation run;
-* remaining compatibility authority;
-* unresolved governance questions.
+- files changed;
+- document types registered or migrated;
+- standards or templates updated;
+- validation run;
+- remaining compatibility authority;
+- unresolved governance questions.
 
 ## Stop Conditions
 
 Stop and report when:
 
-* the proposed type overlaps an existing type;
-* the type’s durable responsibility is unclear;
-* the correct normal branch is unresolved;
-* canonical status cannot be determined;
-* the package would duplicate another authority;
-* a controlled metadata value would change without tooling review;
-* a template and standard would conflict;
-* a legacy type section would remain as competing authority;
-* unrelated working-tree changes may be overwritten.
+- the proposed type overlaps an existing type;
+- the type's durable responsibility is unclear;
+- the correct normal branch is unresolved;
+- canonical status cannot be determined;
+- the package would duplicate another authority;
+- a controlled metadata value would change without tooling review;
+- a template and standard would conflict;
+- a legacy type section would remain as competing authority;
+- unrelated working-tree changes may be overwritten.
 
 ## Related
 
-* [Document Types README](README.md)
-* [Document Types Index](index.md)
-* [Document Type Definition](Definition.md)
-* [Document Type Standard](Standard.md)
-* [How To Write Docs](../How%20To%20Write%20Docs.md)
-* [Doc Governance](../Doc%20Governance.md)
-* [Documentation Review Standards](../Documentation%20Review%20Standards.md)
-* [Documentation Templates](../../../09-reference/templates/docs/_index.md)
+- [Document Types README](README.md)
+- [Document Types Index](index.md)
+- [Document Type Definition](Definition.md)
+- [Document Type Standard](Standard.md)
+- [How To Write Docs](../How%20To%20Write%20Docs.md)
+- [Doc Governance](../Doc%20Governance.md)
+- [Documentation Review Standards](../Documentation%20Review%20Standards.md)
+- [Documentation Templates](../../../09-reference/templates/docs/_index.md)

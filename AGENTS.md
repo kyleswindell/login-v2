@@ -94,7 +94,8 @@ Before editing files:
 - When recording application architecture ownership, use ADR-0005 `ownership_area` values `core`, `module`, or `ui`; Docs, Ops, and Tests are repository workflow owners rather than application ownership areas.
 - Identify the canonical docs that govern the change.
 - Identify the expected files or folders in scope.
-- Identify likely tests or verification commands.
+- Identify the required verification path from the issue and applicable Testing standards.
+- For implementation work, read `docs/02-standards/coding/Agent Implementation Checklist.md` before the first production write.
 - Check the working tree and avoid unrelated changes.
 
 Do not create, edit, close, relabel, or reprioritize GitHub issues or Project fields unless the user explicitly asks.
@@ -134,7 +135,8 @@ Core does not own one consolidated `Shell` capability. Workspace and Navigation 
 
 Core may expose routes, services, policies, events, migrations, tests, account/admin surfaces, and presentation adapters when it owns the underlying responsibility.
 
-Current `app/Platform/*` paths are transitional physical locations, not a separate source-of-truth owner. Do not perform broad moves until Goal 03 accepts target topology and Goal 09 defines migration.
+Current `app/Platform/*` paths are transitional physical locations, not a separate source-of-truth owner. Accepted target topology is owned by `docs/03-architecture/repository-architecture.md`.
+Do not add new canonical Platform ownership. Bounded maintenance, compatibility, or migration work requires accepted issue scope, target ownership, compatibility direction, and verification.
 
 ### Modules
 
@@ -174,7 +176,7 @@ A file under `resources/` is not automatically UI-owned. URL views remain owned 
 - Only modify files directly required for the current issue/task.
 - Prefer small explicit changes over broad rewrites.
 - Preserve existing naming, conventions, tokens, contracts, and public APIs unless the issue requires a change.
-- Do not move files across architecture boundaries without a planning doc or explicit instruction.
+- Do not move files across architecture boundaries without accepted scope, canonical target placement, compatibility direction, and migration authority.
 - Do not change behavior while “just reorganizing” unless the issue explicitly asks for both.
 - Do not add new abstractions before there is a repeated implementation need.
 - Do not silently delete or replace existing tests.
@@ -240,24 +242,24 @@ For UI changes, report whether manual visual review is still required.
 
 ## Testing and Verification
 
-Use the narrowest verification that proves the change.
+Canonical testing and verification policy is owned by `docs/02-standards/testing/`.
 
-Prefer targeted tests first, then broader suites when needed.
+Repository-specific test-source construction and maintenance are owned by `docs/02-standards/coding/test-implementation/`.
 
-Common verification surfaces may include:
+For implementation work:
 
-- PHPUnit or Pest feature/unit tests.
-- Laravel route/controller/request/policy tests.
-- UI surface/component rendering tests.
-- Browser tests when the issue involves real UI behavior.
-- Static checks, formatters, or build commands already present in the repo.
-- Vite/build verification when CSS/JS/assets change.
+- read `docs/02-standards/coding/Agent Implementation Checklist.md`;
+- use the issue's accepted `AC-*` / `PF-*` verification contract;
+- run the declared initial proof before production implementation when required;
+- protect accepted tests, fixtures, Contracts, and review procedures from weakening or silent replacement;
+- require the accepted targeted proof to pass unchanged after implementation when the verification contract requires it;
+- run broader, browser, database, native-platform, manual, accessibility, security, operational, or specialist proof only as declared by the applicable contract and standards.
 
-Do not claim tests passed unless they were run successfully.
+Do not redefine `PASS`, `FAIL`, `EXPECTED_NONPASS`, applicability, evidence, or testing-gate semantics in `AGENTS.md`.
 
-If tests cannot be run, state why and identify the minimum command the user should run.
+Unexpected syntax, fixture, dependency, boot, discovery, tooling, environment, or infrastructure failures are not expected missing behavior.
 
-If a test fails outside the scope of the change, do not fix it unless instructed. Report it separately.
+Do not claim verification passed unless the exact required command or procedure ran successfully.
 
 ---
 
@@ -493,13 +495,14 @@ Start with these when the issue does not name a more specific source:
 
 - `docs/00-start-here.md`
 - `docs/02-standards/index.md`
+- `docs/02-standards/coding/Agent Implementation Checklist.md`
+- `docs/02-standards/coding/test-implementation/index.md`
+- `docs/02-standards/testing/index.md`
 - `docs/03-architecture/index.md`
 - `docs/04-features/index.md`
 - `docs/05-flows/index.md`
 - `docs/06-database/index.md`
 - `docs/07-planning/index.md`
-- `docs/07-planning/core-service-build-plan-matrix.md`
-- `docs/07-planning/view-surface-composition-planning.md`
 - `docs/09-reference/index.md`
 - `docs/10-runbooks/index.md`
 

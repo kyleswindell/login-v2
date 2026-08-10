@@ -1,6 +1,6 @@
-name: Implementation Slice
-description: Define a bounded implementation task for Codex or a developer.
-title: "[Implementation]: "
+name: M1 Implementation Slice
+description: Define a bounded verification-first implementation task for Codex or a developer.
+title: "[M1 Implementation]: "
 projects:
     - "kyleswindell/1"
 
@@ -8,32 +8,32 @@ body:
     - type: markdown
       attributes:
           value: |
-              Use this form for a bounded implementation slice with explicit ownership, acceptance criteria, dependencies, verification, and review requirements.
+              Use this form for one bounded M1 implementation slice.
 
-              Creating the issue does not make it implementation-ready. The GitHub Project status remains the source of truth. Do not move the issue to **Ready** until the Definition of Ready in `docs/02-standards/coding/Agent Implementation Checklist.md` is satisfied.
+              The issue must identify accepted scope, ownership, canonical sources, acceptance criteria, verification, protected evidence, implementation boundaries, review authority, and stop conditions before production implementation begins.
 
-              Do not include passwords, tokens, private keys, production secrets, or unredacted sensitive data.
+              Creating the issue does **not** make it implementation-ready. GitHub Project status remains the delivery-state source of truth. Do not move the issue to **Ready** until the Definition of Ready in `docs/02-standards/coding/Agent Implementation Checklist.md` and the applicable requirements in `docs/02-standards/testing/` are satisfied.
+
+              Test-source implementation rules are owned by `docs/02-standards/coding/test-implementation/`.
+
+              Do not include passwords, tokens, private keys, production secrets, authorization headers, cookies, or unredacted sensitive data.
 
     - type: input
       id: planning-source
       attributes:
-          label: Planning source
-          description: Identify the matrix row, milestone, epic, parent issue, or planning document that produced this slice.
-          placeholder: "Example: Core Service Build Plan Matrix — Order 7, Audit foundation; parent issue #123"
+          label: Planning source or parent work
+          description: Identify the accepted planning source, parent issue, milestone item, or explicit repository-owner direction that produced this slice.
+          placeholder: "Example: M1 Auth implementation planning; parent issue #123; Core Service Build Plan Matrix row ..."
       validations:
-          required: false
+          required: true
 
     - type: dropdown
-      id: owner-layer
+      id: repository-work-owner
       attributes:
-          label: Primary owner layer
-          description: Select the layer that owns the implemented behavior.
+          label: Primary repository work owner
+          description: Select the repository work area primarily responsible for delivering this slice.
           options:
-              - Core Capability
-              - Platform Surface
-              - Business Module
-              - Shared UI
-              - Database
+              - Application
               - Documentation
               - Operations
               - Tests
@@ -42,12 +42,26 @@ body:
       validations:
           required: true
 
+    - type: dropdown
+      id: application-ownership-area
+      attributes:
+          label: Application ownership area
+          description: Select the canonical application owner when application behavior or application-owned source is affected. Laravel integration is an integration boundary, not a fourth ownership area.
+          options:
+              - Core
+              - Module
+              - UI
+              - Not applicable
+          multiple: false
+      validations:
+          required: true
+
     - type: input
       id: specific-owner
       attributes:
-          label: Specific owner
-          description: Name the capability, surface, module, component family, documentation branch, or tool that owns the work.
-          placeholder: "Example: Core/Audit, Core/Auth, Platform/Navigation, Modules/Customers, Shared UI/Button, source-template tooling"
+          label: Specific owner or integration boundary
+          description: Name the smallest clear capability, Module, UI responsibility, Laravel integration boundary, documentation branch, operational area, test owner, or tool that owns the work.
+          placeholder: "Example: Core/Auth; Modules/Customers; UI/Navigation; Laravel integration — app/Http; docs/testing; source-template tooling"
       validations:
           required: true
 
@@ -55,7 +69,7 @@ body:
       id: execution-mode
       attributes:
           label: Execution mode
-          description: Select the permitted delegation level for this slice.
+          description: Select the permitted implementation mode for this slice.
           options:
               - Human-led
               - Codex-assisted
@@ -69,16 +83,16 @@ body:
       id: work-categories
       attributes:
           label: Work categories
-          description: Select every category materially affected by the slice.
+          description: Select every category materially affected by this slice.
           options:
               - Application behavior
-              - Source files or generators
+              - Source files, stubs, or generators
               - Database or migration
-              - Shared UI
+              - UI
               - Security-sensitive behavior
               - Queue, event, or scheduled behavior
               - Query or performance behavior
-              - Tests or regression coverage
+              - Tests or verification source
               - Documentation synchronization
               - Operations or deployment
           multiple: true
@@ -89,7 +103,7 @@ body:
       id: outcome-and-scope
       attributes:
           label: Requested outcome and in-scope behavior
-          description: Describe the exact result this issue must produce. Include the workflow, actor, system behavior, and bounded implementation scope.
+          description: Define one bounded outcome and the exact behavior this issue is allowed to implement.
           placeholder: |
               Requested outcome:
               - ...
@@ -98,7 +112,13 @@ body:
               - ...
               - ...
 
-              Affected workflow:
+              Affected actor or system workflow:
+              - ...
+
+              Required successful behavior:
+              - ...
+
+              Required rejection or failure behavior:
               - ...
       validations:
           required: true
@@ -106,8 +126,8 @@ body:
     - type: textarea
       id: non-goals-and-compatibility
       attributes:
-          label: Non-goals and compatibility constraints
-          description: State what must not be changed and which existing routes, APIs, keys, tables, behaviors, or compatibility layers must remain stable.
+          label: Non-goals and compatibility requirements
+          description: State what this issue must not change and which existing contracts, routes, keys, tables, payloads, behaviors, or compatibility layers must remain stable.
           placeholder: |
               Non-goals:
               - ...
@@ -116,48 +136,53 @@ body:
               Compatibility requirements:
               - Preserve ...
               - Do not rename ...
+              - Do not remove ...
               - Do not implement deferred ...
+
+              Explicitly deferred adjacent work:
+              - ...
       validations:
           required: true
 
     - type: textarea
-      id: acceptance-criteria
+      id: canonical-sources
       attributes:
-          label: Acceptance criteria
-          description: Provide observable completion conditions. Include successful, denied, failure, persistence, side-effect, and compatibility behavior where applicable.
+          label: Governing canonical sources and dependencies
+          description: List the current sources that control this slice. Use Not applicable only after review. Planning provides sequencing and intent; it does not replace canonical behavior, architecture, schema, security, UI, or runbook owners.
           placeholder: |
-              - [ ] ...
-              - [ ] ...
-              - [ ] ...
+              Root / scoped AGENTS.md:
+              - `AGENTS.md`
+              - `.../AGENTS.md`
 
-              Required denied or failure behavior:
-              - [ ] ...
-
-              Required documentation or review outcome:
-              - [ ] ...
-      validations:
-          required: true
-
-    - type: textarea
-      id: canonical-owners
-      attributes:
-          label: Canonical documents, accepted decisions, and dependencies
-          description: List the repository paths or issue references that control architecture, behavior, schema, security, UI, operations, and sequencing. Explicitly state None only after review.
-          placeholder: |
-              Canonical architecture:
-              - `docs/...`
+              Architecture:
+              - `docs/03-architecture/...`
 
               Feature or behavior contract:
-              - `docs/...`
+              - `docs/04-features/...`
+              - Not applicable
+
+              Cross-capability flow:
+              - `docs/05-flows/...`
+              - Not applicable
 
               Database contract:
-              - `docs/...` or Not applicable
+              - `docs/06-database/...`
+              - Not applicable
 
-              Security or UI standards:
-              - `docs/...`
+              Applicable standards:
+              - `docs/02-standards/...`
+
+              UI Contract or visual authority:
+              - `...`
+              - Not applicable
+
+              Operational runbook:
+              - `docs/10-runbooks/...`
+              - Not applicable
 
               Accepted decisions:
-              - #...
+              - `docs/01-decisions/...`
+              - None
 
               Blocking dependencies:
               - #...
@@ -168,26 +193,201 @@ body:
     - type: textarea
       id: implementation-boundaries
       attributes:
-          label: Expected files, archetypes, stubs, and implementation boundaries
-          description: Identify expected files or directories, file archetypes, approved stubs or generators, integration boundaries, and prohibited dependencies.
+          label: Implementation boundaries and smallest production slice
+          description: Define the allowed and forbidden repository scope before production implementation. Identify expected files, archetypes, public Contracts, dependencies, stubs, and shared-file risks.
           placeholder: |
-              Expected owner paths:
+              Allowed paths:
               - `app/Core/...`
-              - `tests/...`
+              - `resources/...`
+              - `...`
 
-              Expected file archetypes:
-              - action
+              Forbidden paths:
+              - `...`
+              - No changes outside the allowed paths without repository-owner approval
+
+              Expected files to create:
+              - ...
+
+              Expected files to modify:
+              - ...
+
+              Expected files to delete:
+              - None
+
+              File archetypes:
+              - Action
               - DTO
-              - feature test
+              - test
+              - ...
 
               Approved stubs or generators:
-              - `stubs/archetypes/action.stub`
+              - `stubs/...`
               - Not applicable
 
-              Files or areas explicitly out of scope:
+              Public Contracts or cross-owner dependencies:
               - ...
 
               Prohibited dependencies or placements:
+              - ...
+
+              Shared-file / concurrent-work risks:
+              - ...
+              - None
+
+              Smallest production behavior to implement:
+              - ...
+      validations:
+          required: true
+
+    - type: textarea
+      id: acceptance-criteria
+      attributes:
+          label: Acceptance criteria
+          description: Define stable AC-* identifiers and observable target behavior. Criteria define what must be true; proof details belong in the verification mapping below.
+          placeholder: |
+              AC-01 — ...
+              - Success:
+              - Required rejection or failure:
+              - Persistence / state:
+              - Required side effects:
+              - Prohibited side effects:
+              - Compatibility:
+
+              AC-02 — ...
+              - Success:
+              - Required rejection or failure:
+              - Persistence / state:
+              - Required side effects:
+              - Prohibited side effects:
+              - Compatibility:
+      validations:
+          required: true
+
+    - type: dropdown
+      id: proof-modes
+      attributes:
+          label: Applicable proof modes
+          description: Select every proof mode materially required by the acceptance criteria.
+          options:
+              - New behavior or bug-fix expected-nonpass proof
+              - Characterization or behavior-preservation proof
+              - Public Contract proof
+              - Security or data-boundary proof
+              - Database or migration proof
+              - UI, browser, or accessibility proof
+              - Documentation proof
+              - Native-platform or operational proof
+          multiple: true
+      validations:
+          required: true
+
+    - type: textarea
+      id: acceptance-proof-mapping
+      attributes:
+          label: Acceptance-to-proof mapping
+          description: Map every AC-* criterion to one or more PF-* proofs. Each proof must identify its method, target, actor/fixture, environment, exact command or procedure, expected initial result, and final required result.
+          placeholder: |
+              PF-01
+              - Criteria: AC-01
+              - Observable behavior:
+              - Proof method / level:
+              - Test, script, route, review surface, or evidence path:
+              - Actor and fixture:
+              - Required environment:
+              - Exact command or procedure:
+              - Initial expected result:
+              - Final required result:
+              - Manual or specialist review:
+              - Non-goal protected by this proof:
+
+              PF-02
+              - Criteria: AC-02
+              - ...
+      validations:
+          required: true
+
+    - type: textarea
+      id: initial-proof
+      attributes:
+          label: Initial proof declaration
+          description: Define the smallest executable proof required before the first production implementation write. EXPECTED_NONPASS is allowed only for the exact predeclared missing behavior or other explicitly permitted evidence result; unexpected syntax, fixture, dependency, infrastructure, tooling, environment, discovery, or boot failures are FAIL.
+          placeholder: |
+              PF-* IDs:
+              - ...
+
+              Proof-source files permitted before production implementation:
+              - ...
+              - None
+
+              Exact command or procedure:
+              - ...
+
+              Required working directory:
+              - ...
+
+              Required OS / runtime / database / browser / external service:
+              - ...
+
+              Responsible executor:
+              - ...
+
+              Allowed initial result class:
+              - PASS / EXPECTED_NONPASS
+
+              Exact expected observable initial result:
+              - ...
+
+              Expected exit code:
+              - ...
+
+              Evidence output / report path:
+              - ...
+
+              Evidence hash procedure:
+              - ...
+
+              Results that must be classified FAIL:
+              - Any unexpected ...
+              - ...
+      validations:
+          required: true
+
+    - type: textarea
+      id: protected-baseline
+      attributes:
+          label: Protected verification baseline
+          description: Identify the accepted proof source and semantics that production implementation may not weaken, skip, delete, redirect, or materially rewrite without an accepted verification-contract revision.
+          placeholder: |
+              Protected test / proof paths:
+              - ...
+
+              Protected fixture / scenario / dataset paths:
+              - ...
+
+              Protected UI Contract / review procedure / other evidence:
+              - ...
+              - Not applicable
+
+              Baseline identity:
+              - Commit / hashes / accepted proof identity
+
+              Assertions and behaviors that may not change:
+              - ...
+
+              Permitted mechanical edits:
+              - ...
+
+              Prohibited edits:
+              - weaken assertions
+              - skip or remove required cases
+              - change expected behavior to match implementation
+              - replace a real required boundary with a fake
+              - ...
+
+              Required authority for material revision:
+              - ...
+
+              Revision stop condition:
               - ...
       validations:
           required: true
@@ -196,36 +396,45 @@ body:
       id: security-data-reliability
       attributes:
           label: Security, data, transaction, and reliability boundaries
-          description: Address each applicable boundary. Write Not applicable only after confirming the category does not affect this slice.
+          description: Address every applicable boundary. Use Not applicable only after confirming the category does not affect this slice.
           placeholder: |
-              Actor, action, target, and scope:
+              Principal / actor, action, target, and canonical scope:
               - ...
 
-              Authentication and authorization:
+              Authentication / assurance:
               - ...
 
-              Tenant or workspace isolation:
+              Authorization / object-level boundary:
               - ...
 
-              Validation:
+              Tenant / Instance / Workspace isolation:
               - ...
 
-              Data classification and sensitive fields:
+              Validation and untrusted input:
               - ...
 
-              Audit, monitoring, and notification requirements:
+              Data classification / sensitive fields / redaction:
               - ...
 
-              Transaction owner and rollback behavior:
+              Audit, Monitoring, and Notification requirements:
               - ...
 
-              Concurrency, retry, duplicate-delivery, and idempotency behavior:
+              Transaction owner / commit boundary / rollback behavior:
               - ...
 
-              After-commit and remote side effects:
+              Concurrency / locking:
               - ...
 
-              Export, retention, erasure, or secret-handling implications:
+              Retry / timeout / backoff:
+              - ...
+
+              Duplicate delivery / idempotency:
+              - ...
+
+              After-commit / remote side effects:
+              - ...
+
+              Export / retention / erasure / secret implications:
               - ...
       validations:
           required: true
@@ -234,21 +443,33 @@ body:
       id: ui-authority
       attributes:
           label: UI authority and visual boundaries
-          description: For UI work, identify the approved contract, design authority, Blade/CSS/JS/test owners, expected states, accessibility requirements, and manual review surface. Otherwise state Not applicable.
+          description: For UI work, identify the canonical UI Contract, approved visual authority, implementation owners, required states, accessibility behavior, browser coverage, and manual review. Otherwise state Not applicable.
           placeholder: |
-              UI owner:
+              UI responsibility:
               - ...
 
-              Component or pattern contract:
-              - `resources/views/components/.../contract.php`
+              Canonical UI Contract:
+              - `...`
+
+              Blade / CSS / JavaScript / test owners:
+              - ...
 
               Approved visual authority:
-              - screenshot, design, existing approved implementation, or explicit direction
+              - accepted contract / approved implementation / explicit repository-owner direction
 
-              Required states and accessibility behavior:
+              Required states and interactions:
               - ...
 
-              Manual visual review:
+              Accessibility requirements:
+              - ...
+
+              Browser / viewport / input requirements:
+              - ...
+
+              Required manual or specialist review:
+              - ...
+
+              Reviewer authority:
               - ...
 
               Or:
@@ -257,33 +478,75 @@ body:
           required: true
 
     - type: textarea
-      id: verification-and-docs
+      id: final-and-broader-verification
       attributes:
-          label: Tests, verification, documentation synchronization, and manual review
-          description: List the required tests, exact verification commands, canonical docs to update, and review that remains after implementation.
+          label: Final targeted proof and broader verification
+          description: Require the same targeted proof to pass unchanged after implementation, then list only the broader checks needed for this slice.
           placeholder: |
-              Tests to add or update:
+              Final targeted PF-*:
               - ...
 
-              Required verification commands:
-              - `php artisan test --filter=...`
-              - `vendor/bin/pint --test`
-              - `npm run build`
+              Exact final command or procedure:
+              - Same as initial proof: ...
+
+              Required final result:
+              - PASS
+
+              Required final exit code:
               - ...
 
-              PostgreSQL or migration verification:
+              Required evidence:
               - ...
+
+              Broader automated checks:
+              - command:
+                purpose:
+                required result:
+
+              PostgreSQL / migration verification:
+              - ...
+              - Not applicable
+
+              Frontend build:
+              - ...
+              - Not applicable
 
               Browser verification:
               - ...
+              - Not applicable
 
-              Documentation to update:
-              - `docs/...`
-
-              Manual review:
+              Native-platform / operational verification:
               - ...
+              - Not applicable
 
-              Checks that are intentionally not required:
+              Checks intentionally NOT required:
+              - ...
+      validations:
+          required: true
+
+    - type: textarea
+      id: documentation-and-review
+      attributes:
+          label: Documentation synchronization and review authority
+          description: Identify durable documentation that must change with implementation and every human or specialist review required before acceptance.
+          placeholder: |
+              Canonical documentation to update:
+              - `docs/...`
+              - None
+
+              AGENTS.md / skill updates:
+              - ...
+              - None
+
+              Required manual or specialist reviews:
+              - Review:
+                Reviewer authority:
+                Surface / environment:
+                Procedure:
+                Required result:
+                May remain when moving to Review: Yes / No
+
+              Repository-owner acceptance required for:
               - ...
       validations:
           required: true
@@ -292,7 +555,7 @@ body:
       id: review-types
       attributes:
           label: Required review types
-          description: Select every human review required before the issue may move to Done.
+          description: Select every review category required before the issue can be accepted as Done.
           options:
               - General code review
               - Architecture review
@@ -301,15 +564,16 @@ body:
               - Privacy or data-governance review
               - UI and accessibility review
               - Operational or deployment review
+              - Repository-owner acceptance
           multiple: true
       validations:
           required: true
 
     - type: textarea
-      id: blockers-and-stop-conditions
+      id: blockers-stop-and-closure
       attributes:
-          label: Blockers, open questions, and agent stop conditions
-          description: List unresolved inputs and conditions that require Codex or a developer to stop instead of making an assumption. State None only after review.
+          label: Blockers, stop conditions, integration, and closure authority
+          description: Define conditions that require execution to stop rather than infer or remediate, plus the authority required for staging, integration, acceptance, and closure.
           placeholder: |
               Current blockers:
               - #...
@@ -317,9 +581,37 @@ body:
 
               Open decisions:
               - ...
+              - None
 
-              Stop before implementation when:
-              - ownership is unresolved
+              Stop before the first production write when:
+              - required initial proof cannot execute
+              - initial result does not match the predeclared result
+              - ownership or canonical behavior is unresolved
+              - ...
+
+              Stop during implementation when:
+              - a mandatory proof returns FAIL
+              - scope would expand beyond allowed paths
+              - protected evidence would require material revision
+              - ...
+
+              Predeclared bounded recoveries:
+              - Trigger:
+                Exact allowed recovery:
+                Maximum attempts:
+                Success check:
+              - None
+
+              Staging / commit authority:
+              - ...
+
+              Integration / merge authority:
+              - ...
+
+              Issue acceptance / closure authority:
+              - ...
+
+              Cleanup authority:
               - ...
       validations:
           required: true
@@ -328,13 +620,21 @@ body:
       id: readiness-acknowledgement
       attributes:
           label: Readiness acknowledgement
-          description: These acknowledgements apply when creating either a Planned or Ready implementation issue.
+          description: These acknowledgements do not themselves move the issue to Ready. They confirm the issue contains the information required for a readiness decision.
           options:
-              - label: I reviewed every section and used **Not applicable** only after confirming that the category does not affect this slice.
+              - label: I reviewed the current canonical repository sources and did not use remembered or superseded guidance as authority.
                 required: true
-              - label: I understand that creating this issue does not make it **Ready**; the GitHub Project status remains the delivery source of truth.
+              - label: Every acceptance criterion has a stable **AC-*** identifier and is mapped to at least one declared **PF-*** proof.
                 required: true
-              - label: I listed unresolved decisions, incomplete dependencies, and blockers that prevent safe implementation.
+              - label: The smallest initial proof, exact expected initial result, required environment, and exact final unchanged proof are declared.
                 required: true
-              - label: This issue must not be delegated while Codex would need to invent architecture, schema, permissions, security policy, transaction behavior, or visual design.
+              - label: Protected tests, fixtures, Contracts, review procedures, or other baseline evidence are identified, including revision authority.
+                required: true
+              - label: Allowed and forbidden repository scope, non-goals, compatibility requirements, and stop conditions are explicit.
+                required: true
+              - label: I used **Not applicable** only after confirming the category does not affect this slice.
+                required: true
+              - label: I understand that issue creation is not implementation authorization and that Project **Ready** status requires the repository's Definition of Ready to be satisfied.
+                required: true
+              - label: This issue must not be delegated while Codex or a developer would need to invent architecture, schema, permissions, security policy, transaction behavior, verification semantics, or visual design.
                 required: true

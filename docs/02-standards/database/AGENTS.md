@@ -73,7 +73,7 @@ Operational procedures belong in:
 
 Before editing this folder, read:
 
-- `AGENTS.md`
+- root `AGENTS.md`
 - `docs/AGENTS.md` if present
 - `docs/02-standards/AGENTS.md` if present
 - `docs/02-standards/database/index.md`
@@ -194,6 +194,10 @@ Database standards in this folder should define:
 - what stop conditions apply
 - how Core, Module, UI, and Laravel integration boundaries affect database design
 
+Testing and verification result semantics are owned by `docs/02-standards/testing/`.
+
+Repository-specific test-source construction is owned by `docs/02-standards/coding/test-implementation/`. Link to those owners instead of redefining their rules here.
+
 They should not:
 
 - duplicate full table docs
@@ -257,3 +261,5 @@ Stop and ask before editing when:
 - [Database Registry Data Standards](Database%20Registry%20Data%20Standards.md)
 - [Database Index](../../06-database/index.md)
 - [Standards Index](../index.md)
+- [Testing Standards Index](../testing/index.md)
+- [Test Implementation Standards Index](../coding/test-implementation/index.md)

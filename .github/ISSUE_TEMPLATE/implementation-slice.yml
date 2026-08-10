@@ -14,6 +14,8 @@ body:
 
               Creating the issue does **not** make it implementation-ready. GitHub Project status remains the delivery-state source of truth. Do not move the issue to **Ready** until the Definition of Ready in `docs/02-standards/coding/Agent Implementation Checklist.md` and the applicable requirements in `docs/02-standards/testing/` are satisfied.
 
+              **Ready** requires a complete and executable verification contract. A required initial proof and accepted protected baseline may be established by the authorized executing session after the issue reaches **Ready**, but they must be completed before the first production implementation write.
+
               Test-source implementation rules are owned by `docs/02-standards/coding/test-implementation/`.
 
               Do not include passwords, tokens, private keys, production secrets, authorization headers, cookies, or unredacted sensitive data.
@@ -83,7 +85,7 @@ body:
       id: work-categories
       attributes:
           label: Work categories
-          description: Select every category materially affected by this slice.
+          description: Select every category materially affected by this slice. Selecting Operations or deployment identifies implementation or verification impact only; it does not authorize deployment execution.
           options:
               - Application behavior
               - Source files, stubs, or generators
@@ -285,7 +287,7 @@ body:
       id: acceptance-proof-mapping
       attributes:
           label: Acceptance-to-proof mapping
-          description: Map every AC-* criterion to one or more PF-* proofs. Each proof must identify its method, target, actor/fixture, environment, exact command or procedure, expected initial result, and final required result.
+          description: Map every AC-* criterion to one or more PF-* proofs. Each proof must identify preimplementation applicability, method, target, actor/fixture, environment, exact command or procedure, expected initial result when executed, and final required result.
           placeholder: |
               PF-01
               - Criteria: AC-01
@@ -295,7 +297,9 @@ body:
               - Actor and fixture:
               - Required environment:
               - Exact command or procedure:
-              - Initial expected result:
+              - Preimplementation applicability: REQUIRED / CONDITIONAL / NOT_APPLICABLE
+              - Applicability condition or NOT_APPLICABLE reason:
+              - Initial expected result when executed:
               - Final required result:
               - Manual or specialist review:
               - Non-goal protected by this proof:
@@ -309,11 +313,21 @@ body:
     - type: textarea
       id: initial-proof
       attributes:
-          label: Initial proof declaration
-          description: Define the smallest executable proof required before the first production implementation write. EXPECTED_NONPASS is allowed only for the exact predeclared missing behavior or other explicitly permitted evidence result; unexpected syntax, fixture, dependency, infrastructure, tooling, environment, discovery, or boot failures are FAIL.
+          label: Preimplementation proof declaration
+          description: Declare preimplementation applicability for each due PF-* proof. For REQUIRED proofs, and CONDITIONAL proofs whose prerequisite becomes true, define the smallest executable proof required before the first production implementation write. NOT_APPLICABLE must be declared before execution with an accepted reason and does not remove the required final proof. EXPECTED_NONPASS is allowed only for the exact predeclared missing behavior or other explicitly permitted evidence result; unexpected syntax, fixture, dependency, infrastructure, tooling, environment, discovery, or boot failures are FAIL.
           placeholder: |
-              PF-* IDs:
+              PF-* applicability:
+              - PF-01: REQUIRED
+              - PF-02: CONDITIONAL — required when ...
+              - PF-03: NOT_APPLICABLE — reason: ...
+
+              Conditional prerequisite resolution:
+              - PF-02 condition:
+              - Must resolve to REQUIRED or NOT_APPLICABLE before:
+
+              PF-* IDs requiring initial execution:
               - ...
+              - None — all applicable proofs are NOT_APPLICABLE at the preimplementation stage
 
               Proof-source files permitted before production implementation:
               - ...
@@ -321,6 +335,7 @@ body:
 
               Exact command or procedure:
               - ...
+              - Not applicable when no initial execution is required
 
               Required working directory:
               - ...
@@ -331,10 +346,10 @@ body:
               Responsible executor:
               - ...
 
-              Allowed initial result class:
+              Allowed initial result class when executed:
               - PASS / EXPECTED_NONPASS
 
-              Exact expected observable initial result:
+              Exact expected observable initial result when executed:
               - ...
 
               Expected exit code:
@@ -349,30 +364,39 @@ body:
               Results that must be classified FAIL:
               - Any unexpected ...
               - ...
+
+              If no separate preimplementation execution is required:
+              - Final proof is still required and is declared below
       validations:
           required: true
 
     - type: textarea
       id: protected-baseline
       attributes:
-          label: Protected verification baseline
-          description: Identify the accepted proof source and semantics that production implementation may not weaken, skip, delete, redirect, or materially rewrite without an accepted verification-contract revision.
+          label: Protected verification baseline plan and accepted identity
+          description: Before execution, declare the proof paths, semantics, edit boundaries, preferred baseline identity, fallback identity, and revision authority that will become protected if initial proof is accepted. After accepted initial proof, record the actual baseline identity and evidence before production implementation. For proofs whose preimplementation stage is NOT_APPLICABLE, state that no separate initial baseline is established while preserving the final proof contract.
           placeholder: |
-              Protected test / proof paths:
+              Expected protected test / proof paths:
               - ...
+              - Not applicable for PF-* with no separate initial proof
 
-              Protected fixture / scenario / dataset paths:
+              Expected protected fixture / scenario / dataset paths:
               - ...
 
               Protected UI Contract / review procedure / other evidence:
               - ...
               - Not applicable
 
-              Baseline identity:
-              - Commit / hashes / accepted proof identity
-
-              Assertions and behaviors that may not change:
+              Intended protected assertions and behaviors:
               - ...
+
+              Preferred baseline identity:
+              - Dedicated proof-only commit after accepted initial proof
+              - Not applicable
+
+              Fallback baseline identity:
+              - File hashes / staged or working-tree proof patch / other reproducible identity
+              - Not applicable
 
               Permitted mechanical edits:
               - ...
@@ -389,6 +413,10 @@ body:
 
               Revision stop condition:
               - ...
+
+              Accepted baseline record:
+              - NOT ESTABLISHED — executing session records the accepted commit / hashes, exact command, environment, result, and evidence identity after accepted initial proof and before production implementation
+              - NOT APPLICABLE — only when every relevant PF-* proof has preimplementation applicability NOT_APPLICABLE
       validations:
           required: true
 
@@ -481,13 +509,18 @@ body:
       id: final-and-broader-verification
       attributes:
           label: Final targeted proof and broader verification
-          description: Require the same targeted proof to pass unchanged after implementation, then list only the broader checks needed for this slice.
+          description: For proofs with accepted initial execution, require the accepted targeted proof to pass after implementation with protected semantics unchanged and the same command unless a preauthorized nonsemantic path-only update applies. For proofs whose preimplementation stage is NOT_APPLICABLE, declare the required final proof directly. Then list only the broader checks required for this slice.
           placeholder: |
               Final targeted PF-*:
               - ...
 
-              Exact final command or procedure:
-              - Same as initial proof: ...
+              For PF-* with accepted initial execution:
+              - Exact final command or procedure: Same as accepted initial proof unless a preauthorized nonsemantic path-only update applies
+              - Required protected semantics: unchanged
+
+              For PF-* with preimplementation NOT_APPLICABLE:
+              - Exact final command or procedure:
+              - Required final proof method / environment:
 
               Required final result:
               - PASS
@@ -584,8 +617,9 @@ body:
               - None
 
               Stop before the first production write when:
-              - required initial proof cannot execute
-              - initial result does not match the predeclared result
+              - required or due conditional initial proof cannot execute
+              - executed initial result does not match the predeclared result
+              - a CONDITIONAL proof is still unresolved when its preimplementation stage becomes due
               - ownership or canonical behavior is unresolved
               - ...
 
@@ -626,15 +660,15 @@ body:
                 required: true
               - label: Every acceptance criterion has a stable **AC-*** identifier and is mapped to at least one declared **PF-*** proof.
                 required: true
-              - label: The smallest initial proof, exact expected initial result, required environment, and exact final unchanged proof are declared.
+              - label: Every **PF-*** proof declares preimplementation applicability. Every REQUIRED or due CONDITIONAL initial proof defines its expected result, environment, command or procedure, and baseline plan, and every criterion has a required final proof.
                 required: true
-              - label: Protected tests, fixtures, Contracts, review procedures, or other baseline evidence are identified, including revision authority.
+              - label: Expected protected tests, fixtures, Contracts, review procedures, or other baseline evidence are identified before execution, including permitted edits and revision authority; the executing session must record the accepted baseline identity after accepted initial proof when applicable.
                 required: true
               - label: Allowed and forbidden repository scope, non-goals, compatibility requirements, and stop conditions are explicit.
                 required: true
-              - label: I used **Not applicable** only after confirming the category does not affect this slice.
+              - label: I used **Not applicable** or **NOT_APPLICABLE** only after confirming the category or preimplementation stage does not affect this slice, and I did not use it to omit required final proof.
                 required: true
-              - label: I understand that issue creation is not implementation authorization and that Project **Ready** status requires the repository's Definition of Ready to be satisfied.
+              - label: I understand that issue creation is not implementation authorization; Project **Ready** requires the repository's Definition of Ready and a complete executable verification contract, while required initial proof and accepted baseline may be established by the authorized executing session before the first production write.
                 required: true
               - label: This issue must not be delegated while Codex or a developer would need to invent architecture, schema, permissions, security policy, transaction behavior, verification semantics, or visual design.
                 required: true

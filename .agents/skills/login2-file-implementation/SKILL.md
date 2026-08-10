@@ -1,626 +1,207 @@
 ---
 name: login2-file-implementation
-description: Create or materially reshape Login 2.0 source files from approved file archetypes, repository stubs, Laravel generators, or project-owned generators. Use for PHP, Laravel framework, database, test, Blade, CSS, JavaScript, and UI component-bundle files after ownership and behavior are defined. Do not use to invent architecture, schema, permissions, transactions, product behavior, or visual design.
+description: Create or materially reshape a bounded Login 2.0 source or test/proof file set after ownership, target paths, behavior, and verification stage are already defined. Use approved archetypes, generators, or stubs and validate the resulting files. Do not use to choose architecture, product behavior, schema, permissions, transactions, public UI design, or verification requirements.
 ---
 
 # Login 2.0 File Implementation
 
+Lifecycle: active.
+
 ## Purpose
 
-Create valid Login 2.0 files from approved archetypes and source templates while preserving ownership, placeholder, commenting, testing, and generated-output standards.
+Perform mechanical construction of an approved file or small file bundle.
 
-This skill governs mechanical file construction.
+This skill owns archetype selection, generator/stub selection, exact file mapping, overwrite safety, placeholder completion, output validation, and file-level reporting.
 
-It does not select product behavior or resolve architecture, schema, security, transaction, or visual-design decisions.
+It does not decide behavior, ownership, target architecture, schema, Security policy, UI design, or proof requirements.
 
-Use this skill:
+## Use And Non-Use
 
-- inside `login2-implementation-slice` when the broader issue requires new files
-- directly when the authorized task is limited to file creation or file-shape normalization
+Use for approved:
 
-## Use This Skill When
+- PHP/Laravel source;
+- migrations, factories, seeders;
+- test/proof source or fixtures;
+- Blade, CSS, JavaScript;
+- reusable UI source bundles;
+- generator/stub changes;
+- material reshape to an accepted archetype.
 
-Use this skill for:
-
-- creating an application action
-- creating a service
-- creating a query object
-- creating a DTO
-- creating a page-data object
-- creating a value object
-- creating an enum
-- creating a result object
-- creating an application exception
-- creating Laravel framework-bound files
-- creating migrations, factories, or seeders from approved contracts
-- creating feature, unit, authorization, query, job, migration, or browser tests
-- creating Blade, CSS, or JavaScript UI files
-- creating an approved UI component bundle
-- materially reshaping an existing file to an approved archetype
-- testing or changing a file generator
-- promoting an approved Laravel framework stub to an active override when explicitly authorized
-
-## Do Not Use This Skill When
-
-Do not use this skill to:
-
-- decide the owner layer
-- invent a new architecture
-- choose a database schema
-- choose permissions or policy rules
-- design transaction boundaries
-- choose retry or idempotency behavior
-- design a UI
-- invent component props, variants, or states
-- create speculative repositories, managers, helpers, utilities, observers, or traits
-- activate every published Laravel stub
-- overwrite existing files without explicit authorization
-- create a new template manifest without a generator consumer
-- perform unrelated cleanup
-
-Resolve those decisions in the work packet and canonical owner documents first.
+Do not use to invent an owner/destination, architecture, schema, permissions, transactions, retries/idempotency, public UI design, speculative abstractions, framework overrides, or unrelated cleanup.
 
 ## Required Inputs
 
-Before creating files, obtain:
+Obtain:
 
-- issue or task identifier
-- owner layer
-- specific owner
-- approved destination path
-- file archetype
-- required behavior or public contract
-- applicable canonical standards
-- applicable source template or generator
-- placeholder values
-- compatibility requirements
-- required tests
-- required verification
-- optional files that must be omitted
-- overwrite or force authorization, when applicable
+- issue/task identifier;
+- verification stage: proof-source preparation, production implementation, or support/tooling;
+- repository/application owner when applicable;
+- exact destination paths and file archetypes;
+- accepted behavior/public Contract and naming requirements;
+- applicable canonical standards;
+- generator/stub when applicable;
+- overwrite/move/delete authorization;
+- compatibility requirements;
+- required validation;
+- protection status of existing tests, fixtures, Contracts, or evidence.
 
-For a multi-file bundle, obtain the complete path and naming map before generation.
+For a bundle, obtain the complete file map before writing.
 
-## Canonical Sources
+## Canonical Routing
 
-Read:
+Always read:
 
-- repository-root and nearest applicable `AGENTS.md`
-- `docs/02-standards/coding/File Building Standards.md`
-- `docs/02-standards/coding/File Archetypes.md`
-- `docs/02-standards/coding/Code Template And Generator Standards.md`
-- `docs/02-standards/coding/Commenting Standards.md`
-- `docs/02-standards/coding/PHP And Laravel Style Standards.md`
-- `docs/02-standards/coding/test-implementation/index.md`
-- `docs/02-standards/testing/index.md`
-- `stubs/README.md`
-- `stubs/AGENTS.md`
+1. root `AGENTS.md`;
+2. nearest scoped `AGENTS.md`;
+3. `docs/02-standards/coding/File Archetypes.md`;
+4. `docs/02-standards/coding/File Building Standards.md`.
 
-Read specialized database, security, UI, queue, transaction, query, or documentation standards when they govern the generated file.
+Read only when applicable:
+
+- Repository Architecture and Repository Naming Standards;
+- Code Template And Generator Standards plus `stubs/AGENTS.md`/`stubs/README.md`;
+- PHP And Laravel Style Standards;
+- Commenting Standards and scoped header/comment rules;
+- Test Implementation Standards and Testing Standards;
+- applicable Database, Security, UI, logging, queue, transaction, documentation, or runbook standards.
+
+Do not load every specialist standard for every file.
+
+## Verification-Stage Gate
+
+### Proof-Source Preparation
+
+When creating proof source/fixtures before initial proof:
+
+- write only accepted proof/fixture/support files;
+- do not modify production implementation;
+- follow Test Implementation standards;
+- preserve the declared expected initial result.
+
+### Production Implementation
+
+Before production file writes:
+
+- confirm verification readiness passed;
+- confirm required initial proof reached its declared accepted state;
+- confirm protected proof is identified;
+- do not modify protected proof unless explicitly permitted.
+
+### Tooling Or Template Maintenance
+
+When changing stubs/generators/tooling:
+
+- confirm the task owns that tooling;
+- validate generated output, not only template source;
+- do not encode unresolved architecture/behavior into templates.
+
+Stop when the stage is unclear.
+
+## Side-Effect Boundary
+
+Within accepted scope this skill may create, modify, move, or delete only the declared file set.
+
+It does not authorize unrelated edits, staging/committing, pushing/merging, dependency changes, shared-environment migrations, deployment/external mutation, or issue/Project updates unless explicitly granted.
+
+Overwrite and deletion require explicit scope.
 
 ## Procedure
 
-### 1. Confirm The File Owner
+### 1. Confirm Owner And Destination
 
-For each file, record:
+For each output record owner, responsibility, destination, archetype, public Contract, and verification role.
 
-- owner layer
-- specific owner
-- final destination
-- primary responsibility
+Use Repository Architecture and scoped `AGENTS.md`.
 
-Use the accepted owner-first model:
+Do not use transitional/generic owners, root `tests/`, or root database paths as defaults when an accepted owner-local target exists.
 
-- Core capability → owner-specific Core placement, currently `app/Core/*`
-- Module → `Modules/*`
-- UI → `resources/views/components/*`, `resources/css/*`, `resources/js/*`
-- Laravel integration → the applicable framework integration location
-- Source templates → `stubs/*`
-- Database implementation → `database/*`
-- Tests → `tests/*`
-- Documentation → `docs/*`
+Stop when ownership and destination disagree.
 
-Classify the file's technical responsibility separately, such as Surface, Delivery Adapter, Registry, Action, Query, or Contract. A Surface is an owner-specific UI presentation and interaction layer, not an application owner. Existing `app/Platform/*` paths are transitional current placement only, establish no target ownership, and must not receive new canonical work unless a bounded Goal 3 decision explicitly authorizes it.
+### 2. Confirm Archetype
 
-Do not generate into a future candidate directory unless the issue explicitly approves that owner.
+Select the file archetype from `File Archetypes.md`.
 
-Stop when destination ownership is unclear.
+Do not choose an archetype because a stub exists. Stop when one file has competing primary responsibilities.
 
-### 2. Confirm The Archetype
+### 3. Select Construction Method
 
-Classify each file using:
+Use the accepted method:
 
-- `docs/02-standards/coding/File Archetypes.md`
+1. approved project generator;
+2. framework generator with explicitly active override;
+3. approved repository stub/template;
+4. direct creation when no approved template applies.
 
-For each archetype, confirm:
+Read generator/template standards only when using them. Do not create a new template system incidentally.
 
-- allowed responsibility
-- forbidden responsibility
-- expected dependencies
-- expected public shape
-- expected tests
-- applicable header policy
+### 4. Build Exact File Map
 
-Do not choose an archetype because a stub exists.
+Before writing, list each destination with owner, archetype, symbol/component identity, generator/stub or `direct`, overwrite/move/delete status, related proof owner, and canonical Contract.
 
-Choose the archetype from the responsibility, then select the matching stub.
+For UI bundles, include only files required by the accepted public Contract. Do not create optional JavaScript for static behavior.
 
-Stop when a file has multiple competing primary responsibilities.
+### 5. Inspect Destination Safety
 
-### 3. Select The Generation Method
+Inspect existing destinations, parent instructions, current writable ownership, shared files, overwrite/move/delete authority, and compatibility-sensitive paths/namespaces/selectors/registrations/serialized identities.
 
-Use this priority:
+Do not overwrite an existing file merely because generated output is newer.
 
-1. approved project-owned generator
-2. real Laravel generator using an explicitly active root override
-3. approved categorized source template under `stubs/`
-4. direct file creation when no approved template applies
+### 6. Preview Output
 
-#### Project-Owned Generator
+Use dry-run/preview when available. For manual creation, prepare the complete output before saving.
 
-Use when an approved command exists for the archetype or bundle.
+Reject output with wrong owner/path/namespace, unresolved/unsupported placeholders, speculative files, permissive authorization, invented schema/behavior, conflicting UI Contracts, secrets, or workstation-specific paths.
 
-Prefer dry-run or preview behavior when available.
+### 7. Create Or Reshape Approved Files
 
-Confirm:
+Write only the accepted set.
 
-- required arguments
-- optional arguments
-- destination
-- overwrite protection
-- generated file inventory
+Complete generated source by replacing placeholders, removing non-applicable scaffold/unused imports, applying required types/dependencies/headers/comments, implementing only accepted behavior, preserving Contracts/compatibility, and removing template/debug material.
 
-#### Laravel Generator
+Generator success alone does not complete the file.
 
-Use the real Artisan generator when the issue expects Laravel-generated behavior.
+### 8. Validate Consistency
 
-Confirm:
+For bundles, verify names, paths, namespaces, selectors, data attributes, props, variants, initializer names, tests, and documentation references agree.
 
-- installed Laravel version
-- generator command
-- expected root stub filename
-- supported placeholders
-- active override status
+For generated source, validate output against the selected archetype.
 
-Do not assume a file under `stubs/framework/` is automatically consumed by Laravel.
+### 9. Scan Scaffold Residue
 
-#### Categorized Source Template
+Run unresolved-placeholder and applicable scaffold-marker scans on affected paths.
 
-Files under these paths are reviewed source templates:
+A required unresolved placeholder/incomplete scaffold is a construction failure.
 
-- `stubs/framework/`
-- `stubs/archetypes/`
-- `stubs/tests/`
-- `stubs/ui/`
+Do not remove an accepted failing assertion because it is preimplementation proof.
 
-Copy or consume the selected template through an approved project mechanism.
+### 10. Run Declared Validation
 
-#### Direct Creation
+Run only validation required by the work packet and applicable standards: syntax, formatting, focused tests, generator self-tests, frontend build, browser proof, PostgreSQL proof, or docs guardrails as applicable.
 
-Create the file directly when:
+Use exact declared commands. Do not claim validation passed unless it ran successfully.
 
-- no approved stub matches
-- the archetype is valid
-- the final shape is established
-- using an existing stub would require replacing most of it
-
-Do not create a new repository stub unless the task explicitly includes template-system maintenance.
-
-### 4. Inspect The Selected Stub
-
-Before generation, confirm:
-
-- the stub exists
-- the stub matches the intended archetype
-- the stub is current
-- the stub contains no deprecated owner assumptions
-- the stub contains no obsolete UI Reference or `reference.php` requirement
-- its placeholder syntax is understood
-- optional content can be safely removed
-- generated imports will be valid
-- generated comments will remain relevant
-
-For Laravel stubs, inspect the installed generator when placeholder support matters.
-
-Do not add unsupported placeholders to an active Laravel override.
-
-### 5. Build The File Map
-
-Before writing, list every output file.
-
-For each file, record:
-
-| Field           | Required Value                                  |
-| --------------- | ----------------------------------------------- |
-| Archetype       | Approved file category                          |
-| Stub            | Source stub or generator                        |
-| Destination     | Repository-relative final path                  |
-| Namespace       | Final PHP namespace when applicable             |
-| Class or symbol | Final class, enum, function, or initializer     |
-| Owner           | Specific capability, module, component, or tool |
-| Optional        | Whether the file may be omitted                 |
-| Tests           | Test owner and expected coverage                |
-| Docs            | Contract or documentation owner                 |
-
-For UI bundles, align:
-
-- component slug
-- human-readable label
-- Blade path
-- contract path
-- CSS path
-- optional JavaScript path
-- test path
-- documentation path
-- initializer name
-- required classes
-- required data attributes
-
-Do not generate a JavaScript file for a non-interactive component.
-
-### 6. Define Placeholder Values
-
-Inventory every placeholder before generation.
-
-Project-owned placeholders use:
-
-    {{ placeholderName }}
-
-Common values include:
-
-- `{{ namespace }}`
-- `{{ class }}`
-- `{{ path }}`
-- `{{ purpose }}`
-- `{{ component }}`
-- `{{ label }}`
-- `{{ initializer }}`
-- `{{ bladePath }}`
-- `{{ cssPath }}`
-- `{{ jsPath }}`
-- `{{ contractPath }}`
-- `{{ docsPath }}`
-- `{{ usageContext }}`
-
-Confirm:
-
-- each required placeholder has one value
-- values are consistent across a bundle
-- namespaces match destinations
-- component slugs use kebab case
-- JavaScript initializers are valid identifiers
-- paths remain inside approved repository roots
-- no sensitive values are used
-
-Do not leave placeholder replacement until after unrelated implementation begins.
-
-### 7. Check Destination Safety
-
-Before writing:
-
-- inspect whether each destination exists
-- inspect parent directory instructions
-- confirm required directories
-- confirm another task does not own the file
-- confirm the worktree is safe
-- confirm overwrite behavior
-
-Do not overwrite an existing file unless:
-
-- the task explicitly authorizes replacement
-- the current file was inspected
-- compatibility impact is understood
-- force behavior is intentional
-
-Stop when an existing file conflicts with the planned output.
-
-### 8. Preview The Output
-
-Use generator dry-run behavior when available.
-
-For manual copying, prepare the complete replacement map before saving.
-
-Confirm the preview will not create:
-
-- wrong namespaces
-- wrong owner paths
-- empty imports
-- malformed syntax
-- fake optional files
-- contradictory component metadata
-- permissive authorization
-- exposed model fields
-- invented schema or business behavior
-
-### 9. Generate Or Copy The Files
-
-Generate only the approved file set.
-
-Do not create:
-
-- deferred files
-- optional JavaScript for static UI
-- speculative interfaces
-- empty repository classes
-- extra tests unrelated to the contract
-- future registry files
-- future database tables
-- compatibility aliases not required by the issue
-
-Report every created, skipped, or failed file when using a generator.
-
-### 10. Complete The Generated Source
-
-A copied stub is not a completed source file.
-
-For every generated file:
-
-1. replace all placeholders
-2. remove non-applicable scaffold
-3. remove unused imports
-4. add actual native types
-5. add actual dependencies
-6. implement only accepted behavior
-7. add explicit validation
-8. add explicit authorization where required
-9. add real failure behavior
-10. update generated comments
-11. retain required file headers
-12. remove template instructions that do not belong in final source
-
-Do not leave:
-
-- empty public methods without an intentional contract
-- fake return values
-- permissive policy results
-- permissive Form Request authorization
-- exposed generic resources
-- placeholder migrations
-- meaningless assertions
-- required `markTestIncomplete()` calls
-- speculative comments
-
-### 11. Apply Language-Specific Rules
-
-#### PHP
-
-New PHP source must normally include:
-
-    <?php
-
-    declare(strict_types=1);
-
-Use:
-
-- explicit native types
-- `final` when extension is not intended
-- `readonly` for valid immutable data objects
-- constructor injection where appropriate
-- PHPDoc only when native types are insufficient
-
-Do not add broad PHP file headers by default.
-
-#### Blade
-
-Use the approved Blade header.
-
-Keep:
-
-- queries out of views
-- authorization decisions out of views
-- domain mutations out of views
-- attribute forwarding intentional
-- native semantics intact
-- public props aligned with the contract
-
-#### CSS
-
-Use the approved CSS header and section structure.
-
-Keep:
-
-- selectors within the component owner
-- primitive tokens out of component files
-- theme role definitions out of component files
-- values token-first
-- variants and states contract-approved
-- reduced-motion and forced-colors behavior intentional
-
-#### JavaScript
-
-Use the approved JavaScript header.
-
-Keep:
-
-- initialization idempotent
-- selectors aligned with Blade data attributes
-- behavior component-owned
-- authorization and business logic server-owned
-- event handling bounded to the component root
-
-#### Tests
-
-Use explicit observable assertions.
-
-Remove inapplicable scaffold tests.
-
-Replace required incomplete markers before the implementation is considered complete.
-
-### 12. Synchronize Bundled Files
-
-For multi-file output, compare the bundle after implementation.
-
-Confirm matching:
-
-- names
-- slugs
-- paths
-- classes
-- data attributes
-- props
-- variants
-- states
-- JavaScript initializer
-- test expectations
-- source arrays
-- documentation references
-
-A bundle is invalid when one file describes a different public contract than another.
-
-### 13. Scan For Unresolved Placeholders
-
-Run against every generated destination:
-
-    rg -n "\{\{[^}]+\}\}" <generated-path>
-
-Also inspect for other known scaffold markers, including:
-
-- `TODO`
-- `FIXME`
-- `markTestIncomplete`
-- `Describe the`
-- `Add source-proven`
-- `Needs confirmation`
-- empty placeholder comments
-- fake example values
-
-An unresolved template token is a generation failure.
-
-A scaffold marker may remain only when the task explicitly creates a template rather than final application source.
-
-### 14. Validate Generated Output
-
-Validate rendered output, not only the `.stub` source.
-
-Run applicable checks.
-
-#### PHP
-
-    php -l <generated-file>
-
-    vendor/bin/pint --test <generated-file>
-
-    php artisan test --filter=<target>
-
-#### Blade, CSS, And JavaScript
-
-    npm run build
-
-    php artisan test --filter=<target>
-
-Run Playwright when installed browser behavior changes.
-
-#### Database
-
-Use PostgreSQL-backed verification when schema, indexes, constraints, locking, transaction behavior, or SQL semantics matter.
-
-#### Templates And Generators
-
-Test:
-
-- expected output paths
-- placeholder replacement
-- optional-file omission
-- overwrite protection
-- invalid input
-- deterministic output
-- generated PHP syntax
-- bundle consistency
-
-Do not claim validation passed unless the command ran successfully.
-
-### 15. Inspect The Diff
+### 11. Inspect Diff
 
 Inspect:
 
-    git status --short
+```text
+git status --short
+git diff --check
+git diff -- <affected-paths>
+```
 
-Review the complete diff.
+Confirm only approved files changed; owner/path/archetype align; protected proof is intact; no placeholders/debug/secrets/workstation paths remain; moves/deletions are intentional; compatibility-sensitive changes are accounted for.
 
-Confirm:
+### 12. Report And Return Control
 
-- only approved outputs were created
-- only intended files changed
-- no unrelated formatting occurred
-- no placeholders remain
-- no secrets are present
-- no deprecated system assumptions remain
-- comments match final behavior
-- generated headers contain correct paths
-- test files target real behavior
-- optional files were omitted correctly
-- bundle metadata is consistent
+Report issue/task, verification stage, owner, archetypes, generation method, file map, stubs/generators, scaffold scan, validation/results, checks not run, compatibility concerns, required review, blockers/gaps.
 
-Do not stage, commit, push, or alter issue state unless explicitly authorized.
-
-### 16. Report The Result
-
-Use this report structure:
-
-## File Implementation Result
-
-- Issue or task:
-- Owner:
-- Archetypes:
-- Generation method:
-
-## File Map
-
-- Created:
-- Modified:
-- Skipped:
-- Replaced:
-
-## Templates And Placeholders
-
-- Stubs or generators used:
-- Placeholder values applied:
-- Optional files omitted:
-- Unresolved-placeholder scan:
-
-## Validation
-
-- Commands run:
-- Results:
-- Checks not run:
-
-## Review
-
-- Contract alignment:
-- Documentation updated:
-- Manual review required:
-- Specialist review required:
-- Known gaps:
+When invoked from `login2-implementation-slice`, return to that workflow for initial proof, production implementation, final proof, documentation sync, broader verification, and review handoff.
 
 ## Stop Conditions
 
-Stop before writing or continuing when:
+Stop when verification stage, owner, destination, archetype, accepted behavior/Contract, overwrite authority, required placeholders, schema/authorization/transaction/retry/compatibility/UI behavior, protected-proof authority, writable ownership, or validation capability is unresolved.
 
-- ownership is unclear
-- the archetype is unclear
-- the destination is unclear
-- no approved behavior contract exists
-- a stub conflicts with current standards
-- a Laravel placeholder is unsupported
-- a required placeholder value is missing
-- a destination file exists without replacement authorization
-- namespace and path disagree
-- bundle paths or identities conflict
-- schema behavior is unresolved
-- authorization behavior is unresolved
-- transaction behavior is unresolved
-- retry or idempotency behavior is unresolved
-- sensitive-data handling is unresolved
-- UI design or public API is unspecified
-- the task would activate a framework override without explicit approval
-- generation would require speculative files
-- another writer owns the destination
-- generated output cannot be validated
+Also stop when the file set requires speculative or unrelated work.
 
-When stopping, report:
-
-- affected file
-- selected archetype or candidate archetypes
-- exact missing or conflicting input
-- canonical owner that must resolve it
-- minimum information required to continue
+Report the affected file, exact conflict, canonical owner, and minimum input or authority needed.

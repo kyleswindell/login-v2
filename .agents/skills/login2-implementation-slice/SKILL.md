@@ -1,633 +1,246 @@
 ---
 name: login2-implementation-slice
-description: Implement a bounded, Ready Login 2.0 GitHub issue or explicitly authorized implementation task with defined ownership, acceptance criteria, dependencies, verification, and review requirements. Use as the outer workflow for application, tooling, test, documentation-sync, and mixed implementation slices. Do not use for unresolved planning, architecture decisions, visual design creation, production operations, or broad matrix-row implementation.
+description: Execute one bounded, implementation-authorized Login 2.0 work packet using verification-first preflight, owner-first placement, protected proof, targeted implementation, final verification, documentation sync, and review handoff. Use for application, tooling, test, documentation-sync, or mixed implementation slices. Do not use for unresolved planning, architecture selection, visual design creation, production operations, or review-only work.
 ---
 
 # Login 2.0 Implementation Slice
 
+Lifecycle: active.
+
 ## Purpose
 
-Execute one bounded Login 2.0 implementation slice from readiness preflight through implementation, verification, documentation synchronization, diff review, and review handoff.
+Execute one bounded repository implementation slice from readiness through review handoff.
 
-This skill is the outer implementation workflow.
+This is the outer implementation workflow. It owns execution order and scope discipline, not product behavior, architecture, schema, Security policy, UI design, verification semantics, or test-source rules.
 
-Apply narrower skills inside this workflow when the task includes specialized file generation, database changes, UI work, security-sensitive behavior, or final verification.
+Use `login2-file-implementation` only when new or materially reshaped files are required.
 
-This skill does not define product, architecture, schema, security, or design truth. Read those requirements from their canonical owners.
+## Use And Non-Use
 
-## Use This Skill When
+Use when the issue or explicit task:
 
-Use this skill when:
+- authorizes repository implementation;
+- defines bounded scope and non-goals;
+- identifies repository work ownership and application ownership when applicable;
+- defines observable acceptance criteria;
+- resolves canonical sources and dependencies;
+- defines verification, environments, review, and stop conditions.
 
-- a GitHub implementation issue is marked `Ready`
-- an explicit user-authorized task provides equivalent implementation detail
-- the work has bounded acceptance criteria
-- the owning layer and specific owner are known
-- relevant decisions and dependencies are resolved
-- verification and review expectations are defined
-- Codex is expected to modify repository files
-
-Typical work includes:
-
-- implementing a Core capability slice
-- implementing an owner-specific Surface or Delivery Adapter slice
-- implementing a Module slice
-- adding or changing application behavior
-- adding tests for established behavior
-- creating compatibility wrappers
-- moving established behavior behind a new owner boundary
-- implementing generator or tooling behavior
-- synchronizing canonical documentation with completed code
-
-## Do Not Use This Skill When
-
-Do not use this skill for:
-
-- planning-only discussion
-- architecture selection
-- unresolved schema design
-- permission-model design
-- visual design creation
-- legal or privacy interpretation
-- security risk acceptance
-- production incident response
-- production deployment execution
-- broad implementation of an entire planning matrix row
-- unrelated cleanup
-- review-only work with no implementation authorization
-
-Use `login2-file-implementation` directly when the task is limited to creating or reshaping files from approved archetypes and no broader implementation workflow is required.
+Do not use for planning, architecture selection, unresolved schema/authorization/transaction/compatibility/UI decisions, review-only work, deployment/incident response, broad cleanup, or milestone-wide implementation.
 
 ## Required Inputs
 
-Obtain the following from the GitHub issue or explicit task:
+Obtain:
 
-- issue number or task identifier
-- requested outcome
-- primary owner layer
-- specific owner
-- execution mode
-- in-scope behavior
-- explicit non-goals
-- observable acceptance criteria
-- canonical document paths
-- accepted decisions
-- blocking dependencies
-- expected file archetypes
-- security and data boundaries
-- transaction and reliability boundaries
-- required tests
-- required verification
-- documentation synchronization requirements
-- manual or specialist review requirements
-- agent stop conditions
+- issue/task identifier and requested outcome;
+- scope, non-goals, allowed/forbidden paths, shared-file risks;
+- repository work owner and specific Core/Module/UI/Laravel-integration owner when applicable;
+- canonical source paths, accepted decisions, public Contracts, dependencies;
+- acceptance criteria and required rejection behavior;
+- `AC-*` → `PF-*` mapping when required;
+- proof methods, environments, fixtures, commands, expected initial result;
+- protected-baseline requirements and permitted proof edits;
+- final targeted proof, broader verification, manual/specialist review;
+- compatibility requirements and stop conditions;
+- authorization for consequential side effects.
 
-Do not infer missing high-impact inputs.
+Stop rather than infer a missing high-impact input.
 
-## Canonical Procedure
+## Canonical Sources
 
-### 1. Declare The Workflow
+Always read:
 
-Before editing, state:
+1. root `AGENTS.md`;
+2. applicable scoped `AGENTS.md`;
+3. the complete issue or explicit work packet;
+4. `docs/02-standards/coding/Agent Implementation Checklist.md`;
+5. `docs/02-standards/testing/index.md`.
 
-- that `login2-implementation-slice` is being used
-- the issue or task identifier
-- the intended owner
-- the planned file scope
-- whether a specialist skill is also required
+Read only when applicable:
 
-Do not describe the work as implementation-ready until the readiness gate passes.
+- `docs/03-architecture/repository-architecture.md`;
+- `docs/02-standards/coding/test-implementation/index.md`;
+- exact feature, flow, database, Security, UI, logging, documentation, or runbook owners;
+- `stubs/AGENTS.md` and `stubs/README.md` for stubs/generators.
 
-### 2. Load Repository Instructions
+Prefer targeted sections. Do not load unrelated standards, planning history, archives, skills, or review records.
 
-Read:
+## Side-Effect Boundary
 
-1. repository-root `AGENTS.md`
-2. each applicable nested `AGENTS.md` from the repository root to the target directory
-3. `docs/02-standards/coding/Agent Implementation Checklist.md`
-4. `docs/02-standards/coding/index.md`
+Within accepted scope this skill may create, modify, move, or delete repository files.
 
-Read `stubs/AGENTS.md` before editing or consuming files under `stubs/`.
+It does not authorize, unless explicitly granted:
 
-Closer `AGENTS.md` files refine broader instructions. Canonical documentation remains authoritative for durable system behavior.
+- staging, committing, pushing, merging, rebasing, resetting, cleaning, or branch deletion;
+- issue or GitHub Project mutation;
+- dependency installation/upgrades;
+- shared-environment migrations;
+- deployment/staging/production actions;
+- destructive data operations;
+- secret rotation or third-party mutation.
 
-### 3. Load The Complete Work Packet
+A failed gate is not authorization for undeclared remediation.
 
-Read the complete GitHub issue or explicit task.
+## Procedure
 
-Include materially relevant:
+### 1. Declare The Slice
 
-- issue body
-- issue comments
-- linked decisions
-- linked parent issues
-- linked canonical documents
-- dependency state
-- acceptance-criteria changes
+State the issue/task, execution mode, repository owner, application owner when applicable, intended file scope, specialist skill/review needs, and authorized consequential side effects.
 
-Do not implement from the title alone.
+### 2. Apply Definition Of Ready
 
-When the issue is unavailable through current tooling, stop and request the full work packet rather than guessing.
+Use `Agent Implementation Checklist.md`.
 
-### 4. Apply The Definition Of Ready
+Confirm outcome, scope, non-goals, compatibility, ownership, target placement, public Contracts, dependencies, Security/data/transaction/reliability/UI boundaries, acceptance/rejection behavior, verification, docs sync, review authority, and stop conditions.
 
-Use the Definition of Ready in:
+If readiness fails, do not edit files. Report the missing input and canonical owner.
 
-- `docs/02-standards/coding/Agent Implementation Checklist.md`
-
-Confirm:
-
-- ownership is explicit
-- scope is bounded
-- non-goals are explicit
-- acceptance criteria are observable
-- canonical owners are linked
-- dependencies are complete
-- applicable decisions are accepted
-- implementation boundaries are defined
-- security and data implications are defined
-- transaction and reliability implications are defined
-- tests and verification are defined
-- review requirements are defined
-- stop conditions are defined
-
-A GitHub issue in `Inbox`, `Todo`, or `Planned` is not independently delegable.
-
-When project status cannot be inspected, require the work packet or user instruction to explicitly authorize implementation.
-
-When readiness fails:
-
-1. do not edit repository files
-2. identify the missing or conflicting inputs
-3. identify the canonical owner that must resolve them
-4. report the minimum information needed to continue
-
-### 5. Inspect The Working Tree
-
-Run the applicable Git inspection commands before editing.
-
-At minimum, inspect:
-
-    git status --short --branch
-
-Identify:
-
-- current branch
-- staged changes
-- unstaged changes
-- untracked files
-- unrelated work
-- whether another writable session owns the worktree
-
-Do not:
-
-- overwrite unrelated work
-- reset files outside the task
-- use `git add .`
-- assume staged files belong to this task
-- start a second writable workflow in the same worktree
-
-Stop when safe file ownership is unclear.
-
-### 6. Confirm The Execution Mode
-
-Confirm one execution mode:
-
-- Human-led
-- Codex-assisted
-- Codex-delegable
-- Codex-delegable with specialist review
-
-Do not use a delegable mode to bypass human-owned decisions.
-
-Require specialist review for applicable:
-
-- authentication and MFA
-- access control
-- service accounts and tokens
-- secrets
-- webhooks
-- sensitive exports
-- audit evidence
-- security middleware
-- retention or erasure
-- destructive migrations
-- concurrency-sensitive writes
-- design-sensitive UI
-
-### 7. Classify The Slice
-
-Record:
-
-- primary owner layer
-- specific owner
-- affected workflows
-- file archetypes
-- applicable stubs or generators
-- security risk
-- data risk
-- transaction risk
-- concurrency or retry risk
-- UI impact
-- database impact
-- documentation impact
-- operational impact
-- required specialist review
-
-Use the accepted owner-first model:
-
-- Core capability → owner-specific Core placement, currently `app/Core/*`
-- Module → `Modules/*`
-- UI → `resources/views/components/*`, `resources/css/*`, `resources/js/*`
-- Laravel integration → the applicable framework integration location
-- Source templates → `stubs/*`
-- Database implementation → `database/*`
-- Tests → `tests/*`
-- Canonical documentation → `docs/*`
-
-Classify the technical responsibility separately, such as Surface, Delivery Adapter, Registry, Action, Query, or Contract. A Surface is an owner-specific UI presentation and interaction layer, not an owner category. Existing `app/Platform/*` paths are transitional current placement only, establish no target ownership, and must not receive new canonical work unless a bounded Goal 3 decision explicitly authorizes it.
-
-Do not create a future owner merely because it appears as a candidate in planning.
-
-### 8. Select Specialized Skills
-
-Use a narrower skill when applicable.
-
-For new or materially reshaped files, apply:
-
-- `login2-file-implementation`
-
-Future specialized skills may govern:
-
-- database changes
-- UI components
-- security-sensitive changes
-- verification and review
-
-The general issue scope remains authoritative.
-
-A specialized skill must not broaden the issue.
-
-### 9. Read Targeted Canonical Sources
-
-At minimum, read the relevant sections of:
-
-- `docs/02-standards/coding/Coding Standards.md`
-- `docs/02-standards/coding/PHP And Laravel Style Standards.md`
-- `docs/02-standards/coding/File Building Standards.md`
-- `docs/02-standards/coding/File Archetypes.md`
-- `docs/02-standards/coding/test-implementation/index.md`
-- `docs/02-standards/testing/index.md`
-
-Read additional owners only when applicable:
-
-- application actions, services, and data objects
-- errors and exceptions
-- transactions, concurrency, and idempotency
-- events, jobs, and queues
-- query and performance
-- database standards and contracts
-- security standards
-- UI standards and contracts
-- logging standards
-- documentation standards
-- runbooks
-- accepted decisions
-
-Prefer targeted section reads.
-
-Do not load unrelated planning, archives, or research.
-
-### 10. Inspect Current Implementation
-
-Inspect applicable:
-
-- existing source files
-- tests
-- routes
-- configuration
-- interfaces
-- actions
-- services
-- queries
-- DTOs
-- policies
-- middleware
-- models
-- migrations
-- database contracts
-- Blade files
-- component contracts
-- CSS
-- JavaScript controls
-- documentation status
-
-Determine whether each reference is:
-
-- current
-- transitional
-- compatibility-only
-- deprecated
-- scheduled for replacement
-
-Do not copy a deprecated pattern merely because it is common.
-
-### 11. Confirm High-Risk Boundaries
-
-Before editing protected behavior, confirm:
-
-- actor
-- action
-- target
-- scope
-- authentication requirement
-- authorization mechanism
-- object-level authorization
-- tenant or workspace isolation
-- validation
-- data classification
-- sensitive fields
-- audit requirements
-- monitoring requirements
-- notification requirements
-- log redaction
-- export implications
-- retention or erasure implications
-
-For mutations, also confirm:
-
-- transaction owner
-- rollback behavior
-- concurrency control
-- retry behavior
-- idempotency
-- duplicate-delivery behavior
-- after-commit effects
-- remote side-effect ordering
-- expected failure states
-
-Stop when any applicable boundary is unresolved.
-
-### 12. Produce A Bounded Implementation Plan
-
-Before changing files, list:
-
-- files to create
-- files to modify
-- files to delete
-- files explicitly out of scope
-- archetype for each affected file
-- stubs or generators to use
-- behavior to preserve
-- tests to add or update
-- documentation to synchronize
-- verification commands
-- required manual review
-- required specialist review
-- known risks
-
-Each proposed change must support an acceptance criterion.
-
-Stop when the plan becomes materially broader than the issue.
-
-### 13. Implement The Smallest Complete Slice
-
-During implementation:
-
-- preserve owner boundaries
-- follow the selected archetypes
-- use approved stubs when applicable
-- replace all placeholders
-- remove non-applicable scaffold
-- use strict types for new PHP files
-- use explicit native types
-- use constructor injection where appropriate
-- validate input
-- authorize protected actions
-- protect mass assignment
-- keep controllers and views thin
-- keep queries scoped and bounded
-- keep transactions focused
-- keep queued payloads small
-- preserve PostgreSQL behavior
-- keep sensitive values out of logs and evidence
-- preserve compatibility unless a break is explicitly authorized
-- avoid unrelated cleanup
-- remove debugging code
-
-Do not implement deferred behavior.
-
-Do not add speculative abstractions.
-
-### 14. Add Or Update Tests
-
-Add the narrowest tests that prove applicable acceptance criteria.
-
-Cover applicable:
-
-- success
-- validation failure
-- unauthenticated denial
-- unauthorized denial
-- object-level denial
-- cross-scope denial
-- rollback
-- concurrency
-- retries
-- duplicate execution
-- idempotency
-- after-commit behavior
-- exception translation
-- audit events
-- monitoring signals
-- notifications
-- PostgreSQL behavior
-- migrations
-- component contracts
-- semantic markup
-- accessibility wiring
-- browser interactions
-- generator output
-- documentation guardrails
-
-Do not weaken existing tests.
-
-Do not use unconditional passing assertions.
-
-Do not leave required incomplete tests.
-
-### 15. Synchronize Canonical Documentation
-
-Update documentation when the slice changes:
-
-- behavior
-- ownership
-- schema
-- routes
-- public APIs
-- security boundaries
-- operational behavior
-- implementation status
-- agent workflows
-- stubs or generators
-
-Use:
-
-- `docs/02-standards/documentation/Implementation Status And Development Sync Standard.md`
-
-Update only the canonical owners affected by this slice.
-
-Do not use the planning matrix as a worklog.
-
-Do not mark an entire capability complete because one issue is complete.
-
-### 16. Run Verification
-
-Run required issue-specific checks.
-
-Also run applicable baseline checks:
-
-- unresolved-placeholder scan
-- PHP syntax
-- formatter
-- targeted Laravel tests
-- broader Laravel tests
-- PostgreSQL-backed tests
-- migration tests
-- frontend build
-- Playwright tests
-- documentation guardrails
-- link checks
-- generator tests
-
-Use the repository-level verification command when one exists.
-
-Record:
-
-- exact command
-- result
-- relevant failure
-- whether the failure was pre-existing
-- whether it blocks completion
-
-Do not claim a check passed unless it ran successfully.
-
-### 17. Review The Final Diff
+### 3. Preflight Repository And Writable Ownership
 
 Inspect:
 
-    git status --short
+```text
+git status --short --branch
+git worktree list
+```
 
-Then inspect the complete diff for the task.
+Confirm branch/worktree, dirty state, unrelated work, current writable owner, and shared-file risks.
 
-Confirm:
+One writer in one working tree is the default. Use another branch/worktree when concurrency or isolation requires it. Never overwrite, reset, clean, stash, or relocate another task's work.
 
-- only intended files changed
-- no unrelated staged files are included
-- no placeholders remain
-- no debug code remains
-- no secrets are present
-- imports are intentional
-- comments remain accurate
-- public APIs match contracts
-- database changes match contracts
-- documentation links are valid
-- deleted files are intentional
-- compatibility requirements are preserved
-- acceptance criteria are addressed
+### 4. Resolve Owner And Target Paths
 
-Do not stage, commit, push, open a pull request, or alter GitHub Project state unless the work packet explicitly authorizes that action.
+Use Repository Architecture and scoped `AGENTS.md`.
 
-### 18. Prepare The Review Handoff
+Select the smallest clear owner before choosing paths:
 
-Move or recommend movement to `Review` only when:
+- Core capability;
+- Module;
+- reusable UI responsibility;
+- restricted application-wide Laravel integration;
+- repository Docs/Ops/Tests/Tooling owner.
 
-- the bounded implementation is complete
-- required automated checks passed
-- documentation is synchronized
-- unresolved implementation decisions are absent
-- known failures are disclosed
-- manual review requirements are identified
-- specialist review requirements are identified
+Treat `app/Platform/`, `app/Surfaces/`, and generic owner branches as transitional, not target owners.
 
-Keep the issue `In Progress` or mark it `Blocked` when required implementation or verification remains incomplete.
+### 5. Establish Verification Readiness
 
-### 19. Report The Result
+Use Testing Standards for proof meaning and gates.
 
-Use this report structure:
+Before the first production implementation write, confirm applicable:
 
-## Implementation Result
+- criterion-to-proof mapping and proof applicability;
+- executor/environment;
+- fixtures/commands;
+- expected initial result;
+- initial-proof requirement or declared non-applicability;
+- protected baseline and permitted edits;
+- final targeted proof;
+- broader/manual/specialist verification.
 
-- Issue or task:
-- Execution mode:
-- Owner:
-- Scope completed:
+This skill does not redefine result-state semantics.
 
-## Files
+### 6. Prepare Required Proof Source
 
-- Created:
-- Modified:
-- Deleted:
+If the verification contract requires new test/proof source or fixtures before initial execution, create only those accepted proof artifacts first.
 
-## Behavior
+Use `login2-file-implementation` when mechanical construction is needed.
 
-- Implemented:
-- Compatibility preserved:
-- Deferred or out of scope:
+Do not modify production implementation while preparing initial proof.
 
-## Tests And Verification
+### 7. Run Initial Proof
 
-- Tests added or changed:
-- Commands run:
-- Results:
-- Checks not run:
+Run the exact declared initial proof in the required environment. Record command/procedure, environment/runtime, result, and evidence location when required.
 
-## Documentation
+Proceed only when the observed result matches the verification contract.
 
-- Canonical docs updated:
-- Status changes made:
+Unexpected syntax, fixture, dependency, boot, discovery, infrastructure, tooling, or environment failures stop execution unless an exact bounded recovery was predeclared.
 
-## Review
+### 8. Protect The Baseline
 
-- Manual review required:
-- Specialist review required:
-- Known gaps:
-- Pre-existing failures:
-- Follow-up work discovered:
+Identify protected tests, fixtures, Contracts, datasets, selectors, scripts, and review procedures.
 
-Distinguish completed, verified, reviewed, deferred, and blocked work.
+Do not weaken, skip, delete, undiscover, narrow, redirect, or materially rewrite protected proof to make implementation pass.
+
+If material baseline revision is required, stop for verification-contract authority.
+
+### 9. Plan The Smallest Production Change
+
+List files to create/modify/move/delete, files out of scope, owner/archetype, public Contracts, compatibility behavior, shared-file risks, docs sync, final proof, broader verification, and specialist review.
+
+Every production change must support accepted scope. Stop if the plan materially expands.
+
+### 10. Implement
+
+Implement only the smallest complete production change.
+
+Use `login2-file-implementation` for file construction/reshape.
+
+Preserve owner/dependency boundaries, public Contracts, validation/authorization, transaction/PostgreSQL semantics, Security/data handling, compatibility, source headers/comments, accepted UI authority, and the protected proof baseline.
+
+No unrelated cleanup or speculative future work.
+
+### 11. Run Final Targeted Proof
+
+Run the accepted targeted proof after implementation. When required, run the same proof unchanged.
+
+If it does not satisfy the contract, stop, preserve evidence/state, and do not weaken proof or broaden remediation without authority.
+
+### 12. Run Required Broader Verification
+
+Run only declared broader checks and required browser, PostgreSQL, accessibility, Security, native-platform, operational, manual, or specialist proof.
+
+Automated success does not replace required human review.
+
+### 13. Synchronize Canonical Documentation
+
+Use `Implementation Status And Development Sync Standard.md`.
+
+Update only affected canonical owners. Do not create a second durable owner in planning, `docs/11-ai/`, memory, issue comments, or skills.
+
+Do not mark a broader capability/Module/milestone/goal complete because one slice completed.
+
+### 14. Review Final Diff
+
+Inspect:
+
+```text
+git status --short
+git diff --check
+git diff
+```
+
+Confirm only accepted files changed, protected proof is intact, no placeholders/debug/secrets remain, ownership/paths/Contracts/tests/docs align, and deletions/compatibility changes are intentional.
+
+Stage explicit paths only when staging is authorized.
+
+### 15. Report And Handoff
+
+Report:
+
+- issue/task, execution mode, owner, scope completed;
+- files created/modified/moved/deleted;
+- criteria addressed;
+- proof source changes;
+- initial proof/result and protected baseline;
+- production implementation;
+- final targeted proof/result;
+- broader verification;
+- canonical docs synchronized;
+- manual/specialist review remaining;
+- gaps/pre-existing failures;
+- exact next authorized action.
+
+Distinguish implemented, verified, reviewed, accepted, deferred, and blocked.
 
 ## Stop Conditions
 
-Stop without editing, or stop before continuing, when:
+Stop when readiness, ownership, placement, acceptance/rejection behavior, verification environment/fixtures/expected initial result, required dependency/decision, schema/authorization/Security/data/transaction/retry/compatibility/UI behavior, writable ownership, or required proof is unresolved.
 
-- the Definition of Ready fails
-- scope is ambiguous
-- acceptance criteria are not observable
-- ownership is unclear
-- an archetype is unclear
-- canonical sources conflict
-- a required decision remains open
-- a dependency is incomplete
-- a new production dependency is not authorized
-- schema behavior lacks a contract
-- destructive behavior lacks recovery
-- authorization is unresolved
-- tenant or workspace scope is unresolved
-- sensitive-data handling is unresolved
-- transaction ownership is unresolved
-- retryable behavior lacks idempotency
-- visual design is unspecified
-- tests fail in a way that changes the plan
-- required verification cannot run
-- another writer owns the same files
-- the task requires broad unrelated cleanup
-- multiple valid implementations have materially different consequences
-- a human-led decision is being delegated implicitly
+Also stop when:
 
-When stopping, report:
+- initial proof produces an unexpected result;
+- protected proof needs unauthorized material revision;
+- implementation requires broad unrelated cleanup;
+- a consequential side effect lacks explicit authority.
 
-- exact blocker
-- why implementation cannot safely continue
-- canonical owner that must resolve it
-- minimum decision or input required
+Report the blocker, affected scope/criterion, canonical owner, and minimum input or authority needed.

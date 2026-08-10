@@ -424,5 +424,6 @@ Stop before adding asynchronous behavior when:
 - [Transaction Concurrency And Idempotency Standards](Transaction%20Concurrency%20And%20Idempotency%20Standards.md)
 - [Error And Exception Handling Standards](Error%20And%20Exception%20Handling%20Standards.md)
 - [Application Actions Services And Data Objects Standards](Application%20Actions%20Services%20And%20Data%20Objects%20Standards.md)
-- [Testing Standards](Testing%20Standards.md)
+- [Integration Testing Standards](../testing/integration-and-system/integration-testing-standards.md)
+- [Reliability Testing Standards](../testing/quality-and-operational-testing/reliability-testing-standards.md)
 - [Coding Standards Index](index.md)

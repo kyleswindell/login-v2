@@ -45,7 +45,7 @@ Relevant standards include:
 - [File Building Standards](../docs/02-standards/coding/File%20Building%20Standards.md)
 - [File Archetypes](../docs/02-standards/coding/File%20Archetypes.md)
 - [PHP And Laravel Style Standards](../docs/02-standards/coding/PHP%20And%20Laravel%20Style%20Standards.md)
-- [Test Implementation Standards](../docs/02-standards/coding/Test%20Implementation%20Standards.md)
+- [Test Implementation Standards Index](../docs/02-standards/coding/test-implementation/index.md)
 - [Testing Standards Index](../docs/02-standards/testing/index.md)
 
 When this README conflicts with a canonical standard, the canonical standard controls.

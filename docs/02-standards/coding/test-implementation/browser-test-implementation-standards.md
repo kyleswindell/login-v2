@@ -43,7 +43,7 @@ This standard owns implementation rules for:
 - browser-visible external state;
 - trace, screenshot, video, DOM, and network evidence safety.
 
-It does not decide whether browser proof, accessibility review, visual review, or a specific browser project is required. Use [UI, Accessibility, And Interaction Testing Standards](../../testing/ui-accessibility-and-interaction-testing-standards.md), the verification contract, and the applicable UI or feature Contract for those decisions.
+It does not decide whether browser proof, accessibility review, visual review, or a specific browser project is required. Use [UI And Accessibility Testing Standards Index](../../testing/ui-and-accessibility/index.md), the verification contract, and the applicable UI or feature Contract for those decisions.
 
 Browser placement follows [Test Source And Placement Standards](test-source-and-placement-standards.md).
 
@@ -271,7 +271,7 @@ Visual, accessibility, browser-matrix, and acceptance sufficiency remain governe
 - [Fixtures, Doubles, And Async Test Implementation Standards](fixtures-doubles-and-async-test-implementation-standards.md)
 - [Test Source Lifecycle Standards](test-source-lifecycle-standards.md)
 - [Testing Standards Index](../../testing/index.md)
-- [UI, Accessibility, And Interaction Testing Standards](../../testing/ui-accessibility-and-interaction-testing-standards.md)
+- [UI And Accessibility Testing Standards Index](../../testing/ui-and-accessibility/index.md)
 - [UI Standards Index](../../ui/index.md)
 - [Repository Architecture](../../../03-architecture/repository-architecture.md)
 - [Playwright Configuration](../../../../playwright.config.js)

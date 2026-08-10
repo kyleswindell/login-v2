@@ -73,7 +73,7 @@ Start with the [Coding Standards Index](coding/index.md).
 
 Use coding standards for how repository source is implemented.
 
-For test source specifically, use [Test Implementation Standards](coding/Test%20Implementation%20Standards.md).
+For test source specifically, use the [Test Implementation Standards Index](coding/test-implementation/index.md).
 
 Testing and verification policy does not belong under `coding/`; use the [Testing Standards Index](testing/index.md).
 
@@ -91,7 +91,7 @@ This area is the canonical owner for:
 - environment and fixture validity;
 - verification evidence and testing gates.
 
-Repository-specific test-source construction remains with [Test Implementation Standards](coding/Test%20Implementation%20Standards.md).
+Repository-specific test-source construction remains with the [Test Implementation Standards Index](coding/test-implementation/index.md).
 
 ### 3.3. Database
 
@@ -146,7 +146,7 @@ Root and scoped `AGENTS.md` files, `.agents/skills/`, GitHub issues, GitHub Proj
 | Question                                                               | Start here                                                                   |
 | ---------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
 | How should application or framework source be implemented?             | [Coding Standards Index](coding/index.md)                                    |
-| How should test source be written or organized?                        | [Test Implementation Standards](coding/Test%20Implementation%20Standards.md) |
+| How should test source be written or organized?                        | [Test Implementation Standards Index](coding/test-implementation/index.md)   |
 | What must be proven, in which environment, and with what evidence?     | [Testing Standards Index](testing/index.md)                                  |
 | How should PostgreSQL schema or migration behavior be designed?        | [Database Standards Index](database/index.md)                                |
 | What security control or security behavior is required?                | [Security Standards Index](security/index.md)                                |

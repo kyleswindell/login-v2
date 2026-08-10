@@ -333,7 +333,7 @@ Do not:
 - [Fixtures, Doubles, And Async Test Implementation Standards](fixtures-doubles-and-async-test-implementation-standards.md)
 - [Browser Test Implementation Standards](browser-test-implementation-standards.md)
 - [Testing Standards Index](../../testing/index.md)
-- [Verification Contract And Evidence Standards](../../testing/verification-contract-and-evidence-standards.md)
+- [Initial Proof And Baseline Standards](../../testing/verification-contract/initial-proof-and-baseline-standards.md)
 - [Automated And Static Testing Standards](../../testing/automated-and-static-testing-standards.md)
 - [Repository Naming Standards](../repository-naming-standards.md)
 - [Code Template And Generator Standards](../Code%20Template%20And%20Generator%20Standards.md)

@@ -276,7 +276,8 @@ At minimum, read the relevant sections of:
 - `docs/02-standards/coding/PHP And Laravel Style Standards.md`
 - `docs/02-standards/coding/File Building Standards.md`
 - `docs/02-standards/coding/File Archetypes.md`
-- `docs/02-standards/coding/Testing Standards.md`
+- `docs/02-standards/coding/test-implementation/index.md`
+- `docs/02-standards/testing/index.md`
 
 Read additional owners only when applicable:
 

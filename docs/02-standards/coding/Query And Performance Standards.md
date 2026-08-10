@@ -385,7 +385,8 @@ Stop before shipping a query when:
 ## 23. Related
 
 - [File Archetypes](File%20Archetypes.md)
-- [Testing Standards](Testing%20Standards.md)
+- [Automated And Static Testing Standards](../testing/automated-and-static-testing-standards.md)
+- [Performance Testing Standards](../testing/quality-and-operational-testing/performance-testing-standards.md)
 - [Schema Design Standards](../database/Schema%20Design%20Standards.md)
 - [Database Tenant Workspace Isolation Standards](../database/Database%20Tenant%20Workspace%20Isolation%20Standards.md)
 - [Coding Standards Index](index.md)

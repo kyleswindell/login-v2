@@ -107,7 +107,8 @@ Before editing this folder, read:
 - `docs/02-standards/coding/index.md`
 - `docs/02-standards/coding/Coding Standards.md`
 - `docs/02-standards/coding/File Building Standards.md`
-- `docs/02-standards/coding/Testing Standards.md`
+- `docs/02-standards/coding/test-implementation/index.md`
+- `docs/02-standards/testing/index.md`
 
 When creating or changing file-shape guidance, also read:
 
@@ -123,7 +124,8 @@ When changing source-template, placeholder, generator, framework-override, or ge
 - `docs/02-standards/coding/File Archetypes.md`
 - `docs/02-standards/coding/File Building Standards.md`
 - `docs/02-standards/coding/Commenting Standards.md`
-- `docs/02-standards/coding/Testing Standards.md`
+- `docs/02-standards/coding/test-implementation/index.md`
+- `docs/02-standards/testing/index.md`
 
 When changing application-object boundaries, also read:
 
@@ -147,7 +149,8 @@ When changing events, jobs, listeners, queues, or scheduled commands, also read:
 
 - `docs/02-standards/coding/Events Jobs And Queue Standards.md`
 - `docs/02-standards/coding/Transaction Concurrency And Idempotency Standards.md`
-- `docs/02-standards/coding/Testing Standards.md`
+- `docs/02-standards/coding/test-implementation/index.md`
+- `docs/02-standards/testing/index.md`
 
 When changing queries, lists, exports, or performance rules, also read:
 
@@ -194,7 +197,8 @@ When work in this folder affects durable coding behavior, keep ownership clear.
 | Transactions, concurrency, retries, locks, and idempotency                                       | `docs/02-standards/coding/Transaction Concurrency And Idempotency Standards.md`       |
 | Events, listeners, jobs, queues, scheduling, and asynchronous behavior                           | `docs/02-standards/coding/Events Jobs And Queue Standards.md`                         |
 | Queries, pagination, eager loading, bounded reads, caching, and performance                      | `docs/02-standards/coding/Query And Performance Standards.md`                         |
-| Testing and verification expectations                                                            | `docs/02-standards/coding/Testing Standards.md`                                       |
+| Test-source implementation                                                                        | `docs/02-standards/coding/test-implementation/index.md`                               |
+| Testing and verification policy                                                                   | `docs/02-standards/testing/index.md`                                                  |
 | Feature and capability implementation rules                                                      | `docs/02-standards/coding/Feature Development Standards.md`                           |
 | Codex implementation preflight and execution checklist                                           | `docs/02-standards/coding/Agent Implementation Checklist.md`                          |
 | Current source-template inventory and operator instructions                                      | `stubs/README.md`                                                                     |
@@ -459,7 +463,8 @@ Stop and ask before editing when:
 - [Events Jobs And Queue Standards](Events%20Jobs%20And%20Queue%20Standards.md)
 - [Query And Performance Standards](Query%20And%20Performance%20Standards.md)
 - [Feature Development Standards](Feature%20Development%20Standards.md)
-- [Testing Standards](Testing%20Standards.md)
+- [Test Implementation Standards Index](../docs/02-standards/coding/test-implementation/index.md)
+- [Testing Standards Index](../docs/02-standards/testing/index.md)
 - [Agent Implementation Checklist](Agent%20Implementation%20Checklist.md)
 - [Stub Templates README](../../../stubs/README.md)
 - [Stub Template Agent Guidance](../../../stubs/AGENTS.md)

@@ -91,7 +91,8 @@ Read:
 - `docs/02-standards/coding/Code Template And Generator Standards.md`
 - `docs/02-standards/coding/Commenting Standards.md`
 - `docs/02-standards/coding/PHP And Laravel Style Standards.md`
-- `docs/02-standards/coding/Testing Standards.md`
+- `docs/02-standards/coding/test-implementation/index.md`
+- `docs/02-standards/testing/index.md`
 - `stubs/README.md`
 - `stubs/AGENTS.md`
 

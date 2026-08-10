@@ -1,7 +1,3 @@
-
-### 0.1. Feature Development Standards
-
-```md
 <!--
 DOC-META
 title: Feature Development Standards
@@ -10,370 +6,274 @@ status: active
 owner: docs
 canonical: true
 canonical_path: docs/02-standards/coding/Feature Development Standards.md
-parent: docs/02-standards/index.md
+parent: docs/02-standards/coding/index.md
 template: docs/09-reference/templates/docs/_doc.md
-summary: Defines standards for developing Core capabilities, Modules, UI, Laravel integration, and owner-specific technical responsibilities with their documentation, permissions, settings, audit, and verification.
+summary: Defines bounded development rules for Core capabilities, Modules, Product and Page presentation, reusable UI, Frame composition, settings, access, observability, verification routing, and closeout.
 -->
 
 # Feature Development Standards
 
-This document defines development standards for discrete capabilities, Products, Pages, Frame composition, and reusable UI in Login App 2.0.
+Parent: [Coding Standards Index](index.md)
 
-- [1. Purpose](#1-purpose)
+- [1. Purpose And Scope](#1-purpose-and-scope)
 - [2. Current Vocabulary](#2-current-vocabulary)
-- [3. Ownership Decision Before Implementation](#3-ownership-decision-before-implementation)
-- [4. Layer Ownership](#4-layer-ownership)
-  - [4.1. Core Capability](#41-core-capability)
-  - [4.2. Module](#42-module)
-  - [4.3. UI](#43-ui)
-  - [4.4. Laravel Integration](#44-laravel-integration)
-  - [4.5. Technical Responsibilities](#45-technical-responsibilities)
-- [5. Canonical Feature Doc](#5-canonical-feature-doc)
-- [6. UI Ownership Standard](#6-ui-ownership-standard)
+- [3. Ownership Before Implementation](#3-ownership-before-implementation)
+- [4. Layer And Responsibility Boundaries](#4-layer-and-responsibility-boundaries)
+  - [Core capability](#core-capability)
+  - [Module](#module)
+  - [UI](#ui)
+  - [Laravel integration](#laravel-integration)
+  - [Technical responsibilities](#technical-responsibilities)
+- [5. Canonical Feature Documentation](#5-canonical-feature-documentation)
+- [6. UI And Presentation Ownership](#6-ui-and-presentation-ownership)
 - [7. Setup, Settings, And Preferences](#7-setup-settings-and-preferences)
-- [8. Permissions](#8-permissions)
-- [9. Audit, Monitoring, And Error Reporting](#9-audit-monitoring-and-error-reporting)
-- [10. Data Table UX Standard](#10-data-table-ux-standard)
-- [11. Tests And Verification](#11-tests-and-verification)
-- [12. Planning And Close-Out](#12-planning-and-close-out)
+- [8. Access, Audit, Monitoring, And Failure](#8-access-audit-monitoring-and-failure)
+- [9. Data Table UX](#9-data-table-ux)
+- [10. Testing And Verification](#10-testing-and-verification)
+- [11. Planning And Closeout](#11-planning-and-closeout)
+- [12. Prohibited Patterns](#12-prohibited-patterns)
 - [13. Related](#13-related)
 
----
+## 1. Purpose And Scope
 
-## 1. Purpose
+Ensure new and changed functionality is assigned to the correct owner, implemented within accepted architecture, documented by the correct canonical source, protected by applicable Access and data boundaries, and verified before acceptance.
 
-Ensure new and changed functionality is planned, owned, implemented, documented, authorized, audited, and verified in the correct layer.
+This standard coordinates feature development. It does not replace Repository Architecture, feature or flow Contracts, database Contracts, Security standards, UI Contracts, Testing Standards, or runbooks.
 
----
+Use the applicable canonical owner for detailed truth and this standard for the cross-cutting development expectations that tie those owners together.
 
 ## 2. Current Vocabulary
 
 Use current project vocabulary.
 
-| Term                | Meaning                                                                                                                                               |
-| ------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Core capability     | Required base-application behavior, state, coordination, infrastructure, and contracts under the Core owner.                                          |
-| Module              | Optional, cohesive feature package under `Modules/*`.                                                                                                 |
-| UI                  | Reusable Elements, Components, Patterns, Layouts, CSS, JavaScript, icons, contracts, tests, and review evidence.                                      |
-| Laravel integration | Application-wide framework bootstrap, registration, and thin adaptation that does not own application behavior.                                       |
-| Workspace           | Named top-level rendered experience available to a User Account; one Workspace is active in a rendered context.                                       |
-| Product             | Major Core- or Module-owned capability available within a Workspace.                                                                                  |
-| Page                | Routed Product destination or deeper focused context rendered in Main.                                                                                |
-| Frame Surface       | Named persistent-Frame composition region; not an application owner, Product, Page, flow, or generic folder.                                          |
-| Delivery Adapter    | Owner-local HTTP, API, console, webhook, queue, scheduler, or background invocation integration.                                                      |
-| Registry            | Host-owned mechanism that defines and resolves Extension Points and validates, collects, orders, and exposes Contributions.                           |
-| Feature Document    | Canonical behavior document under `docs/04-features/`, when an owner-specific capability, Product, Page family, or workflow has behavior to describe. |
+| Term                | Meaning                                                                                                                        |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
+| Core capability     | Cohesive required base-application capability beneath the Core owner.                                                          |
+| Module              | Optional cohesive feature package beneath `Modules/<Module>/`.                                                                 |
+| UI                  | Reusable Elements, Components, Patterns, Layouts, Frame rendering, UI Contracts, CSS, JavaScript, and accessibility rendering. |
+| Laravel integration | Restricted application-wide framework bootstrap or thin adaptation that does not own application behavior.                     |
+| Workspace           | Named top-level rendered application experience available to a User Account within its resolved Tenant Instance.               |
+| Product             | Major Core- or Module-owned capability available within a Workspace.                                                           |
+| Product Area        | Coherent area of one Product containing related Pages and workflows.                                                           |
+| Page                | Routed Product destination or deeper focused context rendered in Main.                                                         |
+| Frame               | Persistent authenticated application structure that renders the active Workspace.                                              |
+| Frame Surface       | Named compositional region of the persistent Frame.                                                                            |
+| Delivery Adapter    | Owner-local HTTP, API, console, webhook, queue, scheduler, or other invocation integration.                                    |
+| Registry            | Host-owned mechanism that validates, collects, orders, resolves, and exposes Contributions.                                    |
+| Contribution        | Contributor-owned implementation supplied to a Host Extension Point.                                                           |
 
-The word “feature” may still be used for canonical behavior documentation, but it must not erase the implementation owner.
+The word `feature` may describe user or system behavior but must not erase the implementation owner.
 
-Do not use “module” as a generic synonym for any capability. In the current architecture, a Module is an optional package owner.
+Do not use Module as a generic synonym for any capability.
 
-Existing `app/Platform/*` paths are transitional current placement only. They establish no target ownership and are not a destination for new canonical work.
+Do not use Surface as a generic owner, Product, Page, flow, or repository folder. Use Frame Surface only for a named persistent-Frame composition region.
 
----
+Existing `app/Platform/`, `app/Surfaces/`, and generic owner-local `Surface/` paths are transitional where they remain and do not establish target ownership.
 
-## 3. Ownership Decision Before Implementation
+## 3. Ownership Before Implementation
 
-Before implementing new behavior, answer:
+Before broad production implementation, identify applicable:
 
-1. Is the owner a Core capability, Module, UI, Laravel integration, or a documentation/ops-only workflow owner?
-2. Which layer owns the durable behavior?
-3. Is the technical responsibility Product presentation, a named Frame Surface, Delivery Adapter, Registry, Action, Query, Contract, or another accepted role?
-4. Which canonical doc owns the behavior?
-5. Which routes, panels, views, commands, jobs, or APIs expose it?
-6. Which database tables, config keys, registry entries, or payloads does it affect?
-7. Which permissions, policies, gates, middleware, or access rules apply?
-8. Which audit, monitoring, notification, or error-reporting behavior applies?
-9. Which tests or manual review surfaces prove the change?
-10. Which planning note or GitHub issue owns the implementation slice?
-11. Which docs must be updated when the implementation is complete?
+1. the bounded outcome and non-goals;
+2. the primary application owner;
+3. the specific Core capability, Module, or UI responsibility;
+4. any restricted Laravel integration boundary;
+5. the Product, Product Area, Page, Frame Surface, Delivery Adapter, Registry, Action, Query, Contract, or other Technical Role involved;
+6. the canonical behavior owner;
+7. the persistence owner and database Contracts;
+8. Access, security, data-protection, Audit, and Monitoring boundaries;
+9. transaction, retry, concurrency, or idempotency behavior when material;
+10. the verification contract and required review;
+11. the issue or planning source that owns the implementation slice;
+12. canonical documentation that must stay synchronized.
 
-Record answers in the GitHub issue, planning note, or canonical document before broad implementation begins.
+Do not begin implementation while a material owner, behavior, schema, security, transaction, compatibility, or design decision remains unresolved.
 
----
+Do not create a new owner or Technical Role merely because the current implementation contains a similarly named folder.
 
-## 4. Layer Ownership
+## 4. Layer And Responsibility Boundaries
 
-### 4.1. Core Capability
+### Core capability
 
-Use Core for required system capabilities such as:
+Use Core for required base-application capabilities defined by accepted architecture.
 
-- Auth
-- Identity
-- Access
-- DataGovernance
-- DataProtection
-- Security
-- Audit
-- Monitoring
-- Notifications
-- Settings
-- Preferences
-- Support
+A permanent direct child of `app/Core/` must represent one cohesive required capability. Do not create generic Core ownership buckets such as `Support`, `Shared`, `Common`, `Helpers`, `Utilities`, `Infrastructure`, `Platform`, or `Surfaces` as default destinations.
 
-Core must not contain business-module domain workflows unless the workflow is truly cross-cutting platform infrastructure.
+Core must operate without optional Modules and must not import optional Module implementation.
 
-### 4.2. Module
+### Module
 
-Use `Modules/*` for tenant/workspace business work areas.
+Use `Modules/<Module>/` for optional cohesive feature packages.
 
-Modules must consume Core capabilities for:
+A Module owns its feature behavior and applicable package-local routes, configuration, persistence, presentation, tests, documentation, and Contributions.
 
-- auth
-- access
-- audit
-- notifications
-- settings/preferences
-- data protection
-- security
-- monitoring
+Modules consume Core public Contracts rather than redefining required Auth, Access, Audit, Monitoring, Notifications, Settings, Security, DataGovernance, or DataProtection infrastructure.
 
-Modules must not redefine required Core infrastructure.
+### UI
 
-### 4.3. UI
+UI owns reusable interface-system responsibilities: Elements, Components, Patterns, Layouts, Frame rendering, reusable CSS and JavaScript, UI Contracts, and reusable accessibility behavior.
 
-Use UI for reusable primitives, patterns, shell components, component CSS, JS controls, contracts, tests, and reference examples.
+UI must not own route behavior, application authorization, domain persistence, Core or Module mutations, Module discovery, or Registry policy.
 
-UI must remain domain-free and must not own route behavior, authorization decisions, database access, or domain mutations.
+A file beneath `resources/` is not automatically UI-owned. Product and Page presentation remains owned by the Core capability or Module whose behavior it exposes.
 
-### 4.4. Laravel Integration
+### Laravel integration
 
-Use Laravel integration for application-wide bootstrap, framework registration, and thin adaptation that cannot remain owner-local.
+Application-wide Laravel integration is limited to framework behavior that cannot remain owner-local. It delegates durable behavior to the applicable Core capability or Module and must not become a competing feature owner.
 
-Laravel integration must delegate durable behavior to the applicable Core capability or Module and must not become a competing application owner.
+### Technical responsibilities
 
-### 4.5. Technical Responsibilities
+Classify Technical Role separately beneath the owner.
 
-Classify technical responsibility separately beneath the owner:
+Product and Page presentation remains owner-local. Main is a route-owned content outlet, not a Frame Surface.
 
-- Product Pages and workflows remain presentation owned by the Core capability or Module whose behavior they expose;
-- a Frame Surface is a named persistent-Frame composition region, not a generic owner-local Technical Role;
-- a Delivery Adapter exposes owner-controlled behavior through HTTP, API, console, webhook, queue, scheduler, or background invocation;
-- a Host owns an extensible feature and its Registry;
-- a Host-owned Registry defines and resolves Extension Points and validates, collects, orders, and exposes Contributions;
-- Contributions remain owned by their Contributors;
-- UI owns reusable Frame, Component, Pattern, Layout, CSS, JavaScript, and accessibility rendering.
+A Frame Surface owns persistent-Frame composition only. It does not own Product behavior, Registry resolution, permission evaluation, or domain state.
 
-Product presentation and Frame rendering must not own contribution discovery, permission evaluation, Module lifecycle, Registry resolution, or domain behavior. Delivery Adapters and Invocation Channels are not Frame Surfaces.
+A Delivery Adapter translates an invocation channel and delegates inward to owner-controlled behavior.
 
----
+A Host owns its Extension Point Contracts and Registry; Contributions remain owned by Contributors.
 
-## 5. Canonical Feature Doc
+Use [Repository Architecture](../../03-architecture/repository-architecture.md) and [Coding Standards](Coding%20Standards.md) for detailed placement and dependency rules.
 
-When behavior is user/admin/system visible, create or update a canonical feature doc under:
+## 5. Canonical Feature Documentation
 
-- `docs/04-features/`
+When durable user, administrator, or system behavior changes, create or update the applicable canonical feature document under `docs/04-features/`.
 
-The feature doc must state:
+A feature document should identify applicable:
 
-- purpose
-- implementation status
-- behavior contract
-- users and actors
-- Pages, Product Areas, and applicable Frame relationships
-- data model
-- permissions/security
-- tenant or workspace considerations
-- validation
-- notifications/audit/monitoring
-- setup/settings when applicable
-- tests and verification
-- known gaps
+- purpose and current implementation status;
+- actors and supported behavior;
+- Product, Product Area, Page, and Workspace context;
+- success, rejection, and failure behavior;
+- data behavior and database Contracts;
+- Access and security requirements;
+- validation;
+- Events, Jobs, Notifications, Audit, and Monitoring;
+- Setup, Settings, and Preferences;
+- verification requirements;
+- known current limitations.
 
-Use:
+Use the [Feature Spec Template](../../09-reference/templates/docs/_feature-spec.md).
 
-- [Feature Spec Template](../../09-reference/templates/docs/_feature-spec.md)
+Feature docs own behavior, not repository topology or implementation sequencing. Planning may link to the feature owner while work is active but must not replace it.
 
-Feature docs must link back to relevant planning notes while planning remains active.
+## 6. UI And Presentation Ownership
 
-Planning notes must link to the canonical feature doc.
+Before implementing presentation work, identify whether the change belongs to reusable UI, Core-owned Product or Page presentation, Module-owned presentation, or a named Frame Surface contribution.
 
----
+Do not assume Filament owns all administrative UI. Use it where its accepted strengths match the required interface and keep durable business behavior in owner-controlled application objects.
 
-## 6. UI Ownership Standard
+Presentation code must not become the only owner of:
 
-Before implementing UI work, identify the UI owner:
+- business rules;
+- authorization policy;
+- state transitions;
+- persistence invariants;
+- Audit or Monitoring behavior;
+- Notifications.
 
-- UI primitive
-- UI pattern
-- Core-owned Product or Page presentation
-- Module-owned Product or Page presentation
-- named Frame Surface rendering when the change affects the persistent Frame
-- Filament/admin resource when appropriate
-- Livewire/custom Blade Page or interaction when appropriate
+For design-sensitive work, identify applicable:
 
-Do not assume Filament owns all admin UI.
+- Product or Page owner;
+- Workspace and Frame relationship;
+- named Frame Surface when the persistent Frame changes;
+- UI Contract;
+- Blade, CSS, and JavaScript owner;
+- browser verification;
+- manual visual and accessibility review.
 
-Filament may fit CRUD-heavy admin records, table/filter/detail viewers, operational admin forms, settings/setup pages, and platform-management records.
+Do not create generic `Surface/` folders for Product or Page presentation.
 
-Filament may not fit specialized viewers, UI reference work, component library work, public/customer-facing pages, highly custom dashboards, or workflows where module/domain logic is the main concern.
-
-Filament resources, pages, and actions must call existing services or actions for business mutations. They must not become the only place where business rules, audit logging, notification dispatching, or state transitions exist.
-
-Every UI implementation must declare:
-
-- Product/Page owner and any applicable Frame Surface
-- route path or panel owner
-- auth guard and permission gate/policy
-- database or context owner
-- canonical doc owner
-- service/action owner for mutations
-- manual visual review needs
-
-Codex must not make independent visual design decisions for spacing, layout, hierarchy, or interaction changes without explicit direction.
-
----
+Codex or another implementation agent must not independently invent spacing, hierarchy, interaction, responsive behavior, or Component APIs when visual authority is unresolved.
 
 ## 7. Setup, Settings, And Preferences
 
-Every new capability that has configuration must identify whether the behavior belongs to:
+Every configurable capability must identify whether behavior belongs to Setup, Settings, Preferences, Module configuration, Laravel configuration, environment configuration, Registry-backed definition, or durable database state.
 
-- Setup
-- Settings
-- Preferences
-- Module configuration
-- Environment/config file
-- Database-backed registry or contribution system
+Keep these concepts separate.
 
-A visible Setup or Settings entry must not ship until there is at least one real editable setting or meaningful view.
+Visible Setup or Settings navigation must represent a real editable setting, meaningful status, configuration action, or review surface rather than an empty placeholder.
 
-Stub pages with no useful fields must not ship as visible navigation entries.
+Settings must be owned, validated, permission-gated, documented, audited where material, and verified.
 
-Settings must be:
+Do not store editable application state in Laravel configuration merely for convenience.
 
-- permission-gated
-- documented
-- validated
-- audited when changes are significant
-- owned by the capability that defines the setting
+## 8. Access, Audit, Monitoring, And Failure
 
-Do not hard-code settings behavior only in views.
+Protected behavior must define the applicable actor or Principal, Action, target, object-level boundary, canonical scope, authorization mechanism, and assurance or elevation requirement.
 
----
+Do not rely on UI visibility, Workspace selection, or navigation availability as authorization.
 
-## 8. Permissions
+Audit-worthy behavior must use the Audit owner. Operational failures, health, telemetry, and alerts must use the applicable Logging or Monitoring owner.
 
-Protected behavior must declare permissions before implementation is considered complete.
+For mutations and asynchronous behavior, define applicable transaction owner, rollback behavior, retry, duplicate handling, idempotency, after-commit effects, and public failure behavior before implementation.
 
-Permission planning should identify:
+Do not implement required Access, Audit, Monitoring, Notification, or failure behavior only in presentation source.
 
-- ability/action
-- subject/actor
-- target/resource
-- owning capability or module
-- policy/gate/middleware location
-- audit expectations
-- tests for allowed and denied paths
+## 9. Data Table UX
 
-Do not hard-code permission strings throughout the codebase.
+For operator-facing tabular views that can grow materially, provide an appropriate interaction baseline such as search or filtering, pagination, result summary, accessible controls, and permission-aware row Actions.
 
-Do not rely on UI visibility as authorization.
+Use client-side behavior only for bounded in-memory datasets and server-side filtering or pagination for larger or expensive datasets.
 
-Modules must consume Core Access patterns rather than redefining authorization infrastructure.
+Do not add fake controls to tiny static tables or let table presentation own authorization or query policy.
 
----
+Detailed reusable table APIs and visual rules remain with the applicable UI Contract and UI standards.
 
-## 9. Audit, Monitoring, And Error Reporting
+## 10. Testing And Verification
 
-Audit-worthy actions must flow through the audit pipeline owned by Core Audit.
+Every feature or capability change must have verification appropriate to its accepted behavior and risk.
 
-Operational failures must flow through logging or monitoring owned by the appropriate Core capability.
+Canonical verification policy belongs to the [Testing Standards Index](../testing/index.md). That suite owns acceptance-to-proof mapping, `AC-*` and `PF-*`, proof methods and levels, initial proof, result classification, protected baselines, environments, evidence, specialist testing, and testing gates.
 
-At minimum, audit:
+This standard does not restate those semantics.
 
-- settings changes
-- role/permission changes
-- MFA/security changes
-- user lifecycle changes
-- export/download requests for sensitive data
-- destructive actions
-- admin/security-sensitive actions
+When required proof uses test source, use the [Test Implementation Standards Index](test-implementation/index.md).
 
-Monitoring should capture operational failures, failed jobs, health checks, anomalies, and security signals when applicable.
+Test source follows the smallest clear owner and configured deterministic discovery. Do not default owner-specific tests to root `tests/` merely because they are conventionally called unit or feature tests.
 
----
+Design-sensitive UI retains required browser, accessibility, and manual visual review. Automated proof does not replace specialist or repository-owner acceptance when those are required.
 
-## 10. Data Table UX Standard
+## 11. Planning And Closeout
 
-When a feature includes a tabular data view intended for regular operator use, provide a complete table interaction baseline unless the table is intentionally tiny or static.
+Before production implementation, confirm the bounded issue is ready under [Agent Implementation Checklist](Agent%20Implementation%20Checklist.md).
 
-Baseline expectations:
+Before closeout, confirm applicable:
 
-- search or filter capability
-- pagination when row count can grow materially
-- rows-per-page selector when useful
-- visible result summary
-- prominent row actions
-- clear empty state
-- accessible labels and controls
-- permission-aware actions
+- implementation is complete for the accepted slice;
+- canonical documentation reflects current behavior;
+- required verification has run and evidence is recorded;
+- manual and specialist review remains visible until complete;
+- compatibility changes are explicit;
+- known gaps are reported;
+- unrelated follow-up work was not silently implemented.
 
-Recommended app-owned Blade table order:
+Do not mark an entire capability, Product, Module, milestone, or planning row complete merely because one bounded implementation slice succeeded.
 
-1. page title/subtitle row
-2. optional stats row
-3. table action row
-4. filter row when scoped filters apply
-5. table
-6. footer controls:
-   - bottom-left: rows selector and result summary
-   - bottom-right: previous / page selector / next
+## 12. Prohibited Patterns
 
-Apply intelligently:
+Do not:
 
-- use client-side behavior for small-to-medium in-memory lists
-- use server-side filtering/pagination for large or expensive datasets
-- avoid fake controls for tiny static tables
-
----
-
-## 11. Tests And Verification
-
-Every feature/capability change should define verification before implementation starts.
-
-Map each acceptance criterion to observable success and rejection behavior, exact proof, fixtures, environment, expected initial result, required final result, protected baseline, and required manual or specialist review. Preservation work uses characterization proof; new or corrected behavior uses exact expected-nonpass proof. Syntax, fixture, dependency, boot, discovery, tooling, database, and environment failures are failures.
-
-Use:
-
-- feature tests for user-visible behavior and database effects
-- unit tests for isolated service logic
-- policy/access tests for protected behavior
-- browser/manual visual review for design-sensitive UI
-- regression tests for bug fixes
-- docs checks when documentation behavior changes
-- build checks when assets change
-
-Test both successful and denied paths for auth/access-sensitive behavior.
-
----
-
-## 12. Planning And Close-Out
-
-Before implementation starts, confirm:
-
-- issue scope is clear
-- ownership area is identified
-- canonical docs are identified
-- affected data/security boundaries are understood
-- verification is known
-- UI review surface is known when applicable
-
-Before completion, confirm:
-
-- code is done for the accepted scope
-- canonical docs reflect current behavior
-- planning docs reflect implementation status
-- tests or verification are recorded
-- known gaps are explicit
-- follow-up issues are tracked or reported
-
----
+- implement without a clear owner or canonical behavior source;
+- restore `Platform` or generic `Surface` as target ownership;
+- let reusable UI own Product behavior;
+- let Delivery Adapters own domain logic;
+- let Modules redefine Core infrastructure;
+- let UI visibility replace authorization;
+- let planning replace canonical behavior;
+- duplicate Testing Standards in this file;
+- use root test type as application ownership;
+- ship visible placeholder Setup or Settings entries;
+- silently expand a bounded issue into adjacent work.
 
 ## 13. Related
 
+- [Coding Standards Index](index.md)
 - [Coding Standards](Coding%20Standards.md)
-- [File Building Standards](File%20Building%20Standards.md)
-- [Testing Standards](Testing%20Standards.md)
+- [Repository Naming Standards](repository-naming-standards.md)
+- [Test Implementation Standards Index](test-implementation/index.md)
+- [Testing Standards Index](../testing/index.md)
+- [Agent Implementation Checklist](Agent%20Implementation%20Checklist.md)
 - [Implementation Status And Development Sync Standard](../documentation/Implementation%20Status%20And%20Development%20Sync%20Standard.md)
 - [Repository Architecture](../../03-architecture/repository-architecture.md)
 - [Workspace Navigation And Frame Composition](../../03-architecture/workspace-navigation-and-frame-composition.md)

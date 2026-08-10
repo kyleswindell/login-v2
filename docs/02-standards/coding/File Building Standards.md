@@ -383,7 +383,7 @@ Do not invent new file shapes when a nearby convention already exists.
 
 - [Coding Standards](Coding%20Standards.md)
 - [Commenting Standards](Commenting%20Standards.md)
-- [Testing Standards](Testing%20Standards.md)
+- [Testing Standards Index](../testing/index.md)
 - [How To Write Docs](../documentation/How%20To%20Write%20Docs.md)
 - [Doc Governance](../documentation/Doc%20Governance.md)
 - [Standards Index](../index.md)

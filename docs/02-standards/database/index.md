@@ -146,9 +146,9 @@ Database design must support the current ownership model:
 | Owner or integration boundary | Typical Database Responsibility                                                                                                                        |
 | ----------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------ |
 | Core capability               | Auth, Identity, Access, Audit, Monitoring, Notifications, Settings, Preferences, Security, DataGovernance, DataProtection, and required system tables. |
-| Module                        | Optional feature-owned tenant/workspace business tables.                                                                                              |
-| UI                            | No application database ownership; reusable presentation infrastructure must not query or mutate domain data.                                         |
-| Laravel integration           | No durable application ownership; framework persistence integration delegates to the applicable Core capability or Module.                            |
+| Module                        | Optional feature-owned tenant/workspace business tables.                                                                                               |
+| UI                            | No application database ownership; reusable presentation infrastructure must not query or mutate domain data.                                          |
+| Laravel integration           | No durable application ownership; framework persistence integration delegates to the applicable Core capability or Module.                             |
 | Ops                           | Operational records, release/deployment metadata, or runbook-supported data when explicitly documented.                                                |
 
 Host-owned Registry tables remain owned by the Host's Core capability or Module. Surface presentation, Delivery Adapters, and transitional `app/Platform/*` placement do not establish database ownership.
@@ -234,5 +234,6 @@ When moving, splitting, or archiving database standards:
 - [Documentation Standards Index](../documentation/index.md)
 - [Database Index](../../06-database/index.md)
 - [Database Tables Index](../../06-database/tables/index.md)
+- [Testing Standards Index](../testing/index.md)
 - [Implementation Status And Development Sync Standard](../documentation/Implementation%20Status%20And%20Development%20Sync%20Standard.md)
 - [Start Here](../../00-start-here.md)

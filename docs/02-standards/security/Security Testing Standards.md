@@ -101,4 +101,4 @@ Do not store restricted exploit details in public test output.
 - [OWASP ASVS Level 2 Baseline](OWASP%20ASVS%20Level%202%20Baseline.md)
 - [Application Security Verification And Secure Delivery Standards](Application%20Security%20Verification%20And%20Secure%20Delivery%20Standards.md)
 - [Offensive Security And Penetration Testing Standards](Offensive%20Security%20And%20Penetration%20Testing%20Standards.md)
-- [Testing Standards](../coding/Testing%20Standards.md)
+- [Testing Standards Index](../testing/index.md)

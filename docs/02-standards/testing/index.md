@@ -29,7 +29,7 @@ Provide one navigable standards suite for planning, constructing, executing, rev
 
 ## 2. Authority
 
-This suite owns shared testing rules. It does not replace the canonical source that defines what the system must do.
+This suite owns shared testing and verification rules. It does not replace the canonical source that defines what the system must do.
 
 Use this authority chain:
 
@@ -42,10 +42,14 @@ verification contract
         ↓
 test or review evidence
         ↓
-issue, pull request, release, or operational acceptance
+testing gate evaluation
+        ↓
+issue, pull request, release, deployment, or operational acceptance
 ```
 
-The [Agent Implementation Checklist](../coding/Agent%20Implementation%20Checklist.md) owns implementation readiness and execution workflow. This suite owns proof design, execution, evidence integrity, and testing gates.
+The [Agent Implementation Checklist](../coding/Agent%20Implementation%20Checklist.md) owns implementation readiness and execution workflow. This suite owns proof design, execution, evidence integrity, and testing-evidence gates.
+
+Repository-specific coding rules for test source belong to [Test Implementation Standards](../coding/Test%20Implementation%20Standards.md).
 
 ## 3. Reading Order
 
@@ -53,45 +57,51 @@ For any implementation or review task:
 
 1. read [Testing And Verification Standards](testing-and-verification-standards.md);
 2. read [Verification Contract And Evidence Standards](verification-contract-and-evidence-standards.md);
-3. read the narrowest specialist testing standard applicable to the work;
-4. read the requirement owner that defines expected behavior;
-5. read security, database, UI, documentation, or runbook standards only when applicable.
+3. read the canonical requirement owner that defines the expected behavior;
+4. read the narrowest specialist testing standard applicable to the work;
+5. read security, database, UI, documentation, or runbook standards only when applicable;
+6. read [Test Implementation Standards](../coding/Test%20Implementation%20Standards.md) when constructing or modifying test source.
 
 Do not load the entire suite for a narrow change.
 
 ## 4. Standards
 
-| Standard                                                                                                                                                 | Owns                                                                                                                                |
-| -------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------- |
-| [Testing And Verification Standards](testing-and-verification-standards.md)                                                                              | Shared principles, taxonomy, risk model, test levels, verification methods, and quality coverage                                    |
-| [Verification Contract And Evidence Standards](verification-contract-and-evidence-standards.md)                                                          | Acceptance-to-proof mapping, result states, protected evidence, baseline rules, and revision authority                              |
-| [Automated And Static Testing Standards](automated-and-static-testing-standards.md)                                                                      | Automated test construction, unit and capability tests, static analysis, architecture tests, contract tests, and design techniques  |
-| [Test Environments, Data, And Fixtures Standards](test-environments-data-and-fixtures-standards.md)                                                      | Environment capability, PostgreSQL use, fixtures, factories, doubles, time, randomness, cleanup, parallelism, and sensitive data    |
-| [Integration, System, And Acceptance Testing Standards](integration-system-and-acceptance-testing-standards.md)                                          | Cross-owner integration, APIs, queues, system tests, end-to-end workflows, smoke, regression, characterization, and acceptance      |
-| [Reliability, Performance, Compatibility, And Operational Testing Standards](reliability-performance-compatibility-and-operational-testing-standards.md) | Failure behavior, concurrency, retry, idempotency, recovery, load, stress, compatibility, deployment, health, and operational proof |
-| [UI, Accessibility, And Interaction Testing Standards](ui-accessibility-and-interaction-testing-standards.md)                                            | UI contracts, implementation and usage conformance, accessibility, browser behavior, responsive behavior, motion, and visual review |
-| [Test Reporting And Delivery Gates Standards](test-reporting-and-delivery-gates-standards.md)                                                            | Lifecycle gates, CI selection, failure handling, flaky tests, evidence reporting, merge, release, and post-deployment gates         |
+| Standard                                                                                                                                                 | Owns                                                                                                                                                                                                                                                    |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [Testing And Verification Standards](testing-and-verification-standards.md)                                                                              | Shared principles, taxonomy, risk-based selection, test levels, verification methods, quality concerns, and minimum verification lifecycle                                                                                                              |
+| [Verification Contract And Evidence Standards](verification-contract-and-evidence-standards.md)                                                          | `AC-*` and `PF-*` mapping, applicability, execution status, verification results, initial proof, production-implementation boundaries, protected baselines, contract revision, and execution evidence                                                   |
+| [Automated And Static Testing Standards](automated-and-static-testing-standards.md)                                                                      | Static verification, automated dynamic tests, unit, technical-component, capability, Contract, and architecture proof; test-design techniques; doubles; assertions; helpers; datasets; coverage; mutation analysis                                      |
+| [Test Environments, Data, And Fixtures Standards](test-environments-data-and-fixtures-standards.md)                                                      | Required and actual environments, capability preflight, environment equivalence, PostgreSQL and isolation, test data, factories, scenario builders, fixtures, provenance, external services, time, randomness, parallelism, cleanup, and sensitive data |
+| [Integration, System, And Acceptance Testing Standards](integration-system-and-acceptance-testing-standards.md)                                          | Integration categories and ownership, cross-owner Contract proof, APIs and protocols, asynchronous and database integration, system and end-to-end proof, regression, smoke, exploratory testing, and acceptance                                        |
+| [Reliability, Performance, Compatibility, And Operational Testing Standards](reliability-performance-compatibility-and-operational-testing-standards.md) | Failure-state and safe-state proof, transactions, concurrency, idempotency, retry, recovery, performance, compatibility, build, deployment, migration, health, operational smoke, and production-safe verification                                      |
+| [UI, Accessibility, And Interaction Testing Standards](ui-accessibility-and-interaction-testing-standards.md)                                            | UI Contract validation, rendered semantics, real-browser interaction, repository usage conformance, accessibility, keyboard and focus, responsive behavior, motion, visual regression, and manual specialist review                                     |
+| [Test Reporting And Delivery Gates Standards](test-reporting-and-delivery-gates-standards.md)                                                            | Preimplementation, development, pull-request, merge-candidacy, release, deployment, and post-deployment testing evidence; failure and flaky-test handling; result artifacts; retention; reporting; testing completeness                                 |
 
 ## 5. Classification Model
 
-Every material proof should be understandable across these independent dimensions:
+Every material proof should be understandable across independent dimensions:
 
-| Dimension           | Examples                                                                                                                             |
-| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------ |
-| Requirement source  | Feature, flow, schema, security control, UI Contract, runbook, issue acceptance criterion                                            |
-| Verification method | Static analysis, automated dynamic test, browser test, manual review, specialist assessment                                          |
-| Test level          | Unit, component, capability, integration, system, end-to-end, acceptance, operational                                                |
-| Quality concern     | Functional, security, data integrity, reliability, performance, compatibility, usability, accessibility, maintainability, operations |
-| Design technique    | Requirements-based, boundary value, decision table, state transition, property-based, fuzz, exploratory, characterization            |
-| Environment         | Isolated process, Laravel application, PostgreSQL, browser, Docker service set, staging, native platform, production-safe smoke      |
-| Delivery gate       | Preimplementation, targeted development, pull request, merge, release, deployment, post-deployment                                   |
+| Dimension           | Examples                                                                                                                                    |
+| ------------------- | ------------------------------------------------------------------------------------------------------------------------------------------- |
+| Requirement source  | Feature, flow, schema, security control, UI Contract, runbook, issue acceptance criterion                                                   |
+| Verification method | Static analysis, automated dynamic test, browser test, manual review, native-platform procedure, specialist assessment                      |
+| Test level          | Unit, component, capability, integration, system, end-to-end, acceptance, operational                                                       |
+| Quality concern     | Functional, security, data integrity, reliability, performance, compatibility, usability, accessibility, maintainability, operations        |
+| Design technique    | Requirements-based, equivalence partitioning, boundary value, decision table, state transition, pairwise, property-based, fuzz, exploratory |
+| Environment         | Isolated process, Laravel application, PostgreSQL, browser, Docker service set, staging, native platform, production-safe verification      |
+| Execution stage     | Preimplementation, final targeted, pull request, release, deployment, post-deployment                                                       |
 
 A label from one dimension must not substitute for another. For example, “browser test” does not state whether the proof is component, system, accessibility, compatibility, or acceptance testing.
+
+Characterization is a proof purpose for preservation work, not a design technique.
+
+Applicability, execution status, and verification result are separate state axes defined by [Verification Contract And Evidence Standards](verification-contract-and-evidence-standards.md).
 
 ## 6. Specialist Routing
 
 Use the applicable specialist owner in addition to this suite:
 
+- test-source coding and repository-specific PHPUnit, Laravel, or Playwright implementation: `docs/02-standards/coding/Test Implementation Standards.md`;
 - security controls and abuse resistance: `docs/02-standards/security/`;
 - exact schema, migration, transaction, and persistence constraints: `docs/02-standards/database/` and `docs/06-database/`;
 - UI public APIs and design-system rules: `docs/02-standards/ui/`;
@@ -103,6 +113,7 @@ Use the applicable specialist owner in addition to this suite:
 ## 7. Related
 
 - [Standards Index](../index.md)
+- [Test Implementation Standards](../coding/Test%20Implementation%20Standards.md)
 - [Agent Implementation Checklist](../coding/Agent%20Implementation%20Checklist.md)
 - [Feature Development Standards](../coding/Feature%20Development%20Standards.md)
 - [Security Testing Standards](../security/Security%20Testing%20Standards.md)

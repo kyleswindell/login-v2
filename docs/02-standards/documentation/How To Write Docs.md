@@ -291,6 +291,9 @@ Split a document when it:
 - becomes difficult to retrieve or review reliably
 - duplicates content owned by focused child documents
 
+File Length Note:
+- For doc_type: standard, exceeding 500 physical lines produces a non-blocking documentation guardrail warning. Treat the warning as a required review for unnecessary duplication or separable responsibilities; line count alone does not require a split.
+
 When splitting:
 
 - preserve a heavily linked old path as a concise hub when practical

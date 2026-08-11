@@ -181,6 +181,10 @@ Every in-scope persistent concept has one authoritative owner. A shared screen, 
 
 Core Users is the canonical Core capability owner for human User Accounts, User Identity, profile and contact data, invitations, and human-account lifecycle. Identity remains a domain concept used in terms such as User Identity, Machine Identity, and Network Identity; it is not a separate broad Core owner containing Users.
 
+User Identity is a conceptual classification of the identifying and profile attributes carried by one User Account. It does not require a separate persistent entity, table, Model, lifecycle, or capability owner.
+
+Once a User Account has been created, supported application behavior must never physically delete it. Human-account offboarding uses deactivation. Inactive User Accounts remain permanently persisted for stable identity, historical relationships, Audit attribution, and possible later reactivation.
+
 A concept marked deferred is outside the initial target rather than unowned implementation work. It must not be implemented until a later accepted architecture decision names its owner and boundaries.
 
 ## 6. Human Users, Authentication, Access, And Non-Human Identity

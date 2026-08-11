@@ -21,6 +21,7 @@ Schema and data contracts only. Feature behavior, architecture rationale, operat
 - [Security Requirements Checklist](feature-contracts/security-requirements-checklist.md)
 - [Calendar Contracts](feature-contracts/calendar.md)
 - [Inter-Tenant Messaging](feature-contracts/inter-tenant-messaging.md)
+- - [Users Data Contract](feature-contracts/users.md)
 
 ## Schema
 
@@ -40,6 +41,8 @@ Schema and data contracts only. Feature behavior, architecture rationale, operat
 - [preference_registry_entries](tables/preference_registry_entries.md)
 - [user_contact_emails](tables/user_contact_emails.md)
 - [user_notification_preferences](tables/user_notification_preferences.md)
+- [users](tables/users.md)
+- [user_invitations](tables/user_invitations.md)
 
 ## Related
 

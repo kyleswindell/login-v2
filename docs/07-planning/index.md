@@ -34,15 +34,15 @@ Planning must not become a parallel task board or substitute for canonical archi
 
 ## 2. Source Roles
 
-| Source | Responsibility |
-| --- | --- |
-| Planning documents | Accepted planning intent, target state, sequence rationale, decomposition, migration direction, and variance |
-| GitHub issues | Bounded work packets, acceptance criteria, dependencies, implementation discussion, and acceptance evidence |
-| GitHub Projects | Current delivery status, priority, sequencing, milestone phase, risk, and dependency fields |
-| Canonical documents | Current accepted architecture, behavior, schema, standards, feature Contracts, flows, and runbooks |
-| Decision records | Durable accepted choices, rationale, alternatives, and supersession history |
-| Pull requests and commits | Reviewable implementation evidence and repository history |
-| Tests and review artifacts | Automated and manual verification evidence |
+| Source                     | Responsibility                                                                                               |
+| -------------------------- | ------------------------------------------------------------------------------------------------------------ |
+| Planning documents         | Accepted planning intent, target state, sequence rationale, decomposition, migration direction, and variance |
+| GitHub issues              | Bounded work packets, acceptance criteria, dependencies, implementation discussion, and acceptance evidence  |
+| GitHub Projects            | Current delivery status, priority, sequencing, milestone phase, risk, and dependency fields                  |
+| Canonical documents        | Current accepted architecture, behavior, schema, standards, feature Contracts, flows, and runbooks           |
+| Decision records           | Durable accepted choices, rationale, alternatives, and supersession history                                  |
+| Pull requests and commits  | Reviewable implementation evidence and repository history                                                    |
+| Tests and review artifacts | Automated and manual verification evidence                                                                   |
 
 ## 3. Governing Standards
 
@@ -102,14 +102,14 @@ It does not create security requirements by itself.
 
 ## 5. Planning Organization
 
-| Path | Responsibility |
-| --- | --- |
-| `00-overview/` | milestone records, planning control documents, review backlogs, and cross-cutting planning overviews |
-| `01-architecture-boundaries/` | application structure, capability boundaries, context models, vocabulary, and structural migration planning |
-| `02-core-capabilities/` | Core capability target state, dependencies, data, security, implementation direction, and capability matrices |
-| `03-platform-surfaces/` | transitional planning from the previous Platform Surface model; folder name does not establish target ownership |
-| `04-business-modules/` | Module package, layout, Contribution, and owner-specific Surface planning |
-| planning root | cross-cutting matrices and control documents whose scope spans multiple planning groups |
+| Path                          | Responsibility                                                                                                  |
+| ----------------------------- | --------------------------------------------------------------------------------------------------------------- |
+| `00-overview/`                | milestone records, planning control documents, review backlogs, and cross-cutting planning overviews            |
+| `01-architecture-boundaries/` | application structure, capability boundaries, context models, vocabulary, and structural migration planning     |
+| `02-core-capabilities/`       | Core capability target state, dependencies, data, security, implementation direction, and capability matrices   |
+| `03-platform-surfaces/`       | transitional planning from the previous Platform Surface model; folder name does not establish target ownership |
+| `04-business-modules/`        | Module package, layout, Contribution, and owner-specific Surface planning                                       |
+| planning root                 | cross-cutting matrices and control documents whose scope spans multiple planning groups                         |
 
 Do not create folders or planning documents merely to mirror a proposed target tree.
 
@@ -142,15 +142,15 @@ Planning documents may use lifecycle states such as:
 
 Promote durable accepted content to its canonical owner:
 
-| Planning content | Canonical destination |
-| --- | --- |
-| mandatory durable rule | standard |
-| accepted structural boundary | architecture |
+| Planning content                                  | Canonical destination  |
+| ------------------------------------------------- | ---------------------- |
+| mandatory durable rule                            | standard               |
+| accepted structural boundary                      | architecture           |
 | table, field, relationship, or migration Contract | database documentation |
-| user-observable behavior | feature or flow |
-| operational procedure | runbook |
-| durable decision and rationale | decision record |
-| bounded execution work | GitHub issue |
+| user-observable behavior                          | feature or flow        |
+| operational procedure                             | runbook                |
+| durable decision and rationale                    | decision record        |
+| bounded execution work                            | GitHub issue           |
 
 ## 8. Planning Completion
 
@@ -172,6 +172,7 @@ Planning is complete for a scope when:
 
 - [Start Here](../00-start-here.md)
 - [M0 Repository Convergence Planning](00-overview/m0-repository-convergence-planning.md)
+- [M1 Core System Development Register](00-overview/m1-core-system-development-register.md)
 - [Core Service Build Plan Matrix](core-service-build-plan-matrix.md)
 - [Planning Documentation Standards](../02-standards/documentation/Planning%20Documentation%20Standards.md)
 - [Testing Standards](../02-standards/testing/index.md)

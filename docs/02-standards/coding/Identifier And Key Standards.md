@@ -148,7 +148,10 @@ Examples:
 ```text
 projects.index
 notifications.header_bell
-identity.user_defaults
+users.user_defaults
+users.user_account.suspended
+users.user_account_suspended
+users.default_active
 ```
 
 The canonical contribution identity is:
@@ -232,7 +235,7 @@ Examples:
 
 ```text
 security.service_account.credential_expiring
-identity.user_account.suspended
+users.user_account.suspended
 projects.project_assigned
 ```
 
@@ -246,7 +249,7 @@ Examples:
 
 ```text
 auth.login_succeeded
-identity.user_account_suspended
+users.user_account.suspended
 access.role_updated
 data.export_downloaded
 projects.project_archived
@@ -261,7 +264,7 @@ Configuration roots use the capability or Module key.
 Examples:
 
 ```text
-identity.users.default_active
+users.default_active
 notifications.delivery.database
 projects.retention_days
 ```
@@ -283,7 +286,7 @@ quickbooks_sync.import_customers
 Domain-event identifiers use capability plus completed-event wording:
 
 ```text
-identity.user_account_suspended
+users.user_account.suspended
 projects.project_created
 orders.order_submitted
 ```
@@ -388,12 +391,12 @@ Core example:
 
 ```text
 ownership_area: core
-owner_key: identity
+owner_key: users
 capability_key: users
 permission_key: users.update
 route_name: users.update
-audit_event_key: identity.user_account_updated
-config_key: identity.users.default_active
+audit_event_key: users.user_account_updated
+config_key: users.default_active
 ```
 
 Module example:

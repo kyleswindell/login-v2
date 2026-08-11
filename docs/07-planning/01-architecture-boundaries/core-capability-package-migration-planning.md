@@ -27,31 +27,31 @@ The implementation needs to preserve the useful manifest and contribution mechan
 
 Runtime packages currently backed by `Modules/*`:
 
-| Package | Current Type | Target Classification | Migration Notes |
-| --- | --- | --- | --- |
-| `_Template` | Template, not runtime | Module scaffolding template | Keep as a template and align it with the accepted Module package contract. |
-| `Account` | `core` module | Core identity/account capability | Owns current-user account surfaces and account-menu contribution. Target physical owner is `app/Core/Identity` with shared views under account/admin view paths. |
-| `Auth` | `core` module | Core authentication capability | Owns authentication, MFA, password mechanics, sessions, recovery, and security notification types. Target physical owner is `app/Core/Auth`. |
-| `Dashboard` | `core` module | Core Dashboard capability with an owner-specific Surface and Host-owned widget Registry | Current `app/Platform/Dashboard` placement is transitional. Goal 3 assigns target Core placement; Modules may contribute widgets without transferring Contribution ownership. |
-| `Notifications` | `core` module | Core communication capability | Owns persistent notification delivery, inbox state, notification type registry, settings/preference contributions. Target physical owner is `app/Core/Notifications`. |
-| `Preferences` | `core` module | Core preferences capability | Owns personal defaults as account-level preference surfaces. Target physical owner is `app/Core/Preferences` if preferences grow beyond Identity-owned profile defaults and Notifications-owned notification preferences. |
-| `Roles` | `core` module | Core access object capability | Owns role/action bundles, permission registry consumption, role CRUD, and role-assignment notifications. Target physical owner is `app/Core/Access`; it is not a business module. |
-| `Settings` | `core` module | Core Settings capability with an owner-specific Surface and Host-owned Registry | Owns settings behavior and the Registry separately from presentation. Target Core placement remains `app/Core/Settings`; no new canonical presentation belongs under transitional `app/Platform/*`. |
-| `Setup` | `core` module | Core Setup capability with an owner-specific Surface and Host-owned Registry | Goal 3 assigns target Core placement. Setup workflows remain with their applicable Core capability or Module and contribute through declared Extension Points. |
+| Package         | Current Type          | Target Classification                                                                   | Migration Notes                                                                                                                                                                                                           |
+| --------------- | --------------------- | --------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `_Template`     | Template, not runtime | Module scaffolding template                                                             | Keep as a template and align it with the accepted Module package contract.                                                                                                                                                |
+| `Account`       | `core` module         | Core identity/account capability                                                        | Owns current-user account surfaces and account-menu contribution. Target physical owner is `app/Core/Identity` with shared views under account/admin view paths.                                                          |
+| `Auth`          | `core` module         | Core authentication capability                                                          | Owns authentication, MFA, password mechanics, sessions, recovery, and security notification types. Target physical owner is `app/Core/Auth`.                                                                              |
+| `Dashboard`     | `core` module         | Core Dashboard capability with an owner-specific Surface and Host-owned widget Registry | Current `app/Platform/Dashboard` placement is transitional. Goal 3 assigns target Core placement; Modules may contribute widgets without transferring Contribution ownership.                                             |
+| `Notifications` | `core` module         | Core communication capability                                                           | Owns persistent notification delivery, inbox state, notification type registry, settings/preference contributions. Target physical owner is `app/Core/Notifications`.                                                     |
+| `Preferences`   | `core` module         | Core preferences capability                                                             | Owns personal defaults as account-level preference surfaces. Target physical owner is `app/Core/Preferences` if preferences grow beyond Identity-owned profile defaults and Notifications-owned notification preferences. |
+| `Roles`         | `core` module         | Core access object capability                                                           | Owns role/action bundles, permission registry consumption, role CRUD, and role-assignment notifications. Target physical owner is `app/Core/Access`; it is not a business module.                                         |
+| `Settings`      | `core` module         | Core Settings capability with an owner-specific Surface and Host-owned Registry         | Owns settings behavior and the Registry separately from presentation. Target Core placement remains `app/Core/Settings`; no new canonical presentation belongs under transitional `app/Platform/*`.                       |
+| `Setup`         | `core` module         | Core Setup capability with an owner-specific Surface and Host-owned Registry            | Goal 3 assigns target Core placement. Setup workflows remain with their applicable Core capability or Module and contribute through declared Extension Points.                                                            |
 
 Static manifest entries not yet backed by `Modules/*`:
 
-| Key | Current Type | Target Classification | Migration Notes |
-| --- | --- | --- | --- |
-| `users` | `core` module | Core identity lifecycle capability | Should be planned under `app/Core/Identity` before Access Control builds on user subjects. |
-| `logging` | `core` module | Core audit capability | Should own audit evidence under `app/Core/Audit`; platform audit views remain presentation. |
-| `ui-system` | `core` module | UI infrastructure | UI owns reusable presentation infrastructure; it is not a Core capability or Module. Shared components remain under `resources/views/components`. |
-| `runtime-security` | `core` module | Core application security infrastructure | Target owner is `app/Core/Security` for cross-cutting guardrails such as security headers, route sensitivity, safe redirects, request redaction, and release checks. |
-| `docs-viewer` | `platform_management` module | Internal Module candidate | Current `app/Platform/Docs` placement is transitional. Goal 3 must assign an explicit Core or Module owner before migration. |
-| `retired-reference-viewer` | `platform_management` module | Transitional artifact to ignore/retire | Do not plan it as a module, core capability, or platform feature set. Do not include it in target architecture. |
-| `security-checklist` | `platform_management` module | Internal platform tool over security/readiness evidence | Keep as an internal tool. It may consume evidence from `app/Core/Security`, `app/Core/Access`, `app/Core/Identity`, `app/Core/DataProtection`, `app/Core/Audit`, or `app/Core/Monitoring`, but it should not own enforcement. |
-| `runtime-readiness` | `platform_management` module | Internal platform tool | Command/readiness package, not a business module. |
-| `development-tools` | `platform_management` module | Internal platform tool | Development-only package. |
+| Key                        | Current Type                 | Target Classification                                   | Migration Notes                                                                                                                                                                                                               |
+| -------------------------- | ---------------------------- | ------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `users`                    | `core` module                | Core identity lifecycle capability                      | Should be planned under `app/Core/Identity` before Access Control builds on user subjects.                                                                                                                                    |
+| `logging`                  | `core` module                | Core audit capability                                   | Should own audit evidence under `app/Core/Audit`; platform audit views remain presentation.                                                                                                                                   |
+| `ui-system`                | `core` module                | UI infrastructure                                       | UI owns reusable presentation infrastructure; it is not a Core capability or Module. Shared components remain under `resources/views/components`.                                                                             |
+| `runtime-security`         | `core` module                | Core application security infrastructure                | Target owner is `app/Core/Security` for cross-cutting guardrails such as security headers, route sensitivity, safe redirects, request redaction, and release checks.                                                          |
+| `docs-viewer`              | `platform_management` module | Internal Module candidate                               | Current `app/Platform/Docs` placement is transitional. Goal 3 must assign an explicit Core or Module owner before migration.                                                                                                  |
+| `retired-reference-viewer` | `platform_management` module | Transitional artifact to ignore/retire                  | Do not plan it as a module, core capability, or platform feature set. Do not include it in target architecture.                                                                                                               |
+| `security-checklist`       | `platform_management` module | Internal platform tool over security/readiness evidence | Keep as an internal tool. It may consume evidence from `app/Core/Security`, `app/Core/Access`, `app/Core/Identity`, `app/Core/DataProtection`, `app/Core/Audit`, or `app/Core/Monitoring`, but it should not own enforcement. |
+| `runtime-readiness`        | `platform_management` module | Internal platform tool                                  | Command/readiness package, not a business module.                                                                                                                                                                             |
+| `development-tools`        | `platform_management` module | Internal platform tool                                  | Development-only package.                                                                                                                                                                                                     |
 
 ## Target Taxonomy
 
@@ -326,15 +326,15 @@ The current manifest model should survive, but the names should change.
 
 Target language:
 
-| Current Term | Target Term |
-| --- | --- |
-| module manifest | package manifest |
-| module definition | package definition |
-| module repository | package catalog or package repository |
-| module registry entry | package registry entry |
-| module contribution | package contribution |
-| module key | retain as `module_key` only for Module identity; use `owner_key` or `capability_key` for those distinct meanings |
-| module type/category | package classification |
+| Current Term          | Target Term                                                                                                      |
+| --------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| module manifest       | package manifest                                                                                                 |
+| module definition     | package definition                                                                                               |
+| module repository     | package catalog or package repository                                                                            |
+| module registry entry | package registry entry                                                                                           |
+| module contribution   | package contribution                                                                                             |
+| module key            | retain as `module_key` only for Module identity; use `owner_key` or `capability_key` for those distinct meanings |
+| module type/category  | package classification                                                                                           |
 
 Important distinction:
 
@@ -395,21 +395,21 @@ Exact schemas belong in `docs/06-database/` after this planning direction is acc
 
 Existing folder migration map:
 
-| Current Location | Target Owner | Notes |
-| --- | --- | --- |
-| `Modules/Auth` | `app/Core/Auth` | Authentication, MFA, password, recovery, recent authentication, and session assurance logic. |
-| `Modules/Account` | `app/Core/Identity` plus account views | Current-user self-service identity/account surfaces. |
-| `Modules/Roles` | `app/Core/Access` | Roles, permissions/actions, permission registry, role CRUD, and assignment guardrails. |
-| `Modules/Preferences` | `app/Core/Preferences` | User-owned preferences should remain distinct from admin-owned system settings. Identity can own profile-level defaults; Notifications owns notification-specific preferences. |
-| `Modules/Settings` | `app/Core/Settings` plus its owner-specific Surface | Settings storage and Registry behavior remain separate from Surface presentation. |
-| `Modules/Setup` | Goal 3 Core placement plus capability- or Module-owned setup workflows | Setup Surface and Host Registry remain Core-owned; specific workflows remain with their owning Core capability or Module. |
-| `Modules/Dashboard` | Goal 3 Core Dashboard placement | Dashboard owns its Surface and Host Registry separately; Modules may contribute widgets. Current `app/Platform/Dashboard` is transitional only. |
-| `Modules/Notifications` | `app/Core/Notifications` | Shared notification backbone, inbox state, and delivery. |
-| `resources/views/platform/users` | `resources/views/admin/users` or `app/Core/Identity` views | User administration views are core identity administration, not business module views. |
-| `resources/views/platform/audit-logs` | `resources/views/admin/audit` or `app/Core/Audit` views | Audit views are an owner-specific Core Audit Surface over Core Audit records. |
-| `resources/views/platform/docs` | Explicit Core or Module owner assigned by Goal 3 | Current `app/Platform/Docs` placement is transitional; no new canonical work belongs there. |
-| `retired reference viewer views` | No target owner | Transitional development artifact to ignore/retire. Do not plan it as a module, core capability, or platform feature. |
-| `resources/views/platform/security` | Internal tool or core security capability after scope review | Do not classify as a business module. |
+| Current Location                      | Target Owner                                                           | Notes                                                                                                                                                                          |
+| ------------------------------------- | ---------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `Modules/Auth`                        | `app/Core/Auth`                                                        | Authentication, MFA, password, recovery, recent authentication, and session assurance logic.                                                                                   |
+| `Modules/Account`                     | `app/Core/Identity` plus account views                                 | Current-user self-service identity/account surfaces.                                                                                                                           |
+| `Modules/Roles`                       | `app/Core/Access`                                                      | Roles, permissions/actions, permission registry, role CRUD, and assignment guardrails.                                                                                         |
+| `Modules/Preferences`                 | `app/Core/Preferences`                                                 | User-owned preferences should remain distinct from admin-owned system settings. Identity can own profile-level defaults; Notifications owns notification-specific preferences. |
+| `Modules/Settings`                    | `app/Core/Settings` plus its owner-specific Surface                    | Settings storage and Registry behavior remain separate from Surface presentation.                                                                                              |
+| `Modules/Setup`                       | Goal 3 Core placement plus capability- or Module-owned setup workflows | Setup Surface and Host Registry remain Core-owned; specific workflows remain with their owning Core capability or Module.                                                      |
+| `Modules/Dashboard`                   | Goal 3 Core Dashboard placement                                        | Dashboard owns its Surface and Host Registry separately; Modules may contribute widgets. Current `app/Platform/Dashboard` is transitional only.                                |
+| `Modules/Notifications`               | `app/Core/Notifications`                                               | Shared notification backbone, inbox state, and delivery.                                                                                                                       |
+| `resources/views/platform/users`      | `resources/views/admin/users` or `app/Core/Identity` views             | User administration views are core identity administration, not business module views.                                                                                         |
+| `resources/views/platform/audit-logs` | `resources/views/admin/audit` or `app/Core/Audit` views                | Audit views are an owner-specific Core Audit Surface over Core Audit records.                                                                                                  |
+| `resources/views/platform/docs`       | Explicit Core or Module owner assigned by Goal 3                       | Current `app/Platform/Docs` placement is transitional; no new canonical work belongs there.                                                                                    |
+| `retired reference viewer views`      | No target owner                                                        | Transitional development artifact to ignore/retire. Do not plan it as a module, core capability, or platform feature.                                                          |
+| `resources/views/platform/security`   | Internal tool or core security capability after scope review           | Do not classify as a business module.                                                                                                                                          |
 
 Do not execute these moves in one broad rename. The map is the endpoint for scoped migration batches.
 

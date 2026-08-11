@@ -227,6 +227,8 @@ Core Runtime owns only the fixed technical invocation envelope and its lifecycle
 
 Runtime owns creation or restoration at accepted invocation boundaries, propagation of correlation and causation, immutable access through one narrow public Contract, required initialization and teardown, and rejection of a missing or malformed envelope.
 
+Consumers read the current Invocation through the Runtime public Contract; they must not rely on HTTP request globals, queue internals, or another transport-specific execution object as the cross-owner Runtime boundary.
+
 Delivery Adapters and native execution integrations create or restore the envelope. Owners consume it only when the technical identifiers are required.
 
 Runtime does not own:
@@ -244,6 +246,53 @@ Runtime does not own:
 Semantic context remains owned by the applicable capability and crosses boundaries through its own Contract or provider-owned Data Object. Runtime carries correlation; it does not interpret semantic context.
 
 The envelope is fixed and typed. A new field requires proof that it is technical, needed across multiple invocation channels, not owned elsewhere, and safe for the entire invocation lifecycle. Arbitrary associative data, container lookup, static mutation, and owner-specific keys are prohibited.
+
+### 9.1. Invocation Lifecycle
+
+A root Invocation begins when application work enters through an accepted execution boundary without a trusted parent Invocation.
+
+For a root Invocation:
+
+```text
+invocation_id  = new unique identifier
+correlation_id = invocation_id
+causation_id   = null
+```
+
+Synchronous work continues within the current Invocation. Ordinary owner-to-owner Contract calls, Queries, Services, and synchronous Event Listeners do not create child Invocations.
+
+Independent asynchronous execution creates a new child Invocation.
+
+For a child Invocation:
+
+```text
+invocation_id  = new unique identifier
+correlation_id = parent correlation_id
+causation_id   = parent invocation_id
+```
+
+Each actual queued execution attempt is a distinct Invocation. Retry attempts receive new Invocation identifiers while remaining in the same correlation family.
+
+Queued Jobs use `queued_job`. Queued or asynchronous Event consumers use `event_consumer`.
+
+A manually invoked command uses `console_command`.
+
+Each scheduled task execution is its own `scheduled_task` root Invocation. Unrelated tasks executed by one scheduler process do not share a correlation family.
+
+`internal_system` is reserved for explicit top-level application-owned execution that has no more accurate canonical Invocation Channel. It does not create nested Invocations for ordinary synchronous application calls.
+
+### 9.2. Trust And Isolation
+
+Login 2.0 owns its internal Invocation identity.
+
+Untrusted external request, trace, or correlation identifiers must not directly control the internal `invocation_id` or silently join unrelated internal correlation families. External correlation protocols may be supported by the applicable Delivery Adapter under explicit validation and trust rules.
+
+Runtime state is execution-local and immutable after initialization.
+
+Long-running processes must initialize and tear down Runtime state at each accepted execution boundary so independent requests, Jobs, Event consumers, commands, or scheduled tasks cannot inherit stale Runtime state.
+
+Invocation and correlation identifiers are technical correlation values. They are not authentication evidence, authorization grants, idempotency keys, database transaction identifiers, Job identifiers, or Event identifiers.
+
 ## 10. Dependency, Security, And Authorization Rules
 Permitted:
 
@@ -280,7 +329,7 @@ This document decides:
 - Host Registries own semantic Contribution acceptance and resolution;
 - Core Runtime owns only the technical invocation envelope and lifecycle.
 
-Deferred to bounded implementation or Goal 10:
+Deferred to bounded system planning or implementation::
 
 - exact owner-specific interface names;
 - descriptor and manifest serialization;
@@ -289,6 +338,12 @@ Deferred to bounded implementation or Goal 10:
 - Registry cache and invalidation;
 - static architecture checks;
 - exact verification commands and fixtures.
+- exact Core Runtime Contract and Data Object type names;
+- exact Invocation identifier representation;
+- Laravel Context keys and bindings;
+- exact HTTP, queue, Event, console, and scheduler integration classes;
+- external correlation and trace propagation protocols.
+
 ## 12. Related
 - [Architecture Index](index.md)
 - [Repository Architecture](repository-architecture.md)

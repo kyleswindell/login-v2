@@ -90,18 +90,18 @@ Do not use legacy Perfex table naming for new Login App 2.0 tables.
 
 Every table should have a clear owner.
 
-| Table Type                                       | Typical Owner                             |
-| ------------------------------------------------ | ----------------------------------------- |
-| Authentication and sessions                      | Core Auth                                 |
-| Users and identity lifecycle                     | Core Identity                             |
-| Roles, permissions, groups, access reviews       | Core Access                               |
-| Audit events and evidence                        | Core Audit                                |
-| Monitoring, health, and detection signals        | Core Monitoring                           |
-| Notifications and notification state             | Core Notifications                        |
-| Settings and preferences                         | Core Settings / Core Preferences          |
-| Data classification and protection               | Core DataGovernance / Core DataProtection |
-| Shell, navigation, setup, UI reference metadata  | Owning Core capability or Module Host Registry |
-| Customers, orders, shipments, inventory, reports | Modules                                   |
+| Table Type                                                                | Typical Owner                                  |
+| ------------------------------------------------------------------------- | ---------------------------------------------- |
+| Authentication and sessions                                               | Core Auth                                      |
+| Human User Accounts, profile identity, invitations, and account lifecycle | Core Users                                     |
+| Roles, permissions, groups, access reviews                                | Core Access                                    |
+| Audit events and evidence                                                 | Core Audit                                     |
+| Monitoring, health, and detection signals                                 | Core Monitoring                                |
+| Notifications and notification state                                      | Core Notifications                             |
+| Settings and preferences                                                  | Core Settings / Core Preferences               |
+| Data classification and protection                                        | Core DataGovernance / Core DataProtection      |
+| Shell, navigation, setup, UI reference metadata                           | Owning Core capability or Module Host Registry |
+| Customers, orders, shipments, inventory, reports                          | Modules                                        |
 
 Scoped business data must include the correct tenant, workspace, account, customer, or module scope.
 
@@ -216,7 +216,11 @@ Status values should be:
 - tested
 - indexed when used for filtering
 
-Avoid vague status values such as `active` when the real lifecycle has distinct states like `invited`, `active`, `suspended`, `deactivated`, `pending_deletion`, and `deleted`.
+Avoid vague lifecycle fields when they collapse materially different states into one value.
+
+A boolean such as `is_active` is acceptable when the authoritative lifecycle is genuinely binary and orthogonal conditions are modeled separately. For example, a User Account may use active/inactive participation while suspension is represented as a separate active-only condition.
+
+Do not introduce lifecycle values such as `invited`, `deleted`, or `pending_deletion` when the domain models those concepts through separate records or does not support those states.
 
 Avoid database enum types for lifecycle values that may change. Prefer application enums plus validation, check constraints, lookup tables, or registries based on how stable and user-configurable the values are.
 

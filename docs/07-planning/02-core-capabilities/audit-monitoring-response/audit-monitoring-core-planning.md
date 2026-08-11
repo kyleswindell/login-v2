@@ -1,25 +1,38 @@
+<!--
+DOC-META
+title: Audit And Monitoring Core Planning
+doc_type: planning
+status: planning
+owner: audit-monitoring
+canonical: true
+canonical_path: docs/07-planning/02-core-capabilities/audit-monitoring-response/audit-monitoring-core-planning.md
+parent: docs/07-planning/index.md
+template: docs/09-reference/templates/docs/_planning.md
+summary: Plans Core/Audit and Core/Monitoring ownership, preserves the accepted compatibility-first Audit foundation, and defers successor schema choices to bounded M1 work.
+-->
+
 # Audit And Monitoring Core Planning
 
-Status: Planning draft
+Parent: [Planning Index](../../index.md)
 
-## Purpose
+## 1. Purpose
 
-Plan the split between `app/Core/Audit` and `app/Core/Monitoring` before audit logs, service activity, error logs, health checks, and operational telemetry are promoted out of transitional platform/logging surfaces.
+Plan the split between `app/Core/Audit` and `app/Core/Monitoring` before audit logs, service activity, error logs, health checks, and operational telemetry are promoted out of transitional logging/platform placement.
 
-This document owns sequencing and intent only. Final behavior, schema, API contracts, and runbook operations must be promoted to their owning docs before implementation.
+This document owns sequencing and intent only. Final behavior, schema, public Contracts, and runbook operations must be promoted to their owning canonical documents before implementation.
 
-## Direction
+## 2. Accepted Direction
 
 Use four related but separate concepts:
 
 ```text
 Audit log
   Who or what changed something important?
-  Used for security, compliance, accountability, and history.
+  Security, compliance, accountability, and history.
 
 Service audit log
-  What service, job, integration, console command, or background process performed a meaningful action?
-  Still an audit log. Actor may be non-human.
+  What service, job, integration, command, or background process performed a meaningful action?
+  Still Audit evidence; the Actor may be non-human.
 
 Error log
   What broke?
@@ -34,606 +47,293 @@ Target ownership:
 
 ```text
 app/Core/Audit
-  human and service audit events
-  forensic evidence and timeline support
+  human and non-human audit evidence
+  query/timeline support
+  formal forensic-evidence support where required
 
 app/Core/Monitoring
-  errors, exceptions, failed jobs, health checks, and operational telemetry
+  errors
+  failed jobs
+  health checks
+  operational telemetry
+  detection signals and operational/security observations
 ```
 
-Do not create separate audit-log stores inside each core capability or business module.
+Do not create separate audit-log stores inside each Core capability or business Module.
 
-## Current Baseline
+## 3. Current Baseline
 
-Current implementation already separates the concepts at least partially:
+Current implementation includes:
 
-- `platform_audit_logs` stores app/platform audit events.
-- `central_error_logs` stores app error events.
-- `/platform/audit-logs` and `/platform/error-logs` exist as app-owned operational surfaces.
-- `/console/platform-audit-logs` and `/console/central-error-logs` remain transitional proof paths.
-- Feature docs already describe auth/security audit events and central error reporting.
+- `platform_audit_logs` for current audit evidence;
+- `central_error_logs` for current error evidence;
+- `/platform/audit-logs` and `/platform/error-logs` operational surfaces;
+- transitional `/console/platform-audit-logs` and `/console/central-error-logs` proof paths.
 
-Current gaps:
+Current implementation placement does not establish target ownership.
 
-- Audit and error logging are still described together as "Logging" in several planning/ownership contexts.
-- Service audit events are not yet modeled as first-class audit events with service/system/job/integration actors.
-- The audit event shape is not yet promoted into `app/Core/Audit`.
-- Error logs, failed jobs, health checks, and operational telemetry are not yet planned under `app/Core/Monitoring`.
-- Feature/service-specific audit event semantics are not yet declared consistently.
+## 4. Ownership Boundaries
 
-## Ownership Split
+### 4.1 Core/Audit Owns
 
-### Core/Audit Owns
+- audit storage boundary;
+- Audit logger public Contract;
+- user and non-human Actor attribution;
+- subject and target attribution;
+- change-set representation;
+- event category, action, result, severity, reason, and summary structure;
+- correlation identifiers;
+- audit query/timeline behavior;
+- retention/pruning integration requirements;
+- audit payload redaction enforcement using applicable DataProtection rules;
+- formal evidence-package metadata and chain-of-custody semantics when a future incident workflow requires them.
 
-- audit storage
-- audit logger API
-- service/security audit logger wrappers
-- actor, subject, target, and change-set structure
-- retention and pruning intent
-- audit payload redaction enforcement, backed by DataProtection classification and redaction rules
-- request, trace, session, IP, and user-agent correlation fields
-- audit query services
-- audit/admin UI data contracts
-- consistency rules for audit records
-- forensic timeline query support
-- evidence package metadata and manifest contracts when formal incident workflow requires them
-- chain-of-custody metadata for formal evidence packages and sensitive evidence exports
+### 4.2 Core/Monitoring Owns
 
-### Core/DataProtection Owns
+- exception and error records;
+- stack traces and operational failure details;
+- failed-job reporting;
+- health-check result records;
+- operational telemetry;
+- error fingerprinting/grouping;
+- detection use cases and signal rules;
+- detection severity/status/window vocabulary;
+- query/correlation support for operational and security observations.
 
-- data classifications
-- sensitive-field metadata
-- masking and redaction standards
-- secure export handling rules
-- retention and erasure expectations
-- sensitivity metadata consumed by Audit and Monitoring
+### 4.3 Core/DataProtection Owns
 
-Audit stores evidence that sensitive data was accessed, changed, exported, retained, erased, or masked. DataProtection owns the rule that says the data or action is sensitive.
+- data classifications;
+- sensitive-field metadata;
+- masking/redaction policy;
+- secure export/download handling rules;
+- retention and erasure policy inputs consumed by Audit and Monitoring.
 
-### Core/Auth, Core/Identity, Core/Access, Core/DataProtection, Core/Settings, Core/Notifications, And Business Modules Own
+Audit stores evidence that sensitive data was accessed, changed, exported, retained, erased, or masked. DataProtection owns the rule that says why the data/action is sensitive.
 
-- which domain events are audit-worthy
-- event action keys and labels
-- before/after values
-- subject/resource context
-- reason and metadata that only the domain can know
-- when to call the audit logger or dispatch auditable events
+### 4.4 Domain Owners Own Event Semantics
 
-### Core/Monitoring Owns
+Core/Auth, Core/Identity, Core/Access, Core/DataProtection, Core/Settings, Core/Notifications, and business Modules own:
 
-- exception and error records
-- stack trace and failure details
-- failed job reporting
-- health check result records
-- operational telemetry such as duration, retry count, queue latency, and sync counts
-- error fingerprinting and grouping
-- error/health query services
-- detection use cases and security signal rules
-- detection severity/status/window vocabulary
-- detection signal query and correlation support
-- response playbook registry metadata when a detection needs a runbook link
-- operational monitoring admin UI data contracts
+- which domain facts are audit-worthy;
+- their event action keys;
+- domain-specific subject/resource context;
+- reason/metadata only the domain can know;
+- when their mutation or operation emits Audit evidence.
 
-Monitoring may consume DataProtection metadata to decide which audit or operational events should be analyzed as sensitive activity, export spikes, unusual deletes, backup failures, or access-denied spikes. Monitoring should detect the pattern; DataProtection defines why the data/action is sensitive.
+They must write through the accepted Audit boundary rather than inventing independent audit infrastructure.
 
-Monitoring also supplies operational evidence for forensic reconstruction: central error logs, failed jobs, health checks, backup check failures, release/check failures, detection signals, and anomaly findings. Monitoring should not own chain-of-custody records or formal evidence package semantics.
+### 4.5 Core/Security And Secrets
 
-### Core/Security Owns
+Core/Security owns cross-cutting request/security guardrails and release/security-control rules.
 
-- request payload redaction guardrails
-- security header and route posture checks
-- safe redirect and signed URL helper rules
-- security release-check conventions
-- security control and detection coverage checks
-- vulnerability finding lifecycle, accepted-risk, and release-gate policy helpers
+Core/Security/Secrets owns secret-specific handling, rotation, reveal/copy/revoke guardrails, redaction inputs, and future vault integration.
 
-Audit and Monitoring consume redacted/safe request context. Security owns the cross-cutting app guardrail rules; Audit and Monitoring own evidence and operational records.
+Audit records lifecycle/access facts without raw secret values. Monitoring detects applicable expiry, rotation, access, or leak signals without owning secret remediation.
 
-### Core/Security/Secrets Owns
+## 5. Audit Actor Model
 
-- secret inventory metadata
-- credential-specific redaction patterns
-- reveal/copy/rotate/revoke guardrail requirements
-- secret expiry and rotation policy inputs
-- secret health-check and leak-detection signals
-- future vault integration boundary
+Audit must support human and non-human Principals and applicable assurance context.
 
-Audit records secret lifecycle and access events without raw values. Monitoring detects secret expiry, rotation failures, failed vault reads, unexpected reveal patterns, and suspected leaked-secret findings.
+Actor attribution should ultimately preserve canonical Principal/Actor vocabulary rather than treating jobs, commands, webhooks, or schedules as identity types.
 
-### Cybersecurity Review Backlog
+Existing transitional labels such as `service`, `system`, `integration`, `job`, or `console` may remain as compatibility evidence until a bounded M1 slice aligns storage/event shape to the canonical Principal, Actor, and Invocation Channel model.
 
-Threat Detection and Response direction is tracked in [Threat Detection And Response Planning](threat-detection-response-planning.md) and the [Detection Use Case Matrix](detection-use-case-matrix.md). Audit supplies normalized evidence; Monitoring evaluates detection use cases and signals; Notifications alerts required owners; Auth, Identity, Access, DataProtection, Secrets, and Vulnerability Management execute containment and remediation actions.
+## 6. Audit Event Semantics
 
-Cloud and deployment hardening direction is tracked in [Cloud And Deployment Hardening Planning](cloud-deployment-hardening-planning.md). Audit should record deployment approvals, emergency deploys, config changes, and rollback events when app-visible; Monitoring should track deployment readiness failures, backup freshness, TLS expiry, queue/scheduler health, storage exposure, and configuration drift signals when checks exist.
-
-API, webhook, and service-account security direction is tracked in [API, Webhook, And Service Account Security Planning](api-webhook-service-account-security-planning.md). Audit should support service account, webhook provider, integration, and system actors; Monitoring should detect invalid token spikes, scope violations, webhook signature failures, replay attempts, stale service accounts, and token rotation failures when those surfaces exist.
-
-DLP and exfiltration detection direction is tracked in [DLP And Exfiltration Detection Planning](dlp-exfiltration-detection-planning.md). Audit should record sensitive data movement evidence; Monitoring should consume DataProtection classifications, DLP decisions, export/download events, and view/access patterns to detect exfiltration-style signals.
-
-Digital forensics readiness is tracked in [Digital Forensics Readiness Planning](digital-forensics-readiness-planning.md) and the [Forensic Evidence Source Matrix](forensic-evidence-source-matrix.md). Audit should support request/correlation IDs, forensic timeline queries, evidence package metadata, evidence access/export audit events, and chain-of-custody metadata when formal evidence packages exist.
-
-Broader SIEM/SOAR forwarding remains tracked in [Cybersecurity Review Backlog Planning](cybersecurity-review-backlog-planning.md).
-
-Audit and Monitoring should be designed so future external detection and response tools can consume safe event summaries after event shape, retention, redaction, and access rules are stable.
-
-Threat-modeling and security-control direction is tracked in [Threat Modeling And Security Controls Planning](threat-modeling-security-controls-planning.md) and the [Threat-Control Traceability Matrix](threat-control-traceability-matrix.md). Audit and Monitoring should consume those mappings to determine which high-risk controls need audit events, monitoring signals, notifications, and runbook evidence.
-
-Zero Trust direction is tracked in [Zero Trust Security Planning](zero-trust-security-planning.md). Audit should capture sensitive allow/deny/step-up/elevated decisions without raw secrets, while Monitoring should detect repeated denials, failed step-up attempts, export spikes, secret reveal spikes, and abnormal elevated access.
-
-## Audit Actor Model
-
-Audit must support human and non-human actors.
-
-Initial actor types:
-
-```text
-user
-service
-system
-integration
-job
-console
-unknown
-```
-
-Examples:
-
-```text
-Actor: user:42
-Action: identity.user_suspended
-Subject: user:91
-
-Actor: service:nightly-inventory-reconciler
-Action: inventory.totals_recalculated
-Subject: part:ABC-123
-
-Actor: system:scheduler
-Action: notifications.digest_sent
-Subject: user:42
-
-Actor: integration:quickbooks
-Action: customers.synced
-Subject: customer:3004
-```
-
-## Audit Categories And Results
-
-Initial categories:
-
-```text
-identity
-auth
-access
-security
-settings
-notification
-service
-integration
-module
-data
-```
-
-Initial results:
-
-```text
-succeeded
-failed
-denied
-skipped
-partial
-```
-
-Severity should be reviewed alongside notification severity but does not have to match notification severity exactly. Audit severity represents evidence importance; notification severity represents user attention.
-
-## Event Semantics Ownership
-
-Core capabilities and business modules own their event semantics while writing through Core/Audit.
-
-Examples:
-
-### Core/Auth
+Domain event keys remain domain-owned. Examples include:
 
 ```text
 auth.login_succeeded
 auth.login_failed
 auth.logout
-auth.password_changed
-auth.password_reset_requested
-auth.password_reset_completed
-auth.mfa_challenge_passed
-auth.mfa_challenge_failed
-auth.mfa_enabled
-auth.mfa_disabled
-auth.recovery_codes_regenerated
-```
-
-### Core/Identity
-
-```text
-identity.user_invited
-identity.user_activated
-identity.user_profile_updated
-identity.user_email_changed
 identity.user_suspended
-identity.user_deactivated
-identity.user_reactivated
-identity.sessions_revoked
-```
-
-### Core/Access
-
-```text
-access.group_created
-access.group_updated
-access.group_member_added
-access.group_member_removed
-access.role_created
-access.role_updated
-access.permission_added_to_role
-access.permission_removed_from_role
-access.policy_created
-access.policy_revoked
-access.elevated_session_activated
-access.elevated_session_revoked
-access.review_completed
 access.denied
-```
-
-### Core/DataProtection
-
-```text
-data_protection.asset_registered
-data_protection.classification_changed
-data_protection.sensitive_fields_viewed
 data_protection.export_requested
-data_protection.export_approved
-data_protection.export_downloaded
-data_protection.export_expired
-data_protection.retention_policy_applied
-data_protection.erasure_requested
-data_protection.erasure_completed
-```
-
-### Core/Security
-
-```text
-security.vulnerability_found
-security.vulnerability_triaged
-security.vulnerability_mitigated
-security.vulnerability_remediated
-security.vulnerability_risk_accepted
-security.vulnerability_false_positive_marked
 security.release_blocked
-security.release_approved
-```
-
-### Core/Settings
-
-```text
 settings.system_updated
-settings.security_policy_updated
-settings.access_policy_defaults_updated
-settings.notification_defaults_updated
-```
-
-### Core/Notifications
-
-```text
 notifications.created
-notifications.bulk_created
-notifications.security_notification_dismissed
-notifications.preference_updated
-notifications.digest_sent
-```
-
-### Business Modules
-
-```text
-customers.created
 customers.updated
-customers.archived
-
-inventory.received
 inventory.adjusted
-inventory.transferred
-inventory.reserved
-inventory.totals_recalculated
-
-orders.created
-orders.approved
-orders.cancelled
-orders.closed
-
-shipments.created
-shipments.scheduled
-shipments.confirmed
-shipments.voided
 ```
 
-## Write Pattern
+Do not create a second generic event namespace that hides the owner responsible for the fact.
 
-For normal domain actions:
+## 7. Write Pattern
+
+For normal mutations:
 
 ```text
-Controller
-  validates request
-  authorizes request
-  calls Action/Service
+Delivery Adapter
+  validates input
+  invokes authorization
+  calls owner-controlled Action/Service
 
 Action/Service
-  performs transaction
-  records audit event after successful commit
+  owns the mutation/transaction
+  emits required Audit evidence after successful commit
 ```
 
-Use after-commit recording for database mutations so rolled-back changes do not produce successful audit records.
+Successful Audit evidence must not be recorded for a mutation that rolls back.
 
-For background services, jobs, scheduled commands, and integrations:
+For background work:
 
 ```text
-Job/Service/Command
+Job / Service / Command
   performs work
-  records service audit event through Core/Audit
-  records monitoring/error event through Core/Monitoring when the system broke or an exception occurred
+  records accountable business/security history through Core/Audit
+  records unexpected failure/telemetry through Core/Monitoring when applicable
 ```
 
-## Service Audit Vs Error Log Rule
+An operation may legitimately create both Audit and Monitoring evidence.
 
-Use this decision rule:
+## 8. Accepted Initial Audit Storage Direction
+
+M0 decision #6 resolved the first Audit foundation as **compatibility-first**.
+
+Initial Core/Audit work must preserve compatibility with existing `platform_audit_logs` writes rather than introducing a new Audit schema merely to establish the Core/Audit owner boundary.
+
+Candidate future successor surfaces remain:
 
 ```text
-Did the attempt matter for accountability, security, or business history?
-  Audit event
-
-Did the system throw, break, timeout, or fail unexpectedly?
-  Monitoring/error log
-
-Both can happen for the same operation.
+audit_events
+audit_event_changes
 ```
 
-Examples:
+but they are not accepted current schema Contracts.
 
-```text
-Login failed due to wrong password
-  Audit: auth.login_failed
-  Monitoring: no
+Do not rename or replace `platform_audit_logs` until a bounded M1 database-contract/migration slice defines:
 
-Access denied to admin users page
-  Audit: access.denied
-  Monitoring: no
+- the exact successor schema, if any;
+- field and relationship Contracts;
+- retention and classification requirements;
+- compatibility behavior;
+- migration/backfill behavior;
+- rollback/stop conditions;
+- verification-first proof.
 
-QuickBooks sync timed out
-  Audit: integration.quickbooks_sync_failed
-  Monitoring: exception/timeout details
+`central_error_logs` likewise remains current compatibility evidence until a bounded Monitoring schema change is accepted.
 
-Inventory recalculation job crashed
-  Audit: service.inventory_recalculation_failed if business-impacting
-  Monitoring: stack trace/failure details
+## 9. Future Audit Data Shape
 
-Blade view missing
-  Audit: usually no
-  Monitoring: error log
-```
+Any future successor Audit Contract should be able to represent applicable:
 
-## Data Direction
+- occurrence time;
+- category and action;
+- result and severity;
+- Principal/Actor attribution;
+- subject and target;
+- service/integration context when applicable;
+- Invocation Channel;
+- request/trace/session correlation;
+- network/request context where permitted;
+- reason and summary;
+- safe metadata;
+- change fields with sensitive-value handling.
 
-Canonical schema belongs in future `docs/06-database/` contracts.
+This is planning direction, not authorization to create the tables or fields.
 
-Expected Audit data surfaces:
+## 10. Admin UI Direction
 
-- `audit_events`
-- `audit_event_changes`
-
-Expected Audit fields should support:
-
-```text
-occurred_at
-category
-action
-result
-severity
-actor_type
-actor_id
-actor_name
-actor_display
-subject_type
-subject_id
-subject_display
-target_type
-target_id
-target_display
-service_name
-job_id
-queue
-command
-integration
-request_id
-trace_id
-session_id
-ip_address
-user_agent
-reason
-summary
-metadata
-```
-
-Expected change fields:
-
-```text
-audit_event_id
-field
-old_value
-new_value
-old_display
-new_display
-is_sensitive
-```
-
-Expected Monitoring data surfaces:
-
-- `central_error_logs` or successor error log table
-- `failed_jobs` integration/read model
-- `health_check_results`
-- future operational telemetry records if needed
-
-Do not rename `platform_audit_logs` or `central_error_logs` until a schema compatibility plan exists.
-
-## Admin UI Direction
-
-Keep Audit and Monitoring as separate admin views:
+Keep Audit and Monitoring as separate user-facing responsibilities.
 
 ```text
 Admin
-  Audit log
-    All events
-    Security
-    Access
-    Identity
-    Service activity
-    Module activity
+  Audit
+    accountability/history/security evidence
 
   Monitoring
-    Error logs
-    Failed jobs
-    Health checks
-    System events
+    errors
+    failed jobs
+    health checks
+    operational/security signals
 ```
 
-Service activity is a filtered Audit view:
+Service/non-human activity is a filtered Audit concern, not a separate audit store.
 
-```text
-category = service
-OR actor_type IN (service, system, integration, job, console)
-```
+## 11. Implementation Sequence
 
-Error logs remain Monitoring:
+### 11.1 Architecture Alignment
 
-```text
-central_error_logs
-failed_jobs
-health_check_results
-```
+- preserve Core/Audit and Core/Monitoring as separate accepted owners;
+- stop creating new combined generic Logging ownership;
+- preserve current compatibility storage until a bounded migration is accepted.
 
-## Implementation Sequence
+### 11.2 Audit Foundation
 
-### 1. Architecture Alignment
+- establish `app/Core/Audit` boundary;
+- introduce the minimum public Contract/data objects needed by the first bounded producer slice;
+- preserve `platform_audit_logs` compatibility;
+- protect existing observable behavior with characterization proof.
 
-- Update architecture docs to split Core/Audit and Core/Monitoring.
-- Stop treating "Logging" as a combined owner for audit and error behavior.
-- Preserve `platform_audit_logs` and `central_error_logs` compatibility during transition.
+### 11.3 Monitoring Foundation
 
-### 2. Audit Foundation
+- establish `app/Core/Monitoring` boundary;
+- move or replace current error/health responsibilities only in bounded slices;
+- preserve `central_error_logs` compatibility where required.
 
-- Introduce `app/Core/Audit` namespace and service boundary.
-- Add `AuditLogger`, `ServiceAuditLogger`, and `SecurityAuditLogger` wrappers.
-- Define actor, subject, target, change-set, category, result, and severity data objects/enums.
-- Keep existing audit table writes compatible.
+### 11.4 Producer Migration
 
-### 3. Monitoring Foundation
+Migrate producers capability by capability only through accepted M1 issues. Planning sequence may consider Auth, Identity, Access, Settings, Notifications, and business Modules, but GitHub Project sequencing owns actual implementation order.
 
-- Introduce `app/Core/Monitoring` namespace and service boundary.
-- Move error logging, exception capture, failed job reporting, and health check planning under Monitoring.
-- Prepare audit/monitoring query shapes needed by the first detection rules.
-- Keep existing `central_error_logs` compatibility.
+## 12. Verification Direction
 
-### 4. Threat Detection Readiness
+Future bounded M1 issues should prove only the behavior materially affected by their slice.
 
-- Add detection key, severity, status, and window vocabulary.
-- Add lightweight detection rule registry planning behind Monitoring.
-- Keep first detection signals derived from Audit/Monitoring queries unless a triage/reporting need justifies persistence.
-- Map first detections to notification type keys and response runbooks.
+Applicable proof may include:
 
-### 5. Producer Migration
+- user and non-human Actor evidence;
+- after-commit Audit behavior;
+- no successful Audit row for rolled-back mutations;
+- sensitive-value redaction;
+- domain-owned event keys;
+- Monitoring errors not becoming Audit events by default;
+- operations that require both Audit and Monitoring evidence;
+- current audit/error route compatibility where in scope.
 
-- Migrate Auth audit events first.
-- Migrate Identity/Users lifecycle audit events.
-- Migrate Access/Roles audit events.
-- Migrate Settings and Notifications audit events.
-- Migrate business module events as modules are built.
+Exact `AC-*` and `PF-*` mappings belong to the accepted M1 work packet.
 
-### 6. UI Migration
+## 13. Transition Rules
 
-- Keep current operational routes stable.
-- Split admin UI language into Audit and Monitoring.
-- Treat `/console/*` proof paths as transitional until explicitly retired.
+- do not create `Modules/*/Audit` storage or query systems;
+- do not let every feature invent its own audit schema;
+- do not write Audit rows directly from delivery adapters when an Action/Service owns the transaction;
+- do not record successful Audit evidence before a mutation commits;
+- do not store passwords, MFA codes, recovery codes, raw tokens, authorization headers, cookies, private keys, or generated credentials in Audit or Monitoring metadata;
+- do not treat every exception as an Audit event;
+- do not treat every denied action as an operational error;
+- do not merge Audit history and error logs into one owner merely because the current implementation uses Logging terminology;
+- do not infer a successor schema from the candidate `audit_events` names.
 
-## Test Planning
+## 14. Deferred M1 Decisions
 
-Expected tests:
+The M0 first-foundation decision is resolved: use existing `platform_audit_logs` compatibility first.
 
-- audit logger records user actor events
-- service audit logger records service/system/job/integration actor events
-- audit events written after commit do not persist when a transaction rolls back
-- sensitive change values are redacted
-- DataProtection classification/redaction metadata can mark audit payload fields as sensitive without storing raw values
-- domain events keep their domain-owned action keys
-- monitoring records exceptions without creating audit records by default
-- operations that are both accountable and broken can create both audit and monitoring records
-- first detection rules can query audit/monitoring evidence without raw sensitive values
-- high/critical detection signals can create required persistent notifications
-- detection use cases map to runbooks
-- sensitive export, erasure, retention, and masking events can be filtered without mixing them into operational error logs
-- service activity filters use audit rows, not a separate service-audit table
-- error log views read Monitoring-owned data, not Audit-owned data
-- existing audit and error routes remain compatible during migration
+The following remain for bounded M1 Audit/Monitoring and database-contract work:
 
-## Transition Rules
+- eventual successor Audit schema and migration/backfill plan, if any;
+- whether `platform_audit_logs` is ultimately renamed, replaced, or retained long-term;
+- exact future Monitoring schema and field mapping;
+- request/trace correlation Contract;
+- exact retention Contracts for Audit versus Monitoring;
+- exact detection-signal persistence threshold;
+- first mandatory producer/event set for each capability;
+- exact admin UI implementation sequence.
 
-- Do not create `Modules/*/Audit` storage or query systems.
-- Do not let every feature invent its own audit schema.
-- Do not write audit rows directly from controllers when an action/service owns the transaction.
-- Do not record successful audit events before a mutation transaction commits.
-- Do not store secrets, submitted MFA codes, raw passwords, recovery codes, full token values, or provider secret payloads in audit metadata.
-- Do not store raw secret values, full authorization headers, full cookies, full private keys, or generated credentials in monitoring/error context.
-- Do not treat every exception as an audit event.
-- Do not treat every audit failure as an error log.
-- Do not merge audit history and error logs into one UI or table.
-- Do not treat every failed login or denied action as a security incident.
-- Do not make Monitoring execute Auth, Identity, Access, DataProtection, Secrets, or Vulnerability remediation directly.
+## 15. Out Of Scope
 
-## Open Decisions
+This planning document does not itself authorize:
 
-- Should the first compatibility implementation write to existing `platform_audit_logs` or introduce `audit_events` with a migration/backfill plan?
-- Should `platform_audit_logs` be renamed, replaced, or retained as a compatibility table?
-- Which existing error log fields should move into a future Monitoring schema?
-- Which audit categories are mandatory before Access Control implementation begins?
-- Which security/access notification dismissal events require audit?
-- Should `request_id` and `trace_id` be unified before Audit/Monitoring promotion?
-- What retention rules apply to audit events versus error logs?
-- Which DataProtection classifications should force audit redaction, long retention, or sensitive activity monitoring?
-- Which vulnerability-management findings and release-gate decisions are audit-worthy on day one?
-- Which secret lifecycle events must be audited first: reveal, copy, rotate, revoke, access denied, expiry, or risk accepted?
-- Should first detection signals be derived from Audit/Monitoring queries or persisted in `detection_signals`?
-- Which detection rules are mandatory before a security operations UI exists?
+- implementing Audit or Monitoring;
+- renaming database tables;
+- changing existing audit/error routes;
+- adding a telemetry pipeline;
+- selecting M1 implementation order.
 
-## Out Of Scope
+## 16. Related
 
-- implementing Audit or Monitoring in this pass
-- renaming database tables in this pass
-- changing existing audit/error routes in this pass
-- adding a full telemetry pipeline in this pass
-- editing `/docs/08-active/`
-
-## Related
-
-- [Core Capability Package Migration Planning](core-capability-package-migration-planning.md)
-- [Cybersecurity Review Backlog Planning](cybersecurity-review-backlog-planning.md)
+- [Core Service Build Plan Matrix](../../core-service-build-plan-matrix.md)
 - [Threat Detection And Response Planning](threat-detection-response-planning.md)
-- [Detection Use Case Matrix](detection-use-case-matrix.md)
-- [Cloud And Deployment Hardening Planning](cloud-deployment-hardening-planning.md)
-- [API, Webhook, And Service Account Security Planning](api-webhook-service-account-security-planning.md)
-- [Threat Modeling And Security Controls Planning](threat-modeling-security-controls-planning.md)
-- [Threat-Control Traceability Matrix](threat-control-traceability-matrix.md)
-- [Zero Trust Security Planning](zero-trust-security-planning.md)
-- [Auth Core Implementation Planning](auth-core-implementation-planning.md)
-- [Access Control Implementation Planning](access-control-implementation-planning.md)
-- [Identity And Users Core Capability Implementation Planning](users-module-implementation-planning.md)
-- [Data Protection Core Planning](data-protection-core-planning.md)
-- [Application Security Core Planning](application-security-core-planning.md)
-- [Secrets Management Core Planning](secrets-management-core-planning.md)
-- [Vulnerability Management Core Planning](vulnerability-management-core-planning.md)
-- [Incident Response Planning](incident-response-planning.md)
-- [Backup And Recovery Planning](backup-recovery-planning.md)
-- [Service Accounts And Machine Identity Planning](service-accounts-machine-identity-planning.md)
-- [Event And Error Logging](../04-features/logging/event-and-error-logging.md)
-- [platform_audit_logs](../06-database/tables/platform_audit_logs.md)
-- [central_error_logs](../06-database/tables/central_error_logs.md)
+- [Digital Forensics Readiness Planning](digital-forensics-readiness-planning.md)
+- [API, Webhook, And Service Account Security Planning](../auth-identity-access/api-webhook-service-account-security-planning.md)
+- [Auth Core Implementation Planning](../auth-identity-access/auth-core-implementation-planning.md)
+- [Data Protection Core Planning](../data-governance-protection/data-protection-core-planning.md)

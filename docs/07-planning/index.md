@@ -8,25 +8,12 @@ canonical: true
 canonical_path: docs/07-planning/index.md
 parent: docs/00-start-here.md
 template: docs/09-reference/templates/docs/_index.md
-summary: Routes accepted planning intent, M0 repository convergence, target-state decomposition, migration direction, implementation sequencing, and planning matrices without owning active delivery status.
+summary: Routes accepted planning intent, completed M0 convergence, target-state decomposition, migration direction, implementation sequencing, and bounded M1 planning without owning active delivery status.
 -->
 
 # Planning Index
 
 Parent: [Start Here](../00-start-here.md)
-
-- [1. Purpose](#1-purpose)
-- [2. Source Roles](#2-source-roles)
-- [3. Governing Standards](#3-governing-standards)
-- [4. Active Planning Control Documents](#4-active-planning-control-documents)
-  - [4.1 M0 Repository Convergence](#41-m0-repository-convergence)
-  - [4.2 Core Planning Matrix](#42-core-planning-matrix)
-  - [4.3 Cybersecurity Promotion Backlog](#43-cybersecurity-promotion-backlog)
-- [5. Planning Organization](#5-planning-organization)
-- [6. M0 Delivery Model](#6-m0-delivery-model)
-- [7. Planning Lifecycle And Promotion](#7-planning-lifecycle-and-promotion)
-- [8. Planning Completion](#8-planning-completion)
-- [9. Related](#9-related)
 
 ## 1. Purpose
 
@@ -34,32 +21,28 @@ This branch owns accepted planning intent for Login 2.0.
 
 Use it for:
 
-- target-state planning
-- architecture and ownership convergence
-- Core capability, Module, UI, and Laravel integration decomposition
-- dependency and decision planning
-- migration, compatibility, and refactor direction
-- implementation sequencing rationale
-- bounded implementation-slice preparation
-- open planning questions
-- planning matrices
-- documentation promotion targets
+- target-state planning;
+- Core capability, Module, UI, and Laravel-integration decomposition;
+- dependency and sequence rationale;
+- migration and compatibility direction;
+- bounded implementation-slice preparation;
+- unresolved planning questions;
+- planning matrices;
+- documentation promotion targets.
 
-Planning must describe accepted intent without becoming a parallel task board or a substitute for canonical implemented documentation.
+Planning must not become a parallel task board or substitute for canonical architecture, behavior, schema, standards, runbooks, GitHub issues, or GitHub Project state.
 
 ## 2. Source Roles
 
-| Source                     | Responsibility                                                                                                             |
-| -------------------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| Planning documents         | Accepted planning intent, target state, sequence rationale, decomposition, migration direction, and variance               |
-| GitHub issues              | Bounded work packets, parent and sub-issue relationships, acceptance criteria, dependencies, and implementation discussion |
-| GitHub Projects            | Current delivery status, priority, sequencing, milestone phase, risk, and dependency fields                                |
-| Canonical documents        | Current implemented architecture, behavior, schema, standards, feature contracts, flows, and runbooks                      |
-| Decision records           | Durable accepted choices, rationale, alternatives, and supersession history                                                |
-| Pull requests and commits  | Reviewable implementation evidence and repository history                                                                  |
-| Tests and review artifacts | Automated and manual verification evidence                                                                                 |
-
-Planning documents do not replace issues, Projects, decision records, or canonical owners.
+| Source | Responsibility |
+| --- | --- |
+| Planning documents | Accepted planning intent, target state, sequence rationale, decomposition, migration direction, and variance |
+| GitHub issues | Bounded work packets, acceptance criteria, dependencies, implementation discussion, and acceptance evidence |
+| GitHub Projects | Current delivery status, priority, sequencing, milestone phase, risk, and dependency fields |
+| Canonical documents | Current accepted architecture, behavior, schema, standards, feature Contracts, flows, and runbooks |
+| Decision records | Durable accepted choices, rationale, alternatives, and supersession history |
+| Pull requests and commits | Reviewable implementation evidence and repository history |
+| Tests and review artifacts | Automated and manual verification evidence |
 
 ## 3. Governing Standards
 
@@ -67,161 +50,128 @@ Planning documents do not replace issues, Projects, decision records, or canonic
 - [Decision Record Standards](../02-standards/documentation/Decision%20Record%20Standards.md)
 - [Document Type Standards](../02-standards/documentation/Document%20Type%20Standards.md)
 - [Implementation Status And Development Sync Standard](../02-standards/documentation/Implementation%20Status%20And%20Development%20Sync%20Standard.md)
-- [Planning Template](../09-reference/templates/docs/_planning.md)
+- [Agent Implementation Checklist](../02-standards/coding/Agent%20Implementation%20Checklist.md)
 
-## 4. Active Planning Control Documents
+## 4. Planning Control Documents
 
-### 4.1 M0 Repository Convergence
+### 4.1 Completed M0 Repository Convergence
 
-[M0 Repository Convergence Planning](00-overview/m0-repository-convergence-planning.md) is the milestone charter for converting the accepted pre-M0 repository baseline into one coherent implementation authority.
+[M0 Repository Convergence Planning](00-overview/m0-repository-convergence-planning.md) is the implemented milestone record for accepted M0 repository convergence and implementation readiness.
 
-It owns:
+It retains:
 
-- the ten M0 goal workstreams
-- milestone scope and non-goals
-- current-to-target convergence requirements
-- dependency order and execution waves
-- required artifacts
-- issue hierarchy expectations
-- milestone-wide acceptance criteria
-- M1 readiness requirements
+- M0 scope and accepted authority;
+- final parent-goal and legacy-issue dispositions;
+- accepted scope variance;
+- explicit M1 deferrals;
+- final completion criteria;
+- the post-M0 readiness contract inherited by M1.
 
-The charter remains `draft` until its parent-goal issue structure and initial existing-issue disposition are accepted. GitHub Projects and issues own active delivery state.
-
-[M0 Repository Current-State Inventory](00-overview/m0-repository-current-state-inventory.md) is the canonical issue #29 inventory of repository structure, non-UI runtime surfaces, current ownership evidence, authority state, registration state, compatibility, contradictions, and unresolved target questions for the pinned Goal 02 baseline.
-
-[M0 UI Current-State Inventory](00-overview/m0-ui-current-state-inventory.md) is the canonical issue #30 implementation-first inventory of material UI Elements, Components, Patterns, Layouts, shell and navigation surfaces, URL views, renderers, UI contributions, supporting assets, contracts, test traces, standards evidence, metadata evidence, registration, provenance, contradictions, and unresolved target questions for the pinned Goal 02 baseline.
-
-[M0 UI Inventory Export Design](00-overview/m0-inventory-export-design/README.md) defines the accepted schema version `0.2.0`, normalized CSV table set, fixtures, and disposable SQLite projection contract for querying the Issue #30 inventory. Reviewed Issue #30 JSON remains authoritative; production exporter, validator, SQLite-builder, query-command, and generated-database tooling are not yet implemented.
-
-[M0 Persistent Data Current Implementation Snapshot](00-overview/m0-persistent-data-current-state-inventory.md) is the bounded issue #31 snapshot of source-controlled table names, persistence boundaries, ownership interpretations, planned concepts, contradictions, and Goal 06 questions at the pinned baseline. It is non-authoritative for migration semantics, does not prove deployed schema state, is not the Goal 06 target model, and has known completeness limitations.
+Final M0 acceptance is recorded in GitHub issue #26. The M0 planning record is historical/authoritative planning context, not an active M1 work queue.
 
 ### 4.2 Core Planning Matrix
 
-[Core Service Build Plan Matrix](core-service-build-plan-matrix.md) owns the cross-capability build matrix, target ownership snapshots, physical folder direction, configuration, data and migration planning, testing direction, implementation sequence, owner keys, and open decisions.
+[Core Service Build Plan Matrix](core-service-build-plan-matrix.md) is the current cross-capability planning/routing index for:
 
-M0 must reconcile the matrix against accepted vocabulary, ownership, database, integration, and migration decisions.
+- target ownership snapshots;
+- physical folder direction;
+- configuration direction;
+- data and migration planning;
+- testing direction;
+- implementation sequence rationale;
+- owner keys;
+- explicit open decisions.
 
-[Identifier Key Convention Propagation Planning](01-architecture-boundaries/identifier-key-convention-propagation-planning.md) inventories documentation alignment completed by issue #28 and routes deferred runtime, schema, route, package, and compatibility migrations to their future owners.
+M0 reconciliation of the matrix is complete. M1 may refine exact capability behavior, schema, and implementation sequencing only through bounded work that preserves accepted repository-wide authority.
 
-### 4.3 Cybersecurity Promotion Backlog
+### 4.3 Current-State Evidence
 
-[Cybersecurity Review Backlog Planning](00-overview/cybersecurity-review-backlog-planning.md) routes remaining cybersecurity promotion work into standards, runbooks, architecture, schema, feature contracts, implementation planning, and deferred future topics.
+The M0 inventory documents remain useful evidence for the accepted pre-M0/current-state baselines. They do not replace current `main`, current canonical documentation, or accepted M1 issue scope.
+
+Relevant evidence includes:
+
+- [M0 Repository Current-State Inventory](00-overview/m0-repository-current-state-inventory.md)
+- [M0 UI Current-State Inventory](00-overview/m0-ui-current-state-inventory.md)
+- [M0 Persistent Data Current Implementation Snapshot](00-overview/m0-persistent-data-current-state-inventory.md)
+
+### 4.4 Cybersecurity Promotion Backlog
+
+[Cybersecurity Review Backlog Planning](00-overview/cybersecurity-review-backlog-planning.md) routes remaining cybersecurity promotion work into standards, runbooks, architecture, schema, feature Contracts, implementation planning, and deferred future topics.
 
 It does not create security requirements by itself.
 
 ## 5. Planning Organization
 
-Planning is organized by stable ownership and planning purpose:
+| Path | Responsibility |
+| --- | --- |
+| `00-overview/` | milestone records, planning control documents, review backlogs, and cross-cutting planning overviews |
+| `01-architecture-boundaries/` | application structure, capability boundaries, context models, vocabulary, and structural migration planning |
+| `02-core-capabilities/` | Core capability target state, dependencies, data, security, implementation direction, and capability matrices |
+| `03-platform-surfaces/` | transitional planning from the previous Platform Surface model; folder name does not establish target ownership |
+| `04-business-modules/` | Module package, layout, Contribution, and owner-specific Surface planning |
+| planning root | cross-cutting matrices and control documents whose scope spans multiple planning groups |
 
-| Path                          | Responsibility                                                                                                                                                                                                                                             |
-| ----------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `00-overview/`                | Milestone charters, planning control documents, review backlogs, and cross-cutting planning overviews                                                                                                                                                      |
-| `01-architecture-boundaries/` | Application structure, capability boundaries, context models, vocabulary, and structural migration planning                                                                                                                                                |
-| `02-core-capabilities/`       | Core capability target state, dependencies, data, security, implementation direction, and capability matrices                                                                                                                                              |
-| `03-platform-surfaces/`       | Transitional planning retained from the previous Platform Surface model. Content must be reclassified into its owning Core capability, Module, UI responsibility, Host Registry, Surface, or Delivery Adapter. This folder is not a target ownership area. |
-| `04-business-modules/`        | Module package, layout, Contribution, and owner-specific Surface planning                                                                                                                                                                                  |
-| planning root                 | Cross-cutting matrices and control documents whose scope spans multiple planning groups                                                                                                                                                                    |
+Do not create folders or planning documents merely to mirror a proposed target tree.
 
-Do not create empty folders solely to match a proposed tree.
+## 6. Post-M0 Delivery Model
 
-Add a planning subfolder only when it has:
+M0 is complete.
 
-- a stable owner
-- multiple related documents
-- a clear routing need
-- an active maintenance reason
+New implementation delivery proceeds through bounded M1 issues using `.github/ISSUE_TEMPLATE/implementation-slice.yml` and the repository's accepted verification-first workflow.
 
-UI planning may remain within the owning architecture, standards planning, or the transitional `03-platform-surfaces/` package until it is reclassified or a dedicated planning group has enough stable material to require its own index.
+Planning may prepare or refine a bounded slice, but GitHub issues own executable work packets and GitHub Projects own current delivery state and sequencing.
 
-## 6. M0 Delivery Model
+Before production implementation, follow:
 
-M0 uses the following hierarchy:
-
-```text
-M0 milestone
-  -> M0 Repository Convergence Planning
-  -> ten M0 parent goal issues
-  -> bounded decision, audit, documentation, tooling, and reconciliation sub-issues
-  -> pull requests and commits
-```
-
-The ten parent goal issues are acceptance and tracking surfaces. They do not replace the charter and should not duplicate its full content.
-
-Each child issue must have one primary parent goal. Cross-workstream effects must be represented through dependencies, related issues, or Project fields rather than duplicate parent ownership.
-
-Parent goals close only after:
-
-- required child work is complete or explicitly deferred
-- resulting artifacts agree with one another
-- accepted terminology and ownership are used
-- canonical targets are updated
-- hidden decisions and contradictions are removed
-- downstream implementation can rely on the result
+1. the applicable `AGENTS.md` files;
+2. [Agent Implementation Checklist](../02-standards/coding/Agent%20Implementation%20Checklist.md);
+3. [Testing Standards](../02-standards/testing/index.md);
+4. applicable canonical architecture, feature, flow, database, security, UI, and runbook sources;
+5. the accepted M1 issue's exact scope and verification contract.
 
 ## 7. Planning Lifecycle And Promotion
 
-Planning documents may use these lifecycle states:
+Planning documents may use lifecycle states such as:
 
-- `draft`
-- `planned`
-- `active`
-- `implemented`
-- `superseded`
-- `archived`
-
-Planning should retain:
-
-- accepted target state
-- implementation sequence
-- migration direction
-- dependencies
-- unresolved alternatives
-- implementation slices
-- accepted variance
+- `draft`;
+- `planned`;
+- `active`;
+- `implemented`;
+- `superseded`;
+- `archived`.
 
 Promote durable accepted content to its canonical owner:
 
-| Planning Content                                  | Canonical Destination  |
-| ------------------------------------------------- | ---------------------- |
-| mandatory durable rule                            | standard               |
-| accepted structural boundary                      | architecture           |
-| table, field, relationship, or migration contract | database documentation |
-| user-observable behavior                          | feature or flow        |
-| operational procedure                             | runbook                |
-| durable decision and rationale                    | decision record        |
-| bounded execution work                            | GitHub issue           |
-
-After promotion, planning should link to the canonical owner and remove duplicated authority where practical.
+| Planning content | Canonical destination |
+| --- | --- |
+| mandatory durable rule | standard |
+| accepted structural boundary | architecture |
+| table, field, relationship, or migration Contract | database documentation |
+| user-observable behavior | feature or flow |
+| operational procedure | runbook |
+| durable decision and rationale | decision record |
+| bounded execution work | GitHub issue |
 
 ## 8. Planning Completion
 
 Planning is complete for a scope when:
 
-- current and target states are clear
-- scope and non-goals are explicit
-- ownership is identified
-- dependencies are classified
-- durable decisions are accepted or explicitly blocking
-- implementation slices are bounded
-- migration and compatibility direction are defined
-- verification and review requirements are defined
-- canonical promotion targets are identified
-- related issues exist when execution is ready
-- lifecycle status is accurate
-- no implementation milestone must infer policy from obsolete or contradictory planning
-
-M0 has additional milestone-wide completion criteria defined in [M0 Repository Convergence Planning](00-overview/m0-repository-convergence-planning.md#27-completion-and-exit-criteria).
+- current and target states are clear;
+- scope and non-goals are explicit;
+- ownership is identified;
+- dependencies are classified;
+- durable decisions are accepted or explicitly deferred/blocked;
+- implementation slices are bounded where execution is ready;
+- migration and compatibility direction are defined where material;
+- verification and review requirements are defined;
+- canonical promotion targets are identified;
+- lifecycle status is accurate;
+- no implementation work must infer policy from obsolete or contradictory planning.
 
 ## 9. Related
 
 - [Start Here](../00-start-here.md)
 - [M0 Repository Convergence Planning](00-overview/m0-repository-convergence-planning.md)
 - [Core Service Build Plan Matrix](core-service-build-plan-matrix.md)
-- [Decisions Index](../01-decisions/index.md)
-- [Architecture Index](../03-architecture/index.md)
-- [Features Index](../04-features/index.md)
-- [Flows Index](../05-flows/index.md)
-- [Database Index](../06-database/index.md)
-- [Runbook Index](../10-runbooks/index.md)
-- [Documentation Standards Index](../02-standards/documentation/index.md)
+- [Planning Documentation Standards](../02-standards/documentation/Planning%20Documentation%20Standards.md)
+- [Testing Standards](../02-standards/testing/index.md)

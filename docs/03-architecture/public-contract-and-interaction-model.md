@@ -329,7 +329,7 @@ This document decides:
 - Host Registries own semantic Contribution acceptance and resolution;
 - Core Runtime owns only the technical invocation envelope and lifecycle.
 
-Deferred to bounded system planning or implementation::
+Deferred to bounded system planning or implementation:
 
 - exact owner-specific interface names;
 - descriptor and manifest serialization;

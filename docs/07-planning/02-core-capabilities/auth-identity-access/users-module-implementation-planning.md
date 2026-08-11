@@ -1,3 +1,18 @@
+<!--
+DOC-META
+title: Identity And Users Core Capability Implementation Planning
+doc_type: planning
+status: superseded
+owner: core
+canonical: false
+canonical_path: docs/07-planning/02-core-capabilities/auth-identity-access/users-module-implementation-planning.md
+parent: docs/07-planning/index.md
+template: docs/09-reference/templates/docs/_planning.md
+summary: Superseded pre-M1 Users planning retained only as historical reference for the prior broad Identity ownership and implementation-derived direction.
+-->
+
+> **Superseded:** Replaced by [Core Users Development Planning](../users/users-development-planning.md). The broad Core Identity owner, `app/Core/Identity` target, separate Account ownership, delete/deprovision direction, and migration-oriented implementation structure in this document are not current target authority.
+
 # Identity And Users Core Capability Implementation Planning
 
 Status: Planning draft

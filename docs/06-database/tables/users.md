@@ -2,9 +2,9 @@
 DOC-META
 title: users
 doc_type: database
-status: draft
+status: planned
 owner: core
-canonical: false
+canonical: true
 canonical_path: docs/06-database/tables/users.md
 parent: docs/06-database/tables/index.md
 template: docs/09-reference/templates/docs/_doc.md
@@ -221,5 +221,5 @@ Monitoring may observe failed or anomalous Users operations but does not own Use
 
 - [Users Data Contract](../feature-contracts/users.md)
 - [User Invitations](user_invitations.md)
-- [Core Users Development Planning](../../07-planning/02-core-capabilities/auth-identity-access/users-development-planning.md)
+- [Core Users Development Planning](../../07-planning/02-core-capabilities/users/users-development-planning.md)
 - [Persistent Data Architecture](../../03-architecture/persistent-data-architecture.md)

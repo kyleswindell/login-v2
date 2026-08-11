@@ -2,10 +2,10 @@
 DOC-META
 title: Core Users Development Planning
 doc_type: planning
-status: draft
+status: planned
 owner: core
-canonical: false
-canonical_path: docs/07-planning/02-core-capabilities/auth-identity-access/users-development-planning.md
+canonical: true
+canonical_path: docs/07-planning/02-core-capabilities/users/users-development-planning.md
 parent: docs/07-planning/00-overview/m1-core-system-development-register.md
 template: docs/09-reference/templates/docs/_planning.md
 summary: Defines the M1 target design for Core Users, including permanent human User Accounts, profile and email ownership, account lifecycle, suspension, invitations, onboarding, public interactions, and persistence requirements.

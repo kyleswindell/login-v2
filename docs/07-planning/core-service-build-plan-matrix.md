@@ -79,7 +79,7 @@ Request Assurance Context
 └── Network Context
 ```
 
-- User Accounts and User Identity records belong to one Tenant Instance.
+- User Accounts and their User Identity attributes belong to one Tenant Instance.
 - There is no canonical global or implicit cross-Tenant User Identity.
 - Machine Identity is independent from NHI.
 - Network Identity is verified identity; Network Context is observed transport and risk evidence.
@@ -114,9 +114,9 @@ Jobs, commands, APIs, webhooks, events, and schedulers are execution mechanisms,
 
 | Area                                        | Source                                                                                                                         |
 | ------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------ |
-| Overall package/core migration              | [Core Capability Package Migration Planning](core-capability-package-migration-planning.md)                                    |
+| M1 system scope and design progression      | [M1 Core System Development Register](00-overview/m1-core-system-development-register.md)                                    |
 | Identifier and key conventions              | [ADR-0007](../01-decisions/adr-0007-owner-registry-and-identifier-key-conventions.md) and [Identifier And Key Standards](../02-standards/coding/Identifier%20And%20Key%20Standards.md) |
-| Application structure/current folder triage | [Application Structure Baseline Planning](application-structure-baseline-planning.md) - superseded historical baseline         |
+| Repository ownership and placement          | [Repository Architecture](../03-architecture/repository-architecture.md)                                                     |
 | Cybersecurity review backlog                | [Cybersecurity Review Backlog Planning](cybersecurity-review-backlog-planning.md)                                              |
 | Threat Modeling and Security Controls       | [Threat Modeling And Security Controls Planning](threat-modeling-security-controls-planning.md)                                |
 | Threat-Control Traceability Matrix          | [Threat-Control Traceability Matrix](threat-control-traceability-matrix.md)                                                    |
@@ -125,7 +125,7 @@ Jobs, commands, APIs, webhooks, events, and schedulers are execution mechanisms,
 | Cloud/Deployment Hardening                  | [Cloud And Deployment Hardening Planning](cloud-deployment-hardening-planning.md)                                              |
 | Zero Trust                                  | [Zero Trust Security Planning](zero-trust-security-planning.md)                                                                |
 | Auth                                        | [Auth Core Implementation Planning](auth-core-implementation-planning.md)                                                      |
-| Identity/Users                              | [Identity And Users Core Capability Implementation Planning](users-module-implementation-planning.md)                          |
+| Users                                       | [Core Users Development Planning](02-core-capabilities/users/users-development-planning.md)                                   |
 | Access Control                              | [Access Control Implementation Planning](access-control-implementation-planning.md)                                            |
 | Data Protection                             | [Data Protection Core Planning](data-protection-core-planning.md)                                                              |
 | Privacy/Data Governance                     | [Privacy And Data Governance Planning](privacy-data-governance-planning.md)                                                    |

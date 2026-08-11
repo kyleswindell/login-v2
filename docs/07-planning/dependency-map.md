@@ -14,11 +14,11 @@ GitHub Projects owns active development sequencing, issue status, assignment, an
 
 Historical phase dependencies are deprecated. Use the current planning entry points for source sequencing:
 
-1. Core capability migration and build sequencing: [Core Service Build Plan Matrix](core-service-build-plan-matrix.md)
-2. Core/package ownership direction: [Core Capability Package Migration Planning](core-capability-package-migration-planning.md)
-3. Access-control sequencing: [Access Control Implementation Planning](access-control-implementation-planning.md)
-4. Identity/users sequencing: [Identity And Users Core Capability Implementation Planning](users-module-implementation-planning.md)
-5. Security planning dependencies: [Cybersecurity Review Backlog Planning](cybersecurity-review-backlog-planning.md)
+1. M1 system scope and design progression: [M1 Core System Development Register](00-overview/m1-core-system-development-register.md)
+2. Target repository ownership and placement: [Repository Architecture](../03-architecture/repository-architecture.md)
+3. Cross-capability planning reference: [Core Service Build Plan Matrix](core-service-build-plan-matrix.md)
+4. Core Users target design: [Core Users Development Planning](02-core-capabilities/users/users-development-planning.md)
+5. Security planning dependencies: [Cybersecurity Review Backlog Planning](00-overview/cybersecurity-review-backlog-planning.md)
 
 ## Batch Dependencies
 

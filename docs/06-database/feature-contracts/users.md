@@ -2,9 +2,9 @@
 DOC-META
 title: Users Data Contract
 doc_type: database
-status: draft
+status: planned
 owner: core
-canonical: false
+canonical: true
 canonical_path: docs/06-database/feature-contracts/users.md
 parent: docs/06-database/index.md
 template: docs/09-reference/templates/docs/_doc.md
@@ -210,6 +210,6 @@ Users tables store current authoritative state, not lifecycle-history records.
 - [Users Table](../tables/users.md)
 - [User Invitations Table](../tables/user_invitations.md)
 - [Persistent Data Architecture](../../03-architecture/persistent-data-architecture.md)
-- [Core Users Development Planning](../../07-planning/02-core-capabilities/auth-identity-access/users-development-planning.md)
+- [Core Users Development Planning](../../07-planning/02-core-capabilities/users/users-development-planning.md)
 - [Schema Design Standards](../../02-standards/database/Schema%20Design%20Standards.md)
 - [Database Data Classification And Retention Standards](../../02-standards/database/Database%20Data%20Classification%20And%20Retention%20Standards.md)

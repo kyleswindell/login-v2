@@ -47,7 +47,7 @@ Keep these fields distinct:
 
 ```text
 ownership_area: core | module | ui
-owner_key: identity | access | notifications | projects | ui
+owner_key: users | auth | access | notifications | projects | ui
 capability_key: users | roles | global_administration | projects
 module_key: projects | quickbooks_sync
 ```
@@ -67,7 +67,7 @@ Examples:
 
 ```text
 auth
-identity
+users
 access
 security
 audit
@@ -148,10 +148,6 @@ Examples:
 ```text
 projects.index
 notifications.header_bell
-users.user_defaults
-users.user_account.suspended
-users.user_account_suspended
-users.default_active
 ```
 
 The canonical contribution identity is:
@@ -197,10 +193,10 @@ Permission keys use:
 Examples:
 
 ```text
-users.view
+users.read
 users.create
 users.update
-users.roles.update
+users.invitations.create
 projects.archive
 ```
 
@@ -249,7 +245,7 @@ Examples:
 
 ```text
 auth.login_succeeded
-users.user_account.suspended
+users.user_account_suspended
 access.role_updated
 data.export_downloaded
 projects.project_archived
@@ -264,7 +260,7 @@ Configuration roots use the capability or Module key.
 Examples:
 
 ```text
-users.default_active
+users.invitation_lifetime_days
 notifications.delivery.database
 projects.retention_days
 ```
@@ -286,7 +282,7 @@ quickbooks_sync.import_customers
 Domain-event identifiers use capability plus completed-event wording:
 
 ```text
-users.user_account.suspended
+users.user_account_suspended
 projects.project_created
 orders.order_submitted
 ```
@@ -396,7 +392,7 @@ capability_key: users
 permission_key: users.update
 route_name: users.update
 audit_event_key: users.user_account_updated
-config_key: users.default_active
+config_key: users.invitation_lifetime_days
 ```
 
 Module example:

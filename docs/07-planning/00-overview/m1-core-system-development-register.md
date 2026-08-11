@@ -39,22 +39,23 @@ This register establishes:
 
 ## 2. Status
 
-- Planning lifecycle: draft
-- Acceptance state: proposed M1 planning control document
+- Planning lifecycle: active
+- Acceptance state: accepted M1 planning control document
 - Current implementation state: pre-alpha and reference-only for M1 target design
 - M0 state: accepted and complete
 - Owning GitHub issue: not yet created
 - GitHub Project: Login 2.0 Core Build Plan
 - M1 implementation issues: none
-- M1 serial system-design order: not yet accepted
+- Working system-design progression: accepted for M1 design steering only
+- Accepted system designs: Core Runtime; Core Users
+- Next system-design target: Security
 
 Known gaps:
 
-- final serial design order is not yet selected;
-- individual system-development specifications do not yet exist;
-- first-order dependencies may be refined as systems are designed;
-- older planning may contain superseded ownership or placement terminology;
-- owner-key synchronization for systems changed by later M0 authority must be handled through canonical naming authority rather than inferred from stale planning.
+- the remaining M1 systems do not yet have accepted system-development specifications;
+- first-order dependencies may be refined as later systems expose real interaction requirements;
+- older planning contains superseded ownership, migration, and placement terminology;
+- actual production implementation and verification order remains intentionally unresolved until the full M1 system-design set is complete.
 
 This document is planning authority, not an active delivery-state board.
 
@@ -244,7 +245,7 @@ Update the authoritative earlier design rather than creating a workaround in the
 
 | System         | M1 Treatment | Primary Responsibility                                                                                                                                                               | First-Order Providers                                                                                     | First-Order Consumers                                                           |
 | -------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | --------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------- |
-| Users          | Full design  | Own human User Accounts, User Identity, profile/contact data, invitations, and human-account lifecycle.                                                                              | Auth operations; Access; Audit; Notifications                                                             | Auth; Access; Preferences; Workspace; Notifications; other human-user consumers |
+| Users          | Full design  | Own human User Accounts, User Identity attributes, profile/contact data, invitations, and human-account lifecycle.                                                                   | Auth operations; Access; Audit; Notifications                                                             | Auth; Access; Security; Preferences; Workspace; Notifications; other human-user consumers |
 | Auth           | Full design  | Own authentication credentials, methods, factors, challenges, recovery, sessions, authentication assurance, recent authentication, and step-up authentication.                       | Users; Security/Secrets; Audit; Notifications; Core Runtime                                               | Access; DataProtection; sensitive Core operations                               |
 | Access         | Full design  | Own authorization policy, roles, permissions, groups, grants, assignments, effective-access evaluation, elevated access, and access review behavior.                                 | Users; Auth; Audit; Settings where applicable                                                             | all protected Core capabilities; Modules; Navigation; Workspace                 |
 | Security       | Full design  | Own cross-cutting application-security guardrails and security-control enforcement without absorbing Auth, Access, DataProtection, Audit, or Monitoring ownership.                   | Settings; Core Runtime; security standards                                                                | Core; Modules; Delivery Adapters; release verification                          |
@@ -409,31 +410,34 @@ For each system:
 7. **Promote durable truth** to architecture, feature, flow, database, standard, or runbook owners.
 8. **Accept the system plan** before beginning the next system.
 
-## 13. Serial Design Order
+## 13. Serial Design Progression
 
-The order is intentionally not accepted by this first register draft.
+This is the accepted M1 working design progression.
 
-M1 Step 2 derives it after this register is accepted.
+It steers system-design order only. It is not the final production implementation, GitHub issue, integration, or verification execution order.
 
-Use:
+1. Core Runtime
+2. Users
+3. Security
+4. Security / Secrets
+5. Audit
+6. Auth
+7. Access
+8. Notifications
+9. Monitoring
+10. Application Registration
+11. Settings
+12. Preferences
+13. Workspace
+14. Navigation
+15. Dashboard
+16. Setup
+17. DataGovernance
+18. DataProtection
 
-1. provider depth;
-2. vocabulary leverage;
-3. workflow centrality;
-4. dependency count;
-5. downstream blocking;
-6. security/data impact;
-7. abstraction maturity.
+The progression may be refined when a later system exposes a real design dependency that changes the appropriate planning order.
 
-Do not use:
-
-- current folder location;
-- current code volume;
-- ease of migration;
-- ease of copying current code;
-- parallel throughput
-
-as primary ordering criteria.
+After all eighteen system plans are accepted, reconcile the actual implementation and verification sequence from the completed cross-system design rather than assuming this planning progression is the build order.
 
 ## 14. System Development Specification Contract
 
@@ -627,16 +631,16 @@ Supersede older planning when accepted M1 design invalidates it.
 
 ## 17. Completion And Exit Criteria
 
-This register may move from `draft` to `active` when:
+This register is active because:
 
-- [ ] M1 system list is accepted;
-- [ ] classifications are accepted;
-- [ ] primary responsibilities are accepted;
-- [ ] first-order dependencies are accepted as the initial graph;
-- [ ] major workflows are sufficient to guide serial design;
-- [ ] intentional deferrals are accepted;
-- [ ] the system-development specification contract is accepted;
-- [ ] the serial design method is accepted.
+- [x] M1 system list is accepted;
+- [x] classifications are accepted;
+- [x] primary responsibilities are accepted;
+- [x] first-order dependencies are accepted as the initial graph;
+- [x] major workflows are sufficient to guide serial design;
+- [x] intentional deferrals are accepted;
+- [x] the system-development specification contract is accepted;
+- [x] the serial design method is accepted.
 
 M1 system-design planning is complete when:
 

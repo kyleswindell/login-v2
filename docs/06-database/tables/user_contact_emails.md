@@ -6,6 +6,14 @@ This document defines the canonical scope and intent for `user_contact_emails`.
 
 Store current-user contact-only email addresses.
 
+## Target Direction
+
+This table remains current implementation truth only.
+
+Additional User contact-email persistence is deprecated from the accepted Core Users target design. Core Users M1 does not plan a `user_contact_emails` record type. The table and this document remain until removal of the current feature is explicitly implemented and verified.
+
+Do not use this current table as target authority for new Core Users implementation.
+
 ## Columns
 
 - `id`

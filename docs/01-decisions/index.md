@@ -75,7 +75,7 @@ Historical archived records already reserve:
 
 Next available identifier:
 
-- `ADR-0009`
+- `ADR-0010`
 
 Before assigning it, search active and archived decision paths again to confirm no newer record exists.
 
@@ -90,9 +90,10 @@ Add proposed records here while they await authorized review.
 ## 6. Accepted Decisions
 
 - [ADR-0005: Core, Modules, And UI Ownership Taxonomy](adr-0005-core-modules-ui-ownership-taxonomy.md) — Establishes Core, Modules, and UI as the three canonical source-of-truth ownership areas.
-- [ADR-0006: Tenant, Instance, Workspace, Principal, Actor, And Invocation Vocabulary](adr-0006-tenant-instance-workspace-principal-and-invocation-vocabulary.md) — Establishes Tenant and Instance isolation, User Account and identity vocabulary, Principal and assurance identity, Actor attribution, and Invocation Channel vocabulary. Its original Workspace cardinality and Global Administration classification are partially superseded by ADR-0008.
-- [ADR-0007: Owner, Registry, And Identifier Key Conventions](adr-0007-owner-registry-and-identifier-key-conventions.md) — Establishes canonical key grammar, ownership fields, key-family formats, collision rules, and compatibility aliases.
+- [ADR-0006: Tenant, Instance, Workspace, Principal, Actor, And Invocation Vocabulary](adr-0006-tenant-instance-workspace-principal-and-invocation-vocabulary.md) — Establishes Tenant and Instance isolation, User Account and identity vocabulary, Principal and assurance identity, Actor attribution, and Invocation Channel vocabulary. Its User Identity record model is partially superseded by ADR-0009; its original Workspace cardinality and Global Administration classification are partially superseded by ADR-0008.
+- [ADR-0007: Owner, Registry, And Identifier Key Conventions](adr-0007-owner-registry-and-identifier-key-conventions.md) — Establishes canonical key grammar, ownership fields, key-family formats, collision rules, and compatibility aliases. Its `identity` owner-key provision for human User Accounts is partially superseded by ADR-0009.
 - [ADR-0008: Workspace, Navigation Hierarchy, And Frame Surface Model](adr-0008-workspace-navigation-and-frame-surface-model.md) — Establishes multiple available Workspaces, exactly one active Workspace, the persistent Frame, narrow Frame Surfaces, A–E+ navigation, and Global Administration as a Workspace.
+- [ADR-0009: Core Users Ownership And Permanent Human Account Model](adr-0009-core-users-ownership-and-permanent-human-account-model.md) — Establishes Core Users as the human-account owner, defines User Identity as a conceptual attribute subset, makes User Accounts permanently retained, and partially supersedes ADR-0006 and ADR-0007 for prior broad Identity ownership.
 
 Historical archived records must be reviewed before any are promoted back into the active branch.
 

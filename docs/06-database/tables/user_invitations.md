@@ -2,9 +2,9 @@
 DOC-META
 title: user_invitations
 doc_type: database
-status: draft
+status: planned
 owner: core
-canonical: false
+canonical: true
 canonical_path: docs/06-database/tables/user_invitations.md
 parent: docs/06-database/tables/index.md
 template: docs/09-reference/templates/docs/_doc.md
@@ -183,7 +183,7 @@ If an administrator directly creates a User Account for the same normalized emai
 ```text
 User Account creation succeeds
         ↓
-outstanding Invitation becomes revoked/superseded
+outstanding Invitation becomes revoked because direct User creation superseded the invitation workflow
         ↓
 old Invitation token is unusable
 ```
@@ -233,5 +233,5 @@ Monitoring may observe failed Invitation processing but does not own Invitation 
 
 - [Users Data Contract](../feature-contracts/users.md)
 - [Users](users.md)
-- [Core Users Development Planning](../../07-planning/02-core-capabilities/auth-identity-access/users-development-planning.md)
+- [Core Users Development Planning](../../07-planning/02-core-capabilities/users/users-development-planning.md)
 - [Persistent Data Architecture](../../03-architecture/persistent-data-architecture.md)

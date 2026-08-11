@@ -1,5 +1,15 @@
 # Auth And RBAC Data Contract
 
+## Authority And Target Direction
+
+This document records the current pre-M1 Auth/RBAC implementation data shape.
+
+Target Core Users persistence is owned by [Users Data Contract](users.md) and the planned [`users`](../tables/users.md) and [`user_invitations`](../tables/user_invitations.md) table Contracts.
+
+The `users` and `user_contact_emails` sections below are current-implementation evidence only. They do not define the target Core Users schema.
+
+Auth and Access target persistence will be reconciled during their respective M1 system-design passes.
+
 This document defines the canonical scope and intent for Auth And RBAC Data Contract.
 
 ## Tables

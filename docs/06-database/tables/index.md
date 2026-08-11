@@ -24,6 +24,8 @@ Table-level schema notes only for the database branch.
 - [user_contact_emails](user_contact_emails.md)
 - [user_notification_preferences](user_notification_preferences.md)
 - [user_dashboard_layouts](user_dashboard_layouts.md)
+- [users](users.md)
+- [user_invitations](user_invitations.md)
 
 ## Related
 

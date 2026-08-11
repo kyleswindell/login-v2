@@ -26,6 +26,8 @@ Canonical schema and table ownership hub.
 - [user_contact_emails](tables/user_contact_emails.md)
 - [user_notification_preferences](tables/user_notification_preferences.md)
 - [user_dashboard_layouts](tables/user_dashboard_layouts.md)
+- [users](tables/users.md)
+- [user_invitations](tables/user_invitations.md)
 
 ## Feature Contracts
 
@@ -34,6 +36,7 @@ Canonical schema and table ownership hub.
 - [Notifications And Settings](feature-contracts/notifications-and-settings.md)
 - [Module Contribution Registries](feature-contracts/module-contribution-registries.md)
 - [Inter-Tenant Messaging](feature-contracts/inter-tenant-messaging.md)
+- [Users Data Contract](feature-contracts/users.md)
 
 ## Related
 

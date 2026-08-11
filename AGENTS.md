@@ -115,7 +115,7 @@ Core owns required base-application behavior, state, coordination, infrastructur
 Examples include:
 
 - Auth
-- Identity
+- Users
 - Access
 - DataGovernance
 - DataProtection

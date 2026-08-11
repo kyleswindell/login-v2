@@ -1,3 +1,18 @@
+<!--
+DOC-META
+title: Core Capability Package Migration Planning
+doc_type: planning
+status: superseded
+owner: architecture
+canonical: false
+canonical_path: docs/07-planning/01-architecture-boundaries/core-capability-package-migration-planning.md
+parent: docs/07-planning/index.md
+template: docs/09-reference/templates/docs/_planning.md
+summary: Superseded pre-M1 migration-oriented capability planning retained only as historical current-to-target evidence.
+-->
+
+> **Superseded:** Current target architecture is owned by [Repository Architecture](../../03-architecture/repository-architecture.md), [Persistent Data Architecture](../../03-architecture/persistent-data-architecture.md), and the [M1 Core System Development Register](../00-overview/m1-core-system-development-register.md). The migration-oriented sequencing, broad Core Identity target, and implementation-derived placement guidance below are historical only and must not guide new M1 system design.
+
 # Core Capability Package Migration Planning
 
 Status: Planning draft

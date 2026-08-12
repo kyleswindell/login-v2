@@ -172,6 +172,7 @@ Use the documentation branch that owns the type of truth:
 | `docs/05-flows/`        | Cross-capability execution paths                                            |
 | `docs/06-database/`     | Exact schema, table, constraint, and persistence contracts                  |
 | `docs/07-planning/`     | Planning intent, sequencing, decomposition, and unresolved target analysis  |
+| `docs/08-design/`       | Accepted pre-implementation software design and concrete implementation realization |
 | `docs/09-reference/`    | Non-canonical research, examples, legacy references, and reusable templates |
 | `docs/10-runbooks/`     | Repeatable operator-executable procedures                                   |
 | `docs/11-ai/`           | Non-canonical agent working documents and review candidates                 |

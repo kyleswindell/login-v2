@@ -8,14 +8,14 @@ canonical: true
 canonical_path: docs/02-standards/documentation/index.md
 parent: docs/02-standards/index.md
 template: docs/09-reference/templates/docs/_index.md
-summary: Indexes standards for documentation authoring, document types, planning, decisions, runbooks, governance, structure, review, and implementation synchronization.
+summary: Indexes standards for documentation authoring, document types, software design documentation, planning, decisions, runbooks, governance, structure, review, and implementation synchronization.
 -->
 
 # Documentation Standards Index
 
 Parent: [Standards Index](../index.md)
 
-This folder contains the canonical standards governing documentation quality, document types, ownership, structure, planning, decisions, runbooks, review, and implementation-status synchronization.
+This folder contains the canonical standards governing documentation quality, document types, software design documentation, ownership, structure, planning, decisions, runbooks, review, and implementation-status synchronization.
 
 Copyable templates live under:
 
@@ -45,6 +45,7 @@ It may contain:
 
 - universal authoring rules
 - controlled document-type contracts
+- software design documentation standards
 - planning-document standards
 - decision-record standards
 - runbook-document standards
@@ -72,6 +73,7 @@ It must not contain:
 | --- | --- |
 | [How To Write Docs](How%20To%20Write%20Docs.md) | Defines universal writing quality, metadata, lifecycle, author workflow, linking, scope, and documentation-with-code expectations. |
 | [Document Type Standards](Document%20Type%20Standards.md) | Defines the controlled `doc_type` registry and baseline contract for each type. |
+| [Software Design Documentation Standard](Software%20Design%20Documentation%20Standard.md) | Defines SDD ownership, required content, implementation manifests, design readiness, review, and synchronization. |
 | [Planning Documentation Standards](Planning%20Documentation%20Standards.md) | Defines planning ownership, current/target state, lifecycle, issue and Project boundaries, implementation slices, variance, promotion, and close-out. |
 | [Decision Record Standards](Decision%20Record%20Standards.md) | Defines decision elevation, numbering, status, acceptance, amendment, rejection, deprecation, supersession, and canonical synchronization. |
 | [Runbook Documentation Standards](Runbook%20Documentation%20Standards.md) | Defines runbook qualification, safety, procedure, verification, recovery, evidence, exercise, and maintenance requirements. |
@@ -86,6 +88,7 @@ It must not contain:
 | --- | --- |
 | How should all documents be written and identified? | [How To Write Docs](How%20To%20Write%20Docs.md) |
 | What does each `doc_type` mean? | [Document Type Standards](Document%20Type%20Standards.md) |
+| How should pre-implementation software design be written and considered implementation-ready? | [Software Design Documentation Standard](Software%20Design%20Documentation%20Standard.md) |
 | How should planning be written and maintained? | [Planning Documentation Standards](Planning%20Documentation%20Standards.md) |
 | When is an ADR required and how is it maintained? | [Decision Record Standards](Decision%20Record%20Standards.md) |
 | What makes a valid runbook? | [Runbook Documentation Standards](Runbook%20Documentation%20Standards.md) |
@@ -104,6 +107,7 @@ Standards define when a template is valid and what completion requires.
 Relevant templates include:
 
 - [Planning Template](../../09-reference/templates/docs/_planning.md)
+- [Software Design Template](../../09-reference/templates/docs/_design.md)
 - [Decision Template](../../09-reference/templates/docs/_decision.md)
 - [Runbook Template](../../09-reference/templates/docs/_runbook.md)
 - [Documentation Templates Index](../../09-reference/templates/docs/_index.md)
@@ -123,6 +127,10 @@ For general documentation work:
 For planning, also read:
 
 - [Planning Documentation Standards](Planning%20Documentation%20Standards.md)
+
+For software design, also read:
+
+- [Software Design Documentation Standard](Software%20Design%20Documentation%20Standard.md)
 
 For decisions, also read:
 
@@ -147,6 +155,7 @@ For implementation synchronization, also read:
 | `docs/05-flows/` | System execution paths |
 | `docs/06-database/` | Schema, tables, constraints, and data contracts |
 | `docs/07-planning/` | Accepted planning intent, sequencing, decomposition, and planning matrices |
+| `docs/08-design/` | Accepted pre-implementation software design and concrete implementation realization |
 | `docs/09-reference/` | Non-canonical references, research, examples, and templates |
 | `docs/10-runbooks/` | Repeatable operator-executable procedures |
 | `docs/11-ai/` | Non-canonical agent-authored drafts, reviews, research, and promotion candidates |

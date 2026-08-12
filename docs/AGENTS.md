@@ -25,6 +25,7 @@ GitHub Issues own bounded work packets. GitHub Projects own current delivery sta
 - `05-flows/` — ordered execution and cross-system flows.
 - `06-database/` — schema, table, relationship, and data Contracts.
 - `07-planning/` — accepted planning intent, migration direction, decomposition, and sequencing rationale.
+- `08-design/` — accepted pre-implementation software design and concrete implementation realization.
 - `09-reference/` — non-canonical reference, research, inventories, and supporting evidence.
 - `10-runbooks/` — operator-executable procedures and recovery.
 - `11-ai/` — bounded AI review, governance, and working-document artifacts.
@@ -91,6 +92,7 @@ Stop and report when:
 - [Start Here](00-start-here.md)
 - [Standards Index](02-standards/index.md)
 - [Architecture Index](03-architecture/index.md)
+- [Software Design Index](08-design/index.md)
 - [Features Index](04-features/index.md)
 - [Flows Index](05-flows/index.md)
 - [Database Index](06-database/index.md)

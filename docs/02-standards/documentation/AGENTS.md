@@ -17,6 +17,7 @@ This folder may contain standards governing:
 - document metadata and lifecycle
 - canonical branch ownership
 - folder placement and navigation
+- software design documentation governance and design-readiness requirements
 - planning-document governance
 - decision-record governance
 - runbook-document governance
@@ -84,6 +85,7 @@ Use this routing table:
 | --- | --- |
 | Universal writing, metadata, lifecycle, and author workflow | `How To Write Docs.md` |
 | Controlled `doc_type` values and baseline type contracts | `Document Type Standards.md` |
+| Software Design Documents, implementation-blueprint ownership, and design readiness | `Software Design Documentation Standard.md` |
 | Planning-document structure, lifecycle, issue boundaries, and promotion | `Planning Documentation Standards.md` |
 | Decision elevation, numbering, acceptance, amendment, and supersession | `Decision Record Standards.md` |
 | Runbook qualification, safety, recovery, evidence, and validation | `Runbook Documentation Standards.md` |
@@ -97,6 +99,12 @@ When changing planning requirements, also inspect:
 - `docs/07-planning/AGENTS.md`
 - `docs/07-planning/index.md`
 - `docs/09-reference/templates/docs/_planning.md`
+
+When changing software-design requirements, also inspect:
+
+- `docs/08-design/AGENTS.md`
+- `docs/08-design/index.md`
+- `docs/09-reference/templates/docs/_design.md`
 
 When changing decision-record requirements, also inspect:
 

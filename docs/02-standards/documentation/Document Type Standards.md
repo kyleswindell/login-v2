@@ -50,6 +50,11 @@ Parent: [Documentation Standards Index](index.md)
   - [11.3. Prohibited Content](#113-prohibited-content)
   - [11.4. Lifecycle](#114-lifecycle)
   - [11.5. Review](#115-review)
+- [`design`](#design)
+  - [Purpose](#purpose)
+  - [Required Content](#required-content)
+  - [Prohibited Content](#prohibited-content)
+  - [Review](#review)
 - [12. `matrix`](#12-matrix)
   - [12.1. Purpose](#121-purpose)
   - [12.2. Required Content](#122-required-content)
@@ -138,6 +143,7 @@ Use one of:
 - `flow`
 - `database`
 - `planning`
+- `design`
 - `matrix`
 - `index`
 - `reference`
@@ -170,6 +176,7 @@ Examples:
 | `flow`           | `docs/05-flows/`                                 | Yes                                            | `_doc.md`                                   |
 | `database`       | `docs/06-database/`                              | Yes                                            | `_doc.md`                                   |
 | `planning`       | `docs/07-planning/`                              | Yes for planning intent, not implemented truth | `_planning.md`                              |
+| `design`         | `docs/08-design/`                                | Yes for accepted implementation design          | `_design.md`                                |
 | `matrix`         | Owning branch                                    | Depends on matrix responsibility               | `_matrix.md`                                |
 | `index`          | Any documentation branch                         | Yes for navigation                             | `_index.md`                                 |
 | `reference`      | `docs/09-reference/`                             | No                                             | `_doc.md`                                   |
@@ -391,6 +398,41 @@ Planning may remain active while implementation is incomplete. When its purpose 
 ### 11.5. Review
 
 Confirm plans are distinguished from current truth and that promotion targets are explicit.
+
+## `design`
+
+### Purpose
+
+Defines the accepted concrete implementation realization of canonical requirements before production implementation.
+
+### Required Content
+
+A design document must identify applicable:
+
+- system identity, scope, and owner;
+- governing canonical requirements;
+- components and exact intended placement;
+- public Contract realization and interactions;
+- persistence implementation;
+- delivery and presentation mapping;
+- security and reliability design;
+- Events and operational effects;
+- implementation manifest;
+- verification and design-readiness state.
+
+### Prohibited Content
+
+A design document must not:
+
+- redefine architecture, feature behavior, schema, standards, or planning;
+- use current implementation as target authority;
+- own active delivery status;
+- replace issue-specific acceptance criteria or verification contracts;
+- present unresolved material alternatives as accepted design.
+
+### Review
+
+Confirm that the design is traceable to accepted requirements and complete enough for bounded implementation work without requiring new material system-design decisions.
 
 ## 12. `matrix`
 

@@ -72,6 +72,7 @@ When content changes authority, promote or move it to the correct owner and reti
 | `docs/05-flows/`        | System execution paths and workflow sequences                                          |
 | `docs/06-database/`     | Schema, tables, constraints, indexes, relationships, and data contracts                |
 | `docs/07-planning/`     | Sequencing, target state, implementation slices, open questions, and planning matrices |
+| `docs/08-design/`       | Accepted pre-implementation software design and concrete implementation realization    |
 | `docs/09-reference/`    | Non-canonical research, examples, source material, vendor references, and templates    |
 | `docs/10-runbooks/`     | Repeatable operator-executable operational procedures                                  |
 | `docs/11-ai/`           | Non-canonical agent-authored drafts, reviews, research, and promotion candidates       |

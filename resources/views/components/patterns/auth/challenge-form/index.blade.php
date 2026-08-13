@@ -10,6 +10,8 @@
     - Uses auth::partials.alerts by default for auth feedback.
     - May compose x-patterns.forms.actions for submit/loading
       action behavior.
+    - Renders the help footer in the approved Gray 100 context so it remains
+      readable over the guest-auth background image.
     - Does not own authentication logic, field values, validation rules, MFA
       behavior, controller state, or routes.
     ========================================================================== --}}
@@ -287,6 +289,7 @@
                 "ui-platform-text-muted mt-5 text-sm",
                 "text-center" => $helpCentered
             ])
+            data-ui-theme="gray-100"
         >
             {{ $helpText }}
 

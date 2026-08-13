@@ -23,7 +23,7 @@ Parent: [Security Standards Index](index.md)
 - [6. Assurance](#6-assurance)
 - [7. Request Security Context](#7-request-security-context)
 - [8. Assume Breach](#8-assume-breach)
-- [9. Route Tiers](#9-route-tiers)
+- [9. Route Security Profiles](#9-route-security-profiles)
 - [10. Service Identities](#10-service-identities)
 - [11. Verification](#11-verification)
 - [12. Related](#12-related)
@@ -72,11 +72,129 @@ Security decisions should be able to consider applicable actor, actor type, sess
 
 Design for credential misuse and lateral movement by minimizing credential scope, rotating secrets, recording denials, detecting abnormal use, limiting export and bulk access, preserving evidence, supporting revocation, and avoiding broad internal bypasses.
 
-## 9. Route Tiers
+## 9. Route Security Profiles
 
-Routes should be classified by required protection, such as public, guest, authenticated, administrative, sensitive administrative, signed download, API, or webhook.
+Every application route must be classified by one canonical Security profile once route-profile enforcement is applied. The canonical profile keys are:
 
-The tier establishes minimum controls; target authorization still applies.
+```text
+public
+guest
+authenticated
+protected
+administrative
+sensitive
+restricted_data
+service
+```
+
+These keys follow the canonical internal identifier grammar. Profiles define minimum security prerequisites. An owner may require stronger controls than its profile baseline, but must not weaken the profile baseline.
+
+### 9.1 `public`
+
+No authenticated Principal is required. The route must not expose protected state merely because it is public.
+
+Input validation, rate limiting, request-forgery protection for browser writes, and abuse resistance still apply where required.
+
+### 9.2 `guest`
+
+Interactive unauthenticated behavior intended specifically for a guest state, such as login, recovery entry, or another explicitly guest-only flow. An authenticated session may be rejected where route semantics require guest-only behavior.
+
+Guest does not mean unprotected from rate limiting, enumeration resistance, request validation, or request-forgery controls.
+
+### 9.3 `authenticated`
+
+Requires a currently valid authenticated human session and applicable loginable or active account posture. It does not itself grant action authorization, target authorization, administrative authority, or export permission.
+
+Authentication remains distinct from authorization.
+
+### 9.4 `protected`
+
+Requires the authenticated baseline plus explicit authorization for the requested action, target, and scope. Use this for ordinary protected application behavior where object or scope authorization is required.
+
+A route profile does not replace the owner Policy or Core Access decision.
+
+### 9.5 `administrative`
+
+Requires the protected baseline plus explicit administrative authority and MFA-level authentication assurance. Administrative location, route prefix, navigation placement, or UI visibility does not establish this authority.
+
+### 9.6 `sensitive`
+
+Requires risk-appropriate action, target, and scope authorization plus MFA and recent authentication. Reason, approval, elevated access, Audit, and Monitoring apply when the owning requirement demands them.
+
+`sensitive` may apply to high-risk self-service behavior as well as administrative behavior. Representative use cases include password or primary-email security changes, MFA disable or reset, recovery-code regeneration, secret reveal or rotation, and privileged access changes.
+
+### 9.7 `restricted_data`
+
+Uses the sensitive baseline plus explicit restricted-data movement or access controls. Applicable requirements include separate restricted-data or export authorization, DataProtection evaluation, reason where required, approval where required, accountable Audit evidence, Monitoring where required, and private or safe delivery controls.
+
+`restricted_data` does not imply that ordinary view permission grants export permission.
+
+### 9.8 `service`
+
+Protected non-browser or machine-to-machine interaction. It requires applicable explicit machine, service, or request identity (or provider verification), scoped authorization, credential or signature protection, request validation, abuse and rate controls, and a revocation path.
+
+Channel-specific replay protection and idempotency apply where required. Internal network origin is not authentication.
+
+### 9.9 Orthogonal Security Dimensions
+
+#### Invocation Channel
+
+Core Runtime owns how execution entered:
+
+```text
+interactive_web
+api_request
+webhook_request
+console_command
+queued_job
+event_consumer
+scheduled_task
+internal_system
+```
+
+Invocation Channel is not a Security profile. Do not duplicate API or webhook delivery as profile values.
+
+```text
+security profile: service
+invocation channel: api_request
+
+security profile: service
+invocation channel: webhook_request
+
+security profile: public
+invocation channel: api_request
+```
+
+The last example may apply to a genuinely unauthenticated public API endpoint.
+
+#### Signed URL
+
+Signed URL validation is an integrity mechanism, not a Security profile. A signed URL does not authenticate the current Actor, authorize the current target, or establish scope.
+
+```text
+security profile: restricted_data
+signed URL required: true
+
+security profile: authenticated
+signed URL required: true
+```
+
+The underlying behavior determines the profile. Do not create a signed-download profile.
+
+#### Other Orthogonal Requirements
+
+The following remain independently declared and enforced where applicable:
+
+- CSRF or request-forgery protection;
+- named rate limiting;
+- replay protection;
+- idempotency;
+- owner Policy or target authorization;
+- DataProtection;
+- reason;
+- approval;
+- Audit; and
+- Monitoring.
 
 ## 10. Service Identities
 

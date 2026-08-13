@@ -98,7 +98,8 @@ Button component tokens: white theme
    Button component tokens: gray 100 theme
    ---------------------------------------------------------------------- */
     html[data-theme-resolved="gray-100"],
-    [data-theme-resolved="gray-100"] {
+    [data-theme-resolved="gray-100"],
+    [data-ui-theme="gray-100"] {
         --ui-button-primary: var(--ui-blue-60);
         --ui-button-primary-hover: var(--ui-blue-60-hover);
         --ui-button-primary-active: var(--ui-blue-80);

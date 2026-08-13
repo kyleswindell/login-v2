@@ -1,6 +1,10 @@
 /* ==========================================================================
 File: resources/css/tokens/semantic/app-aliases.css
 Purpose: App-facing semantic aliases and compatibility aliases.
+
+Notes:
+- Aliases resolve at the root and at approved scoped theme contexts so nested
+  shell and workspace regions inherit the nearest Carbon role values.
 Notes:
 
 * Defines app aliases only.
@@ -11,7 +15,8 @@ Notes:
   ========================================================================== */
 
 @layer base {
-    :root {
+    :root,
+    [data-ui-theme] {
         /* ------------------------------------------------------------------
 Canvas / surface aliases
 ------------------------------------------------------------------ */

@@ -1,20 +1,30 @@
-@php
-    use Illuminate\Support\HtmlString;
+{{-- ==========================================================================
+    File: Modules/Notifications/resources/views/account/preferences.blade.php
+    Purpose: Account notification preferences page.
 
+    Notes:
+    - Uses route/page tabs from the app layout for account page navigation.
+    - Uses x-patterns.account.section-tabs for local notification sections.
+    - Suppresses local tab chrome when only one panel is supplied.
+    ========================================================================== --}}
+
+@php
     $digestValue = $preference->digest_frequency ?? 'never';
     $digestLabel = $digestOptions[$digestValue] ?? $digestValue;
 
-    $deliveryTabs = [
+    $notificationPanels = [
         [
+            'key' => 'delivery-preferences',
             'id' => 'account-notifications-delivery-tab',
             'panel_id' => 'account-notifications-delivery-panel',
             'label' => 'Delivery preferences',
-            'panel_title' => null,
             'selected' => true,
-            'panel' => new HtmlString(view('notifications::account.partials.delivery-preferences', [
+            'view' => 'notifications::account.partials.delivery-preferences',
+            'data' => [
                 'preference' => $preference,
                 'digestLabel' => $digestLabel,
-            ])->render()),
+                'digestItems' => $digestItems ?? [],
+            ],
         ],
     ];
 @endphp
@@ -30,38 +40,29 @@
     <x-ui.grid-column
         tag="section"
         span="100"
-        lg="12"
-        xlg="10"
-        max="8"
+        lg="16"
+        xlg="14"
+        max="12"
         data-account-notifications-page
     >
-        <x-ui.grid subgrid row-gap>
+        <x-ui.v-stack :gap="6">
             @if (session('success'))
-                <x-ui.grid-column span="100">
-                    <x-ui.notification.inline kind="success" title="Notification preferences saved">
-                        {{ session('success') }}
-                    </x-ui.notification.inline>
-                </x-ui.grid-column>
+                <x-ui.notification.inline kind="success" title="Notification preferences saved">
+                    {{ session('success') }}
+                </x-ui.notification.inline>
             @endif
 
             @if ($errors->any())
-                <x-ui.grid-column span="100">
-                    <x-patterns.validation-summary :errors="$errors->all()" />
-                </x-ui.grid-column>
+                <x-patterns.validation-summary :errors="$errors->all()" />
             @endif
 
-            <x-ui.grid-column span="100">
-                <x-ui.tabs
-                    id="account-notifications-tabs"
-                    label="Notification sections"
-                    :tabs="$deliveryTabs"
-                    orientation="vertical"
-                    variant="line"
-                    grid-aware
-                    data-account-notifications-tabs
-                />
-            </x-ui.grid-column>
-        </x-ui.grid>
+            <x-patterns.account.section-tabs
+                id="account-notifications-tabs"
+                label="Notification sections"
+                :panels="$notificationPanels"
+                data-account-notifications-tabs
+            />
+        </x-ui.v-stack>
 
         @include('notifications::account.partials.modals.edit-delivery-preferences', [
             'preference' => $preference,

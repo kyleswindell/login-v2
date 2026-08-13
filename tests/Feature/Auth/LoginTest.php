@@ -22,6 +22,8 @@ class LoginTest extends TestCase
             ->assertSee('Log in')
             ->assertSee('Email or username')
             ->assertSee('Continue')
+            ->assertSee('/storage/login-background-scaled.jpg', false)
+            ->assertSee('background-size: cover', false)
             ->assertDontSee('name="password"', false);
     }
 

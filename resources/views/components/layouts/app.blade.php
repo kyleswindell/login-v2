@@ -11,6 +11,8 @@
     - Grid is enabled by default. Pages that opt out must do so explicitly.
       Grid-enabled pages render direct slot children as x-ui.grid-column.
     - Frame, header, and head partials do not own page grid behavior.
+    - The workspace header variant opts the shared Frame into its approved
+      Gray 100 shell and theme-responsive layered content appearance.
     ========================================================================== --}}
 
 @props ([
@@ -102,6 +104,7 @@
     $showHeaderSearch = filter_var($showHeaderSearch, FILTER_VALIDATE_BOOLEAN);
     $showHeaderNotifications = filter_var($showHeaderNotifications, FILTER_VALIDATE_BOOLEAN);
     $showHeaderSwitcher = filter_var($showHeaderSwitcher, FILTER_VALIDATE_BOOLEAN);
+    $usesWorkspaceShell = $headerVariant === 'workspace';
 
     /*
     |--------------------------------------------------------------------------
@@ -235,6 +238,7 @@
     data-ui-app-grid-row-gap="{{ $usesGridRowGap ? 'true' : 'false' }}"
     data-ui-app-grid-mode="{{ $gridMode }}"
     data-ui-app-grid-align="{{ $gridAlign ?? 'auto' }}"
+    @if ($usesWorkspaceShell) data-ui-shell-appearance="workspace" @endif
 >
     <div class="min-h-screen">
         {{-- ----------------------------------------------------------------

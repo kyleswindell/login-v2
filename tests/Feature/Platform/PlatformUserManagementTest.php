@@ -2,18 +2,18 @@
 
 namespace Tests\Feature\Platform;
 
-use App\Modules\Auth\Models\MfaRecoveryCode;
 use App\Models\User;
+use App\Modules\Auth\Models\MfaRecoveryCode;
 use App\Modules\Auth\Models\UserMfaMethod;
 use App\Modules\Auth\Notifications\Types as AuthNotificationTypes;
 use App\Modules\Notifications\Models\Notification;
-use App\Modules\Roles\Services\AssignmentGuard;
 use App\Modules\Roles\Notifications\Types as RoleNotificationTypes;
+use App\Modules\Roles\Services\AssignmentGuard;
 use App\Modules\Roles\Services\RoleCatalog;
+use Database\Seeders\PlatformRolesAndPermissionsSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Hash;
 use PragmaRX\Google2FA\Google2FA;
-use Database\Seeders\PlatformRolesAndPermissionsSeeder;
 use Tests\TestCase;
 
 class PlatformUserManagementTest extends TestCase
@@ -34,7 +34,11 @@ class PlatformUserManagementTest extends TestCase
 
         $this->get('/platform/users')
             ->assertOk()
-            ->assertSee('Platform Users');
+            ->assertSee('Platform Users')
+            ->assertSee('data-platform-users-page', false)
+            ->assertSee('data-ui-component="data-table"', false)
+            ->assertSee('data-ui-pagination', false)
+            ->assertSee('Create user');
     }
 
     public function test_platform_user_create_surface_uses_shared_phone_input_baseline(): void
@@ -53,7 +57,8 @@ class PlatformUserManagementTest extends TestCase
 
         $this->get('/platform/users')
             ->assertOk()
-            ->assertSee('Platform Users');
+            ->assertSee('Platform Users')
+            ->assertDontSee('Create user');
 
         $this->get('/platform/administration/users')
             ->assertRedirect('/platform/users');
@@ -387,8 +392,8 @@ class PlatformUserManagementTest extends TestCase
         $method = UserMfaMethod::query()->create([
             'user_id' => $user->id,
             'type' => UserMfaMethod::TYPE_TOTP,
-            'secret' => (new Google2FA())->generateSecretKey(),
-            'pending_secret' => (new Google2FA())->generateSecretKey(),
+            'secret' => (new Google2FA)->generateSecretKey(),
+            'pending_secret' => (new Google2FA)->generateSecretKey(),
             'pending_secret_expires_at' => now()->addMinutes(15),
             'confirmed_at' => now(),
             'last_challenged_at' => now(),
@@ -438,7 +443,7 @@ class PlatformUserManagementTest extends TestCase
         UserMfaMethod::query()->create([
             'user_id' => $actor->id,
             'type' => UserMfaMethod::TYPE_TOTP,
-            'secret' => (new Google2FA())->generateSecretKey(),
+            'secret' => (new Google2FA)->generateSecretKey(),
             'confirmed_at' => now(),
         ]);
 

@@ -35,13 +35,27 @@ Request redaction occurs before context is stored.
 
 ## 5. Severity
 
-Use consistent severity based on availability, security, data impact, recurrence, and recoverability.
+Monitoring uses the shared severity vocabulary defined by [Logging Standards](Logging%20Standards.md):
 
-Do not mark every exception critical.
+```text
+informational
+low
+medium
+high
+critical
+```
+
+Use consistent severity based on availability impact, security impact, data impact, recurrence, and recoverability.
+
+Severity represents the significance of the observed operational condition. It is not merely an exception class, framework log level, HTTP status, or whether an alert should be emitted.
+
+Do not mark every exception high or critical. Do not create a second Monitoring-specific serialized severity scale.
 
 ## 6. Alerting
 
 Alert only when an owner needs timely attention.
+
+Alerting remains a separate decision based on whether an owner requires timely attention.
 
 Alerts must identify source, severity, environment, owner, summary, evidence reference, runbook, deduplication key, and escalation.
 

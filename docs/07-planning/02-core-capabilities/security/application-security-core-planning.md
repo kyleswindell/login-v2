@@ -61,7 +61,7 @@ Current useful foundations:
 Missing planning boundary:
 
 - no dedicated `app/Core/Security` target for cross-cutting guardrails
-- no route security tier registry
+- no route security profile registry
 - no standard sensitive-route contract
 - no centralized safe redirect/signed URL validation plan
 - no request payload redaction service boundary
@@ -78,7 +78,7 @@ Missing planning boundary:
 - HTTPS/trusted-proxy enforcement helpers where not already pure middleware/config
 - safe redirect validation
 - signed URL validation helpers for sensitive downloads
-- sensitive route classification and route security tiers
+- route security profile classification and profile-registry planning
 - request payload redaction rules used by logging, monitoring, and exception handling
 - secure file upload scanning/quarantine hooks
 - security release checklist services
@@ -105,7 +105,7 @@ app/Core/Security/
   Actions/
     RunSecurityReleaseChecks.php
     ValidateSignedDownload.php
-    ClassifySensitiveRoute.php
+    ClassifyRouteSecurityProfile.php
   Contracts/
     SecurityCheck.php
     SecurityHeaderPolicy.php
@@ -113,12 +113,11 @@ app/Core/Security/
   Data/
     SecurityCheckResult.php
     SecurityHeaderSet.php
-    SensitiveRouteDefinition.php
+    RouteSecurityProfileDefinition.php
     RequestSecurityContext.php
   Enums/
     SecurityCheckStatus.php
     SecurityHeaderPolicyName.php
-    SensitiveRouteLevel.php
     RequestRiskLevel.php
   Http/
     Middleware/
@@ -126,18 +125,18 @@ app/Core/Security/
       EnforceHttps.php
       PreventUnsafeRedirects.php
       RedactSensitiveRequestContext.php
-      RequireSensitiveRouteControls.php
+      RequireRouteSecurityProfileControls.php
   Services/
     SecurityHeaderService.php
     ContentSecurityPolicyService.php
-    SensitiveRouteRegistry.php
+    RouteSecurityProfileRegistry.php
     SafeRedirectService.php
     RequestPayloadRedactionService.php
     SecurityChecklistService.php
     UploadSecurityService.php
   Support/
     SecurityHeaders.php
-    SensitiveRoutes.php
+    RouteSecurityProfiles.php
     SafeRedirect.php
     RedactedRequestValue.php
   Routes/
@@ -146,74 +145,31 @@ app/Core/Security/
 
 This is a target shape, not a commitment to create every file in the first implementation batch.
 
-## Route Security Tiers
+## Route Security Profiles
 
-Every route should have a clear security tier.
-
-Initial tiers:
+Application Security consumes the canonical route-security profile vocabulary from [Zero Trust Security Standards](../../../02-standards/security/Zero%20Trust%20Security%20Standards.md). This planning document does not own the vocabulary.
 
 ```text
 public
 guest
 authenticated
-admin
-sensitive_admin
-signed_download
-webhook_or_integration
-api_future
+protected
+administrative
+sensitive
+restricted_data
+service
 ```
 
-Public or guest routes:
+Profiles establish minimum trust, assurance, and authorization prerequisites. Owner Policies, DataProtection, Audit, Monitoring, reason, and approval requirements remain independently declared where applicable.
 
-```text
-web
-guest where applicable
-rate limiting where applicable
-CSRF for state-changing forms
-no authenticated-only data exposed
-```
+Signed URL validation is an orthogonal route-integrity requirement. API and webhook delivery are Invocation Channels with channel-specific controls; protected machine endpoints typically use the `service` profile.
 
-Authenticated routes:
+Representative classifications include:
 
-```text
-web
-auth
-identity.active
-auth.mfa when required
-verified if email verification is required
-```
+- `sensitive`: assigning or removing high privilege, resetting MFA for another user, changing an Access policy, and changing a security setting;
+- `restricted_data`: restricted export or download.
 
-Admin routes:
-
-```text
-web
-auth
-identity.active
-auth.mfa
-can:specific ability or admin capability
-```
-
-Sensitive admin routes:
-
-```text
-web
-auth
-identity.active
-auth.mfa
-auth.recent
-can:specific high-risk ability
-audit or security-sensitive action marker
-```
-
-Sensitive admin examples:
-
-- assign or remove Super Admin
-- disable or reset MFA for another user
-- deactivate or suspend a user
-- create or revoke access policy
-- activate elevated access
-- export restricted data
-- change security settings
+Not every administrative route is sensitive.
 
 ## Controller, Action, And Service Security Rule
 
@@ -639,17 +595,17 @@ The `_Template` package should include this once the business-module template is
 
 ## Zero Trust And Cybersecurity Review Backlog
 
-Zero Trust direction is tracked in [Zero Trust Security Planning](zero-trust-security-planning.md). Application Security owns route tiers, request security context support when needed, sensitive route trust decisions, and delegation to Auth, Access, DataProtection, Audit, Monitoring, and Notifications.
+Zero Trust direction is tracked in [Zero Trust Security Planning](zero-trust-security-planning.md). Application Security consumes the canonical route-security profiles, plans request-security-context support when needed, applies sensitive route trust decisions, and delegates to Auth, Access, DataProtection, Audit, Monitoring, and Notifications.
 
 Threat modeling and security controls direction is tracked in [Threat Modeling And Security Controls Planning](threat-modeling-security-controls-planning.md) and the [Threat-Control Traceability Matrix](threat-control-traceability-matrix.md). Application Security should consume that work for route, request, redirect, upload/download, FormRequest, policy, and release-check coverage.
 
 Threat Detection and Response direction is tracked in [Threat Detection And Response Planning](threat-detection-response-planning.md) and the [Detection Use Case Matrix](detection-use-case-matrix.md). Application Security should produce route/request/security-control evidence that Monitoring can use for unsafe redirect attempts, state-changing method anomalies, upload rejection spikes, and release-check failures.
 
-Digital forensics readiness is tracked in [Digital Forensics Readiness Planning](digital-forensics-readiness-planning.md) and the [Forensic Evidence Source Matrix](forensic-evidence-source-matrix.md). Application Security should treat request IDs, correlation IDs, session IDs, route security tiers, and redacted request context as evidence-enabling controls rather than dashboard-only details.
+Digital forensics readiness is tracked in [Digital Forensics Readiness Planning](digital-forensics-readiness-planning.md) and the [Forensic Evidence Source Matrix](forensic-evidence-source-matrix.md). Application Security should treat request IDs, correlation IDs, session IDs, route security profiles, and redacted request context as evidence-enabling controls rather than dashboard-only details.
 
 Cloud and deployment hardening direction is tracked in [Cloud And Deployment Hardening Planning](cloud-deployment-hardening-planning.md). Application Security owns app-level production safety checks such as HTTPS/trusted proxy assumptions, security headers, public exposure checks, storage exposure checks, safe deployment configuration checks, and release-gate integration.
 
-API, webhook, and service-account security direction is tracked in [API, Webhook, And Service Account Security Planning](api-webhook-service-account-security-planning.md). Application Security owns API route tiers, request validation guardrails, payload limits, idempotency/replay conventions, rate-limit posture, and webhook verification guardrails, while Auth owns token verification and Access owns policy decisions.
+API, webhook, and service-account security direction is tracked in [API, Webhook, And Service Account Security Planning](api-webhook-service-account-security-planning.md). API and webhook delivery are Invocation Channels, not route-security profiles. Application Security plans request-validation guardrails, payload limits, idempotency and replay conventions, rate-limit posture, and webhook-verification guardrails; protected machine endpoints typically consume the `service` profile, while Auth owns token verification and Access owns policy decisions.
 
 Software supply-chain direction is tracked in [Software Supply Chain Security Planning](software-supply-chain-security-planning.md). Application Security should consume that work for dependency review expectations, release checks, lockfile drift detection, third-party script posture, and package-owner justification.
 
@@ -673,12 +629,11 @@ Broader cybersecurity topics are tracked in [Cybersecurity Review Backlog Planni
 - Move or wrap runtime security header/check behavior behind `Core/Security` when a scoped code batch owns it.
 - Keep current middleware and runtime-check compatibility until tests protect migration.
 
-### 3. Route Security Tiers
+### 3. Route Security Profiles
 
-- Define route tiers and sensitive route definitions.
-- Align route tiers with the Zero Trust Tier 0 through Tier 6 route classification plan.
-- Add route coverage tests for public, authenticated, admin, and sensitive admin routes.
-- Add conventions for recent-authentication and MFA requirements on sensitive routes.
+- Consume the canonical route-security profiles from [Zero Trust Security Standards](../../../02-standards/security/Zero%20Trust%20Security%20Standards.md) and define profile declarations where implementation requires them.
+- Add route security profile coverage, unclassified-route detection, and minimum-profile-control verification.
+- Add conventions for MFA and recent-authentication requirements on `sensitive` and `restricted_data` routes according to Auth and owner requirements.
 
 ### 4. Request And Controller Contract
 
@@ -720,16 +675,16 @@ Expected tests once implemented:
 
 - security headers are applied to HTML responses
 - HSTS only appears when configured and request context is secure
-- sensitive admin routes require `auth`, active identity, MFA, recent auth, and specific ability
+- `sensitive` routes require risk-appropriate authorization, MFA, recent authentication, and any owner-specific controls
 - write routes have FormRequest validation coverage
 - protected controllers use policy authorization
 - normal users cannot access hidden admin URLs directly
 - state-changing GET routes are absent
 - unsafe redirect targets are rejected
 - request payload redaction removes secrets from monitoring/audit context
-- signed sensitive downloads expire and require authorization
+- signed URLs for restricted downloads expire and protect integrity; the underlying `restricted_data` route still requires authorization
 - upload validation rejects disallowed size/type/extension
-- route security tier registry can detect unclassified protected routes
+- route security profile registry can detect unclassified routes and support minimum-profile-control verification
 
 ## Transition Rules
 
@@ -747,8 +702,8 @@ Expected tests once implemented:
 ## Open Decisions
 
 - Should `runtime-security` static metadata be folded into `app/Core/Security` immediately or kept as compatibility metadata until package vocabulary is renamed?
-- What is the first source of sensitive route definitions: route metadata, manifest contribution, code registry, or tests only?
-- Should route security tiers be projected to a registry table later, or remain code/test-only?
+- What is the first source of route-security profile declarations: route metadata, manifest contribution, code registry, or tests only?
+- Should route security profiles be projected to a registry table later, or remain code/test-only?
 - Which existing middleware should move first: security headers, trusted proxy, HTTPS enforcement, or request redaction?
 - What minimum release checks block production promotion before CI is mature?
 - Which vulnerability-management release gate should be first: Composer audit, npm audit, route policy coverage, or security runtime check?

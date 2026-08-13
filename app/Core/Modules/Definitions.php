@@ -1,4 +1,5 @@
 <?php
+
 /*
 |--------------------------------------------------------------------------
 | File: app/Core/Modules/Definitions.php
@@ -8,14 +9,15 @@
 
 namespace App\Core\Modules;
 
+use App\Core\Modules\Definitions\Permission;
 use App\Core\Modules\Definitions\RuntimeSecurity;
 use App\Core\Modules\Definitions\UiSystem;
-use App\Core\Modules\Definitions\Permission;
 use App\Modules\Account\Definition as AccountDefinition;
 use App\Modules\Auth\Definition as AuthDefinition;
 use App\Modules\Dashboard\Definition as DashboardDefinition;
 use App\Modules\Notifications\Definition as NotificationsDefinition;
 use App\Modules\Preferences\Definition as PreferencesDefinition;
+use App\Modules\ProfileMfgPoc\Definition as ProfileMfgPocDefinition;
 use App\Modules\Roles\Definition as RolesDefinition;
 use App\Modules\Settings\Definition as SettingsDefinition;
 use App\Modules\Setup\Definition as SetupDefinition;
@@ -105,6 +107,7 @@ final class Definitions
             ),
             NotificationsDefinition::manifest(),
             DashboardDefinition::manifest(),
+            ProfileMfgPocDefinition::manifest(),
             PreferencesDefinition::manifest(),
             UiSystem::manifest(),
             RuntimeSecurity::manifest(),
@@ -208,6 +211,7 @@ final class Definitions
             AccountDefinition::definition(),
             RolesDefinition::definition(),
             DashboardDefinition::definition(),
+            ProfileMfgPocDefinition::definition(),
             SettingsDefinition::definition(),
             PreferencesDefinition::definition(),
             NotificationsDefinition::definition(),

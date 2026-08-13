@@ -149,12 +149,10 @@ The initial implementation is a Secrets security foundation. It does not create 
 | `SecretValue`                     | Non-serializable in-memory raw secret wrapper  | `app/Core/Security/Secrets/ValueObjects/SecretValue.php`                     |
 | `LaravelSecretCipher`             | Laravel-backed reversible string encryption    | `app/Core/Security/Secrets/Encryption/LaravelSecretCipher.php`               |
 | `SecretFingerprintResolver`       | Generate permitted prefix/fingerprint evidence | `app/Core/Security/Secrets/Resolvers/SecretFingerprintResolver.php`          |
-| `SecretOperationPolicy`           | Validate definition-level operation guardrails | `app/Core/Security/Secrets/Policies/SecretOperationPolicy.php`               |
 | `SecretDefinitionRegistry`        | Host Registry for owner secret definitions     | `app/Core/Security/Secrets/Registry/SecretDefinitionRegistry.php`            |
 | `SecretRedactionRules`            | Built-in credential redaction definitions      | `app/Core/Security/Secrets/Definitions/SecretRedactionRules.php`             |
 | `SecretSourceControlCheck`        | Blocking source/release secret-safety check    | `app/Core/Security/Secrets/Verification/Checks/SecretSourceControlCheck.php` |
-| `SecretsServiceProvider`          | Bind Secrets Contracts and registry            | `app/Core/Security/Secrets/Providers/SecretsServiceProvider.php`             |
-| `SecretsRegistrationDescriptor`   | Application Registration declaration           | `app/Core/Security/Secrets/Registration/SecretsRegistrationDescriptor.php`   |
+| `SecretsServiceProvider`          | Bind Secrets runtime services after parent Security registration | `app/Core/Security/Secrets/Providers/SecretsServiceProvider.php` |
 
 No generic:
 
@@ -432,9 +430,11 @@ transaction/remote effect
 Audit call timing
 ```
 
-`SecretOperationPolicy` validates that the requested operation is permitted by the registered secret definition.
+Consumers obtain the immutable requirements for `reveal`, `copy`, `rotate`, or `revoke` from the registered `SecretDefinitionData` and its `SecretOperationRequirementsData`. Those requirements describe `allowed`, `requiresMfa`, `requiresRecentAuthentication`, `requiresReason`, and `auditRequired`; they do not authorize an Actor.
 
-It does not replace Auth or Access.
+Auth and Access later enforce assurance, permission, and target scope. The credential/domain owner performs the provider/domain operation, transaction or remote side effect, and Audit timing. An unsupported operation is rejected because its definition reports `allowed = false`.
+
+No Secrets authorization Policy is required for this structural lookup.
 
 ---
 
@@ -796,7 +796,7 @@ Auth assurance
     ↓
 Access authorization
     ↓
-SecretOperationPolicy
+registered SecretDefinitionData requirements lookup
     ↓
 owner retrieves ciphertext/reference
     ↓
@@ -1060,13 +1060,28 @@ Secrets remains authoritative for credential-specific exposure and redaction rul
 
 ### Application Registration
 
-`SecretsRegistrationDescriptor` declares:
+There is no independent Secrets owner registration. Parent `SecurityRegistrationDescriptor` is the one declarative owner registration for `owner_key: security` and declares:
 
 * `SecretsServiceProvider`;
 * `security.secret_definitions` Host Registry;
-* built-in `security.redaction_rules` Contributions;
-* `secrets.source_control` Security-check Contribution;
-* Secrets configuration.
+* Secrets configuration;
+* credential redaction Contributions to `security.redaction_rules`;
+* `secrets.source_control` Contribution to `security.release_checks`.
+
+```text
+SecurityRegistrationDescriptor
+    owner_key = security
+        ↓
+Application Registration
+        ↓
+SecurityServiceProvider
+        ↓
+SecretsServiceProvider
+        ↓
+Security-owned registries and Secrets contributions available
+```
+
+`SecretsServiceProvider` binds `SecretCipherInterface`, initializes and binds `SecretDefinitionRegistry`, and provides Secrets runtime/subcapability services after registration. It performs no independent owner discovery and does not implement a separate registration-descriptor Contract.
 
 No Secrets Provider is directly accumulated in root Laravel bootstrap composition.
 
@@ -1110,100 +1125,40 @@ Secret values continue to come from their approved owner-specific storage mechan
 
 ## 15. Implementation Manifest
 
-### Core Security / Secrets
+| Change | Path | Archetype | Responsibility | Dependencies | Requirement Source | Verification | Compatibility |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| CREATE | `app/Core/Security/Secrets/Contracts/SecretCipherInterface.php` | Contract | Expose reversible secret protection | Secret value data | `docs/03-architecture/public-contract-and-interaction-model.md` | Laravel secret cipher test | None |
+| CREATE | `app/Core/Security/Secrets/Data/SecretDefinitionData.php` | Data Object | Define one immutable owner secret definition and operation lookup | Secret policy and operation requirements data | `docs/02-standards/security/Secrets Management Standards.md` | Secret definition Registry test | None |
+| CREATE | `app/Core/Security/Secrets/Data/SecretRotationPolicyData.php` | Data Object | Define rotation, expiry, and review requirements | None | `docs/02-standards/security/Secrets Management Standards.md` | Secret storage-kind test | None |
+| CREATE | `app/Core/Security/Secrets/Data/SecretHealthPolicyData.php` | Data Object | Define secret-health requirements | Monitoring health-check Contract | `docs/02-standards/security/Secrets Management Standards.md` | Secrets serialization/redaction test | None |
+| CREATE | `app/Core/Security/Secrets/Data/SecretOperationRequirementsData.php` | Data Object | Define immutable structural operation requirements | `SecretOperation` | `docs/02-standards/security/Secrets Management Standards.md` | Secret operation requirements test | None |
+| CREATE | `app/Core/Security/Secrets/Data/EncryptedSecretValue.php` | Data Object | Represent encrypted ciphertext | None | `docs/02-standards/security/Secrets Management Standards.md` | Laravel secret cipher test | None |
+| CREATE | `app/Core/Security/Secrets/Data/SecretFingerprint.php` | Data Object | Represent safe secret fingerprint evidence | None | `docs/02-standards/security/Secrets Management Standards.md` | Secret fingerprint Resolver test | None |
+| CREATE | `app/Core/Security/Secrets/Enums/SecretType.php` | Enum | Define secret categories | None | `docs/02-standards/security/Secrets Management Standards.md` | Secret definition Registry test | None |
+| CREATE | `app/Core/Security/Secrets/Enums/SecretStorageKind.php` | Enum | Define approved storage strategies | None | `docs/02-standards/security/Secrets Management Standards.md` | Secret storage-kind test | None |
+| CREATE | `app/Core/Security/Secrets/Enums/SecretExposurePolicy.php` | Enum | Define secret exposure modes | None | `docs/02-standards/security/Secrets Management Standards.md` | Secret leakage prevention test | None |
+| CREATE | `app/Core/Security/Secrets/Enums/SecretOperation.php` | Enum | Define sensitive secret operations | None | `docs/02-standards/security/Secrets Management Standards.md` | Secret operation requirements test | None |
+| CREATE | `app/Core/Security/Secrets/ValueObjects/SecretValue.php` | Value Object | Hold non-serializable raw secret material | None | `docs/02-standards/security/Secrets Management Standards.md` | Secret value test | None |
+| CREATE | `app/Core/Security/Secrets/Encryption/LaravelSecretCipher.php` | Cipher implementation | Encrypt and decrypt through Laravel | `SecretCipherInterface`, Laravel encryption | `docs/02-standards/security/Secrets Management Standards.md` | Laravel secret cipher test | None |
+| CREATE | `app/Core/Security/Secrets/Resolvers/SecretFingerprintResolver.php` | Resolver | Generate safe secret evidence | `SecretFingerprint` | `docs/02-standards/security/Secrets Management Standards.md` | Secret fingerprint Resolver test | None |
+| CREATE | `app/Core/Security/Secrets/Registry/SecretDefinitionRegistry.php` | Registry | Accept owner secret definitions | Secret Definition data | `docs/03-architecture/public-contract-and-interaction-model.md` | Secret definition Registry test | None |
+| CREATE | `app/Core/Security/Secrets/Definitions/SecretRedactionRules.php` | Contribution | Provide credential redaction definitions | Security Redaction Rule Registry | `docs/02-standards/security/Secrets Management Standards.md` | Secret redaction rules test | None |
+| CREATE | `app/Core/Security/Secrets/Verification/Checks/SecretSourceControlCheck.php` | Security Check | Detect committed high-confidence secret material | Security Check Contract | `docs/02-standards/security/Application Security Verification And Secure Delivery Standards.md` | Source-control check test | None |
+| CREATE | `app/Core/Security/Secrets/Providers/SecretsServiceProvider.php` | Provider | Bind Secrets contracts, Registry, and runtime services | Parent Security registries, Secrets Contracts | `docs/03-architecture/application-registration.md` | Security registration proof | None |
+| CREATE | `app/Core/Security/Secrets/config/secrets.php` | Configuration | Define Secrets structural configuration | Laravel configuration | `docs/03-architecture/repository-architecture.md` | Secrets serialization/redaction test | None |
+| CREATE | `app/Core/Security/Secrets/__tests__/SecretDefinitionRegistryTest.php` | Test | Prove definition registration | Secret Definition Registry | `docs/02-standards/testing/index.md` | Targeted Secrets proof | None |
+| CREATE | `app/Core/Security/Secrets/__tests__/SecretStorageKindTest.php` | Test | Prove storage decision rules | Secret Storage Kind | `docs/02-standards/testing/index.md` | Targeted Secrets proof | None |
+| CREATE | `app/Core/Security/Secrets/__tests__/SecretValueTest.php` | Test | Prove raw-value serialization safety | Secret Value | `docs/02-standards/testing/index.md` | Targeted Secrets proof | None |
+| CREATE | `app/Core/Security/Secrets/__tests__/LaravelSecretCipherTest.php` | Test | Prove reversible protection | Laravel Secret Cipher | `docs/02-standards/testing/index.md` | Targeted Secrets proof | None |
+| CREATE | `app/Core/Security/Secrets/__tests__/SecretFingerprintResolverTest.php` | Test | Prove permitted fingerprinting | Secret Fingerprint Resolver | `docs/02-standards/testing/index.md` | Targeted Secrets proof | None |
+| CREATE | `app/Core/Security/Secrets/__tests__/SecretOperationRequirementsTest.php` | Test | Prove structural, non-authorizing operation lookup | Secret Definition data | `docs/02-standards/testing/index.md` | Targeted Secrets proof | None |
+| CREATE | `app/Core/Security/Secrets/__tests__/SecretRedactionRulesTest.php` | Test | Prove credential redaction Contributions | Secret Redaction Rules | `docs/02-standards/testing/index.md` | Targeted Secrets proof | None |
+| CREATE | `app/Core/Security/Secrets/__tests__/SecretSourceControlCheckTest.php` | Test | Prove safe blocking source-control check | Secret Source Control Check | `docs/02-standards/testing/index.md` | Targeted Secrets proof | None |
+| CREATE | `app/Core/Security/Secrets/__tests__/SecretsRegistrationTest.php` | Test | Prove Security-owned Secrets registration | Security Registration Descriptor | `docs/02-standards/testing/index.md` | Targeted Secrets proof | None |
+| CREATE | `tests/Feature/Security/SecretsRedactionIntegrationTest.php` | Test | Prove Security redaction integration | Security redaction Contract | `docs/02-standards/testing/index.md` | Targeted Secrets proof | None |
+| CREATE | `tests/Feature/Security/SecretLeakagePreventionTest.php` | Test | Prove secret non-leakage | Secrets owner artifacts | `docs/02-standards/testing/index.md` | Targeted Secrets proof | None |
 
-```text
-CREATE app/Core/Security/Secrets/
-    Contracts/SecretCipherInterface.php
-
-    Data/SecretDefinitionData.php
-    Data/SecretRotationPolicyData.php
-    Data/SecretHealthPolicyData.php
-    Data/SecretOperationRequirementsData.php
-    Data/EncryptedSecretValue.php
-    Data/SecretFingerprint.php
-
-    Enums/SecretType.php
-    Enums/SecretStorageKind.php
-    Enums/SecretExposurePolicy.php
-    Enums/SecretOperation.php
-
-    ValueObjects/SecretValue.php
-
-    Encryption/LaravelSecretCipher.php
-
-    Resolvers/SecretFingerprintResolver.php
-
-    Policies/SecretOperationPolicy.php
-
-    Registry/SecretDefinitionRegistry.php
-
-    Definitions/SecretRedactionRules.php
-
-    Verification/Checks/SecretSourceControlCheck.php
-
-    Providers/SecretsServiceProvider.php
-    Registration/SecretsRegistrationDescriptor.php
-
-    config/secrets.php
-
-    __tests__/
-```
-
-### Application Registration
-
-```text
-SecretsRegistrationDescriptor
-    ↓
-Application Registration
-    ↓
-SecretsServiceProvider
-security.secret_definitions
-credential redaction contributions
-secrets.source_control check
-configuration
-```
-
-### Database
-
-Not applicable for the initial implementation.
-
-No Secrets-owned migration is created.
-
-### Presentation
-
-Not applicable for the initial implementation.
-
-No Secrets administration UI is created.
-
-### Proof-Of-Concept Cleanup
-
-Implementation should remove obsolete generic credential/secret helpers or unsafe storage paths that conflict with the accepted target model.
-
-Do not preserve an existing proof-of-concept secret mechanism merely because current code uses it.
-
-Exact `DELETE` paths should be added to the implementation issue after the target owner consuming that secret is in scope and the replacement behavior is proven.
-
-### Tests
-
-```text
-CREATE app/Core/Security/Secrets/__tests__/
-    SecretDefinitionRegistryTest.php
-    SecretStorageKindTest.php
-    SecretValueTest.php
-    LaravelSecretCipherTest.php
-    SecretFingerprintResolverTest.php
-    SecretOperationPolicyTest.php
-    SecretRedactionRulesTest.php
-    SecretSourceControlCheckTest.php
-    SecretsRegistrationTest.php
-
-CREATE tests/Feature/Security/
-    SecretsRedactionIntegrationTest.php
-    SecretLeakagePreventionTest.php
-```
-
-Later Auth/Access owner tests prove their domain-specific use of the Secrets Contracts.
+The initial implementation has no Secrets-owned database or administration UI. Obsolete proof-of-concept secret helpers or unsafe storage paths are deleted only when a bounded implementation issue identifies each target; they have no preservation requirement. Later Auth and Access tests prove their domain-specific use of the Secrets Contracts.
 
 ---
 
@@ -1225,7 +1180,11 @@ Required proof must establish:
 * decryption failure fails closed;
 * one-time values need not be stored raw;
 * controlled reveal cannot be used when exposure policy is `never` or `one_time`;
-* operation requirements are enforced structurally;
+* operation requirements are obtained structurally from `SecretDefinitionData` and do not make an authorization decision;
+* no Secrets operation-requirements authorization Policy class exists;
+* exactly one owner registration exists for `owner_key: security`;
+* no independent Secrets registration descriptor exists;
+* `SecretsServiceProvider` is registered through `SecurityRegistrationDescriptor`;
 * passwords/tokens/cookies/private-key fields are covered by credential redaction rules;
 * Secrets redaction rules integrate into Core Security without changing Audit/Monitoring implementations;
 * high-confidence committed-secret fixtures make `SecretSourceControlCheck` fail;

@@ -648,6 +648,28 @@
         align-items: center;
     }
 
+    button.ui-shell-side-nav__link {
+        min-block-size: var(--ui-shell-side-nav-row-block-size);
+        padding: 0 var(--ui-shell-header-menu-item-padding-inline);
+        text-align: start;
+        font-size: 0.875rem;
+        font-weight: var(--ui-font-weight-semibold);
+        letter-spacing: 0.1px;
+        line-height: 1.25rem;
+    }
+
+    button.ui-shell-side-nav__link:disabled {
+        cursor: not-allowed;
+        opacity: 0.6;
+    }
+
+    button.ui-shell-side-nav__link .ui-shell-side-nav__link-text {
+        overflow: hidden;
+        color: var(--ui-text-secondary);
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
     .ui-shell-side-nav__submenu {
         align-items: center;
     }

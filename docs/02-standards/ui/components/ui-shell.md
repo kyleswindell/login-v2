@@ -176,6 +176,7 @@ Use UI shell for the authenticated app frame only. The shell should be rendered 
 
 - Render the shell through the app layout and Navigation Pattern, not through feature-local markup.
 - Use `ui-shell` as the shell root.
+- Use the app layout's `workspace` header variant when a workspace requires the approved layered application appearance. The layout owns the resulting `gray-100` shell and `workspace` content theme contexts; feature views must not emit those wrappers directly.
 - Use `ui-shell__skip-link` as the first focusable item in the authenticated shell.
 - Use `ui-shell__header` for the persistent global header.
 - Use `ui-shell__brand` for the app/product name link.
@@ -426,6 +427,7 @@ Do not create feature-local Blade components with these names.
 | Header baseline          | Region                | Implemented                       | `ui-shell__header`                                             | Persistent top shell region.                                      |
 | Header only              | Layout                | Implemented / required proof      | `ui-shell--header-only`                                        | Simple shell without left panel.                                  |
 | Header with left panel   | Layout                | Implemented                       | `ui-shell--with-sidebar`                                       | Default app shell when secondary navigation is needed.            |
+| Workspace appearance    | Layout appearance     | Implemented / Pattern-owned       | App layout `headerVariant="workspace"`                        | Gray 100 header/sidebar with a Gray 10 light or Gray 90 dark canvas, a full-width guttered page header, and a left-bound Layer 01 body with a 99rem maximum content measure. |
 | Left panel               | Region                | Implemented / Pattern-owned       | `ui-shell__sidebar`                                            | Product/section navigation.                                       |
 | Account menu             | Composition           | Implemented / Menu-owned behavior | `ui-shell__account` plus Menu buttons                          | Account actions and identity access.                              |
 | Notification/action area | Composition           | Implemented                       | `ui-shell__actions` plus Icon button/Notification entry points | Header utility actions.                                           |
@@ -490,7 +492,7 @@ UI shell consumes Foundation Color, Spacing, Typography, Themes, Icons, Motion, 
 | Color       | Header surface, sidebar surface, borders, current state, hover, active, focus, icon, text, inverse/dark theme roles, and scrim/overlay roles when Pattern-owned.               |
 | Spacing     | Header height, action target spacing, nav item padding, sidebar width/gaps, skip-link offset, main content offset, mobile drawer spacing, and shell-to-content grid alignment. |
 | Typography  | Brand text, navigation labels, account labels, utility labels, sidebar group headings, and menu labels.                                                                        |
-| Themes      | Light, dark, and inverse token resolution for shell zones and nested controls.                                                                                                 |
+| Themes      | Light, dark, the installed Gray 100 shell context, the theme-responsive workspace context, and inverse token resolution for nested controls.                                |
 | Icons       | Internal icon components for menu toggle, account, notifications, help, settings, and utility actions.                                                                               |
 | Motion      | Collapse/open transitions, menu toggle feedback, sidebar reveal, scrim fade, and reduced-motion behavior.                                                                      |
 | 2x Grid     | Main content alignment, page gutters, shell offsets, sidebar/content relationship, and responsive layout zones.                                                                |

@@ -11,11 +11,13 @@ function initDataTablesLite() {
         const statusFilter = container.querySelector('[data-table-lite-filter-status]');
         const roleFilter = container.querySelector('[data-table-lite-filter-role]');
         const resetFiltersBtn = container.querySelector('[data-table-lite-filter-reset]');
-        const rowsPerPageSelect = container.querySelector('[data-table-lite-rows-per-page]');
-        const pageSelect = container.querySelector('[data-table-lite-page-select]');
-        const info = container.querySelector('[data-table-lite-info]');
-        const prevBtn = container.querySelector('[data-table-lite-prev]');
-        const nextBtn = container.querySelector('[data-table-lite-next]');
+        const rowsPerPageSelect = container.querySelector('[data-table-lite-rows-per-page], [data-ui-pagination-page-size]');
+        const pageSelect = container.querySelector('[data-table-lite-page-select], [data-ui-pagination-page-select]');
+        const info = container.querySelector('[data-table-lite-info], [data-ui-pagination-range]');
+        const prevBtn = container.querySelector('[data-table-lite-prev], [data-ui-pagination-prev]');
+        const nextBtn = container.querySelector('[data-table-lite-next], [data-ui-pagination-next]');
+        const pagination = container.querySelector('[data-ui-pagination]');
+        const totalPagesLabel = container.querySelector('[data-ui-pagination-total-pages-label]');
         const tbody = table.querySelector('tbody');
 
         if (!tbody) {
@@ -75,15 +77,19 @@ function initDataTablesLite() {
 
             if (info) {
                 const shown = total === 0 ? 0 : Math.min(end, total);
-                info.textContent = `Showing ${total === 0 ? 0 : start + 1} to ${shown} of ${total} entries`;
+                info.textContent = `${total === 0 ? 0 : start + 1}\u2013${shown} of ${total} employees`;
             }
 
             if (prevBtn) {
                 prevBtn.disabled = page <= 1;
+                prevBtn.classList.toggle('is-disabled', page <= 1);
+                prevBtn.setAttribute('aria-disabled', page <= 1 ? 'true' : 'false');
             }
 
             if (nextBtn) {
                 nextBtn.disabled = page >= pages;
+                nextBtn.classList.toggle('is-disabled', page >= pages);
+                nextBtn.setAttribute('aria-disabled', page >= pages ? 'true' : 'false');
             }
 
             if (pageSelect) {
@@ -95,12 +101,23 @@ function initDataTablesLite() {
                     desiredOptions.forEach((value) => {
                         const option = document.createElement('option');
                         option.value = `${value}`;
-                        option.textContent = `Page ${value}`;
+                        option.textContent = `${value}`;
                         pageSelect.append(option);
                     });
                 }
 
                 pageSelect.value = `${page}`;
+            }
+
+            if (totalPagesLabel) {
+                totalPagesLabel.textContent = `of ${pages} ${pages === 1 ? 'page' : 'pages'}`;
+            }
+
+            if (pagination) {
+                pagination.dataset.uiPaginationCurrent = `${page}`;
+                pagination.dataset.uiPaginationTotalPages = `${pages}`;
+                pagination.dataset.uiPaginationTotalItems = `${total}`;
+                pagination.dataset.uiPaginationPageSizeValue = `${rowsPerPage}`;
             }
         };
 

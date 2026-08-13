@@ -1,0 +1,70 @@
+/* ==========================================================================
+   File: resources/css/patterns/content-section.css
+   Purpose: Read-only content section pattern styles.
+
+   Notes:
+   - Owns the content-section surface and heading composition.
+   - Uses installed layer, border, spacing, text, and type tokens only.
+   - Does not redefine child Components or feature-specific content.
+   ========================================================================== */
+
+@layer components {
+    .ui-pattern-content-section {
+        position: relative;
+        min-inline-size: 0;
+        overflow: visible;
+        border: 1px solid var(--ui-border-subtle-01);
+        padding: var(--ui-spacing-06);
+        background-color: var(--ui-layer);
+        color: var(--ui-text-primary);
+    }
+
+    .ui-pattern-content-section-header {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: var(--ui-spacing-05);
+    }
+
+    .ui-pattern-content-section-actions {
+        display: flex;
+        flex: 0 0 auto;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: var(--ui-spacing-03);
+    }
+
+    .ui-pattern-content-section .ui-card-title {
+        color: var(--ui-text-primary);
+        font-size: var(--ui-type-heading-compact-02-font-size);
+        font-weight: var(--ui-type-heading-compact-02-font-weight);
+        line-height: var(--ui-type-heading-compact-02-line-height);
+        letter-spacing: var(--ui-type-heading-compact-02-letter-spacing);
+    }
+
+    .ui-pattern-content-section .ui-card-copy {
+        max-inline-size: 60ch;
+        margin-block-start: var(--ui-spacing-03);
+        color: var(--ui-text-secondary);
+        font-size: var(--ui-type-body-compact-01-font-size);
+        font-weight: var(--ui-type-body-compact-01-font-weight);
+        line-height: var(--ui-type-body-compact-01-line-height);
+        letter-spacing: var(--ui-type-body-compact-01-letter-spacing);
+    }
+
+    .ui-pattern-content-section .ui-kicker {
+        color: var(--ui-text-helper);
+        font-size: var(--ui-type-label-01-font-size);
+        font-weight: var(--ui-font-weight-semibold);
+        line-height: var(--ui-type-label-01-line-height);
+        letter-spacing: var(--ui-type-label-01-letter-spacing);
+        text-transform: uppercase;
+    }
+
+    @media (max-width: 41.98rem) {
+        .ui-pattern-content-section {
+            padding: var(--ui-spacing-05);
+        }
+    }
+}

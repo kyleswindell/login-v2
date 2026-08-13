@@ -59,6 +59,7 @@
     :logs-navigation="$logsNavigation"
     :setup-base-navigation="$setupBaseNavigation"
     :setup-admin-navigation="$setupAdminNavigation"
+    :data-ui-theme="$usesWorkspaceShell ? 'gray-100' : null"
 >
     @if ($hasCustomSidebar)
         {{ $sidebar }}
@@ -70,6 +71,7 @@
     -------------------------------------------------------------------------- --}}
 
 <x-shell.content
+    :class="$usesWorkspaceShell ? 'ui-shell-content--workspace' : null"
     :id="$mainContentId"
     :page-title="$pageTitle"
     :page-subtitle="$pageSubtitle"
@@ -77,6 +79,7 @@
     :tab-items="$tabItems"
     :tabs-label="$tabsLabel"
     :reserve-page-tabs="$reservePageTabs"
+    :data-ui-theme="$usesWorkspaceShell ? 'workspace' : null"
 >
     {{-- ----------------------------------------------------------------------
         Optional page header override

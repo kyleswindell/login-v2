@@ -1,6 +1,14 @@
-@php
-    use Illuminate\Support\HtmlString;
+{{-- ==========================================================================
+    File: Modules/Preferences/resources/views/personal-defaults.blade.php
+    Purpose: Account preferences page.
 
+    Notes:
+    - Uses route/page tabs from the app layout for account page navigation.
+    - Uses x-patterns.account.section-tabs for local preference sections.
+    - Suppresses local tab chrome when only one panel is supplied.
+    ========================================================================== --}}
+
+@php
     $timezoneLabel = collect($timezoneOptions)->firstWhere('value', $user->timezone)['label'] ?? ($user->timezone ?: 'Not set');
     $languageLabel = collect($localeOptions)->firstWhere('value', $user->default_language)['label'] ?? ($user->default_language ?: 'Not set');
     $themeLabels = [
@@ -10,18 +18,19 @@
     ];
     $themeLabel = $themeLabels[$user->theme_preference ?? 'system'] ?? 'System';
 
-    $personalDefaultsTabs = [
+    $preferencePanels = [
         [
+            'key' => 'personal-defaults',
             'id' => 'account-preferences-personal-defaults-tab',
             'panel_id' => 'account-preferences-personal-defaults-panel',
             'label' => 'Personal defaults',
-            'panel_title' => null,
             'selected' => true,
-            'panel' => new HtmlString(view('preferences::partials.personal-defaults', [
+            'view' => 'preferences::partials.personal-defaults',
+            'data' => [
                 'timezoneLabel' => $timezoneLabel,
                 'languageLabel' => $languageLabel,
                 'themeLabel' => $themeLabel,
-            ])->render()),
+            ],
         ],
     ];
 @endphp
@@ -37,38 +46,29 @@
     <x-ui.grid-column
         tag="section"
         span="100"
-        lg="12"
-        xlg="10"
-        max="8"
+        lg="16"
+        xlg="14"
+        max="12"
         data-account-preferences-page
     >
-        <x-ui.grid subgrid row-gap>
+        <x-ui.v-stack :gap="6">
             @if (session('success'))
-                <x-ui.grid-column span="100">
-                    <x-ui.notification.inline kind="success" title="Preferences saved">
-                        {{ session('success') }}
-                    </x-ui.notification.inline>
-                </x-ui.grid-column>
+                <x-ui.notification.inline kind="success" title="Preferences saved">
+                    {{ session('success') }}
+                </x-ui.notification.inline>
             @endif
 
             @if ($errors->any())
-                <x-ui.grid-column span="100">
-                    <x-patterns.validation-summary :errors="$errors->all()" />
-                </x-ui.grid-column>
+                <x-patterns.validation-summary :errors="$errors->all()" />
             @endif
 
-            <x-ui.grid-column span="100">
-                <x-ui.tabs
-                    id="account-preferences-tabs"
-                    label="Preference sections"
-                    :tabs="$personalDefaultsTabs"
-                    orientation="vertical"
-                    variant="line"
-                    grid-aware
-                    data-account-preferences-tabs
-                />
-            </x-ui.grid-column>
-        </x-ui.grid>
+            <x-patterns.account.section-tabs
+                id="account-preferences-tabs"
+                label="Preference sections"
+                :panels="$preferencePanels"
+                data-account-preferences-tabs
+            />
+        </x-ui.v-stack>
 
         @include('preferences::partials.modals.edit-personal-defaults', [
             'user' => $user,

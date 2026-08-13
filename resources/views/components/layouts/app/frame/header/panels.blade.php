@@ -12,12 +12,14 @@
 @props([
     'showSwitcher' => true,
     'switcherPanelId' => 'app-header-switcher-panel',
+    'theme' => null,
 ])
 
 @if ($showSwitcher)
     <x-shell.header.panel
         :id="$switcherPanelId"
         label="App switcher"
+        :data-ui-theme="$theme"
     >
         @isset($switcher)
             {{ $switcher }}

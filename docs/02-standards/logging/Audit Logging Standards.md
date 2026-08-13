@@ -127,7 +127,63 @@ An audit event should support applicable:
 
 Do not store raw credentials, private keys, reusable tokens, authorization headers, cookies, MFA material, or secret-bearing certificates.
 
-## 7. Results
+## 7. Severity
+
+Audit uses the shared severity vocabulary defined by [Logging Standards](Logging%20Standards.md):
+
+```text
+informational
+low
+medium
+high
+critical
+```
+
+The domain owner that defines the Audit event semantics supplies the event severity. Audit validates the value, persists it, and exposes it through Audit evidence and query Contracts.
+
+Audit must not infer severity solely from Result, event key, `is_security_event`, HTTP status, Monitoring severity, or framework logging level.
+
+Valid examples:
+
+```text
+secrets.secret_revealed
+result: succeeded
+severity: high
+
+auth.login_failed
+result: failed
+severity: low
+
+security.control_disabled
+result: succeeded
+severity: critical
+```
+
+A successful event may be high or critical. A failed or denied event may be informational or low.
+
+`is_security_event` and severity are independent:
+
+```text
+is_security_event
+    = security classification
+
+severity
+    = significance
+```
+
+Result and severity are independent:
+
+```text
+result
+    = outcome
+
+severity
+    = significance
+```
+
+Audit severity must not itself route alerts. Monitoring and Threat Detection own operational or security attention and alert-triggering behavior.
+
+## 8. Results
 
 Use consistent values such as:
 
@@ -139,7 +195,7 @@ Use consistent values such as:
 
 A failed expected authorization decision is not automatically an operational error.
 
-## 8. Scope
+## 9. Scope
 
 Tenant-owned events must identify Tenant and Instance.
 
@@ -152,7 +208,7 @@ Global Administration events must preserve:
 - target Instance
 - explicit cross-Instance Action and Target
 
-## 9. Causal Attribution
+## 10. Causal Attribution
 
 When an operation continues asynchronously, retain applicable correlation and initiating Principal evidence while attributing the current execution to its actual Principal.
 
@@ -167,7 +223,7 @@ Action: report.generated
 
 Do not overwrite the current Actor with the original User Account when a Workload Identity performs the operation.
 
-## 10. After Commit
+## 11. After Commit
 
 Successful mutation events must be recorded after commit.
 
@@ -175,7 +231,7 @@ Rolled-back changes must not leave successful audit events.
 
 Failure and denial events may be recorded outside the mutation transaction when required.
 
-## 11. Change Sets And Redaction
+## 12. Change Sets And Redaction
 
 Record only fields required for accountability.
 
@@ -183,7 +239,7 @@ Mark sensitive fields and redact values.
 
 Preserve safe display labels where raw values are prohibited.
 
-## 12. Required Coverage
+## 13. Required Coverage
 
 Audit applicable:
 
@@ -202,13 +258,13 @@ Audit applicable:
 - privacy and retention workflows
 - business-domain mutations
 
-## 13. Immutability
+## 14. Immutability
 
 Audit records must not be editable through normal application workflows.
 
 Corrections should append explanatory evidence rather than rewrite history.
 
-## 14. Access, Export, And Retention
+## 15. Access, Export, And Retention
 
 Audit access and export require explicit permissions and Tenant Instance scope.
 
@@ -216,7 +272,7 @@ Sensitive evidence exports require private storage, recent authentication when a
 
 Retention must preserve security and accountability needs while applying privacy, erasure, and legal-hold rules.
 
-## 15. Tests
+## 16. Tests
 
 Verify:
 
@@ -233,7 +289,7 @@ Verify:
 - evidence access
 - jobs and commands are not stored as Principal types
 
-## 16. Related
+## 17. Related
 
 - [ADR-0006](../../01-decisions/adr-0006-tenant-instance-workspace-principal-and-invocation-vocabulary.md)
 - [Logging Standards](Logging%20Standards.md)

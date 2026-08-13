@@ -142,7 +142,7 @@ The installed standard is:
 | ----------------------- | ------------------------------------------------------------------------------------------- | --------------------------------------- | ---------------------------------------------------------------------------- |
 | Root defaults           | Base CSS variable values on `:root`                                                         | Themes Element API                      | Defines default fallback values for the app.                                 |
 | Resolved document theme | `html[data-theme-resolved="light"]` and `html[data-theme-resolved="dark"]`                  | Theme resolver / app shell              | The document-level theme state.                                              |
-| Inline theme context    | Scoped wrapper such as `[data-ui-theme="light"]` or `[data-ui-theme="dark"]` when installed | Pattern API or documented theme wrapper | Use only when a nested region intentionally differs from the page theme.     |
+| Inline theme context    | Scoped wrapper such as `[data-ui-theme="workspace"]` or `[data-ui-theme="gray-100"]` when installed | Pattern API or documented theme wrapper | Use only when a nested region intentionally differs from the page theme.     |
 | Inverse context         | Scoped wrapper or component-owned inverse surface                                           | Pattern API or component owner          | Use for shell, tooltip, overlay, or high-contrast moments only.              |
 | High-contrast context   | App-approved high-contrast wrapper or OS/browser compatibility layer                        | Themes + Accessibility owner            | Must preserve text, border, icon, focus, and semantic meaning.               |
 | Component-local value   | Component-specific variable inside a Component API                                          | Component owner                         | Allowed only when documented by that component and backed by Element tokens. |
@@ -226,7 +226,8 @@ Feature-local fixes such as `style="color: #fff"` or `.reports-dark-card { backg
 | Theme root fallback    | `:root`                                                                                        | Global app CSS only                                              | Base token values before resolved theme applies.                      |
 | Light resolved context | `html[data-theme-resolved="light"]`                                                            | App shell and global theme resolver                              | Primary light experience.                                             |
 | Dark resolved context  | `html[data-theme-resolved="dark"]`                                                             | App shell and global theme resolver                              | Primary dark experience where enabled.                                |
-| Inline theme wrapper   | `[data-ui-theme="light"]` / `[data-ui-theme="dark"]` when installed                            | Pattern-owned nested theme context                               | A dark panel inside a light page when approved.                       |
+| Workspace theme wrapper | `[data-ui-theme="workspace"]`                                                                    | App layout / Navigation Pattern                                  | Resolves the workspace canvas to Gray 10 in light mode and Gray 90 in dark mode. |
+| Gray 100 shell wrapper  | `[data-ui-theme="gray-100"]`                                                                     | App layout / Navigation Pattern                                  | Keeps the global header, sidebar, and owned shell panels on the approved high-contrast shell context. |
 | Inverse wrapper        | `[data-ui-theme="inverse"]` or component-owned inverse class when installed                    | Tooltip, shell, overlay, or high-contrast moment                 | Inverse text/icon/border/focus roles.                                 |
 | Theme surfaces         | `--ui-surface`, `--ui-surface-elevated`                                                        | `ui-card`, shell cards, layout surfaces                          | `<section class="ui-card">...</section>`                              |
 | Theme layers           | `--ui-layer-01`, `--ui-layer-02`, `--ui-layer-03`, `--ui-layer-04`, `--ui-layer-05`             | Cards, nested panels, menus, overlays                            | `<aside style="background-color: var(--ui-layer-02);">...</aside>`    |
@@ -267,7 +268,7 @@ Use only the CSS variables and token aliases listed in the Token API table or th
 | `:root`                             | Implemented             | Safe fallback values.                                             | Theme-specific values that should live under a resolved theme selector. |
 | `html[data-theme-resolved="light"]` | Implemented             | Light theme values.                                               | Feature-specific overrides.                                             |
 | `html[data-theme-resolved="dark"]`  | Implemented / expanding | Dark theme values.                                                | Component fixes that bypass the component API.                          |
-| Scoped theme wrapper                | Partial                 | Inline/inverse values approved by this standard or a Pattern API. | New wrappers created inside feature views.                              |
+| Scoped theme wrapper                | Implemented / Pattern-owned | `workspace` and `gray-100` contexts emitted by the app layout; other inline/inverse values require approval. | New wrappers created inside feature views.                              |
 | Component CSS namespace             | Component-owned         | Component-local variables backed by Element roles.                | New theme systems or raw colors.                                        |
 | Pattern CSS namespace               | Pattern-owned           | Pattern composition variables backed by Element roles.            | Local theme overrides hidden in feature pages.                          |
 
@@ -306,6 +307,8 @@ Allowed utility classes, Blade helpers, and component wrappers are those listed 
 | ----------------------------------- | -------------------------------- | ---------------------------------------------------------------- |
 | `html[data-theme-resolved="light"]` | Implemented                      | Document-level resolved light theme.                             |
 | `html[data-theme-resolved="dark"]`  | Implemented / expanding          | Document-level resolved dark theme.                              |
+| `[data-ui-theme="workspace"]`       | Implemented / Pattern-owned      | Theme-responsive workspace canvas emitted by the app layout.     |
+| `[data-ui-theme="gray-100"]`        | Implemented / Pattern-owned      | Fixed high-contrast shell context emitted by the app layout.     |
 | `[data-ui-theme="light"]`           | Partial / gated                  | Scoped inline light context only if the wrapper is installed.    |
 | `[data-ui-theme="dark"]`            | Partial / gated                  | Scoped inline dark context only if the wrapper is installed.     |
 | `[data-ui-theme="inverse"]`         | Partial / gated                  | Inverse surface only through approved Component or Pattern APIs. |
@@ -400,7 +403,7 @@ Every theme-aware Component or Pattern must document:
 
 | Pattern               | Required theme behavior                                                                                      |
 | --------------------- | ------------------------------------------------------------------------------------------------------------ |
-| App shell             | Owns document-level theme context and shell-specific inverse/dark regions.                                   |
+| App shell             | Owns document-level theme context and the installed `gray-100` shell plus `workspace` content contexts.      |
 | Forms                 | Ensures label, helper, validation, required, disabled, and read-only states work in each supported context.  |
 | Overlays and feedback | Owns scrim, modal/drawer/popover depth, notification stack, focus return, and inverse/high-contrast moments. |
 | Documentation pages   | Ensures code snippets, reference cards, tables, and live examples remain readable.                           |

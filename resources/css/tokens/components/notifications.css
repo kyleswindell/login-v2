@@ -384,7 +384,8 @@
        ---------------------------------------------------------------------- */
 
     html[data-theme-resolved="gray-100"],
-    [data-theme-resolved="gray-100"] {
+    [data-theme-resolved="gray-100"],
+    [data-ui-theme="gray-100"] {
         --ui-notification-background-error: var(--ui-gray-90);
         --ui-notification-background-success: var(--ui-gray-90);
         --ui-notification-background-info: var(--ui-gray-90);

@@ -12,7 +12,8 @@ Notes:
 
 @layer base {
     html[data-theme-resolved="gray-100"],
-    [data-theme-resolved="gray-100"] {
+    [data-theme-resolved="gray-100"],
+    [data-ui-theme="gray-100"] {
         /* ------------------------------------------------------------------
 Scheme
 ------------------------------------------------------------------ */

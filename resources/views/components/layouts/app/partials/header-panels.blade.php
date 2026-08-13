@@ -8,6 +8,9 @@
       views and data providers.
 ========================================================================== --}}
 
-<x-layouts.app.frame.header.panels :show-switcher="$showHeaderSwitcher" />
+<x-layouts.app.frame.header.panels
+    :show-switcher="$showHeaderSwitcher"
+    :theme="$usesWorkspaceShell ? 'gray-100' : null"
+/>
 
 @includeIf ("notifications::runtime.toasts")

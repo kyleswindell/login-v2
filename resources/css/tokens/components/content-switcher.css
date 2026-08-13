@@ -51,7 +51,8 @@ Content switcher component tokens: white theme
    Content switcher component tokens: gray 100 theme
    ---------------------------------------------------------------------- */
     html[data-theme-resolved="gray-100"],
-    [data-theme-resolved="gray-100"] {
+    [data-theme-resolved="gray-100"],
+    [data-ui-theme="gray-100"] {
         --ui-content-switcher-selected: rgb(var(--ui-gray-50-rgb) / 0.24);
         --ui-content-switcher-background: rgb(var(--ui-black-rgb) / 0);
         --ui-content-switcher-background-hover: rgb(

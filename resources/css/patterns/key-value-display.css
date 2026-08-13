@@ -1,0 +1,33 @@
+/* ==========================================================================
+   File: resources/css/patterns/key-value-display.css
+   Purpose: Read-only key/value display pattern styles.
+
+   Notes:
+   - Owns key/value label and value hierarchy only.
+   - Layout columns remain owned by the Blade pattern composition.
+   - Uses installed text, spacing, and type tokens only.
+   ========================================================================== */
+
+@layer components {
+    .ui-pattern-key-value-display {
+        min-inline-size: 0;
+    }
+
+    .ui-pattern-key-value-label {
+        color: var(--ui-text-secondary);
+        font-size: var(--ui-type-label-01-font-size);
+        font-weight: var(--ui-font-weight-semibold);
+        line-height: var(--ui-type-label-01-line-height);
+        letter-spacing: var(--ui-type-label-01-letter-spacing);
+        text-transform: uppercase;
+    }
+
+    .ui-pattern-key-value-value {
+        margin-block-start: var(--ui-spacing-03);
+        color: var(--ui-text-primary);
+        font-size: var(--ui-type-body-compact-01-font-size);
+        font-weight: var(--ui-type-body-compact-01-font-weight);
+        line-height: var(--ui-type-body-compact-01-line-height);
+        letter-spacing: var(--ui-type-body-compact-01-letter-spacing);
+    }
+}

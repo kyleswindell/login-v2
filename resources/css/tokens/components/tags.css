@@ -193,7 +193,8 @@ Tag component tokens: white theme
    Tag component tokens: gray 100 theme
    ---------------------------------------------------------------------- */
     html[data-theme-resolved="gray-100"],
-    [data-theme-resolved="gray-100"] {
+    [data-theme-resolved="gray-100"],
+    [data-ui-theme="gray-100"] {
         --ui-tag-background-red: var(--ui-red-70);
         --ui-tag-color-red: var(--ui-red-20);
         --ui-tag-hover-red: var(--ui-red-70-hover);

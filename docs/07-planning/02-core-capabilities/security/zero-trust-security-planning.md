@@ -235,17 +235,20 @@ Initial uses:
 
 For this Laravel app, network segmentation maps to application-layer route segmentation.
 
-Route tiers:
+Route security profiles are defined by [Zero Trust Security Standards](../../../02-standards/security/Zero%20Trust%20Security%20Standards.md); this planning document consumes rather than owns that vocabulary:
 
-| Tier | Segment | Baseline Controls |
-| --- | --- | --- |
-| 0 | Public | no session required; rate limiting where needed |
-| 1 | Authenticated | `auth`, `identity.active`, MFA when required |
-| 2 | Protected business | auth, active identity, MFA where required, policy/resource authorization |
-| 3 | Admin | auth, active identity, MFA, admin permission |
-| 4 | Sensitive admin | auth, active identity, MFA, recent auth, permission, audit |
-| 5 | Restricted data movement | auth, active identity, MFA, recent auth, permission, reason, private storage/signed URL where applicable, audit, monitoring |
-| 6 | Service/nonhuman | service identity, scoped permissions, secret/signature verification, audit |
+| Profile | Minimum posture |
+| --- | --- |
+| `public` | No authenticated Principal; no protected state exposure; applicable validation, request-forgery, rate, and abuse controls remain required. |
+| `guest` | Explicit interactive guest behavior; may reject authenticated sessions; applicable enumeration, validation, request-forgery, and rate controls remain required. |
+| `authenticated` | Valid authenticated human session and applicable active-account posture; no action or target authority is implied. |
+| `protected` | Authenticated baseline plus action, target, and scope authorization. |
+| `administrative` | Protected baseline plus explicit administrative authority and MFA-level assurance. |
+| `sensitive` | Risk-appropriate authorization plus MFA and recent authentication; owner requirements may add reason, approval, elevated access, Audit, or Monitoring. |
+| `restricted_data` | Sensitive baseline plus restricted-data movement or access controls, DataProtection, and separate export authorization where applicable. |
+| `service` | Protected machine-to-machine interaction with explicit identity or provider verification, scoped authorization, request validation, rate or abuse controls, and revocation. |
+
+API and webhook delivery are Invocation Channels, signed URLs are integrity mechanisms, and request-forgery protection, rate limiting, replay protection, idempotency, owner authorization, DataProtection, reason, approval, Audit, and Monitoring remain orthogonal requirements.
 
 ### Applications And Workloads
 
@@ -507,13 +510,12 @@ Do not leak detailed authorization internals in user-facing denial messages. Put
 
 ### 1. Standard And Vocabulary
 
-- Create `docs/02-standards/security/zero-trust.md`.
-- Define default deny, continuous validation, least privilege, breach assumption, route tiers, trust decisions, and step-up rules.
+- Consume [Zero Trust Security Standards](../../../02-standards/security/Zero%20Trust%20Security%20Standards.md) for default deny, continuous validation, least privilege, breach assumption, route-security profiles, trust decisions, and step-up rules.
 
-### 2. Route Sensitivity Tiers
+### 2. Route Security Profiles
 
-- Align route tiers with Application Security.
-- Mark sensitive admin and restricted data movement routes.
+- Align Application Security with the canonical route-security profiles.
+- Identify the first concrete `sensitive` actions and `restricted_data` movement or access actions.
 - Avoid relying on hidden navigation as security.
 
 ### 3. Request Security Context
@@ -523,7 +525,7 @@ Do not leak detailed authorization internals in user-facing denial messages. Put
 
 ### 4. Recent Auth And MFA Step-Up
 
-- Apply `auth.recent` to Tier 4 and Tier 5 actions.
+- Apply recent-authentication requirements to `sensitive` and `restricted_data` routes and actions according to the accepted Auth and owner requirements.
 - Require MFA or re-challenge where policy says the session proof is not strong enough.
 
 ### 5. Context-Aware Access Resolver
@@ -586,14 +588,14 @@ Expected future tests:
 - Do not treat role assignment as unlimited scope.
 - Do not let view permissions imply export permissions.
 - Do not let background jobs or service actors bypass policy/audit requirements.
-- Do not add risk scoring before deterministic route tiers, step-up rules, audit events, and monitoring baselines exist.
+- Do not add risk scoring before deterministic route-security profiles, step-up rules, audit events, and monitoring baselines exist.
 
 ## Open Decisions
 
-- Which route tier vocabulary should be canonical in standards?
-- Which Tier 4 and Tier 5 actions require `auth.recent` first?
+- Which concrete actions first consume `sensitive`?
+- Which concrete actions first consume `restricted_data`?
 - Which actions require MFA re-challenge instead of only recent password confirmation?
-- Should `RequestSecurityContext` be introduced immediately or after route tiers and recent-auth rules exist?
+- Should `RequestSecurityContext` be introduced immediately or after route-security profiles and recent-auth rules exist?
 - What is the first trust decision beyond allow/deny worth implementing?
 - Which access-denied and step-up events should be audited on day one?
 - Which monitoring signals should be created first?
@@ -601,7 +603,7 @@ Expected future tests:
 ## Out Of Scope
 
 - implementing Zero Trust code in this pass
-- creating the Zero Trust standard in this pass
+- changing the Zero Trust standard outside an accepted canonical-policy update
 - creating risk scoring in this pass
 - creating trusted-device behavior in this pass
 - creating service-account/API-token behavior in this pass

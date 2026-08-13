@@ -5,7 +5,7 @@
     Notes:
     - Composes the base shell header primitives into the app-level header.
     - Keeps app-specific header decisions out of resources/views/components/shell.
-    - Supports a default header, minimal header, and bare header variant.
+    - Supports default, workspace, docs, minimal, and bare header variants.
     - Navigation content may be passed through the default slot or navigation slot.
     - Header global actions may be passed through the actions slot.
     ========================================================================== --}}

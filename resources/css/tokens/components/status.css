@@ -79,7 +79,8 @@ Status component tokens: white theme
    Status component tokens: gray 100 theme
    ---------------------------------------------------------------------- */
     html[data-theme-resolved="gray-100"],
-    [data-theme-resolved="gray-100"] {
+    [data-theme-resolved="gray-100"],
+    [data-ui-theme="gray-100"] {
         --ui-status-red: var(--ui-red-50);
         --ui-status-orange: var(--ui-orange-40);
         --ui-status-yellow: var(--ui-yellow-30);

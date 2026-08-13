@@ -100,8 +100,7 @@ Obsolete proof-of-concept artifacts may be explicitly deleted during implementat
 | `ConsoleInvocationSubscriber`       | Manual command root lifecycle                           | `app/Core/Runtime/Listeners/ConsoleInvocationSubscriber.php`          |
 | `ScheduledInvocationSubscriber`     | Per-scheduled-task root lifecycle                       | `app/Core/Runtime/Listeners/ScheduledInvocationSubscriber.php`        |
 | `InvalidInvocationContextException` | Missing or malformed Runtime-state integration failure  | `app/Core/Runtime/Exceptions/InvalidInvocationContextException.php`   |
-| `RuntimeServiceProvider`            | Runtime bindings and Laravel lifecycle integration      | `app/Core/Runtime/Providers/RuntimeServiceProvider.php`               |
-| `RuntimeRegistrationDescriptor`     | Declare Runtime Provider to Application Registration    | `app/Core/Runtime/Registration/RuntimeRegistrationDescriptor.php`     |
+| `RuntimeServiceProvider`            | Runtime registration declaration, bindings, and Laravel lifecycle integration | `app/Core/Runtime/Providers/RuntimeServiceProvider.php` |
 
 No generic Runtime Service, Registry, persistence layer, or context bag is required.
 
@@ -481,26 +480,42 @@ External propagation is added only when a concrete integration defines:
 Runtime declares its Laravel integration through Application Registration.
 
 ```text
-RuntimeRegistrationDescriptor
+RuntimeServiceProvider
+    ├── RegistrationDescriptorInterface declaration
     ↓
 Application Registration Compiler
     ↓
 Compiled Registration Manifest
     ↓
-Application Registration root composition
+Root Application Registrar
     ↓
-RuntimeServiceProvider
+RuntimeServiceProvider registered into Laravel
 ```
 
-`RuntimeRegistrationDescriptor` declares:
+`RuntimeServiceProvider` implements `RegistrationDescriptorInterface`. Its static, declarative `registration()` method returns `RegistrationDescriptorData` with:
 
-* owner identity: `runtime`;
-* `RuntimeServiceProvider`;
-* applicable registration dependencies.
+```text
+owner_key: runtime
+ownership_area: core
+dependencies: none
+registrations:
+  - RuntimeServiceProvider
+  - applicable Runtime middleware, subscribers, and framework lifecycle integration
+```
+
+This one static declaration is Runtime's only owner registration declaration. It must not execute Runtime behavior, query persistence, or perform Laravel bindings while the compiler evaluates it.
+
+`bootstrap/registration.php` names:
+
+```text
+App\Core\Runtime\Providers\RuntimeServiceProvider
+```
+
+as Runtime's explicit base-application descriptor source. Runtime does not modify `bootstrap/registration.php`; Application Registration owns root composition.
 
 Runtime does not directly add `RuntimeServiceProvider` to `bootstrap/providers.php`.
 
-`RuntimeServiceProvider` owns Runtime-specific Laravel integration after it has been registered, including:
+After Laravel registers it through the compiled manifest, `RuntimeServiceProvider` owns Runtime-specific bindings and lifecycle integration, including:
 
 * `InvocationContextInterface` binding;
 * Runtime lifecycle subscriber registration;
@@ -512,30 +527,29 @@ Application Registration owns composition only and does not absorb Runtime behav
 
 ## 10. Implementation Manifest
 
-| Change | Path                                                                  | Responsibility                                                      |
-| ------ | --------------------------------------------------------------------- | ------------------------------------------------------------------- |
-| DELETE | `app/Core/Runtime/Context.php`                                        | Remove obsolete proof-of-concept application-context implementation |
-| DELETE | `app/Core/Runtime/Resolver.php`                                       | Remove obsolete proof-of-concept application-context resolver       |
-| CREATE | `app/Core/Runtime/Data/Invocation.php`                                | Immutable public Invocation                                         |
-| CREATE | `app/Core/Runtime/Enums/InvocationChannel.php`                        | Canonical Invocation Channels                                       |
-| CREATE | `app/Core/Runtime/Enums/InvocationContextKey.php`                     | Internal Laravel Context keys                                       |
-| CREATE | `app/Core/Runtime/Contracts/InvocationContextInterface.php`           | Public Runtime read Contract                                        |
-| CREATE | `app/Core/Runtime/Resolvers/CurrentInvocationResolver.php`            | Validate and reconstruct current Invocation                         |
-| CREATE | `app/Core/Runtime/Coordinators/InvocationLifecycleCoordinator.php`    | Invocation creation and cleanup                                     |
-| CREATE | `app/Core/Runtime/Exceptions/InvalidInvocationContextException.php`   | Runtime integration failure                                         |
-| CREATE | `app/Core/Runtime/Http/Middleware/InitializeInvocationMiddleware.php` | HTTP root lifecycle                                                 |
-| CREATE | `app/Core/Runtime/Listeners/QueueInvocationSubscriber.php`            | Queue/Event-consumer lifecycle                                      |
-| CREATE | `app/Core/Runtime/Listeners/ConsoleInvocationSubscriber.php`          | Console lifecycle                                                   |
-| CREATE | `app/Core/Runtime/Listeners/ScheduledInvocationSubscriber.php`        | Scheduler lifecycle                                                 |
-| CREATE | `app/Core/Runtime/Providers/RuntimeServiceProvider.php`               | Runtime bindings and Laravel integration                            |
-| CREATE | `app/Core/Runtime/Registration/RuntimeRegistrationDescriptor.php`     | Runtime Application Registration declaration                        |
-| CREATE | `app/Core/Runtime/__tests__/InvocationTest.php`                       | Invocation/enum Contract                                            |
-| CREATE | `app/Core/Runtime/__tests__/InvocationContextTest.php`                | Context reconstruction and validation                               |
-| CREATE | `app/Core/Runtime/__tests__/HttpInvocationTest.php`                   | HTTP lifecycle                                                      |
-| CREATE | `app/Core/Runtime/__tests__/QueueInvocationTest.php`                  | Queue propagation, child derivation, retry, and isolation           |
-| CREATE | `app/Core/Runtime/__tests__/ConsoleInvocationTest.php`                | Console lifecycle                                                   |
-| CREATE | `app/Core/Runtime/__tests__/ScheduledInvocationTest.php`              | Scheduler lifecycle                                                 |
-| CREATE | `app/Core/Runtime/__tests__/RuntimeRegistrationTest.php`              | Application Registration integration                                |
+| Change | Path | Archetype | Responsibility | Dependencies | Requirement Source | Verification | Compatibility |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| DELETE | `app/Core/Runtime/Context.php` | Obsolete proof-of-concept artifact | Remove generic application context | None | `docs/03-architecture/public-contract-and-interaction-model.md` | Runtime architecture static validation | Delete obsolete proof-of-concept artifact; no preservation requirement |
+| DELETE | `app/Core/Runtime/Resolver.php` | Obsolete proof-of-concept artifact | Remove obsolete generic context resolver | None | `docs/03-architecture/public-contract-and-interaction-model.md` | Runtime architecture static validation | Delete obsolete proof-of-concept artifact; no preservation requirement |
+| CREATE | `app/Core/Runtime/Data/Invocation.php` | Data Object | Expose immutable five-field Invocation | `InvocationChannel` | `docs/03-architecture/public-contract-and-interaction-model.md` | Invocation Contract test | None |
+| CREATE | `app/Core/Runtime/Enums/InvocationChannel.php` | Enum | Define canonical Invocation channels | None | `docs/03-architecture/public-contract-and-interaction-model.md` | Invocation Contract test | None |
+| CREATE | `app/Core/Runtime/Enums/InvocationContextKey.php` | Enum | Define internal Laravel Context keys | Laravel Context | `docs/03-architecture/public-contract-and-interaction-model.md` | Invocation Context test | None |
+| CREATE | `app/Core/Runtime/Contracts/InvocationContextInterface.php` | Contract | Expose current Invocation read boundary | `Invocation` | `docs/03-architecture/public-contract-and-interaction-model.md` | Invocation Context test | None |
+| CREATE | `app/Core/Runtime/Resolvers/CurrentInvocationResolver.php` | Resolver | Validate and reconstruct current Invocation | `InvocationContextInterface`, Laravel Context | `docs/03-architecture/public-contract-and-interaction-model.md` | Invocation Context test | None |
+| CREATE | `app/Core/Runtime/Coordinators/InvocationLifecycleCoordinator.php` | Coordinator | Create, derive, and clear Invocation state | `Invocation`, Laravel Context | `docs/03-architecture/public-contract-and-interaction-model.md` | Runtime lifecycle tests | None |
+| CREATE | `app/Core/Runtime/Exceptions/InvalidInvocationContextException.php` | Exception | Signal invalid Runtime state | None | `docs/03-architecture/public-contract-and-interaction-model.md` | Invocation Context test | None |
+| CREATE | `app/Core/Runtime/Http/Middleware/InitializeInvocationMiddleware.php` | Middleware | Establish HTTP root lifecycle | `InvocationLifecycleCoordinator` | `docs/03-architecture/public-contract-and-interaction-model.md` | HTTP Invocation test | None |
+| CREATE | `app/Core/Runtime/Listeners/QueueInvocationSubscriber.php` | Listener | Establish queue and Event-consumer child lifecycle | `InvocationLifecycleCoordinator` | `docs/03-architecture/public-contract-and-interaction-model.md` | Queue Invocation test | None |
+| CREATE | `app/Core/Runtime/Listeners/ConsoleInvocationSubscriber.php` | Listener | Establish manual command lifecycle | `InvocationLifecycleCoordinator` | `docs/03-architecture/public-contract-and-interaction-model.md` | Console Invocation test | None |
+| CREATE | `app/Core/Runtime/Listeners/ScheduledInvocationSubscriber.php` | Listener | Establish scheduled-task lifecycle | `InvocationLifecycleCoordinator` | `docs/03-architecture/public-contract-and-interaction-model.md` | Scheduled Invocation test | None |
+| CREATE | `app/Core/Runtime/Providers/RuntimeServiceProvider.php` | Provider and Registration Descriptor | Declare Runtime registration and bind Runtime lifecycle services | `RegistrationDescriptorInterface`, `RegistrationDescriptorData`, Laravel Provider API | `docs/03-architecture/application-registration.md` | Runtime Service Provider registration proof | None |
+| CREATE | `app/Core/Runtime/__tests__/InvocationTest.php` | Test | Prove Invocation and channel Contract | Runtime public types | `docs/02-standards/testing/index.md` | Targeted Runtime test | None |
+| CREATE | `app/Core/Runtime/__tests__/InvocationContextTest.php` | Test | Prove Context reconstruction and validation | `InvocationContextInterface` | `docs/02-standards/testing/index.md` | Targeted Runtime test | None |
+| CREATE | `app/Core/Runtime/__tests__/HttpInvocationTest.php` | Test | Prove HTTP lifecycle | Runtime middleware | `docs/02-standards/testing/index.md` | Targeted Runtime test | None |
+| CREATE | `app/Core/Runtime/__tests__/QueueInvocationTest.php` | Test | Prove queue propagation, derivation, retry, and isolation | Queue subscriber | `docs/02-standards/testing/index.md` | Targeted Runtime test | None |
+| CREATE | `app/Core/Runtime/__tests__/ConsoleInvocationTest.php` | Test | Prove console lifecycle | Console subscriber | `docs/02-standards/testing/index.md` | Targeted Runtime test | None |
+| CREATE | `app/Core/Runtime/__tests__/ScheduledInvocationTest.php` | Test | Prove scheduler lifecycle | Scheduled subscriber | `docs/02-standards/testing/index.md` | Targeted Runtime test | None |
+| CREATE | `app/Core/Runtime/__tests__/RuntimeServiceProviderRegistrationTest.php` | Test | Prove Runtime's single declarative registration source | `RuntimeServiceProvider`, Application Registration Contract | `docs/03-architecture/application-registration.md` | Provider registration architecture proof | None |
 
 No migration, Model, Blade, CSS, JavaScript, route behavior, or Runtime configuration file is required.
 
@@ -563,6 +577,10 @@ Required implementation proof must establish:
 * consumers cannot access a generic Runtime key/value API;
 * Runtime owns no database or UI;
 * Runtime Provider is composed through Application Registration rather than direct root bootstrap registration;
+* `RuntimeServiceProvider` fulfills `RegistrationDescriptorInterface`;
+* Runtime exposes exactly one registration declaration;
+* no separate Runtime registration-descriptor class exists;
+* `RuntimeServiceProvider` is not directly registered in `bootstrap/providers.php`;
 * obsolete proof-of-concept Runtime context artifacts are removed.
 
 ### Non-Goals

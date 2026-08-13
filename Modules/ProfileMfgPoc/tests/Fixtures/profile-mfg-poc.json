@@ -1,0 +1,531 @@
+{
+    "schema_version": 1,
+    "snapshot_date": "2026-08-12",
+    "customers": [
+        {
+            "id": "CUST-001",
+            "name": "Northstar Automotive",
+            "status": "active",
+            "primary_contact": {
+                "name": "Avery Morgan",
+                "email": "avery.morgan@example.test",
+                "phone": "555-0101",
+                "fax": "555-0102"
+            },
+            "billing_address": {
+                "line_1": "100 Industry Drive",
+                "line_2": "Suite 200",
+                "city": "Detroit",
+                "state": "MI",
+                "postal_code": "48201"
+            },
+            "shipping_address": {
+                "line_1": "4200 Assembly Lane",
+                "line_2": null,
+                "city": "Dearborn",
+                "state": "MI",
+                "postal_code": "48120"
+            },
+            "shipping_instructions": "Deliver to receiving door 4 between 7:00 AM and 2:00 PM.",
+            "additional_fields": {
+                "Customer code": "NSA"
+            }
+        },
+        {
+            "id": "CUST-002",
+            "name": "Lakeshore Components",
+            "status": "active",
+            "primary_contact": {
+                "name": "Jordan Lee",
+                "email": "jordan.lee@example.test",
+                "phone": "555-0110",
+                "fax": null
+            },
+            "billing_address": {
+                "line_1": "88 Commerce Park",
+                "line_2": null,
+                "city": "Toledo",
+                "state": "OH",
+                "postal_code": "43604"
+            },
+            "shipping_address": {
+                "line_1": "88 Commerce Park",
+                "line_2": "Dock B",
+                "city": "Toledo",
+                "state": "OH",
+                "postal_code": "43604"
+            },
+            "shipping_instructions": "Call receiving before arrival and reference the customer PO on all containers.",
+            "additional_fields": {}
+        },
+        {
+            "id": "CUST-003",
+            "name": "Heritage Service Parts",
+            "status": "obsolete",
+            "primary_contact": {
+                "name": "Casey Hart",
+                "email": "casey.hart@example.test",
+                "phone": "555-0120",
+                "fax": null
+            },
+            "billing_address": {
+                "line_1": "25 Service Road",
+                "line_2": null,
+                "city": "Lansing",
+                "state": "MI",
+                "postal_code": "48933"
+            },
+            "shipping_address": {
+                "line_1": "25 Service Road",
+                "line_2": null,
+                "city": "Lansing",
+                "state": "MI",
+                "postal_code": "48933"
+            },
+            "shipping_instructions": null,
+            "additional_fields": {}
+        },
+        {
+            "id": "CUST-004",
+            "name": "Summit Mobility",
+            "status": "active",
+            "primary_contact": {
+                "name": "Riley Chen",
+                "email": "riley.chen@example.test",
+                "phone": "555-0130",
+                "fax": null
+            },
+            "billing_address": {
+                "line_1": "700 Innovation Way",
+                "line_2": null,
+                "city": "Fort Wayne",
+                "state": "IN",
+                "postal_code": "46802"
+            },
+            "shipping_address": {
+                "line_1": "740 Innovation Way",
+                "line_2": "Receiving 2",
+                "city": "Fort Wayne",
+                "state": "IN",
+                "postal_code": "46802"
+            },
+            "shipping_instructions": "Use west gate after 3:00 PM. ASN reference required on packing list.",
+            "additional_fields": {
+                "Route": "MW-12"
+            }
+        }
+    ],
+    "parts": [
+        {
+            "id": "PART-001",
+            "customer_id": "CUST-001",
+            "internal_part_number": "PMI-01001",
+            "customer_part_number": "NS-4401",
+            "description": "Front reinforcement profile",
+            "image_file": "PART-001.png",
+            "program": "Northstar X1",
+            "pieces_per_box": 100,
+            "production_line": "Line 2",
+            "material_description": "6063-T5 aluminum",
+            "weight_lbs_per_piece": 1.42,
+            "blueprint_revision": "D · 2026-04-18",
+            "status": "active",
+            "notes": "Use blue returnable containers.",
+            "inventory": {
+                "quantity_on_hand": 140,
+                "serialized_boxes_on_hand": 1,
+                "last_scan_at": "2026-08-12T08:35:00-04:00"
+            },
+            "additional_fields": {
+                "Tooling": "Die 44"
+            }
+        },
+        {
+            "id": "PART-002",
+            "customer_id": "CUST-001",
+            "internal_part_number": "PMI-01002",
+            "customer_part_number": "NS-4410",
+            "description": "Rear channel assembly",
+            "program": "Northstar X1",
+            "pieces_per_box": 50,
+            "production_line": "Line 4",
+            "material_description": "6061-T6 aluminum",
+            "weight_lbs_per_piece": 2.1,
+            "blueprint_revision": "B · 2026-06-03",
+            "status": "active",
+            "notes": "Final inspection required before packing.",
+            "inventory": {
+                "quantity_on_hand": 50,
+                "serialized_boxes_on_hand": 1,
+                "last_scan_at": "2026-08-11T15:20:00-04:00"
+            },
+            "additional_fields": {}
+        },
+        {
+            "id": "PART-003",
+            "customer_id": "CUST-002",
+            "internal_part_number": "PMI-02008",
+            "customer_part_number": "LC-8820",
+            "description": "Upper trim rail",
+            "program": "Lakeshore Transit",
+            "pieces_per_box": 80,
+            "production_line": "Line 1",
+            "material_description": "6005A aluminum",
+            "weight_lbs_per_piece": 0.88,
+            "blueprint_revision": "A · 2026-02-12",
+            "status": "wip",
+            "notes": "Hold the first box for dimensional verification.",
+            "inventory": {
+                "quantity_on_hand": 160,
+                "serialized_boxes_on_hand": 2,
+                "last_scan_at": "2026-08-12T06:45:00-04:00"
+            },
+            "additional_fields": {}
+        },
+        {
+            "id": "PART-004",
+            "customer_id": "CUST-003",
+            "internal_part_number": "PMI-03002",
+            "customer_part_number": "HSP-102",
+            "description": "Legacy service extrusion",
+            "program": "Service",
+            "pieces_per_box": 25,
+            "production_line": "Line 1",
+            "material_description": "6063-T5 aluminum",
+            "weight_lbs_per_piece": 0.55,
+            "blueprint_revision": "F · 2022-11-03",
+            "status": "obsolete",
+            "notes": "Retained for service history only.",
+            "inventory": {
+                "quantity_on_hand": 10,
+                "serialized_boxes_on_hand": 0,
+                "last_scan_at": "2025-11-03T10:00:00-05:00"
+            },
+            "additional_fields": {}
+        },
+        {
+            "id": "PART-005",
+            "customer_id": "CUST-002",
+            "internal_part_number": "PMI-02012",
+            "customer_part_number": "LC-8844",
+            "description": "Lower window retainer",
+            "program": "Lakeshore Transit",
+            "pieces_per_box": 60,
+            "production_line": "Line 3",
+            "material_description": "6063-T6 aluminum",
+            "weight_lbs_per_piece": 1.08,
+            "blueprint_revision": "C · 2026-07-09",
+            "status": "active",
+            "notes": null,
+            "inventory": {
+                "quantity_on_hand": 120,
+                "serialized_boxes_on_hand": 2,
+                "last_scan_at": "2026-08-12T07:10:00-04:00"
+            },
+            "additional_fields": {}
+        },
+        {
+            "id": "PART-006",
+            "customer_id": "CUST-004",
+            "internal_part_number": "PMI-04004",
+            "customer_part_number": "SM-2300-A",
+            "description": "Battery tray side rail",
+            "program": "Summit EV",
+            "pieces_per_box": 40,
+            "production_line": "Line 4",
+            "material_description": "6082-T6 aluminum",
+            "weight_lbs_per_piece": 3.25,
+            "blueprint_revision": "E · 2026-05-22",
+            "status": "active",
+            "notes": "Protect machined datum surface with foam separator.",
+            "inventory": {
+                "quantity_on_hand": 100,
+                "serialized_boxes_on_hand": 2,
+                "last_scan_at": "2026-08-12T09:05:00-04:00"
+            },
+            "additional_fields": {
+                "Rack": "FG-12"
+            }
+        },
+        {
+            "id": "PART-007",
+            "customer_id": "CUST-004",
+            "internal_part_number": "PMI-04009",
+            "customer_part_number": "SM-2318",
+            "description": "Purchased end-cap kit",
+            "program": "Summit EV",
+            "pieces_per_box": 25,
+            "production_line": null,
+            "material_description": "Purchased assembly",
+            "weight_lbs_per_piece": 0.35,
+            "blueprint_revision": "A · 2026-01-15",
+            "status": "purchase",
+            "notes": "Purchased part; verify supplier lot on receipt.",
+            "inventory": {
+                "quantity_on_hand": 0,
+                "serialized_boxes_on_hand": 0,
+                "last_scan_at": null
+            },
+            "additional_fields": {}
+        },
+        {
+            "id": "PART-008",
+            "customer_id": "CUST-001",
+            "internal_part_number": "PMI-01018",
+            "customer_part_number": "NS-SVC-18",
+            "description": "Service roof-channel insert",
+            "program": "Northstar Service",
+            "pieces_per_box": 20,
+            "production_line": "Line 2",
+            "material_description": "6063-T5 aluminum",
+            "weight_lbs_per_piece": 0.71,
+            "blueprint_revision": "C · 2024-10-02",
+            "status": "service",
+            "notes": "Build only to released service demand.",
+            "inventory": {
+                "quantity_on_hand": 60,
+                "serialized_boxes_on_hand": 3,
+                "last_scan_at": "2026-08-10T13:40:00-04:00"
+            },
+            "additional_fields": {}
+        }
+    ],
+    "scans": [
+        {
+            "id": "SCAN-0001",
+            "part_id": "PART-001",
+            "direction": "in",
+            "manufactured_date": "2026-08-10",
+            "serial_number": "01581",
+            "scanned_at": "2026-08-12T08:35:00-04:00",
+            "status": "accepted",
+            "message": null
+        },
+        {
+            "id": "SCAN-0002",
+            "part_id": "PART-001",
+            "direction": "in",
+            "manufactured_date": "2026-08-10",
+            "serial_number": "01582",
+            "scanned_at": "2026-08-12T08:36:00-04:00",
+            "status": "accepted",
+            "message": null
+        },
+        {
+            "id": "SCAN-0003",
+            "part_id": "PART-003",
+            "direction": "in",
+            "manufactured_date": "2026-08-11",
+            "serial_number": "02140",
+            "scanned_at": "2026-08-12T06:45:00-04:00",
+            "status": "accepted",
+            "message": null
+        },
+        {
+            "id": "SCAN-0004",
+            "part_id": "PART-005",
+            "direction": "in",
+            "manufactured_date": "2026-08-11",
+            "serial_number": "00688",
+            "scanned_at": "2026-08-12T07:10:00-04:00",
+            "status": "accepted",
+            "message": null
+        },
+        {
+            "id": "SCAN-0005",
+            "part_id": "PART-006",
+            "direction": "in",
+            "manufactured_date": "2026-08-12",
+            "serial_number": "00412",
+            "scanned_at": "2026-08-12T09:05:00-04:00",
+            "status": "accepted",
+            "message": null
+        },
+        {
+            "id": "SCAN-0006",
+            "part_id": "PART-001",
+            "direction": "out",
+            "manufactured_date": "2026-08-09",
+            "serial_number": "01492",
+            "scanned_at": "2026-08-12T10:12:00-04:00",
+            "status": "accepted",
+            "message": "Loaded for the regular Wednesday route."
+        },
+        {
+            "id": "SCAN-0007",
+            "part_id": "PART-002",
+            "direction": "in",
+            "manufactured_date": "2026-08-11",
+            "serial_number": "00318",
+            "scanned_at": "2026-08-12T10:18:00-04:00",
+            "status": "rejected",
+            "message": "Duplicate serial number"
+        },
+        {
+            "id": "SCAN-0008",
+            "part_id": "PART-002",
+            "direction": "in",
+            "manufactured_date": "2026-08-10",
+            "serial_number": "00317",
+            "scanned_at": "2026-08-11T15:20:00-04:00",
+            "status": "accepted",
+            "message": null
+        }
+    ],
+    "orders": [
+        {
+            "id": "ORD-1001",
+            "customer_id": "CUST-001",
+            "part_id": "PART-001",
+            "original_quantity": 200,
+            "remaining_quantity": 80,
+            "due_date": "2026-08-11",
+            "status": "open",
+            "notes": "Past-due balance from the Monday shipment.",
+            "additional_fields": { "Customer PO": "PO-88410" }
+        },
+        {
+            "id": "ORD-1002",
+            "customer_id": "CUST-001",
+            "part_id": "PART-002",
+            "original_quantity": 150,
+            "remaining_quantity": 120,
+            "due_date": "2026-08-14",
+            "status": "shorted",
+            "notes": "Partial inventory available.",
+            "additional_fields": { "Customer PO": "PO-88421" }
+        },
+        {
+            "id": "ORD-1003",
+            "customer_id": "CUST-002",
+            "part_id": "PART-003",
+            "original_quantity": 40,
+            "remaining_quantity": 40,
+            "due_date": "2026-08-18",
+            "status": "open",
+            "notes": null,
+            "additional_fields": { "Customer PO": "LC-5508" }
+        },
+        {
+            "id": "ORD-1004",
+            "customer_id": "CUST-001",
+            "part_id": "PART-001",
+            "original_quantity": 60,
+            "remaining_quantity": 60,
+            "due_date": "2026-08-12",
+            "status": "open",
+            "notes": "Ship with the regular Wednesday route.",
+            "additional_fields": { "Customer PO": "PO-88418" }
+        },
+        {
+            "id": "ORD-1005",
+            "customer_id": "CUST-002",
+            "part_id": "PART-005",
+            "original_quantity": 90,
+            "remaining_quantity": 90,
+            "due_date": "2026-08-19",
+            "status": "open",
+            "notes": null,
+            "additional_fields": { "Customer PO": "LC-5531" }
+        },
+        {
+            "id": "ORD-1006",
+            "customer_id": "CUST-004",
+            "part_id": "PART-006",
+            "original_quantity": 80,
+            "remaining_quantity": 80,
+            "due_date": "2026-08-13",
+            "status": "open",
+            "notes": "First shipment on new returnable rack route.",
+            "additional_fields": { "Customer PO": "SM-7710" }
+        },
+        {
+            "id": "ORD-1007",
+            "customer_id": "CUST-004",
+            "part_id": "PART-007",
+            "original_quantity": 50,
+            "remaining_quantity": 50,
+            "due_date": "2026-09-02",
+            "status": "open",
+            "notes": "Supplier release is pending confirmation.",
+            "additional_fields": { "Customer PO": "SM-7718" }
+        },
+        {
+            "id": "ORD-1008",
+            "customer_id": "CUST-001",
+            "part_id": "PART-008",
+            "original_quantity": 40,
+            "remaining_quantity": 40,
+            "due_date": "2026-08-25",
+            "status": "open",
+            "notes": "Service demand; ship separately from production parts.",
+            "additional_fields": { "Customer PO": "PO-SVC-211" }
+        },
+        {
+            "id": "ORD-1009",
+            "customer_id": "CUST-002",
+            "part_id": "PART-005",
+            "original_quantity": 30,
+            "remaining_quantity": 30,
+            "due_date": "2026-08-21",
+            "status": "open",
+            "notes": null,
+            "additional_fields": { "Customer PO": "LC-5538" }
+        },
+        {
+            "id": "ORD-1010",
+            "customer_id": "CUST-004",
+            "part_id": "PART-006",
+            "original_quantity": 40,
+            "remaining_quantity": 40,
+            "due_date": "2026-08-17",
+            "status": "open",
+            "notes": "Second release shares available stock with ORD-1006.",
+            "additional_fields": { "Customer PO": "SM-7712" }
+        },
+        {
+            "id": "ORD-1011",
+            "customer_id": "CUST-001",
+            "part_id": "PART-001",
+            "original_quantity": 100,
+            "remaining_quantity": 100,
+            "due_date": "2026-08-31",
+            "status": "open",
+            "notes": null,
+            "additional_fields": { "Customer PO": "PO-88440" }
+        },
+        {
+            "id": "ORD-1012",
+            "customer_id": "CUST-004",
+            "part_id": "PART-007",
+            "original_quantity": 75,
+            "remaining_quantity": 75,
+            "due_date": "2026-09-25",
+            "status": "open",
+            "notes": null,
+            "additional_fields": { "Customer PO": "SM-7730" }
+        },
+        {
+            "id": "ORD-0990",
+            "customer_id": "CUST-002",
+            "part_id": "PART-003",
+            "original_quantity": 80,
+            "remaining_quantity": 0,
+            "due_date": "2026-08-05",
+            "status": "closed",
+            "notes": "Completed on schedule.",
+            "additional_fields": {}
+        },
+        {
+            "id": "ORD-0984",
+            "customer_id": "CUST-003",
+            "part_id": "PART-004",
+            "original_quantity": 25,
+            "remaining_quantity": 0,
+            "due_date": "2026-07-24",
+            "status": "cancelled",
+            "notes": "Customer cancelled obsolete service requirement.",
+            "additional_fields": {}
+        }
+    ]
+}

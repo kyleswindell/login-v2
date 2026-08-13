@@ -7,6 +7,22 @@
    ========================================================================== */
 
 @layer base {
+    /* ----------------------------------------------------------------------
+       Transitional semantic text aliases
+       ---------------------------------------------------------------------- */
+
+    .ui-platform-text-strong {
+        color: var(--ui-text-primary);
+    }
+
+    .ui-platform-text {
+        color: var(--ui-text-secondary);
+    }
+
+    .ui-platform-text-muted {
+        color: var(--ui-text-muted);
+    }
+
     html[data-theme-resolved="light"] .bg-slate-950 {
         background-color: rgb(248 250 252) !important;
     }

@@ -6,6 +6,8 @@
     - Owns unauthenticated main content layout and auth background behavior.
     - Keeps the existing centered guest layout by default.
     - Supports the same Grid handoff used by authenticated pages.
+    - Uses the public login background image with the resolved theme surface
+      token retained as its loading and unavailable fallback.
     - Guest auth screens opt out because they require their own constrained
       layout until guest layout review.
     - Grid-enabled guest pages must render x-ui.grid-column as direct slot
@@ -55,7 +57,13 @@
     class="min-h-screen"
     data-auth-background-shell
     data-auth-background-map='@json($authBackgroundTokenMap)'
-    style="background-color: var(--ui-auth-background, var(--ui-gray-10))"
+    style="
+        background-color: var(--ui-auth-background, var(--ui-gray-10));
+        background-image: url('{{ asset('storage/login-background-scaled.jpg') }}');
+        background-position: center center;
+        background-repeat: no-repeat;
+        background-size: cover;
+    "
 >
     {{-- ----------------------------------------------------------------------
         Guest main content

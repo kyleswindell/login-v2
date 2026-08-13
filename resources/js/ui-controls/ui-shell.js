@@ -190,6 +190,33 @@ function setSideNavExpanded(sideNav, expanded) {
         });
 }
 
+function initResponsiveSideNavState(root) {
+    root.querySelectorAll("[data-ui-shell-side-nav]").forEach((sideNav) => {
+        if (sideNav.hasAttribute("data-ui-shell-responsive-bound")) {
+            return;
+        }
+
+        sideNav.setAttribute("data-ui-shell-responsive-bound", "true");
+
+        const mobileViewport = window.matchMedia("(max-width: 65.98rem)");
+        const desktopExpanded =
+            sideNav.dataset.uiShellSideNavExpanded === "true" ||
+            (!sideNav.classList.contains("ui-shell-side-nav--collapsed") &&
+                sideNav.dataset.uiShellSideNavPersistent === "true");
+        const syncToViewport = () => {
+            if (mobileViewport.matches) {
+                setSideNavExpanded(sideNav, false);
+                return;
+            }
+
+            setSideNavExpanded(sideNav, desktopExpanded);
+        };
+
+        syncToViewport();
+        mobileViewport.addEventListener("change", syncToViewport);
+    });
+}
+
 function initSideNavToggles(root) {
     root.querySelectorAll("[data-ui-shell-header-menu-button]").forEach(
         (trigger) => {
@@ -412,6 +439,7 @@ export function initUiShell(root = document) {
     initHeaderMenus(root);
     initHeaderGlobalActions(root);
     initSideNavMenus(root);
+    initResponsiveSideNavState(root);
     initSideNavToggles(root);
     initGlobalDismissHandlers();
 }

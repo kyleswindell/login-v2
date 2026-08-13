@@ -66,6 +66,7 @@ Primary authority:
 * `docs/01-decisions/adr-0006-tenant-instance-workspace-principal-and-invocation-vocabulary.md`
 * `docs/08-design/foundation/core-runtime/software-design.md`
 * `docs/08-design/foundation/application-registration/software-design.md`
+* `docs/08-design/core/security/software-design.md`
 * applicable database, security, and identifier standards.
 
 Current Audit implementation is reference evidence only and imposes no preservation or migration requirement.
@@ -92,8 +93,8 @@ Current Audit implementation is reference evidence only and imposes no preservat
 | `AuditEvent`                | Append-only persistence Model                 | `app/Core/Audit/Models/AuditEvent.php`                   |
 | `SearchAuditEventsQuery`    | Filtered Audit history                        | `app/Core/Audit/Queries/SearchAuditEventsQuery.php`      |
 | `GetAuditEventQuery`        | Retrieve one Audit Event                      | `app/Core/Audit/Queries/GetAuditEventQuery.php`          |
-| `AuditEvidenceRedactor`     | Enforce Audit-specific safe-evidence rules    | `app/Core/Audit/Redaction/AuditEvidenceRedactor.php`     |
-| `AuditServiceProvider`      | Binding and owner registration                | `app/Core/Audit/Providers/AuditServiceProvider.php`      |
+| `AuditEvidenceRedactor`     | Apply Audit-specific evidence minimization after Security redaction | `app/Core/Audit/Redaction/AuditEvidenceRedactor.php` |
+| `AuditServiceProvider`      | Audit registration declaration, bindings, and framework integration | `app/Core/Audit/Providers/AuditServiceProvider.php` |
 
 Do not create a generic Logging abstraction shared with Monitoring.
 
@@ -204,6 +205,25 @@ invocation_channel
 ```
 
 Producers do not manually populate these fields.
+
+### Application Registration Declaration
+
+`AuditServiceProvider` implements `RegistrationDescriptorInterface`. Its static declaration returns `RegistrationDescriptorData` with:
+
+```text
+owner_key: audit
+ownership_area: core
+dependencies:
+  - runtime
+  - security
+registrations:
+  - AuditServiceProvider
+  - Audit owner routes
+  - Audit migration path
+  - other explicit Audit-owned framework artifacts defined by this SDD
+```
+
+The declaration is static and declarative: it does not execute Audit behavior or query persistence. `bootstrap/registration.php` names `App\Core\Audit\Providers\AuditServiceProvider` as Audit's explicit base-application descriptor source.
 
 ---
 
@@ -346,7 +366,7 @@ Audit persistence failure must not create a second application outage.
 
 On database write failure:
 
-1. emit a minimal redacted fallback record through the framework logging channel;
+1. pass fallback context through `RedactSensitiveContextInterface` before emitting a minimal framework-log record;
 2. return an `AuditWriteResult` indicating fallback rather than durable persistence;
 3. never expose unrestricted metadata or changes in the fallback;
 4. allow Monitoring to observe the failure once Monitoring is available.
@@ -375,7 +395,26 @@ full credential payloads
 unrestricted request bodies
 ```
 
-`AuditEvidenceRedactor` enforces Audit's baseline prohibited-data boundary.
+Before `AuditEvidenceRedactor` applies Audit-specific evidence minimization, it consumes Core Security's public `RedactSensitiveContextInterface` using `RedactionScope::log_context`.
+
+```text
+typed Audit producer data
+    ↓
+Core Security RedactSensitiveContextInterface
+    scope = log_context
+    ↓
+credential/request secret values removed
+    ↓
+AuditEvidenceRedactor
+    ↓
+Audit-specific allow-listing and safe change handling
+    ↓
+persistence
+```
+
+Core Security owns the request/header/credential-redaction mechanism. Security/Secrets owns credential-specific redaction-rule definitions. Audit owns accountable evidence minimization, safe Event shape, and safe metadata/change semantics. DataProtection later owns semantic personal/business-data classification and masking.
+
+Audit does not maintain a canonical password, token, cookie, or private-key catalog. It categorically prohibits raw secret persistence and retains `AuditEvidenceRedactor` for its own semantic rules.
 
 `AuditMetadataData` and `AuditChangeData` accept only explicit safe values rather than arbitrary request/application payloads.
 
@@ -459,7 +498,7 @@ Audit owns no user Notification behavior.
 
 ### Registration
 
-`AuditServiceProvider` is declared through Application Registration.
+`AuditServiceProvider` is Audit's one owner registration declaration and is declared through Application Registration. Its explicit owner dependencies are `runtime` and `security` because Audit consumes `InvocationContextInterface` and `RedactSensitiveContextInterface`.
 
 Audit does not register itself directly in root Laravel bootstrap files.
 
@@ -467,59 +506,35 @@ Audit does not register itself directly in root Laravel bootstrap files.
 
 ## 9. Implementation Manifest
 
-```text
-CREATE app/Core/Audit/
-    Actions/RecordAuditEventAction.php
-
-    Contracts/RecordAuditEventInterface.php
-
-    Data/RecordAuditEventData.php
-    Data/AuditActorData.php
-    Data/AuditResourceData.php
-    Data/AuditContextData.php
-    Data/AuditMetadataData.php
-    Data/AuditChangeData.php
-    Data/AuditWriteResult.php
-    Data/AuditEventSnapshot.php
-    Data/AuditSearchCriteria.php
-
-    Enums/AuditResult.php
-    Enums/AuditPrincipalType.php
-
-    Models/AuditEvent.php
-
-    Queries/SearchAuditEventsQuery.php
-    Queries/GetAuditEventQuery.php
-
-    Redaction/AuditEvidenceRedactor.php
-
-    Providers/AuditServiceProvider.php
-
-    Http/Controllers/AuditController.php
-    Http/Requests/AuditSearchRequest.php
-
-    routes/web.php
-
-    __tests__/
-```
-
-Presentation:
-
-```text
-CREATE resources/views/core/audit/
-```
-
-Database:
-
-```text
-CREATE database/core/Audit/migrations/
-CREATE database/core/Audit/factories/
-
-CREATE docs/06-database/feature-contracts/audit.md
-CREATE docs/06-database/tables/audit_events.md
-```
-
-No migration, adapter, compatibility alias, or preservation of current Audit implementation is required.
+| Change | Path | Archetype | Responsibility | Dependencies | Requirement Source | Verification | Compatibility |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| CREATE | `app/Core/Audit/Actions/RecordAuditEventAction.php` | Action | Validate, Security-redact, and persist one Audit Event | Audit Contract, Runtime, Security redaction | `docs/03-architecture/public-contract-and-interaction-model.md` | Audit redaction integration test | None |
+| CREATE | `app/Core/Audit/Contracts/RecordAuditEventInterface.php` | Contract | Expose public Audit recording | Audit Data and result | `docs/03-architecture/public-contract-and-interaction-model.md` | Audit recording Contract test | None |
+| CREATE | `app/Core/Audit/Data/RecordAuditEventData.php` | Data Object | Receive typed producer evidence | Audit data types | `docs/03-architecture/public-contract-and-interaction-model.md` | Audit recording Contract test | None |
+| CREATE | `app/Core/Audit/Data/AuditActorData.php` | Data Object | Snapshot event-time Actor evidence | None | `docs/03-architecture/public-contract-and-interaction-model.md` | Audit evidence test | None |
+| CREATE | `app/Core/Audit/Data/AuditResourceData.php` | Data Object | Represent an Audit subject or target | None | `docs/03-architecture/public-contract-and-interaction-model.md` | Audit evidence test | None |
+| CREATE | `app/Core/Audit/Data/AuditContextData.php` | Data Object | Hold safe execution evidence | Security redaction Contract | `docs/03-architecture/public-contract-and-interaction-model.md` | Audit redaction integration test | None |
+| CREATE | `app/Core/Audit/Data/AuditMetadataData.php` | Data Object | Hold safe typed supplemental evidence | Security redaction Contract | `docs/03-architecture/public-contract-and-interaction-model.md` | Audit redaction integration test | None |
+| CREATE | `app/Core/Audit/Data/AuditChangeData.php` | Data Object | Hold one safe field change | Security redaction Contract | `docs/03-architecture/public-contract-and-interaction-model.md` | Audit redaction integration test | None |
+| CREATE | `app/Core/Audit/Data/AuditWriteResult.php` | Data Object | Report durable or fallback result | None | `docs/03-architecture/public-contract-and-interaction-model.md` | Audit fallback test | None |
+| CREATE | `app/Core/Audit/Data/AuditEventSnapshot.php` | Data Object | Expose read-side Audit representation | Audit Event model | `docs/03-architecture/public-contract-and-interaction-model.md` | Audit query test | None |
+| CREATE | `app/Core/Audit/Data/AuditSearchCriteria.php` | Data Object | Carry typed Audit query criteria | None | `docs/03-architecture/public-contract-and-interaction-model.md` | Audit query test | None |
+| CREATE | `app/Core/Audit/Enums/AuditResult.php` | Enum | Define stable Audit outcomes | None | `docs/02-standards/logging/Audit Logging Standards.md` | Audit recording Contract test | None |
+| CREATE | `app/Core/Audit/Enums/AuditPrincipalType.php` | Enum | Define canonical Principal categories | None | `docs/03-architecture/public-contract-and-interaction-model.md` | Audit evidence test | None |
+| CREATE | `app/Core/Audit/Models/AuditEvent.php` | Model | Represent append-only Audit persistence | `audit_events` Contract | `docs/03-architecture/persistent-data-architecture.md` | Audit immutability test | None |
+| CREATE | `app/Core/Audit/Queries/SearchAuditEventsQuery.php` | Query | Search Audit history | Audit Event model | `docs/03-architecture/public-contract-and-interaction-model.md` | Audit query test | None |
+| CREATE | `app/Core/Audit/Queries/GetAuditEventQuery.php` | Query | Retrieve one Audit Event | Audit Event model | `docs/03-architecture/public-contract-and-interaction-model.md` | Audit query test | None |
+| CREATE | `app/Core/Audit/Redaction/AuditEvidenceRedactor.php` | Redactor | Apply Audit semantic evidence minimization | `RedactSensitiveContextInterface` | `docs/03-architecture/public-contract-and-interaction-model.md` | Audit redaction integration test | None |
+| CREATE | `app/Core/Audit/Providers/AuditServiceProvider.php` | Provider and Registration Descriptor | Declare Audit registration and bind Audit integration | Runtime and Security public Contracts | `docs/03-architecture/application-registration.md` | Audit provider registration proof | None |
+| CREATE | `app/Core/Audit/Http/Controllers/AuditController.php` | Controller | Deliver read-only Audit administration | Audit queries | `docs/03-architecture/repository-architecture.md` | Audit administration test | None |
+| CREATE | `app/Core/Audit/Http/Requests/AuditSearchRequest.php` | Form Request | Validate Audit search input | None | `docs/03-architecture/repository-architecture.md` | Audit administration test | None |
+| CREATE | `app/Core/Audit/routes/web.php` | Route | Declare Audit owner routes | Audit Controller | `docs/03-architecture/repository-architecture.md` | Audit administration test | None |
+| CREATE | `app/Core/Audit/__tests__/` | Test family | Prove Audit Contracts, redaction, fallback, and provider registration | Audit owner artifacts | `docs/02-standards/testing/index.md` | Targeted Audit proof | None |
+| CREATE | `resources/views/core/audit/` | View family | Render Audit administration | Audit Controller | `docs/03-architecture/repository-architecture.md` | Manual visual review and Audit administration test | None |
+| CREATE | `database/core/Audit/migrations/` | Migration family | Materialize Audit persistence | Canonical Audit table Contract | `docs/03-architecture/persistent-data-architecture.md` | Database migration proof | None |
+| CREATE | `database/core/Audit/factories/` | Factory family | Supply Audit test data | Audit Event model | `docs/03-architecture/persistent-data-architecture.md` | Targeted Audit proof | None |
+| CREATE | `docs/06-database/feature-contracts/audit.md` | Database Contract | Define Audit persistence behavior | Audit persistence requirements | `docs/03-architecture/persistent-data-architecture.md` | Documentation static validation | None |
+| CREATE | `docs/06-database/tables/audit_events.md` | Database Contract | Define `audit_events` table | Audit persistence requirements | `docs/03-architecture/persistent-data-architecture.md` | Documentation static validation | None |
 
 ---
 
@@ -533,12 +548,14 @@ Required proof must cover:
 * domain-owned Audit event keys;
 * supported Audit results;
 * Runtime Invocation/correlation capture;
+* AuditServiceProvider fulfills `RegistrationDescriptorInterface` with the `runtime` and `security` owner dependencies;
 * event-time Actor snapshots;
 * subject/target evidence;
 * successful Audit only after committed mutation;
 * no successful Audit after rollback;
 * denial recording;
 * prohibited secret handling;
+* Security redaction occurs before Audit evidence minimization and fallback logging;
 * redacted change sets;
 * Audit write failure fallback;
 * record immutability;

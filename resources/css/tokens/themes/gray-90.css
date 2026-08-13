@@ -11,6 +11,8 @@ Notes:
   ========================================================================== */
 
 @layer base {
+    html[data-theme-resolved="dark"] [data-ui-theme="workspace"],
+    html[data-theme-resolved="gray-90"] [data-ui-theme="workspace"],
     html[data-theme-resolved="dark"],
     html[data-theme-resolved="gray-90"],
     [data-theme-resolved="dark"],

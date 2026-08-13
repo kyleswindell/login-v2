@@ -93,6 +93,7 @@
     :brand-href="$brandHref"
     :brand-prefix="$brandPrefix"
     :brand-name="$brandName"
+    :data-ui-theme="$usesWorkspaceShell ? 'gray-100' : null"
 >
     {{-- ----------------------------------------------------------------------
         Primary header navigation

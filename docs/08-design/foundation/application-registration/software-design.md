@@ -85,12 +85,13 @@ Obsolete proof-of-concept registration or composition artifacts may be explicitl
 Application Registration has three implementation surfaces:
 
 ```text
-app/ApplicationRegistration/
-    framework-independent registration Contracts,
-    data, compilation, manifest handling, and composition logic
+app/Providers/
+    ApplicationRegistrationServiceProvider.php
+        thin Laravel bootstrap adapter
 
-app/Providers/ApplicationRegistrationServiceProvider.php
-    thin Laravel bootstrap adapter
+    ApplicationRegistration/
+        framework-independent registration Contracts, data, compilation,
+        manifest handling, and composition logic
 
 scripts/application-registration/
     bootstrap-safe executable compile/validation entry points
@@ -100,16 +101,16 @@ scripts/application-registration/
 
 | Component                                | Responsibility                                      | Target Path                                                                 |
 | ---------------------------------------- | --------------------------------------------------- | --------------------------------------------------------------------------- |
-| `RegistrationDescriptorInterface`        | Stable owner-declaration Contract                   | `app/ApplicationRegistration/Contracts/RegistrationDescriptorInterface.php` |
-| `HostContributionSourceInterface`        | Typed Host Contribution read boundary               | `app/ApplicationRegistration/Contracts/HostContributionSourceInterface.php` |
-| `RegistrationDescriptorData`             | Immutable complete declaration for one owner        | `app/ApplicationRegistration/Data/RegistrationDescriptorData.php`           |
-| `CompiledRegistrationManifest`           | Typed compiled representation                       | `app/ApplicationRegistration/Data/CompiledRegistrationManifest.php`         |
-| `CompiledHostContribution`               | One structurally compiled Contribution              | `app/ApplicationRegistration/Data/CompiledHostContribution.php`             |
-| `HostContributionSet`                    | Typed immutable Contribution result                 | `app/ApplicationRegistration/Data/HostContributionSet.php`                  |
-| `RegistrationFamily`                     | Controlled registration-family enum                 | `app/ApplicationRegistration/Enums/RegistrationFamily.php`                  |
-| `RegistrationCompiler`                   | Validate, normalize, order, and compile descriptors | `app/ApplicationRegistration/Compiler/RegistrationCompiler.php`             |
-| `RegistrationManifestLoader`             | Load and structurally validate generated manifest   | `app/ApplicationRegistration/Manifest/RegistrationManifestLoader.php`       |
-| `RootApplicationRegistrar`               | Execute validated application composition           | `app/ApplicationRegistration/Registrars/RootApplicationRegistrar.php`       |
+| `RegistrationDescriptorInterface`        | Stable owner-declaration Contract                   | `app/Providers/ApplicationRegistration/Contracts/RegistrationDescriptorInterface.php` |
+| `HostContributionSourceInterface`        | Typed Host Contribution read boundary               | `app/Providers/ApplicationRegistration/Contracts/HostContributionSourceInterface.php` |
+| `RegistrationDescriptorData`             | Immutable complete declaration for one owner        | `app/Providers/ApplicationRegistration/Data/RegistrationDescriptorData.php`           |
+| `CompiledRegistrationManifest`           | Typed compiled representation                       | `app/Providers/ApplicationRegistration/Data/CompiledRegistrationManifest.php`         |
+| `CompiledHostContribution`               | One structurally compiled Contribution              | `app/Providers/ApplicationRegistration/Data/CompiledHostContribution.php`             |
+| `HostContributionSet`                    | Typed immutable Contribution result                 | `app/Providers/ApplicationRegistration/Data/HostContributionSet.php`                  |
+| `RegistrationFamily`                     | Controlled registration-family enum                 | `app/Providers/ApplicationRegistration/Enums/RegistrationFamily.php`                  |
+| `RegistrationCompiler`                   | Validate, normalize, order, and compile descriptors | `app/Providers/ApplicationRegistration/Compiler/RegistrationCompiler.php`             |
+| `RegistrationManifestLoader`             | Load and structurally validate generated manifest   | `app/Providers/ApplicationRegistration/Manifest/RegistrationManifestLoader.php`       |
+| `RootApplicationRegistrar`               | Execute validated application composition           | `app/Providers/ApplicationRegistration/Registrars/RootApplicationRegistrar.php`       |
 | `ApplicationRegistrationServiceProvider` | Laravel bootstrap adapter                           | `app/Providers/ApplicationRegistrationServiceProvider.php`                  |
 
 Custom Typed Registrar classes are introduced only when a registration family requires independently meaningful normalization, validation, ordering, or adaptation beyond a direct native-framework operation.
@@ -244,9 +245,20 @@ It contains declaration sources, not feature configuration or behavior.
 
 ### Optional Modules
 
-Installed Modules are discovered through Composer package metadata.
+Optional Module descriptors are discovered only through installed Composer package metadata.
 
-Each Login 2.0 Module package declares its registration source in its package `composer.json`.
+The compiler uses this exact algorithm:
+
+1. Read explicit base-application descriptor sources from `bootstrap/registration.php`.
+2. Obtain installed package names from `Composer\InstalledVersions::getInstalledPackages()`.
+3. Sort package names lexically before metadata inspection.
+4. For each installed package, obtain its Composer install path. A package with no install path cannot provide a Login 2.0 descriptor through this mechanism. Inspect only that package's own `composer.json` at its exact install path; never recursively scan `vendor/`, `Modules/`, `app/`, or a package directory.
+5. Read `extra.login-v2.registration_descriptor` from that one package metadata file.
+6. If the key is absent, the package does not participate as a Login 2.0 Module descriptor source and is skipped without error.
+7. If the key is present, its value must be one non-empty FQCN; the class must be autoloadable and satisfy `RegistrationDescriptorInterface`. Invalid metadata is a registration failure, not a silent skip.
+8. Duplicate descriptor classes or duplicate resulting owner identities fail compilation.
+
+Each participating Login 2.0 Module package declares its registration source in its own `composer.json`.
 
 Canonical metadata shape:
 
@@ -260,13 +272,14 @@ Canonical metadata shape:
 }
 ```
 
-The compiler reads installed Composer package metadata and includes only installed packages that declare this supported key.
+This is package-metadata discovery, not filesystem artifact discovery. The compiler includes only installed packages that declare this supported key.
 
 A formal Module Definition should normally fulfill the Module's registration-descriptor responsibility when it already owns the required declarations.
 
 Application Registration must not:
 
 * recursively scan `Modules/`;
+* recursively scan `vendor/`, `app/`, or a package directory;
 * infer registration from package directories;
 * require Core code changes when a properly declared optional Module is installed;
 * treat Composer installation as runtime Module enablement;
@@ -291,7 +304,7 @@ No other implicit discovery source participates in the initial design.
 `RegistrationCompiler`:
 
 1. loads explicit base-application descriptor sources;
-2. loads installed Module descriptor sources from Composer metadata;
+2. loads installed Module descriptor sources through lexical Composer metadata inspection;
 3. verifies each descriptor source;
 4. materializes each `RegistrationDescriptorData`;
 5. validates owner identity and ownership boundaries;
@@ -316,6 +329,10 @@ topological order
     ↓
 canonical owner-key lexical ordering for otherwise independent peers
 ```
+
+`RegistrationDescriptorData` declaration lists are ordered canonical input. Map/object key ordering is not semantic; list ordering is semantic and must be preserved. Registration families execute in the fixed lifecycle order defined by `RegistrationFamily` and the Root Application Registrar. Within one family, the compiler preserves the owner's explicit declaration-list order and never depends on PHP associative-map iteration order.
+
+If later behavior needs dependency-aware ordering within one family, that family's public Contract must represent it explicitly. The compiler must not invent a generic registration-order identifier.
 
 Equivalent canonical inputs must produce byte-identical compiled output.
 
@@ -354,9 +371,13 @@ owner_key
 artifact_family
 artifact_key or native family-specific identity
 normalized registration data
-source declaration class
-source repository path
+source_kind
+source_class
+source_path
+source_package nullable
 ```
+
+Every compiled instruction carries this safe provenance to trace it to its canonical declaration. For base-application descriptors, `source_kind` is `base_application`, `source_path` is repository-relative, and `source_package` is `null`. For installed Module descriptors, `source_kind` is `composer_package`, `source_path` is relative to that Composer package root, and `source_package` is the Composer package name. Absolute workstation paths and absolute vendor/install paths are never serialized.
 
 Example:
 
@@ -434,7 +455,20 @@ Absolute workstation paths must never appear.
 
 ### Source Hash
 
-`source_hash` is SHA-256 over normalized canonical registration inputs.
+`source_hash` is SHA-256 of the canonical JSON representation of normalized canonical registration inputs. The manifest's own `source_hash` field does not participate recursively in computing itself.
+
+Canonical JSON serialization uses:
+
+* UTF-8 JSON;
+* recursively lexical-sorted associative/object keys;
+* exactly preserved list/sequence ordering;
+* no pretty printing;
+* unescaped slashes and Unicode;
+* native JSON boolean, null, integer, and string scalar types;
+* no floating-point registration metadata;
+* exactly one trailing LF in the materialized file.
+
+Serialization errors fail compilation. Normalized object keys are canonicalized before hashing; declaration lists remain ordered; installed package inspection remains lexical; and owner output remains dependency-topological with the lexical owner-key tie-break. Compile and stale-validation logic use this exact canonical serializer; no validation-only serializer exists.
 
 Do not include volatile values such as:
 
@@ -761,100 +795,52 @@ It owns no business Audit Events and no user Notifications.
 
 ## 16. Implementation Manifest
 
-### Application Registration Core
+| Change | Path | Archetype | Responsibility | Dependencies | Requirement Source | Verification | Compatibility |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| CREATE | `app/Providers/ApplicationRegistration/Contracts/RegistrationDescriptorInterface.php` | Contract | Define the owner declaration boundary | `RegistrationDescriptorData` | `docs/03-architecture/application-registration.md` | Registration descriptor architecture test | None |
+| CREATE | `app/Providers/ApplicationRegistration/Contracts/HostContributionSourceInterface.php` | Contract | Expose compiled Contributions to a Host | `HostContributionSet` | `docs/03-architecture/public-contract-and-interaction-model.md` | Host Contribution routing test | None |
+| CREATE | `app/Providers/ApplicationRegistration/Data/RegistrationDescriptorData.php` | Data Object | Hold one immutable owner declaration | Registration family data | `docs/03-architecture/application-registration.md` | Registration compiler test | None |
+| CREATE | `app/Providers/ApplicationRegistration/Data/CompiledRegistrationManifest.php` | Data Object | Hold compiled deterministic registration output | Compiled instructions | `docs/03-architecture/application-registration.md` | Registration manifest test | None |
+| CREATE | `app/Providers/ApplicationRegistration/Data/CompiledHostContribution.php` | Data Object | Hold one structurally compiled Contribution | Host Contribution registration | `docs/03-architecture/public-contract-and-interaction-model.md` | Host Contribution routing test | None |
+| CREATE | `app/Providers/ApplicationRegistration/Data/HostContributionSet.php` | Data Object | Hold typed Contributions for one Host Registry | `CompiledHostContribution` | `docs/03-architecture/public-contract-and-interaction-model.md` | Host Contribution routing test | None |
+| CREATE | `app/Providers/ApplicationRegistration/Enums/RegistrationFamily.php` | Enum | Define fixed registration-family lifecycle order | None | `docs/03-architecture/application-registration.md` | Registration compiler ordering test | None |
+| CREATE | `app/Providers/ApplicationRegistration/Registrations/ProviderRegistration.php` | Data Object | Declare one Provider registration | Provider class | `docs/03-architecture/application-registration.md` | Registration compiler test | None |
+| CREATE | `app/Providers/ApplicationRegistration/Registrations/BindingRegistration.php` | Data Object | Declare one container binding | Contract and implementation | `docs/03-architecture/public-contract-and-interaction-model.md` | Registration compiler test | None |
+| CREATE | `app/Providers/ApplicationRegistration/Registrations/RouteRegistration.php` | Data Object | Declare one owner route source | Route file | `docs/03-architecture/repository-architecture.md` | Registration compiler test | None |
+| CREATE | `app/Providers/ApplicationRegistration/Registrations/CommandRegistration.php` | Data Object | Declare one command integration | Command class | `docs/03-architecture/application-registration.md` | Registration compiler test | None |
+| CREATE | `app/Providers/ApplicationRegistration/Registrations/ScheduleRegistration.php` | Data Object | Declare one schedule integration | Laravel scheduler | `docs/03-architecture/application-registration.md` | Registration compiler test | None |
+| CREATE | `app/Providers/ApplicationRegistration/Registrations/ViewRegistration.php` | Data Object | Declare one view integration | View namespace or path | `docs/03-architecture/application-registration.md` | Registration compiler test | None |
+| CREATE | `app/Providers/ApplicationRegistration/Registrations/LivewireRegistration.php` | Data Object | Declare one Livewire alias integration | Livewire class | `docs/03-architecture/application-registration.md` | Registration compiler test | None |
+| CREATE | `app/Providers/ApplicationRegistration/Registrations/DatabaseRegistration.php` | Data Object | Declare one database lifecycle source | Migration, factory, or seeder path | `docs/03-architecture/application-registration.md` | Registration compiler test | None |
+| CREATE | `app/Providers/ApplicationRegistration/Registrations/ConfigurationRegistration.php` | Data Object | Declare one configuration source | Configuration file | `docs/03-architecture/repository-architecture.md` | Registration compiler test | None |
+| CREATE | `app/Providers/ApplicationRegistration/Registrations/TranslationRegistration.php` | Data Object | Declare one translation source | Translation path | `docs/03-architecture/application-registration.md` | Registration compiler test | None |
+| CREATE | `app/Providers/ApplicationRegistration/Registrations/EventRegistration.php` | Data Object | Declare one Event/Listener integration | Event and Listener classes | `docs/03-architecture/application-registration.md` | Registration compiler test | None |
+| CREATE | `app/Providers/ApplicationRegistration/Registrations/AssetRegistration.php` | Data Object | Declare one deterministic asset input | Asset source | `docs/03-architecture/application-registration.md` | Asset registration test | None |
+| CREATE | `app/Providers/ApplicationRegistration/Registrations/HostRegistryRegistration.php` | Data Object | Declare one Host Registry | Registry Contract | `docs/03-architecture/public-contract-and-interaction-model.md` | Host Contribution routing test | None |
+| CREATE | `app/Providers/ApplicationRegistration/Registrations/HostContributionRegistration.php` | Data Object | Declare one Host Contribution | Contribution implementation | `docs/03-architecture/public-contract-and-interaction-model.md` | Host Contribution routing test | None |
+| CREATE | `app/Providers/ApplicationRegistration/Compiler/RegistrationCompiler.php` | Compiler | Validate, normalize, order, and compile declarations | Descriptor Contract, Composer InstalledVersions | `docs/03-architecture/application-registration.md` | Registration compiler and Module discovery tests | None |
+| CREATE | `app/Providers/ApplicationRegistration/Manifest/RegistrationManifestLoader.php` | Manifest Loader | Load and validate generated output | `CompiledRegistrationManifest` | `docs/03-architecture/application-registration.md` | Registration manifest test | None |
+| CREATE | `app/Providers/ApplicationRegistration/Registrars/RootApplicationRegistrar.php` | Registrar | Compose validated instructions into native integrations | Compiled manifest, Laravel/Vite APIs | `docs/03-architecture/application-registration.md` | Registration bootstrap test | None |
+| CREATE | `app/Providers/ApplicationRegistration/Exceptions/RegistrationValidationException.php` | Exception | Report invalid canonical declarations | None | `docs/03-architecture/application-registration.md` | Registration compiler test | None |
+| CREATE | `app/Providers/ApplicationRegistration/Exceptions/RegistrationManifestException.php` | Exception | Report invalid generated manifest state | None | `docs/03-architecture/application-registration.md` | Registration manifest test | None |
+| CREATE | `app/Providers/ApplicationRegistrationServiceProvider.php` | Provider | Bootstrap compiled Application Registration composition | Manifest Loader, Root Application Registrar | `docs/03-architecture/repository-architecture.md` | Registration bootstrap test | None |
+| CREATE | `bootstrap/registration.php` | Configuration | List explicit base-application descriptor sources | Registration Descriptor Contract | `docs/03-architecture/application-registration.md` | Registration descriptor architecture test | None |
+| MODIFY | `bootstrap/providers.php` | Configuration | Register only the Application Registration bootstrap Provider | Laravel Provider API | `docs/03-architecture/application-registration.md` | Registration bootstrap test | None |
+| GENERATE | `bootstrap/cache/compiled-registration-manifest.json` | Generated Manifest | Materialize deterministic registration output | Registration Compiler | `docs/03-architecture/application-registration.md` | Registration manifest byte-identity and stale-validation tests | None |
+| CREATE | `scripts/application-registration/compile.php` | Script | Compile the registration manifest before normal boot | Registration Compiler | `docs/03-architecture/application-registration.md` | Pre-boot compilation test | None |
+| CREATE | `scripts/application-registration/validate.php` | Script | Validate descriptors and generated manifest with the shared compiler | Registration Compiler | `docs/03-architecture/application-registration.md` | Stale-manifest validation test | None |
+| MODIFY | `composer.json` | Configuration | Invoke the bootstrap-safe compiler after autoload generation | Compile script | `docs/03-architecture/application-registration.md` | Pre-boot compilation test | None |
+| MODIFY | `vite.config.js` | Configuration | Consume compiled deterministic asset inputs | Generated Manifest | `docs/03-architecture/application-registration.md` | Asset registration test | None |
+| CREATE | `tests/Architecture/ApplicationRegistration/RegistrationDescriptorArchitectureTest.php` | Test | Prove explicit descriptor sources and owner boundaries | Registration Descriptor Contract | `docs/02-standards/testing/index.md` | Architecture static proof | None |
+| CREATE | `tests/Architecture/ApplicationRegistration/RegistrationOwnershipTest.php` | Test | Prove registrations remain owner-controlled | Registration compiler | `docs/02-standards/testing/index.md` | Architecture static proof | None |
+| CREATE | `tests/Feature/ApplicationRegistration/RegistrationCompilerTest.php` | Test | Prove validation, ordering, and serialization | Registration Compiler | `docs/02-standards/testing/index.md` | Targeted compiler proof | None |
+| CREATE | `tests/Feature/ApplicationRegistration/RegistrationManifestTest.php` | Test | Prove manifest materialization and stale detection | Generated Manifest | `docs/02-standards/testing/index.md` | Targeted manifest proof | None |
+| CREATE | `tests/Feature/ApplicationRegistration/RegistrationBootstrapTest.php` | Test | Prove manifest-driven Laravel composition | Application Registration Provider | `docs/02-standards/testing/index.md` | Targeted bootstrap proof | None |
+| CREATE | `tests/Feature/ApplicationRegistration/ModuleRegistrationDiscoveryTest.php` | Test | Prove lexical package-metadata descriptor discovery | Composer InstalledVersions | `docs/02-standards/testing/index.md` | Targeted Module discovery proof | None |
+| CREATE | `tests/Feature/ApplicationRegistration/HostContributionRoutingTest.php` | Test | Prove structural Contribution routing only | Host Contribution Contract | `docs/02-standards/testing/index.md` | Targeted Host routing proof | None |
+| CREATE | `tests/Feature/ApplicationRegistration/AssetRegistrationTest.php` | Test | Prove deterministic asset input composition | Asset registration data | `docs/02-standards/testing/index.md` | Targeted asset proof | None |
 
-```text
-CREATE app/ApplicationRegistration/
-    Contracts/RegistrationDescriptorInterface.php
-    Contracts/HostContributionSourceInterface.php
-
-    Data/RegistrationDescriptorData.php
-    Data/CompiledRegistrationManifest.php
-    Data/CompiledHostContribution.php
-    Data/HostContributionSet.php
-
-    Enums/RegistrationFamily.php
-
-    Registrations/ProviderRegistration.php
-    Registrations/BindingRegistration.php
-    Registrations/RouteRegistration.php
-    Registrations/CommandRegistration.php
-    Registrations/ScheduleRegistration.php
-    Registrations/ViewRegistration.php
-    Registrations/LivewireRegistration.php
-    Registrations/DatabaseRegistration.php
-    Registrations/ConfigurationRegistration.php
-    Registrations/TranslationRegistration.php
-    Registrations/EventRegistration.php
-    Registrations/AssetRegistration.php
-    Registrations/HostRegistryRegistration.php
-    Registrations/HostContributionRegistration.php
-
-    Compiler/RegistrationCompiler.php
-
-    Manifest/RegistrationManifestLoader.php
-
-    Registrars/RootApplicationRegistrar.php
-
-    Exceptions/RegistrationValidationException.php
-    Exceptions/RegistrationManifestException.php
-```
-
-Do not create additional Typed Registrar classes unless implementation design for that family proves a distinct adapter is necessary.
-
-### Laravel Bootstrap
-
-```text
-CREATE app/Providers/ApplicationRegistrationServiceProvider.php
-
-CREATE bootstrap/registration.php
-
-MODIFY bootstrap/providers.php
-```
-
-`bootstrap/providers.php` directly registers the Application Registration bootstrap Provider.
-
-Owner Providers are thereafter composed through Application Registration.
-
-### Generated Output
-
-```text
-GENERATE bootstrap/cache/compiled-registration-manifest.json
-```
-
-### Build Tooling
-
-```text
-CREATE scripts/application-registration/compile.php
-CREATE scripts/application-registration/validate.php
-
-MODIFY composer.json
-MODIFY vite.config.js
-```
-
-### Obsolete Composition Cleanup
-
-Implementation must remove obsolete proof-of-concept registration/composition mechanisms that conflict with the accepted target system.
-
-Use explicit `DELETE` or bounded modification instructions in the implementation issue for each identified obsolete artifact.
-
-Do not preserve an obsolete registration mechanism merely because existing proof-of-concept code currently depends on it.
-
-### Tests
-
-```text
-CREATE tests/Architecture/ApplicationRegistration/
-    RegistrationDescriptorArchitectureTest.php
-    RegistrationOwnershipTest.php
-
-CREATE tests/Feature/ApplicationRegistration/
-    RegistrationCompilerTest.php
-    RegistrationManifestTest.php
-    RegistrationBootstrapTest.php
-    ModuleRegistrationDiscoveryTest.php
-    HostContributionRoutingTest.php
-    AssetRegistrationTest.php
-```
+Do not create additional Typed Registrar classes unless implementation design for that family proves a distinct adapter is necessary. Obsolete proof-of-concept registration/composition artifacts are deleted only when a bounded implementation issue identifies each target; they have no preservation requirement.
 
 ---
 

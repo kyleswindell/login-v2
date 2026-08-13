@@ -1,0 +1,14 @@
+/* ==========================================================================
+   File: resources/css/patterns/dashboard.css
+   Purpose: Dashboard layout pattern styles.
+
+   Notes:
+   - Owns dashboard composition only.
+   - Child Tile, Table, and status visuals remain component-owned.
+   ========================================================================== */
+
+@layer components {
+    .ui-pattern-dashboard-grid {
+        min-inline-size: 0;
+    }
+}

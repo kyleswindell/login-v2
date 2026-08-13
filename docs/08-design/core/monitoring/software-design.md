@@ -89,6 +89,7 @@ Primary authority:
 * `docs/08-design/foundation/core-runtime/software-design.md`
 * `docs/08-design/foundation/application-registration/software-design.md`
 * `docs/08-design/core/audit/software-design.md`
+* `docs/08-design/core/security/software-design.md`
 * applicable security, database, transaction, identifier, and testing standards.
 
 Detailed Threat Detection remains a later Monitoring subcapability.
@@ -123,13 +124,13 @@ Monitoring provides the operational Signal foundation that Threat Detection may 
 | `MonitoringSignal`                    | Grouped mutable operational Signal               | `app/Core/Monitoring/Models/MonitoringSignal.php`                       |
 | `MonitoringOccurrence`                | Append-oriented operational observation          | `app/Core/Monitoring/Models/MonitoringOccurrence.php`                   |
 | `MonitoringFingerprintResolver`       | Stable grouping fingerprint                      | `app/Core/Monitoring/Resolvers/MonitoringFingerprintResolver.php`       |
-| `MonitoringContextRedactor`           | Safe operational-context enforcement             | `app/Core/Monitoring/Redaction/MonitoringContextRedactor.php`           |
+| `MonitoringContextRedactor`           | Apply Monitoring evidence minimization after Security redaction | `app/Core/Monitoring/Redaction/MonitoringContextRedactor.php` |
 | `HealthCheckRegistry`                 | Monitoring-owned health-check Host Registry      | `app/Core/Monitoring/Registry/HealthCheckRegistry.php`                  |
 | `SearchMonitoringSignalsQuery`        | Filter/paginate Signals                          | `app/Core/Monitoring/Queries/SearchMonitoringSignalsQuery.php`          |
 | `GetMonitoringSignalQuery`            | Retrieve one Signal                              | `app/Core/Monitoring/Queries/GetMonitoringSignalQuery.php`              |
 | `ListMonitoringOccurrencesQuery`      | Retrieve Signal/source occurrence history        | `app/Core/Monitoring/Queries/ListMonitoringOccurrencesQuery.php`        |
 | `MonitoringServiceProvider`           | Framework lifecycle integration                  | `app/Core/Monitoring/Providers/MonitoringServiceProvider.php`           |
-| `MonitoringRegistrationDescriptor`    | Application Registration declaration             | `app/Core/Monitoring/Registration/MonitoringRegistrationDescriptor.php` |
+| `MonitoringRegistrationDescriptor`    | One Monitoring registration declaration with Runtime, Security, and Audit dependencies | `app/Core/Monitoring/Registration/MonitoringRegistrationDescriptor.php` |
 
 No generic `LoggingService` or combined Audit/Monitoring persistence abstraction is introduced.
 
@@ -286,7 +287,9 @@ invocation_channel
 
 Producers do not manually provide Runtime correlation fields.
 
-When Monitoring executes outside an initialized Runtime boundary, the framework adapter must either establish the applicable Runtime Invocation first or explicitly fail the integration rather than fabricate correlation data.
+`RecordMonitoringOccurrenceInterface` assumes a valid current Invocation. `RecordMonitoringOccurrenceAction` consumes `InvocationContextInterface` and requires `current()` to succeed; Monitoring never fabricates or initializes Runtime state.
+
+For a framework failure that occurs before Runtime initialization, the framework integration adapter must not invoke the normal durable Monitoring recording path. It emits a minimal Security-redacted fallback through Laravel's framework logging channel, preserves the original exception/failure behavior, and does not fabricate `invocation_id`, `correlation_id`, `causation_id`, or `invocation_channel`.
 
 ### Health Check Contract
 
@@ -314,7 +317,7 @@ ownerKey
 contributionKey
 target
 expectedCondition
-intervalSeconds
+intervalMinutes
 failureThreshold
 recoveryThreshold
 failureSeverity
@@ -342,6 +345,8 @@ unhealthy
 Health-check Contributors own the meaning of the expected condition.
 
 Monitoring owns execution, threshold evaluation, occurrence recording, Signal state, and operational attention.
+
+`intervalMinutes` is a positive integer with a minimum of `1`. The health command runs once per minute and executes a check only when it is due according to this whole-minute cadence. Initial implementation does not provide sub-minute health checks; `deduplication_window_seconds` remains a separate concern.
 
 ---
 
@@ -578,7 +583,7 @@ app/Core/Monitoring/Console/RunHealthChecksCommand.php
 
 Application Registration schedules the command once per minute.
 
-The command evaluates registered definitions and runs only checks whose `intervalSeconds` make them due.
+The command evaluates registered definitions and runs only checks whose `intervalMinutes` make them due on the whole-minute cadence.
 
 Overlapping executions of the same health check must be prevented.
 
@@ -605,7 +610,24 @@ unnecessary personal data
 sensitive Job payloads
 ```
 
-`MonitoringContextRedactor` sanitizes context before persistence.
+Before `MonitoringContextRedactor` applies Monitoring-specific evidence minimization, it consumes Core Security's public `RedactSensitiveContextInterface` using `RedactionScope::log_context`.
+
+```text
+Monitoring source evidence
+    ↓
+Core Security RedactSensitiveContextInterface
+    scope = log_context
+    ↓
+credential/request secret redaction
+    ↓
+MonitoringContextRedactor
+    ↓
+Monitoring-specific evidence minimization
+    ↓
+persistence/fingerprinting
+```
+
+Core Security and Security/Secrets own credential redaction. Monitoring owns operational evidence minimization, fingerprint safety, stack-trace/location safety, and cardinality control. Monitoring does not maintain a canonical credential-key catalog, while categorically prohibiting raw secret persistence.
 
 Redaction applies to:
 
@@ -655,7 +677,7 @@ Monitoring persistence failure must not cause a second application outage.
 
 If durable recording fails:
 
-1. emit a minimal redacted fallback through Laravel's normal logging channel;
+1. pass fallback context through `RedactSensitiveContextInterface` and emit the resulting minimal record through Laravel's normal logging channel;
 2. do not recursively attempt the same Monitoring write;
 3. preserve the original application failure behavior;
 4. return a failed/fallback `MonitoringWriteResult` where a caller receives one.
@@ -688,7 +710,7 @@ Severity escalation may bypass the ordinary deduplication interval.
 
 ### Laravel Exception Integration
 
-The application exception-reporting boundary delegates reported exceptions into Monitoring.
+After Runtime initialization, the application exception-reporting boundary delegates reported exceptions into Monitoring.
 
 Target integration:
 
@@ -703,6 +725,8 @@ RecordMonitoringOccurrenceInterface
 Laravel's existing rendering behavior remains separate.
 
 Monitoring does not become the HTTP exception renderer.
+
+If exception reporting is reached before Runtime initialization, the adapter emits only the minimal Security-redacted framework-log fallback defined in the Runtime precondition. It neither calls durable Monitoring recording nor changes Laravel's rendering or exception behavior.
 
 ### Queue Integration
 
@@ -792,128 +816,76 @@ Those actions remain with their owning capabilities.
 * health-check Host Registry;
 * applicable Event integration.
 
+Its owner registration dependencies explicitly include `runtime`, `security`, and `audit` where these defined interactions require their public Contracts.
+
 Monitoring does not directly add its Provider to root Laravel bootstrap composition.
 
 ---
 
 ## 9. Implementation Manifest
 
-### Core Monitoring
+| Change | Path | Archetype | Responsibility | Dependencies | Requirement Source | Verification | Compatibility |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| CREATE | `app/Core/Monitoring/Actions/RecordMonitoringOccurrenceAction.php` | Action | Record an occurrence using a current Invocation | Monitoring Contract, Runtime, Security redaction | `docs/03-architecture/public-contract-and-interaction-model.md` | Monitoring Runtime fallback test | None |
+| CREATE | `app/Core/Monitoring/Actions/RunHealthCheckAction.php` | Action | Execute one due health check | Health Check Contract, Registry | `docs/02-standards/logging/Monitoring And Alerting Standards.md` | Health-check execution test | None |
+| CREATE | `app/Core/Monitoring/Actions/TriageMonitoringSignalAction.php` | Action | Triage one Signal | Monitoring Signal model | `docs/03-architecture/public-contract-and-interaction-model.md` | Signal lifecycle test | None |
+| CREATE | `app/Core/Monitoring/Actions/ResolveMonitoringSignalAction.php` | Action | Resolve one Signal | Monitoring Signal model | `docs/03-architecture/public-contract-and-interaction-model.md` | Signal lifecycle test | None |
+| CREATE | `app/Core/Monitoring/Contracts/RecordMonitoringOccurrenceInterface.php` | Contract | Expose public occurrence recording | Monitoring Data and result | `docs/03-architecture/public-contract-and-interaction-model.md` | Monitoring occurrence test | None |
+| CREATE | `app/Core/Monitoring/Contracts/HealthCheckInterface.php` | Contract | Define health-check Extension Point | Health Check result data | `docs/03-architecture/public-contract-and-interaction-model.md` | Health-check registry test | None |
+| CREATE | `app/Core/Monitoring/Data/RecordMonitoringOccurrenceData.php` | Data Object | Receive typed source evidence | Monitoring data types | `docs/03-architecture/public-contract-and-interaction-model.md` | Monitoring occurrence test | None |
+| CREATE | `app/Core/Monitoring/Data/MonitoringContextData.php` | Data Object | Hold safe execution context | Security redaction Contract | `docs/03-architecture/public-contract-and-interaction-model.md` | Monitoring redaction test | None |
+| CREATE | `app/Core/Monitoring/Data/MonitoringEvidenceData.php` | Data Object | Hold safe source evidence | Security redaction Contract | `docs/03-architecture/public-contract-and-interaction-model.md` | Monitoring redaction test | None |
+| CREATE | `app/Core/Monitoring/Data/MonitoringWriteResult.php` | Data Object | Report occurrence and Signal result | None | `docs/03-architecture/public-contract-and-interaction-model.md` | Monitoring fallback test | None |
+| CREATE | `app/Core/Monitoring/Data/MonitoringSignalSnapshot.php` | Data Object | Expose read-side Signal data | Monitoring Signal model | `docs/03-architecture/public-contract-and-interaction-model.md` | Monitoring administration test | None |
+| CREATE | `app/Core/Monitoring/Data/MonitoringOccurrenceSnapshot.php` | Data Object | Expose read-side occurrence data | Monitoring Occurrence model | `docs/03-architecture/public-contract-and-interaction-model.md` | Monitoring administration test | None |
+| CREATE | `app/Core/Monitoring/Data/MonitoringSearchCriteria.php` | Data Object | Carry typed Signal filters | None | `docs/03-architecture/public-contract-and-interaction-model.md` | Monitoring administration test | None |
+| CREATE | `app/Core/Monitoring/Data/HealthCheckDefinitionData.php` | Data Object | Define one health check and whole-minute cadence | `HealthCheckInterface` | `docs/02-standards/logging/Monitoring And Alerting Standards.md` | Health-check execution test | None |
+| CREATE | `app/Core/Monitoring/Data/HealthCheckResultData.php` | Data Object | Report one health result | None | `docs/02-standards/logging/Monitoring And Alerting Standards.md` | Health-check execution test | None |
+| CREATE | `app/Core/Monitoring/Enums/MonitoringSeverity.php` | Enum | Define operational severity | None | `docs/02-standards/logging/Monitoring And Alerting Standards.md` | Monitoring occurrence test | None |
+| CREATE | `app/Core/Monitoring/Enums/MonitoringSignalStatus.php` | Enum | Define Signal lifecycle status | None | `docs/02-standards/logging/Monitoring And Alerting Standards.md` | Signal lifecycle test | None |
+| CREATE | `app/Core/Monitoring/Enums/MonitoringSourceType.php` | Enum | Define occurrence source types | None | `docs/02-standards/logging/Monitoring And Alerting Standards.md` | Monitoring occurrence test | None |
+| CREATE | `app/Core/Monitoring/Enums/HealthCheckStatus.php` | Enum | Define health result status | None | `docs/02-standards/logging/Monitoring And Alerting Standards.md` | Health-check execution test | None |
+| CREATE | `app/Core/Monitoring/Models/MonitoringSignal.php` | Model | Represent grouped triage state | `monitoring_signals` Contract | `docs/03-architecture/persistent-data-architecture.md` | Signal grouping test | None |
+| CREATE | `app/Core/Monitoring/Models/MonitoringOccurrence.php` | Model | Represent append-oriented observation | `monitoring_occurrences` Contract | `docs/03-architecture/persistent-data-architecture.md` | Monitoring occurrence test | None |
+| CREATE | `app/Core/Monitoring/Queries/SearchMonitoringSignalsQuery.php` | Query | Search Signals | Monitoring Signal model | `docs/03-architecture/public-contract-and-interaction-model.md` | Monitoring administration test | None |
+| CREATE | `app/Core/Monitoring/Queries/GetMonitoringSignalQuery.php` | Query | Retrieve one Signal | Monitoring Signal model | `docs/03-architecture/public-contract-and-interaction-model.md` | Monitoring administration test | None |
+| CREATE | `app/Core/Monitoring/Queries/ListMonitoringOccurrencesQuery.php` | Query | List occurrence history | Monitoring Occurrence model | `docs/03-architecture/public-contract-and-interaction-model.md` | Monitoring administration test | None |
+| CREATE | `app/Core/Monitoring/Resolvers/MonitoringFingerprintResolver.php` | Resolver | Generate safe stable fingerprint | Monitoring source data | `docs/02-standards/logging/Monitoring And Alerting Standards.md` | Signal grouping test | None |
+| CREATE | `app/Core/Monitoring/Redaction/MonitoringContextRedactor.php` | Redactor | Apply Monitoring minimization after Security redaction | `RedactSensitiveContextInterface` | `docs/03-architecture/public-contract-and-interaction-model.md` | Monitoring redaction test | None |
+| CREATE | `app/Core/Monitoring/Registry/HealthCheckRegistry.php` | Registry | Accept Monitoring health-check Contributions | Health Check Contract | `docs/03-architecture/public-contract-and-interaction-model.md` | Health-check registry test | None |
+| CREATE | `app/Core/Monitoring/Events/MonitoringSignalOpened.php` | Event | Publish opened Signal fact | Monitoring Signal snapshot | `docs/03-architecture/public-contract-and-interaction-model.md` | Signal Event after-commit test | None |
+| CREATE | `app/Core/Monitoring/Events/MonitoringSignalEscalated.php` | Event | Publish escalated Signal fact | Monitoring Signal snapshot | `docs/03-architecture/public-contract-and-interaction-model.md` | Signal Event after-commit test | None |
+| CREATE | `app/Core/Monitoring/Events/MonitoringSignalResolved.php` | Event | Publish resolved Signal fact | Monitoring Signal snapshot | `docs/03-architecture/public-contract-and-interaction-model.md` | Signal Event after-commit test | None |
+| CREATE | `app/Core/Monitoring/Listeners/RecordFailedJob.php` | Listener | Record final Job failure | Monitoring Contract | `docs/03-architecture/public-contract-and-interaction-model.md` | Failed-job Monitoring test | None |
+| CREATE | `app/Core/Monitoring/Listeners/RecordScheduledTaskFailure.php` | Listener | Record scheduled-task failure | Monitoring Contract | `docs/03-architecture/public-contract-and-interaction-model.md` | Scheduled-task Monitoring test | None |
+| CREATE | `app/Core/Monitoring/Console/RunHealthChecksCommand.php` | Command | Run due checks once per minute | Health Check Registry | `docs/02-standards/logging/Monitoring And Alerting Standards.md` | Health-check execution test | None |
+| CREATE | `app/Core/Monitoring/Http/Controllers/MonitoringController.php` | Controller | Deliver Monitoring administration | Monitoring queries | `docs/03-architecture/repository-architecture.md` | Monitoring administration test | None |
+| CREATE | `app/Core/Monitoring/Http/Requests/MonitoringSearchRequest.php` | Form Request | Validate Monitoring search input | None | `docs/03-architecture/repository-architecture.md` | Monitoring administration test | None |
+| CREATE | `app/Core/Monitoring/Providers/MonitoringServiceProvider.php` | Provider | Bind Monitoring and framework integration | Monitoring Contracts | `docs/03-architecture/application-registration.md` | Monitoring registration test | None |
+| CREATE | `app/Core/Monitoring/Registration/MonitoringRegistrationDescriptor.php` | Registration Descriptor | Declare Monitoring artifacts and owner dependencies | `runtime`, `security`, `audit` | `docs/03-architecture/application-registration.md` | Monitoring registration test | None |
+| CREATE | `app/Core/Monitoring/routes/web.php` | Route | Declare Monitoring owner routes | Monitoring Controller | `docs/03-architecture/repository-architecture.md` | Monitoring administration test | None |
+| CREATE | `app/Core/Monitoring/config/monitoring.php` | Configuration | Define structural Monitoring configuration | Laravel configuration | `docs/03-architecture/repository-architecture.md` | Monitoring configuration test | None |
+| MODIFY | `bootstrap/app.php` | Laravel integration | Route post-Runtime exceptions to Monitoring or pre-Runtime fallback | Laravel exception hook, Runtime | `docs/03-architecture/public-contract-and-interaction-model.md` | Monitoring Runtime fallback test | None |
+| CREATE | `resources/views/core/monitoring/` | View family | Render Monitoring administration | Monitoring Controller | `docs/03-architecture/repository-architecture.md` | Manual visual review and Monitoring administration test | None |
+| CREATE | `database/core/Monitoring/migrations/` | Migration family | Materialize Monitoring persistence | Canonical Monitoring table Contracts | `docs/03-architecture/persistent-data-architecture.md` | Database migration proof | None |
+| CREATE | `database/core/Monitoring/factories/` | Factory family | Supply Monitoring test data | Monitoring Models | `docs/03-architecture/persistent-data-architecture.md` | Targeted Monitoring proof | None |
+| CREATE | `docs/06-database/feature-contracts/monitoring.md` | Database Contract | Define Monitoring persistence behavior | Monitoring persistence requirements | `docs/03-architecture/persistent-data-architecture.md` | Documentation static validation | None |
+| CREATE | `docs/06-database/tables/monitoring_signals.md` | Database Contract | Define `monitoring_signals` table | Monitoring persistence requirements | `docs/03-architecture/persistent-data-architecture.md` | Documentation static validation | None |
+| CREATE | `docs/06-database/tables/monitoring_occurrences.md` | Database Contract | Define `monitoring_occurrences` table | Monitoring persistence requirements | `docs/03-architecture/persistent-data-architecture.md` | Documentation static validation | None |
+| CREATE | `app/Core/Monitoring/__tests__/MonitoringOccurrenceTest.php` | Test | Prove occurrence recording | Monitoring owner artifacts | `docs/02-standards/testing/index.md` | Targeted Monitoring proof | None |
+| CREATE | `app/Core/Monitoring/__tests__/MonitoringSignalGroupingTest.php` | Test | Prove fingerprint grouping | Monitoring owner artifacts | `docs/02-standards/testing/index.md` | Targeted Monitoring proof | None |
+| CREATE | `app/Core/Monitoring/__tests__/MonitoringSignalLifecycleTest.php` | Test | Prove Signal transitions | Monitoring owner artifacts | `docs/02-standards/testing/index.md` | Targeted Monitoring proof | None |
+| CREATE | `app/Core/Monitoring/__tests__/MonitoringRedactionTest.php` | Test | Prove Security-first context redaction | Security redaction Contract | `docs/02-standards/testing/index.md` | Targeted Monitoring proof | None |
+| CREATE | `app/Core/Monitoring/__tests__/MonitoringFallbackTest.php` | Test | Prove no durable path before Runtime | Runtime and Security redaction | `docs/02-standards/testing/index.md` | Monitoring Runtime fallback test | None |
+| CREATE | `app/Core/Monitoring/__tests__/HealthCheckRegistryTest.php` | Test | Prove health-check Contributions | Health Check Registry | `docs/02-standards/testing/index.md` | Targeted Monitoring proof | None |
+| CREATE | `app/Core/Monitoring/__tests__/HealthCheckExecutionTest.php` | Test | Prove whole-minute due execution | Health Check command | `docs/02-standards/testing/index.md` | Targeted Monitoring proof | None |
+| CREATE | `app/Core/Monitoring/__tests__/FailedJobMonitoringTest.php` | Test | Prove final Job failure capture | Failed Job Listener | `docs/02-standards/testing/index.md` | Targeted Monitoring proof | None |
+| CREATE | `app/Core/Monitoring/__tests__/ScheduledTaskMonitoringTest.php` | Test | Prove scheduled-task capture | Scheduled Listener | `docs/02-standards/testing/index.md` | Targeted Monitoring proof | None |
+| CREATE | `app/Core/Monitoring/__tests__/MonitoringRegistrationTest.php` | Test | Prove Monitoring's single descriptor | Monitoring Registration Descriptor | `docs/02-standards/testing/index.md` | Targeted Monitoring proof | None |
+| CREATE | `tests/Feature/Monitoring/ExceptionMonitoringTest.php` | Test | Prove exception integration behavior | Laravel exception hook | `docs/02-standards/testing/index.md` | Targeted Monitoring proof | None |
+| CREATE | `tests/Feature/Monitoring/MonitoringAdministrationTest.php` | Test | Prove Monitoring administration behavior | Monitoring routes and queries | `docs/02-standards/testing/index.md` | Targeted Monitoring proof | None |
 
-```text
-CREATE app/Core/Monitoring/
-    Actions/RecordMonitoringOccurrenceAction.php
-    Actions/RunHealthCheckAction.php
-    Actions/TriageMonitoringSignalAction.php
-    Actions/ResolveMonitoringSignalAction.php
-
-    Contracts/RecordMonitoringOccurrenceInterface.php
-    Contracts/HealthCheckInterface.php
-
-    Data/RecordMonitoringOccurrenceData.php
-    Data/MonitoringContextData.php
-    Data/MonitoringEvidenceData.php
-    Data/MonitoringWriteResult.php
-    Data/MonitoringSignalSnapshot.php
-    Data/MonitoringOccurrenceSnapshot.php
-    Data/MonitoringSearchCriteria.php
-    Data/HealthCheckDefinitionData.php
-    Data/HealthCheckResultData.php
-
-    Enums/MonitoringSeverity.php
-    Enums/MonitoringSignalStatus.php
-    Enums/MonitoringSourceType.php
-    Enums/HealthCheckStatus.php
-
-    Models/MonitoringSignal.php
-    Models/MonitoringOccurrence.php
-
-    Queries/SearchMonitoringSignalsQuery.php
-    Queries/GetMonitoringSignalQuery.php
-    Queries/ListMonitoringOccurrencesQuery.php
-
-    Resolvers/MonitoringFingerprintResolver.php
-
-    Redaction/MonitoringContextRedactor.php
-
-    Registry/HealthCheckRegistry.php
-
-    Events/MonitoringSignalOpened.php
-    Events/MonitoringSignalEscalated.php
-    Events/MonitoringSignalResolved.php
-
-    Listeners/RecordFailedJob.php
-    Listeners/RecordScheduledTaskFailure.php
-
-    Console/RunHealthChecksCommand.php
-
-    Http/Controllers/MonitoringController.php
-    Http/Requests/MonitoringSearchRequest.php
-
-    Providers/MonitoringServiceProvider.php
-    Registration/MonitoringRegistrationDescriptor.php
-
-    routes/web.php
-    config/monitoring.php
-
-    __tests__/
-```
-
-### Laravel Integration
-
-```text
-MODIFY bootstrap/app.php
-```
-
-The modification installs the thin Laravel exception-reporting hook that delegates to Monitoring.
-
-### Presentation
-
-```text
-CREATE resources/views/core/monitoring/
-```
-
-### Database
-
-```text
-CREATE database/core/Monitoring/migrations/
-CREATE database/core/Monitoring/factories/
-
-CREATE docs/06-database/feature-contracts/monitoring.md
-CREATE docs/06-database/tables/monitoring_signals.md
-CREATE docs/06-database/tables/monitoring_occurrences.md
-```
-
-### Obsolete Proof-Of-Concept Cleanup
-
-Implementation should delete obsolete error-log/Monitoring artifacts that conflict with the accepted target system.
-
-Do not:
-
-* migrate proof-of-concept error records merely because they exist;
-* preserve a generic Platform Logging abstraction;
-* adapt target Monitoring around current error-log Models;
-* keep duplicate error/Monitoring stores for compatibility without an explicit accepted requirement.
-
-### Tests
-
-```text
-CREATE app/Core/Monitoring/__tests__/
-    MonitoringOccurrenceTest.php
-    MonitoringSignalGroupingTest.php
-    MonitoringSignalLifecycleTest.php
-    MonitoringRedactionTest.php
-    MonitoringFallbackTest.php
-    HealthCheckRegistryTest.php
-    HealthCheckExecutionTest.php
-    FailedJobMonitoringTest.php
-    ScheduledTaskMonitoringTest.php
-    MonitoringRegistrationTest.php
-
-CREATE tests/Feature/Monitoring/
-    ExceptionMonitoringTest.php
-    MonitoringAdministrationTest.php
-```
+Obsolete proof-of-concept error-log or Monitoring artifacts are deleted only when a bounded implementation issue identifies each target. They have no preservation requirement.
 
 ---
 
@@ -925,6 +897,8 @@ Required proof must establish:
 * failed-job capture;
 * scheduled-task failure capture;
 * Runtime correlation;
+* `RecordMonitoringOccurrenceAction` requires `InvocationContextInterface::current()` and never initializes Runtime;
+* pre-Runtime framework failures use only Security-redacted Laravel fallback logging;
 * stable fingerprint generation;
 * duplicate occurrence grouping;
 * no duplicate Signal creation for one fingerprint;
@@ -934,6 +908,7 @@ Required proof must establish:
 * legal Signal state transitions;
 * health-check registration;
 * health-check scheduling;
+* positive `intervalMinutes` with whole-minute due execution and no sub-minute promise;
 * health failure threshold;
 * health recovery threshold;
 * healthy occurrences without unnecessary open Signals;
@@ -942,12 +917,14 @@ Required proof must establish:
 * redacted exception context;
 * no sensitive Job payload storage;
 * Monitoring persistence fallback;
+* Security redaction occurs before Monitoring evidence minimization and fallback logging;
 * no fallback recursion;
 * operator triage Audit evidence;
 * Signal events after commit;
 * no Audit/Monitoring ownership collapse;
 * no security containment performed by Monitoring;
 * Application Registration composition;
+* the one Monitoring descriptor declares applicable `runtime`, `security`, and `audit` dependencies;
 * obsolete conflicting proof-of-concept Monitoring/error-log mechanisms are removed.
 
 ### Remaining Blockers

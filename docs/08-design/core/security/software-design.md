@@ -23,7 +23,7 @@ Core Security owns cross-cutting application-security guardrails and security-co
 
 Target owner:
 
-```text
+```text id="0cq83w"
 app/Core/Security/
 App\Core\Security\
 owner_key: security
@@ -35,7 +35,7 @@ Core Security owns:
 * Content Security Policy composition;
 * expected-HTTPS enforcement;
 * trusted transport/proxy/host posture verification;
-* route-security classification and coverage validation;
+* canonical route-security profiles, classification, and coverage validation;
 * safe redirect validation;
 * request/context secret-safety redaction;
 * application security verification checks;
@@ -86,7 +86,9 @@ Primary authority:
 * `docs/08-design/core/audit/software-design.md`
 * `docs/08-design/core/monitoring/software-design.md`
 
-The Security standards package currently remains draft. This SDD therefore defines the proposed implementation realization but does not promote unresolved Security policy into accepted canonical behavior.
+The Security standards package currently remains draft.
+
+The canonical route-security profile vocabulary itself is resolved by Zero Trust Security Standards and is consumed directly by this SDD.
 
 Current implementation structure is reference evidence only.
 
@@ -94,40 +96,41 @@ Current implementation structure is reference evidence only.
 
 ## 3. Component Design
 
-| Component                          | Responsibility                                                        | Target Path                                                              |
-| ---------------------------------- | --------------------------------------------------------------------- | ------------------------------------------------------------------------ |
-| `ResolveSafeRedirectInterface`     | Public safe-redirect Contract                                         | `app/Core/Security/Contracts/ResolveSafeRedirectInterface.php`           |
-| `RedactSensitiveContextInterface`  | Public security-sensitive context-redaction Contract                  | `app/Core/Security/Contracts/RedactSensitiveContextInterface.php`        |
-| `SecurityCheckInterface`           | Security release/runtime verification Extension Point                 | `app/Core/Security/Contracts/SecurityCheckInterface.php`                 |
-| `SafeRedirectTarget`               | Validated redirect result                                             | `app/Core/Security/Data/SafeRedirectTarget.php`                          |
-| `SensitiveContextData`             | Structured redaction input                                            | `app/Core/Security/Data/SensitiveContextData.php`                        |
-| `RedactedContextData`              | Sanitized context result                                              | `app/Core/Security/Data/RedactedContextData.php`                         |
-| `RedactionRuleData`                | One normalized security-redaction rule                                | `app/Core/Security/Data/RedactionRuleData.php`                           |
-| `SecurityHeaderSet`                | Immutable response-header result                                      | `app/Core/Security/Data/SecurityHeaderSet.php`                           |
-| `RouteSecurityProfileData`         | One route-protection profile                                          | `app/Core/Security/Data/RouteSecurityProfileData.php`                    |
-| `SecurityCheckDefinitionData`      | Registered security-check definition                                  | `app/Core/Security/Data/SecurityCheckDefinitionData.php`                 |
-| `SecurityCheckResult`              | One security-check result                                             | `app/Core/Security/Data/SecurityCheckResult.php`                         |
-| `SecurityCheckStatus`              | Controlled check-result state                                         | `app/Core/Security/Enums/SecurityCheckStatus.php`                        |
-| `RedactionScope`                   | Controlled redaction context                                          | `app/Core/Security/Enums/RedactionScope.php`                             |
-| `SecurityHeaderResolver`           | Resolve security headers for one response                             | `app/Core/Security/Resolvers/SecurityHeaderResolver.php`                 |
-| `SafeRedirectResolver`             | Validate and normalize safe redirect targets                          | `app/Core/Security/Resolvers/SafeRedirectResolver.php`                   |
-| `SensitiveContextRedactor`         | Recursively apply Security redaction rules                            | `app/Core/Security/Redaction/SensitiveContextRedactor.php`               |
-| `RedactionRuleRegistry`            | Hold accepted Security/Secrets redaction rules                        | `app/Core/Security/Registry/RedactionRuleRegistry.php`                   |
-| `RouteSecurityProfileRegistry`     | Hold accepted route-security profiles                                 | `app/Core/Security/Registry/RouteSecurityProfileRegistry.php`            |
-| `SecurityCheckRegistry`            | Hold accepted release/runtime security checks                         | `app/Core/Security/Registry/SecurityCheckRegistry.php`                   |
-| `ApplySecurityHeadersMiddleware`   | Apply response security-header policy                                 | `app/Core/Security/Http/Middleware/ApplySecurityHeadersMiddleware.php`   |
-| `RequireSecureTransportMiddleware` | Fail closed when HTTPS is required but absent                         | `app/Core/Security/Http/Middleware/RequireSecureTransportMiddleware.php` |
-| `UnsafeRedirectTargetException`    | Unsafe redirect rejection                                             | `app/Core/Security/Exceptions/UnsafeRedirectTargetException.php`         |
-| `InsecureTransportException`       | Expected-HTTPS enforcement failure                                    | `app/Core/Security/Exceptions/InsecureTransportException.php`            |
-| `RunSecurityChecksCommand`         | Execute registered security verification                              | `app/Core/Security/Console/RunSecurityChecksCommand.php`                 |
-| `SecurityServiceProvider`          | Security bindings, registries, route macro, and framework integration | `app/Core/Security/Providers/SecurityServiceProvider.php`                |
-| `SecurityRegistrationDescriptor`   | Application Registration declaration                                  | `app/Core/Security/Registration/SecurityRegistrationDescriptor.php`      |
+| Component                          | Responsibility                                                                | Target Path                                                              |
+| ---------------------------------- | ----------------------------------------------------------------------------- | ------------------------------------------------------------------------ |
+| `ResolveSafeRedirectInterface`     | Public safe-redirect Contract                                                 | `app/Core/Security/Contracts/ResolveSafeRedirectInterface.php`           |
+| `RedactSensitiveContextInterface`  | Public security-sensitive context-redaction Contract                          | `app/Core/Security/Contracts/RedactSensitiveContextInterface.php`        |
+| `SecurityCheckInterface`           | Security release/runtime verification Extension Point                         | `app/Core/Security/Contracts/SecurityCheckInterface.php`                 |
+| `SafeRedirectTarget`               | Validated redirect result                                                     | `app/Core/Security/Data/SafeRedirectTarget.php`                          |
+| `SensitiveContextData`             | Structured redaction input                                                    | `app/Core/Security/Data/SensitiveContextData.php`                        |
+| `RedactedContextData`              | Sanitized context result                                                      | `app/Core/Security/Data/RedactedContextData.php`                         |
+| `RedactionRuleData`                | One normalized security-redaction rule                                        | `app/Core/Security/Data/RedactionRuleData.php`                           |
+| `SecurityHeaderSet`                | Immutable response-header result                                              | `app/Core/Security/Data/SecurityHeaderSet.php`                           |
+| `RouteSecurityProfileData`         | Immutable minimum-control definition for one canonical route-security profile | `app/Core/Security/Data/RouteSecurityProfileData.php`                    |
+| `SecurityCheckDefinitionData`      | Registered security-check definition                                          | `app/Core/Security/Data/SecurityCheckDefinitionData.php`                 |
+| `SecurityCheckResult`              | One security-check result                                                     | `app/Core/Security/Data/SecurityCheckResult.php`                         |
+| `RouteSecurityProfile`             | Canonical eight-value route-security profile enum                             | `app/Core/Security/Enums/RouteSecurityProfile.php`                       |
+| `SecurityCheckStatus`              | Controlled check-result state                                                 | `app/Core/Security/Enums/SecurityCheckStatus.php`                        |
+| `RedactionScope`                   | Controlled redaction context                                                  | `app/Core/Security/Enums/RedactionScope.php`                             |
+| `SecurityHeaderResolver`           | Resolve security headers for one response                                     | `app/Core/Security/Resolvers/SecurityHeaderResolver.php`                 |
+| `SafeRedirectResolver`             | Validate and normalize safe redirect targets                                  | `app/Core/Security/Resolvers/SafeRedirectResolver.php`                   |
+| `SensitiveContextRedactor`         | Recursively apply Security redaction rules                                    | `app/Core/Security/Redaction/SensitiveContextRedactor.php`               |
+| `RedactionRuleRegistry`            | Hold accepted Security/Secrets redaction rules                                | `app/Core/Security/Registry/RedactionRuleRegistry.php`                   |
+| `RouteSecurityProfileRegistry`     | Resolve the closed canonical eight-profile definitions                        | `app/Core/Security/Registry/RouteSecurityProfileRegistry.php`            |
+| `SecurityCheckRegistry`            | Hold accepted release/runtime security checks                                 | `app/Core/Security/Registry/SecurityCheckRegistry.php`                   |
+| `ApplySecurityHeadersMiddleware`   | Apply response security-header policy                                         | `app/Core/Security/Http/Middleware/ApplySecurityHeadersMiddleware.php`   |
+| `RequireSecureTransportMiddleware` | Fail closed when HTTPS is required but absent                                 | `app/Core/Security/Http/Middleware/RequireSecureTransportMiddleware.php` |
+| `UnsafeRedirectTargetException`    | Unsafe redirect rejection                                                     | `app/Core/Security/Exceptions/UnsafeRedirectTargetException.php`         |
+| `InsecureTransportException`       | Expected-HTTPS enforcement failure                                            | `app/Core/Security/Exceptions/InsecureTransportException.php`            |
+| `RunSecurityChecksCommand`         | Execute registered security verification                                      | `app/Core/Security/Console/RunSecurityChecksCommand.php`                 |
+| `SecurityServiceProvider`          | Security bindings, registries, route macro, and framework integration         | `app/Core/Security/Providers/SecurityServiceProvider.php`                |
+| `SecurityRegistrationDescriptor`   | Application Registration declaration                                          | `app/Core/Security/Registration/SecurityRegistrationDescriptor.php`      |
 
 ### Built-In Verification Checks
 
 Initial checks:
 
-```text
+```text id="9cl3ba"
 DebugDisabledCheck
 TransportSecurityConfigurationCheck
 TrustedProxyConfigurationCheck
@@ -138,13 +141,13 @@ RouteSecurityCoverageCheck
 
 Target paths:
 
-```text
+```text id="vu4nje"
 app/Core/Security/Verification/Checks/
 ```
 
 Do not create:
 
-```text
+```text id="61p8n0"
 SecurityManager
 SecurityService
 SecurityHelper
@@ -158,7 +161,7 @@ or another generic Security abstraction.
 
 Do not create yet:
 
-```text
+```text id="mtqwai"
 RequestSecurityContext
 TrustDecisionService
 risk scoring
@@ -180,7 +183,7 @@ Those require later accepted requirements or subcapability designs.
 
 Cross-owner code that must accept a redirect candidate from request or application input uses:
 
-```php
+```php id="u1wv7k"
 interface ResolveSafeRedirectInterface
 {
     public function resolve(string $candidate): SafeRedirectTarget;
@@ -208,7 +211,7 @@ Any later approved external redirect requires an explicit Security-owned allow-l
 
 Invalid input throws:
 
-```text
+```text id="6ugzu5"
 UnsafeRedirectTargetException
 ```
 
@@ -220,7 +223,7 @@ Security does not silently turn an unsafe redirect into an accepted target.
 
 Audit, Monitoring, exception handling, and other approved consumers may use:
 
-```php
+```php id="ivd8wy"
 interface RedactSensitiveContextInterface
 {
     public function redact(
@@ -231,14 +234,14 @@ interface RedactSensitiveContextInterface
 
 `SensitiveContextData` contains:
 
-```text
+```text id="x4q2ve"
 scope
 values
 ```
 
 `RedactionScope` initially supports:
 
-```text
+```text id="58zmvv"
 request_body
 query
 headers
@@ -259,7 +262,7 @@ The redactor:
 
 Baseline prohibited headers include:
 
-```text
+```text id="mkf3yy"
 Authorization
 Cookie
 Set-Cookie
@@ -273,7 +276,7 @@ DataProtection remains authoritative for semantic personal/business-data classif
 
 Security owns Host Registry:
 
-```text
+```text id="0k22fr"
 security.redaction_rules
 ```
 
@@ -281,7 +284,13 @@ A Contribution provides `RedactionRuleData`.
 
 Security/Secrets uses this Registry to add credential-specific rules without modifying Audit or Monitoring internals.
 
-Core Security provides `RedactSensitiveContextInterface`. Audit consumes it before `AuditEvidenceRedactor`, and Monitoring consumes it before `MonitoringContextRedactor`. Security supplies credential/request redaction but does not absorb their semantic evidence rules.
+Core Security provides `RedactSensitiveContextInterface`.
+
+Audit consumes it before `AuditEvidenceRedactor`.
+
+Monitoring consumes it before `MonitoringContextRedactor`.
+
+Security supplies credential/request redaction but does not absorb their semantic evidence rules.
 
 Duplicate or contradictory normalized rules fail registration.
 
@@ -289,7 +298,7 @@ Duplicate or contradictory normalized rules fail registration.
 
 Security exposes:
 
-```php
+```php id="6mvhlb"
 interface SecurityCheckInterface
 {
     public function evaluate(): SecurityCheckResult;
@@ -298,13 +307,13 @@ interface SecurityCheckInterface
 
 Security owns Host Registry:
 
-```text
+```text id="towsxl"
 security.release_checks
 ```
 
 Each Contribution identifies:
 
-```text
+```text id="dr6dwb"
 contribution_key
 owner_key
 blocking
@@ -315,7 +324,7 @@ optional runbook reference
 
 `SecurityCheckStatus` uses:
 
-```text
+```text id="kgubjv"
 satisfied
 warning
 unsatisfied
@@ -326,13 +335,13 @@ These are application security-check results and are distinct from repository wo
 
 `RunSecurityChecksCommand` uses signature:
 
-```text
+```text id="uwlvgp"
 security:verify
 ```
 
 Command result:
 
-```text
+```text id="4zndw0"
 all blocking checks satisfied/not applicable
     → exit 0
 
@@ -349,45 +358,339 @@ Check output must not contain secret values.
 
 ### Route Security Profiles
 
-Every application route must eventually identify one accepted Security profile.
+Every application route must identify one canonical Security profile once route-profile enforcement is active.
+
+`RouteSecurityProfile` contains exactly:
+
+```text id="aztvcy"
+public
+guest
+authenticated
+protected
+administrative
+sensitive
+restricted_data
+service
+```
+
+No ninth profile may be registered without an accepted canonical Zero Trust Security Standards revision.
+
+Numeric Tier 0–6 labels are not canonical aliases.
+
+API, webhook, and signed-download concepts are not route-security profile values.
+
+#### Route Macro
 
 Security registers the route macro:
 
-```text
-securityProfile(<profile-key>)
+```text id="284zs2"
+securityProfile(RouteSecurityProfile $profile)
 ```
 
-The macro stores profile identity as route metadata.
+The macro stores the canonical serialized profile key as route metadata.
 
-`RouteSecurityProfileRegistry` resolves each key to `RouteSecurityProfileData`.
+Examples:
 
-A profile may define applicable:
+```php id="thrpmd"
+Route::get('/profile', ...)
+    ->securityProfile(RouteSecurityProfile::Authenticated);
 
-```text
-required middleware aliases
-CSRF expectation
-required named rate limiter
-signed-request requirement
-policy-authorization requirement
-sensitive-action Audit expectation
+Route::patch('/account/password', ...)
+    ->securityProfile(RouteSecurityProfile::Sensitive);
 ```
+
+The exact PHP case casing follows repository enum conventions while serialization uses the canonical lowercase values above.
+
+`RouteSecurityProfileRegistry` resolves the enum to the immutable built-in `RouteSecurityProfileData`.
+
+The Registry is not an Extension Point.
+
+Other owners cannot contribute new route-security profile identities.
+
+#### RouteSecurityProfileData
+
+Each definition contains:
+
+```text id="dhry8d"
+profile
+requires_guest_state
+requires_authenticated_human
+requires_service_identity
+requires_action_authorization
+requires_target_authorization
+requires_scope_authorization
+requires_administrative_authority
+requires_mfa
+requires_recent_authentication
+requires_restricted_data_controls
+```
+
+The canonical built-in definitions are:
+
+| Profile           | Guest State | Auth Human | Service Identity | Action/Target/Scope Authorization | Admin Authority | MFA | Recent Auth | Restricted Data Controls |
+| ----------------- | ----------- | ---------- | ---------------- | --------------------------------- | --------------- | --- | ----------- | ------------------------ |
+| `public`          | no          | no         | no               | no                                | no              | no  | no          | no                       |
+| `guest`           | yes         | no         | no               | no                                | no              | no  | no          | no                       |
+| `authenticated`   | no          | yes        | no               | no                                | no              | no  | no          | no                       |
+| `protected`       | no          | yes        | no               | yes                               | no              | no  | no          | no                       |
+| `administrative`  | no          | yes        | no               | yes                               | yes             | yes | no          | no                       |
+| `sensitive`       | no          | yes        | no               | yes                               | no              | yes | yes         | no                       |
+| `restricted_data` | no          | yes        | no               | yes                               | no              | yes | yes         | yes                      |
+| `service`         | no          | no         | yes              | yes                               | no              | no  | no          | no                       |
+
+These fields describe Security-owned minimum requirements.
+
+They do not define how Auth establishes assurance or how Access evaluates authorization.
+
+#### `public`
+
+No authenticated Principal is required.
+
+The route must not expose protected state merely because it is public.
+
+Applicable controls such as:
+
+* input validation;
+* rate limiting;
+* request-forgery protection for browser writes;
+* abuse resistance
+
+remain independent requirements where applicable.
+
+#### `guest`
+
+Interactive unauthenticated behavior intended specifically for guest state.
+
+Representative uses:
+
+* login;
+* recovery entry;
+* another explicitly guest-only flow.
+
+An authenticated session may be rejected when route semantics require guest-only behavior.
+
+Guest does not mean exempt from:
+
+* rate limiting;
+* enumeration resistance;
+* request validation;
+* request-forgery protection.
+
+#### `authenticated`
+
+Requires a currently valid authenticated human session and applicable loginable/active account posture.
+
+It does not itself grant:
+
+* action authorization;
+* target authorization;
+* administrative authority;
+* export permission.
+
+Authentication remains distinct from authorization.
+
+#### `protected`
+
+Requires the authenticated baseline plus explicit authorization for:
+
+* action;
+* target;
+* scope.
+
+Use for ordinary protected application behavior where object or scope authorization is required.
+
+A route profile does not replace the owner Policy or Core Access decision.
+
+#### `administrative`
+
+Requires the protected baseline plus:
+
+* explicit administrative authority;
+* MFA-level authentication assurance.
+
+Administrative route location, route prefix, navigation placement, or UI visibility does not establish authority.
+
+#### `sensitive`
+
+Requires:
+
+* authenticated human posture;
+* action, target, and scope authorization;
+* MFA;
+* recent authentication.
+
+It intentionally does not require administrative authority merely because the operation is sensitive.
+
+It may apply to high-risk self-service as well as administrative behavior.
+
+Representative uses include:
+
+* password or primary-email security changes;
+* MFA disable/reset;
+* recovery-code regeneration;
+* secret reveal or rotation;
+* privileged access changes.
+
+Additional:
+
+* reason;
+* approval;
+* elevated access;
+* Audit;
+* Monitoring
+
+apply when required by the owning behavior.
+
+#### `restricted_data`
+
+Uses the `sensitive` baseline plus explicit restricted-data controls.
+
+Applicable owning requirements may include:
+
+* separate restricted-data/export authorization;
+* DataProtection evaluation;
+* reason;
+* approval;
+* accountable Audit evidence;
+* Monitoring;
+* private/safe delivery.
+
+`restricted_data` does not allow ordinary view permission to imply export permission.
+
+#### `service`
+
+Represents protected non-browser or machine-to-machine interaction.
+
+It requires applicable explicit:
+
+* machine/service/request identity or provider verification;
+* action, target, and scope authorization;
+* credential/signature protection;
+* request validation;
+* abuse/rate controls;
+* revocation path.
+
+Channel-specific replay protection and idempotency remain separate requirements.
+
+Internal network origin never satisfies the profile.
+
+### Orthogonal Security Dimensions
+
+Route Security profile identity is deliberately separate from other controls.
+
+#### Invocation Channel
+
+Core Runtime owns how execution entered:
+
+```text id="v4xzoa"
+interactive_web
+api_request
+webhook_request
+console_command
+queued_job
+event_consumer
+scheduled_task
+internal_system
+```
+
+Invocation Channel is not a Security profile.
+
+Valid combinations include:
+
+```text id="rotv4h"
+security profile: service
+invocation channel: api_request
+
+security profile: service
+invocation channel: webhook_request
+
+security profile: public
+invocation channel: api_request
+```
+
+The final combination may represent a genuinely unauthenticated public API endpoint.
+
+Do not introduce:
+
+```text id="pbeops"
+api
+webhook
+webhook_or_integration
+api_future
+```
+
+as Security profile values.
+
+#### Signed URL
+
+Signed URL validation is an integrity control, not a route-security profile.
+
+A signed URL does not:
+
+* authenticate the current Actor;
+* authorize the current target;
+* establish scope.
+
+Valid combinations include:
+
+```text id="pl8pt2"
+security profile: restricted_data
+signed URL required: true
+
+security profile: authenticated
+signed URL required: true
+```
+
+Do not introduce `signed_download` as a Security profile.
+
+#### Other Orthogonal Requirements
+
+The following remain independently declared and enforced where applicable:
+
+* CSRF/request-forgery protection;
+* named rate limiting;
+* signed URL requirement;
+* replay protection;
+* idempotency;
+* owner Policy / target authorization;
+* DataProtection;
+* reason;
+* approval;
+* Audit;
+* Monitoring.
+
+These concerns are not fields that alter the canonical profile identity.
+
+### Profile Enforcement Boundary
+
+Profile semantics define minimum controls.
+
+An owner may require stronger controls than its selected profile.
+
+An owner may not weaken the profile baseline.
+
+Security verifies profile classification and required control presence.
 
 Security does not implement Auth or Access behavior merely because a profile requires it.
 
-Example target relationship:
+Target relationship:
 
-```text
-route declares Security profile
+```text id="gvqiaa"
+route declares canonical Security profile
         ↓
-Security profile describes minimum prerequisites
+Security resolves immutable minimum-control definition
         ↓
-Auth supplies authentication/assurance middleware
+Auth supplies authentication/assurance behavior
 Access supplies authorization behavior
-owner supplies policy/target authorization
-Security verifies required controls are actually present
+owner supplies resource/domain Policy
+DataProtection supplies restricted-data controls
+        ↓
+Security verifies required controls are represented
 ```
 
-The exact canonical profile-key vocabulary remains unresolved until the Security/Zero Trust standards are accepted.
+Exact Auth middleware/Contract names remain owned by the later Core Auth design.
+
+Exact Access authorization integration remains owned by the later Core Access design.
 
 ### Rate Limiting
 
@@ -395,7 +698,9 @@ Core Security does not create a second rate-limiting framework.
 
 Owners define named limiters using Laravel's native rate limiter when their behavior requires them.
 
-Security profiles and security verification may require that a protected route references the applicable named limiter.
+Rate limiting remains orthogonal to route-profile identity.
+
+Security verification may require an applicable named limiter where the owning standard or behavior requires one.
 
 The owner of the protected behavior defines the actual abuse threshold.
 
@@ -407,7 +712,7 @@ Core Security owns no initial database tables.
 
 Security guardrails are defined through:
 
-```text
+```text id="o8gfbj"
 code
 owner configuration
 Application Registration
@@ -417,7 +722,7 @@ security verification
 
 Do not create database-backed:
 
-```text
+```text id="9loz96"
 route security profiles
 redaction rules
 release checks
@@ -428,17 +733,19 @@ security-control execution behavior
 
 merely to make them editable.
 
+The canonical eight route-security profiles are code-defined immutable Security behavior and are not administrator-editable configuration.
+
 ### Owner Configuration
 
 Target configuration:
 
-```text
+```text id="r5p1z8"
 app/Core/Security/config/security.php
 ```
 
 It contains structural configuration for applicable:
 
-```text
+```text id="zwfshm"
 transport.expect_https
 transport.trusted_proxies
 transport.trusted_hosts
@@ -453,17 +760,15 @@ redirect
 redaction
 
 verification
-
-route_profiles
 ```
 
-Application Registration loads this configuration beneath the canonical:
+The canonical route-profile identities and minimum semantics do not live in editable configuration.
 
-```text
+Application Registration loads configuration beneath:
+
+```text id="iqgzes"
 security.*
 ```
-
-configuration namespace.
 
 Environment-specific values may map into these keys.
 
@@ -475,7 +780,7 @@ Runtime administrator-editable Security Settings are not introduced by the initi
 
 When Core Settings is designed, Security may expose explicitly approved security-setting declarations.
 
-Security defaults must not become dynamically weakenable merely because Settings infrastructure exists.
+Security defaults and canonical route-profile baselines must not become dynamically weakenable merely because Settings infrastructure exists.
 
 ---
 
@@ -489,7 +794,7 @@ Core Security integrates with the Laravel HTTP pipeline.
 
 When:
 
-```text
+```text id="7d7py1"
 security.transport.expect_https = true
 ```
 
@@ -519,7 +824,7 @@ Deployment infrastructure remains responsible for its own network/web-server enf
 
 Required header families include:
 
-```text
+```text id="bm0aqf"
 Content-Security-Policy
 X-Content-Type-Options
 Referrer-Policy
@@ -530,7 +835,7 @@ Strict-Transport-Security when safe
 
 Fixed baseline:
 
-```text
+```text id="b5s5h9"
 X-Content-Type-Options: nosniff
 Referrer-Policy: strict-origin-when-cross-origin
 ```
@@ -563,19 +868,23 @@ Security does not implement a second CSRF system.
 
 State-changing browser routes remain protected by the normal web request-forgery middleware unless an explicitly accepted webhook/integration boundary requires exclusion.
 
+Request-forgery protection remains orthogonal to route-security profile identity.
+
 ### Signed URLs
 
 Security uses Laravel's native signed/temporary-signed URL mechanism for routes requiring cryptographic URL integrity.
 
 A valid signature:
 
-```text
+```text id="67tq51"
 does not grant authorization
 does not grant current scope
 does not replace authentication
 ```
 
 Sensitive downloads must still reauthorize the current request against the owning resource.
+
+Signed URL requirements remain orthogonal to route-security profile identity.
 
 ### File Guardrails
 
@@ -606,7 +915,7 @@ The initial Core Security implementation has no database-backed or administrator
 
 Security verification is exposed through:
 
-```text
+```text id="x8y7q6"
 security:verify
 ```
 
@@ -622,6 +931,7 @@ Security guardrails fail closed for:
 
 * insecure transport when HTTPS is required;
 * unknown route Security profiles;
+* missing route Security profile classification after enforcement is enabled;
 * unsafe redirect candidates;
 * invalid signed URL requirements;
 * structurally invalid redaction rules;
@@ -645,7 +955,7 @@ Do not rely on:
 
 Security-sensitive writes require:
 
-```text
+```text id="swzywp"
 FormRequest
     ↓
 explicit allowed fields
@@ -663,20 +973,20 @@ Core Security does not centralize domain FormRequests.
 
 ### Object Authorization
 
-Security route classification establishes minimum prerequisites only.
+Security route profiles establish minimum prerequisites only.
 
-It does not replace object-level authorization.
+They do not replace object-level authorization.
 
 Protected owners remain responsible for checking the specific:
 
-```text
+```text id="s93dbt"
 actor
 action
 target
 scope
 ```
 
-through Core Access/public policy boundaries.
+through Core Access/public Policy boundaries.
 
 ### State-Changing GET
 
@@ -696,13 +1006,13 @@ Security/Secrets owns the specialized credential rule catalog.
 
 Core Security base guardrails own no database transaction.
 
-Redirect validation, redaction, header generation, route classification, and security checks are deterministic and side-effect free except for:
+Redirect validation, redaction, header generation, route-profile resolution, and security checks are deterministic and side-effect free except for:
 
 * HTTP rejection;
 * command output;
 * framework registration.
 
-No retry or idempotency mechanism is required.
+Idempotency remains an orthogonal owner/channel-specific requirement and is not inferred from route profile.
 
 ---
 
@@ -714,7 +1024,7 @@ Core Security does not automatically Audit every rejected request.
 
 Domain owners remain responsible for defining which security-sensitive actions and denials are Audit-worthy.
 
-Security may provide Security-control context to Audit after Audit/Security reconciliation.
+A route profile may establish a minimum sensitivity posture, but it does not manufacture domain Audit event semantics.
 
 ### Monitoring
 
@@ -725,6 +1035,7 @@ Monitoring may later consume aggregated or explicitly selected Security guardrai
 * repeated unsafe redirects;
 * repeated invalid signed requests;
 * transport-security failures;
+* route-profile violations;
 * release-check failures.
 
 Threat Detection remains a later Monitoring subcapability.
@@ -739,7 +1050,7 @@ When a later Security policy requires human attention, Core Notifications owns d
 
 Other owners may contribute release/security checks through:
 
-```text
+```text id="z1w0pq"
 security.release_checks
 ```
 
@@ -756,7 +1067,7 @@ Security owns:
 
 Security/Secrets and other explicitly approved Security-owned subcapabilities may contribute rules through:
 
-```text
+```text id="zrl9ui"
 security.redaction_rules
 ```
 
@@ -779,17 +1090,31 @@ Consumers do not modify `SensitiveContextRedactor` directly to add domain-specif
 * applicable Security/Secrets secret-definition infrastructure;
 * other Security-owned framework registrations defined by this SDD.
 
-There is exactly one Owner Registration Descriptor for `owner_key: security`. Security/Secrets is a Core Security subcapability, not a second registrable owner. The single descriptor remains declarative and may reference its implementation beneath `app/Core/Security/Secrets/`.
+There is exactly one Owner Registration Descriptor for:
+
+```text id="4lxhf2"
+owner_key: security
+```
+
+Security/Secrets is a Core Security subcapability, not a second registrable owner.
+
+The single descriptor remains declarative and may reference its implementation beneath:
+
+```text id="uvl89y"
+app/Core/Security/Secrets/
+```
 
 Provider order is explicit:
 
-```text
+```text id="kttoav"
 SecurityServiceProvider
     before
 SecretsServiceProvider
 ```
 
-The parent provider establishes shared Security registries and Contracts that the Secrets subcapability consumes or extends. No separate owner dependency edge exists for Secrets.
+The parent Provider establishes shared Security registries and Contracts that the Secrets subcapability consumes or extends.
+
+No separate owner dependency edge exists for Secrets.
 
 No Security Provider is directly accumulated in root Provider configuration outside Application Registration.
 
@@ -803,63 +1128,64 @@ Runtime identifiers never constitute authentication, authorization, or trust.
 
 ## 9. Implementation Manifest
 
-| Change | Path | Archetype | Responsibility | Dependencies | Requirement Source | Verification | Compatibility |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| CREATE | `app/Core/Security/Contracts/ResolveSafeRedirectInterface.php` | Contract | Expose safe redirect resolution | `SafeRedirectTarget` | `docs/03-architecture/public-contract-and-interaction-model.md` | Safe redirect security test | None |
-| CREATE | `app/Core/Security/Contracts/RedactSensitiveContextInterface.php` | Contract | Expose Security-sensitive context redaction | Sensitive and redacted context data | `docs/03-architecture/public-contract-and-interaction-model.md` | Sensitive context redactor test | None |
-| CREATE | `app/Core/Security/Contracts/SecurityCheckInterface.php` | Contract | Define Security check Extension Point | Security check result | `docs/03-architecture/public-contract-and-interaction-model.md` | Security check Registry test | None |
-| CREATE | `app/Core/Security/Data/SafeRedirectTarget.php` | Data Object | Represent a validated redirect target | None | `docs/02-standards/security/Secure Coding And Request Handling Standards.md` | Safe redirect security test | None |
-| CREATE | `app/Core/Security/Data/SensitiveContextData.php` | Data Object | Carry structured redaction input | `RedactionScope` | `docs/02-standards/security/Security Standards.md` | Sensitive context redactor test | None |
-| CREATE | `app/Core/Security/Data/RedactedContextData.php` | Data Object | Carry sanitized context output | `RedactionScope` | `docs/02-standards/security/Security Standards.md` | Sensitive context redactor test | None |
-| CREATE | `app/Core/Security/Data/RedactionRuleData.php` | Data Object | Represent one redaction rule | None | `docs/02-standards/security/Security Standards.md` | Redaction Rule Registry test | None |
-| CREATE | `app/Core/Security/Data/SecurityHeaderSet.php` | Data Object | Represent resolved response headers | None | `docs/02-standards/security/Transport Session And Browser Security Standards.md` | Browser Security headers test | None |
-| CREATE | `app/Core/Security/Data/RouteSecurityProfileData.php` | Data Object | Represent one route-security mechanism profile | Route Security Profile Registry | `docs/02-standards/security/Zero Trust Security Standards.md` | Route security coverage test | None |
-| CREATE | `app/Core/Security/Data/SecurityCheckDefinitionData.php` | Data Object | Represent one security-check Contribution | `SecurityCheckInterface` | `docs/02-standards/security/Application Security Verification And Secure Delivery Standards.md` | Security Check Registry test | None |
-| CREATE | `app/Core/Security/Data/SecurityCheckResult.php` | Data Object | Report one security-check result | `SecurityCheckStatus` | `docs/02-standards/security/Application Security Verification And Secure Delivery Standards.md` | Security command test | None |
-| CREATE | `app/Core/Security/Enums/SecurityCheckStatus.php` | Enum | Define security-check result states | None | `docs/02-standards/security/Application Security Verification And Secure Delivery Standards.md` | Security command test | None |
-| CREATE | `app/Core/Security/Enums/RedactionScope.php` | Enum | Define Security redaction scopes | None | `docs/02-standards/security/Security Standards.md` | Sensitive context redactor test | None |
-| CREATE | `app/Core/Security/Resolvers/SecurityHeaderResolver.php` | Resolver | Resolve one response's security headers | Security configuration | `docs/02-standards/security/Transport Session And Browser Security Standards.md` | Security Header Resolver test | None |
-| CREATE | `app/Core/Security/Resolvers/SafeRedirectResolver.php` | Resolver | Validate and normalize redirect candidates | Safe Redirect Contract | `docs/02-standards/security/Secure Coding And Request Handling Standards.md` | Safe redirect security test | None |
-| CREATE | `app/Core/Security/Redaction/SensitiveContextRedactor.php` | Redactor | Apply Security redaction rules | Redaction Rule Registry | `docs/02-standards/security/Security Standards.md` | Sensitive context redactor test | None |
-| CREATE | `app/Core/Security/Registry/RedactionRuleRegistry.php` | Registry | Hold accepted redaction rules | Redaction Rule data | `docs/03-architecture/public-contract-and-interaction-model.md` | Redaction Rule Registry test | None |
-| CREATE | `app/Core/Security/Registry/RouteSecurityProfileRegistry.php` | Registry | Hold unresolved-vocabulary route-profile mechanisms | Route Security Profile data | `docs/03-architecture/public-contract-and-interaction-model.md` | Route security coverage test | None |
-| CREATE | `app/Core/Security/Registry/SecurityCheckRegistry.php` | Registry | Hold accepted release checks | Security Check Contract | `docs/03-architecture/public-contract-and-interaction-model.md` | Security Check Registry test | None |
-| CREATE | `app/Core/Security/Http/Middleware/ApplySecurityHeadersMiddleware.php` | Middleware | Apply resolved response headers | Security Header Resolver | `docs/02-standards/security/Transport Session And Browser Security Standards.md` | Apply Security headers middleware test | None |
-| CREATE | `app/Core/Security/Http/Middleware/RequireSecureTransportMiddleware.php` | Middleware | Fail closed for insecure required transport | Security configuration | `docs/02-standards/security/Transport Session And Browser Security Standards.md` | Secure transport middleware test | None |
-| CREATE | `app/Core/Security/Exceptions/UnsafeRedirectTargetException.php` | Exception | Signal unsafe redirect rejection | None | `docs/02-standards/security/Secure Coding And Request Handling Standards.md` | Safe redirect security test | None |
-| CREATE | `app/Core/Security/Exceptions/InsecureTransportException.php` | Exception | Signal expected-HTTPS rejection | None | `docs/02-standards/security/Transport Session And Browser Security Standards.md` | Secure transport middleware test | None |
-| CREATE | `app/Core/Security/Verification/Checks/DebugDisabledCheck.php` | Security Check | Verify debug mode is disabled | Security check Contract | `docs/02-standards/security/Application Security Verification And Secure Delivery Standards.md` | Security command test | None |
-| CREATE | `app/Core/Security/Verification/Checks/TransportSecurityConfigurationCheck.php` | Security Check | Verify transport configuration | Security check Contract | `docs/02-standards/security/Application Security Verification And Secure Delivery Standards.md` | Security command test | None |
-| CREATE | `app/Core/Security/Verification/Checks/TrustedProxyConfigurationCheck.php` | Security Check | Verify trusted proxy configuration | Security check Contract | `docs/02-standards/security/Application Security Verification And Secure Delivery Standards.md` | Security command test | None |
-| CREATE | `app/Core/Security/Verification/Checks/SecurityHeaderConfigurationCheck.php` | Security Check | Verify header configuration | Security check Contract | `docs/02-standards/security/Application Security Verification And Secure Delivery Standards.md` | Security command test | None |
-| CREATE | `app/Core/Security/Verification/Checks/SessionCookieConfigurationCheck.php` | Security Check | Verify session-cookie configuration | Security check Contract | `docs/02-standards/security/Application Security Verification And Secure Delivery Standards.md` | Security command test | None |
-| CREATE | `app/Core/Security/Verification/Checks/RouteSecurityCoverageCheck.php` | Security Check | Verify route security coverage | Route Profile Registry | `docs/02-standards/security/Application Security Verification And Secure Delivery Standards.md` | Route security coverage test | None |
-| CREATE | `app/Core/Security/Console/RunSecurityChecksCommand.php` | Command | Execute registered security checks | Security Check Registry | `docs/02-standards/security/Application Security Verification And Secure Delivery Standards.md` | Security command test | None |
-| CREATE | `app/Core/Security/Providers/SecurityServiceProvider.php` | Provider | Bind parent Security services and registries | Security owner artifacts | `docs/03-architecture/application-registration.md` | Security registration test | None |
-| CREATE | `app/Core/Security/Secrets/Providers/SecretsServiceProvider.php` | Provider | Bind Secrets subcapability services after parent Security | Security registries and Secrets Contracts | `docs/03-architecture/application-registration.md` | Security registration test | None |
-| CREATE | `app/Core/Security/Registration/SecurityRegistrationDescriptor.php` | Registration Descriptor | Declare the complete single Security owner composition | Security and Secrets owner artifacts | `docs/03-architecture/application-registration.md` | Security registration architecture proof | None |
-| CREATE | `app/Core/Security/config/security.php` | Configuration | Define Core Security configuration | Laravel configuration | `docs/03-architecture/repository-architecture.md` | Security configuration test | None |
-| CREATE | `app/Core/Security/Secrets/config/secrets.php` | Configuration | Define Secrets subcapability configuration | Laravel configuration | `docs/03-architecture/repository-architecture.md` | Secrets serialization/redaction test | None |
-| MODIFY | `bootstrap/app.php` | Laravel integration | Configure trusted transport, hosts, and global middleware | Laravel HTTP pipeline | `docs/03-architecture/repository-architecture.md` | Security integration proof | None |
-| DELETE | `app/Http/Middleware/ApplySecurityHeaders.php` | Obsolete proof-of-concept artifact | Remove superseded header middleware | None | `docs/03-architecture/repository-architecture.md` | Security route coverage test | Delete obsolete proof-of-concept artifact; no preservation requirement |
-| DELETE | `app/Http/Middleware/ConfigureTrustedProxies.php` | Obsolete proof-of-concept artifact | Remove superseded proxy middleware | None | `docs/03-architecture/repository-architecture.md` | Secure transport test | Delete obsolete proof-of-concept artifact; no preservation requirement |
-| DELETE | `app/Core/Modules/Definitions/RuntimeSecurity.php` | Obsolete proof-of-concept artifact | Remove superseded security metadata | None | `docs/03-architecture/repository-architecture.md` | Security registration architecture proof | Delete obsolete proof-of-concept artifact; no preservation requirement |
-| CREATE | `app/Core/Security/__tests__/SafeRedirectResolverTest.php` | Test | Prove safe redirect resolution | Safe Redirect Resolver | `docs/02-standards/testing/index.md` | Targeted Security proof | None |
-| CREATE | `app/Core/Security/__tests__/SensitiveContextRedactorTest.php` | Test | Prove Security context redaction | Sensitive Context Redactor | `docs/02-standards/testing/index.md` | Targeted Security proof | None |
-| CREATE | `app/Core/Security/__tests__/SecurityHeaderResolverTest.php` | Test | Prove response header resolution | Security Header Resolver | `docs/02-standards/testing/index.md` | Targeted Security proof | None |
-| CREATE | `app/Core/Security/__tests__/RequireSecureTransportMiddlewareTest.php` | Test | Prove required transport enforcement | Transport Middleware | `docs/02-standards/testing/index.md` | Targeted Security proof | None |
-| CREATE | `app/Core/Security/__tests__/ApplySecurityHeadersMiddlewareTest.php` | Test | Prove header application | Header Middleware | `docs/02-standards/testing/index.md` | Targeted Security proof | None |
-| CREATE | `app/Core/Security/__tests__/RedactionRuleRegistryTest.php` | Test | Prove redaction-rule registration | Redaction Rule Registry | `docs/02-standards/testing/index.md` | Targeted Security proof | None |
-| CREATE | `app/Core/Security/__tests__/RouteSecurityProfileRegistryTest.php` | Test | Prove route-profile mechanism | Route Profile Registry | `docs/02-standards/testing/index.md` | Targeted Security proof | None |
-| CREATE | `app/Core/Security/__tests__/SecurityCheckRegistryTest.php` | Test | Prove security-check registration | Security Check Registry | `docs/02-standards/testing/index.md` | Targeted Security proof | None |
-| CREATE | `app/Core/Security/__tests__/RunSecurityChecksCommandTest.php` | Test | Prove security-check execution | Security command | `docs/02-standards/testing/index.md` | Targeted Security proof | None |
-| CREATE | `app/Core/Security/__tests__/SecurityRegistrationTest.php` | Test | Prove one Security owner declaration and provider order | Security Registration Descriptor | `docs/02-standards/testing/index.md` | Targeted Security proof | None |
-| CREATE | `tests/Feature/Security/TransportSecurityTest.php` | Test | Prove transport security | Security HTTP integration | `docs/02-standards/testing/index.md` | Targeted Security proof | None |
-| CREATE | `tests/Feature/Security/BrowserSecurityHeadersTest.php` | Test | Prove browser headers | Security HTTP integration | `docs/02-standards/testing/index.md` | Targeted Security proof | None |
-| CREATE | `tests/Feature/Security/RouteSecurityCoverageTest.php` | Test | Prove route coverage mechanism | Route Profile Registry | `docs/02-standards/testing/index.md` | Targeted Security proof | None |
-| CREATE | `tests/Feature/Security/RequestForgeryProtectionTest.php` | Test | Prove native request-forgery protection | Laravel middleware | `docs/02-standards/testing/index.md` | Targeted Security proof | None |
-| CREATE | `tests/Feature/Security/SafeRedirectSecurityTest.php` | Test | Prove redirect rejection behavior | Safe Redirect Resolver | `docs/02-standards/testing/index.md` | Targeted Security proof | None |
-| CREATE | `tests/Feature/Security/SignedUrlSecurityTest.php` | Test | Prove signed URLs do not bypass authorization | Laravel signed URLs | `docs/02-standards/testing/index.md` | Targeted Security proof | None |
+| Change | Path                                                                            | Archetype                          | Responsibility                                                                 | Dependencies                              | Requirement Source                                                                              | Verification                             | Compatibility                                                          |
+| ------ | ------------------------------------------------------------------------------- | ---------------------------------- | ------------------------------------------------------------------------------ | ----------------------------------------- | ----------------------------------------------------------------------------------------------- | ---------------------------------------- | ---------------------------------------------------------------------- |
+| CREATE | `app/Core/Security/Contracts/ResolveSafeRedirectInterface.php`                  | Contract                           | Expose safe redirect resolution                                                | `SafeRedirectTarget`                      | `docs/03-architecture/public-contract-and-interaction-model.md`                                 | Safe redirect security test              | None                                                                   |
+| CREATE | `app/Core/Security/Contracts/RedactSensitiveContextInterface.php`               | Contract                           | Expose Security-sensitive context redaction                                    | Sensitive and redacted context data       | `docs/03-architecture/public-contract-and-interaction-model.md`                                 | Sensitive context redactor test          | None                                                                   |
+| CREATE | `app/Core/Security/Contracts/SecurityCheckInterface.php`                        | Contract                           | Define Security check Extension Point                                          | Security check result                     | `docs/03-architecture/public-contract-and-interaction-model.md`                                 | Security Check Registry test             | None                                                                   |
+| CREATE | `app/Core/Security/Data/SafeRedirectTarget.php`                                 | Data Object                        | Represent a validated redirect target                                          | None                                      | `docs/02-standards/security/Secure Coding And Request Handling Standards.md`                    | Safe redirect security test              | None                                                                   |
+| CREATE | `app/Core/Security/Data/SensitiveContextData.php`                               | Data Object                        | Carry structured redaction input                                               | `RedactionScope`                          | `docs/02-standards/security/Security Standards.md`                                              | Sensitive context redactor test          | None                                                                   |
+| CREATE | `app/Core/Security/Data/RedactedContextData.php`                                | Data Object                        | Carry sanitized context output                                                 | `RedactionScope`                          | `docs/02-standards/security/Security Standards.md`                                              | Sensitive context redactor test          | None                                                                   |
+| CREATE | `app/Core/Security/Data/RedactionRuleData.php`                                  | Data Object                        | Represent one redaction rule                                                   | None                                      | `docs/02-standards/security/Security Standards.md`                                              | Redaction Rule Registry test             | None                                                                   |
+| CREATE | `app/Core/Security/Data/SecurityHeaderSet.php`                                  | Data Object                        | Represent resolved response headers                                            | None                                      | `docs/02-standards/security/Transport Session And Browser Security Standards.md`                | Browser Security headers test            | None                                                                   |
+| CREATE | `app/Core/Security/Data/RouteSecurityProfileData.php`                           | Data Object                        | Represent one immutable canonical route-security profile definition            | `RouteSecurityProfile`                    | `docs/02-standards/security/Zero Trust Security Standards.md`                                   | Route Security Profile Registry test     | None                                                                   |
+| CREATE | `app/Core/Security/Data/SecurityCheckDefinitionData.php`                        | Data Object                        | Represent one security-check Contribution                                      | `SecurityCheckInterface`                  | `docs/02-standards/security/Application Security Verification And Secure Delivery Standards.md` | Security Check Registry test             | None                                                                   |
+| CREATE | `app/Core/Security/Data/SecurityCheckResult.php`                                | Data Object                        | Report one security-check result                                               | `SecurityCheckStatus`                     | `docs/02-standards/security/Application Security Verification And Secure Delivery Standards.md` | Security command test                    | None                                                                   |
+| CREATE | `app/Core/Security/Enums/RouteSecurityProfile.php`                              | Enum                               | Define the exact eight canonical route-security profile keys                   | None                                      | `docs/02-standards/security/Zero Trust Security Standards.md`                                   | Route Security Profile enum test         | None                                                                   |
+| CREATE | `app/Core/Security/Enums/SecurityCheckStatus.php`                               | Enum                               | Define security-check result states                                            | None                                      | `docs/02-standards/security/Application Security Verification And Secure Delivery Standards.md` | Security command test                    | None                                                                   |
+| CREATE | `app/Core/Security/Enums/RedactionScope.php`                                    | Enum                               | Define Security redaction scopes                                               | None                                      | `docs/02-standards/security/Security Standards.md`                                              | Sensitive context redactor test          | None                                                                   |
+| CREATE | `app/Core/Security/Resolvers/SecurityHeaderResolver.php`                        | Resolver                           | Resolve one response's security headers                                        | Security configuration                    | `docs/02-standards/security/Transport Session And Browser Security Standards.md`                | Security Header Resolver test            | None                                                                   |
+| CREATE | `app/Core/Security/Resolvers/SafeRedirectResolver.php`                          | Resolver                           | Validate and normalize redirect candidates                                     | Safe Redirect Contract                    | `docs/02-standards/security/Secure Coding And Request Handling Standards.md`                    | Safe redirect security test              | None                                                                   |
+| CREATE | `app/Core/Security/Redaction/SensitiveContextRedactor.php`                      | Redactor                           | Apply Security redaction rules                                                 | Redaction Rule Registry                   | `docs/02-standards/security/Security Standards.md`                                              | Sensitive context redactor test          | None                                                                   |
+| CREATE | `app/Core/Security/Registry/RedactionRuleRegistry.php`                          | Registry                           | Hold accepted redaction rules                                                  | Redaction Rule data                       | `docs/03-architecture/public-contract-and-interaction-model.md`                                 | Redaction Rule Registry test             | None                                                                   |
+| CREATE | `app/Core/Security/Registry/RouteSecurityProfileRegistry.php`                   | Registry                           | Resolve the closed canonical eight-profile set and reject unknown identities   | Route Security Profile data               | `docs/02-standards/security/Zero Trust Security Standards.md`                                   | Route Security Profile Registry test     | None                                                                   |
+| CREATE | `app/Core/Security/Registry/SecurityCheckRegistry.php`                          | Registry                           | Hold accepted release checks                                                   | Security Check Contract                   | `docs/03-architecture/public-contract-and-interaction-model.md`                                 | Security Check Registry test             | None                                                                   |
+| CREATE | `app/Core/Security/Http/Middleware/ApplySecurityHeadersMiddleware.php`          | Middleware                         | Apply resolved response headers                                                | Security Header Resolver                  | `docs/02-standards/security/Transport Session And Browser Security Standards.md`                | Apply Security headers middleware test   | None                                                                   |
+| CREATE | `app/Core/Security/Http/Middleware/RequireSecureTransportMiddleware.php`        | Middleware                         | Fail closed for insecure required transport                                    | Security configuration                    | `docs/02-standards/security/Transport Session And Browser Security Standards.md`                | Secure transport middleware test         | None                                                                   |
+| CREATE | `app/Core/Security/Exceptions/UnsafeRedirectTargetException.php`                | Exception                          | Signal unsafe redirect rejection                                               | None                                      | `docs/02-standards/security/Secure Coding And Request Handling Standards.md`                    | Safe redirect security test              | None                                                                   |
+| CREATE | `app/Core/Security/Exceptions/InsecureTransportException.php`                   | Exception                          | Signal expected-HTTPS rejection                                                | None                                      | `docs/02-standards/security/Transport Session And Browser Security Standards.md`                | Secure transport middleware test         | None                                                                   |
+| CREATE | `app/Core/Security/Verification/Checks/DebugDisabledCheck.php`                  | Security Check                     | Verify debug mode is disabled                                                  | Security Check Contract                   | `docs/02-standards/security/Application Security Verification And Secure Delivery Standards.md` | Security command test                    | None                                                                   |
+| CREATE | `app/Core/Security/Verification/Checks/TransportSecurityConfigurationCheck.php` | Security Check                     | Verify transport configuration                                                 | Security Check Contract                   | `docs/02-standards/security/Application Security Verification And Secure Delivery Standards.md` | Security command test                    | None                                                                   |
+| CREATE | `app/Core/Security/Verification/Checks/TrustedProxyConfigurationCheck.php`      | Security Check                     | Verify trusted proxy configuration                                             | Security Check Contract                   | `docs/02-standards/security/Application Security Verification And Secure Delivery Standards.md` | Security command test                    | None                                                                   |
+| CREATE | `app/Core/Security/Verification/Checks/SecurityHeaderConfigurationCheck.php`    | Security Check                     | Verify header configuration                                                    | Security Check Contract                   | `docs/02-standards/security/Application Security Verification And Secure Delivery Standards.md` | Security command test                    | None                                                                   |
+| CREATE | `app/Core/Security/Verification/Checks/SessionCookieConfigurationCheck.php`     | Security Check                     | Verify session-cookie configuration                                            | Security Check Contract                   | `docs/02-standards/security/Application Security Verification And Secure Delivery Standards.md` | Security command test                    | None                                                                   |
+| CREATE | `app/Core/Security/Verification/Checks/RouteSecurityCoverageCheck.php`          | Security Check                     | Verify canonical route-profile coverage and required baseline controls         | Route Security Profile Registry           | `docs/02-standards/security/Zero Trust Security Standards.md`                                   | Route Security coverage test             | None                                                                   |
+| CREATE | `app/Core/Security/Console/RunSecurityChecksCommand.php`                        | Command                            | Execute registered security checks                                             | Security Check Registry                   | `docs/02-standards/security/Application Security Verification And Secure Delivery Standards.md` | Security command test                    | None                                                                   |
+| CREATE | `app/Core/Security/Providers/SecurityServiceProvider.php`                       | Provider                           | Bind parent Security services and registries                                   | Security owner artifacts                  | `docs/03-architecture/application-registration.md`                                              | Security registration test               | None                                                                   |
+| CREATE | `app/Core/Security/Secrets/Providers/SecretsServiceProvider.php`                | Provider                           | Bind Secrets subcapability services after parent Security                      | Security registries and Secrets Contracts | `docs/03-architecture/application-registration.md`                                              | Security registration test               | None                                                                   |
+| CREATE | `app/Core/Security/Registration/SecurityRegistrationDescriptor.php`             | Registration Descriptor            | Declare the complete single Security owner composition                         | Security and Secrets owner artifacts      | `docs/03-architecture/application-registration.md`                                              | Security registration architecture proof | None                                                                   |
+| CREATE | `app/Core/Security/config/security.php`                                         | Configuration                      | Define Core Security configuration excluding canonical route-profile semantics | Laravel configuration                     | `docs/03-architecture/repository-architecture.md`                                               | Security configuration test              | None                                                                   |
+| CREATE | `app/Core/Security/Secrets/config/secrets.php`                                  | Configuration                      | Define Secrets subcapability configuration                                     | Laravel configuration                     | `docs/03-architecture/repository-architecture.md`                                               | Secrets serialization/redaction test     | None                                                                   |
+| MODIFY | `bootstrap/app.php`                                                             | Laravel integration                | Configure trusted transport, hosts, and global middleware                      | Laravel HTTP pipeline                     | `docs/03-architecture/repository-architecture.md`                                               | Security integration proof               | None                                                                   |
+| DELETE | `app/Http/Middleware/ApplySecurityHeaders.php`                                  | Obsolete proof-of-concept artifact | Remove superseded header middleware                                            | None                                      | `docs/03-architecture/repository-architecture.md`                                               | Security route coverage test             | Delete obsolete proof-of-concept artifact; no preservation requirement |
+| DELETE | `app/Http/Middleware/ConfigureTrustedProxies.php`                               | Obsolete proof-of-concept artifact | Remove superseded proxy middleware                                             | None                                      | `docs/03-architecture/repository-architecture.md`                                               | Secure transport test                    | Delete obsolete proof-of-concept artifact; no preservation requirement |
+| DELETE | `app/Core/Modules/Definitions/RuntimeSecurity.php`                              | Obsolete proof-of-concept artifact | Remove superseded security metadata                                            | None                                      | `docs/03-architecture/repository-architecture.md`                                               | Security registration architecture proof | Delete obsolete proof-of-concept artifact; no preservation requirement |
+| CREATE | `app/Core/Security/__tests__/SafeRedirectResolverTest.php`                      | Test                               | Prove safe redirect resolution                                                 | Safe Redirect Resolver                    | `docs/02-standards/testing/index.md`                                                            | Targeted Security proof                  | None                                                                   |
+| CREATE | `app/Core/Security/__tests__/SensitiveContextRedactorTest.php`                  | Test                               | Prove Security context redaction                                               | Sensitive Context Redactor                | `docs/02-standards/testing/index.md`                                                            | Targeted Security proof                  | None                                                                   |
+| CREATE | `app/Core/Security/__tests__/SecurityHeaderResolverTest.php`                    | Test                               | Prove response header resolution                                               | Security Header Resolver                  | `docs/02-standards/testing/index.md`                                                            | Targeted Security proof                  | None                                                                   |
+| CREATE | `app/Core/Security/__tests__/RequireSecureTransportMiddlewareTest.php`          | Test                               | Prove required transport enforcement                                           | Transport Middleware                      | `docs/02-standards/testing/index.md`                                                            | Targeted Security proof                  | None                                                                   |
+| CREATE | `app/Core/Security/__tests__/ApplySecurityHeadersMiddlewareTest.php`            | Test                               | Prove header application                                                       | Header Middleware                         | `docs/02-standards/testing/index.md`                                                            | Targeted Security proof                  | None                                                                   |
+| CREATE | `app/Core/Security/__tests__/RedactionRuleRegistryTest.php`                     | Test                               | Prove redaction-rule registration                                              | Redaction Rule Registry                   | `docs/02-standards/testing/index.md`                                                            | Targeted Security proof                  | None                                                                   |
+| CREATE | `app/Core/Security/__tests__/RouteSecurityProfileRegistryTest.php`              | Test                               | Prove exactly eight immutable route-profile definitions                        | Route Security Profile Registry           | `docs/02-standards/testing/index.md`                                                            | Targeted Security proof                  | None                                                                   |
+| CREATE | `app/Core/Security/__tests__/SecurityCheckRegistryTest.php`                     | Test                               | Prove security-check registration                                              | Security Check Registry                   | `docs/02-standards/testing/index.md`                                                            | Targeted Security proof                  | None                                                                   |
+| CREATE | `app/Core/Security/__tests__/RunSecurityChecksCommandTest.php`                  | Test                               | Prove security-check execution                                                 | Security command                          | `docs/02-standards/testing/index.md`                                                            | Targeted Security proof                  | None                                                                   |
+| CREATE | `app/Core/Security/__tests__/SecurityRegistrationTest.php`                      | Test                               | Prove one Security owner declaration and provider order                        | Security Registration Descriptor          | `docs/02-standards/testing/index.md`                                                            | Targeted Security proof                  | None                                                                   |
+| CREATE | `tests/Feature/Security/TransportSecurityTest.php`                              | Test                               | Prove transport security                                                       | Security HTTP integration                 | `docs/02-standards/testing/index.md`                                                            | Targeted Security proof                  | None                                                                   |
+| CREATE | `tests/Feature/Security/BrowserSecurityHeadersTest.php`                         | Test                               | Prove browser headers                                                          | Security HTTP integration                 | `docs/02-standards/testing/index.md`                                                            | Targeted Security proof                  | None                                                                   |
+| CREATE | `tests/Feature/Security/RouteSecurityCoverageTest.php`                          | Test                               | Prove every route uses one canonical profile and its minimum baseline          | Route Security Profile Registry           | `docs/02-standards/testing/index.md`                                                            | Targeted Security proof                  | None                                                                   |
+| CREATE | `tests/Feature/Security/RequestForgeryProtectionTest.php`                       | Test                               | Prove native request-forgery protection                                        | Laravel middleware                        | `docs/02-standards/testing/index.md`                                                            | Targeted Security proof                  | None                                                                   |
+| CREATE | `tests/Feature/Security/SafeRedirectSecurityTest.php`                           | Test                               | Prove redirect rejection behavior                                              | Safe Redirect Resolver                    | `docs/02-standards/testing/index.md`                                                            | Targeted Security proof                  | None                                                                   |
+| CREATE | `tests/Feature/Security/SignedUrlSecurityTest.php`                              | Test                               | Prove signed URLs remain orthogonal and do not bypass authorization            | Laravel signed URLs                       | `docs/02-standards/testing/index.md`                                                            | Targeted Security proof                  | None                                                                   |
 
 Core Security owns no initial persistence or administration UI.
 
@@ -888,9 +1214,34 @@ Required proof must establish:
 * duplicate/conflicting redaction rules fail;
 * Security/Secrets can extend redaction without changing consumers;
 * Audit and Monitoring consume `RedactSensitiveContextInterface` before their owner-specific redactors;
+* `RouteSecurityProfile` serializes exactly:
+
+  * `public`
+  * `guest`
+  * `authenticated`
+  * `protected`
+  * `administrative`
+  * `sensitive`
+  * `restricted_data`
+  * `service`;
+* exactly eight canonical route-security profiles exist;
+* no ninth profile can be contributed through Application Registration or configuration;
+* numeric Tier 0–6 labels are not accepted aliases;
+* API and webhook remain Invocation/delivery concerns rather than Security profiles;
+* signed URLs remain orthogonal to Security profile identity;
+* CSRF, rate limiting, replay protection, idempotency, DataProtection, reason, approval, Audit, and Monitoring remain independently enforced where applicable;
 * unknown route Security profile fails verification;
 * routes missing required Security classification fail coverage verification;
-* required route middleware/rate limiting matches the accepted profile;
+* profile minimum requirements cannot be weakened by owner configuration;
+* `public` does not require authentication;
+* `guest` represents explicit guest-state behavior;
+* `authenticated` requires human authentication without implying authorization;
+* `protected` requires action/target/scope authorization;
+* `administrative` adds administrative authority and MFA;
+* `sensitive` adds MFA and recent authentication without requiring administrative authority;
+* `restricted_data` adds restricted-data controls to the sensitive baseline;
+* `service` requires protected machine/service identity and scoped authorization;
+* required route middleware/assurance/authorization integration matches the accepted profile once Auth/Access Contracts are available;
 * state-changing browser GET routes are absent;
 * Laravel request-forgery protection remains active on browser writes;
 * signed-route validity does not bypass current authorization;
@@ -899,21 +1250,35 @@ Required proof must establish:
 * warnings do not incorrectly block verification;
 * check output contains no secrets;
 * Security has no database tables;
-* exactly one Security owner registration exists for `owner_key: security`, declares both providers in order, and includes `security.secret_definitions`;
+* exactly one Security owner registration exists for `owner_key: security`, declares both Providers in order, and includes `security.secret_definitions`;
 * Security does not absorb Auth, Access, DataProtection, Audit, Monitoring, Notifications, or Secrets ownership;
 * obsolete conflicting proof-of-concept Security middleware/metadata is removed.
 
 ### Required Reconciliation Before Acceptance
 
-1. **Security standards acceptance** — the applicable Security standards package is currently draft.
-2. **Route Security profile vocabulary** — exact canonical profile keys remain unresolved between Application Security and Zero Trust planning.
-3. **Auth integration** — exact authentication, MFA, and recent-auth middleware/Contract names must come from the later Core Auth design.
-4. **Access integration** — exact authorization/profile requirements must come from the later Core Access design.
-5. **Security/Secrets** — exact credential-sensitive redaction rule catalog must come from the next Secrets SDD.
-6. **CSP policy** — exact CSP directives and approved third-party origins require accepted browser-security policy.
-7. **Permissions Policy / HSTS** — exact directives and HSTS lifetime require accepted Security policy.
-8. **Settings integration** — any dynamically configurable Security setting must wait for the Core Settings design.
-9. **Audit/Monitoring reconciliation** — their owner-specific redactors should consume Core Security's security-sensitive redaction Contract where applicable while retaining their own semantic evidence rules.
+1. **Security standards acceptance** — the applicable Security standards package remains draft.
+2. **Auth integration** — exact authentication, MFA, recent-authentication, and applicable account-posture middleware/Contract names must come from the later Core Auth design.
+3. **Access integration** — exact authorization/profile enforcement Contracts must come from the later Core Access design.
+4. **Security/Secrets** — exact credential-sensitive redaction-rule catalog remains owned by the Security/Secrets design and must remain aligned.
+5. **CSP policy** — exact CSP directives and approved third-party origins require accepted browser-security policy.
+6. **Permissions Policy / HSTS** — exact directives and HSTS lifetime require accepted Security policy.
+7. **Settings integration** — any dynamically configurable Security setting must wait for the Core Settings design.
+8. **Audit/Monitoring reconciliation** — their owner-specific redactors must continue consuming Core Security's security-sensitive redaction Contract while retaining their own semantic evidence rules.
+
+The route-security profile vocabulary is no longer a blocker. It is canonically fixed as:
+
+```text id="2tvlb7"
+public
+guest
+authenticated
+protected
+administrative
+sensitive
+restricted_data
+service
+```
+
+The remaining Auth and Access blockers concern implementation of the profile requirements, not profile identity or semantics.
 
 ### Implementation Ready
 
@@ -925,7 +1290,11 @@ Required proof must establish:
 * [x] security-sensitive redaction Contract is defined.
 * [x] release/security-check Extension Point is defined.
 * [x] Security-check execution behavior is defined.
-* [x] route-security profile mechanism is defined.
+* [x] canonical eight-value route-security profile vocabulary is defined.
+* [x] route-profile minimum-control semantics are defined.
+* [x] route-profile mechanism is defined.
+* [x] Invocation Channel and Security profile are separated.
+* [x] signed URL and Security profile are separated.
 * [x] native CSRF/signed-link boundary is defined.
 * [x] file-security ownership boundary is defined.
 * [x] no persistence requirement exists.
@@ -934,11 +1303,10 @@ Required proof must establish:
 * [x] implementation manifest is defined.
 * [x] verification surfaces are defined.
 * [ ] applicable Security standards are accepted.
-* [ ] canonical route-profile vocabulary is accepted.
-* [ ] Auth and Access profile requirements are reconciled.
-* [ ] Security/Secrets redaction rules are reconciled.
+* [ ] Auth and Access profile enforcement Contracts are reconciled.
+* [ ] Security/Secrets redaction rules remain reconciled.
 * [ ] CSP, Permissions Policy, and HSTS policy values are accepted.
 * [ ] later Settings/Audit/Monitoring dependencies are reconciled.
 * [ ] no material design blocker remains.
 
-**Design state: draft; the Core Security implementation architecture is defined, but final acceptance waits on Security-policy and downstream Contract reconciliation.**
+**Design state: draft; Core Security now fully defines the accepted route-security profile vocabulary and semantics, while final acceptance waits on the remaining Security-policy and downstream Auth/Access Contract reconciliation.**

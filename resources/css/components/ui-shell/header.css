@@ -230,15 +230,19 @@
         list-style: none;
     }
 
-    a.ui-shell-header__menu-item {
+    .ui-shell-header__menu-item {
         position: relative;
         display: flex;
         align-items: center;
+        margin: 0;
         block-size: 100%;
         border: var(--ui-shell-header-focus-border-width) solid transparent;
         padding: 0 var(--ui-shell-header-menu-item-padding-inline);
+        appearance: none;
         background-color: var(--ui-background);
         color: var(--ui-text-secondary);
+        cursor: pointer;
+        font-family: inherit;
         font-size: var(--ui-type-body-compact-01-font-size);
         font-weight: var(--ui-type-body-compact-01-font-weight);
         line-height: var(--ui-type-body-compact-01-line-height);
@@ -251,37 +255,41 @@
         user-select: none;
     }
 
-    a.ui-shell-header__menu-item:hover {
+    .ui-shell-header__menu-item:not([aria-disabled="true"]):hover {
         background-color: var(--ui-background-hover);
         color: var(--ui-text-primary);
     }
 
     .ui-shell-header__action:active,
-    a.ui-shell-header__menu-item:active {
+    .ui-shell-header__menu-item:not([aria-disabled="true"]):active {
         background-color: var(--ui-background-active);
         color: var(--ui-text-primary);
     }
 
-    a.ui-shell-header__menu-item:focus {
+    .ui-shell-header__menu-item:focus {
         border-color: var(--ui-focus);
         outline: none;
     }
 
-    a.ui-shell-header__menu-item:hover > svg,
-    a.ui-shell-header__menu-item:active > svg {
+    .ui-shell-header__menu-item:not([aria-disabled="true"]):hover > svg,
+    .ui-shell-header__menu-item:not([aria-disabled="true"]):active > svg {
         fill: var(--ui-icon-primary);
+    }
+
+    .ui-shell-header__menu-item[aria-disabled="true"] {
+        cursor: not-allowed;
     }
 
     /* ----------------------------------------------------------------------
        Header - Navigation selected state
        ---------------------------------------------------------------------- */
 
-    a.ui-shell-header__menu-item[aria-current="page"],
+    .ui-shell-header__menu-item[aria-current="page"],
     .ui-shell-header__menu-item--current {
         color: var(--ui-text-primary);
     }
 
-    a.ui-shell-header__menu-item[aria-current="page"]::after,
+    .ui-shell-header__menu-item[aria-current="page"]::after,
     .ui-shell-header__menu-item--current::after {
         position: absolute;
         inset-block-end: calc(-1 * var(--ui-shell-header-focus-border-width));
@@ -296,14 +304,14 @@
         content: "";
     }
 
-    a.ui-shell-header__menu-item[aria-current="page"]:focus::after,
+    .ui-shell-header__menu-item[aria-current="page"]:focus::after,
     .ui-shell-header__menu-item--current:focus::after {
         border: 0;
     }
 
     .ui-shell-header__submenu
         .ui-shell-header__menu
-        a.ui-shell-header__menu-item[aria-current="page"]::after,
+        .ui-shell-header__menu-item[aria-current="page"]::after,
     .ui-shell-header__submenu
         .ui-shell-header__menu
         .ui-shell-header__menu-item--current::after {
@@ -320,7 +328,7 @@
 
     .ui-shell-header__submenu
         .ui-shell-header__menu
-        a.ui-shell-header__menu-item[aria-current="page"]:focus::after,
+        .ui-shell-header__menu-item[aria-current="page"]:focus::after,
     .ui-shell-header__submenu
         .ui-shell-header__menu
         .ui-shell-header__menu-item--current:focus::after {
@@ -335,8 +343,8 @@
         background-color: var(--ui-border-interactive);
     }
 
-    a.ui-shell-header__menu-item[aria-current="page"]:focus,
-    a.ui-shell-header__menu-item.ui-shell-header__menu-item--current:focus {
+    .ui-shell-header__menu-item[aria-current="page"]:focus,
+    .ui-shell-header__menu-item.ui-shell-header__menu-item--current:focus {
         border: var(--ui-shell-header-focus-border-width) solid var(--ui-focus);
     }
 

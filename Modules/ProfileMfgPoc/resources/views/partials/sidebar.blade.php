@@ -4,13 +4,21 @@
     ========================================================================== --}}
 
 <x-shell.side-nav.header>
-    <span data-app-sidebar-area-title>Profile Mfg</span>
+    <span data-app-sidebar-area-title>Operations workspace</span>
 </x-shell.side-nav.header>
 
 <x-shell.side-nav.items>
     <x-layouts.app.frame.nav-link
         :href="route('profile-mfg.dashboard')"
         :current="request()->routeIs('profile-mfg.dashboard')"
+        icon="activity"
+    >
+        Dashboard
+    </x-layouts.app.frame.nav-link>
+
+    <x-layouts.app.frame.nav-link
+        :href="route('profile-mfg.shipping-schedule')"
+        :current="request()->routeIs('profile-mfg.shipping-schedule')"
         icon="calendar"
     >
         Shipping schedule
@@ -66,7 +74,7 @@
 
     <x-shell.side-nav.divider />
 
-    @foreach (['Scan in / ship out', 'Inventory adjustments'] as $destination)
+    @foreach (["Scan in / ship out", "Inventory adjustments"] as $destination)
         <x-shell.side-nav.link
             as="button"
             disabled
@@ -79,12 +87,16 @@
 
     <x-shell.side-nav.divider />
 
-    <x-shell.side-nav.menu
-        title="Account & admin"
-    >
+    <x-shell.side-nav.menu title="Account & admin">
         <x-shell.side-nav.menu-item
             :href="route('platform.account.index')"
-            :current="request()->routeIs('platform.account.index', 'platform.account.security', 'platform.account.mfa.*')"
+            :current="
+                request()->routeIs(
+            'platform.account.index',
+            'platform.account.security',
+            'platform.account.mfa.*',
+        )
+            "
             wire-navigate
         >
             My profile
@@ -106,7 +118,7 @@
             Notifications
         </x-shell.side-nav.menu-item>
 
-        @can('view-platform-users')
+        @can ("view-platform-users")
             <x-shell.side-nav.menu-item
                 as="button"
                 disabled
@@ -117,7 +129,7 @@
             </x-shell.side-nav.menu-item>
         @endcan
 
-        @can('view-platform-settings')
+        @can ("view-platform-settings")
             <x-shell.side-nav.menu-item
                 :href="route('profile-mfg.settings.index')"
                 :current="request()->routeIs('profile-mfg.settings.*')"

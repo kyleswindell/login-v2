@@ -28,6 +28,11 @@ final class ProfileMfgPocController
         return $this->render(fn (array $data): View => view('profile-mfg-poc::dashboard', $data));
     }
 
+    public function shippingSchedule(): View|Response
+    {
+        return $this->render(fn (array $data): View => view('profile-mfg-poc::shipping-schedule', $data));
+    }
+
     public function customers(): View|Response
     {
         return $this->render(fn (array $data): View => view('profile-mfg-poc::customers.index', $data));

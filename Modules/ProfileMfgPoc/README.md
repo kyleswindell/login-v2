@@ -2,7 +2,7 @@
 
 This temporary module provides the authenticated, read-only Profile Mfg presentation workspace. It is intentionally self-contained and is not the permanent architecture for customer, inventory, part, or order capabilities.
 
-The presentation routes cover a daily/weekly shipping schedule, finished-goods inventory comparison, serialized scan activity, an operational report catalog, and customer, part, and order list/detail views. The schedule is the operational home because it is the current employee coordination workflow. Scan-in/ship-out transactions remain disabled; the scan page is read-only activity and exception context. Search, filters, record creation, order closing, inventory transactions, exports, and editing are intentionally disabled.
+The presentation routes cover an Operations dashboard, a daily/weekly shipping schedule, finished-goods inventory comparison, serialized scan activity, an operational report catalog, and customer, part, and order list/detail views. The dashboard is the POC entry point; the shipping schedule remains the primary daily coordination workflow. Scan-in/ship-out transactions remain disabled; the scan page is read-only activity and exception context. Search, filters, record creation, order closing, inventory transactions, exports, dashboard editing, workspace switching, and record editing are intentionally disabled.
 
 The POC sidebar links to the existing authenticated Profile and Preferences pages. Employees-and-access and application-settings links use the platform's existing permissions and routes. The POC does not duplicate or bypass those Core capabilities.
 

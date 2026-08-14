@@ -1,4 +1,5 @@
 <?php
+
 /*
 |--------------------------------------------------------------------------
 | File: tests/Feature/Ui/NotificationToastContractTest.php
@@ -97,6 +98,11 @@ final class NotificationToastContractTest extends TestCase
         $this->assertStringNotContainsString('platform-notification-created', $dashboardRuntimeSource);
         $this->assertStringNotContainsString('form.submit()', $dashboardRuntimeSource);
         $this->assertStringContainsString('notifications:toast', $dashboardRuntimeSource);
+        $this->assertStringContainsString('id: payload.notification_id', $dashboardRuntimeSource);
+        $this->assertStringContainsString('"success"', $dashboardRuntimeSource);
+        $this->assertStringContainsString('Test notification created', $dashboardRuntimeSource);
+        $this->assertStringContainsString('submit.matches("[data-ui-tile]")', $dashboardRuntimeSource);
+        $this->assertStringContainsString('data-ui-loading', $dashboardRuntimeSource);
     }
 
     public function test_notification_runtime_declares_idempotent_transport_and_toast_guards(): void

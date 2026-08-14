@@ -13,6 +13,7 @@ use App\Modules\ProfileMfgPoc\Http\Controllers\ProfileMfgPocController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [ProfileMfgPocController::class, 'dashboard'])->name('dashboard');
+Route::get('/shipping-schedule', [ProfileMfgPocController::class, 'shippingSchedule'])->name('shipping-schedule');
 Route::get('/customers', [ProfileMfgPocController::class, 'customers'])->name('customers.index');
 Route::get('/customers/{customer}', [ProfileMfgPocController::class, 'customer'])->name('customers.show');
 Route::get('/parts', [ProfileMfgPocController::class, 'parts'])->name('parts.index');

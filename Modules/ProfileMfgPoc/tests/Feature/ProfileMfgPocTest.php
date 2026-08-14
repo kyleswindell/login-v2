@@ -57,6 +57,7 @@ final class ProfileMfgPocTest extends TestCase
     {
         foreach ([
             '/profile-mfg',
+            '/profile-mfg/shipping-schedule',
             '/profile-mfg/customers',
             '/profile-mfg/customers/CUST-001',
             '/profile-mfg/parts',
@@ -81,7 +82,8 @@ final class ProfileMfgPocTest extends TestCase
 
         $this->get('/profile-mfg')
             ->assertOk()
-            ->assertSee('Shipping schedule')
+            ->assertSee('Operations dashboard')
+            ->assertSee('Operations workspace')
             ->assertSee('Static proof of concept')
             ->assertSee('Data snapshot: Aug 12, 2026');
     }
@@ -92,6 +94,7 @@ final class ProfileMfgPocTest extends TestCase
 
         foreach ([
             '/profile-mfg',
+            '/profile-mfg/shipping-schedule',
             '/profile-mfg/customers',
             '/profile-mfg/customers/CUST-001',
             '/profile-mfg/parts',
@@ -179,6 +182,19 @@ final class ProfileMfgPocTest extends TestCase
         $this->actingAs(User::factory()->create());
 
         $this->get('/profile-mfg')
+            ->assertOk()
+            ->assertSeeInOrder(['Open demand', '805'])
+            ->assertSeeInOrder(['Past due', '80'])
+            ->assertSeeInOrder(['Ship today', '60'])
+            ->assertSeeInOrder(['Inventory checks', '3'])
+            ->assertSee('Shipping requirements for today')
+            ->assertSee('ORD-1004')
+            ->assertSee('Open order priorities')
+            ->assertSee('Scan activity today')
+            ->assertSeeInOrder(['Scanned in', '5 boxes'])
+            ->assertSeeInOrder(['Exceptions', '1']);
+
+        $this->get('/profile-mfg/shipping-schedule')
             ->assertOk()
             ->assertSeeInOrder(['Past due', '80'])
             ->assertSeeInOrder(['Ship today', '60'])
@@ -275,6 +291,63 @@ final class ProfileMfgPocTest extends TestCase
             ->assertSee(route('profile-mfg.settings.index'), false);
     }
 
+    public function test_dashboard_exposes_daily_actions_workspace_preview_and_demo_notification(): void
+    {
+        $this->actingAsPlatformSuperAdmin();
+
+        $response = $this->get('/profile-mfg')
+            ->assertOk()
+            ->assertSee('Dashboard')
+            ->assertSee(route('profile-mfg.dashboard'), false)
+            ->assertSee('Shipping schedule')
+            ->assertSee(route('profile-mfg.shipping-schedule'), false)
+            ->assertSee('Start new scan — Coming soon')
+            ->assertSee('Edit dashboard — Coming soon')
+            ->assertSee('Generate example notification')
+            ->assertSee(route('dashboard.test-notification'), false)
+            ->assertSee('data-dashboard-test-notification-form', false)
+            ->assertSeeInOrder([
+                'Operations',
+                'Accounting · Preview',
+                'Sales · Preview',
+                'Administration · Preview',
+                'Setup',
+            ])
+            ->assertSee('aria-current="true"', false)
+            ->assertSee('aria-disabled="true"', false)
+            ->assertDontSee('Current workspace')
+            ->assertSee('Visualization coming soon')
+            ->assertSee('data-dashboard-widget="open-order-priorities"', false)
+            ->assertSee('data-dashboard-widget="inventory-attention"', false)
+            ->assertSee('data-dashboard-widget="scan-activity"', false)
+            ->assertSee('data-dashboard-widget="shipping-demand-trend"', false)
+            ->assertSee('data-ui-component="data-table"', false);
+
+        $this->assertSame(
+            4,
+            substr_count((string) $response->getContent(), 'data-ui-tile-variant="clickable"'),
+        );
+    }
+
+    public function test_dashboard_uses_the_next_shipping_date_when_snapshot_day_has_no_requirements(): void
+    {
+        $this->actingAs(User::factory()->create());
+
+        $dataset = json_decode((string) File::get($this->fixturePath), true, flags: JSON_THROW_ON_ERROR);
+        $dataset['snapshot_date'] = '2026-08-15';
+
+        $nextShippingPath = $this->temporaryDirectory.'/next-shipping.json';
+        File::put($nextShippingPath, json_encode($dataset, JSON_THROW_ON_ERROR));
+        config()->set('profile-mfg-poc.data_path', $nextShippingPath);
+
+        $this->get('/profile-mfg')
+            ->assertOk()
+            ->assertSee('Next shipping requirements · Aug 17, 2026')
+            ->assertSee('No open requirements are due on Aug 15, 2026. Showing the next scheduled shipping date.')
+            ->assertSee('ORD-1010')
+            ->assertDontSee('No open orders are due on the snapshot date.');
+    }
+
     public function test_poc_directory_tables_use_the_full_width_data_table_contract(): void
     {
         $this->actingAs(User::factory()->create());
@@ -303,6 +376,7 @@ final class ProfileMfgPocTest extends TestCase
         $this->actingAs(User::factory()->create());
 
         $this->post('/profile-mfg')->assertMethodNotAllowed();
+        $this->post('/profile-mfg/shipping-schedule')->assertMethodNotAllowed();
         $this->put('/profile-mfg/customers/CUST-001')->assertMethodNotAllowed();
         $this->patch('/profile-mfg/parts/PART-001')->assertMethodNotAllowed();
         $this->post('/profile-mfg/orders')->assertMethodNotAllowed();

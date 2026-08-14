@@ -355,6 +355,26 @@ final class Dataset
             fn (array $order): bool => in_array($order['status'], self::OPEN_ORDER_STATUSES, true),
         ));
         usort($openOrders, fn (array $left, array $right): int => [$left['due_date'], $left['id']] <=> [$right['due_date'], $right['id']]);
+        $todayOrders = array_values(array_filter(
+            $openOrders,
+            fn (array $order): bool => $order['due_date'] === $data['snapshot_date'],
+        ));
+        $shippingFocusDate = $data['snapshot_date'];
+        $shippingFocusOrders = $todayOrders;
+
+        if ($shippingFocusOrders === []) {
+            foreach ($openOrders as $order) {
+                if ($order['due_date'] > $data['snapshot_date']) {
+                    $shippingFocusDate = $order['due_date'];
+                    break;
+                }
+            }
+
+            $shippingFocusOrders = array_values(array_filter(
+                $openOrders,
+                fn (array $order): bool => $order['due_date'] === $shippingFocusDate,
+            ));
+        }
 
         $sortedOrders = array_values($orders);
         usort($sortedOrders, function (array $left, array $right): int {
@@ -470,6 +490,13 @@ final class Dataset
                 'due_rest_of_week' => $this->sumOrders($openOrders, fn (array $order): bool => $order['due_date'] > $data['snapshot_date'] && $order['due_date'] <= $currentWeekEnd->format('Y-m-d')),
                 'due_next_week' => $this->sumOrders($openOrders, fn (array $order): bool => $order['due_date'] > $currentWeekEnd->format('Y-m-d') && $order['due_date'] <= $scheduleEnd->format('Y-m-d')),
                 'inventory_review_count' => count($inventoryExceptions),
+                'today_orders' => $todayOrders,
+                'shipping_focus_date' => $shippingFocusDate,
+                'shipping_focus_date_label' => $this->dateLabel($shippingFocusDate),
+                'shipping_focus_is_snapshot_date' => $shippingFocusDate === $data['snapshot_date'],
+                'shipping_focus_orders' => $shippingFocusOrders,
+                'priority_orders' => array_slice($openOrders, 0, 5),
+                'priority_inventory' => array_slice($inventoryExceptions, 0, 5),
                 'schedule' => $shippingSchedule,
                 'inventory_exceptions' => $inventoryExceptions,
                 'shipping_notes' => $shippingNotes,

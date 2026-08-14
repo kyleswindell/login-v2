@@ -25,21 +25,97 @@ test.describe("Profile Mfg static POC", () => {
         page,
         request,
     }) => {
+        test.slow();
+
         await signIn(page, request);
 
         await expect(
-            page.getByRole("heading", { name: "Shipping schedule", exact: true }),
+            page.getByRole("heading", {
+                name: "Operations dashboard",
+                exact: true,
+            }),
         ).toBeVisible();
         await expect(page.getByText("Static proof of concept")).toBeVisible();
+        await expect(
+            page.getByRole("link", { name: "Operations", exact: true }),
+        ).toHaveAttribute("aria-current", "true");
+        await expect(
+            page.getByRole("button", {
+                name: "Accounting · Preview",
+                exact: true,
+            }),
+        ).toHaveAttribute("aria-disabled", "true");
+        await expect(
+            page.getByRole("button", {
+                name: "Sales · Preview",
+                exact: true,
+            }),
+        ).toHaveAttribute("aria-disabled", "true");
+        await expect(
+            page.getByRole("button", {
+                name: "Administration · Preview",
+                exact: true,
+            }),
+        ).toHaveAttribute("aria-disabled", "true");
         await expect(
             page.getByRole("link", { name: "Customers" }),
         ).toBeVisible();
         await expect(page.getByRole("link", { name: "Orders" })).toBeVisible();
         await expect(
+            page.getByRole("table", { name: /Shipping requirements/i }),
+        ).toBeVisible();
+        await expect(
+            page.locator('[data-ui-tile-variant="clickable"]'),
+        ).toHaveCount(4);
+        await expect(
+            page.locator('[data-dashboard-widget="open-order-priorities"]'),
+        ).toBeVisible();
+        await expect(
+            page.locator('[data-dashboard-widget="inventory-attention"]'),
+        ).toBeVisible();
+
+        const notificationResponse = page.waitForResponse(
+            (response) =>
+                response.url().endsWith("/dashboard/test-notification") &&
+                response.request().method() === "POST",
+        );
+
+        const notificationTile = page.getByRole("button", {
+            name: /Generate example notification/,
+        });
+
+        await notificationTile.click();
+
+        const response = await notificationResponse;
+        const payload = await response.json();
+
+        expect(response.status()).toBe(201);
+        await expect(notificationTile).toContainText(
+            "Generate example notification",
+        );
+        await expect(
+            page.locator(
+                `[data-notification-toast-id="${payload.notification_id}"]`,
+            ),
+        ).toContainText("Test notification created");
+
+        await page
+            .getByLabel("Common Operations tasks")
+            .getByRole("link", { name: /Shipping schedule/ })
+            .click();
+        await expect(
+            page.getByRole("heading", {
+                name: "Shipping schedule",
+                exact: true,
+            }),
+        ).toBeVisible();
+        await expect(
             page.getByRole("table", { name: "Two-week shipping schedule" }),
         ).toBeVisible();
 
-        await page.getByRole("link", { name: "Inventory", exact: true }).click();
+        await page
+            .getByRole("link", { name: "Inventory", exact: true })
+            .click();
         await expect(
             page.getByRole("heading", {
                 name: "Finished-goods inventory",
@@ -50,7 +126,9 @@ test.describe("Profile Mfg static POC", () => {
             page.locator('[data-ui-shell-side-nav-link-active="true"]'),
         ).toContainText("Inventory");
         await expect(
-            page.getByRole("table", { name: "Finished-goods inventory by part" }),
+            page.getByRole("table", {
+                name: "Finished-goods inventory by part",
+            }),
         ).toBeVisible();
 
         await page
@@ -136,9 +214,7 @@ test.describe("Profile Mfg static POC", () => {
         await expect(futurePreview).toBeVisible();
         await expect(futurePreview).toBeDisabled();
 
-        await page
-            .getByRole("button", { name: "Account & admin" })
-            .click();
+        await page.getByRole("button", { name: "Account & admin" }).click();
         await expect(
             page.getByRole("link", { name: "My profile", exact: true }),
         ).toBeVisible();
@@ -170,7 +246,6 @@ test.describe("Profile Mfg static POC", () => {
                 level: 1,
             }),
         ).toBeVisible();
-
     });
 
     test("keeps the workspace usable at a mobile viewport", async ({
@@ -181,9 +256,18 @@ test.describe("Profile Mfg static POC", () => {
         await signIn(page, request);
 
         await expect(
-            page.getByRole("heading", { name: "Shipping schedule", exact: true }),
+            page.getByRole("heading", {
+                name: "Operations dashboard",
+                exact: true,
+            }),
         ).toBeVisible();
         await expect(page.getByRole("main")).toBeVisible();
+        await expect(
+            page.locator('[data-ui-tile-variant="clickable"]'),
+        ).toHaveCount(4);
+        await expect(
+            page.getByRole("table", { name: /Shipping requirements/i }),
+        ).toBeVisible();
 
         let hasHorizontalOverflow = await page.evaluate(
             () =>
@@ -212,6 +296,5 @@ test.describe("Profile Mfg static POC", () => {
         );
 
         expect(hasHorizontalOverflow).toBe(false);
-
     });
 });

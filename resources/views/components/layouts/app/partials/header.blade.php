@@ -104,13 +104,19 @@
             $href = $resolveHeaderHref($item);
             $label = $item['label'] ?? '';
             $current = $resolveHeaderCurrent($item);
-            $wireNavigate = $resolveWireNavigate($item);
+            $disabled = (bool) ($item['disabled'] ?? false);
+            $wireNavigate = ! $disabled && $resolveWireNavigate($item);
+            $title = $item['title'] ?? null;
         @endphp
 
         <x-shell.header.menu-item
-            :href="$href"
+            :as="$disabled ? 'button' : 'a'"
+            :href="$disabled ? null : $href"
             :current="$current"
             :wire-navigate="$wireNavigate"
+            :aria-disabled="$disabled ? 'true' : null"
+            :tab-index="$disabled ? -1 : null"
+            :title="$title"
         >
             {{ $label }}
         </x-shell.header.menu-item>

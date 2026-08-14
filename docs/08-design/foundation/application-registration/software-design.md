@@ -272,6 +272,40 @@ registration declarations
 
 Dependencies reference accepted canonical owner identities.
 
+### Registration Dependencies Versus Runtime Contracts
+
+`owner dependencies` in `RegistrationDescriptorData` represent composition-order dependencies only.
+
+They are not a complete dependency inventory of every runtime public Contract relationship.
+
+Example:
+
+```text
+Users runtime
+    → Auth public Operation Contract
+
+Auth runtime
+    → Users public Query Contract
+```
+
+does not imply:
+
+```text
+users registration
+    → auth
+
+auth registration
+    → users
+```
+
+unless both registration processes actually require the other owner's registration to have executed first.
+
+The compiler therefore builds its topological owner order only from declared composition dependencies.
+
+Runtime dependency injection after composition does not add an implicit registration edge.
+
+Descriptor evaluation and Provider registration must not eagerly resolve runtime collaborators merely to force ordering.
+
 ### Descriptor Restrictions
 
 Registration declarations must not:
@@ -961,6 +995,10 @@ Required proof must establish:
 * duplicate owner identities fail;
 * unknown dependencies fail;
 * dependency cycles fail;
+* bidirectional runtime public Contracts do not create registration dependencies automatically;
+* Users/Auth runtime collaboration can compile without a cyclic owner dependency when neither requires composition ordering;
+* an actual composition-order dependency must still be declared;
+* runtime collaborator resolution is not performed during descriptor compilation merely to infer dependencies;
 * `RegistrationFamily` encodes the exact canonical family sequence;
 * configuration executes before Providers;
 * Providers execute before routes;

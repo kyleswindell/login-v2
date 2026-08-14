@@ -407,7 +407,20 @@ The raw value must never be rendered through an application UI after initial ing
 
 **one_time**
 
-The raw generated value may be returned once during its creation flow and must not be retrievable afterward.
+The raw generated value may cross the approved user-facing/output boundary only during its creation or enrollment flow.
+
+After that exposure, it must not be available through a normal reveal or copy operation.
+
+`one_time` does not prohibit the owning capability from internally decrypting an `encrypted_owner_storage` value when the credential's intended operation requires that value.
+
+For example, an Auth-owned TOTP secret may be:
+
+```text
+storageKind = encrypted_owner_storage
+exposurePolicy = one_time
+```
+
+Auth may decrypt the ciphertext internally for later TOTP verification, while the confirmed raw secret remains unavailable to application users.
 
 **controlled_reveal**
 
@@ -423,6 +436,10 @@ copy
 rotate
 revoke
 ```
+
+For a `one_time` definition, `reveal` and `copy` are unavailable after the approved initial exposure unless a later accepted design explicitly changes the exposure policy.
+
+Internal credential execution is not a `reveal` or `copy` operation.
 
 Each supported operation has `SecretOperationRequirementsData` defining applicable:
 
@@ -1245,6 +1262,10 @@ Required proof must establish:
 * decryption failure fails closed;
 * one-time values need not be stored raw;
 * controlled reveal cannot be used when exposure policy is `never` or `one_time`;
+* a `one_time` + `encrypted_owner_storage` definition is valid when the owner requires internal retrieval;
+* confirmed TOTP material can be decrypted internally by Auth without becoming user-revealable;
+* `one_time` does not silently become `controlled_reveal`;
+* reveal/copy remain denied after initial enrollment exposure;
 * operation requirements are obtained structurally from `SecretDefinitionData` and do not make an authorization decision;
 * no Secrets operation-requirements authorization Policy class exists;
 * exactly one owner registration exists for `owner_key: security`;

@@ -70,9 +70,34 @@ Secret scanning must cover repository and release-candidate state.
 
 Generated verification credentials should be displayed once when possible.
 
-Persist prefix, fingerprint, hash, owner, purpose, creation time, expiry, and rotation state.
+`one_time` exposure governs raw secret disclosure outside the owning credential mechanism.
 
-Do not persist the raw value when only later verification is needed.
+It means:
+
+- the raw value may be presented to the intended recipient only during the approved creation or enrollment flow;
+- after that exposure, the recipient must not have a normal application reveal or copy path;
+- durable user-facing, Notification, support, Audit, Monitoring, and export surfaces must not expose the raw value.
+
+`one_time` exposure does not prohibit the owning capability from later retrieving or decrypting an `encrypted_owner_storage` value internally when that retrieval is necessary to perform the credential's intended function.
+
+Example:
+
+```text
+TOTP secret
+    storage:
+        encrypted_owner_storage
+
+    user-facing exposure:
+        one_time during enrollment
+
+    after confirmation:
+        internal Auth decryption for TOTP verification = permitted
+        user reveal/copy = prohibited
+```
+
+When only later verification is needed and internal retrieval is unnecessary, persist a hash rather than retrievable ciphertext.
+
+Persist only safe applicable metadata such as prefix, fingerprint, owner, purpose, creation time, expiry, and rotation state.
 
 ## 6. Access
 

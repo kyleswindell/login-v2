@@ -81,7 +81,25 @@ Do not classify these as Principal or Actor types:
 
 Those belong to Invocation Channel or other execution metadata.
 
-Unknown Actor attribution is an error or compatibility condition, not a normal actor category.
+Absence of an attributed Principal is permitted when the event occurs before authentication or another authoritative Principal attribution has been established.
+
+Do not invent Principal types such as:
+
+- `anonymous`
+- `guest`
+- `unknown`
+- `external`
+
+For a pre-authentication attempt:
+
+- Principal type and ID may be absent;
+- a safely resolved User Account may be the Target without being attributed as Actor;
+- an unresolved claimed account produces no User Account Target;
+- the raw claimed login identifier must not be stored merely to compensate for missing Principal attribution.
+
+A known Target does not imply that the Target was the Actor.
+
+When the event semantics require an attributed Principal and one should already exist, missing attribution remains an integration error.
 
 ## 5. Invocation Channel
 
@@ -108,7 +126,7 @@ An audit event should support applicable:
 - Action
 - Result
 - severity
-- Principal type and ID
+- Principal type and ID when an Actor Principal has been authoritatively attributed
 - User Account, NHI, or System Actor stable key
 - Machine Identity reference and safe assurance snapshot
 - Network Identity reference and verification state
@@ -288,6 +306,10 @@ Verify:
 - immutability
 - evidence access
 - jobs and commands are not stored as Principal types
+- legitimate pre-authentication evidence with no attributed Principal
+- known attempted User Account represented as Target rather than Actor
+- unresolved claimed account producing no fabricated Principal or Target
+- no anonymous/guest/unknown Principal type used as a substitute for absent attribution
 
 ## 17. Related
 

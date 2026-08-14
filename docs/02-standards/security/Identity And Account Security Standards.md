@@ -36,11 +36,13 @@ Define the security baseline for proving identity, establishing authenticated se
 ## 2. Ownership Boundary
 
 - Auth owns login, passwords, MFA, recovery, sessions, recent authentication, and future federation.
-- Identity owns user lifecycle, invitations, status, profile, suspension, and deprovisioning.
+- Users owns human User Account lifecycle, Invitations, primary identity/profile state, activation, suspension, and deactivation.
 - Access owns authorization after authentication succeeds.
-- Account owns self-service entry points while calling Auth and Identity boundaries.
+- Account or other Product presentation may own self-service entry points while calling Auth and Users public boundaries.
 
 MFA does not grant permission.
+
+Authentication assurance and authorization remain separate.
 
 ## 3. Login
 
@@ -48,7 +50,7 @@ Login must:
 
 - rate-limit by account-oriented and network-oriented dimensions
 - avoid user-enumeration responses
-- block non-loginable identity states
+- block non-loginable Users-owned account states
 - rotate the session identifier after successful authentication
 - require MFA before full session issuance when policy requires it
 - record safe success, failure, throttle, and rejection evidence
@@ -64,11 +66,23 @@ Local password rules must:
 - avoid arbitrary composition rules
 - reject approved common and context-specific values
 - use a memory-hard password hashing algorithm supported by the framework
-- separate breached-password checking behind an app-owned boundary
+- separate breached-password checking behind an Auth-owned boundary
 - never send the raw password or full hash to an external provider
-- never log provider payloads or matching suffixes
+- never log provider payloads or matching password-derived material
 
-Breached-password modes may be disabled, report-only, or enforced. Enforced production checking should fail closed unless an accepted policy states otherwise.
+Production breached-password checking is enforced for human-supplied passwords when they are established or changed, including:
+
+- Invitation acceptance
+- required first-login password replacement
+- self-service password change
+- password reset
+- administrator-supplied temporary passwords
+
+An Auth-generated cryptographically high-entropy temporary password does not require breached-human-password checking.
+
+Ordinary login verification does not perform breached-password lookup.
+
+When production breached-password checking is enforced and the checker is unavailable, password establishment or change fails closed.
 
 ## 5. MFA
 
@@ -91,14 +105,45 @@ Enrollment, challenge, failure, reset, disablement, recovery, and policy changes
 Recovery must:
 
 - prove control through an approved path
-- avoid bypassing lifecycle and access controls
+- avoid bypassing Users lifecycle and Access controls
 - expire pending artifacts
 - invalidate used artifacts
 - notify the affected user for high-risk recovery actions
 - require recent authentication for self-service factor regeneration when available
 - preserve evidence without storing raw codes or tokens
 
+Local password-reset tokens:
+
+- expire 30 minutes after issuance
+- permit at most one usable token per User Account
+- are single-use
+- are replaced/revoked when a new usable token is issued
+- are persisted only as a non-reversible verification value
+- revoke existing authenticated sessions after successful password reset
+- do not automatically reset MFA after successful password reset
+
 ## 7. Recent Authentication And Step-Up
+
+For the initial local Auth implementation, recent authentication requires:
+
+```text
+current password verification
+    +
+currently enrolled confirmed TOTP verification
+```
+
+Successful recent authentication remains valid for 15 minutes.
+
+The following do not satisfy recent authentication:
+
+* login-time MFA satisfaction
+* an existing MFA-satisfied timestamp by itself
+* recovery codes
+* session age alone
+
+Recovery codes remain a recovery mechanism for normal MFA challenge behavior and are not accepted as recent-authentication step-up.
+
+Successful recent authentication should regenerate the current session identifier.
 
 Require recent authentication or stronger step-up for applicable:
 
@@ -111,7 +156,7 @@ Require recent authentication or stronger step-up for applicable:
 - secret reveal
 - critical security configuration changes
 
-Login-time MFA satisfaction does not automatically satisfy later recent-auth requirements.
+Recent authentication proves authentication assurance only. It does not grant authorization or elevated access.
 
 ## 8. External Identity
 

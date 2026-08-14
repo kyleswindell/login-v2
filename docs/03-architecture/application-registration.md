@@ -116,6 +116,32 @@ The descriptor is the canonical registration input owned by the same owner as th
 
 A descriptor declares registration intent. It does not execute feature behavior, become a Registry, or replace the declared artifact’s own Contract.
 
+### Registration Dependency Semantics
+
+Owner Registration Descriptor dependencies express application-composition ordering requirements.
+
+They do not enumerate every public runtime Contract relationship between owners.
+
+A runtime Contract relationship does not require a registration dependency merely because one owner injects or invokes another owner's public Contract after application composition has completed.
+
+Declare an owner registration dependency only when correct registration/composition requires the provider owner's applicable registration to occur first.
+
+Therefore:
+
+```text
+runtime Contract graph
+    ≠
+registration dependency graph
+```
+
+Bidirectional runtime public Contract relationships are permitted when architecture otherwise allows them.
+
+They must not be converted automatically into cyclic Owner Registration Descriptor dependencies.
+
+Registration-time behavior must not eagerly resolve runtime collaborators merely to manufacture an ordering requirement.
+
+If a real composition dependency exists, declare that actual dependency explicitly and preserve an acyclic registration graph.
+
 ## 6. Registration Compiler
 
 The Registration Compiler consumes Owner Registration Descriptors and:

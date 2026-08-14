@@ -256,6 +256,10 @@ application
 system
 ```
 
+Absence of a Principal is not another `AuditPrincipalType`.
+
+For an event occurring before authoritative Principal attribution, `AuditActorData` may omit Principal attribution rather than fabricating an anonymous, guest, unknown, or System Principal.
+
 Jobs, commands, webhooks, scheduled tasks, Events, routes, and IP addresses are execution/context information—not Principal types.
 
 ### Actor Snapshot
@@ -263,14 +267,18 @@ Jobs, commands, webhooks, scheduled tasks, Events, routes, and IP addresses are 
 `AuditActorData` contains applicable:
 
 ```text
-principal_type
-principal_id
-system_actor_key
-display_label
-initiating_user_account_id
-machine_identity_reference
-network_identity_reference
+principal_type nullable
+principal_id nullable
+system_actor_key nullable
+display_label nullable
+initiating_user_account_id nullable
+machine_identity_reference nullable
+network_identity_reference nullable
 ```
+
+`principal_type`, `principal_id`, and `system_actor_key` may all be null only when the event legitimately occurs before an attributable Principal exists.
+
+A known account targeted by an unauthenticated attempt belongs in `target`, not in Actor attribution.
 
 Historical evidence must remain interpretable without depending solely on mutable current profile data.
 
@@ -399,6 +407,10 @@ changes
 
 created_at
 ```
+
+`principal_type`, `principal_id`, and `system_actor_key` are nullable for legitimate pre-authentication evidence where no Principal has been authoritatively attributed.
+
+The database Contract must prevent this nullable form from being used to erase attribution where a Principal is required by the event semantics.
 
 `severity` persists one `AuditSeverity` serialized value.
 
@@ -708,6 +720,10 @@ Required proof must cover:
 * User Account Actor evidence;
 * System Actor evidence;
 * non-human Principal representation;
+* unauthenticated login failure can persist with no Principal Actor;
+* known attempted User Account is represented as Target rather than Actor;
+* nonexistent claimed account does not create a fabricated User Account Target;
+* no anonymous/guest/unknown Principal enum value exists;
 * domain-owned Audit event keys;
 * all supported Audit Results;
 * all five `AuditSeverity` values;

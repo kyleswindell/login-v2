@@ -214,6 +214,20 @@ high
 critical
 ```
 
+`MonitoringSeverity` is Monitoring's provider-local typed representation of the shared canonical severity vocabulary defined by Logging Standards.
+
+It serializes exactly:
+
+```text
+informational
+low
+medium
+high
+critical
+```
+
+Monitoring does not depend on an Audit-owned or generic shared PHP severity enum.
+
 Severity reflects actual availability, security, data, recurrence, and recoverability impact.
 
 It must not be used merely to increase alert visibility.
@@ -290,6 +304,31 @@ Producers do not manually provide Runtime correlation fields.
 `RecordMonitoringOccurrenceInterface` assumes a valid current Invocation. `RecordMonitoringOccurrenceAction` consumes `InvocationContextInterface` and requires `current()` to succeed; Monitoring never fabricates or initializes Runtime state.
 
 For a framework failure that occurs before Runtime initialization, the framework integration adapter must not invoke the normal durable Monitoring recording path. It emits a minimal Security-redacted fallback through Laravel's framework logging channel, preserves the original exception/failure behavior, and does not fabricate `invocation_id`, `correlation_id`, `causation_id`, or `invocation_channel`.
+
+### Runtime Failure-Observation Ordering
+
+Monitoring's durable recording path requires a valid current Invocation.
+
+Runtime guarantees that the current Invocation remains valid through synchronous framework failure observers associated with that execution.
+
+The ordering is:
+
+```text
+Runtime initializes Invocation
+    ↓
+execution fails
+    ↓
+Monitoring/framework failure observer records evidence
+    while InvocationContextInterface::current() is valid
+    ↓
+Runtime performs boundary cleanup
+```
+
+Monitoring never delays, owns, or invokes Runtime cleanup.
+
+Runtime never depends on Monitoring.
+
+For failures that occur before Runtime initialization, Monitoring continues to use only the Security-redacted framework fallback already defined.
 
 ### Health Check Contract
 
@@ -537,6 +576,41 @@ monitoring.investigate
 monitoring.resolve
 ```
 
+### Route Security Classification
+
+All initial Monitoring administration routes use the canonical:
+
+```text
+administrative
+```
+
+Security profile.
+
+| Route                    | Security Profile |
+| ------------------------ | ---------------- |
+| `monitoring.index`       | `administrative` |
+| `monitoring.show`        | `administrative` |
+| `monitoring.triage`      | `administrative` |
+| `monitoring.investigate` | `administrative` |
+| `monitoring.resolve`     | `administrative` |
+
+The route declarations use:
+
+```text
+RouteSecurityProfile::Administrative
+```
+
+The profile establishes the minimum:
+
+* authenticated human posture;
+* action/target/scope authorization;
+* administrative authority;
+* MFA-level assurance.
+
+Core Access later owns the exact Monitoring permissions and target/state authorization.
+
+Triage/investigate/resolve do not require `sensitive` merely because they mutate Monitoring state unless a later accepted requirement requires recent authentication.
+
 The list view supports applicable filters for:
 
 ```text
@@ -712,17 +786,27 @@ Severity escalation may bypass the ordinary deduplication interval.
 
 After Runtime initialization, the application exception-reporting boundary delegates reported exceptions into Monitoring.
 
-Target integration:
-
 ```text
-bootstrap/app.php
+HTTP Invocation established
+    ↓
+application exception
     ↓
 Laravel exception reporting hook
     ↓
 RecordMonitoringOccurrenceInterface
+    ↓
+Monitoring reads current Invocation
+    ↓
+Laravel reporting/rendering completes
+    ↓
+Runtime terminable HTTP cleanup
 ```
 
-Laravel's existing rendering behavior remains separate.
+The Monitoring reporting hook must execute before Runtime's terminable HTTP cleanup.
+
+Monitoring does not clear Runtime.
+
+Target integration remains Laravel's exception reporting hook in `bootstrap/app.php`. Laravel's existing rendering behavior remains separate.
 
 Monitoring does not become the HTTP exception renderer.
 
@@ -730,21 +814,67 @@ If exception reporting is reached before Runtime initialization, the adapter emi
 
 ### Queue Integration
 
-`MonitoringServiceProvider` listens for final queue Job failure and records:
+`RecordFailedJob` consumes Laravel's final failed-job observation while the current queue Invocation is still valid.
+
+Required ordering:
+
+```text
+JobProcessing
+    ↓
+queue child Invocation
+    ↓
+Job execution
+    ↓
+JobExceptionOccurred / JobFailed as applicable
+    ↓
+RecordFailedJob resolves InvocationContextInterface
+    ↓
+all attempt observers finish
+    ↓
+Runtime post-attempt cleanup before next job
+```
+
+The listener records:
 
 ```text
 source_type = failed_job
 ```
 
-Retries that have not reached final failure may produce lower-level operational evidence when explicitly required, but are not automatically treated as final failed-job Signals.
+Runtime does not clear from `JobFailed` before Monitoring's listener can execute.
+
+Monitoring does not rely on provider-listener registration order to race against Runtime cleanup; Runtime cleanup belongs to the later post-attempt worker boundary.
+
+Retryable exceptions that are not final failures are not automatically recorded as final failed-job Signals.
 
 ### Scheduler Integration
 
-`MonitoringServiceProvider` listens for scheduled-task failure and records:
+`RecordScheduledTaskFailure` consumes the scheduled-task failure observation while the current `scheduled_task` Invocation remains valid.
+
+Required ordering:
+
+```text
+ScheduledTaskStarting
+    ↓
+scheduled_task Invocation
+    ↓
+task execution
+    ↓
+failure observation / exception reporting
+    ↓
+RecordScheduledTaskFailure resolves current Invocation
+    ↓
+Runtime later clears failed-task state
+```
+
+The listener records:
 
 ```text
 source_type = scheduled_task
 ```
+
+Monitoring must not assume that an earlier task-finished framework event proves the scheduled task will not subsequently be classified as failed.
+
+Monitoring owns only failure evidence; Runtime owns the lifecycle guarantee.
 
 ### Signal Events
 
@@ -863,7 +993,7 @@ Monitoring does not directly add its Provider to root Laravel bootstrap composit
 | CREATE | `app/Core/Monitoring/Http/Requests/MonitoringSearchRequest.php` | Form Request | Validate Monitoring search input | None | `docs/03-architecture/repository-architecture.md` | Monitoring administration test | None |
 | CREATE | `app/Core/Monitoring/Providers/MonitoringServiceProvider.php` | Provider | Bind Monitoring and framework integration | Monitoring Contracts | `docs/03-architecture/application-registration.md` | Monitoring registration test | None |
 | CREATE | `app/Core/Monitoring/Registration/MonitoringRegistrationDescriptor.php` | Registration Descriptor | Declare Monitoring artifacts and owner dependencies | `runtime`, `security`, `audit` | `docs/03-architecture/application-registration.md` | Monitoring registration test | None |
-| CREATE | `app/Core/Monitoring/routes/web.php` | Route | Declare Monitoring owner routes | Monitoring Controller | `docs/03-architecture/repository-architecture.md` | Monitoring administration test | None |
+| CREATE | `app/Core/Monitoring/routes/web.php` | Route | Declare Monitoring administration routes using the canonical `administrative` Security profile | Monitoring Controller, `RouteSecurityProfile::Administrative` | `docs/02-standards/security/Zero Trust Security Standards.md` | Monitoring administration Security-profile test | None |
 | CREATE | `app/Core/Monitoring/config/monitoring.php` | Configuration | Define structural Monitoring configuration | Laravel configuration | `docs/03-architecture/repository-architecture.md` | Monitoring configuration test | None |
 | MODIFY | `bootstrap/app.php` | Laravel integration | Route post-Runtime exceptions to Monitoring or pre-Runtime fallback | Laravel exception hook, Runtime | `docs/03-architecture/public-contract-and-interaction-model.md` | Monitoring Runtime fallback test | None |
 | CREATE | `resources/views/core/monitoring/` | View family | Render Monitoring administration | Monitoring Controller | `docs/03-architecture/repository-architecture.md` | Manual visual review and Monitoring administration test | None |
@@ -876,14 +1006,14 @@ Monitoring does not directly add its Provider to root Laravel bootstrap composit
 | CREATE | `app/Core/Monitoring/__tests__/MonitoringSignalGroupingTest.php` | Test | Prove fingerprint grouping | Monitoring owner artifacts | `docs/02-standards/testing/index.md` | Targeted Monitoring proof | None |
 | CREATE | `app/Core/Monitoring/__tests__/MonitoringSignalLifecycleTest.php` | Test | Prove Signal transitions | Monitoring owner artifacts | `docs/02-standards/testing/index.md` | Targeted Monitoring proof | None |
 | CREATE | `app/Core/Monitoring/__tests__/MonitoringRedactionTest.php` | Test | Prove Security-first context redaction | Security redaction Contract | `docs/02-standards/testing/index.md` | Targeted Monitoring proof | None |
-| CREATE | `app/Core/Monitoring/__tests__/MonitoringFallbackTest.php` | Test | Prove no durable path before Runtime | Runtime and Security redaction | `docs/02-standards/testing/index.md` | Monitoring Runtime fallback test | None |
+| CREATE | `app/Core/Monitoring/__tests__/MonitoringFallbackTest.php` | Test | Prove pre-Runtime fallback and no fabricated Invocation | Runtime and Security redaction | `docs/02-standards/testing/index.md` | Monitoring Runtime fallback test | None |
 | CREATE | `app/Core/Monitoring/__tests__/HealthCheckRegistryTest.php` | Test | Prove health-check Contributions | Health Check Registry | `docs/02-standards/testing/index.md` | Targeted Monitoring proof | None |
 | CREATE | `app/Core/Monitoring/__tests__/HealthCheckExecutionTest.php` | Test | Prove whole-minute due execution | Health Check command | `docs/02-standards/testing/index.md` | Targeted Monitoring proof | None |
-| CREATE | `app/Core/Monitoring/__tests__/FailedJobMonitoringTest.php` | Test | Prove final Job failure capture | Failed Job Listener | `docs/02-standards/testing/index.md` | Targeted Monitoring proof | None |
-| CREATE | `app/Core/Monitoring/__tests__/ScheduledTaskMonitoringTest.php` | Test | Prove scheduled-task capture | Scheduled Listener | `docs/02-standards/testing/index.md` | Targeted Monitoring proof | None |
+| CREATE | `app/Core/Monitoring/__tests__/FailedJobMonitoringTest.php` | Test | Prove `JobFailed` capture occurs while the queue Invocation remains valid | Failed Job Listener | `docs/02-standards/testing/index.md` | Targeted Monitoring proof | None |
+| CREATE | `app/Core/Monitoring/__tests__/ScheduledTaskMonitoringTest.php` | Test | Prove scheduled failure capture occurs while the scheduled Invocation remains valid | Scheduled Listener | `docs/02-standards/testing/index.md` | Targeted Monitoring proof | None |
 | CREATE | `app/Core/Monitoring/__tests__/MonitoringRegistrationTest.php` | Test | Prove Monitoring's single descriptor | Monitoring Registration Descriptor | `docs/02-standards/testing/index.md` | Targeted Monitoring proof | None |
-| CREATE | `tests/Feature/Monitoring/ExceptionMonitoringTest.php` | Test | Prove exception integration behavior | Laravel exception hook | `docs/02-standards/testing/index.md` | Targeted Monitoring proof | None |
-| CREATE | `tests/Feature/Monitoring/MonitoringAdministrationTest.php` | Test | Prove Monitoring administration behavior | Monitoring routes and queries | `docs/02-standards/testing/index.md` | Targeted Monitoring proof | None |
+| CREATE | `tests/Feature/Monitoring/ExceptionMonitoringTest.php` | Test | Prove HTTP Monitoring capture occurs before Runtime terminable cleanup | Laravel exception hook | `docs/02-standards/testing/index.md` | Targeted Monitoring proof | None |
+| CREATE | `tests/Feature/Monitoring/MonitoringAdministrationTest.php` | Test | Prove Monitoring administration behavior and all route profiles use `administrative` | Monitoring routes and queries | `docs/02-standards/testing/index.md` | Targeted Monitoring proof | None |
 
 Obsolete proof-of-concept error-log or Monitoring artifacts are deleted only when a bounded implementation issue identifies each target. They have no preservation requirement.
 
@@ -897,6 +1027,10 @@ Required proof must establish:
 * failed-job capture;
 * scheduled-task failure capture;
 * Runtime correlation;
+* Monitoring can resolve Runtime correlation from HTTP exception reporting before cleanup;
+* final Job failure capture occurs before queue Runtime cleanup;
+* scheduled-task failure capture occurs before scheduled Runtime cleanup;
+* Monitoring never initializes or clears Runtime;
 * `RecordMonitoringOccurrenceAction` requires `InvocationContextInterface::current()` and never initializes Runtime;
 * pre-Runtime framework failures use only Security-redacted Laravel fallback logging;
 * stable fingerprint generation;
@@ -923,6 +1057,8 @@ Required proof must establish:
 * Signal events after commit;
 * no Audit/Monitoring ownership collapse;
 * no security containment performed by Monitoring;
+* all five Monitoring administration routes use `administrative`;
+* route profiles do not replace Core Access authorization;
 * Application Registration composition;
 * the one Monitoring descriptor declares applicable `runtime`, `security`, and `audit` dependencies;
 * obsolete conflicting proof-of-concept Monitoring/error-log mechanisms are removed.

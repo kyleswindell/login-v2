@@ -95,10 +95,10 @@ Obsolete proof-of-concept artifacts may be explicitly deleted during implementat
 | `InvocationContextInterface`        | Public read Contract exposing `current()`               | `app/Core/Runtime/Contracts/InvocationContextInterface.php`           |
 | `CurrentInvocationResolver`         | Read and validate current Invocation state              | `app/Core/Runtime/Resolvers/CurrentInvocationResolver.php`            |
 | `InvocationLifecycleCoordinator`    | Create root/child Invocations and clear Runtime state   | `app/Core/Runtime/Coordinators/InvocationLifecycleCoordinator.php`    |
-| `InitializeInvocationMiddleware`    | HTTP root Invocation lifecycle                          | `app/Core/Runtime/Http/Middleware/InitializeInvocationMiddleware.php` |
-| `QueueInvocationSubscriber`         | Queue/Event-consumer child lifecycle and worker cleanup | `app/Core/Runtime/Listeners/QueueInvocationSubscriber.php`            |
+| `InitializeInvocationMiddleware`    | HTTP root initialization and terminable post-observation cleanup | `app/Core/Runtime/Http/Middleware/InitializeInvocationMiddleware.php` |
+| `QueueInvocationSubscriber`         | Queue/Event-consumer child initialization and post-attempt cleanup after framework observers | `app/Core/Runtime/Listeners/QueueInvocationSubscriber.php` |
 | `ConsoleInvocationSubscriber`       | Manual command root lifecycle                           | `app/Core/Runtime/Listeners/ConsoleInvocationSubscriber.php`          |
-| `ScheduledInvocationSubscriber`     | Per-scheduled-task root lifecycle                       | `app/Core/Runtime/Listeners/ScheduledInvocationSubscriber.php`        |
+| `ScheduledInvocationSubscriber`     | Scheduled-task root initialization and failure-safe cleanup after framework observers | `app/Core/Runtime/Listeners/ScheduledInvocationSubscriber.php` |
 | `InvalidInvocationContextException` | Missing or malformed Runtime-state integration failure  | `app/Core/Runtime/Exceptions/InvalidInvocationContextException.php`   |
 | `RuntimeServiceProvider`            | Runtime registration declaration, bindings, and Laravel lifecycle integration | `app/Core/Runtime/Providers/RuntimeServiceProvider.php` |
 
@@ -272,6 +272,39 @@ Cleanup removes only Runtime-owned Context values and must not flush unrelated L
 
 ## 6. Execution Boundary Integration
 
+### Failure Observation And Cleanup Ordering
+
+Runtime owns the lifetime of the current Invocation but does not own Audit, Monitoring, exception reporting, failed-job handling, or scheduled-task failure handling.
+
+For every supported execution boundary:
+
+```text
+Invocation initialized
+    ↓
+owner execution
+    ↓
+success or failure
+    ↓
+applicable synchronous framework observers execute
+    while the current Invocation remains valid
+    ↓
+Runtime cleanup
+    ↓
+next independent execution may begin
+```
+
+`InvocationContextInterface::current()` must remain valid for synchronous failure observers associated with the current execution.
+
+Runtime cleanup must occur:
+
+* after those observers;
+* before the next independent Invocation;
+* on every success, failure, retry, or worker/task termination path.
+
+This is a Runtime lifecycle guarantee, not a Runtime dependency on Audit or Monitoring.
+
+Consumers do not control Runtime cleanup ordering.
+
 ### HTTP
 
 `InitializeInvocationMiddleware` receives the channel assigned to the delivery boundary:
@@ -287,14 +320,33 @@ Lifecycle:
 ```text
 request enters
     ↓
-create root Invocation
+InitializeInvocationMiddleware creates root Invocation
     ↓
 owner behavior executes
     ↓
-response / exception
+successful response
+    OR
+exception enters Laravel reporting/rendering
     ↓
-Runtime cleanup in finally
+all synchronous request failure/reporting observers complete
+while InvocationContextInterface remains valid
+    ↓
+terminable Runtime middleware cleanup
 ```
+
+`InitializeInvocationMiddleware` is a terminable middleware.
+
+Its `handle()` path:
+
+1. establishes the root Invocation;
+2. delegates the request;
+3. does not clear Runtime state in a `finally` block that would execute before Laravel exception reporting.
+
+Its `terminate()` path clears Runtime-owned Context after Laravel has produced the request response and completed synchronous exception reporting/rendering for that request.
+
+Runtime cleanup must not depend on state stored only on the middleware object instance. Cleanup resolves `InvocationLifecycleCoordinator` and clears Runtime-owned Context directly.
+
+If execution fails before Runtime initialization, there is no Runtime state to clear and downstream Monitoring follows its pre-Runtime fallback behavior.
 
 External request headers never control Login 2.0 internal:
 
@@ -310,12 +362,12 @@ No Runtime response header is required by the initial design.
 
 Laravel Context carries the trusted dispatching Invocation across the queue boundary.
 
-Before queued owner behavior executes, `QueueInvocationSubscriber`:
+At `JobProcessing`:
 
-1. validates inherited parent Runtime state;
-2. determines the child Invocation Channel;
-3. derives a new child Invocation;
-4. replaces the inherited parent state with child state.
+1. verify no stale Runtime child state remains;
+2. validate the inherited dispatching Invocation;
+3. derive the new queue/Event-consumer child Invocation;
+4. make that child current.
 
 Channel selection:
 
@@ -329,13 +381,44 @@ other queued execution
 
 Missing or malformed inherited Runtime state is an integration failure.
 
-Runtime state is cleared after:
+The child Invocation remains current throughout the complete attempt, including applicable:
 
-* successful execution;
-* failed execution;
-* thrown exception;
-* retry attempt completion;
-* worker lifecycle boundaries required to prevent leakage.
+```text
+JobProcessed
+JobExceptionOccurred
+JobFailed
+```
+
+observation.
+
+Runtime MUST NOT clear the child Invocation from a `JobExceptionOccurred` or `JobFailed` listener before other failure observers execute.
+
+Post-attempt cleanup occurs at the queue worker lifecycle boundary after the attempt's processing/failure events have completed and before another job begins.
+
+The initial Laravel integration uses the worker loop boundary for this cleanup:
+
+```text
+current attempt observers finish
+    ↓
+queue Looping boundary
+    ↓
+clear any Runtime state from prior attempt
+    ↓
+next job may be popped / JobProcessing may begin
+```
+
+`WorkerStopping` also clears any residual Runtime state so a worker terminating after one attempt cannot retain Invocation state.
+
+`JobProcessing` defensively rejects or clears stale prior-attempt Runtime child state before deriving the new child according to the coordinator's bounded cleanup contract; it must never silently treat stale state as the new job's parent.
+
+This guarantees:
+
+* final failed-job Monitoring observers can still resolve the current Invocation;
+* retryable exception observers see the attempt Invocation;
+* successful post-job observers see the attempt Invocation;
+* the next independent job never inherits stale child state.
+
+Runtime does not depend on Monitoring.
 
 ### Console
 
@@ -355,33 +438,61 @@ Queue-worker and scheduler host commands are orchestration processes and do not 
 
 ### Scheduler
 
-Each scheduled task receives its own:
+At `ScheduledTaskStarting`:
+
+1. clear any residual Runtime state belonging to a previously failed scheduled task;
+2. create the new `scheduled_task` root Invocation.
+
+The scheduled Invocation remains current through task execution and applicable failure observation.
+
+For a successful foreground task:
+
+* Runtime may clear after successful task completion.
+
+For a task whose scheduler event reports a non-zero exit code:
+
+* do NOT clear Runtime merely because the framework emitted its task-finished event;
+* retain the current Invocation through the later task-failure event and framework exception reporting.
+
+For a task that throws:
+
+* retain the current Invocation through the task-failure event and framework exception reporting.
+
+Runtime MUST NOT clear the scheduled Invocation from the failure listener before other failure observers execute.
+
+Residual failed-task state is cleared:
+
+1. before the next `ScheduledTaskStarting`; or
+2. when the outer scheduler host command terminates if no later task begins.
+
+The scheduler host command itself does not become the parent Invocation for scheduled tasks.
+
+Background scheduled processes remain outside the initial Runtime propagation design as already stated.
 
 ```text
-scheduled_task
+ScheduledTaskStarting
+    ↓
+scheduled_task Invocation
+    ↓
+task execution
+    ├── success
+    │     ↓
+    │   cleanup after successful completion observation
+    │
+    └── failure
+          ↓
+        ScheduledTaskFailed / framework reporting
+          ↓
+        Invocation still valid
+          ↓
+        cleanup before next task or scheduler-host termination
 ```
-
-root Invocation.
 
 Unrelated scheduled tasks must never share one correlation family.
 
-If a scheduled task:
+If a scheduled task runs a synchronous Artisan command, the command retains the scheduled-task Invocation.
 
-```text
-runs synchronous Artisan command
-```
-
-the command retains the scheduled-task Invocation.
-
-If it:
-
-```text
-dispatches queued work
-```
-
-that work becomes a correlated asynchronous child.
-
-Background scheduled processes are outside the initial design until explicit cross-process Runtime propagation is accepted.
+If it dispatches queued work, that work becomes a correlated asynchronous child.
 
 ### Internal System Execution
 
@@ -519,7 +630,7 @@ After Laravel registers it through the compiled manifest, `RuntimeServiceProvide
 
 * `InvocationContextInterface` binding;
 * Runtime lifecycle subscriber registration;
-* Runtime HTTP middleware integration.
+* registration of the Runtime middleware as the application-wide HTTP Invocation boundary.
 
 Application Registration owns composition only and does not absorb Runtime behavior.
 
@@ -538,17 +649,17 @@ Application Registration owns composition only and does not absorb Runtime behav
 | CREATE | `app/Core/Runtime/Resolvers/CurrentInvocationResolver.php` | Resolver | Validate and reconstruct current Invocation | `InvocationContextInterface`, Laravel Context | `docs/03-architecture/public-contract-and-interaction-model.md` | Invocation Context test | None |
 | CREATE | `app/Core/Runtime/Coordinators/InvocationLifecycleCoordinator.php` | Coordinator | Create, derive, and clear Invocation state | `Invocation`, Laravel Context | `docs/03-architecture/public-contract-and-interaction-model.md` | Runtime lifecycle tests | None |
 | CREATE | `app/Core/Runtime/Exceptions/InvalidInvocationContextException.php` | Exception | Signal invalid Runtime state | None | `docs/03-architecture/public-contract-and-interaction-model.md` | Invocation Context test | None |
-| CREATE | `app/Core/Runtime/Http/Middleware/InitializeInvocationMiddleware.php` | Middleware | Establish HTTP root lifecycle | `InvocationLifecycleCoordinator` | `docs/03-architecture/public-contract-and-interaction-model.md` | HTTP Invocation test | None |
-| CREATE | `app/Core/Runtime/Listeners/QueueInvocationSubscriber.php` | Listener | Establish queue and Event-consumer child lifecycle | `InvocationLifecycleCoordinator` | `docs/03-architecture/public-contract-and-interaction-model.md` | Queue Invocation test | None |
+| CREATE | `app/Core/Runtime/Http/Middleware/InitializeInvocationMiddleware.php` | Middleware | Establish HTTP root Invocation and perform terminable post-observation cleanup | `InvocationLifecycleCoordinator` | `docs/03-architecture/public-contract-and-interaction-model.md` | HTTP Invocation test | None |
+| CREATE | `app/Core/Runtime/Listeners/QueueInvocationSubscriber.php` | Listener | Establish queue/Event-consumer child Invocation and clear state at post-attempt worker boundaries | `InvocationLifecycleCoordinator` | `docs/03-architecture/public-contract-and-interaction-model.md` | Queue Invocation test | None |
 | CREATE | `app/Core/Runtime/Listeners/ConsoleInvocationSubscriber.php` | Listener | Establish manual command lifecycle | `InvocationLifecycleCoordinator` | `docs/03-architecture/public-contract-and-interaction-model.md` | Console Invocation test | None |
-| CREATE | `app/Core/Runtime/Listeners/ScheduledInvocationSubscriber.php` | Listener | Establish scheduled-task lifecycle | `InvocationLifecycleCoordinator` | `docs/03-architecture/public-contract-and-interaction-model.md` | Scheduled Invocation test | None |
+| CREATE | `app/Core/Runtime/Listeners/ScheduledInvocationSubscriber.php` | Listener | Establish scheduled-task roots and preserve Invocation through failure observation | `InvocationLifecycleCoordinator` | `docs/03-architecture/public-contract-and-interaction-model.md` | Scheduled Invocation test | None |
 | CREATE | `app/Core/Runtime/Providers/RuntimeServiceProvider.php` | Provider and Registration Descriptor | Declare Runtime registration and bind Runtime lifecycle services | `RegistrationDescriptorInterface`, `RegistrationDescriptorData`, Laravel Provider API | `docs/03-architecture/application-registration.md` | Runtime Service Provider registration proof | None |
 | CREATE | `app/Core/Runtime/__tests__/InvocationTest.php` | Test | Prove Invocation and channel Contract | Runtime public types | `docs/02-standards/testing/index.md` | Targeted Runtime test | None |
 | CREATE | `app/Core/Runtime/__tests__/InvocationContextTest.php` | Test | Prove Context reconstruction and validation | `InvocationContextInterface` | `docs/02-standards/testing/index.md` | Targeted Runtime test | None |
-| CREATE | `app/Core/Runtime/__tests__/HttpInvocationTest.php` | Test | Prove HTTP lifecycle | Runtime middleware | `docs/02-standards/testing/index.md` | Targeted Runtime test | None |
-| CREATE | `app/Core/Runtime/__tests__/QueueInvocationTest.php` | Test | Prove queue propagation, derivation, retry, and isolation | Queue subscriber | `docs/02-standards/testing/index.md` | Targeted Runtime test | None |
+| CREATE | `app/Core/Runtime/__tests__/HttpInvocationTest.php` | Test | Prove HTTP lifecycle, exception reporting before cleanup, and later-request isolation | Runtime middleware | `docs/02-standards/testing/index.md` | Targeted Runtime test | None |
+| CREATE | `app/Core/Runtime/__tests__/QueueInvocationTest.php` | Test | Prove queue propagation, derivation, retry, `JobFailed`/`JobExceptionOccurred` visibility, and next-attempt cleanup | Queue subscriber | `docs/02-standards/testing/index.md` | Targeted Runtime test | None |
 | CREATE | `app/Core/Runtime/__tests__/ConsoleInvocationTest.php` | Test | Prove console lifecycle | Console subscriber | `docs/02-standards/testing/index.md` | Targeted Runtime test | None |
-| CREATE | `app/Core/Runtime/__tests__/ScheduledInvocationTest.php` | Test | Prove scheduler lifecycle | Scheduled subscriber | `docs/02-standards/testing/index.md` | Targeted Runtime test | None |
+| CREATE | `app/Core/Runtime/__tests__/ScheduledInvocationTest.php` | Test | Prove failure-observer visibility, non-zero exit behavior, and next-task/host cleanup | Scheduled subscriber | `docs/02-standards/testing/index.md` | Targeted Runtime test | None |
 | CREATE | `app/Core/Runtime/__tests__/RuntimeServiceProviderRegistrationTest.php` | Test | Prove Runtime's single declarative registration source | `RuntimeServiceProvider`, Application Registration Contract | `docs/03-architecture/application-registration.md` | Provider registration architecture proof | None |
 
 No migration, Model, Blade, CSS, JavaScript, route behavior, or Runtime configuration file is required.
@@ -581,6 +692,17 @@ Required implementation proof must establish:
 * Runtime exposes exactly one registration declaration;
 * no separate Runtime registration-descriptor class exists;
 * `RuntimeServiceProvider` is not directly registered in `bootstrap/providers.php`;
+* HTTP exception reporting can resolve the current Invocation before terminable cleanup;
+* HTTP cleanup occurs after response/reporting and before a later independent request;
+* `JobFailed` observers can resolve the current queue Invocation;
+* `JobExceptionOccurred` observers can resolve the current queue Invocation;
+* queue Runtime state is cleared before the next `JobProcessing`;
+* worker termination clears residual Runtime state;
+* scheduled-task failure observers can resolve the current `scheduled_task` Invocation;
+* a non-zero scheduled command exit cannot cause Runtime cleanup before later failure observation;
+* failed scheduled-task state is cleared before the next scheduled task;
+* scheduler host termination clears residual scheduled-task state;
+* none of these guarantees introduces a Runtime dependency on Monitoring;
 * obsolete proof-of-concept Runtime context artifacts are removed.
 
 ### Non-Goals

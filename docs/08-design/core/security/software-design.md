@@ -23,7 +23,7 @@ Core Security owns cross-cutting application-security guardrails and security-co
 
 Target owner:
 
-```text id="0cq83w"
+```text
 app/Core/Security/
 App\Core\Security\
 owner_key: security
@@ -130,7 +130,7 @@ Current implementation structure is reference evidence only.
 
 Initial checks:
 
-```text id="9cl3ba"
+```text
 DebugDisabledCheck
 TransportSecurityConfigurationCheck
 TrustedProxyConfigurationCheck
@@ -141,13 +141,13 @@ RouteSecurityCoverageCheck
 
 Target paths:
 
-```text id="vu4nje"
+```text
 app/Core/Security/Verification/Checks/
 ```
 
 Do not create:
 
-```text id="61p8n0"
+```text
 SecurityManager
 SecurityService
 SecurityHelper
@@ -161,7 +161,7 @@ or another generic Security abstraction.
 
 Do not create yet:
 
-```text id="mtqwai"
+```text
 RequestSecurityContext
 TrustDecisionService
 risk scoring
@@ -183,7 +183,7 @@ Those require later accepted requirements or subcapability designs.
 
 Cross-owner code that must accept a redirect candidate from request or application input uses:
 
-```php id="u1wv7k"
+```php
 interface ResolveSafeRedirectInterface
 {
     public function resolve(string $candidate): SafeRedirectTarget;
@@ -211,7 +211,7 @@ Any later approved external redirect requires an explicit Security-owned allow-l
 
 Invalid input throws:
 
-```text id="6ugzu5"
+```text
 UnsafeRedirectTargetException
 ```
 
@@ -223,7 +223,7 @@ Security does not silently turn an unsafe redirect into an accepted target.
 
 Audit, Monitoring, exception handling, and other approved consumers may use:
 
-```php id="ivd8wy"
+```php
 interface RedactSensitiveContextInterface
 {
     public function redact(
@@ -234,14 +234,14 @@ interface RedactSensitiveContextInterface
 
 `SensitiveContextData` contains:
 
-```text id="x4q2ve"
+```text
 scope
 values
 ```
 
 `RedactionScope` initially supports:
 
-```text id="58zmvv"
+```text
 request_body
 query
 headers
@@ -262,7 +262,7 @@ The redactor:
 
 Baseline prohibited headers include:
 
-```text id="mkf3yy"
+```text
 Authorization
 Cookie
 Set-Cookie
@@ -276,7 +276,7 @@ DataProtection remains authoritative for semantic personal/business-data classif
 
 Security owns Host Registry:
 
-```text id="0k22fr"
+```text
 security.redaction_rules
 ```
 
@@ -298,7 +298,7 @@ Duplicate or contradictory normalized rules fail registration.
 
 Security exposes:
 
-```php id="6mvhlb"
+```php
 interface SecurityCheckInterface
 {
     public function evaluate(): SecurityCheckResult;
@@ -307,13 +307,13 @@ interface SecurityCheckInterface
 
 Security owns Host Registry:
 
-```text id="towsxl"
+```text
 security.release_checks
 ```
 
 Each Contribution identifies:
 
-```text id="dr6dwb"
+```text
 contribution_key
 owner_key
 blocking
@@ -324,7 +324,7 @@ optional runbook reference
 
 `SecurityCheckStatus` uses:
 
-```text id="kgubjv"
+```text
 satisfied
 warning
 unsatisfied
@@ -335,13 +335,13 @@ These are application security-check results and are distinct from repository wo
 
 `RunSecurityChecksCommand` uses signature:
 
-```text id="uwlvgp"
+```text
 security:verify
 ```
 
 Command result:
 
-```text id="4zndw0"
+```text
 all blocking checks satisfied/not applicable
     → exit 0
 
@@ -362,7 +362,7 @@ Every application route must identify one canonical Security profile once route-
 
 `RouteSecurityProfile` contains exactly:
 
-```text id="aztvcy"
+```text
 public
 guest
 authenticated
@@ -383,7 +383,7 @@ API, webhook, and signed-download concepts are not route-security profile values
 
 Security registers the route macro:
 
-```text id="284zs2"
+```text
 securityProfile(RouteSecurityProfile $profile)
 ```
 
@@ -391,7 +391,7 @@ The macro stores the canonical serialized profile key as route metadata.
 
 Examples:
 
-```php id="thrpmd"
+```php
 Route::get('/profile', ...)
     ->securityProfile(RouteSecurityProfile::Authenticated);
 
@@ -411,7 +411,7 @@ Other owners cannot contribute new route-security profile identities.
 
 Each definition contains:
 
-```text id="dhry8d"
+```text
 profile
 requires_guest_state
 requires_authenticated_human
@@ -582,7 +582,7 @@ Route Security profile identity is deliberately separate from other controls.
 
 Core Runtime owns how execution entered:
 
-```text id="v4xzoa"
+```text
 interactive_web
 api_request
 webhook_request
@@ -597,7 +597,7 @@ Invocation Channel is not a Security profile.
 
 Valid combinations include:
 
-```text id="rotv4h"
+```text
 security profile: service
 invocation channel: api_request
 
@@ -612,7 +612,7 @@ The final combination may represent a genuinely unauthenticated public API endpo
 
 Do not introduce:
 
-```text id="pbeops"
+```text
 api
 webhook
 webhook_or_integration
@@ -633,7 +633,7 @@ A signed URL does not:
 
 Valid combinations include:
 
-```text id="pl8pt2"
+```text
 security profile: restricted_data
 signed URL required: true
 
@@ -675,7 +675,7 @@ Security does not implement Auth or Access behavior merely because a profile req
 
 Target relationship:
 
-```text id="gvqiaa"
+```text
 route declares canonical Security profile
         ↓
 Security resolves immutable minimum-control definition
@@ -712,7 +712,7 @@ Core Security owns no initial database tables.
 
 Security guardrails are defined through:
 
-```text id="o8gfbj"
+```text
 code
 owner configuration
 Application Registration
@@ -722,7 +722,7 @@ security verification
 
 Do not create database-backed:
 
-```text id="9loz96"
+```text
 route security profiles
 redaction rules
 release checks
@@ -739,13 +739,13 @@ The canonical eight route-security profiles are code-defined immutable Security 
 
 Target configuration:
 
-```text id="r5p1z8"
+```text
 app/Core/Security/config/security.php
 ```
 
 It contains structural configuration for applicable:
 
-```text id="zwfshm"
+```text
 transport.expect_https
 transport.trusted_proxies
 transport.trusted_hosts
@@ -766,7 +766,7 @@ The canonical route-profile identities and minimum semantics do not live in edit
 
 Application Registration loads configuration beneath:
 
-```text id="iqgzes"
+```text
 security.*
 ```
 
@@ -794,7 +794,7 @@ Core Security integrates with the Laravel HTTP pipeline.
 
 When:
 
-```text id="7d7py1"
+```text
 security.transport.expect_https = true
 ```
 
@@ -824,7 +824,7 @@ Deployment infrastructure remains responsible for its own network/web-server enf
 
 Required header families include:
 
-```text id="bm0aqf"
+```text
 Content-Security-Policy
 X-Content-Type-Options
 Referrer-Policy
@@ -835,7 +835,7 @@ Strict-Transport-Security when safe
 
 Fixed baseline:
 
-```text id="b5s5h9"
+```text
 X-Content-Type-Options: nosniff
 Referrer-Policy: strict-origin-when-cross-origin
 ```
@@ -876,7 +876,7 @@ Security uses Laravel's native signed/temporary-signed URL mechanism for routes 
 
 A valid signature:
 
-```text id="67tq51"
+```text
 does not grant authorization
 does not grant current scope
 does not replace authentication
@@ -915,7 +915,7 @@ The initial Core Security implementation has no database-backed or administrator
 
 Security verification is exposed through:
 
-```text id="x8y7q6"
+```text
 security:verify
 ```
 
@@ -955,7 +955,7 @@ Do not rely on:
 
 Security-sensitive writes require:
 
-```text id="swzywp"
+```text
 FormRequest
     ↓
 explicit allowed fields
@@ -979,7 +979,7 @@ They do not replace object-level authorization.
 
 Protected owners remain responsible for checking the specific:
 
-```text id="s93dbt"
+```text
 actor
 action
 target
@@ -1050,7 +1050,7 @@ When a later Security policy requires human attention, Core Notifications owns d
 
 Other owners may contribute release/security checks through:
 
-```text id="z1w0pq"
+```text
 security.release_checks
 ```
 
@@ -1067,7 +1067,7 @@ Security owns:
 
 Security/Secrets and other explicitly approved Security-owned subcapabilities may contribute rules through:
 
-```text id="zrl9ui"
+```text
 security.redaction_rules
 ```
 
@@ -1092,7 +1092,7 @@ Consumers do not modify `SensitiveContextRedactor` directly to add domain-specif
 
 There is exactly one Owner Registration Descriptor for:
 
-```text id="4lxhf2"
+```text
 owner_key: security
 ```
 
@@ -1100,13 +1100,13 @@ Security/Secrets is a Core Security subcapability, not a second registrable owne
 
 The single descriptor remains declarative and may reference its implementation beneath:
 
-```text id="uvl89y"
+```text
 app/Core/Security/Secrets/
 ```
 
 Provider order is explicit:
 
-```text id="kttoav"
+```text
 SecurityServiceProvider
     before
 SecretsServiceProvider
@@ -1120,7 +1120,7 @@ No Security Provider is directly accumulated in root Provider configuration outs
 
 ### Core Runtime
 
-Security may consume Runtime Invocation identifiers when producing safe Monitoring/Audit evidence.
+Core Security does not depend on Runtime. Evidence owners such as Audit or Monitoring may attach Runtime Invocation identifiers to their own evidence when consuming applicable Security outcomes through provider-owned Contracts.
 
 Runtime identifiers never constitute authentication, authorization, or trust.
 
@@ -1241,6 +1241,10 @@ Required proof must establish:
 * `sensitive` adds MFA and recent authentication without requiring administrative authority;
 * `restricted_data` adds restricted-data controls to the sensitive baseline;
 * `service` requires protected machine/service identity and scoped authorization;
+* the known Audit administration routes use only the canonical `administrative` profile;
+* the known Monitoring administration routes use only the canonical `administrative` profile;
+* Audit and Monitoring still perform owner-specific authorization through later Access Contracts;
+* Audit and Monitoring add no route-profile identity;
 * required route middleware/assurance/authorization integration matches the accepted profile once Auth/Access Contracts are available;
 * state-changing browser GET routes are absent;
 * Laravel request-forgery protection remains active on browser writes;
@@ -1257,28 +1261,21 @@ Required proof must establish:
 ### Required Reconciliation Before Acceptance
 
 1. **Security standards acceptance** — the applicable Security standards package remains draft.
-2. **Auth integration** — exact authentication, MFA, recent-authentication, and applicable account-posture middleware/Contract names must come from the later Core Auth design.
-3. **Access integration** — exact authorization/profile enforcement Contracts must come from the later Core Access design.
-4. **Security/Secrets** — exact credential-sensitive redaction-rule catalog remains owned by the Security/Secrets design and must remain aligned.
-5. **CSP policy** — exact CSP directives and approved third-party origins require accepted browser-security policy.
-6. **Permissions Policy / HSTS** — exact directives and HSTS lifetime require accepted Security policy.
-7. **Settings integration** — any dynamically configurable Security setting must wait for the Core Settings design.
-8. **Audit/Monitoring reconciliation** — their owner-specific redactors must continue consuming Core Security's security-sensitive redaction Contract while retaining their own semantic evidence rules.
+2. **Auth integration** — exact authentication, account-posture, MFA, and recent-authentication middleware/Contract names must come from the Core Auth design.
+3. **Access integration** — exact action/target/scope/admin authorization Contracts and route-profile enforcement integration must come from the Core Access design.
+4. **CSP policy** — exact CSP directives and approved third-party origins require accepted browser-security policy.
+5. **Permissions Policy / HSTS** — exact directives and HSTS lifetime require accepted Security policy.
+6. **Settings integration** — any dynamically configurable Security setting must wait for the Core Settings design.
 
-The route-security profile vocabulary is no longer a blocker. It is canonically fixed as:
+The following foundation reconciliations are complete:
 
-```text id="2tvlb7"
-public
-guest
-authenticated
-protected
-administrative
-sensitive
-restricted_data
-service
-```
+* Security/Secrets defines and contributes the credential-sensitive redaction catalog through `security.redaction_rules`.
+* Audit consumes `RedactSensitiveContextInterface` before `AuditEvidenceRedactor`.
+* Monitoring consumes `RedactSensitiveContextInterface` before `MonitoringContextRedactor`.
+* Security/Secrets uses the single `owner_key: security` registration declaration.
+* Audit and Monitoring use the canonical `administrative` route Security profile for their initial administration surfaces.
 
-The remaining Auth and Access blockers concern implementation of the profile requirements, not profile identity or semantics.
+The route-security profile vocabulary is no longer a blocker.
 
 ### Implementation Ready
 
@@ -1302,11 +1299,14 @@ The remaining Auth and Access blockers concern implementation of the profile req
 * [x] proof-of-concept cleanup is identified.
 * [x] implementation manifest is defined.
 * [x] verification surfaces are defined.
-* [ ] applicable Security standards are accepted.
+* [x] Security/Secrets credential-redaction integration is reconciled.
+* [x] Audit Security-redaction consumption is reconciled.
+* [x] Monitoring Security-redaction consumption is reconciled.
+* [x] initial foundation administration route-profile assignments are reconciled.
 * [ ] Auth and Access profile enforcement Contracts are reconciled.
-* [ ] Security/Secrets redaction rules remain reconciled.
 * [ ] CSP, Permissions Policy, and HSTS policy values are accepted.
-* [ ] later Settings/Audit/Monitoring dependencies are reconciled.
+* [ ] later Settings dependencies are reconciled.
+* [ ] applicable Security standards are accepted.
 * [ ] no material design blocker remains.
 
 **Design state: draft; Core Security now fully defines the accepted route-security profile vocabulary and semantics, while final acceptance waits on the remaining Security-policy and downstream Auth/Access Contract reconciliation.**

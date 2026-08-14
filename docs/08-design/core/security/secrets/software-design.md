@@ -138,7 +138,7 @@ The initial implementation is a Secrets security foundation. It does not create 
 | `SecretCipherInterface`           | Public reversible-protection Contract          | `app/Core/Security/Secrets/Contracts/SecretCipherInterface.php`              |
 | `SecretDefinitionData`            | One owner-controlled secret definition         | `app/Core/Security/Secrets/Data/SecretDefinitionData.php`                    |
 | `SecretRotationPolicyData`        | Rotation/expiry/review requirements            | `app/Core/Security/Secrets/Data/SecretRotationPolicyData.php`                |
-| `SecretHealthPolicyData`          | Health/attention requirements                  | `app/Core/Security/Secrets/Data/SecretHealthPolicyData.php`                  |
+| `SecretHealthPolicyData`          | Define secret-health requirement metadata without depending on Monitoring implementation | `app/Core/Security/Secrets/Data/SecretHealthPolicyData.php` |
 | `SecretOperationRequirementsData` | Reveal/copy/rotate/revoke prerequisites        | `app/Core/Security/Secrets/Data/SecretOperationRequirementsData.php`         |
 | `EncryptedSecretValue`            | Safe encrypted-string representation           | `app/Core/Security/Secrets/Data/EncryptedSecretValue.php`                    |
 | `SecretFingerprint`               | Safe high-entropy secret fingerprint/prefix    | `app/Core/Security/Secrets/Data/SecretFingerprint.php`                       |
@@ -146,6 +146,7 @@ The initial implementation is a Secrets security foundation. It does not create 
 | `SecretStorageKind`               | Approved storage strategy                      | `app/Core/Security/Secrets/Enums/SecretStorageKind.php`                      |
 | `SecretExposurePolicy`            | Secret display/reveal policy                   | `app/Core/Security/Secrets/Enums/SecretExposurePolicy.php`                   |
 | `SecretOperation`                 | Sensitive secret operations                    | `app/Core/Security/Secrets/Enums/SecretOperation.php`                        |
+| `SecretHealthSeverity`            | Security/Secrets typed representation of shared health severity | `app/Core/Security/Secrets/Enums/SecretHealthSeverity.php` |
 | `SecretValue`                     | Non-serializable in-memory raw secret wrapper  | `app/Core/Security/Secrets/ValueObjects/SecretValue.php`                     |
 | `LaravelSecretCipher`             | Laravel-backed reversible string encryption    | `app/Core/Security/Secrets/Encryption/LaravelSecretCipher.php`               |
 | `SecretFingerprintResolver`       | Generate permitted prefix/fingerprint evidence | `app/Core/Security/Secrets/Resolvers/SecretFingerprintResolver.php`          |
@@ -153,6 +154,26 @@ The initial implementation is a Secrets security foundation. It does not create 
 | `SecretRedactionRules`            | Built-in credential redaction definitions      | `app/Core/Security/Secrets/Definitions/SecretRedactionRules.php`             |
 | `SecretSourceControlCheck`        | Blocking source/release secret-safety check    | `app/Core/Security/Secrets/Verification/Checks/SecretSourceControlCheck.php` |
 | `SecretsServiceProvider`          | Bind Secrets runtime services after parent Security registration | `app/Core/Security/Secrets/Providers/SecretsServiceProvider.php` |
+
+`SecretHealthSeverity` contains exactly:
+
+```text
+informational
+low
+medium
+high
+critical
+```
+
+It is a provider-local enum using the shared serialized severity vocabulary.
+
+It does not import:
+
+```text
+MonitoringSeverity
+Monitoring contracts
+Monitoring models
+```
 
 No generic:
 
@@ -641,32 +662,71 @@ Security/Secrets defines the expiry requirements and health thresholds.
 
 ### Health Policy
 
-`SecretHealthPolicyData` defines applicable:
+`SecretHealthPolicyData` describes Security-owned requirements:
 
 ```text
 healthCheckRequired
 expiryWarningDays
 rotationWarningDays
-failureSeverity
+failureSeverity: SecretHealthSeverity
 runbookReference
 ```
 
-When a secret has runtime health or expiry state, its owner contributes the applicable Monitoring health check through:
+Security/Secrets defines:
+
+* whether a secret requires health observation;
+* warning thresholds;
+* the required failure significance;
+* the applicable runbook reference.
+
+It does not own:
+
+* health-check execution;
+* Monitoring occurrences;
+* Monitoring Signals;
+* alert delivery.
+
+Security/Secrets does not import Core Monitoring's:
 
 ```text
-monitoring.health_checks
+HealthCheckInterface
+HealthCheckDefinitionData
+MonitoringSeverity
+HealthCheckRegistry
 ```
 
-Security/Secrets defines the required secret-health behavior.
+and `SecurityRegistrationDescriptor` does not declare `monitoring` as an owner dependency.
 
-Monitoring owns:
+This preserves the dependency direction:
 
-* health execution;
-* occurrences;
-* Signals;
-* operational attention.
+```text
+Monitoring
+    → Security
 
-Notifications later owns durable delivery.
+Security
+    ↛ Monitoring
+```
+
+For a concrete credential owned by another capability, that capability may independently consume:
+
+* its Security/Secrets definition; and
+* Monitoring's public health-check Extension Point
+
+when its own accepted design legitimately depends on both.
+
+That credential owner maps:
+
+```text
+SecretHealthSeverity serialized value
+    ↓ one-to-one canonical severity value
+MonitoringSeverity serialized value
+```
+
+without making the PHP enum types cross-owner dependencies.
+
+If a future Security-owned secret itself requires dynamic Monitoring integration, that requirement must be designed through a non-cyclic consumer/integration boundary rather than by adding a Security → Monitoring dependency.
+
+The initial Security/Secrets foundation does not create such an adapter.
 
 ---
 
@@ -886,7 +946,7 @@ Decryption failure:
 
 1. fails the requested operation;
 2. does not expose ciphertext/plaintext details;
-3. records safe Monitoring evidence where appropriate;
+3. permits the concrete credential owner or a later accepted integration to record safe Monitoring evidence where appropriate;
 4. preserves accountable Audit evidence only when the attempted operation itself is Audit-worthy.
 
 ### Transactions
@@ -1026,16 +1086,20 @@ It must never contain raw secret material.
 
 ### Monitoring
 
-Monitoring owns:
+Monitoring already depends on Core Security and may record applicable secret-related failures when a concrete producer or later accepted integration supplies safe evidence through Monitoring's public Contract.
 
-* decrypt/read failures;
-* expired credential conditions;
-* rotation failures;
-* external-store failures;
+Examples include:
+
+* decryption/read failure;
+* credential expiry condition;
+* rotation failure;
+* external secret-store failure;
 * health-check failures;
-* leak/security Signals.
+* leak/security detection.
 
-Secrets does not create a second health/Signal store.
+Security/Secrets itself does not depend on Monitoring implementation or register Monitoring health checks merely by declaring `SecretHealthPolicyData`.
+
+Secrets does not create a second health or Signal store.
 
 ### Notifications
 
@@ -1130,7 +1194,7 @@ Secret values continue to come from their approved owner-specific storage mechan
 | CREATE | `app/Core/Security/Secrets/Contracts/SecretCipherInterface.php` | Contract | Expose reversible secret protection | Secret value data | `docs/03-architecture/public-contract-and-interaction-model.md` | Laravel secret cipher test | None |
 | CREATE | `app/Core/Security/Secrets/Data/SecretDefinitionData.php` | Data Object | Define one immutable owner secret definition and operation lookup | Secret policy and operation requirements data | `docs/02-standards/security/Secrets Management Standards.md` | Secret definition Registry test | None |
 | CREATE | `app/Core/Security/Secrets/Data/SecretRotationPolicyData.php` | Data Object | Define rotation, expiry, and review requirements | None | `docs/02-standards/security/Secrets Management Standards.md` | Secret storage-kind test | None |
-| CREATE | `app/Core/Security/Secrets/Data/SecretHealthPolicyData.php` | Data Object | Define secret-health requirements | Monitoring health-check Contract | `docs/02-standards/security/Secrets Management Standards.md` | Secrets serialization/redaction test | None |
+| CREATE | `app/Core/Security/Secrets/Data/SecretHealthPolicyData.php` | Data Object | Define secret-health requirements without a Monitoring implementation dependency | `SecretHealthSeverity` | `docs/02-standards/security/Secrets Management Standards.md`; `docs/02-standards/logging/Logging Standards.md` | Secret definition Registry test | None |
 | CREATE | `app/Core/Security/Secrets/Data/SecretOperationRequirementsData.php` | Data Object | Define immutable structural operation requirements | `SecretOperation` | `docs/02-standards/security/Secrets Management Standards.md` | Secret operation requirements test | None |
 | CREATE | `app/Core/Security/Secrets/Data/EncryptedSecretValue.php` | Data Object | Represent encrypted ciphertext | None | `docs/02-standards/security/Secrets Management Standards.md` | Laravel secret cipher test | None |
 | CREATE | `app/Core/Security/Secrets/Data/SecretFingerprint.php` | Data Object | Represent safe secret fingerprint evidence | None | `docs/02-standards/security/Secrets Management Standards.md` | Secret fingerprint Resolver test | None |
@@ -1138,6 +1202,7 @@ Secret values continue to come from their approved owner-specific storage mechan
 | CREATE | `app/Core/Security/Secrets/Enums/SecretStorageKind.php` | Enum | Define approved storage strategies | None | `docs/02-standards/security/Secrets Management Standards.md` | Secret storage-kind test | None |
 | CREATE | `app/Core/Security/Secrets/Enums/SecretExposurePolicy.php` | Enum | Define secret exposure modes | None | `docs/02-standards/security/Secrets Management Standards.md` | Secret leakage prevention test | None |
 | CREATE | `app/Core/Security/Secrets/Enums/SecretOperation.php` | Enum | Define sensitive secret operations | None | `docs/02-standards/security/Secrets Management Standards.md` | Secret operation requirements test | None |
+| CREATE | `app/Core/Security/Secrets/Enums/SecretHealthSeverity.php` | Enum | Define Security-owned secret-health severity using the shared serialized vocabulary | None | `docs/02-standards/logging/Logging Standards.md` | Secret definition Registry test | None |
 | CREATE | `app/Core/Security/Secrets/ValueObjects/SecretValue.php` | Value Object | Hold non-serializable raw secret material | None | `docs/02-standards/security/Secrets Management Standards.md` | Secret value test | None |
 | CREATE | `app/Core/Security/Secrets/Encryption/LaravelSecretCipher.php` | Cipher implementation | Encrypt and decrypt through Laravel | `SecretCipherInterface`, Laravel encryption | `docs/02-standards/security/Secrets Management Standards.md` | Laravel secret cipher test | None |
 | CREATE | `app/Core/Security/Secrets/Resolvers/SecretFingerprintResolver.php` | Resolver | Generate safe secret evidence | `SecretFingerprint` | `docs/02-standards/security/Secrets Management Standards.md` | Secret fingerprint Resolver test | None |
@@ -1185,6 +1250,18 @@ Required proof must establish:
 * exactly one owner registration exists for `owner_key: security`;
 * no independent Secrets registration descriptor exists;
 * `SecretsServiceProvider` is registered through `SecurityRegistrationDescriptor`;
+* `SecretHealthSeverity` serializes exactly to:
+
+  * `informational`
+  * `low`
+  * `medium`
+  * `high`
+  * `critical`;
+* `SecretHealthPolicyData` imports no Monitoring-owned type;
+* Security/Secrets has no owner registration dependency on `monitoring`;
+* Monitoring may still depend on `security`;
+* no circular Application Registration owner dependency exists between `security` and `monitoring`;
+* concrete third-party capability health checks may consume both provider-owned Contracts only when that capability's own design declares those dependencies;
 * passwords/tokens/cookies/private-key fields are covered by credential redaction rules;
 * Secrets redaction rules integrate into Core Security without changing Audit/Monitoring implementations;
 * high-confidence committed-secret fixtures make `SecretSourceControlCheck` fail;
@@ -1197,13 +1274,14 @@ Required proof must establish:
 ### Required Reconciliation Before Acceptance
 
 1. **Secrets Management Standard acceptance** — currently `draft`.
-2. **Core Security acceptance** — `security.redaction_rules` and `security.release_checks` must be accepted in the parent Security SDD.
-3. **Auth design** — confirm exact Auth secret definitions and which Auth-owned fields consume reversible encryption versus owner-specific hashing.
-4. **Access/Auth assurance design** — resolve exact MFA/recent-auth/permission Contracts for controlled reveal, rotate, revoke, and risk-sensitive actions.
-5. **Monitoring design reconciliation** — finalize secret-health-check contribution mechanics and severity mapping.
-6. **Notifications design** — exact mandatory expiry/rotation/leak attention delivery.
-7. **DataProtection design** — final restricted-data classification and evidence handling.
-8. **Source-control scanning policy** — accept the precise blocking pattern/fixture-exclusion contract before implementation verification is frozen.
+2. **Core Security acceptance** — parent Security Contracts and registries must be accepted.
+3. **Auth design** — confirm exact Auth secret definitions and reversible-encryption versus hash-only usage.
+4. **Access/Auth assurance design** — resolve exact MFA/recent-auth/permission Contracts for controlled reveal, rotate, revoke, and other sensitive operations.
+5. **Notifications design** — exact mandatory expiry/rotation/leak attention delivery.
+6. **DataProtection design** — final restricted-data classification and evidence handling.
+7. **Source-control scanning policy** — accept the precise blocking pattern/fixture-exclusion Contract before implementation verification is frozen.
+
+The Security/Monitoring dependency direction is resolved: Security/Secrets owns only health requirement metadata and does not import Monitoring Contracts.
 
 ### Explicit Non-Blockers
 
@@ -1237,11 +1315,15 @@ Those require later concrete consumers and separate accepted design expansion.
 * [x] Application Registration integration is defined.
 * [x] implementation manifest is defined.
 * [x] verification surfaces are defined.
+* [x] secret-health severity is defined without a Monitoring type dependency.
+* [x] Security → Monitoring dependency cycle is prohibited and removed.
+* [x] Monitoring health execution remains Monitoring-owned.
+* [x] Monitoring ownership and dependency direction are reconciled.
 * [ ] Secrets Management standard is accepted.
 * [ ] Core Security registry Contracts are accepted.
 * [ ] Auth secret usage is reconciled.
 * [ ] Access/Auth assurance Contracts are reconciled.
-* [ ] Monitoring/Notifications/DataProtection dependencies are reconciled.
+* [ ] Notifications/DataProtection dependencies are reconciled.
 * [ ] source-control scanning policy is accepted.
 * [ ] no material design blocker remains.
 

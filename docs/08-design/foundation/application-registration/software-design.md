@@ -136,6 +136,71 @@ host_registry
 host_contribution
 ```
 
+### Fixed Registration Family Execution Order
+
+Runtime/Laravel registration families execute in this exact order:
+
+```text
+1.  configuration
+2.  provider
+3.  binding
+4.  host_registry
+5.  translation
+6.  view
+7.  livewire
+8.  event
+9.  route
+10. command
+11. database
+12. host_contribution
+13. schedule
+```
+
+`asset` is compiled in the same deterministic manifest but is build-time input consumed by Vite rather than a Laravel runtime-registration step.
+
+Its canonical family position follows the runtime families:
+
+```text
+14. asset
+```
+
+The ordering guarantees at least:
+
+```text
+configuration
+    before
+Providers that consume configuration
+
+Providers
+    before
+bindings/routes/commands/resources that require owner framework setup
+
+bindings
+    before
+delivery/runtime consumers
+
+host_registry
+    before
+host_contribution
+
+route
+    after
+Providers that establish route macros or route prerequisites
+
+command
+    before
+schedule entries that invoke registered commands
+
+host_contribution
+    after
+the Host Registry and ordinary native application resources are registered
+
+asset
+    outside Laravel runtime execution
+```
+
+The order is structural application composition. It does not transfer ownership between families.
+
 Each materially different family uses an immutable typed registration Data Object.
 
 The initial design defines:
@@ -320,19 +385,47 @@ No other implicit discovery source participates in the initial design.
 
 ### Deterministic Ordering
 
-Owner order is determined by:
+Compilation first computes canonical owner order:
 
 ```text
-declared dependency graph
+owner dependency graph
     ↓
-topological order
+topological owner order
     ↓
-canonical owner-key lexical ordering for otherwise independent peers
+lexical owner_key tie-break for independent peers
 ```
 
-`RegistrationDescriptorData` declaration lists are ordered canonical input. Map/object key ordering is not semantic; list ordering is semantic and must be preserved. Registration families execute in the fixed lifecycle order defined by `RegistrationFamily` and the Root Application Registrar. Within one family, the compiler preserves the owner's explicit declaration-list order and never depends on PHP associative-map iteration order.
+Runtime composition then executes:
 
-If later behavior needs dependency-aware ordering within one family, that family's public Contract must represent it explicitly. The compiler must not invent a generic registration-order identifier.
+```text
+for each RegistrationFamily
+    in the fixed family order:
+
+        for each owner
+            in canonical owner order:
+
+                execute that owner's declarations
+                in the explicit list order declared by the owner
+```
+
+Therefore:
+
+* family order has highest runtime-composition precedence;
+* owner dependency/lexical order determines owner order inside one family;
+* owner declaration-list order determines order inside one owner's family;
+* associative-map iteration order is never semantic;
+* the compiler must not invent an additional free-form order number.
+
+This specifically preserves the Security owner declaration order:
+
+```text
+SecurityServiceProvider
+SecretsServiceProvider
+```
+
+inside the `provider` family.
+
+If later behavior needs additional dependency-aware ordering within one family, that family's public Contract must represent it explicitly.
 
 Equivalent canonical inputs must produce byte-identical compiled output.
 
@@ -536,6 +629,10 @@ It does not own feature behavior.
 
 `RootApplicationRegistrar` performs or delegates accepted native registration.
 
+`RootApplicationRegistrar` does not execute `asset` as Laravel runtime registration.
+
+The compiled asset family is consumed by Vite/build composition after successful manifest compilation and validation.
+
 Use direct Laravel/framework APIs where sufficient.
 
 Create an `<ArtifactFamily>Registrar` only when a family requires meaningful independent:
@@ -704,6 +801,14 @@ Application Registration validates:
 
 It groups structurally valid Contributions by `registry_key`.
 
+Application Registration may structurally compile Host Contributions before runtime composition, but runtime submission into Host Registries occurs only in the `host_contribution` family after:
+
+* `host_registry`;
+* Provider/binding setup;
+* route/view/Livewire/Event/command/database registration families.
+
+This allows Host semantic validation to observe the ordinary application resources that the Contribution may legitimately reference without making Application Registration the Host semantic owner.
+
 ### Public Host Boundary
 
 ```php
@@ -826,7 +931,7 @@ It owns no business Audit Events and no user Notifications.
 | CREATE | `app/Providers/ApplicationRegistrationServiceProvider.php` | Provider | Bootstrap compiled Application Registration composition | Manifest Loader, Root Application Registrar | `docs/03-architecture/repository-architecture.md` | Registration bootstrap test | None |
 | CREATE | `bootstrap/registration.php` | Configuration | List explicit base-application descriptor sources | Registration Descriptor Contract | `docs/03-architecture/application-registration.md` | Registration descriptor architecture test | None |
 | MODIFY | `bootstrap/providers.php` | Configuration | Register only the Application Registration bootstrap Provider | Laravel Provider API | `docs/03-architecture/application-registration.md` | Registration bootstrap test | None |
-| GENERATE | `bootstrap/cache/compiled-registration-manifest.json` | Generated Manifest | Materialize deterministic registration output | Registration Compiler | `docs/03-architecture/application-registration.md` | Registration manifest byte-identity and stale-validation tests | None |
+| CREATE | `bootstrap/cache/compiled-registration-manifest.json` | Generated Manifest | Materialize deterministic registration output | Registration Compiler | `docs/03-architecture/application-registration.md` | Registration manifest byte-identity and stale-validation tests | None |
 | CREATE | `scripts/application-registration/compile.php` | Script | Compile the registration manifest before normal boot | Registration Compiler | `docs/03-architecture/application-registration.md` | Pre-boot compilation test | None |
 | CREATE | `scripts/application-registration/validate.php` | Script | Validate descriptors and generated manifest with the shared compiler | Registration Compiler | `docs/03-architecture/application-registration.md` | Stale-manifest validation test | None |
 | MODIFY | `composer.json` | Configuration | Invoke the bootstrap-safe compiler after autoload generation | Compile script | `docs/03-architecture/application-registration.md` | Pre-boot compilation test | None |
@@ -856,8 +961,17 @@ Required proof must establish:
 * duplicate owner identities fail;
 * unknown dependencies fail;
 * dependency cycles fail;
+* `RegistrationFamily` encodes the exact canonical family sequence;
+* configuration executes before Providers;
+* Providers execute before routes;
+* Host Registry execution precedes Host Contribution submission;
+* commands execute before schedules;
+* Security's two Provider declarations preserve their declared order;
+* owner dependency order is preserved independently inside every family;
+* owner declaration-list ordering is stable;
+* asset declarations do not execute through the Laravel runtime registrar;
 * deterministic owner ordering;
-* repeated compilation is byte-identical;
+* repeated compilation/composition produces the same ordered manifest instructions and byte-identical output;
 * stale manifests fail validation;
 * failed compilation preserves the previous valid manifest;
 * invalid paths, classes, aliases, and canonical keys fail;

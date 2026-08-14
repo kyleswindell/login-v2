@@ -25,7 +25,7 @@ Core Audit owns durable accountable evidence answering:
 
 Target owner:
 
-```text id="s1v7c1"
+```text
 app/Core/Audit/
 App\Core\Audit\
 owner_key: audit
@@ -107,7 +107,7 @@ Audit owns `AuditSeverity` as its provider-local typed representation. It serial
 
 ### Recording Contract
 
-```php id="7go3xk"
+```php
 interface RecordAuditEventInterface
 {
     public function record(RecordAuditEventData $data): AuditWriteResult;
@@ -122,7 +122,7 @@ Producers depend only on this provider-owned Contract.
 
 Examples:
 
-```text id="kcoia8"
+```text
 auth.login_succeeded
 users.user_account_suspended
 access.role_updated
@@ -135,7 +135,7 @@ Audit does not create a competing `audit.*` key.
 
 `AuditResult`:
 
-```text id="4euk9m"
+```text
 succeeded
 failed
 denied
@@ -153,7 +153,7 @@ Result does not determine event significance.
 
 `AuditSeverity`:
 
-```text id="h65a6n"
+```text
 informational
 low
 medium
@@ -167,7 +167,7 @@ Severity answers:
 
 Significance increases:
 
-```text id="1od10z"
+```text
 informational
     ↓
 low
@@ -206,7 +206,7 @@ Audit must not infer severity solely from:
 
 Valid combinations include:
 
-```text id="2fi72r"
+```text
 secrets.secret_revealed
 result: succeeded
 severity: high
@@ -226,7 +226,7 @@ A failed or denied event may be `informational` or `low`.
 
 These concerns remain independent:
 
-```text id="rjcnor"
+```text
 result
     = outcome
 
@@ -248,7 +248,7 @@ Monitoring and Threat Detection own attention and alert-triggering behavior.
 
 `AuditPrincipalType`:
 
-```text id="m1tmd6"
+```text
 user_account
 service_account
 workload
@@ -262,7 +262,7 @@ Jobs, commands, webhooks, scheduled tasks, Events, routes, and IP addresses are 
 
 `AuditActorData` contains applicable:
 
-```text id="hhmcaj"
+```text
 principal_type
 principal_id
 system_actor_key
@@ -278,7 +278,7 @@ Historical evidence must remain interpretable without depending solely on mutabl
 
 `AuditResourceData` contains:
 
-```text id="3gos0d"
+```text
 type
 id
 display_label
@@ -295,13 +295,13 @@ An Event may have:
 
 Audit consumes Core Runtime's:
 
-```text id="y42hej"
+```text
 InvocationContextInterface
 ```
 
 and automatically records:
 
-```text id="slkh3f"
+```text
 invocation_id
 correlation_id
 causation_id
@@ -316,7 +316,7 @@ Producers do not manually populate these fields.
 
 Its static declaration returns `RegistrationDescriptorData` with:
 
-```text id="09h8pv"
+```text
 owner_key: audit
 ownership_area: core
 dependencies:
@@ -331,9 +331,11 @@ registrations:
 
 The declaration is static and declarative. It does not execute Audit behavior or query persistence.
 
+The Audit owner route declaration carries canonical Security profile metadata and therefore consumes Core Security's public `RouteSecurityProfile` type. The existing `security` owner dependency covers this route-profile Contract; no additional owner dependency is required.
+
 `bootstrap/registration.php` names:
 
-```text id="zg303i"
+```text
 App\Core\Audit\Providers\AuditServiceProvider
 ```
 
@@ -347,7 +349,7 @@ as Audit's explicit base-application descriptor source.
 
 Core Audit owns one initial table:
 
-```text id="mbogx3"
+```text
 audit_events
 ```
 
@@ -357,7 +359,7 @@ No legacy Audit table is retained and no separate change table is required initi
 
 The canonical `/06-database/` table Contract must define at least:
 
-```text id="i4n0gy"
+```text
 id
 occurred_at
 
@@ -426,7 +428,7 @@ Add further indexes only for accepted query paths.
 
 Normal application behavior may:
 
-```text id="5n17to"
+```text
 INSERT audit event
 READ audit event
 SEARCH audit events
@@ -434,7 +436,7 @@ SEARCH audit events
 
 It may not:
 
-```text id="l4s99p"
+```text
 UPDATE audit event
 DELETE audit event
 ```
@@ -443,7 +445,7 @@ Corrections append explanatory evidence rather than modifying history.
 
 Exact table/column/constraint definitions must be promoted to:
 
-```text id="ewkdpn"
+```text
 docs/06-database/feature-contracts/audit.md
 docs/06-database/tables/audit_events.md
 ```
@@ -458,7 +460,7 @@ before implementation readiness.
 
 For successful state-changing behavior:
 
-```text id="hggx1n"
+```text
 owner mutation transaction
         ↓
 commit succeeds
@@ -497,7 +499,7 @@ Audit stores only evidence required for accountability.
 
 Never persist:
 
-```text id="xopugp"
+```text
 passwords
 temporary passwords
 MFA codes
@@ -513,7 +515,7 @@ unrestricted request bodies
 
 Before `AuditEvidenceRedactor` applies Audit-specific evidence minimization, it consumes Core Security's public `RedactSensitiveContextInterface` using `RedactionScope::log_context`.
 
-```text id="4qoufc"
+```text
 typed Audit producer data
     ↓
 Core Security RedactSensitiveContextInterface
@@ -548,7 +550,7 @@ DataProtection later supplies broader classification and semantic redaction poli
 
 Each `AuditChangeData` contains:
 
-```text id="465w3i"
+```text
 field
 before
 after
@@ -569,7 +571,7 @@ Audit owns a read-only administration surface.
 
 Target source:
 
-```text id="z7qkp3"
+```text
 app/Core/Audit/Http/Controllers/AuditController.php
 app/Core/Audit/Http/Requests/AuditSearchRequest.php
 app/Core/Audit/routes/web.php
@@ -579,14 +581,48 @@ resources/views/core/audit/
 
 Route names:
 
-```text id="sm2p3p"
+```text
 audit.index
 audit.show
 ```
 
+### Route Security Classification
+
+Audit's administration routes use the canonical Core Security profile:
+
+| Route | Security Profile |
+| --- | --- |
+| `audit.index` | `administrative` |
+| `audit.show` | `administrative` |
+
+The route declarations use:
+
+```text
+RouteSecurityProfile::Administrative
+```
+
+which serializes to:
+
+```text
+administrative
+```
+
+The `administrative` baseline requires:
+
+* authenticated human posture;
+* action/target/scope authorization;
+* explicit administrative authority;
+* MFA-level assurance.
+
+The profile does not define Audit's exact permission keys or resource-authorization logic.
+
+Core Access later supplies the exact Audit administration permission and authorization Contracts.
+
+Audit does not add recent-authentication merely because the route is administrative. A later accepted requirement may impose a stronger `sensitive` control on a particular Audit operation when justified.
+
 Supported filters include applicable:
 
-```text id="m2e1n7"
+```text
 event key
 result
 severity
@@ -624,7 +660,7 @@ Audit owns no user Notification behavior.
 
 `AuditServiceProvider` is Audit's one owner registration declaration and is declared through Application Registration.
 
-Its explicit owner dependencies are `runtime` and `security` because Audit consumes `InvocationContextInterface` and `RedactSensitiveContextInterface`.
+Its explicit owner dependencies are `runtime` and `security` because Audit consumes `InvocationContextInterface`, `RedactSensitiveContextInterface`, and the canonical `RouteSecurityProfile` metadata type used by its route declaration.
 
 Audit does not register itself directly in root Laravel bootstrap files.
 
@@ -655,8 +691,8 @@ Audit does not register itself directly in root Laravel bootstrap files.
 | CREATE | `app/Core/Audit/Providers/AuditServiceProvider.php`      | Provider and Registration Descriptor | Declare Audit registration and bind Audit integration                           | Runtime and Security public Contracts       | `docs/03-architecture/application-registration.md`              | Audit provider registration proof                  | None          |
 | CREATE | `app/Core/Audit/Http/Controllers/AuditController.php`    | Controller                           | Deliver read-only Audit administration                                          | Audit queries                               | `docs/03-architecture/repository-architecture.md`               | Audit administration test                          | None          |
 | CREATE | `app/Core/Audit/Http/Requests/AuditSearchRequest.php`    | Form Request                         | Validate Audit search input                                                     | None                                        | `docs/03-architecture/repository-architecture.md`               | Audit administration test                          | None          |
-| CREATE | `app/Core/Audit/routes/web.php`                          | Route                                | Declare Audit owner routes                                                      | Audit Controller                            | `docs/03-architecture/repository-architecture.md`               | Audit administration test                          | None          |
-| CREATE | `app/Core/Audit/__tests__/`                              | Test family                          | Prove Audit Contracts, severity, redaction, fallback, and provider registration | Audit owner artifacts                       | `docs/02-standards/testing/index.md`                            | Targeted Audit proof                               | None          |
+| CREATE | `app/Core/Audit/routes/web.php`                          | Route                                | Declare Audit administration routes with the canonical `administrative` Security profile | Audit Controller, `RouteSecurityProfile::Administrative` | `docs/02-standards/security/Zero Trust Security Standards.md` | Audit administration Security-profile test | None          |
+| CREATE | `app/Core/Audit/__tests__/`                              | Test family                          | Prove Audit Contracts, severity, redaction, fallback, provider registration, and administration route profiles | Audit owner artifacts | `docs/02-standards/testing/index.md` | Targeted Audit proof | None          |
 | CREATE | `resources/views/core/audit/`                            | View family                          | Render Audit administration                                                     | Audit Controller                            | `docs/03-architecture/repository-architecture.md`               | Manual visual review and Audit administration test | None          |
 | CREATE | `database/core/Audit/migrations/`                        | Migration family                     | Materialize Audit persistence                                                   | Canonical Audit table Contract              | `docs/03-architecture/persistent-data-architecture.md`          | Database migration proof                           | None          |
 | CREATE | `database/core/Audit/factories/`                         | Factory family                       | Supply Audit test data                                                          | Audit Event model                           | `docs/03-architecture/persistent-data-architecture.md`          | Targeted Audit proof                               | None          |
@@ -700,7 +736,12 @@ Required proof must cover:
 * record immutability;
 * chronological/filter/search Queries;
 * no direct cross-owner Audit table access;
-* no Monitoring/error evidence stored as Audit by default.
+* no Monitoring/error evidence stored as Audit by default;
+* `audit.index` is classified `administrative`;
+* `audit.show` is classified `administrative`;
+* Audit routes do not rely on URL location or UI visibility for administrative authority;
+* route classification does not replace later Core Access authorization;
+* no Audit route creates a noncanonical Security profile.
 
 ### Remaining Blockers
 
